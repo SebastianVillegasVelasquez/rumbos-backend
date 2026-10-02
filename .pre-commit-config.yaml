@@ -1,4 +1,4 @@
-﻿repos:
+repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.16.10
     hooks:
@@ -14,4 +14,4 @@
         types: [python]
         require_serial: true
         pass_filenames: false
-        args: [app, tests]
+        args: [app, tests, alembic]
