@@ -1,36 +1,10 @@
 import uuid
-from collections.abc import AsyncIterator
 
-import pytest
-from sqlalchemy import inspect, text
+from sqlalchemy import inspect
 from sqlalchemy.dialects.postgresql import TIMESTAMP
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.config import get_settings
-from app.models.base import BaseORM
-
-
-class Widget(BaseORM):
-    """Throwaway model, test-only: proves BaseORM works against Postgres."""
-
-    __tablename__ = "test_widget"
-
-    name: Mapped[str] = mapped_column(default="")
-
-
-@pytest.fixture
-async def session() -> AsyncIterator[AsyncSession]:
-    engine = create_async_engine(get_settings().database_url)
-    async with engine.begin() as conn:
-        await conn.run_sync(Widget.__table__.create)  # type: ignore[attr-defined]
-    try:
-        async with AsyncSession(engine, expire_on_commit=False) as s:
-            yield s
-    finally:
-        async with engine.begin() as conn:
-            await conn.execute(text("DROP TABLE test_widget"))
-        await engine.dispose()
+from tests.conftest import Widget
 
 
 async def test_id_is_fresh_uuid7_per_row(session: AsyncSession) -> None:
