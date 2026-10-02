@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
 from app.core.config import get_settings
-from app.models.base import BaseORM
+from app.models import BaseORM  # importing app.models registers every model's table
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -18,7 +18,6 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# Models are imported via pp.models so their tables register on the metadata.
 target_metadata = BaseORM.metadata
 
 # The database URL comes from app settings, never from alembic.ini.
