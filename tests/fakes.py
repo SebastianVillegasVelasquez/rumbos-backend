@@ -1,0 +1,100 @@
+"""In-memory test doubles for the repository Protocols.
+
+No inheritance from the Protocols: they satisfy them structurally, which
+mypy checks wherever a fake is passed to `CourseMapService`.
+"""
+
+import uuid
+from datetime import UTC, datetime
+
+from uuid_utils.compat import uuid7
+
+from app.enums import BubbleIcon, BubbleStatus
+from app.exceptions import CourseMapAlreadyExistsError, CourseMapNotFoundError
+from app.schemas.bubble import BubbleCreate, BubbleRead
+from app.schemas.course_map import CourseMapCreate, CourseMapRead
+
+
+class InMemoryCourseMapRepository:
+    def __init__(self) -> None:
+        self.items: dict[uuid.UUID, CourseMapRead] = {}
+
+    async def get_by_id(self, course_map_id: uuid.UUID) -> CourseMapRead | None:
+        return self.items.get(course_map_id)
+
+    async def get_by_moodle_course_id(
+        self, moodle_course_id: int
+    ) -> CourseMapRead | None:
+        return next(
+            (m for m in self.items.values() if m.moodle_course_id == moodle_course_id),
+            None,
+        )
+
+    async def create(self, data: CourseMapCreate) -> CourseMapRead:
+        if await self.get_by_moodle_course_id(data.moodle_course_id):
+            raise CourseMapAlreadyExistsError(data.moodle_course_id)
+        now = datetime.now(UTC)
+        item = CourseMapRead(
+            id=uuid7(), created_at=now, updated_at=now, **data.model_dump()
+        )
+        self.items[item.id] = item
+        return item
+
+    async def delete(self, course_map_id: uuid.UUID) -> bool:
+        return self.items.pop(course_map_id, None) is not None
+
+
+class InMemoryBubbleRepository:
+    def __init__(self, course_maps: InMemoryCourseMapRepository) -> None:
+        self.items: dict[uuid.UUID, BubbleRead] = {}
+        self._course_maps = course_maps
+        self.writes = 0  # counts write calls, to assert on what the service did
+
+    async def get_by_id(self, bubble_id: uuid.UUID) -> BubbleRead | None:
+        return self.items.get(bubble_id)
+
+    async def list_by_course_map(self, course_map_id: uuid.UUID) -> list[BubbleRead]:
+        return [b for b in self.items.values() if b.course_map_id == course_map_id]
+
+    async def create(self, course_map_id: uuid.UUID, data: BubbleCreate) -> BubbleRead:
+        if course_map_id not in self._course_maps.items:
+            raise CourseMapNotFoundError(course_map_id)
+        self.writes += 1
+        now = datetime.now(UTC)
+        item = BubbleRead(
+            id=uuid7(),
+            course_map_id=course_map_id,
+            created_at=now,
+            updated_at=now,
+            **data.model_dump(),
+        )
+        self.items[item.id] = item
+        return item
+
+    async def update_position(
+        self, bubble_id: uuid.UUID, x: float, y: float
+    ) -> BubbleRead | None:
+        return self._update(bubble_id, x=x, y=y)
+
+    async def update_icon(
+        self, bubble_id: uuid.UUID, icon: BubbleIcon | None
+    ) -> BubbleRead | None:
+        return self._update(bubble_id, icon=icon)
+
+    async def update_status(
+        self, bubble_id: uuid.UUID, status: BubbleStatus
+    ) -> BubbleRead | None:
+        return self._update(bubble_id, status=status)
+
+    async def delete(self, bubble_id: uuid.UUID) -> bool:
+        self.writes += 1
+        return self.items.pop(bubble_id, None) is not None
+
+    def _update(self, bubble_id: uuid.UUID, **values: object) -> BubbleRead | None:
+        current = self.items.get(bubble_id)
+        if current is None:
+            return None
+        self.writes += 1
+        updated = current.model_copy(update={**values, "updated_at": datetime.now(UTC)})
+        self.items[bubble_id] = updated
+        return updated
