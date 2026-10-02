@@ -1,0 +1,28 @@
+# VCS and editors
+.git
+.gitignore
+.idea/
+.vscode/
+
+# Local environment and secrets
+.venv/
+.env
+.env.*
+!.env.example
+
+# Python artifacts and caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Not needed in the runtime image
+tests/
+.pre-commit-config.yaml
+Dockerfile
+.dockerignore
+docker-compose*.yml
