@@ -59,3 +59,16 @@ def test_bubble_update_rejects_invalid_payloads(payload: dict[str, object]) -> N
 def test_bubble_update_accepts_position_and_icon() -> None:
     update = BubbleUpdate.model_validate({"x": 0.2, "y": 0.3, "icon": "star"})
     assert update.icon is BubbleIcon.STAR
+
+
+def test_schemas_accept_camel_and_snake_and_serialize_camel() -> None:
+    camel = BubbleCreate.model_validate({"activityId": 1, "x": 0, "y": 0})
+    snake = BubbleCreate(activity_id=1, x=0, y=0)
+    assert camel == snake
+    assert set(snake.model_dump(by_alias=True)) == {
+        "activityId",
+        "x",
+        "y",
+        "icon",
+        "status",
+    }

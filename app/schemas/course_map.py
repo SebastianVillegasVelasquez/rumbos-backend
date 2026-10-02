@@ -1,19 +1,16 @@
 import uuid
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict
-
+from app.schemas.base import ApiModel
 from app.schemas.bubble import BubbleRead
 
 
-class CourseMapCreate(BaseModel):
+class CourseMapCreate(ApiModel):
     moodle_course_id: int
     image_url: str
 
 
-class CourseMapRead(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
+class CourseMapRead(ApiModel):
     id: uuid.UUID
     moodle_course_id: int
     image_url: str

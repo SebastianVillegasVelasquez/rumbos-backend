@@ -2,15 +2,16 @@ import uuid
 from datetime import datetime
 from typing import Annotated, Self
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import Field, model_validator
 
 from app.enums import BubbleIcon, BubbleStatus
+from app.schemas.base import ApiModel
 
 # Relative position on the map, never pixels.
 UnitFloat = Annotated[float, Field(ge=0, le=1)]
 
 
-class BubbleCreate(BaseModel):
+class BubbleCreate(ApiModel):
     activity_id: int
     x: UnitFloat
     y: UnitFloat
@@ -18,7 +19,7 @@ class BubbleCreate(BaseModel):
     status: BubbleStatus = BubbleStatus.LOCKED
 
 
-class BubbleUpdate(BaseModel):
+class BubbleUpdate(ApiModel):
     """Partial update: only fields present in the request are applied.
 
     `icon` is nullable, so an explicit `"icon": null` (clear the icon) is
@@ -44,9 +45,7 @@ class BubbleUpdate(BaseModel):
         return self
 
 
-class BubbleRead(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
+class BubbleRead(ApiModel):
     id: uuid.UUID
     course_map_id: uuid.UUID
     activity_id: int

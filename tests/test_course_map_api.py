@@ -21,7 +21,7 @@ async def client(engine: AsyncEngine) -> AsyncIterator[httpx.AsyncClient]:
 
 async def _create_map(client: httpx.AsyncClient, course_id: int = 1) -> dict[str, Any]:
     r = await client.post(
-        "/course-maps", json={"moodle_course_id": course_id, "image_url": "http://i/x"}
+        "/course-maps", json={"moodleCourseId": course_id, "imageUrl": "http://i/x"}
     )
     assert r.status_code == 201, r.text
     body: dict[str, Any] = r.json()
@@ -31,7 +31,7 @@ async def _create_map(client: httpx.AsyncClient, course_id: int = 1) -> dict[str
 async def _add_bubble(
     client: httpx.AsyncClient, map_id: str, **overrides: Any
 ) -> dict[str, Any]:
-    payload = {"activity_id": 1, "x": 0.25, "y": 0.75, **overrides}
+    payload = {"activityId": 1, "x": 0.25, "y": 0.75, **overrides}
     r = await client.post(f"/course-maps/{map_id}/bubbles", json=payload)
     assert r.status_code == 201, r.text
     body: dict[str, Any] = r.json()
@@ -40,7 +40,7 @@ async def _add_bubble(
 
 async def test_create_course_map(client: httpx.AsyncClient) -> None:
     body = await _create_map(client, 42)
-    assert body["moodle_course_id"] == 42
+    assert body["moodleCourseId"] == 42
     assert uuid.UUID(body["id"]).version == 7
 
 
@@ -49,26 +49,26 @@ async def test_create_course_map_conflict_for_same_course(
 ) -> None:
     await _create_map(client, 5)
     r = await client.post(
-        "/course-maps", json={"moodle_course_id": 5, "image_url": "other"}
+        "/course-maps", json={"moodleCourseId": 5, "imageUrl": "other"}
     )
     assert r.status_code == 409
 
 
 async def test_create_course_map_validation_error(client: httpx.AsyncClient) -> None:
-    r = await client.post("/course-maps", json={"moodle_course_id": "abc"})
+    r = await client.post("/course-maps", json={"moodleCourseId": "abc"})
     assert r.status_code == 422
 
 
 async def test_get_course_map_with_bubbles(client: httpx.AsyncClient) -> None:
     created = await _create_map(client)
-    await _add_bubble(client, created["id"], activity_id=11)
-    await _add_bubble(client, created["id"], activity_id=12, icon="chest")
+    await _add_bubble(client, created["id"], activityId=11)
+    await _add_bubble(client, created["id"], activityId=12, icon="chest")
 
     r = await client.get(f"/course-maps/{created['id']}")
     assert r.status_code == 200
     body = r.json()
     assert body["id"] == created["id"]
-    assert [b["activity_id"] for b in body["bubbles"]] == [11, 12]
+    assert [b["activityId"] for b in body["bubbles"]] == [11, 12]
     assert body["bubbles"][1]["icon"] == "chest"
 
 
@@ -84,11 +84,11 @@ async def test_add_bubble_defaults_and_validation(client: httpx.AsyncClient) -> 
 
     bad = await client.post(
         f"/course-maps/{created['id']}/bubbles",
-        json={"activity_id": 1, "x": 1.5, "y": 0.5},
+        json={"activityId": 1, "x": 1.5, "y": 0.5},
     )
     assert bad.status_code == 422
     missing = await client.post(
-        f"/course-maps/{uuid.uuid4()}/bubbles", json={"activity_id": 1, "x": 0, "y": 0}
+        f"/course-maps/{uuid.uuid4()}/bubbles", json={"activityId": 1, "x": 0, "y": 0}
     )
     assert missing.status_code == 404
 
@@ -149,3 +149,49 @@ async def test_delete_bubble(client: httpx.AsyncClient) -> None:
     assert (await client.delete(url)).status_code == 204
     assert (await client.get(f"/course-maps/{created['id']}")).json()["bubbles"] == []
     assert (await client.delete(url)).status_code == 404
+
+
+async def test_responses_are_camel_case(client: httpx.AsyncClient) -> None:
+    created = await _create_map(client, 7)
+    assert set(created) == {
+        "id",
+        "moodleCourseId",
+        "imageUrl",
+        "createdAt",
+        "updatedAt",
+    }
+    bubble = await _add_bubble(client, created["id"])
+    assert set(bubble) == {
+        "id",
+        "courseMapId",
+        "activityId",
+        "x",
+        "y",
+        "icon",
+        "status",
+        "createdAt",
+        "updatedAt",
+    }
+    detail = (await client.get(f"/course-maps/{created['id']}")).json()
+    assert set(detail["bubbles"][0]) == set(bubble)
+
+
+async def test_snake_case_request_bodies_are_still_accepted(
+    client: httpx.AsyncClient,
+) -> None:
+    r = await client.post(
+        "/course-maps", json={"moodle_course_id": 9, "image_url": "http://i/y"}
+    )
+    assert r.status_code == 201
+    assert r.json()["moodleCourseId"] == 9  # but the response is always camelCase
+
+
+async def test_camel_case_request_body_is_applied(client: httpx.AsyncClient) -> None:
+    created = await _create_map(client)
+    r = await client.post(
+        f"/course-maps/{created['id']}/bubbles",
+        json={"activityId": 77, "x": 0.5, "y": 0.5, "status": "in_progress"},
+    )
+    assert r.status_code == 201
+    assert r.json()["activityId"] == 77
+    assert r.json()["courseMapId"] == created["id"]
