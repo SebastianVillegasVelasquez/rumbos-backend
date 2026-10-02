@@ -3,6 +3,8 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from app.api.errors import register_exception_handlers
+from app.api.routes import course_map
 from app.core.config import get_settings
 from app.core.database import create_engine
 
@@ -18,6 +20,8 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 
 app = FastAPI(title="Rumbos Backend", lifespan=lifespan)
+register_exception_handlers(app)
+app.include_router(course_map.router)
 
 
 @app.get("/health")
