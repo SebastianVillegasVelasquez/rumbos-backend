@@ -46,26 +46,11 @@ class CourseMapService:
         self, course_map_id: uuid.UUID, bubble_id: uuid.UUID, data: BubbleUpdate
     ) -> BubbleRead:
         """Applies only the fields present in `data` (partial update)."""
-        bubble = await self._require_bubble(course_map_id, bubble_id)
-        sent = data.model_fields_set
-        # The repository exposes one write per concern; each commits on its
-        # own, so a multi-field patch is not applied atomically.
-        if "x" in sent and "y" in sent:
-            assert data.x is not None and data.y is not None  # guaranteed by schema
-            bubble = await self._or_not_found(
-                await self._bubbles.update_position(bubble_id, data.x, data.y),
-                bubble_id,
-            )
-        if "icon" in sent:
-            bubble = await self._or_not_found(
-                await self._bubbles.update_icon(bubble_id, data.icon), bubble_id
-            )
-        if "status" in sent:
-            assert data.status is not None  # guaranteed by schema
-            bubble = await self._or_not_found(
-                await self._bubbles.update_status(bubble_id, data.status), bubble_id
-            )
-        return bubble
+        await self._require_bubble(course_map_id, bubble_id)
+        updated = await self._bubbles.update(bubble_id, data)
+        if updated is None:  # deleted between the lookup and the write
+            raise BubbleNotFoundError(bubble_id)
+        return updated
 
     async def remove_bubble(
         self, course_map_id: uuid.UUID, bubble_id: uuid.UUID
@@ -86,13 +71,5 @@ class CourseMapService:
         """A bubble addressed through the wrong map counts as not found."""
         bubble = await self._bubbles.get_by_id(bubble_id)
         if bubble is None or bubble.course_map_id != course_map_id:
-            raise BubbleNotFoundError(bubble_id)
-        return bubble
-
-    @staticmethod
-    async def _or_not_found(
-        bubble: BubbleRead | None, bubble_id: uuid.UUID
-    ) -> BubbleRead:
-        if bubble is None:  # deleted between the lookup and the write
             raise BubbleNotFoundError(bubble_id)
         return bubble

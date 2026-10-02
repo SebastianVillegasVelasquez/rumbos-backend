@@ -1,13 +1,12 @@
 import uuid
 
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.enums import BubbleIcon, BubbleStatus
 from app.exceptions import CourseMapNotFoundError
 from app.models import Bubble
-from app.schemas.bubble import BubbleCreate, BubbleRead
+from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 
 
 class SqlAlchemyBubbleRepository:
@@ -43,20 +42,26 @@ class SqlAlchemyBubbleRepository:
             raise
         return BubbleRead.model_validate(bubble)
 
-    async def update_position(
-        self, bubble_id: uuid.UUID, x: float, y: float
+    async def update(
+        self, bubble_id: uuid.UUID, data: BubbleUpdate
     ) -> BubbleRead | None:
-        return await self._update(bubble_id, x=x, y=y)
-
-    async def update_icon(
-        self, bubble_id: uuid.UUID, icon: BubbleIcon | None
-    ) -> BubbleRead | None:
-        return await self._update(bubble_id, icon=icon)
-
-    async def update_status(
-        self, bubble_id: uuid.UUID, status: BubbleStatus
-    ) -> BubbleRead | None:
-        return await self._update(bubble_id, status=status)
+        # One UPDATE touching only the fields the caller sent (an explicit
+        # `icon: None` is sent, so it clears the column).
+        values = data.model_dump(exclude_unset=True)
+        stmt = (
+            update(Bubble)
+            .where(Bubble.id == bubble_id)
+            .values(**values)
+            .returning(Bubble)
+            .execution_options(populate_existing=True)
+        )
+        try:
+            bubble = (await self._session.scalars(stmt)).one_or_none()
+            await self._session.commit()
+        except BaseException:
+            await self._session.rollback()
+            raise
+        return BubbleRead.model_validate(bubble) if bubble else None
 
     async def delete(self, bubble_id: uuid.UUID) -> bool:
         bubble = await self._session.get(Bubble, bubble_id)
@@ -69,18 +74,3 @@ class SqlAlchemyBubbleRepository:
             await self._session.rollback()
             raise
         return True
-
-    async def _update(
-        self, bubble_id: uuid.UUID, **values: object
-    ) -> BubbleRead | None:
-        bubble = await self._session.get(Bubble, bubble_id)
-        if bubble is None:
-            return None
-        try:
-            for name, value in values.items():
-                setattr(bubble, name, value)
-            await self._session.commit()
-        except BaseException:
-            await self._session.rollback()
-            raise
-        return BubbleRead.model_validate(bubble)

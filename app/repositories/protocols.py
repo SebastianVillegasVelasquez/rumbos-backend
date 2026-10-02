@@ -6,7 +6,7 @@ schemas so callers never import SQLAlchemy models.
 
 Contract shared by all implementations:
 - Reads (`get_*`, `list_*`) never commit.
-- Writes (`create`, `update_*`, `delete`) are atomic: they commit on
+- Writes (`create`, `update`, `delete`) are atomic: they commit on
   success and roll back before re-raising on failure.
 - A missing target is reported as `None` / `False`, not an exception.
 """
@@ -14,8 +14,7 @@ Contract shared by all implementations:
 import uuid
 from typing import Protocol
 
-from app.enums import BubbleIcon, BubbleStatus
-from app.schemas.bubble import BubbleCreate, BubbleRead
+from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import CourseMapCreate, CourseMapRead
 
 
@@ -46,16 +45,13 @@ class BubbleRepository(Protocol):
         """Raises `CourseMapNotFoundError` if the map doesn't exist."""
         ...
 
-    async def update_position(
-        self, bubble_id: uuid.UUID, x: float, y: float
-    ) -> BubbleRead | None: ...
+    async def update(
+        self, bubble_id: uuid.UUID, data: BubbleUpdate
+    ) -> BubbleRead | None:
+        """Applies only the fields set in `data`, all in one statement.
 
-    async def update_icon(
-        self, bubble_id: uuid.UUID, icon: BubbleIcon | None
-    ) -> BubbleRead | None: ...
-
-    async def update_status(
-        self, bubble_id: uuid.UUID, status: BubbleStatus
-    ) -> BubbleRead | None: ...
+        Either every provided field is persisted or none is.
+        """
+        ...
 
     async def delete(self, bubble_id: uuid.UUID) -> bool: ...

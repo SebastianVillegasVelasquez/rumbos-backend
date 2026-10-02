@@ -9,9 +9,8 @@ from datetime import UTC, datetime
 
 from uuid_utils.compat import uuid7
 
-from app.enums import BubbleIcon, BubbleStatus
 from app.exceptions import CourseMapAlreadyExistsError, CourseMapNotFoundError
-from app.schemas.bubble import BubbleCreate, BubbleRead
+from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import CourseMapCreate, CourseMapRead
 
 
@@ -71,30 +70,20 @@ class InMemoryBubbleRepository:
         self.items[item.id] = item
         return item
 
-    async def update_position(
-        self, bubble_id: uuid.UUID, x: float, y: float
+    async def update(
+        self, bubble_id: uuid.UUID, data: BubbleUpdate
     ) -> BubbleRead | None:
-        return self._update(bubble_id, x=x, y=y)
-
-    async def update_icon(
-        self, bubble_id: uuid.UUID, icon: BubbleIcon | None
-    ) -> BubbleRead | None:
-        return self._update(bubble_id, icon=icon)
-
-    async def update_status(
-        self, bubble_id: uuid.UUID, status: BubbleStatus
-    ) -> BubbleRead | None:
-        return self._update(bubble_id, status=status)
-
-    async def delete(self, bubble_id: uuid.UUID) -> bool:
-        self.writes += 1
-        return self.items.pop(bubble_id, None) is not None
-
-    def _update(self, bubble_id: uuid.UUID, **values: object) -> BubbleRead | None:
         current = self.items.get(bubble_id)
         if current is None:
             return None
         self.writes += 1
-        updated = current.model_copy(update={**values, "updated_at": datetime.now(UTC)})
+        changes = data.model_dump(exclude_unset=True)
+        updated = current.model_copy(
+            update={**changes, "updated_at": datetime.now(UTC)}
+        )
         self.items[bubble_id] = updated
         return updated
+
+    async def delete(self, bubble_id: uuid.UUID) -> bool:
+        self.writes += 1
+        return self.items.pop(bubble_id, None) is not None

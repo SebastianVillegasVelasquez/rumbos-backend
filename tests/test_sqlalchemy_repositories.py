@@ -7,7 +7,8 @@ import uuid
 from collections.abc import AsyncIterator
 
 import pytest
-from sqlalchemy import func, select
+from sqlalchemy import func, select, text
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 
 from app.enums import BubbleIcon, BubbleStatus
@@ -17,8 +18,9 @@ from app.repositories.sqlalchemy.bubble_repository import SqlAlchemyBubbleReposi
 from app.repositories.sqlalchemy.course_map_repository import (
     SqlAlchemyCourseMapRepository,
 )
-from app.schemas.bubble import BubbleCreate
+from app.schemas.bubble import BubbleCreate, BubbleUpdate
 from app.schemas.course_map import CourseMapCreate
+from app.services.course_map_service import CourseMapService
 
 
 @pytest.fixture
@@ -136,7 +138,7 @@ async def test_bubble_create_for_missing_map_raises_and_rolls_back(
     assert await _count(session, Bubble) == 0
 
 
-async def test_bubble_updates_commit_and_touch_updated_at(
+async def test_bubble_update_commits_and_touches_updated_at(
     maps: SqlAlchemyCourseMapRepository,
     bubbles: SqlAlchemyBubbleRepository,
     observer: AsyncSession,
@@ -144,16 +146,20 @@ async def test_bubble_updates_commit_and_touch_updated_at(
     map_id = await _make_map(maps)
     bubble = await bubbles.create(map_id, BubbleCreate(activity_id=1, x=0.1, y=0.2))
 
-    moved = await bubbles.update_position(bubble.id, 0.7, 0.8)
+    moved = await bubbles.update(
+        bubble.id, BubbleUpdate.model_validate({"x": 0.7, "y": 0.8})
+    )
     assert moved is not None and (moved.x, moved.y) == (0.7, 0.8)
     assert moved.updated_at > bubble.updated_at
-    iconed = await bubbles.update_icon(bubble.id, BubbleIcon.STAR)
+    iconed = await bubbles.update(bubble.id, BubbleUpdate(icon=BubbleIcon.STAR))
     assert iconed is not None and iconed.icon is BubbleIcon.STAR
-    # Moving earlier did not clobber anything else, and icon can be cleared.
-    cleared = await bubbles.update_icon(bubble.id, None)
-    assert cleared is not None and cleared.icon is None
-    status = await bubbles.update_status(bubble.id, BubbleStatus.COMPLETE)
-    assert status is not None and status.status is BubbleStatus.COMPLETE
+    assert (iconed.x, iconed.y) == (0.7, 0.8)  # earlier move not clobbered
+    # Several fields at once, including clearing the icon, in one call.
+    both = await bubbles.update(
+        bubble.id, BubbleUpdate(icon=None, status=BubbleStatus.COMPLETE)
+    )
+    assert both is not None and both.icon is None
+    assert both.status is BubbleStatus.COMPLETE
 
     stored = await observer.get(Bubble, bubble.id)
     assert stored is not None
@@ -165,13 +171,12 @@ async def test_bubble_updates_commit_and_touch_updated_at(
     )
 
 
-async def test_bubble_updates_on_missing_bubble_return_none(
+async def test_bubble_update_and_delete_on_missing_bubble(
     bubbles: SqlAlchemyBubbleRepository,
 ) -> None:
     missing = uuid.uuid4()
-    assert await bubbles.update_position(missing, 0, 0) is None
-    assert await bubbles.update_icon(missing, None) is None
-    assert await bubbles.update_status(missing, BubbleStatus.LOCKED) is None
+    patch = BubbleUpdate(status=BubbleStatus.LOCKED)
+    assert await bubbles.update(missing, patch) is None
     assert await bubbles.delete(missing) is False
 
 
@@ -223,11 +228,48 @@ async def test_failed_write_is_rolled_back(
 
     monkeypatch.setattr(session, "commit", flush_then_fail)
     with pytest.raises(RuntimeError):
-        await bubbles.update_position(bubble.id, 0.9, 0.9)
+        await bubbles.update(bubble.id, BubbleUpdate(status=BubbleStatus.COMPLETE))
 
     # The repository itself rolled back: the failed transaction is gone and
     # the session is immediately reusable (it would still be mid-transaction
     # if the repository had left cleanup to someone else).
     assert not session.in_transaction()
     stored = await observer.get(Bubble, bubble.id)
-    assert stored is not None and (stored.x, stored.y) == (0.1, 0.1)
+    assert stored is not None and stored.status is BubbleStatus.LOCKED
+
+
+async def test_multi_field_update_is_all_or_nothing(
+    maps: SqlAlchemyCourseMapRepository,
+    bubbles: SqlAlchemyBubbleRepository,
+    session: AsyncSession,
+    observer: AsyncSession,
+) -> None:
+    map_id = await _make_map(maps)
+    bubble = await bubbles.create(
+        map_id, BubbleCreate(activity_id=1, x=0.1, y=0.2, icon=BubbleIcon.STAR)
+    )
+    # Make exactly one of the patched fields unacceptable to the database.
+    await session.execute(
+        text(
+            "ALTER TABLE bubbles ADD CONSTRAINT ck_no_complete "
+            "CHECK (status <> 'complete')"
+        )
+    )
+    await session.commit()
+
+    patch = BubbleUpdate.model_validate(
+        {"x": 0.9, "y": 0.8, "icon": None, "status": "complete"}
+    )
+    service = CourseMapService(maps, bubbles)
+    with pytest.raises(IntegrityError):
+        await service.update_bubble(map_id, bubble.id, patch)
+
+    # Not just the failing field: none of them may have changed.
+    stored = await observer.get(Bubble, bubble.id)
+    assert stored is not None
+    assert (stored.x, stored.y, stored.icon, stored.status) == (
+        0.1,
+        0.2,
+        BubbleIcon.STAR,
+        BubbleStatus.LOCKED,
+    )
