@@ -27,16 +27,17 @@ def _uow_app(engine: AsyncEngine) -> FastAPI:
     test_app.state.db_engine = engine
     seen: list[AsyncSession] = []
 
-    @test_app.post("/ok")
-    async def ok(session: SessionDep) -> dict[str, int]:
+    @test_app.post("/add-without-commit")
+    async def add_without_commit(session: SessionDep) -> None:
         session.add(Widget())
+        await session.flush()
         seen.append(session)
-        return {"n": len(seen)}
 
     @test_app.post("/boom")
     async def boom(session: SessionDep) -> None:
         session.add(Widget())
         await session.flush()
+        seen.append(session)
         raise RuntimeError("fail after flush")
 
     test_app.state.seen = seen
@@ -48,23 +49,34 @@ async def _count(engine: AsyncEngine) -> int:
         return (await s.execute(select(func.count()).select_from(Widget))).scalar_one()
 
 
-async def test_session_commits_on_success_and_is_per_request(
-    engine: AsyncEngine,
-) -> None:
+async def test_session_is_fresh_per_request(engine: AsyncEngine) -> None:
     test_app = _uow_app(engine)
     transport = httpx.ASGITransport(app=test_app)
     async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
-        assert (await c.post("/ok")).status_code == 200
-        assert (await c.post("/ok")).status_code == 200
-    assert await _count(engine) == 2
+        assert (await c.post("/add-without-commit")).status_code == 200
+        assert (await c.post("/add-without-commit")).status_code == 200
     seen = test_app.state.seen
     assert len(seen) == 2 and seen[0] is not seen[1]
 
 
-async def test_session_rolls_back_on_exception(engine: AsyncEngine) -> None:
-    transport = httpx.ASGITransport(app=_uow_app(engine), raise_app_exceptions=False)
+async def test_session_does_not_commit_on_its_own(engine: AsyncEngine) -> None:
+    transport = httpx.ASGITransport(app=_uow_app(engine))
     async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
+        assert (await c.post("/add-without-commit")).status_code == 200
+    assert await _count(engine) == 0
+
+
+async def test_session_is_closed_after_request_even_on_exception(
+    engine: AsyncEngine,
+) -> None:
+    test_app = _uow_app(engine)
+    transport = httpx.ASGITransport(app=test_app, raise_app_exceptions=False)
+    async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
+        assert (await c.post("/add-without-commit")).status_code == 200
         assert (await c.post("/boom")).status_code == 500
+    ok_session, boom_session = test_app.state.seen
+    assert not ok_session.in_transaction()
+    assert not boom_session.in_transaction()
     assert await _count(engine) == 0
 
 

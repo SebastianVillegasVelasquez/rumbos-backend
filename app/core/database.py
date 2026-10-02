@@ -12,15 +12,10 @@ def create_engine(database_url: str) -> AsyncEngine:
 async def get_session(request: Request) -> AsyncIterator[AsyncSession]:
     """Unit of Work: one fresh session per request.
 
-    The engine is shared (read from `app.state`), the session is not: an
-    AsyncSession must never be used by concurrent requests. Commits on
-    success, rolls back on any exception, and always closes.
+    Only responsible for opening and closing the session. Commit/rollback
+    decisions belong to the service/repository layer that knows whether
+    the unit of work actually succeeded.
     """
     engine: AsyncEngine = request.app.state.db_engine
     async with AsyncSession(engine, expire_on_commit=False) as session:
-        try:
-            yield session
-            await session.commit()
-        except BaseException:
-            await session.rollback()
-            raise
+        yield session
