@@ -92,9 +92,9 @@ async def test_get_course_contents_parses_sections_and_modules() -> None:
     quiz = unit.modules[0]
     assert quiz.url == "https://moodle.test/mod/quiz/view.php?id=102"
     assert quiz.completion == 2
-    # Missing optional fields are tolerated.
+    # Missing optional fields are tolerated (missing visibility means visible).
     label = unit.modules[1]
-    assert label.url is None and label.visible is None and label.uservisible is None
+    assert label.url is None and label.visible is True and label.uservisible is True
     assert sections[2].modules == []
 
 

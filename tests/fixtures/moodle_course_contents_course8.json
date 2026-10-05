@@ -1,0 +1,37 @@
+[
+  {
+    "id": 24,
+    "name": "General",
+    "visible": 1,
+    "summary": "<div id=\"pctur-c3-wrapper\">[TRIMMED IN THIS FIXTURE: the real value is ~20 KB of hand-written HTML with inline styles, iframes and links to the same activities]</div>",
+    "summaryformat": 1,
+    "section": 0,
+    "hiddenbynumsections": 0,
+    "uservisible": true,
+    "component": null,
+    "itemid": null,
+    "modules": []
+  },
+  {
+    "id": 25,
+    "name": "Recursos",
+    "visible": 0,
+    "summary": "",
+    "summaryformat": 1,
+    "section": 1,
+    "hiddenbynumsections": 0,
+    "uservisible": true,
+    "component": null,
+    "itemid": null,
+    "modules": [
+      {"id": 28, "url": "https://academiaturismo.mincit.gov.co/mod/quiz/view.php?id=28", "name": "Preguntas para reconocer cuánto sabes [IN-1]", "instance": 7, "contextid": 92, "visible": 1, "uservisible": true, "visibleoncoursepage": 1, "modname": "quiz", "purpose": "assessment", "branded": false, "modplural": "Cuestionarios", "availability": null, "indent": 0, "onclick": "", "afterlink": null, "customdata": "\"\"", "noviewlink": false, "candisplay": true, "completion": 0, "downloadcontent": 1, "dates": [], "groupmode": 0},
+      {"id": 27, "url": "https://academiaturismo.mincit.gov.co/mod/scorm/view.php?id=27", "name": "Preparar el Viaje - Contenido [VIAJE-1-1]", "instance": 6, "contextid": 91, "visible": 1, "uservisible": true, "visibleoncoursepage": 1, "modname": "scorm", "purpose": "interactivecontent", "branded": false, "modplural": "Paquetes SCORM", "availability": null, "indent": 0, "onclick": "", "afterlink": null, "customdata": "\"\"", "noviewlink": false, "candisplay": true, "completion": 0, "downloadcontent": 1, "dates": [], "groupmode": 0},
+      {"id": 29, "url": "https://academiaturismo.mincit.gov.co/mod/quiz/view.php?id=29", "name": "Mi museo con ojos de visitante [VIAJE-1-2]", "instance": 8, "contextid": 93, "visible": 1, "uservisible": true, "visibleoncoursepage": 1, "modname": "quiz", "purpose": "assessment", "branded": false, "modplural": "Cuestionarios", "availability": null, "indent": 0, "onclick": "", "afterlink": null, "customdata": "\"\"", "noviewlink": false, "candisplay": true, "completion": 0, "downloadcontent": 1, "dates": [], "groupmode": 0},
+      {"id": 31, "url": "https://academiaturismo.mincit.gov.co/mod/scorm/view.php?id=31", "name": "Vivir la Experiencia - Contenido [VIAJE-1-3]", "instance": 7, "contextid": 95, "visible": 1, "uservisible": true, "visibleoncoursepage": 1, "modname": "scorm", "purpose": "interactivecontent", "branded": false, "modplural": "Paquetes SCORM", "availability": null, "indent": 0, "onclick": "", "afterlink": null, "customdata": "\"\"", "noviewlink": false, "candisplay": true, "completion": 0, "downloadcontent": 1, "dates": [], "groupmode": 0},
+      {"id": 30, "url": "https://academiaturismo.mincit.gov.co/mod/quiz/view.php?id=30", "name": "Mi plan ante una situación tensa [VIAJE-1-4]", "instance": 9, "contextid": 94, "visible": 1, "uservisible": true, "visibleoncoursepage": 1, "modname": "quiz", "purpose": "assessment", "branded": false, "modplural": "Cuestionarios", "availability": null, "indent": 0, "onclick": "", "afterlink": null, "customdata": "\"\"", "noviewlink": false, "candisplay": true, "completion": 0, "downloadcontent": 1, "dates": [], "groupmode": 0},
+      {"id": 32, "url": "https://academiaturismo.mincit.gov.co/mod/scorm/view.php?id=32", "name": "Cierre Operativo y Síntesis [OUT-1]", "instance": 8, "contextid": 96, "visible": 1, "uservisible": true, "visibleoncoursepage": 1, "modname": "scorm", "purpose": "interactivecontent", "branded": false, "modplural": "Paquetes SCORM", "availability": null, "indent": 0, "onclick": "", "afterlink": null, "customdata": "\"\"", "noviewlink": false, "candisplay": true, "completion": 0, "downloadcontent": 1, "dates": [], "groupmode": 0},
+      {"id": 25, "url": "https://academiaturismo.mincit.gov.co/mod/quiz/view.php?id=25", "name": "Preguntas para revisar cuánto aprendiste [OUT-2]", "instance": 6, "contextid": 88, "visible": 1, "uservisible": true, "visibleoncoursepage": 1, "modname": "quiz", "purpose": "assessment", "branded": false, "modplural": "Cuestionarios", "availability": null, "indent": 0, "onclick": "", "afterlink": null, "customdata": "\"\"", "noviewlink": false, "candisplay": true, "completion": 0, "downloadcontent": 1, "dates": [], "groupmode": 0},
+      {"id": 33, "url": "https://academiaturismo.mincit.gov.co/mod/customcert/view.php?id=33", "name": "Certificado de Aprobación [OUT-3]", "instance": 1, "contextid": 97, "visible": 1, "uservisible": true, "visibleoncoursepage": 1, "modname": "customcert", "purpose": "other", "branded": false, "modplural": "Certificados personalizados", "availability": null, "indent": 0, "onclick": "", "afterlink": null, "customdata": "\"\"", "noviewlink": false, "candisplay": true, "completion": 0, "downloadcontent": 1, "dates": [], "groupmode": 0}
+    ]
+  }
+]
