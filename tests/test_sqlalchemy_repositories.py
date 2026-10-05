@@ -21,6 +21,7 @@ from app.repositories.sqlalchemy.course_map_repository import (
 from app.schemas.bubble import BubbleCreate, BubbleUpdate
 from app.schemas.course_map import CourseMapCreate
 from app.services.course_map_service import CourseMapService
+from tests.fakes import InMemoryMoodleClient
 
 
 @pytest.fixture
@@ -260,7 +261,7 @@ async def test_multi_field_update_is_all_or_nothing(
     patch = BubbleUpdate.model_validate(
         {"x": 0.9, "y": 0.8, "icon": None, "status": "complete"}
     )
-    service = CourseMapService(maps, bubbles)
+    service = CourseMapService(maps, bubbles, InMemoryMoodleClient())
     with pytest.raises(IntegrityError):
         await service.update_bubble(map_id, bubble.id, patch)
 

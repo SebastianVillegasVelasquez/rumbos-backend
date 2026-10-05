@@ -1,4 +1,4 @@
-"""In-memory test doubles for the repository Protocols.
+"""In-memory test doubles for the repository and Moodle client Protocols.
 
 No inheritance from the Protocols: they satisfy them structurally, which
 mypy checks wherever a fake is passed to `CourseMapService`.
@@ -10,6 +10,8 @@ from datetime import UTC, datetime
 from uuid_utils.compat import uuid7
 
 from app.exceptions import CourseMapAlreadyExistsError, CourseMapNotFoundError
+from app.moodle.exceptions import MoodleCourseNotFoundError
+from app.moodle.schemas import MoodleSection, MoodleSiteInfo
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import CourseMapCreate, CourseMapRead
 
@@ -87,3 +89,26 @@ class InMemoryBubbleRepository:
     async def delete(self, bubble_id: uuid.UUID) -> bool:
         self.writes += 1
         return self.items.pop(bubble_id, None) is not None
+
+
+class InMemoryMoodleClient:
+    """Serves canned course contents; no HTTP.
+
+    Set `error` to make every call raise it, to simulate Moodle failures.
+    """
+
+    def __init__(self) -> None:
+        self.courses: dict[int, list[MoodleSection]] = {}
+        self.error: Exception | None = None
+
+    async def get_site_info(self) -> MoodleSiteInfo:
+        if self.error:
+            raise self.error
+        return MoodleSiteInfo(sitename="Fake Moodle")
+
+    async def get_course_contents(self, course_id: int) -> list[MoodleSection]:
+        if self.error:
+            raise self.error
+        if course_id not in self.courses:
+            raise MoodleCourseNotFoundError("Moodle course not found")
+        return self.courses[course_id]

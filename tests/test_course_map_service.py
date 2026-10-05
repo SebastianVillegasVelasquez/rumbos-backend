@@ -13,7 +13,11 @@ from app.exceptions import (
 from app.schemas.bubble import BubbleCreate, BubbleUpdate
 from app.schemas.course_map import CourseMapCreate
 from app.services.course_map_service import CourseMapService
-from tests.fakes import InMemoryBubbleRepository, InMemoryCourseMapRepository
+from tests.fakes import (
+    InMemoryBubbleRepository,
+    InMemoryCourseMapRepository,
+    InMemoryMoodleClient,
+)
 
 
 @pytest.fixture
@@ -27,11 +31,18 @@ def bubbles(maps: InMemoryCourseMapRepository) -> InMemoryBubbleRepository:
 
 
 @pytest.fixture
+def moodle() -> InMemoryMoodleClient:
+    return InMemoryMoodleClient()
+
+
+@pytest.fixture
 def service(
-    maps: InMemoryCourseMapRepository, bubbles: InMemoryBubbleRepository
+    maps: InMemoryCourseMapRepository,
+    bubbles: InMemoryBubbleRepository,
+    moodle: InMemoryMoodleClient,
 ) -> CourseMapService:
     # Passing the fakes here is the Protocol check: mypy verifies they match.
-    return CourseMapService(maps, bubbles)
+    return CourseMapService(maps, bubbles, moodle)
 
 
 async def _map_id(service: CourseMapService, course_id: int = 1) -> uuid.UUID:

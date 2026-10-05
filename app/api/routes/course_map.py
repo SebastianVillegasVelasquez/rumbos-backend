@@ -5,10 +5,13 @@ from fastapi import APIRouter, Depends, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_session
+from app.moodle.dependencies import get_moodle_client
+from app.moodle.protocols import MoodleClient
 from app.repositories.sqlalchemy.bubble_repository import SqlAlchemyBubbleRepository
 from app.repositories.sqlalchemy.course_map_repository import (
     SqlAlchemyCourseMapRepository,
 )
+from app.schemas.activity import ActivityRead
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import CourseMapCreate, CourseMapDetail, CourseMapRead
 from app.services.course_map_service import CourseMapService
@@ -18,9 +21,12 @@ router = APIRouter(prefix="/course-maps", tags=["course-maps"])
 
 def get_course_map_service(
     session: Annotated[AsyncSession, Depends(get_session)],
+    moodle: Annotated[MoodleClient, Depends(get_moodle_client)],
 ) -> CourseMapService:
     return CourseMapService(
-        SqlAlchemyCourseMapRepository(session), SqlAlchemyBubbleRepository(session)
+        SqlAlchemyCourseMapRepository(session),
+        SqlAlchemyBubbleRepository(session),
+        moodle,
     )
 
 
@@ -39,6 +45,13 @@ async def get_course_map(
     course_map_id: uuid.UUID, service: ServiceDep
 ) -> CourseMapDetail:
     return await service.get_course_map(course_map_id)
+
+
+@router.get("/{course_map_id}/activities", response_model=list[ActivityRead])
+async def list_activities(
+    course_map_id: uuid.UUID, service: ServiceDep
+) -> list[ActivityRead]:
+    return await service.list_activities(course_map_id)
 
 
 @router.post(
