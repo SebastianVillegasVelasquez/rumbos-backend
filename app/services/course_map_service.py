@@ -6,7 +6,7 @@ from app.exceptions import (
     CourseMapNotFoundError,
 )
 from app.moodle.protocols import MoodleClient
-from app.moodle.schemas import MoodleModule
+from app.moodle.schemas import MoodleModule, MoodleSection
 from app.repositories.protocols import BubbleRepository, CourseMapRepository
 from app.schemas.activity import ActivityRead
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
@@ -16,19 +16,28 @@ from app.schemas.course_map import CourseMapCreate, CourseMapDetail, CourseMapRe
 def is_bubble_candidate(module: MoodleModule) -> bool:
     """Whether a Moodle module is meaningful as a bubble on the map.
 
-    Excluded:
-    - `label` modules: they are only text on the course page, not something
-      a student does.
-    - modules Moodle marks as not visible to users: hidden by the teacher
-      (`visible == 0`) or unavailable to the user (`uservisible is False`).
-      A missing flag is treated as visible, since Moodle versions and
-      plugins vary in which flags they send.
+    A candidate is a module that is not a `label` (just text on the course
+    page), has a `url`, and does not have `noviewlink` set (nothing to open).
 
-    This is the single place to change the rule.
+    Deliberately NOT used: `visibleoncoursepage == 0` ("stealth" activities,
+    reachable by link but not listed) stays a candidate, and `candisplay` is
+    not consulted. Hiding is a separate concern, see `is_hidden`.
+
+    This is the single place to change the candidate rule.
     """
-    if module.modname == "label":
-        return False
-    return module.visible != 0 and module.uservisible is not False
+    return module.modname != "label" and bool(module.url) and not module.noviewlink
+
+
+def is_hidden(section: MoodleSection, module: MoodleModule) -> bool:
+    """Whether learners would not see this module.
+
+    True if the section is not visible, the module is not visible, or
+    `uservisible` is false. `uservisible` alone is not trusted: the service
+    token belongs to a privileged user who can see hidden content, so Moodle
+    reports `uservisible: true` for things learners cannot see. A hidden
+    section hides all its modules even when each module says `visible: 1`.
+    """
+    return not (section.visible and module.visible and module.uservisible)
 
 
 class CourseMapService:
@@ -84,33 +93,52 @@ class CourseMapService:
         if not await self._bubbles.delete(bubble_id):
             raise BubbleNotFoundError(bubble_id)
 
-    async def list_activities(self, course_map_id: uuid.UUID) -> list[ActivityRead]:
-        """The map's Moodle course activities, flattened in course order.
+    async def list_activities(
+        self, course_map_id: uuid.UUID, *, include_hidden: bool = False
+    ) -> list[ActivityRead]:
+        """The map's Moodle course activities, flattened in Moodle's order.
 
-        Each one says whether a bubble on this map already references it.
+        Order is section number, then position in the section's `modules`
+        list. Each activity says whether a bubble on this map already
+        references it (by module id) and whether learners would not see it.
+        Hidden activities are left out unless `include_hidden`.
         Raises the `Moodle*Error`s from the client unchanged.
         """
         course_map = await self._require_course_map(course_map_id)
         bubbles = await self._bubbles.list_by_course_map(course_map_id)
         sections = await self._moodle.get_course_contents(course_map.moodle_course_id)
 
-        bubble_by_activity: dict[int, uuid.UUID] = {}
+        # Keyed by module id only; section ids live in a different namespace
+        # and are never put in here.
+        bubble_by_module: dict[int, uuid.UUID] = {}
         for bubble in bubbles:
-            bubble_by_activity.setdefault(bubble.activity_id, bubble.id)
+            bubble_by_module.setdefault(bubble.activity_id, bubble.id)
 
-        return [
-            ActivityRead(
-                activity_id=module.id,
-                name=module.name,
-                modname=module.modname,
-                section_name=section.name,
-                placed=module.id in bubble_by_activity,
-                bubble_id=bubble_by_activity.get(module.id),
+        activities: list[ActivityRead] = []
+        for position, section in enumerate(sections):
+            section_number = (
+                section.section if section.section is not None else position
             )
-            for section in sections
-            for module in section.modules
-            if is_bubble_candidate(module)
-        ]
+            for module in section.modules:
+                if not is_bubble_candidate(module):
+                    continue
+                hidden = is_hidden(section, module)
+                if hidden and not include_hidden:
+                    continue
+                activities.append(
+                    ActivityRead(
+                        activity_id=module.id,
+                        name=module.name,
+                        modname=module.modname,
+                        url=module.url or "",
+                        section_name=section.name,
+                        section_number=section_number,
+                        hidden=hidden,
+                        placed=module.id in bubble_by_module,
+                        bubble_id=bubble_by_module.get(module.id),
+                    )
+                )
+        return activities
 
     async def _require_course_map(self, course_map_id: uuid.UUID) -> CourseMapRead:
         course_map = await self._course_maps.get_by_id(course_map_id)

@@ -15,8 +15,8 @@ from app.moodle.exceptions import (
     MoodleError,
     MoodleUnavailableError,
 )
-from app.moodle.schemas import MoodleModule, MoodleSection
 from tests.fakes import InMemoryMoodleClient
+from tests.moodle_fixtures import COURSE8_MODULE_ORDER, course8, parse, raw_course8
 
 
 @pytest.fixture
@@ -45,47 +45,99 @@ async def _create_map(client: httpx.AsyncClient, course_id: int) -> str:
     return str(r.json()["id"])
 
 
-async def test_returns_camel_case_activities_with_placement(
+async def test_course8_defaults_to_no_activities(
     client: httpx.AsyncClient, moodle: InMemoryMoodleClient
 ) -> None:
-    map_id = await _create_map(client, 9)
-    r = await client.post(
-        f"/course-maps/{map_id}/bubbles", json={"activityId": 101, "x": 0.1, "y": 0.2}
-    )
-    bubble_id = r.json()["id"]
-    moodle.courses[9] = [
-        MoodleSection(
-            id=1,
-            name="Unit 1",
-            modules=[
-                MoodleModule(id=101, name="Quiz 1", modname="quiz"),
-                MoodleModule(id=102, name="Reading", modname="resource"),
-                MoodleModule(id=103, name="Text", modname="label"),
-            ],
-        )
-    ]
+    """The real course has one hidden section: zero activities is correct."""
+    map_id = await _create_map(client, 8)
+    moodle.courses[8] = course8()
 
     r = await client.get(f"/course-maps/{map_id}/activities")
 
     assert r.status_code == 200
-    assert r.json() == [
-        {
-            "activityId": 101,
-            "name": "Quiz 1",
-            "modname": "quiz",
-            "sectionName": "Unit 1",
-            "placed": True,
-            "bubbleId": bubble_id,
-        },
-        {
-            "activityId": 102,
-            "name": "Reading",
-            "modname": "resource",
-            "sectionName": "Unit 1",
-            "placed": False,
-            "bubbleId": None,
-        },
-    ]
+    assert r.json() == []
+
+
+async def test_include_hidden_returns_camel_case_activities(
+    client: httpx.AsyncClient, moodle: InMemoryMoodleClient
+) -> None:
+    map_id = await _create_map(client, 8)
+    r = await client.post(
+        f"/course-maps/{map_id}/bubbles", json={"activityId": 25, "x": 0.1, "y": 0.2}
+    )
+    bubble_id = r.json()["id"]
+    moodle.courses[8] = course8()
+
+    r = await client.get(
+        f"/course-maps/{map_id}/activities", params={"includeHidden": "true"}
+    )
+
+    assert r.status_code == 200
+    body = r.json()
+    assert [a["activityId"] for a in body] == COURSE8_MODULE_ORDER
+    assert body[0] == {
+        "activityId": 28,
+        "name": "Preguntas para reconocer cuánto sabes [IN-1]",
+        "modname": "quiz",
+        "url": "https://academiaturismo.mincit.gov.co/mod/quiz/view.php?id=28",
+        "sectionName": "Recursos",
+        "sectionNumber": 1,
+        "hidden": True,
+        "placed": False,
+        "bubbleId": None,
+    }
+    quiz_25 = next(a for a in body if a["activityId"] == 25)
+    assert quiz_25["placed"] is True and quiz_25["bubbleId"] == bubble_id
+    assert quiz_25["name"].endswith("[OUT-2]")
+
+
+async def test_include_hidden_false_explicitly_excludes_hidden(
+    client: httpx.AsyncClient, moodle: InMemoryMoodleClient
+) -> None:
+    map_id = await _create_map(client, 8)
+    moodle.courses[8] = course8()
+
+    r = await client.get(
+        f"/course-maps/{map_id}/activities", params={"includeHidden": "false"}
+    )
+
+    assert r.json() == []
+
+
+async def test_visible_section_activities_are_not_hidden(
+    client: httpx.AsyncClient, moodle: InMemoryMoodleClient
+) -> None:
+    raw = raw_course8()
+    raw[1]["visible"] = 1
+    map_id = await _create_map(client, 8)
+    moodle.courses[8] = parse(raw)
+
+    r = await client.get(f"/course-maps/{map_id}/activities")
+
+    body = r.json()
+    assert [a["activityId"] for a in body] == COURSE8_MODULE_ORDER
+    assert not any(a["hidden"] for a in body)
+
+
+async def test_hostile_section_summary_never_reaches_the_response(
+    client: httpx.AsyncClient, moodle: InMemoryMoodleClient
+) -> None:
+    raw = raw_course8()
+    raw[1]["visible"] = 1
+    marker = "EVIL_MARKER"
+    raw[1]["summary"] = f"<script>alert('{marker}')</script>" + "x" * 200_000
+    raw[0]["summary"] = raw[1]["summary"]
+    map_id = await _create_map(client, 8)
+    moodle.courses[8] = parse(raw)
+
+    r = await client.get(
+        f"/course-maps/{map_id}/activities", params={"includeHidden": "true"}
+    )
+
+    assert r.status_code == 200
+    assert marker not in r.text and "<script>" not in r.text
+    assert "summary" not in r.text
+    assert len(r.content) < 10_000
 
 
 async def test_unknown_map_is_404(client: httpx.AsyncClient) -> None:

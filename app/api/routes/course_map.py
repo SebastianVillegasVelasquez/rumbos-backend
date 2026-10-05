@@ -1,7 +1,7 @@
 import uuid
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Response, status
+from fastapi import APIRouter, Depends, Query, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_session
@@ -49,9 +49,14 @@ async def get_course_map(
 
 @router.get("/{course_map_id}/activities", response_model=list[ActivityRead])
 async def list_activities(
-    course_map_id: uuid.UUID, service: ServiceDep
+    course_map_id: uuid.UUID,
+    service: ServiceDep,
+    # TODO(auth): there is no authentication yet, so anyone can list the names
+    # of hidden activities with `includeHidden=true`. When auth arrives, this
+    # parameter must require a teacher/editor role.
+    include_hidden: Annotated[bool, Query(alias="includeHidden")] = False,
 ) -> list[ActivityRead]:
-    return await service.list_activities(course_map_id)
+    return await service.list_activities(course_map_id, include_hidden=include_hidden)
 
 
 @router.post(
