@@ -10,7 +10,7 @@ from app.moodle.schemas import MoodleModule, MoodleSection
 from app.repositories.protocols import BubbleRepository, CourseMapRepository
 from app.schemas.activity import ActivityRead
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
-from app.schemas.course_map import CourseMapCreate, CourseMapDetail, CourseMapRead
+from app.schemas.course_map import CourseMapBase, CourseMapCreate, CourseMapRead
 
 
 def is_bubble_candidate(module: MoodleModule) -> bool:
@@ -63,12 +63,13 @@ class CourseMapService:
             raise CourseMapAlreadyExistsError(data.moodle_course_id)
         # The repository still enforces uniqueness, covering the race between
         # this check and the insert.
-        return await self._course_maps.create(data)
+        created = await self._course_maps.create(data)
+        return CourseMapRead(**created.model_dump(), bubbles=[])
 
-    async def get_course_map(self, course_map_id: uuid.UUID) -> CourseMapDetail:
+    async def get_course_map(self, course_map_id: uuid.UUID) -> CourseMapRead:
         course_map = await self._require_course_map(course_map_id)
         bubbles = await self._bubbles.list_by_course_map(course_map_id)
-        return CourseMapDetail(**course_map.model_dump(), bubbles=bubbles)
+        return CourseMapRead(**course_map.model_dump(), bubbles=bubbles)
 
     async def add_bubble(
         self, course_map_id: uuid.UUID, data: BubbleCreate
@@ -140,7 +141,7 @@ class CourseMapService:
                 )
         return activities
 
-    async def _require_course_map(self, course_map_id: uuid.UUID) -> CourseMapRead:
+    async def _require_course_map(self, course_map_id: uuid.UUID) -> CourseMapBase:
         course_map = await self._course_maps.get_by_id(course_map_id)
         if course_map is None:
             raise CourseMapNotFoundError(course_map_id)

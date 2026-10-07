@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING
 
+from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import BaseORM
@@ -11,6 +12,7 @@ if TYPE_CHECKING:
 class CourseMap(BaseORM):
     __tablename__ = "course_maps"
 
+    title: Mapped[str] = mapped_column(String(120))
     # One map per Moodle course for now (unique); the unique index also
     # serves lookups by this column.
     moodle_course_id: Mapped[int] = mapped_column(unique=True, index=True)

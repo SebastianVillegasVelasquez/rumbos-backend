@@ -46,7 +46,7 @@ def service(moodle: InMemoryMoodleClient) -> CourseMapService:
 
 async def _map_id(service: CourseMapService, course_id: int = COURSE_ID) -> uuid.UUID:
     created = await service.create_course_map(
-        CourseMapCreate(moodle_course_id=course_id, image_url="u")
+        CourseMapCreate(title="T", moodle_course_id=course_id, image_url="/u")
     )
     return created.id
 

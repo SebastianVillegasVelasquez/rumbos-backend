@@ -49,7 +49,9 @@ async def _make_map(
     maps: SqlAlchemyCourseMapRepository, course_id: int = 1
 ) -> uuid.UUID:
     return (
-        await maps.create(CourseMapCreate(moodle_course_id=course_id, image_url="u"))
+        await maps.create(
+            CourseMapCreate(title="T", moodle_course_id=course_id, image_url="/u")
+        )
     ).id
 
 
@@ -71,7 +73,9 @@ def _spy_commits(session: AsyncSession, monkeypatch: pytest.MonkeyPatch) -> list
 async def test_create_commits_and_is_visible_to_other_sessions(
     maps: SqlAlchemyCourseMapRepository, observer: AsyncSession
 ) -> None:
-    created = await maps.create(CourseMapCreate(moodle_course_id=9, image_url="img"))
+    created = await maps.create(
+        CourseMapCreate(title="T", moodle_course_id=9, image_url="/img")
+    )
     assert created.id.version == 7
     stored = await observer.get(CourseMap, created.id)
     assert stored is not None and stored.moodle_course_id == 9
@@ -82,9 +86,11 @@ async def test_duplicate_moodle_course_raises_and_rolls_back(
     session: AsyncSession,
     observer: AsyncSession,
 ) -> None:
-    await maps.create(CourseMapCreate(moodle_course_id=3, image_url="a"))
+    await maps.create(CourseMapCreate(title="T", moodle_course_id=3, image_url="/a"))
     with pytest.raises(CourseMapAlreadyExistsError):
-        await maps.create(CourseMapCreate(moodle_course_id=3, image_url="b"))
+        await maps.create(
+            CourseMapCreate(title="T", moodle_course_id=3, image_url="/b")
+        )
     # The session is usable again (rolled back) and nothing extra persisted.
     assert await _count(session, CourseMap) == 1
     assert await _count(observer, CourseMap) == 1

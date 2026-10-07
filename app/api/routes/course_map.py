@@ -13,7 +13,7 @@ from app.repositories.sqlalchemy.course_map_repository import (
 )
 from app.schemas.activity import ActivityRead
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
-from app.schemas.course_map import CourseMapCreate, CourseMapDetail, CourseMapRead
+from app.schemas.course_map import CourseMapCreate, CourseMapRead
 from app.services.course_map_service import CourseMapService
 
 router = APIRouter(prefix="/course-maps", tags=["course-maps"])
@@ -40,10 +40,10 @@ async def create_course_map(
     return await service.create_course_map(data)
 
 
-@router.get("/{course_map_id}", response_model=CourseMapDetail)
+@router.get("/{course_map_id}", response_model=CourseMapRead)
 async def get_course_map(
     course_map_id: uuid.UUID, service: ServiceDep
-) -> CourseMapDetail:
+) -> CourseMapRead:
     return await service.get_course_map(course_map_id)
 
 

@@ -15,17 +15,17 @@ import uuid
 from typing import Protocol
 
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
-from app.schemas.course_map import CourseMapCreate, CourseMapRead
+from app.schemas.course_map import CourseMapBase, CourseMapCreate
 
 
 class CourseMapRepository(Protocol):
-    async def get_by_id(self, course_map_id: uuid.UUID) -> CourseMapRead | None: ...
+    async def get_by_id(self, course_map_id: uuid.UUID) -> CourseMapBase | None: ...
 
     async def get_by_moodle_course_id(
         self, moodle_course_id: int
-    ) -> CourseMapRead | None: ...
+    ) -> CourseMapBase | None: ...
 
-    async def create(self, data: CourseMapCreate) -> CourseMapRead:
+    async def create(self, data: CourseMapCreate) -> CourseMapBase:
         """Raises `CourseMapAlreadyExistsError` if the Moodle course has a map."""
         ...
 

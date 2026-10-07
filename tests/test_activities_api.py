@@ -39,7 +39,12 @@ async def client(
 
 async def _create_map(client: httpx.AsyncClient, course_id: int) -> str:
     r = await client.post(
-        "/course-maps", json={"moodleCourseId": course_id, "imageUrl": "http://i/x"}
+        "/course-maps",
+        json={
+            "title": f"Map {course_id}",
+            "moodleCourseId": course_id,
+            "imageUrl": "http://i/x",
+        },
     )
     assert r.status_code == 201, r.text
     return str(r.json()["id"])

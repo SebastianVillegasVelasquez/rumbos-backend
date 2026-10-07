@@ -13,29 +13,29 @@ from app.exceptions import CourseMapAlreadyExistsError, CourseMapNotFoundError
 from app.moodle.exceptions import MoodleCourseNotFoundError
 from app.moodle.schemas import MoodleSection, MoodleSiteInfo
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
-from app.schemas.course_map import CourseMapCreate, CourseMapRead
+from app.schemas.course_map import CourseMapBase, CourseMapCreate
 
 
 class InMemoryCourseMapRepository:
     def __init__(self) -> None:
-        self.items: dict[uuid.UUID, CourseMapRead] = {}
+        self.items: dict[uuid.UUID, CourseMapBase] = {}
 
-    async def get_by_id(self, course_map_id: uuid.UUID) -> CourseMapRead | None:
+    async def get_by_id(self, course_map_id: uuid.UUID) -> CourseMapBase | None:
         return self.items.get(course_map_id)
 
     async def get_by_moodle_course_id(
         self, moodle_course_id: int
-    ) -> CourseMapRead | None:
+    ) -> CourseMapBase | None:
         return next(
             (m for m in self.items.values() if m.moodle_course_id == moodle_course_id),
             None,
         )
 
-    async def create(self, data: CourseMapCreate) -> CourseMapRead:
+    async def create(self, data: CourseMapCreate) -> CourseMapBase:
         if await self.get_by_moodle_course_id(data.moodle_course_id):
             raise CourseMapAlreadyExistsError(data.moodle_course_id)
         now = datetime.now(UTC)
-        item = CourseMapRead(
+        item = CourseMapBase(
             id=uuid7(), created_at=now, updated_at=now, **data.model_dump()
         )
         self.items[item.id] = item

@@ -8,7 +8,9 @@ from app.models import Bubble, CourseMap
 
 
 async def _map(session: AsyncSession, course_id: int = 1) -> CourseMap:
-    course_map = CourseMap(moodle_course_id=course_id, image_url="http://img/1.webp")
+    course_map = CourseMap(
+        title="Map", moodle_course_id=course_id, image_url="http://img/1.webp"
+    )
     session.add(course_map)
     await session.commit()
     return course_map
@@ -35,7 +37,7 @@ async def test_bubble_defaults_and_enum_roundtrip(session: AsyncSession) -> None
 
 async def test_moodle_course_id_is_unique(session: AsyncSession) -> None:
     await _map(session, 5)
-    session.add(CourseMap(moodle_course_id=5, image_url="x"))
+    session.add(CourseMap(title="Map", moodle_course_id=5, image_url="x"))
     with pytest.raises(IntegrityError):
         await session.commit()
 

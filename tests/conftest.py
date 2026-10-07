@@ -3,7 +3,7 @@ from collections.abc import AsyncIterator
 
 import pytest
 from sqlalchemy import text
-from sqlalchemy.engine import make_url
+from sqlalchemy.engine import URL, make_url
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -20,23 +20,39 @@ class Widget(BaseORM):
     name: Mapped[str] = mapped_column(default="")
 
 
-def _test_database_url() -> str:
-    """Same server as DATABASE_URL, but a dedicated `<name>_test` database.
+def _test_database_url(suffix: str = "test") -> str:
+    """Same server as DATABASE_URL, but a dedicated `<name>_<suffix>` database.
 
     Tests create and drop tables freely, so they must never share a database
     with migrated development data.
     """
     url = make_url(get_settings().database_url)
-    return url.set(database=f"{url.database}_test").render_as_string(
+    return url.set(database=f"{url.database}_{suffix}").render_as_string(
         hide_password=False
     )
 
 
-async def _ensure_test_database() -> None:
-    url = make_url(_test_database_url())
-    admin = create_async_engine(
+async def _admin_engine(url: URL) -> AsyncEngine:
+    return create_async_engine(
         url.set(database="postgres"), isolation_level="AUTOCOMMIT"
     )
+
+
+async def recreate_database(url_text: str) -> None:
+    """Drop and recreate an (empty) database, for tests that run migrations."""
+    url = make_url(url_text)
+    admin = await _admin_engine(url)
+    async with admin.connect() as conn:
+        await conn.execute(
+            text(f'DROP DATABASE IF EXISTS "{url.database}" WITH (FORCE)')
+        )
+        await conn.execute(text(f'CREATE DATABASE "{url.database}"'))
+    await admin.dispose()
+
+
+async def _ensure_test_database() -> None:
+    url = make_url(_test_database_url())
+    admin = await _admin_engine(url)
     async with admin.connect() as conn:
         exists = await conn.scalar(
             text("SELECT 1 FROM pg_database WHERE datname = :n"), {"n": url.database}

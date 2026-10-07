@@ -1,4 +1,5 @@
 from collections.abc import Awaitable, Callable
+from typing import Any
 
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
@@ -21,7 +22,7 @@ ExceptionHandler = Callable[[Request, Exception], Awaitable[JSONResponse]]
 def register_exception_handlers(app: FastAPI) -> None:
     """Map domain errors to HTTP responses."""
 
-    def _handler(code: int, detail: str) -> ExceptionHandler:
+    def _handler(code: int, detail: Any) -> ExceptionHandler:
         async def handle(request: Request, exc: Exception) -> JSONResponse:
             return JSONResponse(status_code=code, content={"detail": detail})
 
@@ -37,7 +38,11 @@ def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(
         CourseMapAlreadyExistsError,
         _handler(
-            status.HTTP_409_CONFLICT, "A course map already exists for this course"
+            status.HTTP_409_CONFLICT,
+            {
+                "code": "map_already_exists_for_course",
+                "message": "A course map already exists for this course",
+            },
         ),
     )
 

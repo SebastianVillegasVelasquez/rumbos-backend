@@ -22,7 +22,12 @@ async def client(engine: AsyncEngine) -> AsyncIterator[httpx.AsyncClient]:
 
 async def _create_map(client: httpx.AsyncClient, course_id: int = 1) -> dict[str, Any]:
     r = await client.post(
-        "/course-maps", json={"moodleCourseId": course_id, "imageUrl": "http://i/x"}
+        "/course-maps",
+        json={
+            "title": f"Map {course_id}",
+            "moodleCourseId": course_id,
+            "imageUrl": "http://i/x",
+        },
     )
     assert r.status_code == 201, r.text
     body: dict[str, Any] = r.json()
@@ -50,9 +55,41 @@ async def test_create_course_map_conflict_for_same_course(
 ) -> None:
     await _create_map(client, 5)
     r = await client.post(
-        "/course-maps", json={"moodleCourseId": 5, "imageUrl": "other"}
+        "/course-maps",
+        json={"title": "Other", "moodleCourseId": 5, "imageUrl": "/other"},
     )
     assert r.status_code == 409
+    assert r.json()["detail"]["code"] == "map_already_exists_for_course"
+
+
+async def test_create_course_map_returns_title_and_empty_bubbles(
+    client: httpx.AsyncClient,
+) -> None:
+    r = await client.post(
+        "/course-maps",
+        json={"title": "  Ruta del café ", "moodleCourseId": 3, "imageUrl": "/m.png"},
+    )
+    assert r.status_code == 201
+    body = r.json()
+    assert body["title"] == "Ruta del café"
+    assert body["bubbles"] == []
+    assert body["imageUrl"] == "/m.png"
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"moodleCourseId": 1, "imageUrl": "/a"},
+        {"title": "", "moodleCourseId": 1, "imageUrl": "/a"},
+        {"title": "x" * 121, "moodleCourseId": 1, "imageUrl": "/a"},
+        {"title": "T", "moodleCourseId": 1, "imageUrl": "javascript:alert(1)"},
+        {"title": "T", "moodleCourseId": 1, "imageUrl": "data:text/html,x"},
+    ],
+)
+async def test_create_course_map_rejects_invalid_payloads(
+    client: httpx.AsyncClient, payload: dict[str, Any]
+) -> None:
+    assert (await client.post("/course-maps", json=payload)).status_code == 422
 
 
 async def test_create_course_map_validation_error(client: httpx.AsyncClient) -> None:
@@ -156,6 +193,8 @@ async def test_responses_are_camel_case(client: httpx.AsyncClient) -> None:
     created = await _create_map(client, 7)
     assert set(created) == {
         "id",
+        "title",
+        "bubbles",
         "moodleCourseId",
         "imageUrl",
         "createdAt",
@@ -181,7 +220,8 @@ async def test_snake_case_request_bodies_are_still_accepted(
     client: httpx.AsyncClient,
 ) -> None:
     r = await client.post(
-        "/course-maps", json={"moodle_course_id": 9, "image_url": "http://i/y"}
+        "/course-maps",
+        json={"title": "T", "moodle_course_id": 9, "image_url": "http://i/y"},
     )
     assert r.status_code == 201
     assert r.json()["moodleCourseId"] == 9  # but the response is always camelCase

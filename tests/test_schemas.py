@@ -3,6 +3,7 @@ from pydantic import ValidationError
 
 from app.enums import BubbleIcon, BubbleStatus
 from app.schemas.bubble import BubbleCreate, BubbleUpdate
+from app.schemas.course_map import CourseMapCreate, CourseMapUpdate
 
 
 def test_bubble_create_defaults() -> None:
@@ -72,3 +73,64 @@ def test_schemas_accept_camel_and_snake_and_serialize_camel() -> None:
         "icon",
         "status",
     }
+
+
+@pytest.mark.parametrize(
+    "image_url",
+    [
+        "https://cdn.example.com/maps/a.webp",
+        "http://localhost:8000/a.png",
+        "/static/maps/a.webp",
+        "/",
+    ],
+)
+def test_image_url_accepts_http_urls_and_site_paths(image_url: str) -> None:
+    created = CourseMapCreate(title="T", moodle_course_id=1, image_url=image_url)
+    assert created.image_url == image_url
+
+
+@pytest.mark.parametrize(
+    "image_url",
+    [
+        "javascript:alert(1)",
+        "data:image/png;base64,AAAA",
+        "file:///etc/passwd",
+        "ftp://host/a.png",
+        "//evil.example/a.png",
+        r"/\evil.example/a.png",
+        "relative/path.png",
+        "http://",
+        "https:///a.png",
+        "https://host/a b.png",
+        "",
+        "/" + "a" * 2048,
+    ],
+)
+def test_image_url_rejects_everything_else(image_url: str) -> None:
+    with pytest.raises(ValidationError):
+        CourseMapCreate(title="T", moodle_course_id=1, image_url=image_url)
+
+
+def test_image_url_accepts_exactly_the_max_length() -> None:
+    url = "/" + "a" * 2047
+    assert CourseMapCreate(title="T", moodle_course_id=1, image_url=url)
+
+
+def test_title_is_trimmed_and_bounded() -> None:
+    assert (
+        CourseMapCreate(title="  Ruta  ", moodle_course_id=1, image_url="/a").title
+        == "Ruta"
+    )
+    for bad in ["", "   ", "x" * 121]:
+        with pytest.raises(ValidationError):
+            CourseMapCreate(title=bad, moodle_course_id=1, image_url="/a")
+    assert CourseMapCreate(title="x" * 120, moodle_course_id=1, image_url="/a")
+
+
+def test_course_map_update_requires_at_least_one_non_null_field() -> None:
+    assert CourseMapUpdate.model_validate({"title": "New"}).model_fields_set == {
+        "title"
+    }
+    for bad in [{}, {"title": None}, {"imageUrl": None}, {"imageUrl": "javascript:1"}]:
+        with pytest.raises(ValidationError):
+            CourseMapUpdate.model_validate(bad)
