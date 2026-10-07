@@ -14,6 +14,23 @@ class BubbleStatus(StrEnum):
     COMPLETE = "complete"
 
 
+class MoodleStatus(StrEnum):
+    """How fresh the Moodle data behind a resolved map is."""
+
+    LIVE = "live"  # a live call, or a cache hit inside the TTL
+    CACHED = "cached"  # stale copy served because Moodle failed
+    UNAVAILABLE = "unavailable"  # nothing to serve
+
+
+class Availability(StrEnum):
+    """What a bubble's Moodle activity looks like to a learner."""
+
+    AVAILABLE = "available"
+    HIDDEN = "hidden"  # exists but learners cannot see it
+    MISSING = "missing"  # gone from the course, or not a valid bubble target
+    UNKNOWN = "unknown"  # Moodle could not be asked
+
+
 class BubbleIcon(StrEnum):
     QUESTION = "question"
     CHEST = "chest"

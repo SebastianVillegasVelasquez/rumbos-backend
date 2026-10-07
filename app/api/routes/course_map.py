@@ -5,8 +5,8 @@ from fastapi import APIRouter, Depends, Query, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_session
-from app.moodle.dependencies import get_moodle_client
-from app.moodle.protocols import MoodleClient
+from app.moodle.dependencies import get_contents_provider, get_moodle_client
+from app.moodle.protocols import CourseContentsProvider, MoodleClient
 from app.repositories.sqlalchemy.bubble_repository import SqlAlchemyBubbleRepository
 from app.repositories.sqlalchemy.course_map_repository import (
     SqlAlchemyCourseMapRepository,
@@ -19,7 +19,9 @@ from app.schemas.course_map import (
     CourseMapRead,
     CourseMapUpdate,
 )
+from app.schemas.resolved import ResolvedMap
 from app.services.course_map_service import CourseMapService
+from app.services.resolution_service import MapResolutionService
 
 router = APIRouter(prefix="/course-maps", tags=["course-maps"])
 
@@ -35,7 +37,19 @@ def get_course_map_service(
     )
 
 
+def get_resolution_service(
+    session: Annotated[AsyncSession, Depends(get_session)],
+    contents: Annotated[CourseContentsProvider, Depends(get_contents_provider)],
+) -> MapResolutionService:
+    return MapResolutionService(
+        SqlAlchemyCourseMapRepository(session),
+        SqlAlchemyBubbleRepository(session),
+        contents,
+    )
+
+
 ServiceDep = Annotated[CourseMapService, Depends(get_course_map_service)]
+ResolutionServiceDep = Annotated[MapResolutionService, Depends(get_resolution_service)]
 
 
 @router.get("", response_model=CourseMapList)
@@ -83,11 +97,23 @@ async def list_activities(
     course_map_id: uuid.UUID,
     service: ServiceDep,
     # TODO(auth): there is no authentication yet, so anyone can list the names
-    # of hidden activities with `includeHidden=true`. When auth arrives, this
-    # parameter must require a teacher/editor role.
+    # of hidden activities with `includeHidden=true` (here and on `/resolved`).
+    # When auth arrives, this parameter must require a teacher/editor role.
     include_hidden: Annotated[bool, Query(alias="includeHidden")] = False,
 ) -> list[ActivityRead]:
     return await service.list_activities(course_map_id, include_hidden=include_hidden)
+
+
+@router.get("/{course_map_id}/resolved", response_model=ResolvedMap)
+async def resolve_course_map(
+    course_map_id: uuid.UUID,
+    service: ResolutionServiceDep,
+    # TODO(auth): same as `/activities`: until there is authentication anyone
+    # can read the names of hidden activities with `includeHidden=true`. It
+    # must require a teacher/editor role once roles exist.
+    include_hidden: Annotated[bool, Query(alias="includeHidden")] = False,
+) -> ResolvedMap:
+    return await service.resolve(course_map_id, include_hidden=include_hidden)
 
 
 @router.post(

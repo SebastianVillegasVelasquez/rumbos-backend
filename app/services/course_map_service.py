@@ -46,6 +46,11 @@ def is_hidden(section: MoodleSection, module: MoodleModule) -> bool:
     return not (section.visible and module.visible and module.uservisible)
 
 
+def section_number(section: MoodleSection, position: int) -> int:
+    """The section's number in the course; its list position if Moodle omits it."""
+    return section.section if section.section is not None else position
+
+
 class CourseMapService:
     """Orchestrates course maps and bubbles.
 
@@ -151,9 +156,7 @@ class CourseMapService:
 
         activities: list[ActivityRead] = []
         for position, section in enumerate(sections):
-            section_number = (
-                section.section if section.section is not None else position
-            )
+            number = section_number(section, position)
             for module in section.modules:
                 if not is_bubble_candidate(module):
                     continue
@@ -167,7 +170,7 @@ class CourseMapService:
                         modname=module.modname,
                         url=module.url or "",
                         section_name=section.name,
-                        section_number=section_number,
+                        section_number=number,
                         hidden=hidden,
                         placed=module.id in bubble_by_module,
                         bubble_id=bubble_by_module.get(module.id),
