@@ -4,6 +4,7 @@ No inheritance from the Protocols: they satisfy them structurally, which
 mypy checks wherever a fake is passed to `CourseMapService`.
 """
 
+import asyncio
 import uuid
 from datetime import UTC, datetime
 
@@ -155,6 +156,10 @@ class InMemoryMoodleClient:
     def __init__(self) -> None:
         self.courses: dict[int, list[MoodleSection]] = {}
         self.error: Exception | None = None
+        self.calls = 0  # get_course_contents calls that reached this fake
+        # When set, get_course_contents waits for it: lets a test hold a call
+        # open while other callers pile up.
+        self.gate: asyncio.Event | None = None
 
     async def get_site_info(self) -> MoodleSiteInfo:
         if self.error:
@@ -162,8 +167,24 @@ class InMemoryMoodleClient:
         return MoodleSiteInfo(sitename="Fake Moodle")
 
     async def get_course_contents(self, course_id: int) -> list[MoodleSection]:
+        self.calls += 1
+        if self.gate is not None:
+            await self.gate.wait()
         if self.error:
             raise self.error
         if course_id not in self.courses:
             raise MoodleCourseNotFoundError("Moodle course not found")
         return self.courses[course_id]
+
+
+class FakeClock:
+    """A manually advanced monotonic clock, for cache tests."""
+
+    def __init__(self, start: float = 1000.0) -> None:
+        self.now = start
+
+    def __call__(self) -> float:
+        return self.now
+
+    def advance(self, seconds: float) -> None:
+        self.now += seconds

@@ -10,12 +10,13 @@ import pytest
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 from app.main import app
+from tests.fakes import InMemoryMoodleClient
 
 
 @pytest.fixture
 async def client(engine: AsyncEngine) -> AsyncIterator[httpx.AsyncClient]:
     app.state.db_engine = engine  # the test database, instead of the lifespan engine
-    app.state.moodle_http = httpx.AsyncClient()  # never called by these tests
+    app.state.moodle_client = InMemoryMoodleClient()  # never called by these tests
     transport = httpx.ASGITransport(app=app)
     async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
         yield c

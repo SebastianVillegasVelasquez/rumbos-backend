@@ -1,19 +1,18 @@
 from fastapi import Request
 
-from app.core.config import get_settings
-from app.moodle.client import HttpMoodleClient
-from app.moodle.protocols import MoodleClient
+from app.moodle.protocols import CourseContentsProvider, MoodleClient
 
 
 def get_moodle_client(request: Request) -> MoodleClient:
-    """A Moodle client over the app-wide `httpx.AsyncClient`.
+    """The app-wide Moodle client: HTTP client behind the contents cache.
 
-    The HTTP client is created and closed by the lifespan; this only wires
-    it with the Moodle settings. Cheap to build, so one per request.
+    Built once by the lifespan (the cache has to outlive requests).
     """
-    settings = get_settings()
-    return HttpMoodleClient(
-        request.app.state.moodle_http,
-        settings.moodle_base_url,
-        settings.moodle_service_token,
-    )
+    client: MoodleClient = request.app.state.moodle_client
+    return client
+
+
+def get_contents_provider(request: Request) -> CourseContentsProvider:
+    """The same app-wide client, seen through the freshness-aware Protocol."""
+    provider: CourseContentsProvider = request.app.state.moodle_client
+    return provider

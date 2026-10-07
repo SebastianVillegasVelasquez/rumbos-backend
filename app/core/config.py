@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from pydantic import SecretStr
+from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -15,6 +15,11 @@ class Settings(BaseSettings):
     # Seconds. Moodle calls fail fast: there are no automatic retries.
     moodle_connect_timeout: float = 5.0
     moodle_read_timeout: float = 15.0
+    # In-process cache of Moodle course contents (see `app.moodle.cache`).
+    # A cached copy is served as-is for this long...
+    moodle_contents_ttl_seconds: float = Field(default=60.0, ge=0)
+    # ...and, when Moodle fails, a copy up to this old is served as "stale".
+    moodle_stale_max_seconds: float = Field(default=3600.0, ge=0)
 
 
 @lru_cache

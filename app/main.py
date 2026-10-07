@@ -8,6 +8,8 @@ from app.api.errors import register_exception_handlers
 from app.api.routes import course_map
 from app.core.config import get_settings
 from app.core.database import create_engine
+from app.moodle.cache import CachedMoodleClient
+from app.moodle.client import HttpMoodleClient
 
 
 @asynccontextmanager
@@ -24,6 +26,14 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     )
     moodle_http = httpx.AsyncClient(timeout=timeout)
     app.state.moodle_http = moodle_http
+    # One cache for the whole process, shared by every request.
+    app.state.moodle_client = CachedMoodleClient(
+        HttpMoodleClient(
+            moodle_http, settings.moodle_base_url, settings.moodle_service_token
+        ),
+        ttl_seconds=settings.moodle_contents_ttl_seconds,
+        stale_max_seconds=settings.moodle_stale_max_seconds,
+    )
     try:
         yield
     finally:
