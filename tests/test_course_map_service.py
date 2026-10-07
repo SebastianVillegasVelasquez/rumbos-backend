@@ -60,6 +60,25 @@ async def test_create_course_map_rejects_second_map_for_same_course(
         await _map_id(service, 7)
 
 
+async def test_list_course_maps_wraps_the_page_and_counts_bubbles(
+    service: CourseMapService,
+) -> None:
+    first, second = await _map_id(service, 1), await _map_id(service, 2)
+    await service.add_bubble(first, BubbleCreate(activity_id=1, x=0, y=0))
+    await service.add_bubble(first, BubbleCreate(activity_id=2, x=0, y=0))
+
+    page = await service.list_course_maps(
+        moodle_course_id=None, q=None, limit=1, offset=0
+    )
+
+    assert (page.total, page.limit, page.offset) == (2, 1, 0)
+    assert [m.id for m in page.items] == [second]
+    everything = await service.list_course_maps(
+        moodle_course_id=1, q="  t ", limit=24, offset=0
+    )
+    assert [(m.id, m.bubble_count) for m in everything.items] == [(first, 2)]
+
+
 async def test_get_course_map_includes_its_bubbles_only(
     service: CourseMapService,
 ) -> None:

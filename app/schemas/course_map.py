@@ -80,6 +80,19 @@ class CourseMapBase(ApiModel):
     updated_at: datetime
 
 
+class CourseMapSummary(CourseMapBase):
+    """A map as listed: counts its bubbles instead of carrying them."""
+
+    bubble_count: int
+
+
+class CourseMapList(ApiModel):
+    items: list[CourseMapSummary]
+    total: int  # matches of the filters, ignoring limit/offset
+    limit: int
+    offset: int
+
+
 class CourseMapRead(CourseMapBase):
     """A course map together with its bubbles."""
 

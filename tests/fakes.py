@@ -13,12 +13,13 @@ from app.exceptions import CourseMapAlreadyExistsError, CourseMapNotFoundError
 from app.moodle.exceptions import MoodleCourseNotFoundError
 from app.moodle.schemas import MoodleSection, MoodleSiteInfo
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
-from app.schemas.course_map import CourseMapBase, CourseMapCreate
+from app.schemas.course_map import CourseMapBase, CourseMapCreate, CourseMapSummary
 
 
 class InMemoryCourseMapRepository:
     def __init__(self) -> None:
         self.items: dict[uuid.UUID, CourseMapBase] = {}
+        self.bubble_counts: dict[uuid.UUID, int] = {}
 
     async def get_by_id(self, course_map_id: uuid.UUID) -> CourseMapBase | None:
         return self.items.get(course_map_id)
@@ -30,6 +31,28 @@ class InMemoryCourseMapRepository:
             (m for m in self.items.values() if m.moodle_course_id == moodle_course_id),
             None,
         )
+
+    async def list(
+        self,
+        moodle_course_id: int | None,
+        q: str | None,
+        limit: int,
+        offset: int,
+    ) -> tuple[list[CourseMapSummary], int]:
+        matches = [
+            m
+            for m in self.items.values()
+            if (moodle_course_id is None or m.moodle_course_id == moodle_course_id)
+            and (not q or q.lower() in m.title.lower())
+        ]
+        matches.sort(key=lambda m: (m.updated_at, m.id), reverse=True)
+        page = [
+            CourseMapSummary(
+                **m.model_dump(), bubble_count=self.bubble_counts.get(m.id, 0)
+            )
+            for m in matches[offset : offset + limit]
+        ]
+        return page, len(matches)
 
     async def create(self, data: CourseMapCreate) -> CourseMapBase:
         if await self.get_by_moodle_course_id(data.moodle_course_id):
@@ -61,6 +84,8 @@ class InMemoryBubbleRepository:
         if course_map_id not in self._course_maps.items:
             raise CourseMapNotFoundError(course_map_id)
         self.writes += 1
+        counts = self._course_maps.bubble_counts
+        counts[course_map_id] = counts.get(course_map_id, 0) + 1
         now = datetime.now(UTC)
         item = BubbleRead(
             id=uuid7(),
@@ -88,7 +113,10 @@ class InMemoryBubbleRepository:
 
     async def delete(self, bubble_id: uuid.UUID) -> bool:
         self.writes += 1
-        return self.items.pop(bubble_id, None) is not None
+        bubble = self.items.pop(bubble_id, None)
+        if bubble is not None:
+            self._course_maps.bubble_counts[bubble.course_map_id] -= 1
+        return bubble is not None
 
 
 class InMemoryMoodleClient:

@@ -236,3 +236,63 @@ async def test_camel_case_request_body_is_applied(client: httpx.AsyncClient) -> 
     assert r.status_code == 201
     assert r.json()["activityId"] == 77
     assert r.json()["courseMapId"] == created["id"]
+
+
+async def test_list_course_maps_contract(client: httpx.AsyncClient) -> None:
+    first = await _create_map(client, 1)
+    second = await _create_map(client, 2)
+    await _add_bubble(client, first["id"], activityId=1)
+    await _add_bubble(client, first["id"], activityId=2)
+
+    r = await client.get("/course-maps")
+
+    assert r.status_code == 200
+    body = r.json()
+    assert set(body) == {"items", "total", "limit", "offset"}
+    assert (body["total"], body["limit"], body["offset"]) == (2, 24, 0)
+    # Most recently updated first, and summaries never carry bubbles.
+    assert [m["id"] for m in body["items"]] == [second["id"], first["id"]]
+    assert set(body["items"][0]) == {
+        "id",
+        "title",
+        "moodleCourseId",
+        "imageUrl",
+        "bubbleCount",
+        "createdAt",
+        "updatedAt",
+    }
+    assert [m["bubbleCount"] for m in body["items"]] == [0, 2]
+
+
+async def test_list_course_maps_filters_and_pages(client: httpx.AsyncClient) -> None:
+    for course_id, title in [(1, "Ruta Café"), (2, "Ruta Mar"), (3, "Otro")]:
+        r = await client.post(
+            "/course-maps",
+            json={"title": title, "moodleCourseId": course_id, "imageUrl": "/a"},
+        )
+        assert r.status_code == 201
+
+    by_q = (await client.get("/course-maps", params={"q": "ruta"})).json()
+    assert by_q["total"] == 2
+
+    by_course = (await client.get("/course-maps", params={"moodleCourseId": 3})).json()
+    assert [m["title"] for m in by_course["items"]] == ["Otro"]
+
+    paged = (await client.get("/course-maps", params={"limit": 1, "offset": 1})).json()
+    assert paged["total"] == 3 and len(paged["items"]) == 1
+    assert (paged["limit"], paged["offset"]) == (1, 1)
+
+
+@pytest.mark.parametrize(
+    "params",
+    [{"limit": 0}, {"limit": 101}, {"offset": -1}, {"moodleCourseId": "abc"}],
+)
+async def test_list_course_maps_rejects_bad_paging(
+    client: httpx.AsyncClient, params: dict[str, Any]
+) -> None:
+    assert (await client.get("/course-maps", params=params)).status_code == 422
+
+
+async def test_list_course_maps_accepts_max_limit(client: httpx.AsyncClient) -> None:
+    r = await client.get("/course-maps", params={"limit": 100})
+    assert r.status_code == 200 and r.json()["limit"] == 100

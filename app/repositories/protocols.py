@@ -15,7 +15,7 @@ import uuid
 from typing import Protocol
 
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
-from app.schemas.course_map import CourseMapBase, CourseMapCreate
+from app.schemas.course_map import CourseMapBase, CourseMapCreate, CourseMapSummary
 
 
 class CourseMapRepository(Protocol):
@@ -24,6 +24,19 @@ class CourseMapRepository(Protocol):
     async def get_by_moodle_course_id(
         self, moodle_course_id: int
     ) -> CourseMapBase | None: ...
+
+    async def list(
+        self,
+        moodle_course_id: int | None,
+        q: str | None,
+        limit: int,
+        offset: int,
+    ) -> tuple[list[CourseMapSummary], int]:
+        """Maps ordered by `updated_at` desc, and the total before paging.
+
+        `q` is a case-insensitive substring match on the title.
+        """
+        ...
 
     async def create(self, data: CourseMapCreate) -> CourseMapBase:
         """Raises `CourseMapAlreadyExistsError` if the Moodle course has a map."""

@@ -5,9 +5,10 @@ A second, independent session is used to observe what was really committed.
 
 import uuid
 from collections.abc import AsyncIterator
+from datetime import UTC, datetime, timedelta
 
 import pytest
-from sqlalchemy import func, select, text
+from sqlalchemy import event, func, select, text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 
@@ -118,6 +119,105 @@ async def test_delete_map_cascades_and_commits(
     assert await _count(observer, CourseMap) == 0
     assert await _count(observer, Bubble) == 0
     assert await maps.delete(map_id) is False
+
+
+async def _seed_maps(
+    session: AsyncSession, titles: list[tuple[int, str]]
+) -> dict[int, uuid.UUID]:
+    """Maps with strictly increasing `updated_at` (first = oldest)."""
+    ids: dict[int, uuid.UUID] = {}
+    base = datetime(2026, 1, 1, tzinfo=UTC)
+    for n, (course_id, title) in enumerate(titles):
+        course_map = CourseMap(
+            title=title,
+            moodle_course_id=course_id,
+            image_url="/x",
+            updated_at=base + timedelta(minutes=n),
+        )
+        session.add(course_map)
+        await session.flush()
+        ids[course_id] = course_map.id
+    await session.commit()
+    return ids
+
+
+async def test_list_orders_by_updated_at_desc_and_paginates(
+    maps: SqlAlchemyCourseMapRepository, session: AsyncSession
+) -> None:
+    await _seed_maps(session, [(c, f"Map {c}") for c in range(1, 6)])
+
+    page1, total = await maps.list(None, None, limit=2, offset=0)
+    page2, _ = await maps.list(None, None, limit=2, offset=2)
+    page3, _ = await maps.list(None, None, limit=2, offset=4)
+    beyond, beyond_total = await maps.list(None, None, limit=2, offset=10)
+
+    assert total == 5
+    assert [m.moodle_course_id for m in page1] == [5, 4]
+    assert [m.moodle_course_id for m in page2] == [3, 2]
+    assert [m.moodle_course_id for m in page3] == [1]
+    assert beyond == [] and beyond_total == 5
+
+
+async def test_list_filters_by_course_and_title_with_total(
+    maps: SqlAlchemyCourseMapRepository, session: AsyncSession
+) -> None:
+    await _seed_maps(
+        session,
+        [(1, "Ruta del Café"), (2, "Ruta del mar"), (3, "Otra cosa"), (4, "100%_real")],
+    )
+
+    by_course, total = await maps.list(2, None, 24, 0)
+    assert [m.moodle_course_id for m in by_course] == [2] and total == 1
+
+    by_title, total = await maps.list(None, "RUTA", 24, 0)  # case-insensitive
+    assert [m.moodle_course_id for m in by_title] == [2, 1] and total == 2
+
+    both, total = await maps.list(1, "ruta", 24, 0)
+    assert [m.moodle_course_id for m in both] == [1] and total == 1
+
+    none, total = await maps.list(3, "ruta", 24, 0)
+    assert none == [] and total == 0
+
+    # LIKE wildcards in the search text are literal.
+    wild, total = await maps.list(None, "%", 24, 0)
+    assert [m.moodle_course_id for m in wild] == [4] and total == 1
+    wild, total = await maps.list(None, "_", 24, 0)
+    assert [m.moodle_course_id for m in wild] == [4] and total == 1
+
+
+async def test_list_total_ignores_limit_and_offset(
+    maps: SqlAlchemyCourseMapRepository, session: AsyncSession
+) -> None:
+    await _seed_maps(session, [(c, f"Mapa {c}") for c in range(1, 8)])
+    page, total = await maps.list(None, "mapa", limit=3, offset=3)
+    assert len(page) == 3 and total == 7
+
+
+async def test_list_counts_bubbles_in_one_query(
+    maps: SqlAlchemyCourseMapRepository,
+    bubbles: SqlAlchemyBubbleRepository,
+    session: AsyncSession,
+    engine: AsyncEngine,
+) -> None:
+    ids = await _seed_maps(session, [(1, "A"), (2, "B"), (3, "C")])
+    for activity in (1, 2, 3):
+        await bubbles.create(ids[1], BubbleCreate(activity_id=activity, x=0, y=0))
+    await bubbles.create(ids[2], BubbleCreate(activity_id=1, x=0, y=0))
+
+    statements: list[str] = []
+
+    def record(conn: object, cursor: object, statement: str, *args: object) -> None:
+        statements.append(statement)
+
+    event.listen(engine.sync_engine, "before_cursor_execute", record)
+    try:
+        items, _ = await maps.list(None, None, 24, 0)
+    finally:
+        event.remove(engine.sync_engine, "before_cursor_execute", record)
+
+    assert {m.moodle_course_id: m.bubble_count for m in items} == {1: 3, 2: 1, 3: 0}
+    # The page and the total: two statements however many maps there are.
+    assert len(statements) == 2
 
 
 # --- bubbles ---------------------------------------------------------------

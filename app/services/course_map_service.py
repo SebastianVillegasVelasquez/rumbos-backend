@@ -10,7 +10,12 @@ from app.moodle.schemas import MoodleModule, MoodleSection
 from app.repositories.protocols import BubbleRepository, CourseMapRepository
 from app.schemas.activity import ActivityRead
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
-from app.schemas.course_map import CourseMapBase, CourseMapCreate, CourseMapRead
+from app.schemas.course_map import (
+    CourseMapBase,
+    CourseMapCreate,
+    CourseMapList,
+    CourseMapRead,
+)
 
 
 def is_bubble_candidate(module: MoodleModule) -> bool:
@@ -65,6 +70,19 @@ class CourseMapService:
         # this check and the insert.
         created = await self._course_maps.create(data)
         return CourseMapRead(**created.model_dump(), bubbles=[])
+
+    async def list_course_maps(
+        self,
+        *,
+        moodle_course_id: int | None,
+        q: str | None,
+        limit: int,
+        offset: int,
+    ) -> CourseMapList:
+        items, total = await self._course_maps.list(
+            moodle_course_id, (q or "").strip() or None, limit, offset
+        )
+        return CourseMapList(items=items, total=total, limit=limit, offset=offset)
 
     async def get_course_map(self, course_map_id: uuid.UUID) -> CourseMapRead:
         course_map = await self._require_course_map(course_map_id)

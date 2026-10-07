@@ -13,7 +13,7 @@ from app.repositories.sqlalchemy.course_map_repository import (
 )
 from app.schemas.activity import ActivityRead
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
-from app.schemas.course_map import CourseMapCreate, CourseMapRead
+from app.schemas.course_map import CourseMapCreate, CourseMapList, CourseMapRead
 from app.services.course_map_service import CourseMapService
 
 router = APIRouter(prefix="/course-maps", tags=["course-maps"])
@@ -31,6 +31,19 @@ def get_course_map_service(
 
 
 ServiceDep = Annotated[CourseMapService, Depends(get_course_map_service)]
+
+
+@router.get("", response_model=CourseMapList)
+async def list_course_maps(
+    service: ServiceDep,
+    moodle_course_id: Annotated[int | None, Query(alias="moodleCourseId")] = None,
+    q: Annotated[str | None, Query(max_length=120)] = None,
+    limit: Annotated[int, Query(ge=1, le=100)] = 24,
+    offset: Annotated[int, Query(ge=0)] = 0,
+) -> CourseMapList:
+    return await service.list_course_maps(
+        moodle_course_id=moodle_course_id, q=q, limit=limit, offset=offset
+    )
 
 
 @router.post("", response_model=CourseMapRead, status_code=status.HTTP_201_CREATED)
