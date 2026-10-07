@@ -13,7 +13,12 @@ from app.repositories.sqlalchemy.course_map_repository import (
 )
 from app.schemas.activity import ActivityRead
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
-from app.schemas.course_map import CourseMapCreate, CourseMapList, CourseMapRead
+from app.schemas.course_map import (
+    CourseMapCreate,
+    CourseMapList,
+    CourseMapRead,
+    CourseMapUpdate,
+)
 from app.services.course_map_service import CourseMapService
 
 router = APIRouter(prefix="/course-maps", tags=["course-maps"])
@@ -58,6 +63,19 @@ async def get_course_map(
     course_map_id: uuid.UUID, service: ServiceDep
 ) -> CourseMapRead:
     return await service.get_course_map(course_map_id)
+
+
+@router.patch("/{course_map_id}", response_model=CourseMapRead)
+async def update_course_map(
+    course_map_id: uuid.UUID, data: CourseMapUpdate, service: ServiceDep
+) -> CourseMapRead:
+    return await service.update_course_map(course_map_id, data)
+
+
+@router.delete("/{course_map_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_course_map(course_map_id: uuid.UUID, service: ServiceDep) -> Response:
+    await service.delete_course_map(course_map_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.get("/{course_map_id}/activities", response_model=list[ActivityRead])

@@ -11,7 +11,7 @@ from app.exceptions import (
     CourseMapNotFoundError,
 )
 from app.schemas.bubble import BubbleCreate, BubbleUpdate
-from app.schemas.course_map import CourseMapCreate
+from app.schemas.course_map import CourseMapCreate, CourseMapUpdate
 from app.services.course_map_service import CourseMapService
 from tests.fakes import (
     InMemoryBubbleRepository,
@@ -77,6 +77,32 @@ async def test_list_course_maps_wraps_the_page_and_counts_bubbles(
         moodle_course_id=1, q="  t ", limit=24, offset=0
     )
     assert [(m.id, m.bubble_count) for m in everything.items] == [(first, 2)]
+
+
+async def test_update_course_map_returns_map_with_bubbles(
+    service: CourseMapService,
+) -> None:
+    map_id = await _map_id(service)
+    await service.add_bubble(map_id, BubbleCreate(activity_id=1, x=0, y=0))
+
+    updated = await service.update_course_map(map_id, CourseMapUpdate(title="Renamed"))
+
+    assert updated.title == "Renamed" and updated.image_url == "/u"
+    assert len(updated.bubbles) == 1
+
+
+async def test_update_and_delete_missing_map_raise(service: CourseMapService) -> None:
+    with pytest.raises(CourseMapNotFoundError):
+        await service.update_course_map(uuid.uuid4(), CourseMapUpdate(title="x"))
+    with pytest.raises(CourseMapNotFoundError):
+        await service.delete_course_map(uuid.uuid4())
+
+
+async def test_delete_course_map(service: CourseMapService) -> None:
+    map_id = await _map_id(service)
+    await service.delete_course_map(map_id)
+    with pytest.raises(CourseMapNotFoundError):
+        await service.get_course_map(map_id)
 
 
 async def test_get_course_map_includes_its_bubbles_only(

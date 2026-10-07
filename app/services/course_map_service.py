@@ -15,6 +15,7 @@ from app.schemas.course_map import (
     CourseMapCreate,
     CourseMapList,
     CourseMapRead,
+    CourseMapUpdate,
 )
 
 
@@ -88,6 +89,21 @@ class CourseMapService:
         course_map = await self._require_course_map(course_map_id)
         bubbles = await self._bubbles.list_by_course_map(course_map_id)
         return CourseMapRead(**course_map.model_dump(), bubbles=bubbles)
+
+    async def update_course_map(
+        self, course_map_id: uuid.UUID, data: CourseMapUpdate
+    ) -> CourseMapRead:
+        """Applies only the fields present in `data` (partial update)."""
+        updated = await self._course_maps.update(course_map_id, data)
+        if updated is None:
+            raise CourseMapNotFoundError(course_map_id)
+        bubbles = await self._bubbles.list_by_course_map(course_map_id)
+        return CourseMapRead(**updated.model_dump(), bubbles=bubbles)
+
+    async def delete_course_map(self, course_map_id: uuid.UUID) -> None:
+        """Deletes the map; its bubbles go with it (ON DELETE CASCADE)."""
+        if not await self._course_maps.delete(course_map_id):
+            raise CourseMapNotFoundError(course_map_id)
 
     async def add_bubble(
         self, course_map_id: uuid.UUID, data: BubbleCreate

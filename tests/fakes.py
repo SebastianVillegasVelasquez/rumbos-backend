@@ -13,7 +13,12 @@ from app.exceptions import CourseMapAlreadyExistsError, CourseMapNotFoundError
 from app.moodle.exceptions import MoodleCourseNotFoundError
 from app.moodle.schemas import MoodleSection, MoodleSiteInfo
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
-from app.schemas.course_map import CourseMapBase, CourseMapCreate, CourseMapSummary
+from app.schemas.course_map import (
+    CourseMapBase,
+    CourseMapCreate,
+    CourseMapSummary,
+    CourseMapUpdate,
+)
 
 
 class InMemoryCourseMapRepository:
@@ -63,6 +68,19 @@ class InMemoryCourseMapRepository:
         )
         self.items[item.id] = item
         return item
+
+    async def update(
+        self, course_map_id: uuid.UUID, data: CourseMapUpdate
+    ) -> CourseMapBase | None:
+        current = self.items.get(course_map_id)
+        if current is None:
+            return None
+        changes = data.model_dump(exclude_unset=True)
+        updated = current.model_copy(
+            update={**changes, "updated_at": datetime.now(UTC)}
+        )
+        self.items[course_map_id] = updated
+        return updated
 
     async def delete(self, course_map_id: uuid.UUID) -> bool:
         return self.items.pop(course_map_id, None) is not None

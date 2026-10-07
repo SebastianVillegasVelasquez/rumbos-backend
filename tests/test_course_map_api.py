@@ -296,3 +296,66 @@ async def test_list_course_maps_rejects_bad_paging(
 async def test_list_course_maps_accepts_max_limit(client: httpx.AsyncClient) -> None:
     r = await client.get("/course-maps", params={"limit": 100})
     assert r.status_code == 200 and r.json()["limit"] == 100
+
+
+async def test_patch_course_map_is_partial(client: httpx.AsyncClient) -> None:
+    created = await _create_map(client)
+    await _add_bubble(client, created["id"])
+    url = f"/course-maps/{created['id']}"
+
+    renamed = await client.patch(url, json={"title": "  Nuevo nombre "})
+    assert renamed.status_code == 200
+    body = renamed.json()
+    assert body["title"] == "Nuevo nombre"
+    assert body["imageUrl"] == created["imageUrl"]
+    assert len(body["bubbles"]) == 1  # PATCH returns the full CourseMapRead
+    assert body["updatedAt"] > created["updatedAt"]
+
+    image = await client.patch(url, json={"imageUrl": "/new.png"})
+    assert image.json()["imageUrl"] == "/new.png"
+    assert image.json()["title"] == "Nuevo nombre"
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {},
+        {"title": None},
+        {"title": "   "},
+        {"title": "x" * 121},
+        {"imageUrl": "javascript:alert(1)"},
+        {"imageUrl": "data:image/png;base64,AAAA"},
+        {"imageUrl": None},
+        {"moodleCourseId": 99},  # not editable, so on its own it is an empty patch
+    ],
+)
+async def test_patch_course_map_rejects_invalid_payloads(
+    client: httpx.AsyncClient, payload: dict[str, Any]
+) -> None:
+    created = await _create_map(client)
+    r = await client.patch(f"/course-maps/{created['id']}", json=payload)
+    assert r.status_code == 422
+    unchanged = (await client.get(f"/course-maps/{created['id']}")).json()
+    assert unchanged["title"] == created["title"]
+
+
+async def test_patch_missing_course_map_is_404(client: httpx.AsyncClient) -> None:
+    r = await client.patch(f"/course-maps/{uuid.uuid4()}", json={"title": "x"})
+    assert r.status_code == 404
+
+
+async def test_delete_course_map_removes_its_bubbles(
+    client: httpx.AsyncClient,
+) -> None:
+    created = await _create_map(client)
+    await _add_bubble(client, created["id"])
+    url = f"/course-maps/{created['id']}"
+
+    r = await client.delete(url)
+
+    assert r.status_code == 204 and r.content == b""
+    assert (await client.get(url)).status_code == 404
+    assert (await client.get("/course-maps")).json()["total"] == 0
+    assert (await client.delete(url)).status_code == 404
+    # The course is free again for a new map.
+    assert (await _create_map(client)).get("bubbles") == []

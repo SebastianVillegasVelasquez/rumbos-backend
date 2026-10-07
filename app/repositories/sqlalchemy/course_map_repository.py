@@ -1,12 +1,17 @@
 import uuid
 
-from sqlalchemy import func, select
+from sqlalchemy import func, select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.exceptions import CourseMapAlreadyExistsError
 from app.models import Bubble, CourseMap
-from app.schemas.course_map import CourseMapBase, CourseMapCreate, CourseMapSummary
+from app.schemas.course_map import (
+    CourseMapBase,
+    CourseMapCreate,
+    CourseMapSummary,
+    CourseMapUpdate,
+)
 
 
 class SqlAlchemyCourseMapRepository:
@@ -81,6 +86,27 @@ class SqlAlchemyCourseMapRepository:
             await self._session.rollback()
             raise
         return CourseMapBase.model_validate(course_map)
+
+    async def update(
+        self, course_map_id: uuid.UUID, data: CourseMapUpdate
+    ) -> CourseMapBase | None:
+        # One UPDATE touching only the fields the caller sent; `updated_at`
+        # is refreshed by the column's `onupdate`.
+        values = data.model_dump(exclude_unset=True)
+        stmt = (
+            update(CourseMap)
+            .where(CourseMap.id == course_map_id)
+            .values(**values)
+            .returning(CourseMap)
+            .execution_options(populate_existing=True)
+        )
+        try:
+            course_map = (await self._session.scalars(stmt)).one_or_none()
+            await self._session.commit()
+        except BaseException:
+            await self._session.rollback()
+            raise
+        return CourseMapBase.model_validate(course_map) if course_map else None
 
     async def delete(self, course_map_id: uuid.UUID) -> bool:
         course_map = await self._session.get(CourseMap, course_map_id)

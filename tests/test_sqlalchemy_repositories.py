@@ -20,7 +20,7 @@ from app.repositories.sqlalchemy.course_map_repository import (
     SqlAlchemyCourseMapRepository,
 )
 from app.schemas.bubble import BubbleCreate, BubbleUpdate
-from app.schemas.course_map import CourseMapCreate
+from app.schemas.course_map import CourseMapCreate, CourseMapUpdate
 from app.services.course_map_service import CourseMapService
 from tests.fakes import InMemoryMoodleClient
 
@@ -218,6 +218,81 @@ async def test_list_counts_bubbles_in_one_query(
     assert {m.moodle_course_id: m.bubble_count for m in items} == {1: 3, 2: 1, 3: 0}
     # The page and the total: two statements however many maps there are.
     assert len(statements) == 2
+
+
+async def test_map_update_applies_only_sent_fields_in_one_commit(
+    maps: SqlAlchemyCourseMapRepository,
+    session: AsyncSession,
+    observer: AsyncSession,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    map_id = await _make_map(maps)
+    before = await maps.get_by_id(map_id)
+    assert before is not None
+    calls = _spy_commits(session, monkeypatch)
+
+    renamed = await maps.update(map_id, CourseMapUpdate(title="Nuevo"))
+
+    assert calls == [1]
+    assert renamed is not None and renamed.title == "Nuevo"
+    assert renamed.image_url == before.image_url  # not sent, not changed
+    assert renamed.updated_at > before.updated_at
+    assert renamed.created_at == before.created_at
+    both = await maps.update(
+        map_id, CourseMapUpdate(title="Otro", image_url="https://i/new.png")
+    )
+    assert both is not None and both.image_url == "https://i/new.png"
+    stored = await observer.get(CourseMap, map_id)
+    assert stored is not None
+    assert (stored.title, stored.image_url) == ("Otro", "https://i/new.png")
+
+
+async def test_map_update_on_missing_map_returns_none(
+    maps: SqlAlchemyCourseMapRepository,
+) -> None:
+    assert await maps.update(uuid.uuid4(), CourseMapUpdate(title="x")) is None
+
+
+async def test_map_update_is_all_or_nothing(
+    maps: SqlAlchemyCourseMapRepository,
+    session: AsyncSession,
+    observer: AsyncSession,
+) -> None:
+    map_id = await _make_map(maps)
+    # Make exactly one of the patched fields unacceptable to the database.
+    await session.execute(
+        text(
+            "ALTER TABLE course_maps ADD CONSTRAINT ck_no_forbidden "
+            "CHECK (title <> 'forbidden')"
+        )
+    )
+    await session.commit()
+
+    with pytest.raises(IntegrityError):
+        await maps.update(
+            map_id, CourseMapUpdate(image_url="/changed", title="forbidden")
+        )
+
+    assert not session.in_transaction()  # rolled back, session reusable
+    stored = await observer.get(CourseMap, map_id)
+    assert stored is not None
+    assert (stored.title, stored.image_url) == ("T", "/u")
+
+
+async def test_map_delete_cascades_to_every_bubble_but_only_its_own(
+    maps: SqlAlchemyCourseMapRepository,
+    bubbles: SqlAlchemyBubbleRepository,
+    observer: AsyncSession,
+) -> None:
+    doomed, kept = await _make_map(maps, 1), await _make_map(maps, 2)
+    for activity in (1, 2, 3):
+        await bubbles.create(doomed, BubbleCreate(activity_id=activity, x=0, y=0))
+    await bubbles.create(kept, BubbleCreate(activity_id=1, x=0, y=0))
+
+    assert await maps.delete(doomed) is True
+
+    remaining = (await observer.scalars(select(Bubble.course_map_id))).all()
+    assert list(remaining) == [kept]
 
 
 # --- bubbles ---------------------------------------------------------------
