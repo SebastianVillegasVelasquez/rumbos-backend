@@ -1,5 +1,6 @@
 """API tests through the real stack (routes -> service -> repositories -> Postgres)."""
 
+import asyncio
 import uuid
 from collections.abc import AsyncIterator
 from typing import Any
@@ -129,6 +130,47 @@ async def test_add_bubble_defaults_and_validation(client: httpx.AsyncClient) -> 
         f"/course-maps/{uuid.uuid4()}/bubbles", json={"activityId": 1, "x": 0, "y": 0}
     )
     assert missing.status_code == 404
+
+
+async def test_add_bubble_for_a_placed_activity_is_409_with_code(
+    client: httpx.AsyncClient,
+) -> None:
+    created = await _create_map(client)
+    await _add_bubble(client, created["id"], activityId=5)
+
+    r = await client.post(
+        f"/course-maps/{created['id']}/bubbles",
+        json={"activityId": 5, "x": 0.1, "y": 0.1},
+    )
+
+    assert r.status_code == 409
+    assert r.json() == {
+        "detail": {
+            "code": "activity_already_placed",
+            "message": "This activity already has a bubble on the map",
+        }
+    }
+    other = await _create_map(client, 2)
+    await _add_bubble(client, other["id"], activityId=5)  # other map: fine
+
+
+async def test_concurrent_add_bubble_requests_create_one(
+    client: httpx.AsyncClient,
+) -> None:
+    created = await _create_map(client)
+
+    async def post() -> int:
+        r = await client.post(
+            f"/course-maps/{created['id']}/bubbles",
+            json={"activityId": 9, "x": 0.3, "y": 0.3},
+        )
+        return r.status_code
+
+    codes = await asyncio.gather(*(post() for _ in range(6)))
+
+    assert sorted(codes) == [201] + [409] * 5
+    body = (await client.get(f"/course-maps/{created['id']}")).json()
+    assert len(body["bubbles"]) == 1
 
 
 async def test_patch_bubble_is_partial(client: httpx.AsyncClient) -> None:

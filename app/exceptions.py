@@ -13,5 +13,9 @@ class BubbleNotFoundError(DomainError):
     pass
 
 
+class ActivityAlreadyPlacedError(DomainError):
+    """A bubble for this Moodle activity already exists on the map."""
+
+
 class CourseMapAlreadyExistsError(DomainError):
     """A map already exists for this Moodle course (one map per course)."""

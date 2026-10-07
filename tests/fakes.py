@@ -9,7 +9,11 @@ from datetime import UTC, datetime
 
 from uuid_utils.compat import uuid7
 
-from app.exceptions import CourseMapAlreadyExistsError, CourseMapNotFoundError
+from app.exceptions import (
+    ActivityAlreadyPlacedError,
+    CourseMapAlreadyExistsError,
+    CourseMapNotFoundError,
+)
 from app.moodle.exceptions import MoodleCourseNotFoundError
 from app.moodle.schemas import MoodleSection, MoodleSiteInfo
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
@@ -101,6 +105,11 @@ class InMemoryBubbleRepository:
     async def create(self, course_map_id: uuid.UUID, data: BubbleCreate) -> BubbleRead:
         if course_map_id not in self._course_maps.items:
             raise CourseMapNotFoundError(course_map_id)
+        if any(
+            b.course_map_id == course_map_id and b.activity_id == data.activity_id
+            for b in self.items.values()
+        ):
+            raise ActivityAlreadyPlacedError(data.activity_id)
         self.writes += 1
         counts = self._course_maps.bubble_counts
         counts[course_map_id] = counts.get(course_map_id, 0) + 1

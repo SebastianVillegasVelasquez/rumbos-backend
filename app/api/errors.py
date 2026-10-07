@@ -5,6 +5,7 @@ from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
 from app.exceptions import (
+    ActivityAlreadyPlacedError,
     BubbleNotFoundError,
     CourseMapAlreadyExistsError,
     CourseMapNotFoundError,
@@ -42,6 +43,17 @@ def register_exception_handlers(app: FastAPI) -> None:
             {
                 "code": "map_already_exists_for_course",
                 "message": "A course map already exists for this course",
+            },
+        ),
+    )
+
+    app.add_exception_handler(
+        ActivityAlreadyPlacedError,
+        _handler(
+            status.HTTP_409_CONFLICT,
+            {
+                "code": "activity_already_placed",
+                "message": "This activity already has a bubble on the map",
             },
         ),
     )

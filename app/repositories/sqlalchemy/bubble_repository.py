@@ -4,9 +4,21 @@ from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.exceptions import CourseMapNotFoundError
+from app.exceptions import ActivityAlreadyPlacedError, CourseMapNotFoundError
 from app.models import Bubble
+from app.models.bubble import UQ_BUBBLE_ACTIVITY
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
+
+_FOREIGN_KEY_VIOLATION = "23503"  # PostgreSQL SQLSTATE
+
+
+def _constraint_name(exc: IntegrityError) -> str | None:
+    """Name of the violated constraint, as reported by the driver.
+
+    asyncpg's exception (the SQLAlchemy adapter's `__cause__`) carries it.
+    """
+    cause = exc.orig.__cause__ if exc.orig else None
+    return getattr(cause, "constraint_name", None)
 
 
 class SqlAlchemyBubbleRepository:
@@ -33,10 +45,15 @@ class SqlAlchemyBubbleRepository:
         try:
             await self._session.commit()
         except IntegrityError as exc:
-            # Inputs are validated upstream, so the only way to violate a
-            # constraint here is a foreign key to a map that doesn't exist.
+            # Inputs are validated upstream, so what is left is a foreign key
+            # to a map that doesn't exist, or the one-bubble-per-activity
+            # constraint (which is what stops concurrent duplicates).
             await self._session.rollback()
-            raise CourseMapNotFoundError(course_map_id) from exc
+            if _constraint_name(exc) == UQ_BUBBLE_ACTIVITY:
+                raise ActivityAlreadyPlacedError(data.activity_id) from exc
+            if getattr(exc.orig, "sqlstate", None) == _FOREIGN_KEY_VIOLATION:
+                raise CourseMapNotFoundError(course_map_id) from exc
+            raise
         except BaseException:
             await self._session.rollback()
             raise

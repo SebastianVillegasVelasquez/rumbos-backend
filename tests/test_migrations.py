@@ -64,11 +64,15 @@ def fetch(db_url: str, sql: str) -> list[tuple[Any, ...]]:
     return asyncio.run(go())
 
 
-def insert_map(course_id: int) -> tuple[str, dict[str, Any]]:
+def insert_map(
+    course_id: int, *, with_title: bool = False
+) -> tuple[str, dict[str, Any]]:
+    """A map row; `with_title` for databases already past the title migration."""
+    columns, values = ("title, ", "'Seeded', ") if with_title else ("", "")
     return (
         (
-            "INSERT INTO course_maps (id, moodle_course_id, image_url, created_at,"
-            " updated_at) VALUES (:id, :c, '/x.png', now(), now())"
+            f"INSERT INTO course_maps (id, {columns}moodle_course_id, image_url,"
+            f" created_at, updated_at) VALUES (:id, {values}:c, '/x.png', now(), now())"
         ),
         {"id": uuid.uuid4(), "c": course_id},
     )
@@ -109,3 +113,80 @@ def test_title_migration_downgrade_keeps_rows(migration_db: str) -> None:
         " WHERE table_name = 'course_maps'",
     )
     assert ("title",) not in columns
+
+
+UNIQUE = "c2e8f4a61d07"
+
+
+def insert_bubble(map_id: uuid.UUID, activity_id: int) -> tuple[str, dict[str, Any]]:
+    return (
+        (
+            "INSERT INTO bubbles (id, course_map_id, activity_id, x, y, status,"
+            " created_at, updated_at) VALUES (:id, :m, :a, 0.5, 0.5, 'locked',"
+            " now(), now())"
+        ),
+        {"id": uuid.uuid4(), "m": map_id, "a": activity_id},
+    )
+
+
+def seed_map_with_bubbles(db: str, activities: list[int]) -> uuid.UUID:
+    map_id = uuid.uuid4()
+    sql, params = insert_map(8, with_title=True)
+    run_sql(db, [(sql, {**params, "id": map_id})])
+    run_sql(db, [insert_bubble(map_id, a) for a in activities])
+    return map_id
+
+
+UNIQUE_CONSTRAINTS = (
+    "SELECT conname FROM pg_constraint WHERE conrelid = 'bubbles'::regclass"
+    " AND contype = 'u'"
+)
+
+
+def test_unique_migration_succeeds_on_clean_data_and_downgrades(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", TITLE).returncode == 0
+    seed_map_with_bubbles(migration_db, [1, 2, 3])
+
+    up = alembic(migration_db, "upgrade", UNIQUE)
+    assert up.returncode == 0, up.stderr
+    assert fetch(migration_db, UNIQUE_CONSTRAINTS) == [
+        ("uq_bubbles_course_map_id_activity_id",)
+    ]
+
+    down = alembic(migration_db, "downgrade", TITLE)
+    assert down.returncode == 0, down.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM bubbles") == [(3,)]
+    assert not fetch(migration_db, UNIQUE_CONSTRAINTS)
+
+
+def test_unique_migration_aborts_listing_duplicates_and_deletes_nothing(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", TITLE).returncode == 0
+    map_id = seed_map_with_bubbles(migration_db, [5, 5, 6, 7, 7, 7])
+
+    result = alembic(migration_db, "upgrade", UNIQUE)
+
+    assert result.returncode != 0
+    assert "duplicates exist" in result.stderr
+    assert f"map {map_id}, activity 5: 2 bubbles" in result.stderr
+    assert f"map {map_id}, activity 7: 3 bubbles" in result.stderr
+    assert "activity 6" not in result.stderr  # only the duplicated ones
+    # Nothing deleted, constraint not added, version not advanced.
+    assert fetch(migration_db, "SELECT count(*) FROM bubbles") == [(6,)]
+    assert not fetch(migration_db, UNIQUE_CONSTRAINTS)
+    assert fetch(migration_db, "SELECT version_num FROM alembic_version") == [(TITLE,)]
+
+
+def test_unique_migration_allows_same_activity_on_different_maps(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", TITLE).returncode == 0
+    seed_map_with_bubbles(migration_db, [1])
+    other = uuid.uuid4()
+    sql, params = insert_map(9, with_title=True)
+    run_sql(migration_db, [(sql, {**params, "id": other}), insert_bubble(other, 1)])
+
+    assert alembic(migration_db, "upgrade", UNIQUE).returncode == 0

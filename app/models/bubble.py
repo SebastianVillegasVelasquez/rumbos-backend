@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import CheckConstraint, Enum, ForeignKey
+from sqlalchemy import CheckConstraint, Enum, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.enums import BubbleIcon, BubbleStatus
@@ -11,9 +11,16 @@ def _values(enum_cls: type[BubbleStatus] | type[BubbleIcon]) -> list[str]:
     return [member.value for member in enum_cls]
 
 
+# A Moodle activity appears at most once per map. The database enforces it
+# (so concurrent requests cannot both win); the repository maps a violation of
+# this constraint to `ActivityAlreadyPlacedError`.
+UQ_BUBBLE_ACTIVITY = "uq_bubbles_course_map_id_activity_id"
+
+
 class Bubble(BaseORM):
     __tablename__ = "bubbles"
     __table_args__ = (
+        UniqueConstraint("course_map_id", "activity_id", name=UQ_BUBBLE_ACTIVITY),
         CheckConstraint("x >= 0 AND x <= 1", name="ck_bubbles_x_range"),
         CheckConstraint("y >= 0 AND y <= 1", name="ck_bubbles_y_range"),
     )

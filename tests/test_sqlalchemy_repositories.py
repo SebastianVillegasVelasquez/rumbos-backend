@@ -3,6 +3,7 @@
 A second, independent session is used to observe what was really committed.
 """
 
+import asyncio
 import uuid
 from collections.abc import AsyncIterator
 from datetime import UTC, datetime, timedelta
@@ -13,7 +14,11 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 
 from app.enums import BubbleIcon, BubbleStatus
-from app.exceptions import CourseMapAlreadyExistsError, CourseMapNotFoundError
+from app.exceptions import (
+    ActivityAlreadyPlacedError,
+    CourseMapAlreadyExistsError,
+    CourseMapNotFoundError,
+)
 from app.models import Bubble, CourseMap
 from app.repositories.sqlalchemy.bubble_repository import SqlAlchemyBubbleRepository
 from app.repositories.sqlalchemy.course_map_repository import (
@@ -372,6 +377,57 @@ async def test_bubble_delete_commits(
     assert await bubbles.delete(bubble.id) is True
     assert await _count(observer, Bubble) == 0
     assert await bubbles.get_by_id(bubble.id) is None
+
+
+async def test_duplicate_activity_on_a_map_raises_and_rolls_back(
+    maps: SqlAlchemyCourseMapRepository,
+    bubbles: SqlAlchemyBubbleRepository,
+    session: AsyncSession,
+    observer: AsyncSession,
+) -> None:
+    map_id = await _make_map(maps)
+    await bubbles.create(map_id, BubbleCreate(activity_id=7, x=0.1, y=0.1))
+
+    with pytest.raises(ActivityAlreadyPlacedError):
+        await bubbles.create(map_id, BubbleCreate(activity_id=7, x=0.9, y=0.9))
+
+    assert not session.in_transaction()
+    assert await _count(observer, Bubble) == 1
+    # The session still works afterwards.
+    await bubbles.create(map_id, BubbleCreate(activity_id=8, x=0.2, y=0.2))
+    assert await _count(observer, Bubble) == 2
+
+
+async def test_same_activity_on_different_maps_is_allowed(
+    maps: SqlAlchemyCourseMapRepository, bubbles: SqlAlchemyBubbleRepository
+) -> None:
+    first, second = await _make_map(maps, 1), await _make_map(maps, 2)
+    await bubbles.create(first, BubbleCreate(activity_id=7, x=0, y=0))
+    await bubbles.create(second, BubbleCreate(activity_id=7, x=0, y=0))
+
+
+async def test_concurrent_duplicate_creates_yield_exactly_one_bubble(
+    maps: SqlAlchemyCourseMapRepository,
+    engine: AsyncEngine,
+    observer: AsyncSession,
+) -> None:
+    """Relies on the DB constraint: a pre-check alone would let several win."""
+    map_id = await _make_map(maps)
+
+    async def attempt(x: float) -> str:
+        async with AsyncSession(engine, expire_on_commit=False) as s:
+            try:
+                await SqlAlchemyBubbleRepository(s).create(
+                    map_id, BubbleCreate(activity_id=42, x=x, y=0.5)
+                )
+            except ActivityAlreadyPlacedError:
+                return "duplicate"
+            return "created"
+
+    outcomes = await asyncio.gather(*(attempt(i / 10) for i in range(8)))
+
+    assert sorted(outcomes) == ["created"] + ["duplicate"] * 7
+    assert await _count(observer, Bubble) == 1
 
 
 # --- commit / rollback placement -------------------------------------------

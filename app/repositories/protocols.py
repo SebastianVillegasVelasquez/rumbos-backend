@@ -70,7 +70,9 @@ class BubbleRepository(Protocol):
     ) -> list[BubbleRead]: ...
 
     async def create(self, course_map_id: uuid.UUID, data: BubbleCreate) -> BubbleRead:
-        """Raises `CourseMapNotFoundError` if the map doesn't exist."""
+        """Raises `CourseMapNotFoundError` if the map doesn't exist, and
+        `ActivityAlreadyPlacedError` if the activity already has a bubble on it.
+        """
         ...
 
     async def update(

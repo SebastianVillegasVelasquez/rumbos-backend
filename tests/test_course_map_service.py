@@ -6,6 +6,7 @@ import pytest
 
 from app.enums import BubbleIcon, BubbleStatus
 from app.exceptions import (
+    ActivityAlreadyPlacedError,
     BubbleNotFoundError,
     CourseMapAlreadyExistsError,
     CourseMapNotFoundError,
@@ -115,6 +116,17 @@ async def test_get_course_map_includes_its_bubbles_only(
     detail = await service.get_course_map(first)
     assert detail.id == first
     assert [b.activity_id for b in detail.bubbles] == [1]
+
+
+async def test_add_bubble_twice_for_the_same_activity_raises(
+    service: CourseMapService,
+) -> None:
+    map_id = await _map_id(service)
+    await service.add_bubble(map_id, BubbleCreate(activity_id=1, x=0, y=0))
+    with pytest.raises(ActivityAlreadyPlacedError):
+        await service.add_bubble(map_id, BubbleCreate(activity_id=1, x=0.5, y=0.5))
+    other = await _map_id(service, 2)  # another map may reuse the activity
+    await service.add_bubble(other, BubbleCreate(activity_id=1, x=0, y=0))
 
 
 async def test_get_missing_course_map_raises(service: CourseMapService) -> None:
