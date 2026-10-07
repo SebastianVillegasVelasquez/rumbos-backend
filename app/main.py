@@ -3,10 +3,11 @@ from contextlib import asynccontextmanager
 
 import httpx
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.errors import register_exception_handlers
-from app.api.routes import course_map
-from app.core.config import get_settings
+from app.api.routes import course_map, health
+from app.core.config import Settings, get_settings
 from app.core.database import create_engine
 from app.moodle.cache import CachedMoodleClient
 from app.moodle.client import HttpMoodleClient
@@ -41,11 +42,27 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         await engine.dispose()
 
 
-app = FastAPI(title="Rumbos Backend", lifespan=lifespan)
-register_exception_handlers(app)
-app.include_router(course_map.router)
+def create_app(settings: Settings | None = None) -> FastAPI:
+    """Build the app. `settings` only drives the middleware; the lifespan
+    reads its own (resources are created when the server starts)."""
+    settings = settings or get_settings()
+    application = FastAPI(title="Rumbos Backend", lifespan=lifespan)
+    if settings.cors_allowed_origins:
+        # Browsers on other origins (the deployed frontend) need this; in
+        # development the Vite proxy makes requests same-origin, so the default
+        # is no middleware. No cookies or credentials are involved, so
+        # credentials stay off.
+        application.add_middleware(
+            CORSMiddleware,
+            allow_origins=settings.cors_allowed_origins,
+            allow_credentials=False,
+            allow_methods=["GET", "POST", "PATCH", "DELETE"],
+            allow_headers=["Content-Type", "Authorization"],
+        )
+    register_exception_handlers(application)
+    application.include_router(health.router)
+    application.include_router(course_map.router)
+    return application
 
 
-@app.get("/health")
-async def health() -> dict[str, str]:
-    return {"status": "ok"}
+app = create_app()
