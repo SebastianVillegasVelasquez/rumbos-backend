@@ -32,6 +32,13 @@ Environment variables (or `.env`); see `.env.example`.
 | `MOODLE_READ_TIMEOUT` | `15` | Seconds to wait for Moodle's response. |
 | `MOODLE_CONTENTS_TTL_SECONDS` | `60` | A cached copy of a course's contents is served without asking Moodle for this long. |
 | `MOODLE_STALE_MAX_SECONDS` | `3600` | When Moodle fails, a cached copy up to this old is still served (reported as `cached`). |
+| `ASSETS_UPLOADS_ENABLED` | `false` | Master switch for `POST /assets`. **Keep it off on anything reachable from the internet** (see "Uploads and security"). Serving existing assets never depends on it. |
+| `ASSETS_DIR` | `data/assets` | Directory of the local-disk asset storage (git-ignored). |
+| `ASSETS_MAX_BACKGROUND_BYTES` | `8388608` | Largest accepted background upload (8 MB). |
+| `ASSETS_MAX_BUBBLE_BYTES` | `2097152` | Largest accepted bubble image upload (2 MB). |
+| `ASSETS_MAX_BACKGROUND_SIDE` | `8192` | Longest side, in pixels, of a background. |
+| `ASSETS_MAX_BUBBLE_SIDE` | `1024` | Longest side, in pixels, of a bubble image. |
+| `ASSETS_MAX_TOTAL_BYTES` | `2147483648` | Quota: sum of every stored file (2 GB). Over it, uploads answer 507. |
 | `CORS_ALLOWED_ORIGINS` | empty | Comma-separated browser origins. Empty adds no CORS middleware. Credentials are never allowed. The dev frontend uses a Vite proxy and needs nothing here. |
 
 ### Moodle cache
@@ -40,6 +47,43 @@ Course contents are cached in memory, per course, with single-flight (a burst
 of requests for one course makes one Moodle call) and stale-on-error. The cache
 is **per process**: with several workers each has its own copy, so Moodle may be
 called once per worker per TTL. A shared cache (Redis) is a later decision.
+
+### Uploads and security
+
+Teachers can upload their own backgrounds and bubble images (`POST /assets`,
+`multipart/form-data` with `file` and `kind` = `background` | `bubble`).
+
+> **There is no authentication yet, so the upload endpoint is anonymous.** The
+> quota and `ASSETS_UPLOADS_ENABLED` are damage limiters, not protection.
+> Uploads are **off by default** and must stay disabled on any publicly
+> reachable deployment until auth exists.
+
+What the pipeline does with an upload:
+
+- Streams the body and cuts it off as soon as it passes the size cap (it is
+  never read whole into memory); checks the per-kind size.
+- Never trusts the `Content-Type`, file name or extension: the format is decided
+  from the bytes. Only PNG, JPEG and static WebP are accepted (no SVG, GIF or
+  animations).
+- Decodes with Pillow in a worker thread, refuses images over the per-kind side
+  limit before decoding any pixel (decompression bombs), and caps concurrent
+  decodes.
+- **Re-encodes** the pixels: EXIF (GPS included), XMP, comments and any data
+  appended after the image are gone; the EXIF orientation is applied first.
+  Palette/CMYK/grayscale become RGB(A).
+- De-duplicates by the SHA-256 of the stored bytes and kind (the same upload
+  again answers `200` with the existing asset).
+- Backgrounds also get a WebP thumbnail, at most 640 px wide.
+
+Files are served from `GET /assets/{id}` (and `/thumb`) with the stored
+`Content-Type`, an `ETag`, `Cache-Control: public, max-age=31536000, immutable`,
+`X-Content-Type-Options: nosniff` and `Content-Security-Policy: default-src
+'none'; sandbox`. Any id that is not a known asset is a 404.
+
+Storage sits behind the `AssetStorage` Protocol (`LocalDiskAssetStorage` today;
+an S3 adapter needs no service changes). Deleting assets and garbage-collecting
+orphans (assets nothing uses) are not implemented, so orphans can accumulate;
+the quota bounds them.
 
 ## API
 
@@ -67,6 +111,9 @@ never changes after creation.
 - `GET /course-maps/{id}/resolved?includeHidden=`: each bubble's
   `availability` (`available`, `hidden`, `missing`, `unknown`) and the
   `moodleStatus` (`live`, `cached`, `unavailable`). Moodle outages answer 200.
+- `POST /assets` (201, or 200 for already-known content), `GET /assets/{id}`,
+  `GET /assets/{id}/thumb` (backgrounds only). A map's `imageUrl` may be a
+  bundled frontend path or `/assets/{id}`.
 - `GET /health` (liveness) and `GET /health/ready` (database `SELECT 1`; 503 if
   it fails; never calls Moodle).
 

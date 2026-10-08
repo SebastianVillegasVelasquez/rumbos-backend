@@ -293,3 +293,39 @@ def test_levels_migration_downgrades_when_each_course_has_one_map(
     assert fetch(migration_db, UNIQUE_CONSTRAINTS) == [
         ("uq_bubbles_course_map_id_activity_id",)
     ]
+
+
+ASSETS = "b7d3e9a15c42"
+
+
+def test_assets_migration_creates_a_deduplicating_table_and_downgrades(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", UNIQUE).returncode == 0
+    seed_map_with_bubbles(migration_db, [1])
+
+    up = alembic(migration_db, "upgrade", ASSETS)
+
+    assert up.returncode == 0, up.stderr
+
+    def asset(kind: str, digest: str) -> tuple[str, dict[str, Any]]:
+        return (
+            (
+                "INSERT INTO assets (id, kind, mime, width, height, bytes, sha256,"
+                " created_at, updated_at)"
+                " VALUES (:id, :k, 'image/png', 1, 1, 10, :h, now(), now())"
+            ),
+            {"id": uuid.uuid4(), "k": kind, "h": digest},
+        )
+
+    run_sql(
+        migration_db,
+        [asset("background", "a" * 64), asset("bubble", "a" * 64)],
+    )  # same hash, different kind: fine
+    with pytest.raises(Exception, match="uq_assets_kind_sha256"):
+        run_sql(migration_db, [asset("bubble", "a" * 64)])
+
+    down = alembic(migration_db, "downgrade", LEVELS)
+    assert down.returncode == 0, down.stderr
+    assert not fetch(migration_db, "SELECT 1 FROM pg_tables WHERE tablename = 'assets'")
+    assert fetch(migration_db, "SELECT count(*) FROM bubbles") == [(1,)]

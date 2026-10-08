@@ -40,3 +40,10 @@ class BubbleIcon(StrEnum):
     VIDEO = "video"
     TROPHY = "trophy"
     LOCK = "lock"
+
+
+class AssetKind(StrEnum):
+    """What an uploaded image is for; decides its size limits."""
+
+    BACKGROUND = "background"
+    BUBBLE = "bubble"

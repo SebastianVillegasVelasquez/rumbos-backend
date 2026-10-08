@@ -3,8 +3,9 @@
 Alembic's autogenerate only sees tables that have been imported.
 """
 
+from app.models.asset import Asset
 from app.models.base import BaseORM
 from app.models.bubble import Bubble
 from app.models.course_map import CourseMap
 
-__all__ = ["BaseORM", "Bubble", "CourseMap"]
+__all__ = ["Asset", "BaseORM", "Bubble", "CourseMap"]

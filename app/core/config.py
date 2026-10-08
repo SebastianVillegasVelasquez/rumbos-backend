@@ -26,6 +26,21 @@ class Settings(BaseSettings):
     # ...and, when Moodle fails, a copy up to this old is served as "stale".
     moodle_stale_max_seconds: float = Field(default=3600.0, ge=0)
 
+    # User-uploaded images (see `app.services.asset_service`). There is no
+    # authentication yet, so uploads are anonymous: the quota and this switch
+    # only limit the damage. Off by default; keep it off on any deployment
+    # reachable from the internet until auth exists.
+    assets_uploads_enabled: bool = False
+    # Where `LocalDiskAssetStorage` keeps the files.
+    assets_dir: str = "data/assets"
+    # Upload limits: per-file bytes and longest side, by kind, and the sum of
+    # every stored file.
+    assets_max_background_bytes: int = Field(default=8 * 1024 * 1024, ge=1)
+    assets_max_bubble_bytes: int = Field(default=2 * 1024 * 1024, ge=1)
+    assets_max_background_side: int = Field(default=8192, ge=1, le=16384)
+    assets_max_bubble_side: int = Field(default=1024, ge=1, le=16384)
+    assets_max_total_bytes: int = Field(default=2 * 1024**3, ge=1)
+
     @field_validator("cors_allowed_origins", mode="before")
     @classmethod
     def _split_origins(cls, value: object) -> object:

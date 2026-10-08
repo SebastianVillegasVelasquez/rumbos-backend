@@ -12,8 +12,11 @@ Contract shared by all implementations:
 """
 
 import uuid
+from collections.abc import Collection
 from typing import Protocol
 
+from app.enums import AssetKind
+from app.schemas.asset import AssetRecord
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
     CourseMapBase,
@@ -106,3 +109,34 @@ class BubbleRepository(Protocol):
         ...
 
     async def delete(self, bubble_id: uuid.UUID) -> bool: ...
+
+
+class AssetRepository(Protocol):
+    async def get_by_id(self, asset_id: uuid.UUID) -> AssetRecord | None: ...
+
+    async def get_many(
+        self, asset_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, AssetRecord]:
+        """The assets that exist among `asset_ids`, by id."""
+        ...
+
+    async def find_by_hash(
+        self, kind: AssetKind, sha256: str
+    ) -> AssetRecord | None: ...
+
+    async def total_bytes(self) -> int:
+        """Sum of the stored size of every asset (what the quota counts)."""
+        ...
+
+    async def create(
+        self,
+        asset_id: uuid.UUID,
+        kind: AssetKind,
+        mime: str,
+        width: int,
+        height: int,
+        size_bytes: int,
+        sha256: str,
+    ) -> AssetRecord:
+        """Raises `AssetAlreadyExistsError` if the kind and hash already exist."""
+        ...

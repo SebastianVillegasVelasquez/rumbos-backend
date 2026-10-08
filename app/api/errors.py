@@ -6,10 +6,18 @@ from fastapi.responses import JSONResponse
 
 from app.exceptions import (
     ActivityAlreadyPlacedError,
+    AssetDimensionsTooLargeError,
+    AssetInvalidImageError,
+    AssetNotFoundError,
+    AssetQuotaExceededError,
+    AssetTooLargeError,
+    AssetTypeNotAllowedError,
     BubbleNotFoundError,
     CourseMapNotFoundError,
+    InvalidUploadError,
     OrderMismatchError,
     SectionAlreadyMappedError,
+    UploadsDisabledError,
 )
 from app.moodle.exceptions import (
     MoodleAuthError,
@@ -78,6 +86,79 @@ def register_exception_handlers(app: FastAPI) -> None:
         )
 
     app.add_exception_handler(OrderMismatchError, order_mismatch)
+
+    app.add_exception_handler(
+        AssetNotFoundError, _handler(status.HTTP_404_NOT_FOUND, "Asset not found")
+    )
+
+    def _coded(
+        code: int,
+        name: str,
+        message: str,
+        extras: Callable[[Any], dict[str, Any]] | None = None,
+    ) -> ExceptionHandler:
+        """`detail = { code, message, ...extras }`, messages fixed on purpose
+        (Pillow's own error text never reaches the client)."""
+
+        async def handle(request: Request, exc: Exception) -> JSONResponse:
+            detail: dict[str, Any] = {"code": name, "message": message}
+            if extras is not None:
+                detail.update(extras(exc))
+            return JSONResponse(status_code=code, content={"detail": detail})
+
+        return handle
+
+    app.add_exception_handler(
+        InvalidUploadError,
+        _coded(
+            422,
+            "invalid_upload",
+            "Send multipart/form-data with a `file` and a `kind` of "
+            "'background' or 'bubble'",
+        ),
+    )
+    app.add_exception_handler(
+        UploadsDisabledError,
+        _coded(503, "uploads_disabled", "Image uploads are disabled"),
+    )
+    app.add_exception_handler(
+        AssetTooLargeError,
+        _coded(
+            413,
+            "asset_too_large",
+            "The file is too large",
+            lambda exc: {"limitBytes": exc.limit_bytes},
+        ),
+    )
+    app.add_exception_handler(
+        AssetTypeNotAllowedError,
+        _coded(
+            422,
+            "asset_type_not_allowed",
+            "Only PNG, JPEG and static WebP images are accepted",
+        ),
+    )
+    app.add_exception_handler(
+        AssetInvalidImageError,
+        _coded(422, "asset_invalid_image", "The file is not a valid image"),
+    )
+    app.add_exception_handler(
+        AssetDimensionsTooLargeError,
+        _coded(
+            422,
+            "asset_dimensions_too_large",
+            "The image is too large in pixels",
+            lambda exc: {
+                "maxSide": exc.limit_side,
+                "width": exc.width or None,
+                "height": exc.height or None,
+            },
+        ),
+    )
+    app.add_exception_handler(
+        AssetQuotaExceededError,
+        _coded(507, "asset_quota_exceeded", "The storage quota is full"),
+    )
 
     # Moodle failures. Messages are generic on purpose: never the token, nor
     # Moodle's own error text. Starlette picks the handler for the most

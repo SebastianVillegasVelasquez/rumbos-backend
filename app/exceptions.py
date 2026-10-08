@@ -51,3 +51,45 @@ class OrderMismatchError(DomainError):
         self.missing = missing
         self.unexpected = unexpected
         self.duplicated = duplicated
+
+
+class AssetNotFoundError(DomainError):
+    pass
+
+
+class UploadsDisabledError(DomainError):
+    """`ASSETS_UPLOADS_ENABLED` is off."""
+
+
+class AssetTooLargeError(DomainError):
+    def __init__(self, limit_bytes: int) -> None:
+        super().__init__(f"upload exceeds {limit_bytes} bytes")
+        self.limit_bytes = limit_bytes
+
+
+class AssetTypeNotAllowedError(DomainError):
+    """Not a PNG, JPEG or static WebP (SVG, GIF, animations, anything else)."""
+
+
+class AssetInvalidImageError(DomainError):
+    """Looks like an allowed format but does not decode."""
+
+
+class AssetDimensionsTooLargeError(DomainError):
+    def __init__(self, limit_side: int, width: int, height: int) -> None:
+        super().__init__(f"{width}x{height} exceeds {limit_side} px per side")
+        self.limit_side = limit_side
+        self.width = width
+        self.height = height
+
+
+class AssetQuotaExceededError(DomainError):
+    """Storing the file would pass `ASSETS_MAX_TOTAL_BYTES`."""
+
+
+class AssetAlreadyExistsError(DomainError):
+    """An asset with the same kind and content already exists."""
+
+
+class InvalidUploadError(DomainError):
+    """The upload form is malformed (no file, unknown kind)."""
