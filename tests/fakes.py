@@ -25,7 +25,9 @@ from app.schemas.course_map import (
     CourseMapCreate,
     CourseMapSummary,
     CourseMapUpdate,
+    SkinRule,
 )
+from app.schemas.map_settings import MapSettings
 from app.schemas.skin import ImageSkin, ProceduralSkin, SkinRead
 
 
@@ -34,6 +36,8 @@ class InMemoryCourseMapRepository:
         self.items: dict[uuid.UUID, CourseMapBase] = {}
         self.bubble_counts: dict[uuid.UUID, int] = {}
         self.complete_counts: dict[uuid.UUID, int] = {}
+        self.rules: dict[uuid.UUID, list[SkinRule]] = {}
+        self.appearance_writes = 0
 
     async def get_by_id(self, course_map_id: uuid.UUID) -> CourseMapBase | None:
         return self.items.get(course_map_id)
@@ -70,6 +74,26 @@ class InMemoryCourseMapRepository:
         )
         self.items[item.id] = item
         return item
+
+    async def list_skin_rules(self, course_map_id: uuid.UUID) -> list[SkinRule]:
+        return sorted(self.rules.get(course_map_id, []), key=lambda r: r.modname)
+
+    async def replace_appearance(
+        self,
+        course_map_id: uuid.UUID,
+        settings: MapSettings,
+        default_skin_id: uuid.UUID | None,
+        rules: list[SkinRule],
+    ) -> bool:
+        current = self.items.get(course_map_id)
+        if current is None:
+            return False
+        self.appearance_writes += 1
+        self.items[course_map_id] = current.model_copy(
+            update={"settings": settings, "default_skin_id": default_skin_id}
+        )
+        self.rules[course_map_id] = list(rules)
+        return True
 
     async def set_order(
         self, moodle_course_id: int, ordered_ids: list[uuid.UUID]
@@ -164,6 +188,17 @@ class InMemoryBubbleRepository:
         )
         self.items[item.id] = item
         return item
+
+    async def set_order(
+        self, course_map_id: uuid.UUID, ordered_ids: list[uuid.UUID]
+    ) -> None:
+        self.writes += 1
+        for sequence, bubble_id in enumerate(ordered_ids):
+            current = self.items[bubble_id]
+            if current.course_map_id == course_map_id:
+                self.items[bubble_id] = current.model_copy(
+                    update={"sequence": sequence}
+                )
 
     async def update(
         self, bubble_id: uuid.UUID, data: BubbleUpdate

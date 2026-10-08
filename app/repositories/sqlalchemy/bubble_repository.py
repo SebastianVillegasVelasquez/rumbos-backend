@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import func, select, update
+from sqlalchemy import case, func, select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -38,6 +38,7 @@ class SqlAlchemyBubbleRepository:
             select(Bubble)
             .where(Bubble.course_map_id == course_map_id)
             .order_by(*_PATH_ORDER)
+            .execution_options(populate_existing=True)
         )
         return [BubbleRead.model_validate(b) for b in result]
 
@@ -130,6 +131,29 @@ class SqlAlchemyBubbleRepository:
             await self._session.rollback()
             raise
         return BubbleRead.model_validate(bubble) if bubble else None
+
+    async def set_order(
+        self, course_map_id: uuid.UUID, ordered_ids: list[uuid.UUID]
+    ) -> None:
+        if not ordered_ids:
+            return  # nothing to order (and a CASE needs at least one branch)
+        # One UPDATE with a CASE: the whole reorder is a single statement.
+        sequences = case(
+            {bubble_id: index for index, bubble_id in enumerate(ordered_ids)},
+            value=Bubble.id,
+        )
+        stmt = (
+            update(Bubble)
+            .where(Bubble.course_map_id == course_map_id, Bubble.id.in_(ordered_ids))
+            .values(sequence=sequences)
+            .execution_options(synchronize_session="fetch")
+        )
+        try:
+            await self._session.execute(stmt)
+            await self._session.commit()
+        except BaseException:
+            await self._session.rollback()
+            raise
 
     async def delete(self, bubble_id: uuid.UUID) -> bool:
         bubble = await self._session.get(Bubble, bubble_id)

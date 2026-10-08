@@ -356,6 +356,9 @@ async def test_responses_are_camel_case(client: httpx.AsyncClient) -> None:
         "id",
         "title",
         "bubbles",
+        "settings",
+        "defaultSkinId",
+        "skinRules",
         "moodleCourseId",
         "moodleSectionId",
         "position",
@@ -619,3 +622,14 @@ async def test_a_deleted_skin_leaves_bubbles_with_no_skin_through_the_api(
 
     stored = (await client.get(f"/course-maps/{created['id']}")).json()["bubbles"][0]
     assert stored["skinId"] is None
+
+
+async def test_reordering_a_course_without_maps_is_an_empty_success(
+    client: httpx.AsyncClient,
+) -> None:
+    r = await client.put(
+        "/course-maps/order", json={"moodleCourseId": 77, "mapIds": []}
+    )
+
+    assert r.status_code == 200
+    assert r.json() == {"items": []}

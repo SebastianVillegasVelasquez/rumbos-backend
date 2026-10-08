@@ -130,3 +130,11 @@ class SkinAssetSizeMismatchError(DomainError):
     def __init__(self, sizes: list[tuple[str, uuid.UUID, int, int]]) -> None:
         super().__init__("skin assets differ in size")
         self.sizes = sizes  # (state, asset id, width, height)
+
+
+class DuplicateSkinRuleError(DomainError):
+    """The same activity type appears in more than one skin rule."""
+
+    def __init__(self, modnames: list[str]) -> None:
+        super().__init__("duplicate skin rule")
+        self.modnames = modnames

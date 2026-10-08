@@ -4,6 +4,7 @@ from collections import Counter
 from app.exceptions import (
     BubbleNotFoundError,
     CourseMapNotFoundError,
+    DuplicateSkinRuleError,
     OrderMismatchError,
     SkinReferenceNotFoundError,
 )
@@ -15,8 +16,15 @@ from app.repositories.protocols import (
     SkinRepository,
 )
 from app.schemas.activity import ActivityRead
-from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
+from app.schemas.bubble import (
+    BubbleCreate,
+    BubbleOrdered,
+    BubbleOrderUpdate,
+    BubbleRead,
+    BubbleUpdate,
+)
 from app.schemas.course_map import (
+    AppearanceUpdate,
     CourseMapBase,
     CourseMapCreate,
     CourseMapList,
@@ -95,7 +103,7 @@ class CourseMapService:
         # The repository appends the map to the course and enforces one map
         # per section (`SectionAlreadyMappedError`).
         created = await self._course_maps.create(data)
-        return CourseMapRead(**created.model_dump(), bubbles=[])
+        return CourseMapRead(**created.model_dump(), skin_rules=[], bubbles=[])
 
     async def reorder_course_maps(self, data: CourseMapOrderUpdate) -> CourseMapOrdered:
         """Sets the order of a course's maps; `map_ids` must be exactly its maps."""
@@ -121,8 +129,7 @@ class CourseMapService:
 
     async def get_course_map(self, course_map_id: uuid.UUID) -> CourseMapRead:
         course_map = await self._require_course_map(course_map_id)
-        bubbles = await self._bubbles.list_by_course_map(course_map_id)
-        return CourseMapRead(**course_map.model_dump(), bubbles=bubbles)
+        return await self._read(course_map)
 
     async def update_course_map(
         self, course_map_id: uuid.UUID, data: CourseMapUpdate
@@ -131,8 +138,35 @@ class CourseMapService:
         updated = await self._course_maps.update(course_map_id, data)
         if updated is None:
             raise CourseMapNotFoundError(course_map_id)
-        bubbles = await self._bubbles.list_by_course_map(course_map_id)
-        return CourseMapRead(**updated.model_dump(), bubbles=bubbles)
+        return await self._read(updated)
+
+    async def update_appearance(
+        self, course_map_id: uuid.UUID, data: AppearanceUpdate
+    ) -> CourseMapRead:
+        """Replaces settings, default skin and skin rules, all or nothing.
+
+        Every skin referenced must exist and no activity type may appear in two
+        rules. Nothing is written unless all of it is valid.
+        """
+        await self._require_course_map(course_map_id)
+        counts = Counter(r.modname for r in data.skin_rules)
+        duplicated = sorted(modname for modname, n in counts.items() if n > 1)
+        if duplicated:
+            raise DuplicateSkinRuleError(duplicated)
+
+        wanted = {r.skin_id for r in data.skin_rules}
+        if data.default_skin_id is not None:
+            wanted.add(data.default_skin_id)
+        missing = wanted - await self._skins.existing_ids(wanted)
+        if missing:
+            raise SkinReferenceNotFoundError(sorted(missing))
+
+        applied = await self._course_maps.replace_appearance(
+            course_map_id, data.settings, data.default_skin_id, data.skin_rules
+        )
+        if not applied:  # deleted between the lookup and the write
+            raise CourseMapNotFoundError(course_map_id)
+        return await self.get_course_map(course_map_id)
 
     async def delete_course_map(self, course_map_id: uuid.UUID) -> None:
         """Deletes the map; its bubbles go with it (ON DELETE CASCADE)."""
@@ -162,6 +196,18 @@ class CourseMapService:
         if updated is None:  # deleted between the lookup and the write
             raise BubbleNotFoundError(bubble_id)
         return updated
+
+    async def reorder_bubbles(
+        self, course_map_id: uuid.UUID, data: BubbleOrderUpdate
+    ) -> BubbleOrdered:
+        """Sets the guided path: `bubble_ids` must be exactly the map's bubbles."""
+        await self._require_course_map(course_map_id)
+        existing = await self._bubbles.list_by_course_map(course_map_id)
+        check_exact_order([b.id for b in existing], data.bubble_ids)
+        await self._bubbles.set_order(course_map_id, data.bubble_ids)
+        return BubbleOrdered(
+            bubbles=await self._bubbles.list_by_course_map(course_map_id)
+        )
 
     async def remove_bubble(
         self, course_map_id: uuid.UUID, bubble_id: uuid.UUID
@@ -226,6 +272,13 @@ class CourseMapService:
                     )
                 )
         return activities
+
+    async def _read(self, course_map: CourseMapBase) -> CourseMapRead:
+        return CourseMapRead(
+            **course_map.model_dump(),
+            skin_rules=await self._course_maps.list_skin_rules(course_map.id),
+            bubbles=await self._bubbles.list_by_course_map(course_map.id),
+        )
 
     async def _require_course_map(self, course_map_id: uuid.UUID) -> CourseMapBase:
         course_map = await self._course_maps.get_by_id(course_map_id)

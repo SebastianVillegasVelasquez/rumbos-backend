@@ -102,6 +102,16 @@ never changes after creation.
   calls Moodle).
 - `PUT /course-maps/order` `{ moodleCourseId, mapIds }`: reorders a course's
   maps; `mapIds` must be exactly its maps (422 `order_mismatch`).
+- `PUT /course-maps/{id}/appearance` `{ settings, defaultSkinId, skinRules }`:
+  replaces the map's presentation settings (mode, fit, initial view, path style,
+  ambient effects, intro), its default skin and its per-activity-type skin rules
+  (`{ modname, skinId }`) in **one transaction**: all or nothing (422
+  `skin_not_found`, `duplicate_skin_rule`). Settings are always read through the
+  `MapSettings` model, so missing keys (or an empty `{}` column) read as defaults;
+  unknown keys are rejected on write.
+- `PUT /course-maps/{id}/bubbles/order` `{ bubbleIds }`: the guided path.
+  Must be exactly the map's bubbles (422 `order_mismatch`); sets `sequence`
+  0..n-1. Only this endpoint changes `sequence`.
 - `POST|PATCH|DELETE /course-maps/{id}/bubbles[/{bubbleId}]`. An activity can
   have one bubble per **course**, on any of its maps.
 - `GET /course-maps/{id}/activities?includeHidden=&onlySection=`: the course's

@@ -23,7 +23,9 @@ from app.schemas.course_map import (
     CourseMapCreate,
     CourseMapSummary,
     CourseMapUpdate,
+    SkinRule,
 )
+from app.schemas.map_settings import MapSettings
 from app.schemas.skin import ImageSkin, ProceduralSkin, SkinRead
 
 
@@ -60,6 +62,25 @@ class CourseMapRepository(Protocol):
 
     async def delete(self, course_map_id: uuid.UUID) -> bool:
         """Deletes the map and its bubbles. Returns False if it didn't exist."""
+        ...
+
+    async def list_skin_rules(self, course_map_id: uuid.UUID) -> list[SkinRule]:
+        """The map's skin rules, ordered by `modname`."""
+        ...
+
+    async def replace_appearance(
+        self,
+        course_map_id: uuid.UUID,
+        settings: MapSettings,
+        default_skin_id: uuid.UUID | None,
+        rules: list[SkinRule],
+    ) -> bool:
+        """Replaces settings, default skin and every skin rule in ONE
+        transaction: all or nothing. False if the map doesn't exist.
+
+        Raises `SkinReferenceNotFoundError` if a skin vanished since the
+        caller checked (the foreign keys are the last line of defence).
+        """
         ...
 
     async def list(
@@ -107,6 +128,12 @@ class BubbleRepository(Protocol):
 
         Either every provided field is persisted or none is.
         """
+        ...
+
+    async def set_order(
+        self, course_map_id: uuid.UUID, ordered_ids: list[uuid.UUID]
+    ) -> None:
+        """Sets `sequence` 0..n-1 following `ordered_ids`, atomically."""
         ...
 
     async def delete(self, bubble_id: uuid.UUID) -> bool: ...

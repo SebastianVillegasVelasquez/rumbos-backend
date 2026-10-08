@@ -9,9 +9,18 @@ from app.exceptions import (
     ActivityAlreadyPlacedError,
     BubbleNotFoundError,
     CourseMapNotFoundError,
+    DuplicateSkinRuleError,
+    OrderMismatchError,
+    SkinReferenceNotFoundError,
 )
-from app.schemas.bubble import BubbleCreate, BubbleUpdate
-from app.schemas.course_map import CourseMapCreate, CourseMapUpdate
+from app.schemas.bubble import BubbleCreate, BubbleOrderUpdate, BubbleUpdate
+from app.schemas.course_map import (
+    AppearanceUpdate,
+    CourseMapCreate,
+    CourseMapUpdate,
+    SkinRule,
+)
+from app.schemas.map_settings import MapSettings
 from app.services.course_map_service import CourseMapService
 from tests.fakes import (
     InMemoryBubbleRepository,
@@ -206,3 +215,100 @@ async def test_remove_bubble(service: CourseMapService) -> None:
     assert (await service.get_course_map(map_id)).bubbles == []
     with pytest.raises(BubbleNotFoundError):
         await service.remove_bubble(map_id, bubble.id)
+
+
+# --- appearance and ordering ------------------------------------------------
+
+
+def _appearance(
+    default: uuid.UUID | None = None, rules: list[tuple[str, uuid.UUID]] | None = None
+) -> AppearanceUpdate:
+    return AppearanceUpdate(
+        settings=MapSettings(mode="guided"),
+        default_skin_id=default,
+        skin_rules=[SkinRule(modname=m, skin_id=s) for m, s in rules or []],
+    )
+
+
+async def test_appearance_is_written_once_when_everything_is_valid(
+    service: CourseMapService,
+    maps: InMemoryCourseMapRepository,
+    skins: InMemorySkinRepository,
+) -> None:
+    map_id = await _map_id(service)
+    skin = skins.add()
+
+    read = await service.update_appearance(
+        map_id, _appearance(skin, [("quiz", skin), ("scorm", skin)])
+    )
+
+    assert maps.appearance_writes == 1
+    assert read.settings.mode == "guided" and read.default_skin_id == skin
+    assert [r.modname for r in read.skin_rules] == ["quiz", "scorm"]
+
+
+async def test_appearance_with_an_unknown_skin_writes_nothing(
+    service: CourseMapService,
+    maps: InMemoryCourseMapRepository,
+    skins: InMemorySkinRepository,
+) -> None:
+    map_id = await _map_id(service)
+    known, ghost = skins.add(), uuid.uuid4()
+
+    with pytest.raises(SkinReferenceNotFoundError) as caught:
+        await service.update_appearance(
+            map_id, _appearance(known, [("quiz", known), ("url", ghost)])
+        )
+
+    assert caught.value.skin_ids == [ghost]
+    assert maps.appearance_writes == 0
+
+
+async def test_appearance_with_duplicate_rules_writes_nothing(
+    service: CourseMapService,
+    maps: InMemoryCourseMapRepository,
+    skins: InMemorySkinRepository,
+) -> None:
+    map_id = await _map_id(service)
+    skin = skins.add()
+
+    with pytest.raises(DuplicateSkinRuleError) as caught:
+        await service.update_appearance(
+            map_id,
+            _appearance(None, [("quiz", skin), ("url", skin), ("quiz", skin)]),
+        )
+
+    assert caught.value.modnames == ["quiz"]
+    assert maps.appearance_writes == 0
+
+
+async def test_appearance_of_an_unknown_map_is_not_found(
+    service: CourseMapService,
+) -> None:
+    with pytest.raises(CourseMapNotFoundError):
+        await service.update_appearance(uuid.uuid4(), _appearance())
+
+
+async def test_reorder_bubbles_requires_exactly_the_maps_bubbles(
+    service: CourseMapService, bubbles: InMemoryBubbleRepository
+) -> None:
+    map_id = await _map_id(service)
+    first = await service.add_bubble(map_id, BubbleCreate(activity_id=1, x=0, y=0))
+    second = await service.add_bubble(map_id, BubbleCreate(activity_id=2, x=0, y=0))
+    writes = bubbles.writes
+
+    with pytest.raises(OrderMismatchError) as caught:
+        await service.reorder_bubbles(
+            map_id, BubbleOrderUpdate(bubble_ids=[first.id, first.id])
+        )
+
+    assert caught.value.duplicated == [first.id]
+    assert caught.value.missing == [second.id]
+    assert bubbles.writes == writes
+    ordered = await service.reorder_bubbles(
+        map_id, BubbleOrderUpdate(bubble_ids=[second.id, first.id])
+    )
+    assert [(b.id, b.sequence) for b in ordered.bubbles] == [
+        (second.id, 0),
+        (first.id, 1),
+    ]

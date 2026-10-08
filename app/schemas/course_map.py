@@ -3,10 +3,11 @@ from datetime import datetime
 from typing import Annotated, Self
 from urllib.parse import urlsplit
 
-from pydantic import AfterValidator, StringConstraints, model_validator
+from pydantic import AfterValidator, Field, StringConstraints, model_validator
 
 from app.schemas.base import ApiModel
 from app.schemas.bubble import BubbleRead
+from app.schemas.map_settings import MapSettings
 
 TITLE_MAX_LENGTH = 120
 IMAGE_URL_MAX_LENGTH = 2048
@@ -39,6 +40,8 @@ Title = Annotated[
     str,
     StringConstraints(strip_whitespace=True, min_length=1, max_length=TITLE_MAX_LENGTH),
 ]
+# Moodle's module type names: lowercase letters, digits and underscores.
+Modname = Annotated[str, StringConstraints(pattern=r"^[a-z0-9_]{1,50}$")]
 ImageUrl = Annotated[
     str,
     StringConstraints(max_length=IMAGE_URL_MAX_LENGTH),
@@ -88,6 +91,10 @@ class CourseMapCore(ApiModel):
 class CourseMapBase(CourseMapCore):
     """The `course_maps` row: what repositories return. Never has bubbles."""
 
+    # Read through the model: a missing or empty stored value reads as defaults.
+    settings: MapSettings = Field(default_factory=MapSettings)
+    default_skin_id: uuid.UUID | None = None
+
 
 class CourseMapSummary(CourseMapCore):
     """A map as listed: counts its bubbles instead of carrying them."""
@@ -114,7 +121,23 @@ class CourseMapOrdered(ApiModel):
     items: list[CourseMapSummary]
 
 
-class CourseMapRead(CourseMapBase):
-    """A course map together with its bubbles."""
+class SkinRule(ApiModel):
+    """On a map, bubbles of Moodle activity type `modname` use `skin_id`."""
 
+    modname: Modname
+    skin_id: uuid.UUID
+
+
+class AppearanceUpdate(ApiModel):
+    """The map's whole appearance, replaced in one go (omitted means cleared)."""
+
+    settings: MapSettings
+    default_skin_id: uuid.UUID | None = None
+    skin_rules: list[SkinRule] = Field(default_factory=list, max_length=200)
+
+
+class CourseMapRead(CourseMapBase):
+    """A course map together with its skin rules and bubbles."""
+
+    skin_rules: list[SkinRule]
     bubbles: list[BubbleRead]

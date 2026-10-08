@@ -61,3 +61,13 @@ class BubbleRead(ApiModel):
     sequence: int
     created_at: datetime
     updated_at: datetime
+
+
+class BubbleOrderUpdate(ApiModel):
+    """The full desired order of a map's bubbles (the guided path)."""
+
+    bubble_ids: list[uuid.UUID]
+
+
+class BubbleOrdered(ApiModel):
+    bubbles: list[BubbleRead]

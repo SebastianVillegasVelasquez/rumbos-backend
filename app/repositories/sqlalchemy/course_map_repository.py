@@ -2,22 +2,28 @@ import uuid
 from collections.abc import Sequence
 from typing import Any
 
-from sqlalchemy import ColumnElement, case, func, select, update
+from sqlalchemy import ColumnElement, case, delete, func, select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.enums import BubbleStatus
-from app.exceptions import SectionAlreadyMappedError
-from app.models import Bubble, CourseMap
+from app.exceptions import SectionAlreadyMappedError, SkinReferenceNotFoundError
+from app.models import Bubble, CourseMap, CourseMapSkinRule
 from app.models.course_map import UQ_COURSE_MAP_SECTION
-from app.repositories.sqlalchemy._errors import constraint_name
+from app.repositories.sqlalchemy._errors import (
+    FOREIGN_KEY_VIOLATION,
+    constraint_name,
+    sqlstate,
+)
 from app.schemas.course_map import (
     CourseMapBase,
     CourseMapCore,
     CourseMapCreate,
     CourseMapSummary,
     CourseMapUpdate,
+    SkinRule,
 )
+from app.schemas.map_settings import MapSettings
 
 
 class SqlAlchemyCourseMapRepository:
@@ -90,7 +96,9 @@ class SqlAlchemyCourseMapRepository:
                 )
             )
             course_map = CourseMap(
-                **data.model_dump(), position=0 if last is None else last + 1
+                **data.model_dump(),
+                position=0 if last is None else last + 1,
+                settings=MapSettings().to_stored(),
             )
             self._session.add(course_map)
             await self._session.commit()
@@ -128,6 +136,8 @@ class SqlAlchemyCourseMapRepository:
     async def set_order(
         self, moodle_course_id: int, ordered_ids: list[uuid.UUID]
     ) -> None:
+        if not ordered_ids:
+            return  # nothing to order (and a CASE needs at least one branch)
         # One UPDATE with a CASE, so the whole reorder is a single statement.
         positions = case(
             {map_id: index for index, map_id in enumerate(ordered_ids)},
@@ -148,6 +158,62 @@ class SqlAlchemyCourseMapRepository:
         except BaseException:
             await self._session.rollback()
             raise
+
+    async def replace_appearance(
+        self,
+        course_map_id: uuid.UUID,
+        settings: MapSettings,
+        default_skin_id: uuid.UUID | None,
+        rules: list[SkinRule],
+    ) -> bool:
+        # Every statement below runs in the session's single transaction and
+        # the one commit at the end publishes all of it; any failure rolls
+        # everything back (a bad rule never leaves new settings behind).
+        try:
+            updated = await self._session.execute(
+                update(CourseMap)
+                .where(CourseMap.id == course_map_id)
+                .values(settings=settings.to_stored(), default_skin_id=default_skin_id)
+                .returning(CourseMap.id)
+                .execution_options(synchronize_session="fetch")
+            )
+            if updated.scalar_one_or_none() is None:
+                await self._session.rollback()
+                return False
+            await self._session.execute(
+                delete(CourseMapSkinRule).where(
+                    CourseMapSkinRule.course_map_id == course_map_id
+                )
+            )
+            self._session.add_all(
+                CourseMapSkinRule(
+                    course_map_id=course_map_id,
+                    modname=rule.modname,
+                    skin_id=rule.skin_id,
+                )
+                for rule in rules
+            )
+            await self._session.commit()
+        except IntegrityError as exc:
+            await self._session.rollback()
+            if sqlstate(exc) == FOREIGN_KEY_VIOLATION:
+                # A skin was deleted after the service checked it.
+                wanted = [r.skin_id for r in rules]
+                raise SkinReferenceNotFoundError(wanted) from exc
+            raise
+        except BaseException:
+            await self._session.rollback()
+            raise
+        return True
+
+    async def list_skin_rules(self, course_map_id: uuid.UUID) -> list[SkinRule]:
+        result = await self._session.scalars(
+            select(CourseMapSkinRule)
+            .where(CourseMapSkinRule.course_map_id == course_map_id)
+            .order_by(CourseMapSkinRule.modname)
+            .execution_options(populate_existing=True)
+        )
+        return [SkinRule.model_validate(rule) for rule in result]
 
     async def delete(self, course_map_id: uuid.UUID) -> bool:
         course_map = await self._session.get(CourseMap, course_map_id)

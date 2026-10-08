@@ -14,6 +14,7 @@ from app.exceptions import (
     AssetTypeNotAllowedError,
     BubbleNotFoundError,
     CourseMapNotFoundError,
+    DuplicateSkinRuleError,
     InvalidUploadError,
     OrderMismatchError,
     SectionAlreadyMappedError,
@@ -180,6 +181,15 @@ def register_exception_handlers(app: FastAPI) -> None:
             "skin_not_found",
             "A referenced skin does not exist",
             lambda exc: {"skinIds": [str(i) for i in exc.skin_ids]},
+        ),
+    )
+    app.add_exception_handler(
+        DuplicateSkinRuleError,
+        _coded(
+            422,
+            "duplicate_skin_rule",
+            "An activity type can have only one skin rule",
+            lambda exc: {"modnames": exc.modnames},
         ),
     )
     app.add_exception_handler(

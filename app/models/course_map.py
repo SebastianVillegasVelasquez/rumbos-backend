@@ -1,7 +1,8 @@
 import uuid
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from sqlalchemy import ForeignKey, Index, String, UniqueConstraint, text
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import BaseORM
@@ -41,6 +42,11 @@ class CourseMap(BaseORM):
     # creates); lists break ties by `created_at, id`.
     position: Mapped[int] = mapped_column(server_default="0")
     image_url: Mapped[str]
+    # `MapSettings` as camelCase JSON. Always read through that model, which
+    # fills in whatever the stored object lacks (an empty `{}` is valid).
+    settings: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, server_default=text("'{}'::jsonb")
+    )
     # Skin for bubbles with no skin of their own and no matching rule. Deleting
     # the skin clears it (the app then falls back to the default skin).
     default_skin_id: Mapped[uuid.UUID | None] = mapped_column(

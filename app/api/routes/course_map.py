@@ -13,8 +13,15 @@ from app.repositories.sqlalchemy.course_map_repository import (
 )
 from app.repositories.sqlalchemy.skin_repository import SqlAlchemySkinRepository
 from app.schemas.activity import ActivityRead
-from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
+from app.schemas.bubble import (
+    BubbleCreate,
+    BubbleOrdered,
+    BubbleOrderUpdate,
+    BubbleRead,
+    BubbleUpdate,
+)
 from app.schemas.course_map import (
+    AppearanceUpdate,
     CourseMapCreate,
     CourseMapList,
     CourseMapOrdered,
@@ -97,6 +104,13 @@ async def update_course_map(
     return await service.update_course_map(course_map_id, data)
 
 
+@router.put("/{course_map_id}/appearance", response_model=CourseMapRead)
+async def update_appearance(
+    course_map_id: uuid.UUID, data: AppearanceUpdate, service: ServiceDep
+) -> CourseMapRead:
+    return await service.update_appearance(course_map_id, data)
+
+
 @router.delete("/{course_map_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_course_map(course_map_id: uuid.UUID, service: ServiceDep) -> Response:
     await service.delete_course_map(course_map_id)
@@ -139,6 +153,13 @@ async def add_bubble(
     course_map_id: uuid.UUID, data: BubbleCreate, service: ServiceDep
 ) -> BubbleRead:
     return await service.add_bubble(course_map_id, data)
+
+
+@router.put("/{course_map_id}/bubbles/order", response_model=BubbleOrdered)
+async def reorder_bubbles(
+    course_map_id: uuid.UUID, data: BubbleOrderUpdate, service: ServiceDep
+) -> BubbleOrdered:
+    return await service.reorder_bubbles(course_map_id, data)
 
 
 @router.patch("/{course_map_id}/bubbles/{bubble_id}", response_model=BubbleRead)

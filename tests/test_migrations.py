@@ -472,3 +472,31 @@ def test_skins_migration_downgrades_and_keeps_bubbles(migration_db: str) -> None
     assert down.returncode == 0, down.stderr
     assert fetch(migration_db, "SELECT count(*) FROM bubbles") == [(2,)]
     assert not fetch(migration_db, "SELECT 1 FROM pg_tables WHERE tablename = 'skins'")
+
+
+SETTINGS = "e3c7a94d2b18"
+
+
+def test_settings_migration_gives_existing_maps_an_empty_object_that_reads_as_defaults(
+    migration_db: str,
+) -> None:
+    from app.schemas.map_settings import MapSettings
+
+    assert alembic(migration_db, "upgrade", SKINS).returncode == 0
+    sql, params = insert_map(8, with_title=True)
+    run_sql(migration_db, [(sql, {**params, "id": uuid.uuid4()})])
+
+    up = alembic(migration_db, "upgrade", SETTINGS)
+
+    assert up.returncode == 0, up.stderr
+    assert fetch(migration_db, "SELECT settings::text FROM course_maps") == [("{}",)]
+    assert MapSettings.model_validate({}).mode == "explorative"
+    nullable = fetch(
+        migration_db,
+        "SELECT is_nullable FROM information_schema.columns"
+        " WHERE table_name = 'course_maps' AND column_name = 'settings'",
+    )
+    assert nullable == [("NO",)]
+    down = alembic(migration_db, "downgrade", SKINS)
+    assert down.returncode == 0, down.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM course_maps") == [(1,)]
