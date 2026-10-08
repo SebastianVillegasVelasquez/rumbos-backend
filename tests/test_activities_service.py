@@ -153,7 +153,7 @@ async def test_instance_is_not_used_as_activity_id(
     assert not any(a.placed for a in activities)
 
 
-async def test_bubbles_of_other_maps_do_not_count(
+async def test_bubbles_of_other_courses_do_not_count(
     service: CourseMapService, moodle: InMemoryMoodleClient
 ) -> None:
     map_id = await _setup_course8(service, moodle)
@@ -163,6 +163,69 @@ async def test_bubbles_of_other_maps_do_not_count(
     activities = await service.list_activities(map_id, include_hidden=True)
 
     assert not any(a.placed for a in activities)
+
+
+async def test_a_bubble_on_another_map_of_the_course_marks_it_placed(
+    service: CourseMapService, moodle: InMemoryMoodleClient
+) -> None:
+    map_id = await _setup_course8(service, moodle)
+    sibling = await _map_id(service)
+    bubble = await service.add_bubble(sibling, BubbleCreate(activity_id=28, x=0, y=0))
+
+    activities = await service.list_activities(map_id, include_hidden=True)
+
+    placed = [a for a in activities if a.placed]
+    assert [(a.activity_id, a.bubble_id, a.placed_in_map_id) for a in placed] == [
+        (28, bubble.id, sibling)
+    ]
+
+
+async def test_activities_carry_the_moodle_section_id(
+    service: CourseMapService, moodle: InMemoryMoodleClient
+) -> None:
+    map_id = await _setup_course8(service, moodle)
+
+    activities = await service.list_activities(map_id, include_hidden=True)
+
+    assert {a.section_id for a in activities} == {25}  # not 24, not a module id
+
+
+async def test_only_section_keeps_the_maps_section(
+    service: CourseMapService, moodle: InMemoryMoodleClient
+) -> None:
+    moodle.courses[COURSE_ID] = [
+        MoodleSection(id=10, section=1, modules=[_module(1), _module(2)]),
+        MoodleSection(id=2, section=2, modules=[_module(3), _module(10)]),
+    ]
+    created = await service.create_course_map(
+        CourseMapCreate(
+            title="T",
+            moodle_course_id=COURSE_ID,
+            image_url="/u",
+            moodle_section_id=10,
+        )
+    )
+
+    only = await service.list_activities(created.id, only_section=True)
+    everything = await service.list_activities(created.id)
+
+    # Section id 10 is section 1's, even though module 10 sits in section 2.
+    assert [a.activity_id for a in only] == [1, 2]
+    assert [a.activity_id for a in everything] == [1, 2, 3, 10]
+
+
+async def test_only_section_is_ignored_without_a_section(
+    service: CourseMapService, moodle: InMemoryMoodleClient
+) -> None:
+    moodle.courses[COURSE_ID] = [
+        MoodleSection(id=10, section=1, modules=[_module(1)]),
+        MoodleSection(id=11, section=2, modules=[_module(2)]),
+    ]
+    map_id = await _map_id(service)
+
+    activities = await service.list_activities(map_id, only_section=True)
+
+    assert [a.activity_id for a in activities] == [1, 2]
 
 
 # --- variants of the real fixture -------------------------------------------

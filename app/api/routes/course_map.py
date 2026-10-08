@@ -109,8 +109,11 @@ async def list_activities(
     # of hidden activities with `includeHidden=true` (here and on `/resolved`).
     # When auth arrives, this parameter must require a teacher/editor role.
     include_hidden: Annotated[bool, Query(alias="includeHidden")] = False,
+    only_section: Annotated[bool, Query(alias="onlySection")] = False,
 ) -> list[ActivityRead]:
-    return await service.list_activities(course_map_id, include_hidden=include_hidden)
+    return await service.list_activities(
+        course_map_id, include_hidden=include_hidden, only_section=only_section
+    )
 
 
 @router.get("/{course_map_id}/resolved", response_model=ResolvedMap)

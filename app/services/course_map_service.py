@@ -160,28 +160,37 @@ class CourseMapService:
             raise BubbleNotFoundError(bubble_id)
 
     async def list_activities(
-        self, course_map_id: uuid.UUID, *, include_hidden: bool = False
+        self,
+        course_map_id: uuid.UUID,
+        *,
+        include_hidden: bool = False,
+        only_section: bool = False,
     ) -> list[ActivityRead]:
         """The map's Moodle course activities, flattened in Moodle's order.
 
         Order is section number, then position in the section's `modules`
-        list. Each activity says whether a bubble on this map already
-        references it (by module id) and whether learners would not see it.
-        Hidden activities are left out unless `include_hidden`.
+        list. Each activity says whether a bubble on ANY map of the course
+        already references it (by module id), which map, and whether learners
+        would not see it. Hidden activities are left out unless
+        `include_hidden`. With `only_section`, only the activities of the
+        map's Moodle section are listed (ignored for a map without one).
         Raises the `Moodle*Error`s from the client unchanged.
         """
         course_map = await self._require_course_map(course_map_id)
-        bubbles = await self._bubbles.list_by_course_map(course_map_id)
+        bubbles = await self._bubbles.list_by_course(course_map.moodle_course_id)
         sections = await self._moodle.get_course_contents(course_map.moodle_course_id)
 
         # Keyed by module id only; section ids live in a different namespace
         # and are never put in here.
-        bubble_by_module: dict[int, uuid.UUID] = {}
+        bubble_by_module: dict[int, BubbleRead] = {}
         for bubble in bubbles:
-            bubble_by_module.setdefault(bubble.activity_id, bubble.id)
+            bubble_by_module.setdefault(bubble.activity_id, bubble)
+        section_filter = course_map.moodle_section_id if only_section else None
 
         activities: list[ActivityRead] = []
         for position, section in enumerate(sections):
+            if section_filter is not None and section.id != section_filter:
+                continue
             number = section_number(section, position)
             for module in section.modules:
                 if not is_bubble_candidate(module):
@@ -189,17 +198,20 @@ class CourseMapService:
                 hidden = is_hidden(section, module)
                 if hidden and not include_hidden:
                     continue
+                placed = bubble_by_module.get(module.id)
                 activities.append(
                     ActivityRead(
                         activity_id=module.id,
                         name=module.name,
                         modname=module.modname,
                         url=module.url or "",
+                        section_id=section.id,
                         section_name=section.name,
                         section_number=number,
                         hidden=hidden,
-                        placed=module.id in bubble_by_module,
-                        bubble_id=bubble_by_module.get(module.id),
+                        placed=placed is not None,
+                        bubble_id=placed.id if placed else None,
+                        placed_in_map_id=placed.course_map_id if placed else None,
                     )
                 )
         return activities

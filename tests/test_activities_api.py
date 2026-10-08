@@ -85,14 +85,17 @@ async def test_include_hidden_returns_camel_case_activities(
         "name": "Preguntas para reconocer cuánto sabes [IN-1]",
         "modname": "quiz",
         "url": "https://academiaturismo.mincit.gov.co/mod/quiz/view.php?id=28",
+        "sectionId": 25,  # Moodle's section id; module 25 is a different thing
         "sectionName": "Recursos",
         "sectionNumber": 1,
         "hidden": True,
         "placed": False,
         "bubbleId": None,
+        "placedInMapId": None,
     }
     quiz_25 = next(a for a in body if a["activityId"] == 25)
     assert quiz_25["placed"] is True and quiz_25["bubbleId"] == bubble_id
+    assert quiz_25["placedInMapId"] == map_id
     assert quiz_25["name"].endswith("[OUT-2]")
 
 
@@ -186,3 +189,48 @@ async def test_error_response_does_not_leak_exception_text(
 
     assert "abc123" not in r.text and "invalidtoken" not in r.text
     assert r.json() == {"detail": "Moodle integration error"}
+
+
+async def test_placed_covers_every_map_of_the_course_and_only_section_filters(
+    client: httpx.AsyncClient, moodle: InMemoryMoodleClient
+) -> None:
+    moodle.courses[8] = course8()
+    level_one = await _create_map(client, 8)
+    created = await client.post(
+        "/course-maps",
+        json={
+            "title": "Level 2",
+            "moodleCourseId": 8,
+            "imageUrl": "/y",
+            "moodleSectionId": 25,
+        },
+    )
+    level_two = created.json()["id"]
+    await client.post(
+        f"/course-maps/{level_one}/bubbles", json={"activityId": 33, "x": 0, "y": 0}
+    )
+
+    params = {"includeHidden": "true"}
+    everything = (
+        await client.get(f"/course-maps/{level_two}/activities", params=params)
+    ).json()
+    certificate = next(a for a in everything if a["activityId"] == 33)
+    assert certificate["placed"] is True
+    assert certificate["placedInMapId"] == level_one  # not this map, but the course's
+
+    only = (
+        await client.get(
+            f"/course-maps/{level_two}/activities",
+            params={**params, "onlySection": "true"},
+        )
+    ).json()
+    # Section id 25 holds all eight modules; it is not "module 25".
+    assert [a["activityId"] for a in only] == COURSE8_MODULE_ORDER
+    # A map without a section ignores the flag.
+    ignored = (
+        await client.get(
+            f"/course-maps/{level_one}/activities",
+            params={**params, "onlySection": "true"},
+        )
+    ).json()
+    assert len(ignored) == len(everything)
