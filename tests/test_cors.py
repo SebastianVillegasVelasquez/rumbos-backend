@@ -62,6 +62,17 @@ async def test_allowed_origin_passes_preflight_without_credentials() -> None:
     assert "access-control-allow-credentials" not in r.headers
 
 
+async def test_put_is_allowed_for_the_reorder_and_appearance_endpoints() -> None:
+    async with _client([ALLOWED]) as client:
+        r = await client.options(
+            "/course-maps/order",
+            headers={**_preflight(ALLOWED), "Access-Control-Request-Method": "PUT"},
+        )
+
+    assert r.status_code == 200
+    assert "PUT" in r.headers["access-control-allow-methods"]
+
+
 async def test_allowed_origin_gets_cors_headers_on_real_responses() -> None:
     async with _client([ALLOWED]) as client:
         r = await client.get("/health", headers={"Origin": ALLOWED})
