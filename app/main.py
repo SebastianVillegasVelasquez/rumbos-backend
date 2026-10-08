@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.errors import register_exception_handlers
-from app.api.routes import assets, course_map, health
+from app.api.routes import assets, course_map, health, skins
 from app.core.config import Settings, get_settings
 from app.core.database import create_engine
 from app.moodle.cache import CachedMoodleClient
@@ -63,6 +63,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(health.router)
     application.include_router(course_map.router)
     application.include_router(assets.router)
+    application.include_router(skins.router)
     return application
 
 

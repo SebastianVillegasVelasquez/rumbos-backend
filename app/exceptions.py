@@ -93,3 +93,40 @@ class AssetAlreadyExistsError(DomainError):
 
 class InvalidUploadError(DomainError):
     """The upload form is malformed (no file, unknown kind)."""
+
+
+class SkinNotFoundError(DomainError):
+    pass
+
+
+class SkinIsBuiltinError(DomainError):
+    """Built-in skins can be neither edited nor deleted."""
+
+
+class SkinReferenceNotFoundError(DomainError):
+    """A request points at a skin id that does not exist (422, not 404: the
+    thing being addressed exists, the value it carries does not)."""
+
+    def __init__(self, skin_ids: list[uuid.UUID]) -> None:
+        super().__init__("skin not found")
+        self.skin_ids = skin_ids
+
+
+class SkinAssetNotFoundError(DomainError):
+    def __init__(self, missing: dict[str, uuid.UUID]) -> None:
+        super().__init__("skin asset not found")
+        self.missing = missing  # state name -> asset id
+
+
+class SkinAssetWrongKindError(DomainError):
+    def __init__(self, wrong: dict[str, uuid.UUID]) -> None:
+        super().__init__("skin asset is not a bubble image")
+        self.wrong = wrong  # state name -> asset id
+
+
+class SkinAssetSizeMismatchError(DomainError):
+    """The state images of an image skin do not share one width and height."""
+
+    def __init__(self, sizes: list[tuple[str, uuid.UUID, int, int]]) -> None:
+        super().__init__("skin assets differ in size")
+        self.sizes = sizes  # (state, asset id, width, height)

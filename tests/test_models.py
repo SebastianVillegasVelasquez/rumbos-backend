@@ -110,3 +110,22 @@ async def test_deleting_map_cascades_to_bubbles(session: AsyncSession) -> None:
     await session.commit()
     count = await session.scalar(select(func.count()).select_from(Bubble))
     assert count == 0
+
+
+async def test_a_skin_rule_is_unique_per_map_and_modname(session: AsyncSession) -> None:
+    from app.models import CourseMapSkinRule, Skin
+
+    course_map = await _map(session)
+    skin = Skin(name="S", kind="procedural", config={})
+    session.add(skin)
+    await session.commit()
+    session.add(
+        CourseMapSkinRule(course_map_id=course_map.id, modname="quiz", skin_id=skin.id)
+    )
+    await session.commit()
+
+    session.add(
+        CourseMapSkinRule(course_map_id=course_map.id, modname="quiz", skin_id=skin.id)
+    )
+    with pytest.raises(IntegrityError, match="uq_course_map_skin_rules_map_modname"):
+        await session.commit()

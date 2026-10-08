@@ -17,6 +17,7 @@ from tests.fakes import (
     InMemoryBubbleRepository,
     InMemoryCourseMapRepository,
     InMemoryMoodleClient,
+    InMemorySkinRepository,
 )
 
 
@@ -36,13 +37,19 @@ def moodle() -> InMemoryMoodleClient:
 
 
 @pytest.fixture
+def skins() -> InMemorySkinRepository:
+    return InMemorySkinRepository()
+
+
+@pytest.fixture
 def service(
     maps: InMemoryCourseMapRepository,
     bubbles: InMemoryBubbleRepository,
     moodle: InMemoryMoodleClient,
+    skins: InMemorySkinRepository,
 ) -> CourseMapService:
     # Passing the fakes here is the Protocol check: mypy verifies they match.
-    return CourseMapService(maps, bubbles, moodle)
+    return CourseMapService(maps, bubbles, moodle, skins)
 
 
 async def _map_id(service: CourseMapService, course_id: int = 1) -> uuid.UUID:

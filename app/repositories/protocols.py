@@ -24,6 +24,7 @@ from app.schemas.course_map import (
     CourseMapSummary,
     CourseMapUpdate,
 )
+from app.schemas.skin import ImageSkin, ProceduralSkin, SkinRead
 
 
 class CourseMapRepository(Protocol):
@@ -139,4 +140,34 @@ class AssetRepository(Protocol):
         sha256: str,
     ) -> AssetRecord:
         """Raises `AssetAlreadyExistsError` if the kind and hash already exist."""
+        ...
+
+
+class SkinRepository(Protocol):
+    async def get_by_id(self, skin_id: uuid.UUID) -> SkinRead | None: ...
+
+    async def existing_ids(self, skin_ids: Collection[uuid.UUID]) -> set[uuid.UUID]:
+        """Which of `skin_ids` are skins."""
+        ...
+
+    async def create(
+        self, name: str, config: ProceduralSkin | ImageSkin
+    ) -> SkinRead: ...
+
+    async def update(
+        self,
+        skin_id: uuid.UUID,
+        name: str | None,
+        config: ProceduralSkin | ImageSkin | None,
+    ) -> SkinRead | None:
+        """Changes only what is not None, in one statement."""
+        ...
+
+    async def delete(self, skin_id: uuid.UUID) -> bool:
+        """Bubbles using the skin lose it (`skin_id` null), maps using it as
+        their default lose that, and its skin rules go. Done by the database."""
+        ...
+
+    async def list(self, limit: int) -> list[SkinRead]:
+        """Built-in skins first, then by creation."""
         ...

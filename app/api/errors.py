@@ -17,6 +17,12 @@ from app.exceptions import (
     InvalidUploadError,
     OrderMismatchError,
     SectionAlreadyMappedError,
+    SkinAssetNotFoundError,
+    SkinAssetSizeMismatchError,
+    SkinAssetWrongKindError,
+    SkinIsBuiltinError,
+    SkinNotFoundError,
+    SkinReferenceNotFoundError,
     UploadsDisabledError,
 )
 from app.moodle.exceptions import (
@@ -158,6 +164,60 @@ def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(
         AssetQuotaExceededError,
         _coded(507, "asset_quota_exceeded", "The storage quota is full"),
+    )
+
+    app.add_exception_handler(
+        SkinNotFoundError, _handler(status.HTTP_404_NOT_FOUND, "Skin not found")
+    )
+    app.add_exception_handler(
+        SkinIsBuiltinError,
+        _coded(403, "skin_is_builtin", "Built-in skins cannot be changed or deleted"),
+    )
+    app.add_exception_handler(
+        SkinReferenceNotFoundError,
+        _coded(
+            422,
+            "skin_not_found",
+            "A referenced skin does not exist",
+            lambda exc: {"skinIds": [str(i) for i in exc.skin_ids]},
+        ),
+    )
+    app.add_exception_handler(
+        SkinAssetNotFoundError,
+        _coded(
+            422,
+            "skin_asset_not_found",
+            "A skin state refers to an asset that does not exist",
+            lambda exc: {"states": {s: str(a) for s, a in exc.missing.items()}},
+        ),
+    )
+    app.add_exception_handler(
+        SkinAssetWrongKindError,
+        _coded(
+            422,
+            "skin_asset_wrong_kind",
+            "Skin states must use bubble images, not backgrounds",
+            lambda exc: {"states": {s: str(a) for s, a in exc.wrong.items()}},
+        ),
+    )
+    app.add_exception_handler(
+        SkinAssetSizeMismatchError,
+        _coded(
+            422,
+            "skin_asset_size_mismatch",
+            "All state images of a skin must have the same width and height",
+            lambda exc: {
+                "sizes": [
+                    {
+                        "state": state,
+                        "assetId": str(asset_id),
+                        "width": width,
+                        "height": height,
+                    }
+                    for state, asset_id, width, height in exc.sizes
+                ]
+            },
+        ),
     )
 
     # Moodle failures. Messages are generic on purpose: never the token, nor

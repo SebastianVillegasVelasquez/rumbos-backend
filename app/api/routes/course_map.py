@@ -11,6 +11,7 @@ from app.repositories.sqlalchemy.bubble_repository import SqlAlchemyBubbleReposi
 from app.repositories.sqlalchemy.course_map_repository import (
     SqlAlchemyCourseMapRepository,
 )
+from app.repositories.sqlalchemy.skin_repository import SqlAlchemySkinRepository
 from app.schemas.activity import ActivityRead
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
@@ -36,6 +37,7 @@ def get_course_map_service(
         SqlAlchemyCourseMapRepository(session),
         SqlAlchemyBubbleRepository(session),
         moodle,
+        SqlAlchemySkinRepository(session),
     )
 
 

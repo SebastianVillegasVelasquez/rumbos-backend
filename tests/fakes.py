@@ -6,6 +6,7 @@ mypy checks wherever a fake is passed to `CourseMapService`.
 
 import asyncio
 import uuid
+from collections.abc import Collection
 from datetime import UTC, datetime
 
 from uuid_utils.compat import uuid7
@@ -25,6 +26,7 @@ from app.schemas.course_map import (
     CourseMapSummary,
     CourseMapUpdate,
 )
+from app.schemas.skin import ImageSkin, ProceduralSkin, SkinRead
 
 
 class InMemoryCourseMapRepository:
@@ -124,7 +126,8 @@ class InMemoryBubbleRepository:
         return self.items.get(bubble_id)
 
     async def list_by_course_map(self, course_map_id: uuid.UUID) -> list[BubbleRead]:
-        return [b for b in self.items.values() if b.course_map_id == course_map_id]
+        own = [b for b in self.items.values() if b.course_map_id == course_map_id]
+        return sorted(own, key=lambda b: (b.sequence, b.created_at, b.id))
 
     async def list_by_course(self, moodle_course_id: int) -> list[BubbleRead]:
         return [
@@ -149,9 +152,12 @@ class InMemoryBubbleRepository:
         counts = self._course_maps.bubble_counts
         counts[course_map_id] = counts.get(course_map_id, 0) + 1
         now = datetime.now(UTC)
+        siblings = await self.list_by_course_map(course_map_id)
         item = BubbleRead(
             id=uuid7(),
             course_map_id=course_map_id,
+            skin_id=None,
+            sequence=max((b.sequence for b in siblings), default=-1) + 1,
             created_at=now,
             updated_at=now,
             **data.model_dump(),
@@ -179,6 +185,41 @@ class InMemoryBubbleRepository:
         if bubble is not None:
             self._course_maps.bubble_counts[bubble.course_map_id] -= 1
         return bubble is not None
+
+
+class InMemorySkinRepository:
+    """Knows which skin ids exist; `service` tests only need that."""
+
+    def __init__(self) -> None:
+        self.ids: set[uuid.UUID] = set()
+
+    def add(self) -> uuid.UUID:
+        skin_id: uuid.UUID = uuid7()
+        self.ids.add(skin_id)
+        return skin_id
+
+    async def get_by_id(self, skin_id: uuid.UUID) -> SkinRead | None:
+        raise NotImplementedError
+
+    async def existing_ids(self, skin_ids: Collection[uuid.UUID]) -> set[uuid.UUID]:
+        return {i for i in skin_ids if i in self.ids}
+
+    async def create(self, name: str, config: ProceduralSkin | ImageSkin) -> SkinRead:
+        raise NotImplementedError
+
+    async def update(
+        self,
+        skin_id: uuid.UUID,
+        name: str | None,
+        config: ProceduralSkin | ImageSkin | None,
+    ) -> SkinRead | None:
+        raise NotImplementedError
+
+    async def delete(self, skin_id: uuid.UUID) -> bool:
+        raise NotImplementedError
+
+    async def list(self, limit: int) -> list[SkinRead]:
+        raise NotImplementedError
 
 
 class InMemoryMoodleClient:

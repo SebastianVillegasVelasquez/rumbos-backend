@@ -10,6 +10,7 @@ import pytest
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 from app.main import app
+from tests import skin_configs
 from tests.fakes import InMemoryMoodleClient
 
 
@@ -371,6 +372,8 @@ async def test_responses_are_camel_case(client: httpx.AsyncClient) -> None:
         "y",
         "icon",
         "status",
+        "skinId",
+        "sequence",
         "createdAt",
         "updatedAt",
     }
@@ -524,3 +527,95 @@ async def test_delete_course_map_removes_its_bubbles(
     assert (await client.delete(url)).status_code == 404
     # The course is free again for a new map.
     assert (await _create_map(client)).get("bubbles") == []
+
+
+async def _create_skin(client: httpx.AsyncClient) -> str:
+    r = await client.post(
+        "/skins", json={"name": "S", "config": skin_configs.procedural()}
+    )
+    assert r.status_code == 201, r.text
+    return str(r.json()["id"])
+
+
+async def test_new_bubbles_go_last_in_the_path(client: httpx.AsyncClient) -> None:
+    created = await _create_map(client)
+    other = await _create_map(client, 2)
+
+    sequences = [
+        (await _add_bubble(client, created["id"], activityId=a))["sequence"]
+        for a in (1, 2, 3)
+    ]
+    first_elsewhere = await _add_bubble(client, other["id"], activityId=9)
+
+    assert sequences == [0, 1, 2]
+    assert first_elsewhere["sequence"] == 0  # per map
+    assert (await _add_bubble(client, created["id"], activityId=4))["sequence"] == 3
+    assert all(b["skinId"] is None for b in [first_elsewhere])
+
+
+async def test_patch_bubble_sets_and_clears_its_skin(
+    client: httpx.AsyncClient,
+) -> None:
+    created = await _create_map(client)
+    bubble = await _add_bubble(client, created["id"])
+    skin_id = await _create_skin(client)
+    url = f"/course-maps/{created['id']}/bubbles/{bubble['id']}"
+
+    set_skin = await client.patch(url, json={"skinId": skin_id})
+    other_field = await client.patch(url, json={"x": 0.9, "y": 0.9})
+    cleared = await client.patch(url, json={"skinId": None})
+
+    assert set_skin.status_code == 200 and set_skin.json()["skinId"] == skin_id
+    assert other_field.json()["skinId"] == skin_id  # untouched when not sent
+    assert cleared.json()["skinId"] is None
+    stored = (await client.get(f"/course-maps/{created['id']}")).json()["bubbles"][0]
+    assert stored["skinId"] is None
+
+
+async def test_patch_bubble_with_an_unknown_skin_is_422_and_changes_nothing(
+    client: httpx.AsyncClient,
+) -> None:
+    created = await _create_map(client)
+    bubble = await _add_bubble(client, created["id"])
+    ghost = str(uuid.uuid4())
+
+    r = await client.patch(
+        f"/course-maps/{created['id']}/bubbles/{bubble['id']}",
+        json={"skinId": ghost, "x": 0.9, "y": 0.9},
+    )
+
+    assert r.status_code == 422
+    assert r.json()["detail"]["code"] == "skin_not_found"
+    assert r.json()["detail"]["skinIds"] == [ghost]
+    stored = (await client.get(f"/course-maps/{created['id']}")).json()["bubbles"][0]
+    assert (stored["x"], stored["skinId"]) == (0.25, None)
+
+
+async def test_sequence_cannot_be_patched(client: httpx.AsyncClient) -> None:
+    created = await _create_map(client)
+    await _add_bubble(client, created["id"], activityId=1)
+    second = await _add_bubble(client, created["id"], activityId=2)
+    url = f"/course-maps/{created['id']}/bubbles/{second['id']}"
+
+    only_sequence = await client.patch(url, json={"sequence": 0})
+    with_other = await client.patch(url, json={"sequence": 0, "status": "complete"})
+
+    assert only_sequence.status_code == 422  # nothing patchable was sent
+    assert with_other.status_code == 200 and with_other.json()["sequence"] == 1
+
+
+async def test_a_deleted_skin_leaves_bubbles_with_no_skin_through_the_api(
+    client: httpx.AsyncClient,
+) -> None:
+    created = await _create_map(client)
+    bubble = await _add_bubble(client, created["id"])
+    skin_id = await _create_skin(client)
+    await client.patch(
+        f"/course-maps/{created['id']}/bubbles/{bubble['id']}",
+        json={"skinId": skin_id},
+    )
+
+    assert (await client.delete(f"/skins/{skin_id}")).status_code == 204
+
+    stored = (await client.get(f"/course-maps/{created['id']}")).json()["bubbles"][0]
+    assert stored["skinId"] is None

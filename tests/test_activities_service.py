@@ -27,6 +27,7 @@ from tests.fakes import (
     InMemoryBubbleRepository,
     InMemoryCourseMapRepository,
     InMemoryMoodleClient,
+    InMemorySkinRepository,
 )
 from tests.moodle_fixtures import COURSE8_MODULE_ORDER, course8, parse, raw_course8
 
@@ -41,7 +42,9 @@ def moodle() -> InMemoryMoodleClient:
 @pytest.fixture
 def service(moodle: InMemoryMoodleClient) -> CourseMapService:
     maps = InMemoryCourseMapRepository()
-    return CourseMapService(maps, InMemoryBubbleRepository(maps), moodle)
+    return CourseMapService(
+        maps, InMemoryBubbleRepository(maps), moodle, InMemorySkinRepository()
+    )
 
 
 async def _map_id(service: CourseMapService, course_id: int = COURSE_ID) -> uuid.UUID:

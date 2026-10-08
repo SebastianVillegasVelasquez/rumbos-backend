@@ -329,3 +329,146 @@ def test_assets_migration_creates_a_deduplicating_table_and_downgrades(
     assert down.returncode == 0, down.stderr
     assert not fetch(migration_db, "SELECT 1 FROM pg_tables WHERE tablename = 'assets'")
     assert fetch(migration_db, "SELECT count(*) FROM bubbles") == [(1,)]
+
+
+SKINS = "d5b8a31c7e90"
+
+
+def test_skins_migration_seeds_four_valid_builtins_with_exactly_one_default(
+    migration_db: str,
+) -> None:
+    from app.schemas.skin import ProceduralSkin, skin_config_adapter
+
+    assert alembic(migration_db, "upgrade", SKINS).returncode == 0
+
+    rows = fetch(
+        migration_db,
+        "SELECT id::text, name, kind, is_builtin, is_default, config::text FROM skins"
+        " ORDER BY id",
+    )
+    assert [(r[0], r[1], r[2], r[3], r[4]) for r in rows] == [
+        ("01900000-0000-7000-8000-000000000001", "Orbe", "procedural", True, True),
+        ("01900000-0000-7000-8000-000000000002", "Insignia", "procedural", True, False),
+        ("01900000-0000-7000-8000-000000000003", "Pin", "procedural", True, False),
+        ("01900000-0000-7000-8000-000000000004", "Hexágono", "procedural", True, False),
+    ]
+    assert fetch(migration_db, "SELECT count(*) FROM skins WHERE is_default") == [(1,)]
+    configs = {r[1]: skin_config_adapter.validate_json(r[5]) for r in rows}
+    assert {
+        n: c.shape for n, c in configs.items() if isinstance(c, ProceduralSkin)
+    } == {
+        "Orbe": "circle",
+        "Insignia": "badge",
+        "Pin": "pin",
+        "Hexágono": "hexagon",
+    }
+    orbe = configs["Orbe"]
+    assert isinstance(orbe, ProceduralSkin)
+    assert orbe.size == 56 and orbe.effects.idle == "breathe"
+    assert orbe.effects.ring and orbe.effects.glow
+    assert orbe.palette.available.fill == "#FFB703"
+    assert orbe.palette.in_progress.glow == "#5ED3DD"
+    assert orbe.label.mode == "hover" and orbe.effects.completion == "burst"
+    pin = configs["Pin"]
+    assert isinstance(pin, ProceduralSkin) and pin.effects.idle == "float"
+    hexagon = configs["Hexágono"]
+    assert isinstance(hexagon, ProceduralSkin) and hexagon.effects.idle == "pulse"
+
+
+def test_skins_migration_backfills_sequence_in_creation_order_per_map(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", ASSETS).returncode == 0
+    first, second = uuid.uuid4(), uuid.uuid4()
+    for map_id, course in ((first, 8), (second, 9)):
+        sql, params = insert_map(course, with_title=True)
+        run_sql(migration_db, [(sql, {**params, "id": map_id})])
+
+    def bubble(map_id: uuid.UUID, course: int, activity: int, minute: int):  # type: ignore[no-untyped-def]
+        return (
+            (
+                "INSERT INTO bubbles (id, course_map_id, moodle_course_id, activity_id,"
+                " x, y, status, created_at, updated_at)"
+                " VALUES (:id, :m, :c, :a, 0.5, 0.5, 'locked',"
+                " now() + make_interval(mins => :t), now())"
+            ),
+            {"id": uuid.uuid4(), "m": map_id, "c": course, "a": activity, "t": minute},
+        )
+
+    # Inserted out of order: the sequence follows created_at, not insertion.
+    run_sql(
+        migration_db,
+        [
+            bubble(first, 8, 30, 3),
+            bubble(first, 8, 10, 1),
+            bubble(first, 8, 20, 2),
+            bubble(second, 9, 40, 9),
+        ],
+    )
+
+    assert alembic(migration_db, "upgrade", SKINS).returncode == 0
+
+    rows = fetch(
+        migration_db,
+        "SELECT moodle_course_id, activity_id, sequence FROM bubbles"
+        " ORDER BY moodle_course_id, sequence",
+    )
+    assert rows == [(8, 10, 0), (8, 20, 1), (8, 30, 2), (9, 40, 0)]
+    assert fetch(
+        migration_db,
+        "SELECT is_nullable FROM information_schema.columns"
+        " WHERE table_name = 'bubbles' AND column_name = 'sequence'",
+    ) == [("NO",)]
+
+
+def test_skins_migration_foreign_keys_clear_and_cascade_on_the_real_schema(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", SKINS).returncode == 0
+    map_id, bubble_id = uuid.uuid4(), uuid.uuid4()
+    orbe = "01900000-0000-7000-8000-000000000001"
+    sql, params = insert_map(8, with_title=True)
+    run_sql(
+        migration_db,
+        [
+            (sql, {**params, "id": map_id}),
+            (
+                "UPDATE course_maps SET default_skin_id = :s WHERE id = :m",
+                {"s": uuid.UUID(orbe), "m": map_id},
+            ),
+            (
+                (
+                    "INSERT INTO bubbles (id, course_map_id, moodle_course_id,"
+                    " activity_id, x, y, status, skin_id, created_at, updated_at)"
+                    " VALUES (:id, :m, 8, 1, 0, 0, 'locked', :s, now(), now())"
+                ),
+                {"id": bubble_id, "m": map_id, "s": uuid.UUID(orbe)},
+            ),
+            (
+                (
+                    "INSERT INTO course_map_skin_rules (id, course_map_id, modname,"
+                    " skin_id, created_at, updated_at)"
+                    " VALUES (:id, :m, 'quiz', :s, now(), now())"
+                ),
+                {"id": uuid.uuid4(), "m": map_id, "s": uuid.UUID(orbe)},
+            ),
+        ],
+    )
+
+    run_sql(migration_db, [("DELETE FROM skins WHERE id = :s", {"s": uuid.UUID(orbe)})])
+
+    assert fetch(migration_db, "SELECT skin_id FROM bubbles") == [(None,)]
+    assert fetch(migration_db, "SELECT default_skin_id FROM course_maps") == [(None,)]
+    assert fetch(migration_db, "SELECT count(*) FROM course_map_skin_rules") == [(0,)]
+
+
+def test_skins_migration_downgrades_and_keeps_bubbles(migration_db: str) -> None:
+    assert alembic(migration_db, "upgrade", UNIQUE).returncode == 0
+    seed_map_with_bubbles(migration_db, [1, 2])
+    assert alembic(migration_db, "upgrade", SKINS).returncode == 0
+
+    down = alembic(migration_db, "downgrade", ASSETS)
+
+    assert down.returncode == 0, down.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM bubbles") == [(2,)]
+    assert not fetch(migration_db, "SELECT 1 FROM pg_tables WHERE tablename = 'skins'")

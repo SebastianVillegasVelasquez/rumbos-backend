@@ -5,10 +5,15 @@ from app.exceptions import (
     BubbleNotFoundError,
     CourseMapNotFoundError,
     OrderMismatchError,
+    SkinReferenceNotFoundError,
 )
 from app.moodle.protocols import MoodleClient
 from app.moodle.schemas import MoodleModule, MoodleSection
-from app.repositories.protocols import BubbleRepository, CourseMapRepository
+from app.repositories.protocols import (
+    BubbleRepository,
+    CourseMapRepository,
+    SkinRepository,
+)
 from app.schemas.activity import ActivityRead
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
@@ -79,10 +84,12 @@ class CourseMapService:
         course_maps: CourseMapRepository,
         bubbles: BubbleRepository,
         moodle: MoodleClient,
+        skins: SkinRepository,
     ) -> None:
         self._course_maps = course_maps
         self._bubbles = bubbles
         self._moodle = moodle
+        self._skins = skins
 
     async def create_course_map(self, data: CourseMapCreate) -> CourseMapRead:
         # The repository appends the map to the course and enforces one map
@@ -147,6 +154,10 @@ class CourseMapService:
     ) -> BubbleRead:
         """Applies only the fields present in `data` (partial update)."""
         await self._require_bubble(course_map_id, bubble_id)
+        if data.skin_id is not None and not await self._skins.existing_ids(
+            {data.skin_id}
+        ):
+            raise SkinReferenceNotFoundError([data.skin_id])
         updated = await self._bubbles.update(bubble_id, data)
         if updated is None:  # deleted between the lookup and the write
             raise BubbleNotFoundError(bubble_id)

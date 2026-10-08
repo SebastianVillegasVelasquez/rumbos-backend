@@ -1,10 +1,14 @@
 import uuid
 
-from sqlalchemy import select, update
+from sqlalchemy import func, select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.exceptions import ActivityAlreadyPlacedError, CourseMapNotFoundError
+from app.exceptions import (
+    ActivityAlreadyPlacedError,
+    CourseMapNotFoundError,
+    SkinReferenceNotFoundError,
+)
 from app.models import Bubble, CourseMap
 from app.models.bubble import UQ_BUBBLE_ACTIVITY
 from app.repositories.sqlalchemy._errors import (
@@ -13,6 +17,10 @@ from app.repositories.sqlalchemy._errors import (
     sqlstate,
 )
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
+
+# The guided path order. `created_at, id` break ties (duplicate sequences are
+# tolerated; the order endpoint normalizes them).
+_PATH_ORDER = (Bubble.sequence, Bubble.created_at, Bubble.id)
 
 
 class SqlAlchemyBubbleRepository:
@@ -29,7 +37,7 @@ class SqlAlchemyBubbleRepository:
         result = await self._session.scalars(
             select(Bubble)
             .where(Bubble.course_map_id == course_map_id)
-            .order_by(Bubble.id)  # UUIDv7 ids sort by creation time
+            .order_by(*_PATH_ORDER)
         )
         return [BubbleRead.model_validate(b) for b in result]
 
@@ -37,20 +45,28 @@ class SqlAlchemyBubbleRepository:
         result = await self._session.scalars(
             select(Bubble)
             .where(Bubble.moodle_course_id == moodle_course_id)
-            .order_by(Bubble.id)
+            .order_by(*_PATH_ORDER)
         )
         return [BubbleRead.model_validate(b) for b in result]
 
     async def create(
         self, course_map_id: uuid.UUID, moodle_course_id: int, data: BubbleCreate
     ) -> BubbleRead:
-        bubble = Bubble(
-            course_map_id=course_map_id,
-            moodle_course_id=moodle_course_id,
-            **data.model_dump(),
-        )
-        self._session.add(bubble)
         try:
+            # New bubbles go last: max + 1 in this transaction (a simultaneous
+            # create can tie; that is tolerated, see `_PATH_ORDER`).
+            last = await self._session.scalar(
+                select(func.max(Bubble.sequence)).where(
+                    Bubble.course_map_id == course_map_id
+                )
+            )
+            bubble = Bubble(
+                course_map_id=course_map_id,
+                moodle_course_id=moodle_course_id,
+                sequence=0 if last is None else last + 1,
+                **data.model_dump(),
+            )
+            self._session.add(bubble)
             await self._session.commit()
         except IntegrityError as exc:
             # Inputs are validated upstream, so what is left is a foreign key
@@ -104,6 +120,12 @@ class SqlAlchemyBubbleRepository:
         try:
             bubble = (await self._session.scalars(stmt)).one_or_none()
             await self._session.commit()
+        except IntegrityError as exc:
+            await self._session.rollback()
+            # The skin was deleted after the service checked it.
+            if sqlstate(exc) == FOREIGN_KEY_VIOLATION and values.get("skin_id"):
+                raise SkinReferenceNotFoundError([values["skin_id"]]) from exc
+            raise
         except BaseException:
             await self._session.rollback()
             raise

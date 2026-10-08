@@ -22,15 +22,19 @@ class BubbleCreate(ApiModel):
 class BubbleUpdate(ApiModel):
     """Partial update: only fields present in the request are applied.
 
-    `icon` is nullable, so an explicit `"icon": null` (clear the icon) is
+    `icon` and `skinId` are nullable, so an explicit `null` (clear it) is
     different from omitting it; use `model_fields_set` to tell them apart.
-    `x` and `y` always move together.
+    `x` and `y` always move together. `sequence` is not here on purpose: the
+    order endpoint is the only thing that changes it.
     """
 
     x: UnitFloat | None = None
     y: UnitFloat | None = None
     icon: BubbleIcon | None = None
     status: BubbleStatus | None = None
+    # Nullable like `icon`: an explicit `"skinId": null` clears the bubble's
+    # own skin (it falls back to its map's rules and default).
+    skin_id: uuid.UUID | None = None
 
     @model_validator(mode="after")
     def _check_fields(self) -> Self:
@@ -53,5 +57,7 @@ class BubbleRead(ApiModel):
     y: float
     icon: BubbleIcon | None
     status: BubbleStatus
+    skin_id: uuid.UUID | None
+    sequence: int
     created_at: datetime
     updated_at: datetime

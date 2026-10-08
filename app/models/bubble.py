@@ -3,6 +3,7 @@ import uuid
 from sqlalchemy import (
     CheckConstraint,
     Enum,
+    ForeignKey,
     ForeignKeyConstraint,
     UniqueConstraint,
 )
@@ -42,6 +43,13 @@ class Bubble(BaseORM):
     # Copied from the parent map by the service on create; immutable. It is
     # what makes "one bubble per activity per course" a plain unique constraint.
     moodle_course_id: Mapped[int]
+    # Overrides the map's rules and default. Deleting the skin clears it.
+    skin_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("skins.id", ondelete="SET NULL"), index=True
+    )
+    # Position in the guided path (0-based). Only the order endpoint changes
+    # it; new bubbles go last. Ties are tolerated and broken by `created_at, id`.
+    sequence: Mapped[int] = mapped_column(server_default="0")
     # Opaque Moodle activity id; not a foreign key (Moodle data isn't here).
     activity_id: Mapped[int]
     # Relative position on a 0-1 scale, never pixels.

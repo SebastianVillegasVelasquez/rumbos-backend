@@ -114,6 +114,15 @@ never changes after creation.
 - `POST /assets` (201, or 200 for already-known content), `GET /assets/{id}`,
   `GET /assets/{id}/thumb` (backgrounds only). A map's `imageUrl` may be a
   bundled frontend path or `/assets/{id}`.
+- `GET /skins`, `POST /skins`, `PATCH /skins/{id}`, `DELETE /skins/{id}`: how
+  bubbles look. A skin is a validated `config` (`kind` `procedural` or
+  `image`; every key is checked, unknown ones rejected). Image skins reference
+  bubble assets per state, and all of a skin's state images must have the same
+  width and height. Four built-in skins (Orbe, the default, Insignia, Pin,
+  Hexágono) are seeded by a migration; they cannot be edited or deleted (403
+  `skin_is_builtin`). Deleting a skin clears it from the bubbles and maps that
+  used it. `PATCH` on a bubble also takes `skinId` (nullable); bubbles carry a
+  `sequence` (their place in the guided path; new ones go last).
 - `GET /health` (liveness) and `GET /health/ready` (database `SELECT 1`; 503 if
   it fails; never calls Moodle).
 
