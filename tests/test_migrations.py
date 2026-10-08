@@ -190,3 +190,106 @@ def test_unique_migration_allows_same_activity_on_different_maps(
     run_sql(migration_db, [(sql, {**params, "id": other}), insert_bubble(other, 1)])
 
     assert alembic(migration_db, "upgrade", UNIQUE).returncode == 0
+
+
+LEVELS = "a41f7c2d9b30"
+
+
+def test_levels_migration_backfills_positions_and_bubble_courses(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", UNIQUE).returncode == 0
+    seed_map_with_bubbles(migration_db, [1, 2, 3])  # course 8
+    other = uuid.uuid4()
+    sql, params = insert_map(9, with_title=True)
+    run_sql(migration_db, [(sql, {**params, "id": other}), insert_bubble(other, 1)])
+
+    result = alembic(migration_db, "upgrade", LEVELS)
+
+    assert result.returncode == 0, result.stderr
+    assert fetch(
+        migration_db,
+        "SELECT moodle_course_id, position, moodle_section_id FROM course_maps"
+        " ORDER BY moodle_course_id",
+    ) == [(8, 0, None), (9, 0, None)]
+    assert fetch(
+        migration_db,
+        "SELECT moodle_course_id, count(*) FROM bubbles"
+        " GROUP BY moodle_course_id ORDER BY moodle_course_id",
+    ) == [(8, 3), (9, 1)]
+    nullable = fetch(
+        migration_db,
+        "SELECT is_nullable FROM information_schema.columns"
+        " WHERE table_name = 'bubbles' AND column_name = 'moodle_course_id'",
+    )
+    assert nullable == [("NO",)]
+
+
+def test_levels_migration_allows_levels_and_enforces_the_new_rules(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", LEVELS).returncode == 0
+    first, second = uuid.uuid4(), uuid.uuid4()
+
+    def level(map_id: uuid.UUID, section: int | None) -> tuple[str, dict[str, Any]]:
+        return (
+            (
+                "INSERT INTO course_maps (id, title, moodle_course_id,"
+                " moodle_section_id, image_url, created_at, updated_at)"
+                " VALUES (:id, 'L', 8, :s, '/x.png', now(), now())"
+            ),
+            {"id": map_id, "s": section},
+        )
+
+    def bubble(
+        map_id: uuid.UUID, course: int, activity: int
+    ) -> tuple[str, dict[str, Any]]:
+        sql, params = insert_bubble(map_id, activity)
+        return (
+            sql.replace("activity_id,", "activity_id, moodle_course_id,").replace(
+                ":a,", ":a, :c,"
+            ),
+            {**params, "c": course},
+        )
+
+    # Several maps per course; NULL sections repeat.
+    run_sql(migration_db, [level(first, 1), level(second, None)])
+    run_sql(migration_db, [bubble(first, 8, 5)])
+    # An activity is unique per course, across maps...
+    with pytest.raises(Exception, match="uq_bubbles_moodle_course_id_activity_id"):
+        run_sql(migration_db, [bubble(second, 8, 5)])
+    # ...a section is unique per course...
+    with pytest.raises(Exception, match="uq_course_maps_course_section"):
+        run_sql(migration_db, [level(uuid.uuid4(), 1)])
+    # ...and a bubble's course must be its map's.
+    with pytest.raises(Exception, match="fk_bubbles_course_map"):
+        run_sql(migration_db, [bubble(second, 9, 6)])
+
+
+def test_levels_migration_downgrade_refuses_to_merge_maps(migration_db: str) -> None:
+    assert alembic(migration_db, "upgrade", LEVELS).returncode == 0
+    for _ in range(2):
+        sql, params = insert_map(8, with_title=True)
+        run_sql(migration_db, [(sql, {**params, "id": uuid.uuid4()})])
+
+    result = alembic(migration_db, "downgrade", UNIQUE)
+
+    assert result.returncode != 0
+    assert "course 8: 2 maps" in result.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM course_maps") == [(2,)]
+
+
+def test_levels_migration_downgrades_when_each_course_has_one_map(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", UNIQUE).returncode == 0
+    seed_map_with_bubbles(migration_db, [1, 2])
+    assert alembic(migration_db, "upgrade", LEVELS).returncode == 0
+
+    result = alembic(migration_db, "downgrade", UNIQUE)
+
+    assert result.returncode == 0, result.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM bubbles") == [(2,)]
+    assert fetch(migration_db, UNIQUE_CONSTRAINTS) == [
+        ("uq_bubbles_course_map_id_activity_id",)
+    ]

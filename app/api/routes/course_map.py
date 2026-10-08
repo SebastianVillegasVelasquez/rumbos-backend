@@ -16,6 +16,8 @@ from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
     CourseMapCreate,
     CourseMapList,
+    CourseMapOrdered,
+    CourseMapOrderUpdate,
     CourseMapRead,
     CourseMapUpdate,
 )
@@ -70,6 +72,13 @@ async def create_course_map(
     data: CourseMapCreate, service: ServiceDep
 ) -> CourseMapRead:
     return await service.create_course_map(data)
+
+
+@router.put("/order", response_model=CourseMapOrdered)
+async def reorder_course_maps(
+    data: CourseMapOrderUpdate, service: ServiceDep
+) -> CourseMapOrdered:
+    return await service.reorder_course_maps(data)
 
 
 @router.get("/{course_map_id}", response_model=CourseMapRead)

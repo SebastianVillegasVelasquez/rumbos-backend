@@ -1,9 +1,10 @@
 import uuid
+from collections import Counter
 
 from app.exceptions import (
     BubbleNotFoundError,
-    CourseMapAlreadyExistsError,
     CourseMapNotFoundError,
+    OrderMismatchError,
 )
 from app.moodle.protocols import MoodleClient
 from app.moodle.schemas import MoodleModule, MoodleSection
@@ -14,6 +15,8 @@ from app.schemas.course_map import (
     CourseMapBase,
     CourseMapCreate,
     CourseMapList,
+    CourseMapOrdered,
+    CourseMapOrderUpdate,
     CourseMapRead,
     CourseMapUpdate,
 )
@@ -51,6 +54,18 @@ def section_number(section: MoodleSection, position: int) -> int:
     return section.section if section.section is not None else position
 
 
+def check_exact_order(existing: list[uuid.UUID], requested: list[uuid.UUID]) -> None:
+    """Raises `OrderMismatchError` unless `requested` is `existing` reordered:
+    same ids, none missing, none unknown, none repeated."""
+    counts = Counter(requested)
+    known = set(existing)
+    duplicated = [i for i, n in counts.items() if n > 1]
+    missing = [i for i in existing if i not in counts]
+    unexpected = [i for i in counts if i not in known]
+    if missing or unexpected or duplicated:
+        raise OrderMismatchError(missing, unexpected, duplicated)
+
+
 class CourseMapService:
     """Orchestrates course maps and bubbles.
 
@@ -70,12 +85,19 @@ class CourseMapService:
         self._moodle = moodle
 
     async def create_course_map(self, data: CourseMapCreate) -> CourseMapRead:
-        if await self._course_maps.get_by_moodle_course_id(data.moodle_course_id):
-            raise CourseMapAlreadyExistsError(data.moodle_course_id)
-        # The repository still enforces uniqueness, covering the race between
-        # this check and the insert.
+        # The repository appends the map to the course and enforces one map
+        # per section (`SectionAlreadyMappedError`).
         created = await self._course_maps.create(data)
         return CourseMapRead(**created.model_dump(), bubbles=[])
+
+    async def reorder_course_maps(self, data: CourseMapOrderUpdate) -> CourseMapOrdered:
+        """Sets the order of a course's maps; `map_ids` must be exactly its maps."""
+        existing = await self._course_maps.list_for_course(data.moodle_course_id)
+        check_exact_order([m.id for m in existing], data.map_ids)
+        await self._course_maps.set_order(data.moodle_course_id, data.map_ids)
+        return CourseMapOrdered(
+            items=await self._course_maps.list_for_course(data.moodle_course_id)
+        )
 
     async def list_course_maps(
         self,
@@ -113,8 +135,12 @@ class CourseMapService:
     async def add_bubble(
         self, course_map_id: uuid.UUID, data: BubbleCreate
     ) -> BubbleRead:
-        await self._require_course_map(course_map_id)
-        return await self._bubbles.create(course_map_id, data)
+        course_map = await self._require_course_map(course_map_id)
+        # The bubble carries its map's Moodle course (immutable), which is what
+        # makes an activity unique per course.
+        return await self._bubbles.create(
+            course_map_id, course_map.moodle_course_id, data
+        )
 
     async def update_bubble(
         self, course_map_id: uuid.UUID, bubble_id: uuid.UUID, data: BubbleUpdate

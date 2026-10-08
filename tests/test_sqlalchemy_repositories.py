@@ -16,8 +16,8 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 from app.enums import BubbleIcon, BubbleStatus
 from app.exceptions import (
     ActivityAlreadyPlacedError,
-    CourseMapAlreadyExistsError,
     CourseMapNotFoundError,
+    SectionAlreadyMappedError,
 )
 from app.models import Bubble, CourseMap
 from app.repositories.sqlalchemy.bubble_repository import SqlAlchemyBubbleRepository
@@ -87,30 +87,53 @@ async def test_create_commits_and_is_visible_to_other_sessions(
     assert stored is not None and stored.moodle_course_id == 9
 
 
-async def test_duplicate_moodle_course_raises_and_rolls_back(
+async def test_duplicate_section_raises_and_rolls_back(
     maps: SqlAlchemyCourseMapRepository,
     session: AsyncSession,
     observer: AsyncSession,
 ) -> None:
-    await maps.create(CourseMapCreate(title="T", moodle_course_id=3, image_url="/a"))
-    with pytest.raises(CourseMapAlreadyExistsError):
+    await maps.create(
+        CourseMapCreate(
+            title="T", moodle_course_id=3, image_url="/a", moodle_section_id=11
+        )
+    )
+    with pytest.raises(SectionAlreadyMappedError):
         await maps.create(
-            CourseMapCreate(title="T", moodle_course_id=3, image_url="/b")
+            CourseMapCreate(
+                title="T", moodle_course_id=3, image_url="/b", moodle_section_id=11
+            )
         )
     # The session is usable again (rolled back) and nothing extra persisted.
     assert await _count(session, CourseMap) == 1
     assert await _count(observer, CourseMap) == 1
 
 
-async def test_get_by_id_and_by_moodle_course_id(
+async def test_a_course_can_have_several_maps_and_sections_are_per_course(
     maps: SqlAlchemyCourseMapRepository,
 ) -> None:
+    def make(course: int, section: int | None) -> CourseMapCreate:
+        return CourseMapCreate(
+            title="T",
+            moodle_course_id=course,
+            image_url="/a",
+            moodle_section_id=section,
+        )
+
+    first = await maps.create(make(3, 11))
+    second = await maps.create(make(3, 12))
+    third = await maps.create(make(3, None))
+    fourth = await maps.create(make(3, None))  # NULL sections never collide
+    other_course = await maps.create(make(4, 11))  # same section id, other course
+
+    assert [m.position for m in (first, second, third, fourth)] == [0, 1, 2, 3]
+    assert other_course.position == 0
+
+
+async def test_get_by_id(maps: SqlAlchemyCourseMapRepository) -> None:
     map_id = await _make_map(maps, 4)
     by_id = await maps.get_by_id(map_id)
-    by_course = await maps.get_by_moodle_course_id(4)
-    assert by_id is not None and by_course is not None and by_id.id == by_course.id
+    assert by_id is not None and by_id.moodle_course_id == 4
     assert await maps.get_by_id(uuid.uuid4()) is None
-    assert await maps.get_by_moodle_course_id(404) is None
 
 
 async def test_delete_map_cascades_and_commits(
@@ -119,7 +142,7 @@ async def test_delete_map_cascades_and_commits(
     observer: AsyncSession,
 ) -> None:
     map_id = await _make_map(maps)
-    await bubbles.create(map_id, BubbleCreate(activity_id=1, x=0.1, y=0.1))
+    await bubbles.create(map_id, 1, BubbleCreate(activity_id=1, x=0.1, y=0.1))
     assert await maps.delete(map_id) is True
     assert await _count(observer, CourseMap) == 0
     assert await _count(observer, Bubble) == 0
@@ -206,8 +229,8 @@ async def test_list_counts_bubbles_in_one_query(
 ) -> None:
     ids = await _seed_maps(session, [(1, "A"), (2, "B"), (3, "C")])
     for activity in (1, 2, 3):
-        await bubbles.create(ids[1], BubbleCreate(activity_id=activity, x=0, y=0))
-    await bubbles.create(ids[2], BubbleCreate(activity_id=1, x=0, y=0))
+        await bubbles.create(ids[1], 1, BubbleCreate(activity_id=activity, x=0, y=0))
+    await bubbles.create(ids[2], 2, BubbleCreate(activity_id=1, x=0, y=0))
 
     statements: list[str] = []
 
@@ -291,8 +314,8 @@ async def test_map_delete_cascades_to_every_bubble_but_only_its_own(
 ) -> None:
     doomed, kept = await _make_map(maps, 1), await _make_map(maps, 2)
     for activity in (1, 2, 3):
-        await bubbles.create(doomed, BubbleCreate(activity_id=activity, x=0, y=0))
-    await bubbles.create(kept, BubbleCreate(activity_id=1, x=0, y=0))
+        await bubbles.create(doomed, 1, BubbleCreate(activity_id=activity, x=0, y=0))
+    await bubbles.create(kept, 2, BubbleCreate(activity_id=1, x=0, y=0))
 
     assert await maps.delete(doomed) is True
 
@@ -310,7 +333,9 @@ async def test_bubble_create_and_list_in_creation_order(
 ) -> None:
     map_id = await _make_map(maps)
     for activity in (10, 20, 30):
-        await bubbles.create(map_id, BubbleCreate(activity_id=activity, x=0.5, y=0.5))
+        await bubbles.create(
+            map_id, 1, BubbleCreate(activity_id=activity, x=0.5, y=0.5)
+        )
     listed = await bubbles.list_by_course_map(map_id)
     assert [b.activity_id for b in listed] == [10, 20, 30]
     assert await _count(observer, Bubble) == 3
@@ -321,7 +346,7 @@ async def test_bubble_create_for_missing_map_raises_and_rolls_back(
     bubbles: SqlAlchemyBubbleRepository, session: AsyncSession
 ) -> None:
     with pytest.raises(CourseMapNotFoundError):
-        await bubbles.create(uuid.uuid4(), BubbleCreate(activity_id=1, x=0, y=0))
+        await bubbles.create(uuid.uuid4(), 1, BubbleCreate(activity_id=1, x=0, y=0))
     assert await _count(session, Bubble) == 0
 
 
@@ -331,7 +356,7 @@ async def test_bubble_update_commits_and_touches_updated_at(
     observer: AsyncSession,
 ) -> None:
     map_id = await _make_map(maps)
-    bubble = await bubbles.create(map_id, BubbleCreate(activity_id=1, x=0.1, y=0.2))
+    bubble = await bubbles.create(map_id, 1, BubbleCreate(activity_id=1, x=0.1, y=0.2))
 
     moved = await bubbles.update(
         bubble.id, BubbleUpdate.model_validate({"x": 0.7, "y": 0.8})
@@ -373,7 +398,7 @@ async def test_bubble_delete_commits(
     observer: AsyncSession,
 ) -> None:
     map_id = await _make_map(maps)
-    bubble = await bubbles.create(map_id, BubbleCreate(activity_id=1, x=0, y=0))
+    bubble = await bubbles.create(map_id, 1, BubbleCreate(activity_id=1, x=0, y=0))
     assert await bubbles.delete(bubble.id) is True
     assert await _count(observer, Bubble) == 0
     assert await bubbles.get_by_id(bubble.id) is None
@@ -386,24 +411,58 @@ async def test_duplicate_activity_on_a_map_raises_and_rolls_back(
     observer: AsyncSession,
 ) -> None:
     map_id = await _make_map(maps)
-    await bubbles.create(map_id, BubbleCreate(activity_id=7, x=0.1, y=0.1))
+    await bubbles.create(map_id, 1, BubbleCreate(activity_id=7, x=0.1, y=0.1))
 
     with pytest.raises(ActivityAlreadyPlacedError):
-        await bubbles.create(map_id, BubbleCreate(activity_id=7, x=0.9, y=0.9))
+        await bubbles.create(map_id, 1, BubbleCreate(activity_id=7, x=0.9, y=0.9))
 
     assert not session.in_transaction()
     assert await _count(observer, Bubble) == 1
     # The session still works afterwards.
-    await bubbles.create(map_id, BubbleCreate(activity_id=8, x=0.2, y=0.2))
+    await bubbles.create(map_id, 1, BubbleCreate(activity_id=8, x=0.2, y=0.2))
     assert await _count(observer, Bubble) == 2
 
 
-async def test_same_activity_on_different_maps_is_allowed(
+async def test_same_activity_on_maps_of_different_courses_is_allowed(
     maps: SqlAlchemyCourseMapRepository, bubbles: SqlAlchemyBubbleRepository
 ) -> None:
     first, second = await _make_map(maps, 1), await _make_map(maps, 2)
-    await bubbles.create(first, BubbleCreate(activity_id=7, x=0, y=0))
-    await bubbles.create(second, BubbleCreate(activity_id=7, x=0, y=0))
+    await bubbles.create(first, 1, BubbleCreate(activity_id=7, x=0, y=0))
+    await bubbles.create(second, 2, BubbleCreate(activity_id=7, x=0, y=0))
+
+
+async def test_activity_is_unique_per_course_across_its_maps(
+    maps: SqlAlchemyCourseMapRepository,
+    bubbles: SqlAlchemyBubbleRepository,
+    observer: AsyncSession,
+) -> None:
+    first, second = await _make_map(maps, 1), await _make_map(maps, 1)
+    await bubbles.create(first, 1, BubbleCreate(activity_id=7, x=0, y=0))
+
+    with pytest.raises(ActivityAlreadyPlacedError) as caught:
+        await bubbles.create(second, 1, BubbleCreate(activity_id=7, x=0, y=0))
+
+    assert caught.value.course_map_id == first
+    assert caught.value.course_map_title == "T"
+    assert await _count(observer, Bubble) == 1
+
+
+async def test_deleting_a_map_frees_its_activities_for_the_course(
+    maps: SqlAlchemyCourseMapRepository, bubbles: SqlAlchemyBubbleRepository
+) -> None:
+    first, second = await _make_map(maps, 1), await _make_map(maps, 1)
+    await bubbles.create(first, 1, BubbleCreate(activity_id=7, x=0, y=0))
+    await maps.delete(first)
+
+    await bubbles.create(second, 1, BubbleCreate(activity_id=7, x=0, y=0))
+
+
+async def test_bubble_course_must_match_its_map(
+    maps: SqlAlchemyCourseMapRepository, bubbles: SqlAlchemyBubbleRepository
+) -> None:
+    map_id = await _make_map(maps, 1)
+    with pytest.raises(CourseMapNotFoundError):
+        await bubbles.create(map_id, 2, BubbleCreate(activity_id=7, x=0, y=0))
 
 
 async def test_concurrent_duplicate_creates_yield_exactly_one_bubble(
@@ -418,7 +477,7 @@ async def test_concurrent_duplicate_creates_yield_exactly_one_bubble(
         async with AsyncSession(engine, expire_on_commit=False) as s:
             try:
                 await SqlAlchemyBubbleRepository(s).create(
-                    map_id, BubbleCreate(activity_id=42, x=x, y=0.5)
+                    map_id, 1, BubbleCreate(activity_id=42, x=x, y=0.5)
                 )
             except ActivityAlreadyPlacedError:
                 return "duplicate"
@@ -440,11 +499,11 @@ async def test_read_methods_never_commit(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     map_id = await _make_map(maps)
-    bubble = await bubbles.create(map_id, BubbleCreate(activity_id=1, x=0, y=0))
+    bubble = await bubbles.create(map_id, 1, BubbleCreate(activity_id=1, x=0, y=0))
     calls = _spy_commits(session, monkeypatch)
 
     await maps.get_by_id(map_id)
-    await maps.get_by_moodle_course_id(1)
+    await maps.list_for_course(1)
     await bubbles.get_by_id(bubble.id)
     await bubbles.list_by_course_map(map_id)
     assert calls == []
@@ -458,7 +517,7 @@ async def test_failed_write_is_rolled_back(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     map_id = await _make_map(maps)
-    bubble = await bubbles.create(map_id, BubbleCreate(activity_id=1, x=0.1, y=0.1))
+    bubble = await bubbles.create(map_id, 1, BubbleCreate(activity_id=1, x=0.1, y=0.1))
 
     async def flush_then_fail() -> None:
         await session.flush()  # the UPDATE reaches the DB inside the transaction...
@@ -484,7 +543,7 @@ async def test_multi_field_update_is_all_or_nothing(
 ) -> None:
     map_id = await _make_map(maps)
     bubble = await bubbles.create(
-        map_id, BubbleCreate(activity_id=1, x=0.1, y=0.2, icon=BubbleIcon.STAR)
+        map_id, 1, BubbleCreate(activity_id=1, x=0.1, y=0.2, icon=BubbleIcon.STAR)
     )
     # Make exactly one of the patched fields unacceptable to the database.
     await session.execute(

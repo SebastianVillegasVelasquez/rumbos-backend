@@ -8,7 +8,6 @@ from app.enums import BubbleIcon, BubbleStatus
 from app.exceptions import (
     ActivityAlreadyPlacedError,
     BubbleNotFoundError,
-    CourseMapAlreadyExistsError,
     CourseMapNotFoundError,
 )
 from app.schemas.bubble import BubbleCreate, BubbleUpdate
@@ -53,12 +52,16 @@ async def _map_id(service: CourseMapService, course_id: int = 1) -> uuid.UUID:
     return created.id
 
 
-async def test_create_course_map_rejects_second_map_for_same_course(
+async def test_a_course_can_have_several_maps_in_order(
     service: CourseMapService,
 ) -> None:
-    await _map_id(service, 7)
-    with pytest.raises(CourseMapAlreadyExistsError):
-        await _map_id(service, 7)
+    first, second = await _map_id(service, 7), await _map_id(service, 7)
+
+    listed = await service.list_course_maps(
+        moodle_course_id=7, q=None, limit=10, offset=0
+    )
+
+    assert [(m.id, m.position) for m in listed.items] == [(first, 0), (second, 1)]
 
 
 async def test_list_course_maps_wraps_the_page_and_counts_bubbles(

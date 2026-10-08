@@ -79,7 +79,11 @@ async def _map_with_bubbles(
         CourseMapCreate(title="T", moodle_course_id=COURSE_ID, image_url="/u")
     )
     ids = [
-        (await bubbles.create(created.id, BubbleCreate(activity_id=a, x=0.5, y=0.5))).id
+        (
+            await bubbles.create(
+                created.id, COURSE_ID, BubbleCreate(activity_id=a, x=0.5, y=0.5)
+            )
+        ).id
         for a in activity_ids
     ]
     return created.id, ids

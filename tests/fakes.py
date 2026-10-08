@@ -12,14 +12,15 @@ from uuid_utils.compat import uuid7
 
 from app.exceptions import (
     ActivityAlreadyPlacedError,
-    CourseMapAlreadyExistsError,
     CourseMapNotFoundError,
+    SectionAlreadyMappedError,
 )
 from app.moodle.exceptions import MoodleCourseNotFoundError
 from app.moodle.schemas import MoodleSection, MoodleSiteInfo
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
     CourseMapBase,
+    CourseMapCore,
     CourseMapCreate,
     CourseMapSummary,
     CourseMapUpdate,
@@ -30,49 +31,51 @@ class InMemoryCourseMapRepository:
     def __init__(self) -> None:
         self.items: dict[uuid.UUID, CourseMapBase] = {}
         self.bubble_counts: dict[uuid.UUID, int] = {}
+        self.complete_counts: dict[uuid.UUID, int] = {}
 
     async def get_by_id(self, course_map_id: uuid.UUID) -> CourseMapBase | None:
         return self.items.get(course_map_id)
 
-    async def get_by_moodle_course_id(
-        self, moodle_course_id: int
-    ) -> CourseMapBase | None:
-        return next(
-            (m for m in self.items.values() if m.moodle_course_id == moodle_course_id),
-            None,
+    def _level_order(self, moodle_course_id: int) -> list[CourseMapBase]:
+        maps = [
+            m for m in self.items.values() if m.moodle_course_id == moodle_course_id
+        ]
+        return sorted(maps, key=lambda m: (m.position, m.created_at, m.id))
+
+    def _summary(self, m: CourseMapBase) -> CourseMapSummary:
+        return CourseMapSummary(
+            **CourseMapCore.model_validate(m).model_dump(),
+            bubble_count=self.bubble_counts.get(m.id, 0),
+            complete_count=self.complete_counts.get(m.id, 0),
         )
 
-    async def list(
-        self,
-        moodle_course_id: int | None,
-        q: str | None,
-        limit: int,
-        offset: int,
-    ) -> tuple[list[CourseMapSummary], int]:
-        matches = [
-            m
-            for m in self.items.values()
-            if (moodle_course_id is None or m.moodle_course_id == moodle_course_id)
-            and (not q or q.lower() in m.title.lower())
-        ]
-        matches.sort(key=lambda m: (m.updated_at, m.id), reverse=True)
-        page = [
-            CourseMapSummary(
-                **m.model_dump(), bubble_count=self.bubble_counts.get(m.id, 0)
-            )
-            for m in matches[offset : offset + limit]
-        ]
-        return page, len(matches)
+    async def list_for_course(self, moodle_course_id: int) -> list[CourseMapSummary]:
+        return [self._summary(m) for m in self._level_order(moodle_course_id)]
 
     async def create(self, data: CourseMapCreate) -> CourseMapBase:
-        if await self.get_by_moodle_course_id(data.moodle_course_id):
-            raise CourseMapAlreadyExistsError(data.moodle_course_id)
+        siblings = self._level_order(data.moodle_course_id)
+        if data.moodle_section_id is not None and any(
+            m.moodle_section_id == data.moodle_section_id for m in siblings
+        ):
+            raise SectionAlreadyMappedError(data.moodle_section_id)
         now = datetime.now(UTC)
         item = CourseMapBase(
-            id=uuid7(), created_at=now, updated_at=now, **data.model_dump()
+            id=uuid7(),
+            created_at=now,
+            updated_at=now,
+            position=max((m.position for m in siblings), default=-1) + 1,
+            **data.model_dump(),
         )
         self.items[item.id] = item
         return item
+
+    async def set_order(
+        self, moodle_course_id: int, ordered_ids: list[uuid.UUID]
+    ) -> None:
+        for position, map_id in enumerate(ordered_ids):
+            current = self.items[map_id]
+            if current.moodle_course_id == moodle_course_id:
+                self.items[map_id] = current.model_copy(update={"position": position})
 
     async def update(
         self, course_map_id: uuid.UUID, data: CourseMapUpdate
@@ -90,6 +93,26 @@ class InMemoryCourseMapRepository:
     async def delete(self, course_map_id: uuid.UUID) -> bool:
         return self.items.pop(course_map_id, None) is not None
 
+    async def list(
+        self,
+        moodle_course_id: int | None,
+        q: str | None,
+        limit: int,
+        offset: int,
+    ) -> tuple[list[CourseMapSummary], int]:
+        matches = [
+            m
+            for m in self.items.values()
+            if (moodle_course_id is None or m.moodle_course_id == moodle_course_id)
+            and (not q or q.lower() in m.title.lower())
+        ]
+        if moodle_course_id is None:
+            matches.sort(key=lambda m: (m.updated_at, m.id), reverse=True)
+        else:
+            matches.sort(key=lambda m: (m.position, m.created_at, m.id))
+        page = [self._summary(m) for m in matches[offset : offset + limit]]
+        return page, len(matches)
+
 
 class InMemoryBubbleRepository:
     def __init__(self, course_maps: InMemoryCourseMapRepository) -> None:
@@ -103,14 +126,25 @@ class InMemoryBubbleRepository:
     async def list_by_course_map(self, course_map_id: uuid.UUID) -> list[BubbleRead]:
         return [b for b in self.items.values() if b.course_map_id == course_map_id]
 
-    async def create(self, course_map_id: uuid.UUID, data: BubbleCreate) -> BubbleRead:
+    async def list_by_course(self, moodle_course_id: int) -> list[BubbleRead]:
+        return [
+            b
+            for b in self.items.values()
+            if self._course_maps.items[b.course_map_id].moodle_course_id
+            == moodle_course_id
+        ]
+
+    async def create(
+        self, course_map_id: uuid.UUID, moodle_course_id: int, data: BubbleCreate
+    ) -> BubbleRead:
         if course_map_id not in self._course_maps.items:
             raise CourseMapNotFoundError(course_map_id)
-        if any(
-            b.course_map_id == course_map_id and b.activity_id == data.activity_id
-            for b in self.items.values()
-        ):
-            raise ActivityAlreadyPlacedError(data.activity_id)
+        for other in await self.list_by_course(moodle_course_id):
+            if other.activity_id == data.activity_id:
+                owner = self._course_maps.items[other.course_map_id]
+                raise ActivityAlreadyPlacedError(
+                    data.activity_id, owner.id, owner.title
+                )
         self.writes += 1
         counts = self._course_maps.bubble_counts
         counts[course_map_id] = counts.get(course_map_id, 0) + 1

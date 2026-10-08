@@ -50,6 +50,9 @@ class CourseMapCreate(ApiModel):
     title: Title
     moodle_course_id: int
     image_url: ImageUrl
+    # The Moodle section (id, not number) this level covers; at most one map
+    # per section in a course.
+    moodle_section_id: int | None = None
 
 
 class CourseMapUpdate(ApiModel):
@@ -69,21 +72,28 @@ class CourseMapUpdate(ApiModel):
         return self
 
 
-class CourseMapBase(ApiModel):
-    """The `course_maps` row: what repositories return. Never has bubbles."""
+class CourseMapCore(ApiModel):
+    """The `course_maps` columns every representation shares."""
 
     id: uuid.UUID
     title: str
     moodle_course_id: int
+    moodle_section_id: int | None
+    position: int
     image_url: str
     created_at: datetime
     updated_at: datetime
 
 
-class CourseMapSummary(CourseMapBase):
+class CourseMapBase(CourseMapCore):
+    """The `course_maps` row: what repositories return. Never has bubbles."""
+
+
+class CourseMapSummary(CourseMapCore):
     """A map as listed: counts its bubbles instead of carrying them."""
 
     bubble_count: int
+    complete_count: int  # bubbles whose status is `complete`
 
 
 class CourseMapList(ApiModel):
@@ -91,6 +101,17 @@ class CourseMapList(ApiModel):
     total: int  # matches of the filters, ignoring limit/offset
     limit: int
     offset: int
+
+
+class CourseMapOrderUpdate(ApiModel):
+    """The full desired order of a course's maps."""
+
+    moodle_course_id: int
+    map_ids: list[uuid.UUID]
+
+
+class CourseMapOrdered(ApiModel):
+    items: list[CourseMapSummary]
 
 
 class CourseMapRead(CourseMapBase):

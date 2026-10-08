@@ -5,20 +5,14 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.exceptions import ActivityAlreadyPlacedError, CourseMapNotFoundError
-from app.models import Bubble
+from app.models import Bubble, CourseMap
 from app.models.bubble import UQ_BUBBLE_ACTIVITY
+from app.repositories.sqlalchemy._errors import (
+    FOREIGN_KEY_VIOLATION,
+    constraint_name,
+    sqlstate,
+)
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
-
-_FOREIGN_KEY_VIOLATION = "23503"  # PostgreSQL SQLSTATE
-
-
-def _constraint_name(exc: IntegrityError) -> str | None:
-    """Name of the violated constraint, as reported by the driver.
-
-    asyncpg's exception (the SQLAlchemy adapter's `__cause__`) carries it.
-    """
-    cause = exc.orig.__cause__ if exc.orig else None
-    return getattr(cause, "constraint_name", None)
 
 
 class SqlAlchemyBubbleRepository:
@@ -39,25 +33,60 @@ class SqlAlchemyBubbleRepository:
         )
         return [BubbleRead.model_validate(b) for b in result]
 
-    async def create(self, course_map_id: uuid.UUID, data: BubbleCreate) -> BubbleRead:
-        bubble = Bubble(course_map_id=course_map_id, **data.model_dump())
+    async def list_by_course(self, moodle_course_id: int) -> list[BubbleRead]:
+        result = await self._session.scalars(
+            select(Bubble)
+            .where(Bubble.moodle_course_id == moodle_course_id)
+            .order_by(Bubble.id)
+        )
+        return [BubbleRead.model_validate(b) for b in result]
+
+    async def create(
+        self, course_map_id: uuid.UUID, moodle_course_id: int, data: BubbleCreate
+    ) -> BubbleRead:
+        bubble = Bubble(
+            course_map_id=course_map_id,
+            moodle_course_id=moodle_course_id,
+            **data.model_dump(),
+        )
         self._session.add(bubble)
         try:
             await self._session.commit()
         except IntegrityError as exc:
             # Inputs are validated upstream, so what is left is a foreign key
-            # to a map that doesn't exist, or the one-bubble-per-activity
-            # constraint (which is what stops concurrent duplicates).
+            # to a map that doesn't exist, or the one-bubble-per-activity-per-
+            # course constraint (which is what stops concurrent duplicates).
             await self._session.rollback()
-            if _constraint_name(exc) == UQ_BUBBLE_ACTIVITY:
-                raise ActivityAlreadyPlacedError(data.activity_id) from exc
-            if getattr(exc.orig, "sqlstate", None) == _FOREIGN_KEY_VIOLATION:
+            if constraint_name(exc) == UQ_BUBBLE_ACTIVITY:
+                raise await self._already_placed(moodle_course_id, data) from exc
+            if sqlstate(exc) == FOREIGN_KEY_VIOLATION:
                 raise CourseMapNotFoundError(course_map_id) from exc
             raise
         except BaseException:
             await self._session.rollback()
             raise
         return BubbleRead.model_validate(bubble)
+
+    async def _already_placed(
+        self, moodle_course_id: int, data: BubbleCreate
+    ) -> ActivityAlreadyPlacedError:
+        """The error for a duplicate, naming the map that already has it."""
+        # This read starts a new transaction (the failed one was rolled back);
+        # close it so the repository leaves the session clean.
+        row = (
+            await self._session.execute(
+                select(CourseMap.id, CourseMap.title)
+                .join(Bubble, Bubble.course_map_id == CourseMap.id)
+                .where(
+                    Bubble.moodle_course_id == moodle_course_id,
+                    Bubble.activity_id == data.activity_id,
+                )
+            )
+        ).first()
+        await self._session.rollback()
+        if row is None:  # the other bubble was deleted since the violation
+            return ActivityAlreadyPlacedError(data.activity_id)
+        return ActivityAlreadyPlacedError(data.activity_id, row.id, row.title)
 
     async def update(
         self, bubble_id: uuid.UUID, data: BubbleUpdate

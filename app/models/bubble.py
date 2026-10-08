@@ -1,6 +1,11 @@
 import uuid
 
-from sqlalchemy import CheckConstraint, Enum, ForeignKey, UniqueConstraint
+from sqlalchemy import (
+    CheckConstraint,
+    Enum,
+    ForeignKeyConstraint,
+    UniqueConstraint,
+)
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.enums import BubbleIcon, BubbleStatus
@@ -11,23 +16,32 @@ def _values(enum_cls: type[BubbleStatus] | type[BubbleIcon]) -> list[str]:
     return [member.value for member in enum_cls]
 
 
-# A Moodle activity appears at most once per map. The database enforces it
-# (so concurrent requests cannot both win); the repository maps a violation of
-# this constraint to `ActivityAlreadyPlacedError`.
-UQ_BUBBLE_ACTIVITY = "uq_bubbles_course_map_id_activity_id"
+# A Moodle activity appears at most once per COURSE (on one of its maps). The
+# database enforces it (so concurrent requests cannot both win); the repository
+# maps a violation of this constraint to `ActivityAlreadyPlacedError`.
+UQ_BUBBLE_ACTIVITY = "uq_bubbles_moodle_course_id_activity_id"
 
 
 class Bubble(BaseORM):
     __tablename__ = "bubbles"
     __table_args__ = (
-        UniqueConstraint("course_map_id", "activity_id", name=UQ_BUBBLE_ACTIVITY),
+        UniqueConstraint("moodle_course_id", "activity_id", name=UQ_BUBBLE_ACTIVITY),
+        # Composite so the course id copied onto the bubble must match the
+        # parent map's: it cannot drift, and the map's can't change under it.
+        ForeignKeyConstraint(
+            ["course_map_id", "moodle_course_id"],
+            ["course_maps.id", "course_maps.moodle_course_id"],
+            name="fk_bubbles_course_map",
+            ondelete="CASCADE",
+        ),
         CheckConstraint("x >= 0 AND x <= 1", name="ck_bubbles_x_range"),
         CheckConstraint("y >= 0 AND y <= 1", name="ck_bubbles_y_range"),
     )
 
-    course_map_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("course_maps.id", ondelete="CASCADE"), index=True
-    )
+    course_map_id: Mapped[uuid.UUID] = mapped_column(index=True)
+    # Copied from the parent map by the service on create; immutable. It is
+    # what makes "one bubble per activity per course" a plain unique constraint.
+    moodle_course_id: Mapped[int]
     # Opaque Moodle activity id; not a foreign key (Moodle data isn't here).
     activity_id: Mapped[int]
     # Relative position on a 0-1 scale, never pixels.

@@ -52,16 +52,42 @@ async def test_create_course_map(client: httpx.AsyncClient) -> None:
     assert uuid.UUID(body["id"]).version == 7
 
 
-async def test_create_course_map_conflict_for_same_course(
+async def test_a_course_can_have_several_maps_appended_in_order(
     client: httpx.AsyncClient,
 ) -> None:
-    await _create_map(client, 5)
-    r = await client.post(
-        "/course-maps",
-        json={"title": "Other", "moodleCourseId": 5, "imageUrl": "/other"},
-    )
+    first = await _create_map(client, 5)
+    second = await _create_map(client, 5)
+    other_course = await _create_map(client, 6)
+
+    assert [first["position"], second["position"], other_course["position"]] == [
+        0,
+        1,
+        0,
+    ]
+    assert first["moodleSectionId"] is None
+
+
+async def test_create_course_map_conflict_for_same_section(
+    client: httpx.AsyncClient,
+) -> None:
+    payload = {
+        "title": "L1",
+        "moodleCourseId": 5,
+        "imageUrl": "/a",
+        "moodleSectionId": 31,
+    }
+    created = await client.post("/course-maps", json=payload)
+    assert created.status_code == 201
+    assert created.json()["moodleSectionId"] == 31
+
+    r = await client.post("/course-maps", json=payload)
+
     assert r.status_code == 409
-    assert r.json()["detail"]["code"] == "map_already_exists_for_course"
+    assert r.json()["detail"]["code"] == "map_already_exists_for_section"
+    # Another course may use the same section id; maps without one never collide.
+    other = await client.post("/course-maps", json={**payload, "moodleCourseId": 6})
+    assert other.status_code == 201
+    assert (await _create_map(client, 5))["moodleSectionId"] is None
 
 
 async def test_create_course_map_returns_title_and_empty_bubbles(
@@ -148,11 +174,102 @@ async def test_add_bubble_for_a_placed_activity_is_409_with_code(
     assert r.json() == {
         "detail": {
             "code": "activity_already_placed",
-            "message": "This activity already has a bubble on the map",
+            "message": "This activity already has a bubble on a map of the course",
+            "courseMapId": created["id"],
+            "courseMapTitle": "Map 1",
         }
     }
-    other = await _create_map(client, 2)
-    await _add_bubble(client, other["id"], activityId=5)  # other map: fine
+    other_course = await _create_map(client, 2)
+    await _add_bubble(client, other_course["id"], activityId=5)  # other course: fine
+
+
+async def test_activity_is_unique_across_the_maps_of_a_course(
+    client: httpx.AsyncClient,
+) -> None:
+    first = await _create_map(client, 1)
+    second = await _create_map(client, 1)
+    await _add_bubble(client, first["id"], activityId=5)
+
+    r = await client.post(
+        f"/course-maps/{second['id']}/bubbles",
+        json={"activityId": 5, "x": 0.1, "y": 0.1},
+    )
+
+    assert r.status_code == 409
+    assert r.json()["detail"]["courseMapId"] == first["id"]
+    # Deleting the map that holds it frees the activity again.
+    assert (await client.delete(f"/course-maps/{first['id']}")).status_code == 204
+    await _add_bubble(client, second["id"], activityId=5)
+
+
+async def test_a_maps_course_can_never_change(client: httpx.AsyncClient) -> None:
+    created = await _create_map(client, 4)
+    await _add_bubble(client, created["id"])
+
+    r = await client.patch(
+        f"/course-maps/{created['id']}",
+        json={"title": "Renamed", "moodleCourseId": 99, "moodleSectionId": 7},
+    )
+
+    assert r.status_code == 200
+    assert r.json()["title"] == "Renamed"
+    assert r.json()["moodleCourseId"] == 4  # silently not updatable
+    assert r.json()["moodleSectionId"] is None
+    only_course = await client.patch(
+        f"/course-maps/{created['id']}", json={"moodleCourseId": 99}
+    )
+    assert only_course.status_code == 422  # nothing updatable was sent
+
+
+async def test_reorder_course_maps(client: httpx.AsyncClient) -> None:
+    a = await _create_map(client, 3)
+    b = await _create_map(client, 3)
+    c = await _create_map(client, 3)
+    await _add_bubble(client, b["id"], activityId=1, status="complete")
+    await _add_bubble(client, b["id"], activityId=2)
+    other = await _create_map(client, 4)
+
+    r = await client.put(
+        "/course-maps/order",
+        json={"moodleCourseId": 3, "mapIds": [c["id"], a["id"], b["id"]]},
+    )
+
+    assert r.status_code == 200
+    items = r.json()["items"]
+    assert [m["id"] for m in items] == [c["id"], a["id"], b["id"]]
+    assert [m["position"] for m in items] == [0, 1, 2]
+    assert [(m["bubbleCount"], m["completeCount"]) for m in items] == [
+        (0, 0),
+        (0, 0),
+        (2, 1),
+    ]
+    listed = await client.get("/course-maps", params={"moodleCourseId": 3})
+    assert [m["id"] for m in listed.json()["items"]] == [c["id"], a["id"], b["id"]]
+    untouched = await client.get(f"/course-maps/{other['id']}")
+    assert untouched.json()["position"] == 0
+
+
+@pytest.mark.parametrize("case", ["missing", "unknown", "duplicate", "foreign"])
+async def test_reorder_requires_exactly_the_courses_maps(
+    client: httpx.AsyncClient, case: str
+) -> None:
+    a, b = await _create_map(client, 3), await _create_map(client, 3)
+    foreign = await _create_map(client, 4)
+    ids = {
+        "missing": [a["id"]],
+        "unknown": [a["id"], b["id"], str(uuid.uuid4())],
+        "duplicate": [a["id"], a["id"], b["id"]],
+        "foreign": [a["id"], b["id"], foreign["id"]],
+    }[case]
+
+    r = await client.put(
+        "/course-maps/order", json={"moodleCourseId": 3, "mapIds": ids}
+    )
+
+    assert r.status_code == 422
+    assert r.json()["detail"]["code"] == "order_mismatch"
+    after = await client.get("/course-maps", params={"moodleCourseId": 3})
+    assert [m["id"] for m in after.json()["items"]] == [a["id"], b["id"]]
 
 
 async def test_concurrent_add_bubble_requests_create_one(
@@ -239,6 +356,8 @@ async def test_responses_are_camel_case(client: httpx.AsyncClient) -> None:
         "title",
         "bubbles",
         "moodleCourseId",
+        "moodleSectionId",
+        "position",
         "imageUrl",
         "createdAt",
         "updatedAt",
@@ -299,8 +418,11 @@ async def test_list_course_maps_contract(client: httpx.AsyncClient) -> None:
         "id",
         "title",
         "moodleCourseId",
+        "moodleSectionId",
+        "position",
         "imageUrl",
         "bubbleCount",
+        "completeCount",
         "createdAt",
         "updatedAt",
     }
