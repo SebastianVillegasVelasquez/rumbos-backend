@@ -26,3 +26,6 @@ Thumbs.db
 
 # Uploaded images (ASSETS_DIR default)
 /data/
+
+# Generated test fixtures (scripts/make_demo_skin_pack.py)
+/tmp/

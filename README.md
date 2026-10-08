@@ -85,6 +85,15 @@ an S3 adapter needs no service changes). Deleting assets and garbage-collecting
 orphans (assets nothing uses) are not implemented, so orphans can accumulate;
 the quota bounds them.
 
+### Demo skin pack
+
+`uv run python scripts/make_demo_skin_pack.py` writes an original set of six
+256x256 transparent PNGs (`available`, `locked`, `next`, `inProgress`,
+`complete`, `hover`, all on identical artboards) to `tmp/demo-skin-pack/`
+(git-ignored). Upload them as `kind=bubble` assets and reference them from an
+image skin to exercise the whole pipeline. It is **test-fixture material, not
+production art**: real skin art is a separate deliverable.
+
 ## API
 
 A Moodle course can have several maps ("levels"). Each map has a `position`
