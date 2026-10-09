@@ -2,8 +2,8 @@
 
 Each test gets its own throwaway `<name>_migration_test` database and runs the
 real `alembic` CLI in a subprocess (env.py calls `asyncio.run`, which cannot
-nest inside pytest-asyncio's loop). `DATABASE_URL` in the child's environment
-overrides `.env`, so it never touches development data.
+nest inside pytest-asyncio's loop). `POSTGRES_*` in the child's environment
+override `.env`, so it never touches development data.
 """
 
 import asyncio
@@ -16,6 +16,7 @@ from typing import Any
 
 import pytest
 from sqlalchemy import text
+from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import create_async_engine
 
 from tests.conftest import _test_database_url, recreate_database
@@ -32,7 +33,15 @@ def migration_db() -> Iterator[str]:
 
 
 def alembic(db_url: str, *args: str) -> subprocess.CompletedProcess[str]:
-    env = {**os.environ, "DATABASE_URL": db_url}
+    url = make_url(db_url)
+    env = {
+        **os.environ,
+        "POSTGRES_USER": url.username or "",
+        "POSTGRES_PASSWORD": url.password or "",
+        "POSTGRES_DB": url.database or "",
+        "POSTGRES_HOST": url.host or "",
+        "POSTGRES_PORT": str(url.port),
+    }
     return subprocess.run(
         [sys.executable, "-m", "alembic", *args],
         env=env,

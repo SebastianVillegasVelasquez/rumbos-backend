@@ -45,7 +45,9 @@ def test_origins_default_to_empty(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("CORS_ALLOWED_ORIGINS", raising=False)
     settings = Settings(
         _env_file=None,
-        database_url="postgresql+asyncpg://u:p@h/d",
+        postgres_user="u",
+        postgres_password=SecretStr("p"),
+        postgres_db="d",
         moodle_base_url="https://m.example",
         moodle_service_token=SecretStr("t"),
     )

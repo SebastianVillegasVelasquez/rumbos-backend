@@ -1,8 +1,9 @@
-from functools import lru_cache
+from functools import cached_property, lru_cache
 from typing import Annotated
 
 from pydantic import Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
+from sqlalchemy.engine import URL
 
 
 class Settings(BaseSettings):
@@ -10,7 +11,11 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    database_url: str
+    postgres_user: str
+    postgres_password: SecretStr
+    postgres_db: str
+    postgres_host: str
+    postgres_port: int = Field(default=5432, ge=1, le=65535)
     # Origins allowed to call the API from a browser, comma-separated in the
     # environment. Empty (the default) means no CORS middleware at all. `NoDecode`
     # stops pydantic-settings from expecting JSON for this list.
@@ -40,6 +45,18 @@ class Settings(BaseSettings):
     assets_max_background_side: int = Field(default=8192, ge=1, le=16384)
     assets_max_bubble_side: int = Field(default=1024, ge=1, le=16384)
     assets_max_total_bytes: int = Field(default=2 * 1024**3, ge=1)
+
+    @cached_property
+    def build_database_url(self) -> str:
+        """Async SQLAlchemy URL (asyncpg) built from the `POSTGRES_*` settings."""
+        return URL.create(
+            "postgresql+asyncpg",
+            username=self.postgres_user,
+            password=self.postgres_password.get_secret_value(),
+            host=self.postgres_host,
+            port=self.postgres_port,
+            database=self.postgres_db,
+        ).render_as_string(hide_password=False)
 
     @field_validator("cors_allowed_origins", mode="before")
     @classmethod

@@ -9,7 +9,9 @@ from app.core.config import Settings
 def make(**overrides: object) -> Settings:
     return Settings.model_validate(
         {
-            "database_url": "postgresql+asyncpg://u:p@h/d",
+            "postgres_user": "u",
+            "postgres_password": SecretStr("p"),
+            "postgres_db": "d",
             "moodle_base_url": "https://m.example",
             "moodle_service_token": SecretStr("t"),
             **overrides,
@@ -23,7 +25,9 @@ def test_uploads_are_off_by_default(monkeypatch: pytest.MonkeyPatch) -> None:
 
     settings = Settings(
         _env_file=None,
-        database_url="postgresql+asyncpg://u:p@h/d",
+        postgres_user="u",
+        postgres_password=SecretStr("p"),
+        postgres_db="d",
         moodle_base_url="https://m.example",
         moodle_service_token=SecretStr("t"),
     )

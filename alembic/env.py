@@ -22,7 +22,9 @@ target_metadata = BaseORM.metadata
 
 # The database URL comes from app settings, never from alembic.ini.
 # "%" must be escaped for configparser interpolation.
-config.set_main_option("sqlalchemy.url", get_settings().database_url.replace("%", "%%"))
+config.set_main_option(
+    "sqlalchemy.url", get_settings().build_database_url.replace("%", "%%")
+)
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

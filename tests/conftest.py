@@ -21,12 +21,12 @@ class Widget(BaseORM):
 
 
 def _test_database_url(suffix: str = "test") -> str:
-    """Same server as DATABASE_URL, but a dedicated `<name>_<suffix>` database.
+    """Same server as the POSTGRES_* settings, but a dedicated `<name>_<suffix>` database.
 
     Tests create and drop tables freely, so they must never share a database
     with migrated development data.
     """
-    url = make_url(get_settings().database_url)
+    url = make_url(get_settings().build_database_url)
     return url.set(database=f"{url.database}_{suffix}").render_as_string(
         hide_password=False
     )

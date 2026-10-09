@@ -16,7 +16,7 @@ from app.moodle.client import HttpMoodleClient
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     settings = get_settings()
-    engine = create_engine(settings.database_url)
+    engine = create_engine(settings.build_database_url)
     app.state.db_engine = engine
     # No automatic retries: a Moodle failure surfaces immediately.
     timeout = httpx.Timeout(

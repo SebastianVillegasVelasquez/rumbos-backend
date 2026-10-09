@@ -14,7 +14,7 @@ uv run uvicorn app.main:app --reload
 ```
 
 Checks (all must stay green): `uv run pytest`, `uv run ruff check .`,
-`uv run mypy .`. Tests need the PostgreSQL server from `DATABASE_URL`; they use
+`uv run mypy .`. Tests need the PostgreSQL server from the `POSTGRES_*` settings; they use
 separate `<name>_test` and `<name>_migration_test` databases and never touch
 the configured one. `RUN_MOODLE_SMOKE=1 uv run pytest tests/test_moodle_smoke.py`
 runs an opt-in check against the real Moodle.
@@ -25,7 +25,11 @@ Environment variables (or `.env`); see `.env.example`.
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
-| `DATABASE_URL` | required | Async SQLAlchemy URL (`postgresql+asyncpg://...`). |
+| `POSTGRES_USER` | required | PostgreSQL user. |
+| `POSTGRES_PASSWORD` | required | PostgreSQL password. |
+| `POSTGRES_DB` | required | PostgreSQL database name. |
+| `POSTGRES_HOST` | `localhost` | PostgreSQL host. |
+| `POSTGRES_PORT` | `5432` | PostgreSQL port. |
 | `MOODLE_BASE_URL` | required | Moodle instance the service talks to. |
 | `MOODLE_SERVICE_TOKEN` | required | Web Services token. Server-side only. |
 | `MOODLE_CONNECT_TIMEOUT` | `5` | Seconds to connect to Moodle. |
