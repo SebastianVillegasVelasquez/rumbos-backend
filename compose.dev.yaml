@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: rumbos-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres-rumbos:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"
+    networks:
+      - rumbos-network
+
+volumes:
+  postgres-rumbos:
+
+networks:
+  rumbos-network:
+    driver: bridge
