@@ -1,0 +1,6 @@
+# Force LF for scripts that run inside Linux containers, regardless of the
+# checkout OS. Without this, a Windows checkout can reintroduce CRLF into
+# entrypoint.sh and break the shebang inside Docker ("no such file or
+# directory" even though the file exists).
+*.sh text eol=lf
+entrypoint.sh text eol=lf
