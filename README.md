@@ -43,7 +43,8 @@ Environment variables (or `.env`); see `.env.example`.
 | `ASSETS_MAX_BACKGROUND_SIDE` | `8192` | Longest side, in pixels, of a background. |
 | `ASSETS_MAX_BUBBLE_SIDE` | `1024` | Longest side, in pixels, of a bubble image. |
 | `ASSETS_MAX_TOTAL_BYTES` | `2147483648` | Quota: sum of every stored file (2 GB). Over it, uploads answer 507. |
-| `CORS_ALLOWED_ORIGINS` | empty | Comma-separated browser origins. Empty adds no CORS middleware. Credentials are never allowed. The dev frontend uses a Vite proxy and needs nothing here. |
+| `PUBLICATIONS_KEEP` | `20` | Publications kept per map; older ones are pruned when a new one is published. The latest is never pruned (minimum 1). |
+| `CORS_ALLOWED_ORIGINS` | empty | Comma-separated browser origins. Empty adds no CORS middleware. Credentials are never allowed. `If-Match` is an allowed request header and `ETag` an exposed response header. The dev frontend uses a Vite proxy and needs nothing here. |
 
 ### Moodle cache
 
@@ -85,9 +86,87 @@ Files are served from `GET /assets/{id}` (and `/thumb`) with the stored
 'none'; sandbox`. Any id that is not a known asset is a 404.
 
 Storage sits behind the `AssetStorage` Protocol (`LocalDiskAssetStorage` today;
-an S3 adapter needs no service changes). Deleting assets and garbage-collecting
-orphans (assets nothing uses) are not implemented, so orphans can accumulate;
-the quota bounds them.
+an S3 adapter needs no service changes).
+
+**Deleting is anonymous too.** `DELETE /assets/{id}` and `PATCH /assets/{id}`
+need no authentication (and, unlike uploads, no switch turns them off), so
+anyone who can reach the API can delete an image that nothing uses or rename
+any image. What is protected is images **in use**: a delete is refused with
+409 `asset_in_use` (and `usage: { maps, skins, publications }`) while a draft
+map, a skin or any publication references it, so a published map can never
+lose its picture. The check and the row delete are one SQL statement; it is not
+a lock, so a map that starts using the image in the very same instant can still
+lose it. The row is deleted first and the files after: if removing the files
+fails the asset is simply gone (the failure is logged and the bytes become
+unreachable garbage), never listed-but-broken. Until auth exists, treat the API
+as trusted-network only.
+
+Every asset has a `title` (default: the file name without extension), an
+optional `credit` and the sanitized `originalFilename` (display text; stored
+files are named by id only). A map whose `imageUrl` is `/assets/{id}` must name
+an existing `background` asset (422 `background_asset_not_found` /
+`background_asset_wrong_kind`); any other URL is accepted as before.
+
+### Draft and published maps
+
+Every editor endpoint reads and writes the **draft** (the normalized rows).
+**Publishing** stores an immutable snapshot of it (title, background, settings,
+default skin and rules, the skins involved as frozen copies, and the bubbles'
+position/icon/skin/order) as publication `n` of that map; students read the
+latest one through `/published/...`. Live data is never in the snapshot: bubble
+`status`, the level `position`, `moodleCourseId` and `moodleSectionId` are
+joined from the live rows. Bubble order is stored as the dense rank 0..n-1.
+
+The draft's `draftHash` is the SHA-256 of the canonical JSON of the snapshot it
+would produce (sorted keys, no whitespace, floats normalized to 12 significant
+digits), so it does not depend on key order or number formatting. An editor
+reviews `GET /course-maps/{id}/publication-state` and publishes with that
+`draftHash`; if the draft moved in between, publish answers 409
+`draft_changed_since_review`. Publishing runs in one `REPEATABLE READ`
+transaction (retried once on a serialization failure) and refuses unchanged
+drafts (409 `no_changes_to_publish`) and drafts whose background or skin images
+no longer exist (422 `publish_invalid`, every problem listed).
+`discard-changes` and `restore` load a snapshot back into the draft in one
+transaction (they do **not** publish); skins that no longer exist are reset
+with `skin_missing` warnings.
+
+Because skins are global, editing or deleting a skin a map uses changes that
+map's draft (it shows as `skinsChanged`) but never what students see until the
+map is published again; `discard-changes` cannot undo a skin edit.
+
+> **This is not access control.** There is no authentication: a draft is not
+> hidden from anyone who calls the editor endpoints directly. "Published" only
+> means "what students are shown, consistently".
+
+### Concurrent edits (`If-Match`)
+
+`CourseMapRead.revision` and `BubbleRead.version` start at 1 and travel as the
+`ETag` (`"3"`) of single-resource responses. Guarded writes must send the number
+they are based on as `If-Match: "3"`: `PATCH /course-maps/{id}`,
+`PUT .../appearance`, `POST .../discard-changes`, `POST .../publications/{n}/restore`
+(map revision) and `PATCH`/`DELETE .../bubbles/{id}` (bubble version; the PATCH
+only when the body has `x`, `y`, `icon` or `skinId`). Missing header: 428
+`precondition_required`; malformed: 400 `invalid_if_match`; stale: 412
+`version_conflict` with `currentRevision` / `currentVersion`. Each guarded write
+is a single `UPDATE ... WHERE revision = :expected` that also adds 1, so of two
+editors on the same number exactly one wins. A PATCH with **only** `status` is
+live demo data: it needs no `If-Match` and does not bump the version. Creating
+maps/bubbles and the two `order` endpoints are not guarded.
+
+### Operations
+
+Run from the project root with the app's environment (`POSTGRES_*`, ...).
+Both are **dry runs unless `--apply` is given**.
+
+- **Required deploy step:** `python -m app.scripts.publish_existing_maps --apply`
+  after migrating. Maps created before publishing existed have no publication
+  and are invisible to students until this publishes them as #1 ("Publicación
+  inicial (migración)"). Only maps with at least one bubble and no publication
+  are touched, so it is safe to run again.
+- `python -m app.scripts.gc_assets [--older-than-days 7] [--apply]` lists, and
+  with `--apply` deletes, assets that no map, skin or publication uses and that
+  are older than the threshold, reporting the bytes reclaimed. It uses the same
+  usage rule as `DELETE /assets/{id}`.
 
 ### Demo skin pack
 
@@ -134,9 +213,21 @@ never changes after creation.
 - `GET /course-maps/{id}/resolved?includeHidden=`: each bubble's
   `availability` (`available`, `hidden`, `missing`, `unknown`) and the
   `moodleStatus` (`live`, `cached`, `unavailable`). Moodle outages answer 200.
-- `POST /assets` (201, or 200 for already-known content), `GET /assets/{id}`,
+- `POST /assets` (201, or 200 for already-known content; optional form fields
+  `title`, `credit`), `GET /assets?kind=&q=&limit=&offset=` (the library, newest
+  first, with `usage` counts), `PATCH /assets/{id}` (`title`, `credit`),
+  `DELETE /assets/{id}` (409 while in use), `GET /assets/{id}`,
   `GET /assets/{id}/thumb` (backgrounds only). A map's `imageUrl` may be a
   bundled frontend path or `/assets/{id}`.
+- `GET /course-maps/{id}/publication-state`, `POST .../publish`,
+  `GET .../publications?limit=`, `POST .../discard-changes`,
+  `POST .../publications/{n}/restore`: see "Draft and published maps". Map list
+  items carry `publication: { status, number, publishedAt }`.
+- `GET /published/course-maps?moodleCourseId=&limit=&offset=`,
+  `GET /published/course-maps/{id}` (404 `not_published`) and
+  `GET /published/course-maps/{id}/resolved?includeHidden=`: the student view
+  (maps with at least one publication only). `resolved` uses the same resolver
+  and Moodle cache as the editor's.
 - `GET /skins`, `POST /skins`, `PATCH /skins/{id}`, `DELETE /skins/{id}`: how
   bubbles look. A skin is a validated `config` (`kind` `procedural` or
   `image`; every key is checked, unknown ones rejected). Image skins reference
