@@ -6,9 +6,6 @@ is used more than once the dependencies will not be downloaded from the internet
 runs:
   using: "composite"
   steps:
-    - name: Clone source code
-      uses: actions/checkout@v7
-
     - name: Install uv
       uses: astral-sh/setup-uv@v5
       with:
