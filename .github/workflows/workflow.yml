@@ -55,6 +55,7 @@ jobs:
           POSTGRES_DB: db_test
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
+          MOODLE_SERVICE_TOKEN: ""
 
       - name: Run testing
         run: uv run pytest --maxfail=3 --disable-warnings
@@ -64,6 +65,7 @@ jobs:
           POSTGRES_DB: db_test
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
+          MOODLE_SERVICE_TOKEN: ""
 
   build-and-publish:
     name: Build image and publish image
