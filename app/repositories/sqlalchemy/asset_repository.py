@@ -16,12 +16,13 @@ from sqlalchemy import (
     select,
     update,
 )
+from sqlalchemy.dialects.postgresql import array as pg_array
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.enums import AssetKind
 from app.exceptions import AssetAlreadyExistsError, AssetInUseError
-from app.models import Asset, CourseMap, Skin
+from app.models import Asset, CourseMap, Publication, Skin
 from app.models.asset import UQ_ASSET_CONTENT
 from app.repositories.sqlalchemy._errors import constraint_name
 from app.schemas.asset import AssetRecord, AssetUpdate, AssetUsage
@@ -43,6 +44,12 @@ def skin_uses(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:
     """A skin whose config mentions the id anywhere. `strpos`, not `LIKE`, so
     nothing in an id can act as a wildcard; the id is always a bound value."""
     return func.strpos(cast(Skin.config, Text), _id_text(asset_id)) > 0
+
+
+def publication_uses(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:
+    """A publication whose snapshot depends on the asset (`asset_ids @> {id}`,
+    which the GIN index serves)."""
+    return Publication.asset_ids.contains(pg_array([asset_id]))
 
 
 class SqlAlchemyAssetRepository:
@@ -152,6 +159,7 @@ class SqlAlchemyAssetRepository:
         for field, model, uses in (
             ("maps", CourseMap, map_uses),
             ("skins", Skin, skin_uses),
+            ("publications", Publication, publication_uses),
         ):
             rows = await self._session.execute(
                 select(Asset.id, func.count(model.id))
@@ -172,6 +180,7 @@ class SqlAlchemyAssetRepository:
                 Asset.id == asset_id,
                 ~exists().where(map_uses(Asset.id)),
                 ~exists().where(skin_uses(Asset.id)),
+                ~exists().where(publication_uses(Asset.id)),
             )
             .returning(Asset.id)
             .execution_options(synchronize_session=False)

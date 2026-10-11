@@ -46,6 +46,9 @@ class Settings(BaseSettings):
     assets_max_bubble_side: int = Field(default=1024, ge=1, le=16384)
     assets_max_total_bytes: int = Field(default=2 * 1024**3, ge=1)
 
+    # How many publications of each map to keep (the latest is never pruned).
+    publications_keep: int = Field(default=20, ge=1)
+
     @cached_property
     def build_database_url(self) -> str:
         """Async SQLAlchemy URL (asyncpg) built from the `POSTGRES_*` settings."""

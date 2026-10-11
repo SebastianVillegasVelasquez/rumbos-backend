@@ -5,6 +5,7 @@ from urllib.parse import urlsplit
 
 from pydantic import AfterValidator, Field, StringConstraints, model_validator
 
+from app.enums import PublicationStatus
 from app.schemas.base import ApiModel
 from app.schemas.bubble import BubbleRead
 from app.schemas.map_settings import MapSettings
@@ -98,11 +99,21 @@ class CourseMapBase(CourseMapCore):
     revision: int = 1
 
 
+class PublicationInfo(ApiModel):
+    """Where a map stands against what students see."""
+
+    status: PublicationStatus = PublicationStatus.NEVER_PUBLISHED
+    number: int | None = None  # the current publication
+    published_at: datetime | None = None
+
+
 class CourseMapSummary(CourseMapCore):
     """A map as listed: counts its bubbles instead of carrying them."""
 
     bubble_count: int
     complete_count: int  # bubbles whose status is `complete`
+    # Filled in by the service for a whole page; repositories leave the default.
+    publication: PublicationInfo = Field(default_factory=PublicationInfo)
 
 
 class CourseMapList(ApiModel):

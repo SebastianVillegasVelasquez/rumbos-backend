@@ -15,6 +15,8 @@ import httpx
 _UUID = r"[0-9a-fA-F-]{36}"
 _MAP = re.compile(rf"^/course-maps/({_UUID})$")
 _APPEARANCE = re.compile(rf"^/course-maps/({_UUID})/appearance$")
+_DISCARD = re.compile(rf"^/course-maps/({_UUID})/discard-changes$")
+_RESTORE = re.compile(rf"^/course-maps/({_UUID})/publications/\d+/restore$")
 _BUBBLE = re.compile(rf"^/course-maps/({_UUID})/bubbles/({_UUID})$")
 
 
@@ -33,6 +35,8 @@ class EditorClient(httpx.AsyncClient):
         if method == "PATCH" and (m := _MAP.match(path)):
             return await self._revision(m[1])
         if method == "PUT" and (m := _APPEARANCE.match(path)):
+            return await self._revision(m[1])
+        if method == "POST" and (m := _DISCARD.match(path) or _RESTORE.match(path)):
             return await self._revision(m[1])
         if method in ("PATCH", "DELETE") and (m := _BUBBLE.match(path)):
             return await self._version(m[1], m[2])

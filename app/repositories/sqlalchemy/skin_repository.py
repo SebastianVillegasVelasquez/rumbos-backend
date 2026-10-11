@@ -9,7 +9,7 @@ from app.models import Skin
 from app.schemas.skin import ImageSkin, ProceduralSkin, SkinRead, dump_config
 
 
-def _to_read(skin: Skin) -> SkinRead:
+def to_skin_read(skin: Skin) -> SkinRead:
     return SkinRead(
         id=skin.id,
         name=skin.name,
@@ -29,7 +29,7 @@ class SqlAlchemySkinRepository:
 
     async def get_by_id(self, skin_id: uuid.UUID) -> SkinRead | None:
         skin = await self._session.get(Skin, skin_id)
-        return _to_read(skin) if skin else None
+        return to_skin_read(skin) if skin else None
 
     async def existing_ids(self, skin_ids: Collection[uuid.UUID]) -> set[uuid.UUID]:
         if not skin_ids:
@@ -47,7 +47,7 @@ class SqlAlchemySkinRepository:
         except BaseException:
             await self._session.rollback()
             raise
-        return _to_read(skin)
+        return to_skin_read(skin)
 
     async def update(
         self,
@@ -74,7 +74,7 @@ class SqlAlchemySkinRepository:
         except BaseException:
             await self._session.rollback()
             raise
-        return _to_read(skin) if skin else None
+        return to_skin_read(skin) if skin else None
 
     async def delete(self, skin_id: uuid.UUID) -> bool:
         # One DELETE; the foreign keys (SET NULL / CASCADE) do the rest.
@@ -95,4 +95,4 @@ class SqlAlchemySkinRepository:
             .order_by(Skin.is_builtin.desc(), Skin.created_at, Skin.id)
             .limit(limit)
         )
-        return [_to_read(skin) for skin in result]
+        return [to_skin_read(skin) for skin in result]

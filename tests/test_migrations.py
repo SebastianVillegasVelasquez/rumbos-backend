@@ -602,3 +602,65 @@ def test_concurrency_migration_gives_existing_rows_revision_and_version_one(
     down = alembic(migration_db, "downgrade", ASSET_METADATA)
     assert down.returncode == 0, down.stderr
     assert fetch(migration_db, "SELECT count(*) FROM bubbles") == [(2,)]
+
+
+PUBLICATIONS = "b8e4c1a7d035"
+
+
+def test_publications_migration_adds_the_table_for_existing_maps_and_downgrades(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", CONCURRENCY).returncode == 0
+    map_id = uuid.uuid4()
+    sql, params = insert_map(8, with_title=True)
+    run_sql(migration_db, [(sql, {**params, "id": map_id})])
+
+    up = alembic(migration_db, "upgrade", PUBLICATIONS)
+
+    assert up.returncode == 0, up.stderr
+    # Existing maps start unpublished: the table is empty.
+    assert fetch(migration_db, "SELECT count(*) FROM publications") == [(0,)]
+    indexes = dict(
+        fetch(
+            migration_db,
+            "SELECT indexname, indexdef FROM pg_indexes"
+            " WHERE tablename = 'publications'",
+        )
+    )
+    assert "USING gin (asset_ids)" in indexes["ix_publications_asset_ids"]
+    run_sql(
+        migration_db,
+        [
+            (
+                (
+                    "INSERT INTO publications (id, course_map_id, number, snapshot,"
+                    " content_hash, asset_ids, created_at, updated_at) VALUES"
+                    " (:id, :m, 1, '{}'::jsonb, 'h', ARRAY[]::uuid[], now(), now())"
+                ),
+                {"id": uuid.uuid4(), "m": map_id},
+            )
+        ],
+    )
+    with pytest.raises(Exception, match="uq_publications_course_map_number"):
+        run_sql(
+            migration_db,
+            [
+                (
+                    (
+                        "INSERT INTO publications (id, course_map_id, number, snapshot,"
+                        " content_hash, asset_ids, created_at, updated_at) VALUES"
+                        " (:id, :m, 1, '{}'::jsonb, 'h', ARRAY[]::uuid[], now(), now())"
+                    ),
+                    {"id": uuid.uuid4(), "m": map_id},
+                )
+            ],
+        )
+    # Deleting the map takes its publications along.
+    run_sql(migration_db, [("DELETE FROM course_maps WHERE id = :m", {"m": map_id})])
+    assert fetch(migration_db, "SELECT count(*) FROM publications") == [(0,)]
+
+    down = alembic(migration_db, "downgrade", CONCURRENCY)
+    assert down.returncode == 0, down.stderr
+    assert not fetch(
+        migration_db, "SELECT 1 FROM pg_tables WHERE tablename = 'publications'"
+    )

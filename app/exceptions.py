@@ -69,6 +69,45 @@ class VersionConflictError(DomainError):
         self.current_version = current_version
 
 
+class NoChangesToPublishError(DomainError):
+    """The draft is identical to the current publication."""
+
+
+class DraftChangedSinceReviewError(DomainError):
+    """The draft is not what the editor reviewed (`draftHash` is stale)."""
+
+    def __init__(self, current_hash: str) -> None:
+        super().__init__("draft changed since review")
+        self.current_hash = current_hash
+
+
+class PublishInvalidError(DomainError):
+    """The draft (or a snapshot being loaded) points at things that are gone.
+
+    `problems` are (code, message) pairs, every one of them, not just the first.
+    """
+
+    def __init__(self, problems: list[tuple[str, str]]) -> None:
+        super().__init__("publish invalid")
+        self.problems = problems
+
+
+class PublishConflictError(DomainError):
+    """Another publish of the same map won the race, twice in a row."""
+
+
+class NeverPublishedError(DomainError):
+    """There is no publication to go back to."""
+
+
+class PublicationNotFoundError(DomainError):
+    pass
+
+
+class NotPublishedError(DomainError):
+    """A student asked for a map that has no publication (or does not exist)."""
+
+
 class OrderMismatchError(DomainError):
     """An ordering request does not list exactly the existing ids."""
 

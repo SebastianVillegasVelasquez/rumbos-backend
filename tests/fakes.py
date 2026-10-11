@@ -8,7 +8,7 @@ import asyncio
 import uuid
 from collections.abc import Collection
 from datetime import UTC, datetime
-from typing import Never
+from typing import Any, Never
 
 from uuid_utils.compat import uuid7
 
@@ -21,6 +21,7 @@ from app.exceptions import (
 )
 from app.moodle.exceptions import MoodleCourseNotFoundError
 from app.moodle.schemas import MoodleSection, MoodleSiteInfo
+from app.publishing.snapshot import DraftInputs
 from app.schemas.asset import AssetRecord, AssetUpdate, AssetUsage
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
@@ -32,6 +33,12 @@ from app.schemas.course_map import (
     SkinRule,
 )
 from app.schemas.map_settings import MapSettings
+from app.schemas.publication import (
+    PublicationMeta,
+    PublicationRecord,
+    PublicationSummary,
+    RestoreWarning,
+)
 from app.schemas.skin import ImageSkin, ProceduralSkin, SkinRead
 
 
@@ -346,6 +353,53 @@ class InMemoryAssetRepository:
     async def list(
         self, kind: AssetKind | None, q: str | None, limit: int, offset: int
     ) -> tuple[list[AssetRecord], int]:
+        raise NotImplementedError
+
+
+class InMemoryPublicationRepository:
+    """Nothing is ever published; service tests of maps only need that."""
+
+    async def load_draft(self, course_map_id: uuid.UUID) -> DraftInputs | None:
+        raise NotImplementedError
+
+    async def load_drafts(
+        self, course_map_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, DraftInputs]:
+        return {}
+
+    async def latest(self, course_map_id: uuid.UUID) -> PublicationRecord | None:
+        return None
+
+    async def latest_meta(
+        self, course_map_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, PublicationMeta]:
+        return {}
+
+    async def get(
+        self, course_map_id: uuid.UUID, number: int
+    ) -> PublicationRecord | None:
+        return None
+
+    async def list_summaries(
+        self, course_map_id: uuid.UUID, limit: int
+    ) -> list[PublicationSummary]:
+        return []
+
+    async def publish(
+        self,
+        course_map_id: uuid.UUID,
+        expected_hash: str | None,
+        note: str | None,
+        keep: int,
+    ) -> PublicationSummary:
+        raise NotImplementedError
+
+    async def restore_into_draft(
+        self,
+        course_map_id: uuid.UUID,
+        snapshot: dict[str, Any],
+        expected_revision: int,
+    ) -> list[RestoreWarning] | None:
         raise NotImplementedError
 
 

@@ -1,7 +1,7 @@
-import re
 import uuid
 from collections import Counter
 
+from app.assets.references import asset_id_of_image_url, is_canonical_asset_url
 from app.enums import AssetKind
 from app.exceptions import (
     BackgroundAssetNotFoundError,
@@ -19,6 +19,7 @@ from app.repositories.protocols import (
     AssetRepository,
     BubbleRepository,
     CourseMapRepository,
+    PublicationRepository,
     SkinRepository,
 )
 from app.schemas.activity import ActivityRead
@@ -37,22 +38,10 @@ from app.schemas.course_map import (
     CourseMapOrdered,
     CourseMapOrderUpdate,
     CourseMapRead,
+    CourseMapSummary,
     CourseMapUpdate,
 )
-
-# A map background served by this API: exactly `/assets/{canonical uuid}`.
-_ASSET_PATH = re.compile(
-    r"/assets/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})",
-    re.IGNORECASE,
-)
-
-
-def asset_id_of_image_url(image_url: str) -> uuid.UUID | None:
-    """The asset id when `image_url` is `/assets/{uuid}`, else None (any other
-    URL or path is the editor's business). An upper-case id is treated as the
-    asset it names, but the stored text must be the canonical lower-case one."""
-    match = _ASSET_PATH.fullmatch(image_url)
-    return uuid.UUID(match[1]) if match else None
+from app.services.publication_service import publication_infos
 
 
 def is_bubble_candidate(module: MoodleModule) -> bool:
@@ -114,12 +103,14 @@ class CourseMapService:
         moodle: MoodleClient,
         skins: SkinRepository,
         assets: AssetRepository,
+        publications: PublicationRepository,
     ) -> None:
         self._course_maps = course_maps
         self._bubbles = bubbles
         self._moodle = moodle
         self._skins = skins
         self._assets = assets
+        self._publications = publications
 
     async def create_course_map(self, data: CourseMapCreate) -> CourseMapRead:
         await self._check_background(data.image_url)
@@ -134,7 +125,9 @@ class CourseMapService:
         check_exact_order([m.id for m in existing], data.map_ids)
         await self._course_maps.set_order(data.moodle_course_id, data.map_ids)
         return CourseMapOrdered(
-            items=await self._course_maps.list_for_course(data.moodle_course_id)
+            items=await self._with_publication(
+                await self._course_maps.list_for_course(data.moodle_course_id)
+            )
         )
 
     async def list_course_maps(
@@ -148,7 +141,12 @@ class CourseMapService:
         items, total = await self._course_maps.list(
             moodle_course_id, (q or "").strip() or None, limit, offset
         )
-        return CourseMapList(items=items, total=total, limit=limit, offset=offset)
+        return CourseMapList(
+            items=await self._with_publication(items),
+            total=total,
+            limit=limit,
+            offset=offset,
+        )
 
     async def get_course_map(self, course_map_id: uuid.UUID) -> CourseMapRead:
         course_map = await self._require_course_map(course_map_id)
@@ -325,6 +323,14 @@ class CourseMapService:
                 )
         return activities
 
+    async def _with_publication(
+        self, items: list[CourseMapSummary]
+    ) -> list[CourseMapSummary]:
+        """Each summary with where it stands against what students see, for the
+        whole page at once."""
+        infos = await publication_infos(self._publications, [m.id for m in items])
+        return [m.model_copy(update={"publication": infos[m.id]}) for m in items]
+
     async def _check_background(self, image_url: str) -> None:
         """A background served by this API must be an existing background asset.
 
@@ -335,7 +341,7 @@ class CourseMapService:
             return
         asset = (
             await self._assets.get_by_id(asset_id)
-            if image_url == f"/assets/{asset_id}"
+            if is_canonical_asset_url(image_url)
             else None  # not the canonical spelling: it names no stored asset
         )
         if asset is None:

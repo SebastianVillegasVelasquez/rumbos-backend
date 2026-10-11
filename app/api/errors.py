@@ -17,12 +17,19 @@ from app.exceptions import (
     BackgroundAssetWrongKindError,
     BubbleNotFoundError,
     CourseMapNotFoundError,
+    DraftChangedSinceReviewError,
     DuplicateSkinRuleError,
     InvalidAssetMetadataError,
     InvalidIfMatchError,
     InvalidUploadError,
+    NeverPublishedError,
+    NoChangesToPublishError,
+    NotPublishedError,
     OrderMismatchError,
     PreconditionRequiredError,
+    PublicationNotFoundError,
+    PublishConflictError,
+    PublishInvalidError,
     SectionAlreadyMappedError,
     SkinAssetNotFoundError,
     SkinAssetSizeMismatchError,
@@ -115,6 +122,81 @@ def register_exception_handlers(app: FastAPI) -> None:
             },
         ),
     )
+    app.add_exception_handler(
+        NoChangesToPublishError,
+        _handler(
+            status.HTTP_409_CONFLICT,
+            {
+                "code": "no_changes_to_publish",
+                "message": "The draft is identical to the current publication",
+            },
+        ),
+    )
+
+    async def draft_changed(request: Request, exc: Exception) -> JSONResponse:
+        assert isinstance(exc, DraftChangedSinceReviewError)
+        return JSONResponse(
+            status_code=status.HTTP_409_CONFLICT,
+            content={
+                "detail": {
+                    "code": "draft_changed_since_review",
+                    "message": "The draft changed after you reviewed it",
+                    "currentHash": exc.current_hash,
+                }
+            },
+        )
+
+    app.add_exception_handler(DraftChangedSinceReviewError, draft_changed)
+
+    async def publish_invalid(request: Request, exc: Exception) -> JSONResponse:
+        assert isinstance(exc, PublishInvalidError)
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            content={
+                "detail": {
+                    "code": "publish_invalid",
+                    "message": "The map refers to things that no longer exist",
+                    "problems": [
+                        {"code": code, "message": message}
+                        for code, message in exc.problems
+                    ],
+                }
+            },
+        )
+
+    app.add_exception_handler(PublishInvalidError, publish_invalid)
+    app.add_exception_handler(
+        PublishConflictError,
+        _handler(
+            status.HTTP_409_CONFLICT,
+            {
+                "code": "publish_conflict",
+                "message": "Another publish was in progress; review and try again",
+            },
+        ),
+    )
+    app.add_exception_handler(
+        NeverPublishedError,
+        _handler(
+            status.HTTP_409_CONFLICT,
+            {
+                "code": "never_published",
+                "message": "This map has no publication to go back to",
+            },
+        ),
+    )
+    app.add_exception_handler(
+        PublicationNotFoundError,
+        _handler(status.HTTP_404_NOT_FOUND, "Publication not found"),
+    )
+    app.add_exception_handler(
+        NotPublishedError,
+        _handler(
+            status.HTTP_404_NOT_FOUND,
+            {"code": "not_published", "message": "This map is not published"},
+        ),
+    )
+
     app.add_exception_handler(
         InvalidIfMatchError,
         _handler(

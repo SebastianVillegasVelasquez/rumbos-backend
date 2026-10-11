@@ -432,6 +432,7 @@ async def test_list_course_maps_contract(client: httpx.AsyncClient) -> None:
         "imageUrl",
         "bubbleCount",
         "completeCount",
+        "publication",
         "createdAt",
         "updatedAt",
     }

@@ -23,13 +23,23 @@ async def upload(
 
 
 async def png_asset(
-    client: httpx.AsyncClient, n: int, kind: str = "bubble", **form: str
+    client: httpx.AsyncClient,
+    n: int,
+    kind: str = "bubble",
+    *,
+    size: tuple[int, int] | None = None,
+    **form: str,
 ) -> dict[str, Any]:
-    """Uploads a distinct small PNG (`n` varies its size) and returns the asset."""
+    """Uploads a distinct small PNG and returns the asset.
+
+    `n` makes the content distinct (and, without `size`, the width too); give
+    the same `size` to several calls to get distinct images of equal dimensions.
+    """
+    data = images.png(size or (8 + n, 8), color=(n * 7 % 256, 30, 200))
     r = await client.post(
         "/assets",
         data={"kind": kind, **form},
-        files={"file": (f"f{n}.png", images.png((8 + n, 8)), "image/png")},
+        files={"file": (f"f{n}.png", data, "image/png")},
     )
     assert r.status_code == 201, r.text
     body: dict[str, Any] = r.json()

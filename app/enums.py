@@ -47,3 +47,11 @@ class AssetKind(StrEnum):
 
     BACKGROUND = "background"
     BUBBLE = "bubble"
+
+
+class PublicationStatus(StrEnum):
+    """How a map's draft relates to what students see."""
+
+    NEVER_PUBLISHED = "never_published"
+    UP_TO_DATE = "up_to_date"
+    UNPUBLISHED_CHANGES = "unpublished_changes"

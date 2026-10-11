@@ -1,11 +1,11 @@
 """Helpers for reading PostgreSQL constraint violations off SQLAlchemy errors."""
 
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import DBAPIError
 
 FOREIGN_KEY_VIOLATION = "23503"  # PostgreSQL SQLSTATE
 
 
-def constraint_name(exc: IntegrityError) -> str | None:
+def constraint_name(exc: DBAPIError) -> str | None:
     """Name of the violated constraint (or unique index), as the driver reports it.
 
     asyncpg's exception (the SQLAlchemy adapter's `__cause__`) carries it.
@@ -14,5 +14,5 @@ def constraint_name(exc: IntegrityError) -> str | None:
     return getattr(cause, "constraint_name", None)
 
 
-def sqlstate(exc: IntegrityError) -> str | None:
+def sqlstate(exc: DBAPIError) -> str | None:
     return getattr(exc.orig, "sqlstate", None)

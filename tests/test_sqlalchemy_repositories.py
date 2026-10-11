@@ -25,6 +25,9 @@ from app.repositories.sqlalchemy.bubble_repository import SqlAlchemyBubbleReposi
 from app.repositories.sqlalchemy.course_map_repository import (
     SqlAlchemyCourseMapRepository,
 )
+from app.repositories.sqlalchemy.publication_repository import (
+    SqlAlchemyPublicationRepository,
+)
 from app.repositories.sqlalchemy.skin_repository import SqlAlchemySkinRepository
 from app.schemas.bubble import BubbleCreate, BubbleUpdate
 from app.schemas.course_map import CourseMapCreate, CourseMapUpdate
@@ -568,6 +571,7 @@ async def test_multi_field_update_is_all_or_nothing(
         InMemoryMoodleClient(),
         SqlAlchemySkinRepository(session),
         SqlAlchemyAssetRepository(session),
+        SqlAlchemyPublicationRepository(session),
     )
     with pytest.raises(IntegrityError):
         await service.update_bubble(map_id, bubble.id, patch, 1)

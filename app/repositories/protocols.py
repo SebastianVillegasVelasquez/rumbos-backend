@@ -14,9 +14,10 @@ Contract shared by all implementations:
 import uuid
 from collections.abc import Collection
 from datetime import datetime
-from typing import Protocol
+from typing import Any, Protocol
 
 from app.enums import AssetKind
+from app.publishing.snapshot import DraftInputs
 from app.schemas.asset import AssetRecord, AssetUpdate, AssetUsage
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
@@ -27,6 +28,12 @@ from app.schemas.course_map import (
     SkinRule,
 )
 from app.schemas.map_settings import MapSettings
+from app.schemas.publication import (
+    PublicationMeta,
+    PublicationRecord,
+    PublicationSummary,
+    RestoreWarning,
+)
 from app.schemas.skin import ImageSkin, ProceduralSkin, SkinRead
 
 
@@ -240,4 +247,66 @@ class SkinRepository(Protocol):
 
     async def list(self, limit: int) -> list[SkinRead]:
         """Built-in skins first, then by creation."""
+        ...
+
+
+class PublicationRepository(Protocol):
+    async def load_draft(self, course_map_id: uuid.UUID) -> DraftInputs | None:
+        """The map's draft as snapshot inputs. None if the map doesn't exist."""
+        ...
+
+    async def load_drafts(
+        self, course_map_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, DraftInputs]:
+        """Several drafts in a fixed handful of queries (never one per map)."""
+        ...
+
+    async def latest(self, course_map_id: uuid.UUID) -> PublicationRecord | None:
+        """The map's highest-numbered publication, snapshot included."""
+        ...
+
+    async def latest_meta(
+        self, course_map_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, PublicationMeta]:
+        """The latest publication of each map that has one, without snapshots."""
+        ...
+
+    async def get(
+        self, course_map_id: uuid.UUID, number: int
+    ) -> PublicationRecord | None: ...
+
+    async def list_summaries(
+        self, course_map_id: uuid.UUID, limit: int
+    ) -> list[PublicationSummary]:
+        """Newest first."""
+        ...
+
+    async def publish(
+        self,
+        course_map_id: uuid.UUID,
+        expected_hash: str | None,
+        note: str | None,
+        keep: int,
+    ) -> PublicationSummary:
+        """Builds the draft's snapshot and stores it as the next publication, in
+        ONE REPEATABLE READ transaction (retried once on a serialization
+        failure), and prunes all but the latest `keep`.
+
+        `expected_hash` is what the editor reviewed; None skips that check.
+        Raises `CourseMapNotFoundError`, `DraftChangedSinceReviewError`,
+        `NoChangesToPublishError`, `PublishInvalidError` (every problem listed)
+        or `PublishConflictError`.
+        """
+        ...
+
+    async def restore_into_draft(
+        self,
+        course_map_id: uuid.UUID,
+        snapshot: dict[str, Any],
+        expected_revision: int,
+    ) -> list[RestoreWarning] | None:
+        """Loads a snapshot into the draft in ONE transaction and bumps the map
+        revision. None if the map doesn't exist; `VersionConflictError` if the
+        revision is stale; `PublishInvalidError` (nothing changed) if the
+        snapshot's background is gone."""
         ...
