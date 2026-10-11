@@ -94,6 +94,8 @@ class CourseMapBase(CourseMapCore):
     # Read through the model: a missing or empty stored value reads as defaults.
     settings: MapSettings = Field(default_factory=MapSettings)
     default_skin_id: uuid.UUID | None = None
+    # Concurrency token: starts at 1, bumped by every guarded write.
+    revision: int = 1
 
 
 class CourseMapSummary(CourseMapCore):

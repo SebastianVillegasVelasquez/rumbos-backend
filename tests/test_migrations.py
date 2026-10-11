@@ -558,3 +558,47 @@ def test_asset_metadata_migration_backfills_a_title_for_existing_assets(
     down = alembic(migration_db, "downgrade", SETTINGS)
     assert down.returncode == 0, down.stderr
     assert fetch(migration_db, "SELECT count(*) FROM assets") == [(2,)]
+
+
+CONCURRENCY = "a3f6d2b8c914"
+
+
+def test_concurrency_migration_gives_existing_rows_revision_and_version_one(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", ASSET_METADATA).returncode == 0
+    map_id = uuid.uuid4()
+    sql, params = insert_map(8, with_title=True)
+    run_sql(migration_db, [(sql, {**params, "id": map_id})])
+    run_sql(
+        migration_db,
+        [
+            (
+                (
+                    "INSERT INTO bubbles (id, course_map_id, moodle_course_id,"
+                    " activity_id, x, y, status, created_at, updated_at)"
+                    " VALUES (:id, :m, 8, :a, 0.5, 0.5, 'locked', now(), now())"
+                ),
+                {"id": uuid.uuid4(), "m": map_id, "a": activity},
+            )
+            for activity in (1, 2)
+        ],
+    )
+
+    up = alembic(migration_db, "upgrade", CONCURRENCY)
+
+    assert up.returncode == 0, up.stderr
+    assert fetch(migration_db, "SELECT revision FROM course_maps") == [(1,)]
+    assert fetch(migration_db, "SELECT version FROM bubbles") == [(1,), (1,)]
+    nullable = fetch(
+        migration_db,
+        "SELECT table_name, is_nullable FROM information_schema.columns"
+        " WHERE (table_name, column_name) IN"
+        " (('course_maps', 'revision'), ('bubbles', 'version'))"
+        " ORDER BY table_name",
+    )
+    assert nullable == [("bubbles", "NO"), ("course_maps", "NO")]
+
+    down = alembic(migration_db, "downgrade", ASSET_METADATA)
+    assert down.returncode == 0, down.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM bubbles") == [(2,)]

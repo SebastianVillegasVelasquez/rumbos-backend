@@ -59,6 +59,8 @@ class BubbleRead(ApiModel):
     status: BubbleStatus
     skin_id: uuid.UUID | None
     sequence: int
+    # Concurrency token: starts at 1, bumped by edits to x, y, icon or skin.
+    version: int = 1
     created_at: datetime
     updated_at: datetime
 

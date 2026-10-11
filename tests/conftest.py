@@ -17,6 +17,7 @@ from app.core.config import get_settings
 from app.main import app as fastapi_app
 from app.models.base import BaseORM
 from app.services.asset_service import AssetSettings
+from tests.editor_client import EditorClient
 from tests.fakes import InMemoryMoodleClient
 
 
@@ -142,5 +143,5 @@ async def client(
         InMemoryMoodleClient()
     )  # never called by these tests
     transport = httpx.ASGITransport(app=fastapi_app)
-    async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
+    async with EditorClient(transport=transport, base_url="http://t") as c:
         yield c

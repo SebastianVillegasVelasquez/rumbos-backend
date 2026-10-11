@@ -13,6 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 from app.main import app
 from app.repositories.sqlalchemy.skin_repository import SqlAlchemySkinRepository
 from tests import skin_configs
+from tests.editor_client import EditorClient
 from tests.fakes import InMemoryMoodleClient
 
 DEFAULT_SETTINGS: dict[str, Any] = {
@@ -41,7 +42,7 @@ async def client(engine: AsyncEngine) -> AsyncIterator[httpx.AsyncClient]:
     app.state.db_engine = engine
     app.state.moodle_client = InMemoryMoodleClient()  # never called here
     transport = httpx.ASGITransport(app=app)
-    async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
+    async with EditorClient(transport=transport, base_url="http://t") as c:
         yield c
 
 

@@ -47,6 +47,10 @@ class CourseMap(BaseORM):
     settings: Mapped[dict[str, Any]] = mapped_column(
         JSONB, server_default=text("'{}'::jsonb")
     )
+    # Optimistic concurrency token. Every guarded write is one
+    # `UPDATE ... WHERE revision = :expected` that also adds 1, so of two editors
+    # based on the same revision exactly one wins.
+    revision: Mapped[int] = mapped_column(default=1, server_default="1")
     # Skin for bubbles with no skin of their own and no matching rule. Deleting
     # the skin clears it (the app then falls back to the default skin).
     default_skin_id: Mapped[uuid.UUID | None] = mapped_column(

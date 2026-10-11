@@ -52,6 +52,9 @@ class Bubble(BaseORM):
     sequence: Mapped[int] = mapped_column(server_default="0")
     # Opaque Moodle activity id; not a foreign key (Moodle data isn't here).
     activity_id: Mapped[int]
+    # Optimistic concurrency token, like `CourseMap.revision`. Bumped by edits to
+    # draft content (position, icon, skin) and NOT by `status`, which is live data.
+    version: Mapped[int] = mapped_column(default=1, server_default="1")
     # Relative position on a 0-1 scale, never pixels.
     x: Mapped[float]
     y: Mapped[float]
