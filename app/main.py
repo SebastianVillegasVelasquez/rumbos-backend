@@ -57,7 +57,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             allow_origins=settings.cors_allowed_origins,
             allow_credentials=False,
             allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
-            allow_headers=["Content-Type", "Authorization"],
+            # `If-Match` carries the revision/version a write is based on;
+            # `ETag` is how the frontend reads it from single-resource responses.
+            allow_headers=["Content-Type", "Authorization", "If-Match"],
+            expose_headers=["ETag"],
         )
     register_exception_handlers(application)
     application.include_router(health.router)

@@ -105,3 +105,19 @@ async def test_no_origins_means_no_cors_middleware() -> None:
     assert simple.status_code == 200
     assert "access-control-allow-origin" not in simple.headers
     assert "access-control-allow-origin" not in preflight.headers
+
+
+async def test_if_match_is_allowed_and_etag_is_exposed() -> None:
+    async with _client([ALLOWED]) as client:
+        preflight = await client.options(
+            "/course-maps/x",
+            headers={
+                **_preflight(ALLOWED),
+                "Access-Control-Request-Headers": "content-type,if-match",
+            },
+        )
+        real = await client.get("/health", headers={"Origin": ALLOWED})
+
+    assert preflight.status_code == 200
+    assert "if-match" in preflight.headers["access-control-allow-headers"].lower()
+    assert "etag" in real.headers["access-control-expose-headers"].lower()
