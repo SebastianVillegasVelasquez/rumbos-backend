@@ -13,10 +13,11 @@ Contract shared by all implementations:
 
 import uuid
 from collections.abc import Collection
+from datetime import datetime
 from typing import Protocol
 
 from app.enums import AssetKind
-from app.schemas.asset import AssetRecord
+from app.schemas.asset import AssetRecord, AssetUpdate, AssetUsage
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
     CourseMapBase,
@@ -165,8 +166,41 @@ class AssetRepository(Protocol):
         height: int,
         size_bytes: int,
         sha256: str,
+        title: str,
+        credit: str | None,
+        original_filename: str | None,
     ) -> AssetRecord:
         """Raises `AssetAlreadyExistsError` if the kind and hash already exist."""
+        ...
+
+    async def list_created_before(self, cutoff: datetime) -> list[AssetRecord]:
+        """Every asset created before `cutoff`, oldest first."""
+        ...
+
+    async def update_metadata(
+        self, asset_id: uuid.UUID, data: AssetUpdate
+    ) -> AssetRecord | None:
+        """Applies only the fields set in `data`. None if there is no such asset."""
+        ...
+
+    async def usage(
+        self, asset_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, AssetUsage]:
+        """What references each asset, counted in a handful of queries (never one
+        per asset). Every requested id is in the result, zeros included."""
+        ...
+
+    async def delete_if_unused(self, asset_id: uuid.UUID) -> bool:
+        """Removes the row in ONE statement that also checks nothing references
+        it. False if there is no such asset; raises `AssetInUseError` if it is
+        referenced. Does not touch the stored files."""
+        ...
+
+    async def list(
+        self, kind: AssetKind | None, q: str | None, limit: int, offset: int
+    ) -> tuple[list[AssetRecord], int]:
+        """Assets newest first and the total before paging. `q` is a
+        case-insensitive substring match on title and credit."""
         ...
 
 

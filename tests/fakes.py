@@ -8,9 +8,11 @@ import asyncio
 import uuid
 from collections.abc import Collection
 from datetime import UTC, datetime
+from typing import Never
 
 from uuid_utils.compat import uuid7
 
+from app.enums import AssetKind
 from app.exceptions import (
     ActivityAlreadyPlacedError,
     CourseMapNotFoundError,
@@ -18,6 +20,7 @@ from app.exceptions import (
 )
 from app.moodle.exceptions import MoodleCourseNotFoundError
 from app.moodle.schemas import MoodleSection, MoodleSiteInfo
+from app.schemas.asset import AssetRecord, AssetUpdate, AssetUsage
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
     CourseMapBase,
@@ -254,6 +257,68 @@ class InMemorySkinRepository:
         raise NotImplementedError
 
     async def list(self, limit: int) -> list[SkinRead]:
+        raise NotImplementedError
+
+
+class InMemoryAssetRepository:
+    """Knows which assets exist; service tests only need lookups."""
+
+    def __init__(self) -> None:
+        self.items: dict[uuid.UUID, AssetRecord] = {}
+
+    def add(self, kind: AssetKind = AssetKind.BACKGROUND) -> AssetRecord:
+        record = AssetRecord(
+            id=uuid7(),
+            kind=kind,
+            mime="image/png",
+            width=10,
+            height=10,
+            size_bytes=1,
+            sha256=uuid.uuid4().hex * 2,
+            title="Fake",
+            credit=None,
+            original_filename=None,
+            created_at=datetime.now(UTC),
+        )
+        self.items[record.id] = record
+        return record
+
+    async def get_by_id(self, asset_id: uuid.UUID) -> AssetRecord | None:
+        return self.items.get(asset_id)
+
+    async def get_many(
+        self, asset_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, AssetRecord]:
+        return {i: self.items[i] for i in asset_ids if i in self.items}
+
+    async def find_by_hash(self, kind: AssetKind, sha256: str) -> AssetRecord | None:
+        raise NotImplementedError
+
+    async def total_bytes(self) -> int:
+        raise NotImplementedError
+
+    async def create(self, *args: object, **kwargs: object) -> Never:
+        raise NotImplementedError
+
+    async def list_created_before(self, cutoff: datetime) -> list[AssetRecord]:
+        raise NotImplementedError
+
+    async def update_metadata(
+        self, asset_id: uuid.UUID, data: AssetUpdate
+    ) -> AssetRecord | None:
+        raise NotImplementedError
+
+    async def usage(
+        self, asset_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, AssetUsage]:
+        raise NotImplementedError
+
+    async def delete_if_unused(self, asset_id: uuid.UUID) -> bool:
+        raise NotImplementedError
+
+    async def list(
+        self, kind: AssetKind | None, q: str | None, limit: int, offset: int
+    ) -> tuple[list[AssetRecord], int]:
         raise NotImplementedError
 
 

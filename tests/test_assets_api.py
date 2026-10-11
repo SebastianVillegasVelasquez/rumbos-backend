@@ -1,9 +1,8 @@
 """`/assets` through the real stack: routes, service, Postgres, a temp directory."""
 
 import asyncio
-import dataclasses
 import io
-from collections.abc import AsyncIterator, Iterator
+from collections.abc import AsyncIterator
 from pathlib import Path
 from typing import Any
 
@@ -13,72 +12,10 @@ from PIL import Image
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 
-from app.api.routes.assets import get_asset_settings, get_asset_storage
-from app.assets.storage import AssetStorage, LocalDiskAssetStorage
-from app.main import app
 from app.models import Asset
-from app.services.asset_service import AssetSettings
 from tests import images
-
-ENABLED = AssetSettings(
-    uploads_enabled=True,
-    max_total_bytes=1_000_000_000,
-    max_background_bytes=200_000,
-    max_bubble_bytes=50_000,
-    max_background_side=2000,
-    max_bubble_side=100,
-)
-
-
-class Box:
-    """The settings the overridden dependency returns; tests tweak `current`."""
-
-    current = ENABLED
-
-    def change(self, **fields: Any) -> None:
-        self.current = dataclasses.replace(self.current, **fields)
-
-
-@pytest.fixture
-def box() -> Iterator[Box]:
-    box = Box()
-    app.dependency_overrides[get_asset_settings] = lambda: box.current
-    yield box
-    app.dependency_overrides.pop(get_asset_settings, None)
-
-
-@pytest.fixture
-def storage(tmp_path: Path) -> Iterator[AssetStorage]:
-    storage = LocalDiskAssetStorage(tmp_path / "assets")
-    app.dependency_overrides[get_asset_storage] = lambda: storage
-    yield storage
-    app.dependency_overrides.pop(get_asset_storage, None)
-
-
-@pytest.fixture
-async def client(
-    engine: AsyncEngine, box: Box, storage: AssetStorage
-) -> AsyncIterator[httpx.AsyncClient]:
-    app.state.db_engine = engine
-    transport = httpx.ASGITransport(app=app)
-    async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
-        yield c
-
-
-async def upload(
-    client: httpx.AsyncClient,
-    data: bytes,
-    kind: str = "bubble",
-    *,
-    content_type: str = "image/png",
-    filename: str = "pic.png",
-) -> httpx.Response:
-    return await client.post(
-        "/assets",
-        data={"kind": kind},
-        files={"file": (filename, data, content_type)},
-    )
-
+from tests.asset_helpers import upload
+from tests.conftest import Box
 
 # --- uploading --------------------------------------------------------------
 
@@ -99,6 +36,9 @@ async def test_upload_a_background_returns_the_contract_shape(
         "bytes",
         "url",
         "thumbUrl",
+        "title",
+        "credit",
+        "originalFilename",
         "createdAt",
     }
     assert body["kind"] == "background" and body["mime"] == "image/png"

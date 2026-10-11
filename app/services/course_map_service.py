@@ -1,7 +1,11 @@
+import re
 import uuid
 from collections import Counter
 
+from app.enums import AssetKind
 from app.exceptions import (
+    BackgroundAssetNotFoundError,
+    BackgroundAssetWrongKindError,
     BubbleNotFoundError,
     CourseMapNotFoundError,
     DuplicateSkinRuleError,
@@ -11,6 +15,7 @@ from app.exceptions import (
 from app.moodle.protocols import MoodleClient
 from app.moodle.schemas import MoodleModule, MoodleSection
 from app.repositories.protocols import (
+    AssetRepository,
     BubbleRepository,
     CourseMapRepository,
     SkinRepository,
@@ -33,6 +38,20 @@ from app.schemas.course_map import (
     CourseMapRead,
     CourseMapUpdate,
 )
+
+# A map background served by this API: exactly `/assets/{canonical uuid}`.
+_ASSET_PATH = re.compile(
+    r"/assets/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})",
+    re.IGNORECASE,
+)
+
+
+def asset_id_of_image_url(image_url: str) -> uuid.UUID | None:
+    """The asset id when `image_url` is `/assets/{uuid}`, else None (any other
+    URL or path is the editor's business). An upper-case id is treated as the
+    asset it names, but the stored text must be the canonical lower-case one."""
+    match = _ASSET_PATH.fullmatch(image_url)
+    return uuid.UUID(match[1]) if match else None
 
 
 def is_bubble_candidate(module: MoodleModule) -> bool:
@@ -93,13 +112,16 @@ class CourseMapService:
         bubbles: BubbleRepository,
         moodle: MoodleClient,
         skins: SkinRepository,
+        assets: AssetRepository,
     ) -> None:
         self._course_maps = course_maps
         self._bubbles = bubbles
         self._moodle = moodle
         self._skins = skins
+        self._assets = assets
 
     async def create_course_map(self, data: CourseMapCreate) -> CourseMapRead:
+        await self._check_background(data.image_url)
         # The repository appends the map to the course and enforces one map
         # per section (`SectionAlreadyMappedError`).
         created = await self._course_maps.create(data)
@@ -135,6 +157,8 @@ class CourseMapService:
         self, course_map_id: uuid.UUID, data: CourseMapUpdate
     ) -> CourseMapRead:
         """Applies only the fields present in `data` (partial update)."""
+        if data.image_url is not None:
+            await self._check_background(data.image_url)
         updated = await self._course_maps.update(course_map_id, data)
         if updated is None:
             raise CourseMapNotFoundError(course_map_id)
@@ -272,6 +296,24 @@ class CourseMapService:
                     )
                 )
         return activities
+
+    async def _check_background(self, image_url: str) -> None:
+        """A background served by this API must be an existing background asset.
+
+        Raises `BackgroundAssetNotFoundError` / `BackgroundAssetWrongKindError`.
+        """
+        asset_id = asset_id_of_image_url(image_url)
+        if asset_id is None:
+            return
+        asset = (
+            await self._assets.get_by_id(asset_id)
+            if image_url == f"/assets/{asset_id}"
+            else None  # not the canonical spelling: it names no stored asset
+        )
+        if asset is None:
+            raise BackgroundAssetNotFoundError(asset_id)
+        if asset.kind is not AssetKind.BACKGROUND:
+            raise BackgroundAssetWrongKindError(asset_id)
 
     async def _read(self, course_map: CourseMapBase) -> CourseMapRead:
         return CourseMapRead(

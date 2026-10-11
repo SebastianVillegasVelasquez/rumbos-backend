@@ -23,6 +23,7 @@ from app.schemas.course_map import (
 from app.schemas.map_settings import MapSettings
 from app.services.course_map_service import CourseMapService
 from tests.fakes import (
+    InMemoryAssetRepository,
     InMemoryBubbleRepository,
     InMemoryCourseMapRepository,
     InMemoryMoodleClient,
@@ -58,7 +59,7 @@ def service(
     skins: InMemorySkinRepository,
 ) -> CourseMapService:
     # Passing the fakes here is the Protocol check: mypy verifies they match.
-    return CourseMapService(maps, bubbles, moodle, skins)
+    return CourseMapService(maps, bubbles, moodle, skins, InMemoryAssetRepository())
 
 
 async def _map_id(service: CourseMapService, course_id: int = 1) -> uuid.UUID:

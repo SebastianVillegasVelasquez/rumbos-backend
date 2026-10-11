@@ -1,16 +1,48 @@
 import uuid
 from collections.abc import Collection
+from datetime import datetime
+from typing import Any
 
-from sqlalchemy import func, select
+from sqlalchemy import (
+    ColumnElement,
+    SQLColumnExpression,
+    String,
+    Text,
+    cast,
+    delete,
+    exists,
+    func,
+    or_,
+    select,
+    update,
+)
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.enums import AssetKind
-from app.exceptions import AssetAlreadyExistsError
-from app.models import Asset
+from app.exceptions import AssetAlreadyExistsError, AssetInUseError
+from app.models import Asset, CourseMap, Skin
 from app.models.asset import UQ_ASSET_CONTENT
 from app.repositories.sqlalchemy._errors import constraint_name
-from app.schemas.asset import AssetRecord
+from app.schemas.asset import AssetRecord, AssetUpdate, AssetUsage
+
+
+def _id_text(asset_id: SQLColumnExpression[Any]) -> ColumnElement[str]:
+    return cast(asset_id, String)
+
+
+# One definition of "uses this asset" per kind of user, shared by the counts and
+# the guarded delete (and so by the garbage collector). Each takes an SQL
+# expression for the asset id, so it works for a literal and for a join.
+def map_uses(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:
+    """A draft map whose background is `/assets/{id}`."""
+    return CourseMap.image_url == func.concat("/assets/", _id_text(asset_id))
+
+
+def skin_uses(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:
+    """A skin whose config mentions the id anywhere. `strpos`, not `LIKE`, so
+    nothing in an id can act as a wildcard; the id is always a bound value."""
+    return func.strpos(cast(Skin.config, Text), _id_text(asset_id)) > 0
 
 
 class SqlAlchemyAssetRepository:
@@ -54,6 +86,9 @@ class SqlAlchemyAssetRepository:
         height: int,
         size_bytes: int,
         sha256: str,
+        title: str,
+        credit: str | None,
+        original_filename: str | None,
     ) -> AssetRecord:
         asset = Asset(
             id=asset_id,
@@ -63,6 +98,9 @@ class SqlAlchemyAssetRepository:
             height=height,
             size_bytes=size_bytes,
             sha256=sha256,
+            title=title,
+            credit=credit,
+            original_filename=original_filename,
         )
         self._session.add(asset)
         try:
@@ -76,3 +114,104 @@ class SqlAlchemyAssetRepository:
             await self._session.rollback()
             raise
         return AssetRecord.model_validate(asset)
+
+    async def list_created_before(self, cutoff: datetime) -> list[AssetRecord]:
+        result = await self._session.scalars(
+            select(Asset)
+            .where(Asset.created_at < cutoff)
+            .order_by(Asset.created_at, Asset.id)
+        )
+        return [AssetRecord.model_validate(a) for a in result]
+
+    async def update_metadata(
+        self, asset_id: uuid.UUID, data: AssetUpdate
+    ) -> AssetRecord | None:
+        stmt = (
+            update(Asset)
+            .where(Asset.id == asset_id)
+            .values(**data.model_dump(exclude_unset=True))
+            .returning(Asset)
+            .execution_options(populate_existing=True)
+        )
+        try:
+            asset = (await self._session.scalars(stmt)).one_or_none()
+            await self._session.commit()
+        except BaseException:
+            await self._session.rollback()
+            raise
+        return AssetRecord.model_validate(asset) if asset else None
+
+    async def usage(
+        self, asset_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, AssetUsage]:
+        ids = list(asset_ids)
+        counts = {i: AssetUsage() for i in ids}
+        if not ids:
+            return counts
+        # One grouped query per kind of user, however many assets are asked for.
+        for field, model, uses in (
+            ("maps", CourseMap, map_uses),
+            ("skins", Skin, skin_uses),
+        ):
+            rows = await self._session.execute(
+                select(Asset.id, func.count(model.id))
+                .select_from(Asset)
+                .join(model, uses(Asset.id))
+                .where(Asset.id.in_(ids))
+                .group_by(Asset.id)
+            )
+            for asset_id, n in rows:
+                setattr(counts[asset_id], field, n)
+        await self._session.rollback()  # reads only: leave the session clean
+        return counts
+
+    async def delete_if_unused(self, asset_id: uuid.UUID) -> bool:
+        stmt = (
+            delete(Asset)
+            .where(
+                Asset.id == asset_id,
+                ~exists().where(map_uses(Asset.id)),
+                ~exists().where(skin_uses(Asset.id)),
+            )
+            .returning(Asset.id)
+            .execution_options(synchronize_session=False)
+        )
+        try:
+            deleted = (await self._session.execute(stmt)).scalar_one_or_none()
+            await self._session.commit()
+        except BaseException:
+            await self._session.rollback()
+            raise
+        if deleted is not None:
+            return True
+        # Nothing deleted: either it never existed or something uses it.
+        if await self.get_by_id(asset_id) is None:
+            return False
+        raise AssetInUseError((await self.usage([asset_id]))[asset_id])
+
+    async def list(
+        self, kind: AssetKind | None, q: str | None, limit: int, offset: int
+    ) -> tuple[list[AssetRecord], int]:
+        filters: list[ColumnElement[bool]] = []
+        if kind is not None:
+            filters.append(Asset.kind == kind)
+        if q:
+            # `autoescape` makes "%" and "_" in the search text literal.
+            filters.append(
+                or_(
+                    Asset.title.icontains(q, autoescape=True),
+                    Asset.credit.icontains(q, autoescape=True),
+                )
+            )
+        total = await self._session.scalar(
+            select(func.count()).select_from(Asset).where(*filters)
+        )
+        # `id` (UUIDv7) makes the order total when timestamps tie.
+        result = await self._session.scalars(
+            select(Asset)
+            .where(*filters)
+            .order_by(Asset.created_at.desc(), Asset.id.desc())
+            .limit(limit)
+            .offset(offset)
+        )
+        return [AssetRecord.model_validate(a) for a in result], total or 0

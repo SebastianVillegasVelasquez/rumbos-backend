@@ -1,6 +1,10 @@
 """Domain errors, raised by repositories/services and mapped to HTTP in the API layer."""
 
 import uuid
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from app.schemas.asset import AssetUsage
 
 
 class DomainError(Exception):
@@ -93,6 +97,34 @@ class AssetAlreadyExistsError(DomainError):
 
 class InvalidUploadError(DomainError):
     """The upload form is malformed (no file, unknown kind)."""
+
+
+class InvalidAssetMetadataError(DomainError):
+    """The upload's `title` or `credit` is empty where required or too long."""
+
+
+class AssetInUseError(DomainError):
+    """The asset is referenced by a map, a skin or a publication."""
+
+    def __init__(self, usage: "AssetUsage") -> None:
+        super().__init__("asset in use")
+        self.usage = usage
+
+
+class BackgroundAssetNotFoundError(DomainError):
+    """A map's `imageUrl` points at `/assets/{id}` but no such asset exists."""
+
+    def __init__(self, asset_id: uuid.UUID) -> None:
+        super().__init__("background asset not found")
+        self.asset_id = asset_id
+
+
+class BackgroundAssetWrongKindError(DomainError):
+    """A map's `imageUrl` points at an asset that is not a background."""
+
+    def __init__(self, asset_id: uuid.UUID) -> None:
+        super().__init__("asset is not a background")
+        self.asset_id = asset_id
 
 
 class SkinNotFoundError(DomainError):

@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_session
 from app.moodle.dependencies import get_contents_provider, get_moodle_client
 from app.moodle.protocols import CourseContentsProvider, MoodleClient
+from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
 from app.repositories.sqlalchemy.bubble_repository import SqlAlchemyBubbleRepository
 from app.repositories.sqlalchemy.course_map_repository import (
     SqlAlchemyCourseMapRepository,
@@ -45,6 +46,7 @@ def get_course_map_service(
         SqlAlchemyBubbleRepository(session),
         moodle,
         SqlAlchemySkinRepository(session),
+        SqlAlchemyAssetRepository(session),
     )
 
 

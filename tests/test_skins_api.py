@@ -65,7 +65,16 @@ async def make_asset(
 ) -> uuid.UUID:
     async with AsyncSession(engine, expire_on_commit=False) as session:
         record = await SqlAlchemyAssetRepository(session).create(
-            uuid7(), kind, "image/png", width, height, 1000, uuid.uuid4().hex * 2
+            uuid7(),
+            kind,
+            "image/png",
+            width,
+            height,
+            1000,
+            uuid.uuid4().hex * 2,
+            "Test asset",
+            None,
+            None,
         )
     return record.id
 

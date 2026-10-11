@@ -24,6 +24,7 @@ from app.services.course_map_service import (
     is_hidden,
 )
 from tests.fakes import (
+    InMemoryAssetRepository,
     InMemoryBubbleRepository,
     InMemoryCourseMapRepository,
     InMemoryMoodleClient,
@@ -43,7 +44,11 @@ def moodle() -> InMemoryMoodleClient:
 def service(moodle: InMemoryMoodleClient) -> CourseMapService:
     maps = InMemoryCourseMapRepository()
     return CourseMapService(
-        maps, InMemoryBubbleRepository(maps), moodle, InMemorySkinRepository()
+        maps,
+        InMemoryBubbleRepository(maps),
+        moodle,
+        InMemorySkinRepository(),
+        InMemoryAssetRepository(),
     )
 
 

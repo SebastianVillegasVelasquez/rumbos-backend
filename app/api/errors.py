@@ -7,14 +7,18 @@ from fastapi.responses import JSONResponse
 from app.exceptions import (
     ActivityAlreadyPlacedError,
     AssetDimensionsTooLargeError,
+    AssetInUseError,
     AssetInvalidImageError,
     AssetNotFoundError,
     AssetQuotaExceededError,
     AssetTooLargeError,
     AssetTypeNotAllowedError,
+    BackgroundAssetNotFoundError,
+    BackgroundAssetWrongKindError,
     BubbleNotFoundError,
     CourseMapNotFoundError,
     DuplicateSkinRuleError,
+    InvalidAssetMetadataError,
     InvalidUploadError,
     OrderMismatchError,
     SectionAlreadyMappedError,
@@ -122,6 +126,47 @@ def register_exception_handlers(app: FastAPI) -> None:
             "invalid_upload",
             "Send multipart/form-data with a `file` and a `kind` of "
             "'background' or 'bubble'",
+        ),
+    )
+    app.add_exception_handler(
+        InvalidAssetMetadataError,
+        _coded(
+            422,
+            "invalid_asset_metadata",
+            "The title must be 1-120 characters and the credit at most 300",
+        ),
+    )
+    app.add_exception_handler(
+        AssetInUseError,
+        _coded(
+            409,
+            "asset_in_use",
+            "The image is used by a map, a skin or a publication",
+            lambda exc: {
+                "usage": {
+                    "maps": exc.usage.maps,
+                    "skins": exc.usage.skins,
+                    "publications": exc.usage.publications,
+                }
+            },
+        ),
+    )
+    app.add_exception_handler(
+        BackgroundAssetNotFoundError,
+        _coded(
+            422,
+            "background_asset_not_found",
+            "The map's imageUrl points at an image that does not exist",
+            lambda exc: {"assetId": str(exc.asset_id)},
+        ),
+    )
+    app.add_exception_handler(
+        BackgroundAssetWrongKindError,
+        _coded(
+            422,
+            "background_asset_wrong_kind",
+            "The map's imageUrl must be a background image, not a bubble image",
+            lambda exc: {"assetId": str(exc.asset_id)},
         ),
     )
     app.add_exception_handler(

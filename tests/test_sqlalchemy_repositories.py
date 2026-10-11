@@ -20,6 +20,7 @@ from app.exceptions import (
     SectionAlreadyMappedError,
 )
 from app.models import Bubble, CourseMap
+from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
 from app.repositories.sqlalchemy.bubble_repository import SqlAlchemyBubbleRepository
 from app.repositories.sqlalchemy.course_map_repository import (
     SqlAlchemyCourseMapRepository,
@@ -559,7 +560,11 @@ async def test_multi_field_update_is_all_or_nothing(
         {"x": 0.9, "y": 0.8, "icon": None, "status": "complete"}
     )
     service = CourseMapService(
-        maps, bubbles, InMemoryMoodleClient(), SqlAlchemySkinRepository(session)
+        maps,
+        bubbles,
+        InMemoryMoodleClient(),
+        SqlAlchemySkinRepository(session),
+        SqlAlchemyAssetRepository(session),
     )
     with pytest.raises(IntegrityError):
         await service.update_bubble(map_id, bubble.id, patch)

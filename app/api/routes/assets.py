@@ -7,11 +7,12 @@ deployment until auth exists. (`GET` is public by design: assets are shown to
 learners.)
 """
 
+import uuid
 from collections.abc import Awaitable, Callable
 from pathlib import Path
 from typing import Annotated, Any
 
-from fastapi import APIRouter, Depends, Request, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.datastructures import UploadFile
 from starlette.types import Message
@@ -22,7 +23,7 @@ from app.core.database import get_session
 from app.enums import AssetKind
 from app.exceptions import AssetTooLargeError, InvalidUploadError
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
-from app.schemas.asset import AssetRead
+from app.schemas.asset import AssetList, AssetRead, AssetUpdate
 from app.services.asset_service import AssetContent, AssetService, AssetSettings
 
 router = APIRouter(prefix="/assets", tags=["assets"])
@@ -30,6 +31,8 @@ router = APIRouter(prefix="/assets", tags=["assets"])
 # Multipart framing (boundaries, the `kind` field, part headers) on top of the
 # file itself.
 _BODY_OVERHEAD_BYTES = 64 * 1024
+
+_FORM_FIELDS = {"file", "kind", "title", "credit"}
 
 _CACHE_CONTROL = "public, max-age=31536000, immutable"
 # An image response must never be able to run anything, whatever it contains.
@@ -39,14 +42,7 @@ _CONTENT_SECURITY_POLICY = "default-src 'none'; sandbox"
 def get_asset_settings(
     settings: Annotated[Settings, Depends(get_settings)],
 ) -> AssetSettings:
-    return AssetSettings(
-        uploads_enabled=settings.assets_uploads_enabled,
-        max_total_bytes=settings.assets_max_total_bytes,
-        max_background_bytes=settings.assets_max_background_bytes,
-        max_bubble_bytes=settings.assets_max_bubble_bytes,
-        max_background_side=settings.assets_max_background_side,
-        max_bubble_side=settings.assets_max_bubble_side,
-    )
+    return AssetSettings.from_app_settings(settings)
 
 
 def get_asset_storage(
@@ -107,6 +103,8 @@ _UPLOAD_OPENAPI: dict[str, Any] = {
                     "properties": {
                         "file": {"type": "string", "format": "binary"},
                         "kind": {"type": "string", "enum": ["background", "bubble"]},
+                        "title": {"type": "string", "maxLength": 120},
+                        "credit": {"type": "string", "maxLength": 300},
                     },
                 }
             }
@@ -129,7 +127,8 @@ async def upload_asset(
     settings: AssetSettingsDep,
 ) -> AssetRead:
     """201 with the new asset, or 200 with the existing one when the same
-    content of the same kind was already uploaded."""
+    content of the same kind was already uploaded (its title and credit are
+    left as they were). Optional form fields: `title`, `credit`."""
     service.ensure_uploads_enabled()  # before reading a byte of the body
     limit = settings.largest_upload_bytes + _BODY_OVERHEAD_BYTES
     declared = request.headers.get("content-length", "")
@@ -138,10 +137,12 @@ async def upload_asset(
 
     limited = Request(request.scope, _limited(request.receive, limit))
     try:
-        form = await limited.form(max_files=1, max_fields=1)
+        form = await limited.form(max_files=1, max_fields=3)
     except _BodyTooLargeError as exc:
         raise AssetTooLargeError(settings.largest_upload_bytes) from exc
     try:
+        if set(form.keys()) - _FORM_FIELDS:
+            raise HTTPException(status.HTTP_400_BAD_REQUEST, "Unexpected form field")
         file, raw_kind = form.get("file"), form.get("kind")
         if not isinstance(file, UploadFile):
             raise InvalidUploadError("missing file")
@@ -151,12 +152,48 @@ async def upload_asset(
             raise InvalidUploadError("kind must be 'background' or 'bubble'") from exc
         file.file.seek(0, 2)
         size = file.file.tell()
-        result = await service.upload(file.file, size, kind)
+        raw_title, raw_credit = form.get("title"), form.get("credit")
+        result = await service.upload(
+            file.file,
+            size,
+            kind,
+            title=raw_title if isinstance(raw_title, str) else None,
+            credit=raw_credit if isinstance(raw_credit, str) else None,
+            filename=file.filename,
+        )
     finally:
         await form.close()
     if not result.created:
         response.status_code = status.HTTP_200_OK
     return AssetRead.from_record(result.asset)
+
+
+@router.get("", response_model=AssetList)
+async def list_assets(
+    service: ServiceDep,
+    kind: AssetKind | None = None,
+    q: Annotated[str | None, Query(max_length=120)] = None,
+    limit: Annotated[int, Query(ge=1, le=100)] = 24,
+    offset: Annotated[int, Query(ge=0)] = 0,
+) -> AssetList:
+    return await service.list_assets(kind=kind, q=q, limit=limit, offset=offset)
+
+
+@router.patch("/{asset_id}", response_model=AssetRead)
+async def update_asset(
+    asset_id: uuid.UUID, data: AssetUpdate, service: ServiceDep
+) -> AssetRead:
+    return AssetRead.from_record(await service.update_metadata(asset_id, data))
+
+
+@router.delete("/{asset_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_asset(asset_id: uuid.UUID, service: ServiceDep) -> Response:
+    """409 `asset_in_use` while a map, skin or publication references it.
+
+    SECURITY: anonymous like the upload. See the README.
+    """
+    await service.delete(asset_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 def _etag_matches(header: str | None, etag: str) -> bool:

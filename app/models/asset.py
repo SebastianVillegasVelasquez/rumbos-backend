@@ -35,3 +35,8 @@ class Asset(BaseORM):
     size_bytes: Mapped[int] = mapped_column("bytes", BigInteger)
     # Hex digest of the stored bytes. Also the HTTP ETag.
     sha256: Mapped[str] = mapped_column(String(64))
+    # Library metadata, shown to editors. Never part of a file path.
+    title: Mapped[str] = mapped_column(String(120))
+    credit: Mapped[str | None] = mapped_column(String(300))
+    # What the uploader's file was called. Display only; sanitized on the way in.
+    original_filename: Mapped[str | None] = mapped_column(String(255))

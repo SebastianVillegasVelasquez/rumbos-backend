@@ -1,15 +1,23 @@
 import asyncio
-from collections.abc import AsyncIterator
+import dataclasses
+from collections.abc import AsyncIterator, Iterator
+from pathlib import Path
+from typing import Any
 
+import httpx
 import pytest
 from sqlalchemy import text
 from sqlalchemy.engine import URL, make_url
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 from sqlalchemy.orm import Mapped, mapped_column
 
-import app.models  # noqa: F401  (registers the real tables on the metadata)
+from app.api.routes.assets import get_asset_settings, get_asset_storage
+from app.assets.storage import AssetStorage, LocalDiskAssetStorage
 from app.core.config import get_settings
+from app.main import app as fastapi_app
 from app.models.base import BaseORM
+from app.services.asset_service import AssetSettings
+from tests.fakes import InMemoryMoodleClient
 
 
 class Widget(BaseORM):
@@ -86,3 +94,53 @@ async def engine(test_database: str) -> AsyncIterator[AsyncEngine]:
 async def session(engine: AsyncEngine) -> AsyncIterator[AsyncSession]:
     async with AsyncSession(engine, expire_on_commit=False) as s:
         yield s
+
+
+# --- API client with the asset settings and storage under test control --------
+
+ENABLED = AssetSettings(
+    uploads_enabled=True,
+    max_total_bytes=1_000_000_000,
+    max_background_bytes=200_000,
+    max_bubble_bytes=50_000,
+    max_background_side=2000,
+    max_bubble_side=100,
+)
+
+
+class Box:
+    """The settings the overridden dependency returns; tests tweak `current`."""
+
+    current = ENABLED
+
+    def change(self, **fields: Any) -> None:
+        self.current = dataclasses.replace(self.current, **fields)
+
+
+@pytest.fixture
+def box() -> Iterator[Box]:
+    box = Box()
+    fastapi_app.dependency_overrides[get_asset_settings] = lambda: box.current
+    yield box
+    fastapi_app.dependency_overrides.pop(get_asset_settings, None)
+
+
+@pytest.fixture
+def storage(tmp_path: Path) -> Iterator[AssetStorage]:
+    storage = LocalDiskAssetStorage(tmp_path / "assets")
+    fastapi_app.dependency_overrides[get_asset_storage] = lambda: storage
+    yield storage
+    fastapi_app.dependency_overrides.pop(get_asset_storage, None)
+
+
+@pytest.fixture
+async def client(
+    engine: AsyncEngine, box: Box, storage: AssetStorage
+) -> AsyncIterator[httpx.AsyncClient]:
+    fastapi_app.state.db_engine = engine
+    fastapi_app.state.moodle_client = (
+        InMemoryMoodleClient()
+    )  # never called by these tests
+    transport = httpx.ASGITransport(app=fastapi_app)
+    async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
+        yield c

@@ -7,6 +7,7 @@ from typing import BinaryIO
 
 from uuid_utils.compat import uuid7
 
+from app.assets.metadata import clean_credit, clean_filename, default_title, fits_credit
 from app.assets.processing import ImageLimits, process_image
 from app.assets.storage import (
     AssetFileMissingError,
@@ -14,6 +15,7 @@ from app.assets.storage import (
     content_key,
     thumb_key,
 )
+from app.core.config import Settings
 from app.enums import AssetKind
 from app.exceptions import (
     AssetAlreadyExistsError,
@@ -21,10 +23,18 @@ from app.exceptions import (
     AssetNotFoundError,
     AssetQuotaExceededError,
     AssetTooLargeError,
+    InvalidAssetMetadataError,
     UploadsDisabledError,
 )
 from app.repositories.protocols import AssetRepository
-from app.schemas.asset import AssetRecord
+from app.schemas.asset import (
+    CREDIT_MAX_LENGTH,
+    TITLE_MAX_LENGTH,
+    AssetList,
+    AssetListItem,
+    AssetRecord,
+    AssetUpdate,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +49,17 @@ class AssetSettings:
     max_bubble_bytes: int
     max_background_side: int
     max_bubble_side: int
+
+    @classmethod
+    def from_app_settings(cls, settings: Settings) -> "AssetSettings":
+        return cls(
+            uploads_enabled=settings.assets_uploads_enabled,
+            max_total_bytes=settings.assets_max_total_bytes,
+            max_background_bytes=settings.assets_max_background_bytes,
+            max_bubble_bytes=settings.assets_max_bubble_bytes,
+            max_background_side=settings.assets_max_background_side,
+            max_bubble_side=settings.assets_max_bubble_side,
+        )
 
     def max_bytes_for(self, kind: AssetKind) -> int:
         if kind is AssetKind.BACKGROUND:
@@ -70,8 +91,9 @@ class AssetService:
     SECURITY: there is no authentication yet, so uploads are anonymous. The
     quota and `uploads_enabled` only limit the damage; they are not protection.
     Uploads must stay disabled on any publicly reachable deployment until auth
-    exists. Orphans (assets no map or skin uses) are never deleted for now;
-    the quota bounds how many can pile up.
+    exists. Deleting is anonymous too (see `delete`): anyone who can reach the
+    API can remove an UNUSED image. Assets in use are protected by the usage
+    check, so a published map can never lose its picture.
     """
 
     def __init__(
@@ -85,12 +107,33 @@ class AssetService:
         if not self._settings.uploads_enabled:
             raise UploadsDisabledError
 
-    async def upload(self, file: BinaryIO, size: int, kind: AssetKind) -> UploadResult:
+    async def upload(
+        self,
+        file: BinaryIO,
+        size: int,
+        kind: AssetKind,
+        *,
+        title: str | None = None,
+        credit: str | None = None,
+        filename: str | None = None,
+    ) -> UploadResult:
         """Checks the upload, re-encodes it and stores it (or finds the twin).
 
         `file` is the already-received upload, `size` its length in bytes.
+        `title` defaults to the file name without its extension. An identical
+        upload returns the existing asset untouched: its title and credit are
+        NOT overwritten by the new ones.
         """
         self.ensure_uploads_enabled()
+        original_filename = clean_filename(filename)
+        clean_title = (
+            _clean_title(title)
+            if title is not None and title.strip()
+            else default_title(original_filename, kind)
+        )
+        clean_cred = clean_credit(credit)
+        if not fits_credit(clean_cred):
+            raise InvalidAssetMetadataError(f"credit over {CREDIT_MAX_LENGTH}")
         limit = self._settings.max_bytes_for(kind)
         if size > limit:
             raise AssetTooLargeError(limit)
@@ -133,6 +176,9 @@ class AssetService:
                 processed.height,
                 len(processed.data),
                 sha256,
+                clean_title,
+                clean_cred,
+                original_filename,
             )
         except AssetAlreadyExistsError:
             # Lost a race against an identical upload: use the winner's.
@@ -145,6 +191,49 @@ class AssetService:
             await self._discard(keys)
             raise
         return UploadResult(record, created=True)
+
+    async def list_assets(
+        self, *, kind: AssetKind | None, q: str | None, limit: int, offset: int
+    ) -> AssetList:
+        records, total = await self._assets.list(
+            kind, (q or "").strip() or None, limit, offset
+        )
+        usage = await self._assets.usage([r.id for r in records])
+        return AssetList(
+            items=[
+                AssetListItem.from_record_and_usage(r, usage[r.id]) for r in records
+            ],
+            total=total,
+            limit=limit,
+            offset=offset,
+        )
+
+    async def update_metadata(
+        self, asset_id: uuid.UUID, data: AssetUpdate
+    ) -> AssetRecord:
+        updated = await self._assets.update_metadata(asset_id, data)
+        if updated is None:
+            raise AssetNotFoundError(str(asset_id))
+        return updated
+
+    async def delete(self, asset_id: uuid.UUID) -> None:
+        """Deletes an asset nothing references.
+
+        Order: the database row first, in one statement that also checks that no
+        map, skin or publication uses it (`AssetInUseError` otherwise); only
+        then the files. The row is what makes an asset reachable, so if removing
+        the files fails the worst case is unreachable bytes on disk (logged,
+        and removal is idempotent), never an asset that is listed but has lost
+        its picture. The usage check is not a lock: a map that starts using the
+        image in the same instant as the delete can still lose it.
+        """
+        if not await self._assets.delete_if_unused(asset_id):
+            raise AssetNotFoundError(str(asset_id))
+        for key in (thumb_key(asset_id), content_key(asset_id)):
+            try:
+                await self._storage.delete(key)
+            except Exception:  # noqa: BLE001  the asset is gone either way
+                logger.error("Asset %s deleted but %s was not removed", asset_id, key)
 
     async def get_content(self, raw_id: str, *, thumb: bool = False) -> AssetContent:
         """The bytes to serve. Anything that is not a known asset id is not found.
@@ -174,6 +263,13 @@ class AssetService:
                 await self._storage.delete(key)
             except Exception:  # noqa: BLE001  best effort; never mask the real error
                 logger.warning("Could not remove %s after a failed upload", key)
+
+
+def _clean_title(raw: str) -> str:
+    cleaned = " ".join(raw.split())
+    if not cleaned or len(cleaned) > TITLE_MAX_LENGTH:
+        raise InvalidAssetMetadataError(f"title must be 1-{TITLE_MAX_LENGTH} chars")
+    return cleaned
 
 
 def _parse_asset_id(raw_id: str) -> uuid.UUID:

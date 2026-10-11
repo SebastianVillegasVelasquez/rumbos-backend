@@ -509,3 +509,52 @@ def test_settings_migration_gives_existing_maps_an_empty_object_that_reads_as_de
     down = alembic(migration_db, "downgrade", SKINS)
     assert down.returncode == 0, down.stderr
     assert fetch(migration_db, "SELECT count(*) FROM course_maps") == [(1,)]
+
+
+ASSET_METADATA = "f1a9c3d7b2e4"
+
+
+def test_asset_metadata_migration_backfills_a_title_for_existing_assets(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", SETTINGS).returncode == 0
+
+    def old_asset(kind: str, digest: str) -> tuple[str, dict[str, Any]]:
+        return (
+            (
+                "INSERT INTO assets (id, kind, mime, width, height, bytes, sha256,"
+                " created_at, updated_at) VALUES (:id, :k, 'image/png', 1, 1, 10, :h,"
+                " '2026-03-04 10:00:00+00', now())"
+            ),
+            {"id": uuid.uuid4(), "k": kind, "h": digest * 64},
+        )
+
+    run_sql(migration_db, [old_asset("background", "a"), old_asset("bubble", "b")])
+
+    up = alembic(migration_db, "upgrade", ASSET_METADATA)
+
+    assert up.returncode == 0, up.stderr
+    rows = fetch(
+        migration_db,
+        "SELECT kind, title, credit, original_filename FROM assets ORDER BY kind",
+    )
+    assert rows == [
+        ("background", "Fondo 2026-03-04", None, None),
+        ("bubble", "Imagen 2026-03-04", None, None),
+    ]
+    nullable = fetch(
+        migration_db,
+        "SELECT column_name, is_nullable FROM information_schema.columns"
+        " WHERE table_name = 'assets'"
+        " AND column_name IN ('title', 'credit', 'original_filename')"
+        " ORDER BY column_name",
+    )
+    assert nullable == [
+        ("credit", "YES"),
+        ("original_filename", "YES"),
+        ("title", "NO"),
+    ]
+
+    down = alembic(migration_db, "downgrade", SETTINGS)
+    assert down.returncode == 0, down.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM assets") == [(2,)]
