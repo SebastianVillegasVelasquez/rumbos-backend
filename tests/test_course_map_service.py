@@ -106,7 +106,9 @@ async def test_update_course_map_returns_map_with_bubbles(
     map_id = await _map_id(service)
     await service.add_bubble(map_id, BubbleCreate(activity_id=1, x=0, y=0))
 
-    updated = await service.update_course_map(map_id, CourseMapUpdate(title="Renamed"))
+    updated = await service.update_course_map(
+        map_id, CourseMapUpdate(title="Renamed"), 1
+    )
 
     assert updated.title == "Renamed" and updated.image_url == "/u"
     assert len(updated.bubbles) == 1
@@ -114,7 +116,7 @@ async def test_update_course_map_returns_map_with_bubbles(
 
 async def test_update_and_delete_missing_map_raise(service: CourseMapService) -> None:
     with pytest.raises(CourseMapNotFoundError):
-        await service.update_course_map(uuid.uuid4(), CourseMapUpdate(title="x"))
+        await service.update_course_map(uuid.uuid4(), CourseMapUpdate(title="x"), 1)
     with pytest.raises(CourseMapNotFoundError):
         await service.delete_course_map(uuid.uuid4())
 
@@ -169,7 +171,7 @@ async def test_partial_update_only_touches_sent_fields(
     writes_before = bubbles.writes
 
     moved = await service.update_bubble(
-        map_id, bubble.id, BubbleUpdate.model_validate({"x": 0.9, "y": 0.8})
+        map_id, bubble.id, BubbleUpdate.model_validate({"x": 0.9, "y": 0.8}), 1
     )
     assert (moved.x, moved.y) == (0.9, 0.8)
     assert moved.icon is BubbleIcon.FLAG  # icon was not resent, so untouched
@@ -188,6 +190,7 @@ async def test_update_can_clear_icon_and_change_status(
         map_id,
         bubble.id,
         BubbleUpdate.model_validate({"icon": None, "status": "complete"}),
+        1,
     )
     assert updated.icon is None
     assert updated.status is BubbleStatus.COMPLETE
@@ -201,10 +204,10 @@ async def test_bubble_addressed_through_wrong_map_is_not_found(
 
     with pytest.raises(BubbleNotFoundError):
         await service.update_bubble(
-            other, bubble.id, BubbleUpdate.model_validate({"status": "complete"})
+            other, bubble.id, BubbleUpdate.model_validate({"status": "complete"}), None
         )
     with pytest.raises(BubbleNotFoundError):
-        await service.remove_bubble(other, bubble.id)
+        await service.remove_bubble(other, bubble.id, 1)
     # Still intact under its real map.
     assert len((await service.get_course_map(owner)).bubbles) == 1
 
@@ -212,10 +215,10 @@ async def test_bubble_addressed_through_wrong_map_is_not_found(
 async def test_remove_bubble(service: CourseMapService) -> None:
     map_id = await _map_id(service)
     bubble = await service.add_bubble(map_id, BubbleCreate(activity_id=1, x=0, y=0))
-    await service.remove_bubble(map_id, bubble.id)
+    await service.remove_bubble(map_id, bubble.id, 1)
     assert (await service.get_course_map(map_id)).bubbles == []
     with pytest.raises(BubbleNotFoundError):
-        await service.remove_bubble(map_id, bubble.id)
+        await service.remove_bubble(map_id, bubble.id, 1)
 
 
 # --- appearance and ordering ------------------------------------------------
@@ -240,7 +243,7 @@ async def test_appearance_is_written_once_when_everything_is_valid(
     skin = skins.add()
 
     read = await service.update_appearance(
-        map_id, _appearance(skin, [("quiz", skin), ("scorm", skin)])
+        map_id, _appearance(skin, [("quiz", skin), ("scorm", skin)]), 1
     )
 
     assert maps.appearance_writes == 1
@@ -258,7 +261,7 @@ async def test_appearance_with_an_unknown_skin_writes_nothing(
 
     with pytest.raises(SkinReferenceNotFoundError) as caught:
         await service.update_appearance(
-            map_id, _appearance(known, [("quiz", known), ("url", ghost)])
+            map_id, _appearance(known, [("quiz", known), ("url", ghost)]), 1
         )
 
     assert caught.value.skin_ids == [ghost]
@@ -277,6 +280,7 @@ async def test_appearance_with_duplicate_rules_writes_nothing(
         await service.update_appearance(
             map_id,
             _appearance(None, [("quiz", skin), ("url", skin), ("quiz", skin)]),
+            1,
         )
 
     assert caught.value.modnames == ["quiz"]
@@ -287,7 +291,7 @@ async def test_appearance_of_an_unknown_map_is_not_found(
     service: CourseMapService,
 ) -> None:
     with pytest.raises(CourseMapNotFoundError):
-        await service.update_appearance(uuid.uuid4(), _appearance())
+        await service.update_appearance(uuid.uuid4(), _appearance(), 1)
 
 
 async def test_reorder_bubbles_requires_exactly_the_maps_bubbles(

@@ -10,6 +10,7 @@ from app.exceptions import (
     CourseMapNotFoundError,
     DuplicateSkinRuleError,
     OrderMismatchError,
+    PreconditionRequiredError,
     SkinReferenceNotFoundError,
 )
 from app.moodle.protocols import MoodleClient
@@ -154,18 +155,25 @@ class CourseMapService:
         return await self._read(course_map)
 
     async def update_course_map(
-        self, course_map_id: uuid.UUID, data: CourseMapUpdate
+        self,
+        course_map_id: uuid.UUID,
+        data: CourseMapUpdate,
+        expected_revision: int,
     ) -> CourseMapRead:
-        """Applies only the fields present in `data` (partial update)."""
+        """Applies only the fields present in `data` (partial update), if the
+        map is still at `expected_revision` (`VersionConflictError` otherwise)."""
         if data.image_url is not None:
             await self._check_background(data.image_url)
-        updated = await self._course_maps.update(course_map_id, data)
+        updated = await self._course_maps.update(course_map_id, data, expected_revision)
         if updated is None:
             raise CourseMapNotFoundError(course_map_id)
         return await self._read(updated)
 
     async def update_appearance(
-        self, course_map_id: uuid.UUID, data: AppearanceUpdate
+        self,
+        course_map_id: uuid.UUID,
+        data: AppearanceUpdate,
+        expected_revision: int,
     ) -> CourseMapRead:
         """Replaces settings, default skin and skin rules, all or nothing.
 
@@ -186,7 +194,11 @@ class CourseMapService:
             raise SkinReferenceNotFoundError(sorted(missing))
 
         applied = await self._course_maps.replace_appearance(
-            course_map_id, data.settings, data.default_skin_id, data.skin_rules
+            course_map_id,
+            data.settings,
+            data.default_skin_id,
+            data.skin_rules,
+            expected_revision,
         )
         if not applied:  # deleted between the lookup and the write
             raise CourseMapNotFoundError(course_map_id)
@@ -208,15 +220,31 @@ class CourseMapService:
         )
 
     async def update_bubble(
-        self, course_map_id: uuid.UUID, bubble_id: uuid.UUID, data: BubbleUpdate
+        self,
+        course_map_id: uuid.UUID,
+        bubble_id: uuid.UUID,
+        data: BubbleUpdate,
+        expected_version: int | None,
     ) -> BubbleRead:
-        """Applies only the fields present in `data` (partial update)."""
+        """Applies only the fields present in `data` (partial update).
+
+        A body of only `status` is live demo data, not draft content: it needs
+        no version and does not bump it. Any other field (x, y, icon, skinId,
+        alone or mixed with status) is a content edit and needs
+        `expected_version` (`PreconditionRequiredError` without it,
+        `VersionConflictError` if stale).
+        """
+        guarded = bool(data.model_fields_set - {"status"})
+        if guarded and expected_version is None:
+            raise PreconditionRequiredError
         await self._require_bubble(course_map_id, bubble_id)
         if data.skin_id is not None and not await self._skins.existing_ids(
             {data.skin_id}
         ):
             raise SkinReferenceNotFoundError([data.skin_id])
-        updated = await self._bubbles.update(bubble_id, data)
+        updated = await self._bubbles.update(
+            bubble_id, data, expected_version if guarded else None
+        )
         if updated is None:  # deleted between the lookup and the write
             raise BubbleNotFoundError(bubble_id)
         return updated
@@ -234,10 +262,10 @@ class CourseMapService:
         )
 
     async def remove_bubble(
-        self, course_map_id: uuid.UUID, bubble_id: uuid.UUID
+        self, course_map_id: uuid.UUID, bubble_id: uuid.UUID, expected_version: int
     ) -> None:
         await self._require_bubble(course_map_id, bubble_id)
-        if not await self._bubbles.delete(bubble_id):
+        if not await self._bubbles.delete(bubble_id, expected_version):
             raise BubbleNotFoundError(bubble_id)
 
     async def list_activities(

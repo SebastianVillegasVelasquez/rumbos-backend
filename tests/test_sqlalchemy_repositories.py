@@ -261,7 +261,7 @@ async def test_map_update_applies_only_sent_fields_in_one_commit(
     assert before is not None
     calls = _spy_commits(session, monkeypatch)
 
-    renamed = await maps.update(map_id, CourseMapUpdate(title="Nuevo"))
+    renamed = await maps.update(map_id, CourseMapUpdate(title="Nuevo"), 1)
 
     assert calls == [1]
     assert renamed is not None and renamed.title == "Nuevo"
@@ -269,7 +269,7 @@ async def test_map_update_applies_only_sent_fields_in_one_commit(
     assert renamed.updated_at > before.updated_at
     assert renamed.created_at == before.created_at
     both = await maps.update(
-        map_id, CourseMapUpdate(title="Otro", image_url="https://i/new.png")
+        map_id, CourseMapUpdate(title="Otro", image_url="https://i/new.png"), 2
     )
     assert both is not None and both.image_url == "https://i/new.png"
     stored = await observer.get(CourseMap, map_id)
@@ -280,7 +280,7 @@ async def test_map_update_applies_only_sent_fields_in_one_commit(
 async def test_map_update_on_missing_map_returns_none(
     maps: SqlAlchemyCourseMapRepository,
 ) -> None:
-    assert await maps.update(uuid.uuid4(), CourseMapUpdate(title="x")) is None
+    assert await maps.update(uuid.uuid4(), CourseMapUpdate(title="x"), 1) is None
 
 
 async def test_map_update_is_all_or_nothing(
@@ -300,7 +300,7 @@ async def test_map_update_is_all_or_nothing(
 
     with pytest.raises(IntegrityError):
         await maps.update(
-            map_id, CourseMapUpdate(image_url="/changed", title="forbidden")
+            map_id, CourseMapUpdate(image_url="/changed", title="forbidden"), 1
         )
 
     assert not session.in_transaction()  # rolled back, session reusable
@@ -361,16 +361,16 @@ async def test_bubble_update_commits_and_touches_updated_at(
     bubble = await bubbles.create(map_id, 1, BubbleCreate(activity_id=1, x=0.1, y=0.2))
 
     moved = await bubbles.update(
-        bubble.id, BubbleUpdate.model_validate({"x": 0.7, "y": 0.8})
+        bubble.id, BubbleUpdate.model_validate({"x": 0.7, "y": 0.8}), 1
     )
     assert moved is not None and (moved.x, moved.y) == (0.7, 0.8)
     assert moved.updated_at > bubble.updated_at
-    iconed = await bubbles.update(bubble.id, BubbleUpdate(icon=BubbleIcon.STAR))
+    iconed = await bubbles.update(bubble.id, BubbleUpdate(icon=BubbleIcon.STAR), 2)
     assert iconed is not None and iconed.icon is BubbleIcon.STAR
     assert (iconed.x, iconed.y) == (0.7, 0.8)  # earlier move not clobbered
     # Several fields at once, including clearing the icon, in one call.
     both = await bubbles.update(
-        bubble.id, BubbleUpdate(icon=None, status=BubbleStatus.COMPLETE)
+        bubble.id, BubbleUpdate(icon=None, status=BubbleStatus.COMPLETE), 3
     )
     assert both is not None and both.icon is None
     assert both.status is BubbleStatus.COMPLETE
@@ -390,8 +390,9 @@ async def test_bubble_update_and_delete_on_missing_bubble(
 ) -> None:
     missing = uuid.uuid4()
     patch = BubbleUpdate(status=BubbleStatus.LOCKED)
-    assert await bubbles.update(missing, patch) is None
-    assert await bubbles.delete(missing) is False
+    assert await bubbles.update(missing, patch, None) is None
+    assert await bubbles.update(missing, patch, 1) is None
+    assert await bubbles.delete(missing, 1) is False
 
 
 async def test_bubble_delete_commits(
@@ -401,7 +402,7 @@ async def test_bubble_delete_commits(
 ) -> None:
     map_id = await _make_map(maps)
     bubble = await bubbles.create(map_id, 1, BubbleCreate(activity_id=1, x=0, y=0))
-    assert await bubbles.delete(bubble.id) is True
+    assert await bubbles.delete(bubble.id, 1) is True
     assert await _count(observer, Bubble) == 0
     assert await bubbles.get_by_id(bubble.id) is None
 
@@ -527,7 +528,9 @@ async def test_failed_write_is_rolled_back(
 
     monkeypatch.setattr(session, "commit", flush_then_fail)
     with pytest.raises(RuntimeError):
-        await bubbles.update(bubble.id, BubbleUpdate(status=BubbleStatus.COMPLETE))
+        await bubbles.update(
+            bubble.id, BubbleUpdate(status=BubbleStatus.COMPLETE), None
+        )
 
     # The repository itself rolled back: the failed transaction is gone and
     # the session is immediately reusable (it would still be mid-transaction
@@ -567,7 +570,7 @@ async def test_multi_field_update_is_all_or_nothing(
         SqlAlchemyAssetRepository(session),
     )
     with pytest.raises(IntegrityError):
-        await service.update_bubble(map_id, bubble.id, patch)
+        await service.update_bubble(map_id, bubble.id, patch, 1)
 
     # Not just the failing field: none of them may have changed.
     stored = await observer.get(Bubble, bubble.id)

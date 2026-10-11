@@ -17,6 +17,7 @@ from app.exceptions import (
     ActivityAlreadyPlacedError,
     CourseMapNotFoundError,
     SectionAlreadyMappedError,
+    VersionConflictError,
 )
 from app.moodle.exceptions import MoodleCourseNotFoundError
 from app.moodle.schemas import MoodleSection, MoodleSiteInfo
@@ -87,13 +88,20 @@ class InMemoryCourseMapRepository:
         settings: MapSettings,
         default_skin_id: uuid.UUID | None,
         rules: list[SkinRule],
+        expected_revision: int,
     ) -> bool:
         current = self.items.get(course_map_id)
         if current is None:
             return False
+        if current.revision != expected_revision:
+            raise VersionConflictError(current_revision=current.revision)
         self.appearance_writes += 1
         self.items[course_map_id] = current.model_copy(
-            update={"settings": settings, "default_skin_id": default_skin_id}
+            update={
+                "settings": settings,
+                "default_skin_id": default_skin_id,
+                "revision": current.revision + 1,
+            }
         )
         self.rules[course_map_id] = list(rules)
         return True
@@ -107,14 +115,20 @@ class InMemoryCourseMapRepository:
                 self.items[map_id] = current.model_copy(update={"position": position})
 
     async def update(
-        self, course_map_id: uuid.UUID, data: CourseMapUpdate
+        self, course_map_id: uuid.UUID, data: CourseMapUpdate, expected_revision: int
     ) -> CourseMapBase | None:
         current = self.items.get(course_map_id)
         if current is None:
             return None
+        if current.revision != expected_revision:
+            raise VersionConflictError(current_revision=current.revision)
         changes = data.model_dump(exclude_unset=True)
         updated = current.model_copy(
-            update={**changes, "updated_at": datetime.now(UTC)}
+            update={
+                **changes,
+                "updated_at": datetime.now(UTC),
+                "revision": current.revision + 1,
+            }
         )
         self.items[course_map_id] = updated
         return updated
@@ -204,25 +218,38 @@ class InMemoryBubbleRepository:
                 )
 
     async def update(
-        self, bubble_id: uuid.UUID, data: BubbleUpdate
+        self, bubble_id: uuid.UUID, data: BubbleUpdate, expected_version: int | None
     ) -> BubbleRead | None:
         current = self.items.get(bubble_id)
         if current is None:
             return None
+        bump = 0
+        if expected_version is not None:
+            if current.version != expected_version:
+                raise VersionConflictError(current_version=current.version)
+            bump = 1
         self.writes += 1
         changes = data.model_dump(exclude_unset=True)
         updated = current.model_copy(
-            update={**changes, "updated_at": datetime.now(UTC)}
+            update={
+                **changes,
+                "updated_at": datetime.now(UTC),
+                "version": current.version + bump,
+            }
         )
         self.items[bubble_id] = updated
         return updated
 
-    async def delete(self, bubble_id: uuid.UUID) -> bool:
+    async def delete(self, bubble_id: uuid.UUID, expected_version: int) -> bool:
+        current = self.items.get(bubble_id)
+        if current is None:
+            return False
+        if current.version != expected_version:
+            raise VersionConflictError(current_version=current.version)
         self.writes += 1
-        bubble = self.items.pop(bubble_id, None)
-        if bubble is not None:
-            self._course_maps.bubble_counts[bubble.course_map_id] -= 1
-        return bubble is not None
+        del self.items[bubble_id]
+        self._course_maps.bubble_counts[current.course_map_id] -= 1
+        return True
 
 
 class InMemorySkinRepository:

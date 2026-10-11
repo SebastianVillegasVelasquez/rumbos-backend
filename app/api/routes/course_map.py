@@ -1,9 +1,10 @@
 import uuid
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Query, Response, status
+from fastapi import APIRouter, Depends, Header, Query, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.preconditions import IfMatch, parse_if_match, set_etag
 from app.core.database import get_session
 from app.moodle.dependencies import get_contents_provider, get_moodle_client
 from app.moodle.protocols import CourseContentsProvider, MoodleClient
@@ -80,9 +81,11 @@ async def list_course_maps(
 
 @router.post("", response_model=CourseMapRead, status_code=status.HTTP_201_CREATED)
 async def create_course_map(
-    data: CourseMapCreate, service: ServiceDep
+    data: CourseMapCreate, service: ServiceDep, response: Response
 ) -> CourseMapRead:
-    return await service.create_course_map(data)
+    created = await service.create_course_map(data)
+    set_etag(response, created.revision)
+    return created
 
 
 @router.put("/order", response_model=CourseMapOrdered)
@@ -94,23 +97,39 @@ async def reorder_course_maps(
 
 @router.get("/{course_map_id}", response_model=CourseMapRead)
 async def get_course_map(
-    course_map_id: uuid.UUID, service: ServiceDep
+    course_map_id: uuid.UUID, service: ServiceDep, response: Response
 ) -> CourseMapRead:
-    return await service.get_course_map(course_map_id)
+    course_map = await service.get_course_map(course_map_id)
+    set_etag(response, course_map.revision)
+    return course_map
 
 
 @router.patch("/{course_map_id}", response_model=CourseMapRead)
 async def update_course_map(
-    course_map_id: uuid.UUID, data: CourseMapUpdate, service: ServiceDep
+    course_map_id: uuid.UUID,
+    data: CourseMapUpdate,
+    service: ServiceDep,
+    response: Response,
+    revision: IfMatch,
 ) -> CourseMapRead:
-    return await service.update_course_map(course_map_id, data)
+    """Needs `If-Match: "<revision>"` (428 without, 412 when stale)."""
+    updated = await service.update_course_map(course_map_id, data, revision)
+    set_etag(response, updated.revision)
+    return updated
 
 
 @router.put("/{course_map_id}/appearance", response_model=CourseMapRead)
 async def update_appearance(
-    course_map_id: uuid.UUID, data: AppearanceUpdate, service: ServiceDep
+    course_map_id: uuid.UUID,
+    data: AppearanceUpdate,
+    service: ServiceDep,
+    response: Response,
+    revision: IfMatch,
 ) -> CourseMapRead:
-    return await service.update_appearance(course_map_id, data)
+    """Needs `If-Match: "<revision>"` (428 without, 412 when stale)."""
+    updated = await service.update_appearance(course_map_id, data, revision)
+    set_etag(response, updated.revision)
+    return updated
 
 
 @router.delete("/{course_map_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -152,9 +171,14 @@ async def resolve_course_map(
     status_code=status.HTTP_201_CREATED,
 )
 async def add_bubble(
-    course_map_id: uuid.UUID, data: BubbleCreate, service: ServiceDep
+    course_map_id: uuid.UUID,
+    data: BubbleCreate,
+    service: ServiceDep,
+    response: Response,
 ) -> BubbleRead:
-    return await service.add_bubble(course_map_id, data)
+    created = await service.add_bubble(course_map_id, data)
+    set_etag(response, created.version)
+    return created
 
 
 @router.put("/{course_map_id}/bubbles/order", response_model=BubbleOrdered)
@@ -170,15 +194,27 @@ async def update_bubble(
     bubble_id: uuid.UUID,
     data: BubbleUpdate,
     service: ServiceDep,
+    response: Response,
+    if_match: Annotated[str | None, Header(alias="If-Match")] = None,
 ) -> BubbleRead:
-    return await service.update_bubble(course_map_id, bubble_id, data)
+    """`If-Match: "<version>"` is required unless the body is only `status`
+    (live demo data), which neither needs nor bumps the version."""
+    content_edit = bool(data.model_fields_set - {"status"})
+    version = parse_if_match(if_match, required=content_edit)
+    updated = await service.update_bubble(course_map_id, bubble_id, data, version)
+    set_etag(response, updated.version)
+    return updated
 
 
 @router.delete(
     "/{course_map_id}/bubbles/{bubble_id}", status_code=status.HTTP_204_NO_CONTENT
 )
 async def remove_bubble(
-    course_map_id: uuid.UUID, bubble_id: uuid.UUID, service: ServiceDep
+    course_map_id: uuid.UUID,
+    bubble_id: uuid.UUID,
+    service: ServiceDep,
+    version: IfMatch,
 ) -> Response:
-    await service.remove_bubble(course_map_id, bubble_id)
+    """Needs `If-Match: "<version>"` (428 without, 412 when stale)."""
+    await service.remove_bubble(course_map_id, bubble_id, version)
     return Response(status_code=status.HTTP_204_NO_CONTENT)

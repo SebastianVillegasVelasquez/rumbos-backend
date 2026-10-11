@@ -42,6 +42,33 @@ class SectionAlreadyMappedError(DomainError):
     """The course already has a map for this Moodle section."""
 
 
+class PreconditionRequiredError(DomainError):
+    """A guarded write came without `If-Match`."""
+
+
+class InvalidIfMatchError(DomainError):
+    """`If-Match` is not a single quoted number such as `"3"`."""
+
+    def __init__(self, raw: str) -> None:
+        super().__init__("malformed If-Match")
+        self.raw = raw
+
+
+class VersionConflictError(DomainError):
+    """The caller's `If-Match` is stale: the resource moved on.
+
+    Exactly one of the two is set: `current_revision` for a map,
+    `current_version` for a bubble.
+    """
+
+    def __init__(
+        self, *, current_revision: int | None = None, current_version: int | None = None
+    ) -> None:
+        super().__init__("stale If-Match")
+        self.current_revision = current_revision
+        self.current_version = current_version
+
+
 class OrderMismatchError(DomainError):
     """An ordering request does not list exactly the existing ids."""
 

@@ -19,8 +19,10 @@ from app.exceptions import (
     CourseMapNotFoundError,
     DuplicateSkinRuleError,
     InvalidAssetMetadataError,
+    InvalidIfMatchError,
     InvalidUploadError,
     OrderMismatchError,
+    PreconditionRequiredError,
     SectionAlreadyMappedError,
     SkinAssetNotFoundError,
     SkinAssetSizeMismatchError,
@@ -29,6 +31,7 @@ from app.exceptions import (
     SkinNotFoundError,
     SkinReferenceNotFoundError,
     UploadsDisabledError,
+    VersionConflictError,
 )
 from app.moodle.exceptions import (
     MoodleAuthError,
@@ -101,6 +104,48 @@ def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(
         AssetNotFoundError, _handler(status.HTTP_404_NOT_FOUND, "Asset not found")
     )
+
+    app.add_exception_handler(
+        PreconditionRequiredError,
+        _handler(
+            status.HTTP_428_PRECONDITION_REQUIRED,
+            {
+                "code": "precondition_required",
+                "message": 'Send the revision you are editing in If-Match, e.g. "3"',
+            },
+        ),
+    )
+    app.add_exception_handler(
+        InvalidIfMatchError,
+        _handler(
+            status.HTTP_400_BAD_REQUEST,
+            {
+                "code": "invalid_if_match",
+                "message": 'If-Match must be one quoted number, e.g. "3"',
+            },
+        ),
+    )
+
+    async def version_conflict(request: Request, exc: Exception) -> JSONResponse:
+        assert isinstance(exc, VersionConflictError)
+        detail: dict[str, Any] = {
+            "code": "version_conflict",
+            "message": "Someone else changed this since you loaded it",
+        }
+        current = exc.current_revision
+        if current is not None:
+            detail["currentRevision"] = current
+        else:
+            current = exc.current_version
+            detail["currentVersion"] = current
+        # The current state's tag, so a client can see what it is behind.
+        return JSONResponse(
+            status_code=status.HTTP_412_PRECONDITION_FAILED,
+            content={"detail": detail},
+            headers={"ETag": f'"{current}"'},
+        )
+
+    app.add_exception_handler(VersionConflictError, version_conflict)
 
     def _coded(
         code: int,

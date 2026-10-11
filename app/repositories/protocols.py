@@ -52,12 +52,14 @@ class CourseMapRepository(Protocol):
         ...
 
     async def update(
-        self, course_map_id: uuid.UUID, data: CourseMapUpdate
+        self, course_map_id: uuid.UUID, data: CourseMapUpdate, expected_revision: int
     ) -> CourseMapBase | None:
-        """Applies only the fields set in `data`, all in one statement.
+        """Applies only the fields set in `data`, all in one statement that also
+        checks `revision = expected_revision` and adds 1 to it.
 
         Either every provided field is persisted or none is. Returns None if
-        the map doesn't exist.
+        the map doesn't exist; raises `VersionConflictError` (with the current
+        revision) if it exists at another revision.
         """
         ...
 
@@ -75,9 +77,11 @@ class CourseMapRepository(Protocol):
         settings: MapSettings,
         default_skin_id: uuid.UUID | None,
         rules: list[SkinRule],
+        expected_revision: int,
     ) -> bool:
         """Replaces settings, default skin and every skin rule in ONE
-        transaction: all or nothing. False if the map doesn't exist.
+        transaction: all or nothing, guarded and bumped like `update`. False if
+        the map doesn't exist; `VersionConflictError` if the revision is stale.
 
         Raises `SkinReferenceNotFoundError` if a skin vanished since the
         caller checked (the foreign keys are the last line of defence).
@@ -123,11 +127,14 @@ class BubbleRepository(Protocol):
         ...
 
     async def update(
-        self, bubble_id: uuid.UUID, data: BubbleUpdate
+        self, bubble_id: uuid.UUID, data: BubbleUpdate, expected_version: int | None
     ) -> BubbleRead | None:
         """Applies only the fields set in `data`, all in one statement.
 
-        Either every provided field is persisted or none is.
+        Either every provided field is persisted or none is. With
+        `expected_version` the same statement checks `version = expected` and
+        adds 1 (None if missing, `VersionConflictError` if stale). With None it
+        is unguarded and does not bump: for `status`-only changes.
         """
         ...
 
@@ -137,7 +144,9 @@ class BubbleRepository(Protocol):
         """Sets `sequence` 0..n-1 following `ordered_ids`, atomically."""
         ...
 
-    async def delete(self, bubble_id: uuid.UUID) -> bool: ...
+    async def delete(self, bubble_id: uuid.UUID, expected_version: int) -> bool:
+        """One guarded DELETE. False if missing; `VersionConflictError` if stale."""
+        ...
 
 
 class AssetRepository(Protocol):

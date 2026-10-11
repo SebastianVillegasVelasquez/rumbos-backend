@@ -7,7 +7,11 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.enums import BubbleStatus
-from app.exceptions import SectionAlreadyMappedError, SkinReferenceNotFoundError
+from app.exceptions import (
+    SectionAlreadyMappedError,
+    SkinReferenceNotFoundError,
+    VersionConflictError,
+)
 from app.models import Bubble, CourseMap, CourseMapSkinRule
 from app.models.course_map import UQ_COURSE_MAP_SECTION
 from app.repositories.sqlalchemy._errors import (
@@ -112,26 +116,44 @@ class SqlAlchemyCourseMapRepository:
             raise
         return CourseMapBase.model_validate(course_map)
 
+    async def _stale_or_missing(self, course_map_id: uuid.UUID) -> None:
+        """After a guarded write matched no row: raise `VersionConflictError`
+        if the map exists (so the revision was stale); return if it doesn't.
+        Ends the transaction, so the caller's failed write is rolled back."""
+        current = await self._session.scalar(
+            select(CourseMap.revision).where(CourseMap.id == course_map_id)
+        )
+        await self._session.rollback()
+        if current is not None:
+            raise VersionConflictError(current_revision=current)
+
     async def update(
-        self, course_map_id: uuid.UUID, data: CourseMapUpdate
+        self, course_map_id: uuid.UUID, data: CourseMapUpdate, expected_revision: int
     ) -> CourseMapBase | None:
-        # One UPDATE touching only the fields the caller sent; `updated_at`
-        # is refreshed by the column's `onupdate`.
+        # One UPDATE touching only the fields the caller sent, guarded by the
+        # revision and bumping it in the same statement; `updated_at` is
+        # refreshed by the column's `onupdate`. Never read-then-write.
         values = data.model_dump(exclude_unset=True)
         stmt = (
             update(CourseMap)
-            .where(CourseMap.id == course_map_id)
-            .values(**values)
+            .where(
+                CourseMap.id == course_map_id,
+                CourseMap.revision == expected_revision,
+            )
+            .values(**values, revision=CourseMap.revision + 1)
             .returning(CourseMap)
             .execution_options(populate_existing=True)
         )
         try:
             course_map = (await self._session.scalars(stmt)).one_or_none()
+            if course_map is None:
+                await self._stale_or_missing(course_map_id)
+                return None
             await self._session.commit()
         except BaseException:
             await self._session.rollback()
             raise
-        return CourseMapBase.model_validate(course_map) if course_map else None
+        return CourseMapBase.model_validate(course_map)
 
     async def set_order(
         self, moodle_course_id: int, ordered_ids: list[uuid.UUID]
@@ -165,6 +187,7 @@ class SqlAlchemyCourseMapRepository:
         settings: MapSettings,
         default_skin_id: uuid.UUID | None,
         rules: list[SkinRule],
+        expected_revision: int,
     ) -> bool:
         # Every statement below runs in the session's single transaction and
         # the one commit at the end publishes all of it; any failure rolls
@@ -172,13 +195,20 @@ class SqlAlchemyCourseMapRepository:
         try:
             updated = await self._session.execute(
                 update(CourseMap)
-                .where(CourseMap.id == course_map_id)
-                .values(settings=settings.to_stored(), default_skin_id=default_skin_id)
+                .where(
+                    CourseMap.id == course_map_id,
+                    CourseMap.revision == expected_revision,
+                )
+                .values(
+                    settings=settings.to_stored(),
+                    default_skin_id=default_skin_id,
+                    revision=CourseMap.revision + 1,
+                )
                 .returning(CourseMap.id)
                 .execution_options(synchronize_session="fetch")
             )
             if updated.scalar_one_or_none() is None:
-                await self._session.rollback()
+                await self._stale_or_missing(course_map_id)
                 return False
             await self._session.execute(
                 delete(CourseMapSkinRule).where(

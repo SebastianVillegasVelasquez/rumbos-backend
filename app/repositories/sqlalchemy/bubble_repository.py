@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import case, func, select, update
+from sqlalchemy import case, delete, func, select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -8,6 +8,7 @@ from app.exceptions import (
     ActivityAlreadyPlacedError,
     CourseMapNotFoundError,
     SkinReferenceNotFoundError,
+    VersionConflictError,
 )
 from app.models import Bubble, CourseMap
 from app.models.bubble import UQ_BUBBLE_ACTIVITY
@@ -105,21 +106,38 @@ class SqlAlchemyBubbleRepository:
             return ActivityAlreadyPlacedError(data.activity_id)
         return ActivityAlreadyPlacedError(data.activity_id, row.id, row.title)
 
+    async def _stale_or_missing(self, bubble_id: uuid.UUID) -> None:
+        """After a guarded write matched no row: raise `VersionConflictError` if
+        the bubble exists (stale version); return if it doesn't. Ends the
+        transaction."""
+        current = await self._session.scalar(
+            select(Bubble.version).where(Bubble.id == bubble_id)
+        )
+        await self._session.rollback()
+        if current is not None:
+            raise VersionConflictError(current_version=current)
+
     async def update(
-        self, bubble_id: uuid.UUID, data: BubbleUpdate
+        self, bubble_id: uuid.UUID, data: BubbleUpdate, expected_version: int | None
     ) -> BubbleRead | None:
         # One UPDATE touching only the fields the caller sent (an explicit
-        # `icon: None` is sent, so it clears the column).
+        # `icon: None` is sent, so it clears the column). When guarded, the same
+        # statement checks and bumps the version; unguarded (status only) it
+        # touches nothing but the status, so it cannot conflict with an edit.
         values = data.model_dump(exclude_unset=True)
-        stmt = (
-            update(Bubble)
-            .where(Bubble.id == bubble_id)
-            .values(**values)
-            .returning(Bubble)
-            .execution_options(populate_existing=True)
-        )
+        stmt = update(Bubble).where(Bubble.id == bubble_id)
+        if expected_version is None:
+            stmt = stmt.values(**values)
+        else:
+            stmt = stmt.where(Bubble.version == expected_version).values(
+                **values, version=Bubble.version + 1
+            )
+        stmt = stmt.returning(Bubble).execution_options(populate_existing=True)
         try:
             bubble = (await self._session.scalars(stmt)).one_or_none()
+            if bubble is None and expected_version is not None:
+                await self._stale_or_missing(bubble_id)
+                return None
             await self._session.commit()
         except IntegrityError as exc:
             await self._session.rollback()
@@ -155,12 +173,18 @@ class SqlAlchemyBubbleRepository:
             await self._session.rollback()
             raise
 
-    async def delete(self, bubble_id: uuid.UUID) -> bool:
-        bubble = await self._session.get(Bubble, bubble_id)
-        if bubble is None:
-            return False
+    async def delete(self, bubble_id: uuid.UUID, expected_version: int) -> bool:
+        stmt = (
+            delete(Bubble)
+            .where(Bubble.id == bubble_id, Bubble.version == expected_version)
+            .returning(Bubble.id)
+            .execution_options(synchronize_session=False)
+        )
         try:
-            await self._session.delete(bubble)
+            deleted = (await self._session.execute(stmt)).scalar_one_or_none()
+            if deleted is None:
+                await self._stale_or_missing(bubble_id)
+                return False
             await self._session.commit()
         except BaseException:
             await self._session.rollback()
