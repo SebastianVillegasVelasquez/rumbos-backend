@@ -12,7 +12,7 @@ from typing import Any, Never
 
 from uuid_utils.compat import uuid7
 
-from app.enums import AssetKind
+from app.enums import AssetKind, BubbleStatus
 from app.exceptions import (
     ActivityAlreadyPlacedError,
     CourseMapNotFoundError,
@@ -39,6 +39,7 @@ from app.schemas.publication import (
     PublicationSummary,
     RestoreWarning,
 )
+from app.schemas.published import PublishedRow
 from app.schemas.skin import ImageSkin, ProceduralSkin, SkinRead
 
 
@@ -401,6 +402,19 @@ class InMemoryPublicationRepository:
         expected_revision: int,
     ) -> list[RestoreWarning] | None:
         raise NotImplementedError
+
+    async def list_published(
+        self, moodle_course_id: int | None, limit: int, offset: int
+    ) -> tuple[list[PublishedRow], int]:
+        return [], 0
+
+    async def get_published(self, course_map_id: uuid.UUID) -> PublishedRow | None:
+        return None
+
+    async def bubble_statuses(
+        self, bubble_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, BubbleStatus]:
+        return {}
 
 
 class InMemoryMoodleClient:

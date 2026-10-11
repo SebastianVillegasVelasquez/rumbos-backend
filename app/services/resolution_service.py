@@ -8,7 +8,6 @@ from app.moodle.exceptions import MoodleCourseNotFoundError, MoodleError
 from app.moodle.protocols import CourseContentsProvider
 from app.moodle.schemas import MoodleModule, MoodleSection
 from app.repositories.protocols import BubbleRepository, CourseMapRepository
-from app.schemas.bubble import BubbleRead
 from app.schemas.resolved import ResolvedActivity, ResolvedBubble, ResolvedMap
 from app.services.course_map_service import (
     is_bubble_candidate,
@@ -54,14 +53,33 @@ class MapResolutionService:
         if course_map is None:
             raise CourseMapNotFoundError(course_map_id)
         bubbles = await self._bubbles.list_by_course_map(course_map_id)
+        return await self.resolve_activities(
+            course_map.moodle_course_id,
+            [(b.id, b.activity_id) for b in bubbles],
+            include_hidden=include_hidden,
+        )
 
-        sections, moodle_status = await self._load(course_map.moodle_course_id)
+    async def resolve_activities(
+        self,
+        moodle_course_id: int,
+        bubbles: list[tuple[uuid.UUID, int]],
+        *,
+        include_hidden: bool = False,
+    ) -> ResolvedMap:
+        """Resolves `(bubble id, Moodle activity id)` pairs, in the given order.
+
+        The one place the Moodle filtering rules are applied: the editor's
+        draft and the students' published bubbles both go through it.
+        """
+        sections, moodle_status = await self._load(moodle_course_id)
         if sections is None:
             unknown = [
                 ResolvedBubble(
-                    bubble_id=b.id, availability=Availability.UNKNOWN, activity=None
+                    bubble_id=bubble_id,
+                    availability=Availability.UNKNOWN,
+                    activity=None,
                 )
-                for b in bubbles
+                for bubble_id, _ in bubbles
             ]
             return ResolvedMap(moodle_status=moodle_status, bubbles=unknown)
 
@@ -76,7 +94,10 @@ class MapResolutionService:
 
         return ResolvedMap(
             moodle_status=moodle_status,
-            bubbles=[self._resolve_bubble(b, modules, include_hidden) for b in bubbles],
+            bubbles=[
+                self._resolve_bubble(bubble_id, activity_id, modules, include_hidden)
+                for bubble_id, activity_id in bubbles
+            ],
         )
 
     async def _load(
@@ -95,12 +116,15 @@ class MapResolutionService:
 
     @staticmethod
     def _resolve_bubble(
-        bubble: BubbleRead, modules: dict[int, _Found], include_hidden: bool
+        bubble_id: uuid.UUID,
+        activity_id: int,
+        modules: dict[int, _Found],
+        include_hidden: bool,
     ) -> ResolvedBubble:
-        found = modules.get(bubble.activity_id)
+        found = modules.get(activity_id)
         if found is None or not is_bubble_candidate(found.module):
             return ResolvedBubble(
-                bubble_id=bubble.id, availability=Availability.MISSING, activity=None
+                bubble_id=bubble_id, availability=Availability.MISSING, activity=None
             )
         module = found.module
         activity = ResolvedActivity(
@@ -114,10 +138,10 @@ class MapResolutionService:
         if is_hidden(found.section, module):
             # What a hidden activity is called is not for learners to see.
             return ResolvedBubble(
-                bubble_id=bubble.id,
+                bubble_id=bubble_id,
                 availability=Availability.HIDDEN,
                 activity=activity if include_hidden else None,
             )
         return ResolvedBubble(
-            bubble_id=bubble.id, availability=Availability.AVAILABLE, activity=activity
+            bubble_id=bubble_id, availability=Availability.AVAILABLE, activity=activity
         )

@@ -2,7 +2,7 @@ import uuid
 from collections.abc import Collection
 from typing import Any
 
-from sqlalchemy import delete, func, select, update
+from sqlalchemy import and_, delete, func, select, update
 from sqlalchemy.dialects.postgresql import distinct_on
 from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -45,6 +45,7 @@ from app.schemas.publication import (
     PublicationSummary,
     RestoreWarning,
 )
+from app.schemas.published import PublishedRow
 from app.schemas.skin import SkinRead
 
 SERIALIZATION_FAILURE = "40001"  # PostgreSQL SQLSTATE
@@ -221,6 +222,96 @@ class SqlAlchemyPublicationRepository:
             )
             for r in rows
         ]
+
+    # --- what students see -----------------------------------------------
+
+    @staticmethod
+    def _latest_numbers() -> Any:
+        """Subquery: each published map with the number of its latest publication."""
+        return (
+            select(
+                Publication.course_map_id,
+                func.max(Publication.number).label("latest"),
+            )
+            .group_by(Publication.course_map_id)
+            .subquery()
+        )
+
+    def _published_select(self, latest: Any) -> Any:
+        return (
+            select(
+                CourseMap.id,
+                CourseMap.moodle_course_id,
+                CourseMap.moodle_section_id,
+                CourseMap.position,
+                Publication.number,
+                Publication.created_at,
+                Publication.snapshot,
+            )
+            .join(latest, latest.c.course_map_id == CourseMap.id)
+            .join(
+                Publication,
+                and_(
+                    Publication.course_map_id == CourseMap.id,
+                    Publication.number == latest.c.latest,
+                ),
+            )
+        )
+
+    @staticmethod
+    def _published_row(r: Any) -> PublishedRow:
+        return PublishedRow(
+            course_map_id=r.id,
+            moodle_course_id=r.moodle_course_id,
+            moodle_section_id=r.moodle_section_id,
+            position=r.position,
+            number=r.number,
+            published_at=r.created_at,
+            snapshot=r.snapshot,
+        )
+
+    async def list_published(
+        self, moodle_course_id: int | None, limit: int, offset: int
+    ) -> tuple[list[PublishedRow], int]:
+        latest = self._latest_numbers()
+        filters = (
+            [CourseMap.moodle_course_id == moodle_course_id]
+            if moodle_course_id is not None
+            else []
+        )
+        total = await self._session.scalar(
+            select(func.count())
+            .select_from(CourseMap)
+            .join(latest, latest.c.course_map_id == CourseMap.id)
+            .where(*filters)
+        )
+        rows = await self._session.execute(
+            self._published_select(latest)
+            .where(*filters)
+            .order_by(CourseMap.position, CourseMap.created_at, CourseMap.id)
+            .limit(limit)
+            .offset(offset)
+        )
+        return [self._published_row(r) for r in rows], total or 0
+
+    async def get_published(self, course_map_id: uuid.UUID) -> PublishedRow | None:
+        latest = self._latest_numbers()
+        row = (
+            await self._session.execute(
+                self._published_select(latest).where(CourseMap.id == course_map_id)
+            )
+        ).first()
+        return self._published_row(row) if row else None
+
+    async def bubble_statuses(
+        self, bubble_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, BubbleStatus]:
+        if not bubble_ids:
+            return {}
+        rows = await self._session.execute(
+            select(Bubble.id, Bubble.status).where(Bubble.id.in_(list(bubble_ids)))
+        )
+        return {r.id: r.status for r in rows}
 
     # --- publish ---------------------------------------------------------
 

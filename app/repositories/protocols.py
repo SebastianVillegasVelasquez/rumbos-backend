@@ -16,7 +16,7 @@ from collections.abc import Collection
 from datetime import datetime
 from typing import Any, Protocol
 
-from app.enums import AssetKind
+from app.enums import AssetKind, BubbleStatus
 from app.publishing.snapshot import DraftInputs
 from app.schemas.asset import AssetRecord, AssetUpdate, AssetUsage
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
@@ -34,6 +34,7 @@ from app.schemas.publication import (
     PublicationSummary,
     RestoreWarning,
 )
+from app.schemas.published import PublishedRow
 from app.schemas.skin import ImageSkin, ProceduralSkin, SkinRead
 
 
@@ -309,4 +310,22 @@ class PublicationRepository(Protocol):
         revision. None if the map doesn't exist; `VersionConflictError` if the
         revision is stale; `PublishInvalidError` (nothing changed) if the
         snapshot's background is gone."""
+        ...
+
+    async def list_published(
+        self, moodle_course_id: int | None, limit: int, offset: int
+    ) -> tuple[list[PublishedRow], int]:
+        """Maps that have at least one publication, each with its latest, ordered
+        by `(position, created_at, id)`, and the total before paging."""
+        ...
+
+    async def get_published(self, course_map_id: uuid.UUID) -> PublishedRow | None:
+        """The map's latest publication with its live columns, or None if the
+        map does not exist or was never published."""
+        ...
+
+    async def bubble_statuses(
+        self, bubble_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, BubbleStatus]:
+        """Live status of the bubbles that still exist (others are absent)."""
         ...
