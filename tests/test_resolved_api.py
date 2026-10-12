@@ -17,6 +17,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine
 from app.main import app
 from app.moodle.cache import CachedMoodleClient
 from app.moodle.exceptions import MoodleAuthError, MoodleUnavailableError
+from tests.api_client import ApiClient
 from tests.fakes import FakeClock, InMemoryMoodleClient
 from tests.moodle_fixtures import course8, parse, raw_course8
 
@@ -45,7 +46,7 @@ async def client(
         moodle, ttl_seconds=TTL, stale_max_seconds=STALE_MAX, clock=clock
     )
     transport = httpx.ASGITransport(app=app)
-    async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
+    async with ApiClient(transport=transport, base_url="http://t/api/v1") as c:
         yield c
 
 

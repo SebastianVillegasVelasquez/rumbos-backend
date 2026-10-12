@@ -14,6 +14,7 @@ from app.core.config import get_settings
 from app.main import app
 from app.models import Asset, Publication
 from tests import skin_configs
+from tests.api_client import ApiClient
 from tests.asset_helpers import png_asset
 from tests.fakes import InMemoryMoodleClient
 
@@ -26,7 +27,7 @@ async def plain(engine: AsyncEngine) -> AsyncIterator[httpx.AsyncClient]:
     app.state.db_engine = engine
     app.state.moodle_client = InMemoryMoodleClient()
     transport = httpx.ASGITransport(app=app)
-    async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
+    async with ApiClient(transport=transport, base_url="http://t/api/v1") as c:
         yield c
 
 

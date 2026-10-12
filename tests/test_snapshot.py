@@ -282,7 +282,7 @@ def test_asset_ids_are_the_background_plus_every_image_of_the_frozen_skins() -> 
     unused_skin = make_skin(config=skin_configs.image(uuid7()))
     snapshot = build_snapshot(
         make_inputs(
-            image_url=f"/assets/{background}",
+            image_url=f"/api/v1/assets/{background}",
             skins=[image_skin, other_skin, unused_skin, make_skin()],
             default_skin_id=image_skin.id,
             rules=[SkinRule(modname="quiz", skin_id=other_skin.id)],
@@ -297,9 +297,9 @@ def test_asset_ids_are_the_background_plus_every_image_of_the_frozen_skins() -> 
     [
         "https://example.com/a.png",
         "/uploads/x.png",
-        "/assets/not-a-uuid",
-        "/assets/0192F3A0-0000-7000-8000-000000000000",  # not the canonical spelling
-        "/assets/0192f3a0-0000-7000-8000-000000000000/thumb",
+        "/api/v1/assets/not-a-uuid",
+        "/api/v1/assets/0192F3A0-0000-7000-8000-000000000000",  # not the canonical spelling
+        "/api/v1/assets/0192f3a0-0000-7000-8000-000000000000/thumb",
     ],
 )
 def test_only_a_canonical_asset_url_counts_as_a_background_asset(

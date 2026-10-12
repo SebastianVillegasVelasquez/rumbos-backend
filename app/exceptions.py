@@ -178,7 +178,7 @@ class AssetInUseError(DomainError):
 
 
 class BackgroundAssetNotFoundError(DomainError):
-    """A map's `imageUrl` points at `/assets/{id}` but no such asset exists."""
+    """A map's `imageUrl` points at `/api/v1/assets/{id}` but no such asset exists."""
 
     def __init__(self, asset_id: uuid.UUID) -> None:
         super().__init__("background asset not found")

@@ -36,7 +36,7 @@ async def client(
         moodle, ttl_seconds=60.0, stale_max_seconds=3600.0, clock=FakeClock()
     )
     transport = httpx.ASGITransport(app=app)
-    async with EditorClient(transport=transport, base_url="http://t") as c:
+    async with EditorClient(transport=transport, base_url="http://t/api/v1") as c:
         yield c
 
 

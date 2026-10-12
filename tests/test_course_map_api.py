@@ -20,7 +20,7 @@ async def client(engine: AsyncEngine) -> AsyncIterator[httpx.AsyncClient]:
     app.state.db_engine = engine  # the test database, instead of the lifespan engine
     app.state.moodle_client = InMemoryMoodleClient()  # never called by these tests
     transport = httpx.ASGITransport(app=app)
-    async with EditorClient(transport=transport, base_url="http://t") as c:
+    async with EditorClient(transport=transport, base_url="http://t/api/v1") as c:
         yield c
 
 

@@ -6,6 +6,7 @@ from pydantic import SecretStr
 
 from app.core.config import Settings, get_settings
 from app.main import create_app
+from tests.api_client import ApiClient
 
 ALLOWED = "https://rumbos.example.com"
 OTHER = "https://evil.example.com"
@@ -14,7 +15,7 @@ OTHER = "https://evil.example.com"
 def _client(origins: list[str]) -> httpx.AsyncClient:
     settings = get_settings().model_copy(update={"cors_allowed_origins": origins})
     transport = httpx.ASGITransport(app=create_app(settings))
-    return httpx.AsyncClient(transport=transport, base_url="http://t")
+    return ApiClient(transport=transport, base_url="http://t/api/v1")
 
 
 def _preflight(origin: str) -> dict[str, str]:

@@ -16,6 +16,7 @@ from app.main import app
 from app.models import Bubble, CourseMap, CourseMapSkinRule, Skin
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
 from tests import skin_configs
+from tests.api_client import ApiClient
 
 ORBE = uuid.UUID("01900000-0000-7000-8000-000000000001")
 INSIGNIA = uuid.UUID("01900000-0000-7000-8000-000000000002")
@@ -25,7 +26,7 @@ INSIGNIA = uuid.UUID("01900000-0000-7000-8000-000000000002")
 async def client(engine: AsyncEngine) -> AsyncIterator[httpx.AsyncClient]:
     app.state.db_engine = engine
     transport = httpx.ASGITransport(app=app)
-    async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
+    async with ApiClient(transport=transport, base_url="http://t/api/v1") as c:
         yield c
 
 

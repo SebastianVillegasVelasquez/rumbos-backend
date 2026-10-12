@@ -15,6 +15,7 @@ from app.moodle.exceptions import (
     MoodleError,
     MoodleUnavailableError,
 )
+from tests.api_client import ApiClient
 from tests.fakes import InMemoryMoodleClient
 from tests.moodle_fixtures import COURSE8_MODULE_ORDER, course8, parse, raw_course8
 
@@ -33,7 +34,7 @@ async def client(
 ) -> AsyncIterator[httpx.AsyncClient]:
     app.state.db_engine = engine
     transport = httpx.ASGITransport(app=app)
-    async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
+    async with ApiClient(transport=transport, base_url="http://t/api/v1") as c:
         yield c
 
 

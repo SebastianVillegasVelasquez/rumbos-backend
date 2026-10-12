@@ -14,7 +14,7 @@ async def test_health() -> None:
     async with lifespan(app):
         transport = httpx.ASGITransport(app=app)
         async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
-            r = await c.get("/health")
+            r = await c.get("/api/v1/health")
     assert r.status_code == 200
     assert r.json() == {"status": "ok"}
 

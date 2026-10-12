@@ -12,6 +12,8 @@ from typing import Any
 
 import httpx
 
+from tests.api_client import ApiClient
+
 _UUID = r"[0-9a-fA-F-]{36}"
 _MAP = re.compile(rf"^/course-maps/({_UUID})$")
 _APPEARANCE = re.compile(rf"^/course-maps/({_UUID})/appearance$")
@@ -20,7 +22,7 @@ _RESTORE = re.compile(rf"^/course-maps/({_UUID})/publications/\d+/restore$")
 _BUBBLE = re.compile(rf"^/course-maps/({_UUID})/bubbles/({_UUID})$")
 
 
-class EditorClient(httpx.AsyncClient):
+class EditorClient(ApiClient):
     async def request(self, method: str, url: Any, **kwargs: Any) -> httpx.Response:
         headers = httpx.Headers(kwargs.get("headers") or {})
         if "if-match" not in headers:

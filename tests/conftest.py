@@ -143,5 +143,5 @@ async def client(
         InMemoryMoodleClient()
     )  # never called by these tests
     transport = httpx.ASGITransport(app=fastapi_app)
-    async with EditorClient(transport=transport, base_url="http://t") as c:
+    async with EditorClient(transport=transport, base_url="http://t/api/v1") as c:
         yield c

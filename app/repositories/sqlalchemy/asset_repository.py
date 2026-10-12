@@ -20,6 +20,7 @@ from sqlalchemy.dialects.postgresql import array as pg_array
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.paths import ASSETS_PATH
 from app.enums import AssetKind
 from app.exceptions import AssetAlreadyExistsError, AssetInUseError
 from app.models import Asset, CourseMap, Publication, Skin
@@ -36,8 +37,8 @@ def _id_text(asset_id: SQLColumnExpression[Any]) -> ColumnElement[str]:
 # the guarded delete (and so by the garbage collector). Each takes an SQL
 # expression for the asset id, so it works for a literal and for a join.
 def map_uses(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:
-    """A draft map whose background is `/assets/{id}`."""
-    return CourseMap.image_url == func.concat("/assets/", _id_text(asset_id))
+    """A draft map whose background is `{ASSETS_PATH}/{id}`."""
+    return CourseMap.image_url == func.concat(f"{ASSETS_PATH}/", _id_text(asset_id))
 
 
 def skin_uses(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:

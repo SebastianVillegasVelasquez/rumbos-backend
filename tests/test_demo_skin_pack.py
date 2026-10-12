@@ -14,6 +14,7 @@ from app.api.routes.assets import get_asset_settings, get_asset_storage
 from app.assets.storage import LocalDiskAssetStorage
 from app.main import app
 from app.services.asset_service import AssetSettings
+from tests.api_client import ApiClient
 
 SCRIPT = Path(__file__).resolve().parent.parent / "scripts" / "make_demo_skin_pack.py"
 STATES = ["available", "locked", "next", "inProgress", "complete", "hover"]
@@ -63,7 +64,7 @@ async def client(
 ) -> AsyncIterator[httpx.AsyncClient]:
     app.state.db_engine = engine
     transport = httpx.ASGITransport(app=app)
-    async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
+    async with ApiClient(transport=transport, base_url="http://t/api/v1") as c:
         yield c
 
 

@@ -9,6 +9,7 @@ from app.api.errors import register_exception_handlers
 from app.api.routes import assets, course_map, health, publications, published, skins
 from app.core.config import Settings, get_settings
 from app.core.database import create_engine
+from app.core.paths import API_PREFIX
 from app.moodle.cache import CachedMoodleClient
 from app.moodle.client import HttpMoodleClient
 
@@ -46,7 +47,16 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     """Build the app. `settings` only drives the middleware; the lifespan
     reads its own (resources are created when the server starts)."""
     settings = settings or get_settings()
-    application = FastAPI(title="Rumbos Backend", lifespan=lifespan)
+    application = FastAPI(
+        title="Rumbos Backend",
+        lifespan=lifespan,
+        # The documentation lives under the prefix too, so one proxy rule
+        # (`/api/`) covers the whole service.
+        openapi_url=f"{API_PREFIX}/openapi.json",
+        docs_url=f"{API_PREFIX}/docs",
+        redoc_url=f"{API_PREFIX}/redoc",
+        swagger_ui_oauth2_redirect_url=f"{API_PREFIX}/docs/oauth2-redirect",
+    )
     if settings.cors_allowed_origins:
         # Browsers on other origins (the deployed frontend) need this; in
         # development the Vite proxy makes requests same-origin, so the default
@@ -63,12 +73,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             expose_headers=["ETag"],
         )
     register_exception_handlers(application)
-    application.include_router(health.router)
-    application.include_router(course_map.router)
-    application.include_router(publications.router)
-    application.include_router(published.router)
-    application.include_router(assets.router)
-    application.include_router(skins.router)
+    application.include_router(health.router, prefix=API_PREFIX)
+    application.include_router(course_map.router, prefix=API_PREFIX)
+    application.include_router(publications.router, prefix=API_PREFIX)
+    application.include_router(published.router, prefix=API_PREFIX)
+    application.include_router(assets.router, prefix=API_PREFIX)
+    application.include_router(skins.router, prefix=API_PREFIX)
     return application
 
 

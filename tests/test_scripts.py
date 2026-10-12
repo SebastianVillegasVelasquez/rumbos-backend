@@ -112,7 +112,10 @@ async def test_publish_existing_maps_skips_a_map_whose_background_is_gone(
 
         await conn.execute(
             text("UPDATE course_maps SET image_url = :u WHERE id = :i"),
-            {"u": "/assets/0192f3a0-0000-7000-8000-000000000000", "i": ghost["id"]},
+            {
+                "u": "/api/v1/assets/0192f3a0-0000-7000-8000-000000000000",
+                "i": ghost["id"],
+            },
         )
     lines: list[str] = []
 

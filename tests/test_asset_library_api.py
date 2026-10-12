@@ -329,7 +329,7 @@ async def test_a_failing_file_removal_leaves_no_listed_asset_with_missing_bytes(
 async def test_a_map_background_must_exist_when_it_is_an_asset_url(
     client: httpx.AsyncClient,
 ) -> None:
-    ghost = "/assets/0192f3a0-0000-7000-8000-000000000000"
+    ghost = "/api/v1/assets/0192f3a0-0000-7000-8000-000000000000"
     created = await _map(client, "http://i/x")
 
     on_create = await client.post(
@@ -370,7 +370,7 @@ async def test_other_image_urls_are_not_checked(client: httpx.AsyncClient) -> No
 
     for url in (
         "https://cdn.example.com/a.png",
-        "/assets/not-a-uuid",
+        "/api/v1/assets/not-a-uuid",
         f"{bg['url']}/thumb",
         "/uploads/x.png",
     ):
@@ -388,7 +388,7 @@ async def test_an_upper_case_asset_id_is_not_accepted_as_a_background(
         json={
             "title": "M",
             "moodleCourseId": 9,
-            "imageUrl": f"/assets/{bg['id'].upper()}",
+            "imageUrl": f"/api/v1/assets/{bg['id'].upper()}",
         },
     )
 

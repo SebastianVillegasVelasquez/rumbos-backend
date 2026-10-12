@@ -4,6 +4,7 @@ from typing import Annotated, Self
 
 from pydantic import StringConstraints, field_validator, model_validator
 
+from app.core.paths import ASSETS_PATH
 from app.enums import AssetKind
 from app.schemas.base import ApiModel
 
@@ -61,9 +62,9 @@ class AssetRead(ApiModel):
             width=record.width,
             height=record.height,
             bytes=record.size_bytes,
-            url=f"/assets/{record.id}",
+            url=f"{ASSETS_PATH}/{record.id}",
             thumb_url=(
-                f"/assets/{record.id}/thumb"
+                f"{ASSETS_PATH}/{record.id}/thumb"
                 if record.kind is AssetKind.BACKGROUND
                 else None
             ),

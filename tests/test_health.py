@@ -8,13 +8,14 @@ from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 from app.main import app
 from app.moodle.exceptions import MoodleUnavailableError
+from tests.api_client import ApiClient
 from tests.fakes import InMemoryMoodleClient
 
 
 @pytest.fixture
 async def client() -> AsyncIterator[httpx.AsyncClient]:
     transport = httpx.ASGITransport(app=app)
-    async with httpx.AsyncClient(transport=transport, base_url="http://t") as c:
+    async with ApiClient(transport=transport, base_url="http://t/api/v1") as c:
         yield c
 
 

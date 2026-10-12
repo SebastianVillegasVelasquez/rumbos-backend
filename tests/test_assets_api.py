@@ -43,8 +43,8 @@ async def test_upload_a_background_returns_the_contract_shape(
     }
     assert body["kind"] == "background" and body["mime"] == "image/png"
     assert (body["width"], body["height"]) == (1600, 900)
-    assert body["url"] == f"/assets/{body['id']}"
-    assert body["thumbUrl"] == f"/assets/{body['id']}/thumb"
+    assert body["url"] == f"/api/v1/assets/{body['id']}"
+    assert body["thumbUrl"] == f"/api/v1/assets/{body['id']}/thumb"
     stored = await client.get(body["url"])
     assert body["bytes"] == len(stored.content)
 
