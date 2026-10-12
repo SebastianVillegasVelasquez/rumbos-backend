@@ -80,7 +80,7 @@ What the pipeline does with an upload:
   again answers `200` with the existing asset).
 - Backgrounds also get a WebP thumbnail, at most 640 px wide.
 
-Files are served from `GET /assets/{id}` (and `/thumb`) with the stored
+Files are served from `GET /api/v1/assets/{id}` (and `/thumb`) with the stored
 `Content-Type`, an `ETag`, `Cache-Control: public, max-age=31536000, immutable`,
 `X-Content-Type-Options: nosniff` and `Content-Security-Policy: default-src
 'none'; sandbox`. Any id that is not a known asset is a 404.
@@ -103,7 +103,7 @@ as trusted-network only.
 
 Every asset has a `title` (default: the file name without extension), an
 optional `credit` and the sanitized `originalFilename` (display text; stored
-files are named by id only). A map whose `imageUrl` is `/assets/{id}` must name
+files are named by id only). A map whose `imageUrl` is `/api/v1/assets/{id}` must name
 an existing `background` asset (422 `background_asset_not_found` /
 `background_asset_wrong_kind`); any other URL is accepted as before.
 
@@ -179,6 +179,20 @@ production art**: real skin art is a separate deliverable.
 
 ## API
 
+**Every route is served under `/api/v1`** (`/api/v1/course-maps`,
+`/api/v1/published/course-maps`, `/api/v1/assets`, `/api/v1/skins`,
+`/api/v1/health`, ...), and so is the documentation: `/api/v1/docs`,
+`/api/v1/redoc` and `/api/v1/openapi.json`. The paths listed below are written
+relative to that prefix. The prefix is defined once, in `app/core/paths.py`.
+
+The URLs the API returns include it too: an asset's `url` is
+`/api/v1/assets/{id}` (and `thumbUrl` `/api/v1/assets/{id}/thumb`), and a map
+background served by this API is stored as `imageUrl: "/api/v1/assets/{id}"`.
+Maps created before the prefix existed are rewritten by migration
+`c9d2e5f8a416`, which also fixes the stored publications and their hashes, so
+nothing shows up as an unpublished change. A proxy in front of the API needs
+no path rewriting.
+
 A Moodle course can have several maps ("levels"). Each map has a `position`
 among its course's maps and may be tied to one Moodle section
 (`moodleSectionId`, a section id, never a module id). A map's `moodleCourseId`
@@ -218,7 +232,7 @@ never changes after creation.
   first, with `usage` counts), `PATCH /assets/{id}` (`title`, `credit`),
   `DELETE /assets/{id}` (409 while in use), `GET /assets/{id}`,
   `GET /assets/{id}/thumb` (backgrounds only). A map's `imageUrl` may be a
-  bundled frontend path or `/assets/{id}`.
+  bundled frontend path or `/api/v1/assets/{id}`.
 - `GET /course-maps/{id}/publication-state`, `POST .../publish`,
   `GET .../publications?limit=`, `POST .../discard-changes`,
   `POST .../publications/{n}/restore`: see "Draft and published maps". Map list
