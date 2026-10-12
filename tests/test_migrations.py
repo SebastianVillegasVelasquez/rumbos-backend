@@ -7,6 +7,7 @@ override `.env`, so it never touches development data.
 """
 
 import asyncio
+import json
 import os
 import subprocess
 import sys
@@ -664,3 +665,82 @@ def test_publications_migration_adds_the_table_for_existing_maps_and_downgrades(
     assert not fetch(
         migration_db, "SELECT 1 FROM pg_tables WHERE tablename = 'publications'"
     )
+
+
+API_PREFIX_REVISION = "c9d2e5f8a416"
+ASSET_ID = "0192f3a0-0000-7000-8000-000000000001"
+
+
+def test_api_prefix_migration_rewrites_asset_urls_and_rehashes_publications(
+    migration_db: str,
+) -> None:
+    from app.publishing.snapshot import content_hash
+
+    assert alembic(migration_db, "upgrade", PUBLICATIONS).returncode == 0
+    uploaded, external = uuid.uuid4(), uuid.uuid4()
+    for map_id, course, url in (
+        (uploaded, 8, f"/assets/{ASSET_ID}"),
+        (external, 9, "https://cdn.example.com/a.png"),
+    ):
+        sql, params = insert_map(course, with_title=True)
+        run_sql(
+            migration_db,
+            [
+                (sql, {**params, "id": map_id}),
+                (
+                    "UPDATE course_maps SET image_url = :u WHERE id = :i",
+                    {"u": url, "i": map_id},
+                ),
+            ],
+        )
+    old_snapshot = {"imageUrl": f"/assets/{ASSET_ID}", "title": "T", "bubbles": []}
+    other_snapshot = {"imageUrl": "https://cdn.example.com/a.png", "title": "T"}
+    for map_id, snapshot in ((uploaded, old_snapshot), (external, other_snapshot)):
+        run_sql(
+            migration_db,
+            [
+                (
+                    (
+                        "INSERT INTO publications (id, course_map_id, number, snapshot,"
+                        " content_hash, asset_ids, created_at, updated_at) VALUES"
+                        " (:id, :m, 1, CAST(:s AS jsonb), 'old', ARRAY[]::uuid[],"
+                        " now(), now())"
+                    ),
+                    {"id": uuid.uuid4(), "m": map_id, "s": json.dumps(snapshot)},
+                )
+            ],
+        )
+
+    up = alembic(migration_db, "upgrade", API_PREFIX_REVISION)
+
+    assert up.returncode == 0, up.stderr
+    urls = dict(
+        fetch(migration_db, "SELECT moodle_course_id, image_url FROM course_maps")
+    )
+    assert urls == {
+        8: f"/api/v1/assets/{ASSET_ID}",
+        9: "https://cdn.example.com/a.png",
+    }
+    [(snapshot, digest)] = fetch(
+        migration_db,
+        f"SELECT snapshot, content_hash FROM publications WHERE course_map_id = '{uploaded}'",
+    )
+    assert snapshot["imageUrl"] == f"/api/v1/assets/{ASSET_ID}"
+    assert digest == content_hash(snapshot)  # what the app would compute now
+    [(untouched,)] = fetch(
+        migration_db,
+        f"SELECT content_hash FROM publications WHERE course_map_id = '{external}'",
+    )
+    assert untouched == "old"  # not an asset url: left exactly as it was
+
+    down = alembic(migration_db, "downgrade", PUBLICATIONS)
+    assert down.returncode == 0, down.stderr
+    restored = dict(
+        fetch(migration_db, "SELECT moodle_course_id, image_url FROM course_maps")
+    )
+    assert restored[8] == f"/assets/{ASSET_ID}"
+    [(back,)] = fetch(
+        migration_db,
+        f"SELECT snapshot->>'imageUrl' FROM publications WHERE course_map_id = '{uploaded}'",
+    )
+    assert back == f"/assets/{ASSET_ID}"
