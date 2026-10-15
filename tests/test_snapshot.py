@@ -409,3 +409,29 @@ def test_adding_or_removing_a_bubble_is_not_a_reorder() -> None:
 
     assert not diff_snapshots(old, new).bubbles_reordered
     assert not diff_snapshots(new, old).bubbles_reordered
+
+
+# --- format stability ----------------------------------------------------------
+
+# Computed once and never to be edited: it pins the canonical text of a snapshot
+# as it was published before 3D views existed. If a change to the builder moves
+# this hash, every map published so far would suddenly show "unpublished changes".
+LEGACY_HASH = "4ec6eff5b462a0066f8ca623906b1e5726d867a75eb31d6515ff3021d00a9fb7"
+
+
+def test_a_map_without_extras_hashes_exactly_as_it_always_did() -> None:
+    skin = SkinRead(
+        id=uuid.UUID(int=10),
+        name="Skin",
+        builtin=False,
+        is_default=True,
+        config=skin_config_adapter.validate_python(skin_configs.procedural()),
+        created_at=T0,
+        updated_at=T0,
+    )
+    bubble = make_bubble(7, icon=BubbleIcon.STAR, bubble_id=uuid.UUID(int=20))
+    snapshot = build_snapshot(
+        make_inputs(bubbles=[bubble], skins=[skin], default_skin_id=skin.id)
+    )
+
+    assert content_hash(snapshot) == LEGACY_HASH
