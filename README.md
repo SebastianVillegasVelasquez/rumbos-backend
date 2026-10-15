@@ -128,7 +128,8 @@ drafts (409 `no_changes_to_publish`) and drafts whose background or skin images
 no longer exist (422 `publish_invalid`, every problem listed).
 `discard-changes` and `restore` load a snapshot back into the draft in one
 transaction (they do **not** publish); skins that no longer exist are reset
-with `skin_missing` warnings.
+with `skin_missing` warnings, and a 3D scene that is no longer in the registry
+is dropped with a `scene_unknown` warning (see "3D view").
 
 Because skins are global, editing or deleting a skin a map uses changes that
 map's draft (it shows as `skinsChanged`) but never what students see until the
@@ -138,13 +139,76 @@ map is published again; `discard-changes` cannot undo a skin edit.
 > hidden from anyone who calls the editor endpoints directly. "Published" only
 > means "what students are shown, consistently".
 
+### 3D view
+
+A map can show a hand-authored 3D world ("La Región de los Encuentros", built
+with three.js) in addition to the flat map. The backend only stores **which
+scene a map uses and which bubble is bound to which zone**, with optional ES/EN
+text overrides. It does not serve 3D assets (textures and sprites are static
+frontend files), does not call Moodle for this and stores no tokens or
+credentials. Students only view; editors configure bindings in the editor.
+
+**Scene registry.** `app/view3d/scenes.py` is a code constant mapping a scene id
+to its number of zones (today `region-encuentros` -> 9). Adding a scene is a code
+change deployed together with the frontend; maps store only the id, so it needs
+no migration. `GET /view3d/scenes` serves it: `{ items: [{ id, zoneCount }] }`.
+A generic 3D view for any course is not possible this way (the world is
+hand-authored per scene).
+
+**Contract.** `CourseMapRead.view3d` and `PublishedMapRead.view3d` are
+`null` or `{ scene, bindings: [{ zoneId, bubbleId, title, description }] }`,
+bindings ordered by `zoneId`. `title` / `description` are `null` or
+`{ es?, en? }` (a language that was not given is absent, not `null`); the
+frontend falls back to the activity name and the scene's own text.
+`PUT /course-maps/{id}/view3d` takes that object (or a JSON `null`, which
+removes the 3D view), needs `If-Match` (428 / 412 as everywhere), bumps the map
+revision and replaces the scene and every binding in one transaction (a single
+`UPDATE ... WHERE revision = :expected`), so one invalid binding changes
+nothing. A request without any body is a 422, so a forgotten payload cannot
+remove the view. 422 codes, checked in this order, with `detail = { code,
+message, ...extras }`: `scene_unknown` (`scene`, `scenes`), `zone_out_of_range`
+(`zoneIds`, `zoneCount`; valid zones are `0 <= zoneId < zoneCount`),
+`duplicate_zone` (`zoneIds`), `duplicate_bubble` (`bubbleIds`),
+`bubble_not_in_map` (`bubbleIds`). Malformed bodies (wrong types, unknown keys,
+over-long text) are FastAPI's usual 422 with a list `detail`. Deleting a bubble
+deletes its binding in the same transaction (foreign key cascade); the scene
+stays.
+
+**Text** is plain text. On write it is normalized to Unicode NFC, control
+characters are removed (line breaks stay in descriptions, normalized to LF), it is
+trimmed and limited to 120 characters (title) / 600 (description), counted after
+cleaning. A language left empty after cleaning is not stored, and a title or
+description with no language left is `null`. Nothing is ever interpreted; the
+frontend renders it with `textContent`, but it is treated as untrusted anyway.
+
+**Draft and published.** The 3D view is part of the map's content: the snapshot
+holds it, `publication-state.changes.view3dChanged` reports a difference
+(added, removed, another zone or bubble, or only a text), the published read
+returns the frozen copy whatever the draft does afterwards, and publishing a
+draft whose scene is not in the registry is a `publish_invalid` problem
+(`scene_unknown`). `discard-changes` and `restore` recreate the scene and
+bindings once the bubbles are back with their original ids; a binding whose
+bubble could not be brought back (already reported as `bubble_not_restored`) or
+whose zone is no longer in the scene is left out.
+
+**Why the snapshot key is omitted, not `null`.** A map with no 3D view has no
+`view3d` key in its snapshot. Snapshots published before this feature have no
+such key either, so a draft that still has no 3D view builds the very same
+canonical JSON, and hash, as that old publication: nothing shows up as an
+unpublished change after the migration, and a map shows
+`unpublished_changes` only once its 3D view actually changes. Writing
+`"view3d": null` would change every existing hash. `tests/test_snapshot.py`
+pins the hash of a snapshot in the old format, and `tests/test_migrations.py`
+checks a publication made before the migration. The same rule applies to any
+future optional snapshot field.
+
 ### Concurrent edits (`If-Match`)
 
 `CourseMapRead.revision` and `BubbleRead.version` start at 1 and travel as the
 `ETag` (`"3"`) of single-resource responses. Guarded writes must send the number
 they are based on as `If-Match: "3"`: `PATCH /course-maps/{id}`,
-`PUT .../appearance`, `POST .../discard-changes`, `POST .../publications/{n}/restore`
-(map revision) and `PATCH`/`DELETE .../bubbles/{id}` (bubble version; the PATCH
+`PUT .../appearance`, `PUT .../view3d`, `POST .../discard-changes`,
+`POST .../publications/{n}/restore` (map revision) and `PATCH`/`DELETE .../bubbles/{id}` (bubble version; the PATCH
 only when the body has `x`, `y`, `icon` or `skinId`). Missing header: 428
 `precondition_required`; malformed: 400 `invalid_if_match`; stale: 412
 `version_conflict` with `currentRevision` / `currentVersion`. Each guarded write
@@ -215,6 +279,8 @@ never changes after creation.
   `skin_not_found`, `duplicate_skin_rule`). Settings are always read through the
   `MapSettings` model, so missing keys (or an empty `{}` column) read as defaults;
   unknown keys are rejected on write.
+- `GET /view3d/scenes` and `PUT /course-maps/{id}/view3d`: the 3D scene and
+  zone bindings; see "3D view".
 - `PUT /course-maps/{id}/bubbles/order` `{ bubbleIds }`: the guided path.
   Must be exactly the map's bubbles (422 `order_mismatch`); sets `sequence`
   0..n-1. Only this endpoint changes `sequence`.
