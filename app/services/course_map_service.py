@@ -21,6 +21,7 @@ from app.repositories.protocols import (
     CourseMapRepository,
     PublicationRepository,
     SkinRepository,
+    View3dRepository,
 )
 from app.schemas.activity import ActivityRead
 from app.schemas.bubble import (
@@ -41,7 +42,9 @@ from app.schemas.course_map import (
     CourseMapSummary,
     CourseMapUpdate,
 )
+from app.schemas.view3d import View3dUpdate
 from app.services.publication_service import publication_infos
+from app.view3d.validation import check_view3d
 
 
 def is_bubble_candidate(module: MoodleModule) -> bool:
@@ -104,6 +107,7 @@ class CourseMapService:
         skins: SkinRepository,
         assets: AssetRepository,
         publications: PublicationRepository,
+        view3d: View3dRepository,
     ) -> None:
         self._course_maps = course_maps
         self._bubbles = bubbles
@@ -111,13 +115,16 @@ class CourseMapService:
         self._skins = skins
         self._assets = assets
         self._publications = publications
+        self._view3d = view3d
 
     async def create_course_map(self, data: CourseMapCreate) -> CourseMapRead:
         await self._check_background(data.image_url)
         # The repository appends the map to the course and enforces one map
         # per section (`SectionAlreadyMappedError`).
         created = await self._course_maps.create(data)
-        return CourseMapRead(**created.model_dump(), skin_rules=[], bubbles=[])
+        return CourseMapRead(
+            **created.model_dump(), skin_rules=[], bubbles=[], view3d=None
+        )
 
     async def reorder_course_maps(self, data: CourseMapOrderUpdate) -> CourseMapOrdered:
         """Sets the order of a course's maps; `map_ids` must be exactly its maps."""
@@ -198,6 +205,27 @@ class CourseMapService:
             data.skin_rules,
             expected_revision,
         )
+        if not applied:  # deleted between the lookup and the write
+            raise CourseMapNotFoundError(course_map_id)
+        return await self.get_course_map(course_map_id)
+
+    async def update_view3d(
+        self,
+        course_map_id: uuid.UUID,
+        data: View3dUpdate | None,
+        expected_revision: int,
+    ) -> CourseMapRead:
+        """Replaces the map's scene and every zone binding, all or nothing
+        (`None` removes the 3D view). The scene must exist, each zone must be
+        in range and used once, each bubble bound once and on this map; the
+        first problem is reported as a 422 with its code. Nothing is written
+        unless all of it is valid."""
+        await self._require_course_map(course_map_id)
+        view3d = data.to_view3d() if data is not None else None
+        if view3d is not None:
+            bubbles = await self._bubbles.list_by_course_map(course_map_id)
+            check_view3d(view3d, [b.id for b in bubbles])
+        applied = await self._view3d.replace(course_map_id, view3d, expected_revision)
         if not applied:  # deleted between the lookup and the write
             raise CourseMapNotFoundError(course_map_id)
         return await self.get_course_map(course_map_id)
@@ -354,6 +382,7 @@ class CourseMapService:
             **course_map.model_dump(),
             skin_rules=await self._course_maps.list_skin_rules(course_map.id),
             bubbles=await self._bubbles.list_by_course_map(course_map.id),
+            view3d=await self._view3d.get(course_map.id),
         )
 
     async def _require_course_map(self, course_map_id: uuid.UUID) -> CourseMapBase:

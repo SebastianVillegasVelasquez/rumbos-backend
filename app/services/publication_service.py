@@ -17,6 +17,7 @@ from app.repositories.protocols import (
     BubbleRepository,
     CourseMapRepository,
     PublicationRepository,
+    View3dRepository,
 )
 from app.schemas.course_map import CourseMapRead, PublicationInfo
 from app.schemas.publication import (
@@ -92,11 +93,13 @@ class PublicationService:
         publications: PublicationRepository,
         course_maps: CourseMapRepository,
         bubbles: BubbleRepository,
+        view3d: View3dRepository,
         keep: int,
     ) -> None:
         self._publications = publications
         self._course_maps = course_maps
         self._bubbles = bubbles
+        self._view3d = view3d
         self._keep = keep
 
     async def state(self, course_map_id: uuid.UUID) -> PublicationState:
@@ -186,6 +189,7 @@ class PublicationService:
                 **course_map.model_dump(),
                 skin_rules=await self._course_maps.list_skin_rules(course_map_id),
                 bubbles=await self._bubbles.list_by_course_map(course_map_id),
+                view3d=await self._view3d.get(course_map_id),
             ),
             warnings=warnings,
         )

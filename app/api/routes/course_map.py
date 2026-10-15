@@ -1,7 +1,8 @@
 import uuid
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Header, Query, Response, status
+from fastapi import APIRouter, Body, Depends, Header, Query, Request, Response, status
+from fastapi.exceptions import RequestValidationError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.preconditions import IfMatch, parse_if_match, set_etag
@@ -17,6 +18,7 @@ from app.repositories.sqlalchemy.publication_repository import (
     SqlAlchemyPublicationRepository,
 )
 from app.repositories.sqlalchemy.skin_repository import SqlAlchemySkinRepository
+from app.repositories.sqlalchemy.view3d_repository import SqlAlchemyView3dRepository
 from app.schemas.activity import ActivityRead
 from app.schemas.bubble import (
     BubbleCreate,
@@ -35,6 +37,7 @@ from app.schemas.course_map import (
     CourseMapUpdate,
 )
 from app.schemas.resolved import ResolvedMap
+from app.schemas.view3d import View3dUpdate
 from app.services.course_map_service import CourseMapService
 from app.services.resolution_service import MapResolutionService
 
@@ -52,6 +55,7 @@ def get_course_map_service(
         SqlAlchemySkinRepository(session),
         SqlAlchemyAssetRepository(session),
         SqlAlchemyPublicationRepository(session),
+        SqlAlchemyView3dRepository(session),
     )
 
 
@@ -132,6 +136,40 @@ async def update_appearance(
 ) -> CourseMapRead:
     """Needs `If-Match: "<revision>"` (428 without, 412 when stale)."""
     updated = await service.update_appearance(course_map_id, data, revision)
+    set_etag(response, updated.revision)
+    return updated
+
+
+async def require_request_body(request: Request) -> None:
+    """422 when the request has no body at all.
+
+    FastAPI reads a JSON `null` body as "missing", so `view3d` declares its body
+    optional (`null` removes the 3D view); this keeps a request that merely
+    forgot its body from doing that.
+    """
+    if not (await request.body()).strip():
+        raise RequestValidationError(
+            [{"type": "missing", "loc": ("body",), "msg": "Field required"}]
+        )
+
+
+@router.put(
+    "/{course_map_id}/view3d",
+    response_model=CourseMapRead,
+    dependencies=[Depends(require_request_body)],
+)
+async def update_view3d(
+    course_map_id: uuid.UUID,
+    service: ServiceDep,
+    response: Response,
+    revision: IfMatch,
+    data: Annotated[View3dUpdate | None, Body()] = None,
+) -> CourseMapRead:
+    """Replaces the 3D scene and its zone bindings; a `null` body removes the
+    3D view. Needs `If-Match: "<revision>"` (428 without, 412 when stale);
+    422 `scene_unknown` / `zone_out_of_range` / `duplicate_zone` /
+    `duplicate_bubble` / `bubble_not_in_map`."""
+    updated = await service.update_view3d(course_map_id, data, revision)
     set_etag(response, updated.revision)
     return updated
 

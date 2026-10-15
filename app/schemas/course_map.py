@@ -9,6 +9,7 @@ from app.enums import PublicationStatus
 from app.schemas.base import ApiModel
 from app.schemas.bubble import BubbleRead
 from app.schemas.map_settings import MapSettings
+from app.schemas.view3d import View3d
 
 TITLE_MAX_LENGTH = 120
 IMAGE_URL_MAX_LENGTH = 2048
@@ -150,7 +151,10 @@ class AppearanceUpdate(ApiModel):
 
 
 class CourseMapRead(CourseMapBase):
-    """A course map together with its skin rules and bubbles."""
+    """A course map together with its skin rules, bubbles and 3D view."""
 
     skin_rules: list[SkinRule]
     bubbles: list[BubbleRead]
+    # The 3D scene and which bubble sits in each zone; null when the map has none.
+    # Aliased by hand: the camelCase generator would spell it `view3D`.
+    view3d: View3d | None = Field(alias="view3d")

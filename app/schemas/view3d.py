@@ -110,7 +110,7 @@ class LocalizedDescriptionUpdate(_Strict):
 
 
 class View3dBindingUpdate(_Strict):
-    zone_id: Annotated[int, Field(ge=0)]
+    zone_id: int  # its range depends on the scene: checked with the scene
     bubble_id: uuid.UUID
     title: LocalizedTitleUpdate | None = None
     description: LocalizedDescriptionUpdate | None = None

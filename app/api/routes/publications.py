@@ -21,6 +21,7 @@ from app.repositories.sqlalchemy.course_map_repository import (
 from app.repositories.sqlalchemy.publication_repository import (
     SqlAlchemyPublicationRepository,
 )
+from app.repositories.sqlalchemy.view3d_repository import SqlAlchemyView3dRepository
 from app.schemas.publication import (
     PublicationList,
     PublicationState,
@@ -44,6 +45,7 @@ def get_publication_service(
         SqlAlchemyPublicationRepository(session),
         SqlAlchemyCourseMapRepository(session),
         SqlAlchemyBubbleRepository(session),
+        SqlAlchemyView3dRepository(session),
         settings.publications_keep,
     )
 

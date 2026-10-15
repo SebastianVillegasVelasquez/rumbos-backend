@@ -39,6 +39,7 @@ from app.exceptions import (
     SkinReferenceNotFoundError,
     UploadsDisabledError,
     VersionConflictError,
+    View3dInvalidError,
 )
 from app.moodle.exceptions import (
     MoodleAuthError,
@@ -401,6 +402,17 @@ def register_exception_handlers(app: FastAPI) -> None:
             },
         ),
     )
+
+    async def view3d_invalid(request: Request, exc: Exception) -> JSONResponse:
+        assert isinstance(exc, View3dInvalidError)
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            content={
+                "detail": {"code": exc.code, "message": exc.message, **exc.extras}
+            },
+        )
+
+    app.add_exception_handler(View3dInvalidError, view3d_invalid)
 
     # Moodle failures. Messages are generic on purpose: never the token, nor
     # Moodle's own error text. Starlette picks the handler for the most

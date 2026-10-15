@@ -29,6 +29,7 @@ from tests.fakes import (
     InMemoryMoodleClient,
     InMemoryPublicationRepository,
     InMemorySkinRepository,
+    InMemoryView3dRepository,
 )
 
 
@@ -67,6 +68,7 @@ def service(
         skins,
         InMemoryAssetRepository(),
         InMemoryPublicationRepository(),
+        InMemoryView3dRepository(maps, bubbles),
     )
 
 

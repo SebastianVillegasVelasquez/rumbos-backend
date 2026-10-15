@@ -17,6 +17,7 @@ from tests.api_client import ApiClient
 _UUID = r"[0-9a-fA-F-]{36}"
 _MAP = re.compile(rf"^/course-maps/({_UUID})$")
 _APPEARANCE = re.compile(rf"^/course-maps/({_UUID})/appearance$")
+_VIEW3D = re.compile(rf"^/course-maps/({_UUID})/view3d$")
 _DISCARD = re.compile(rf"^/course-maps/({_UUID})/discard-changes$")
 _RESTORE = re.compile(rf"^/course-maps/({_UUID})/publications/\d+/restore$")
 _BUBBLE = re.compile(rf"^/course-maps/({_UUID})/bubbles/({_UUID})$")
@@ -36,7 +37,7 @@ class EditorClient(ApiClient):
         path = path.split("?")[0]
         if method == "PATCH" and (m := _MAP.match(path)):
             return await self._revision(m[1])
-        if method == "PUT" and (m := _APPEARANCE.match(path)):
+        if method == "PUT" and (m := _APPEARANCE.match(path) or _VIEW3D.match(path)):
             return await self._revision(m[1])
         if method == "POST" and (m := _DISCARD.match(path) or _RESTORE.match(path)):
             return await self._revision(m[1])
