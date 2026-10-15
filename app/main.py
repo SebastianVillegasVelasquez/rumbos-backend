@@ -6,7 +6,15 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.errors import register_exception_handlers
-from app.api.routes import assets, course_map, health, publications, published, skins
+from app.api.routes import (
+    assets,
+    course_map,
+    health,
+    publications,
+    published,
+    skins,
+    view3d,
+)
 from app.core.config import Settings, get_settings
 from app.core.database import create_engine
 from app.core.paths import API_PREFIX
@@ -79,6 +87,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(published.router, prefix=API_PREFIX)
     application.include_router(assets.router, prefix=API_PREFIX)
     application.include_router(skins.router, prefix=API_PREFIX)
+    application.include_router(view3d.router, prefix=API_PREFIX)
     return application
 
 
