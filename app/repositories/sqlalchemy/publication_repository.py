@@ -22,6 +22,7 @@ from app.models import (
     Bubble,
     CourseMap,
     CourseMapSkinRule,
+    CourseMapView3dBinding,
     Publication,
     Skin,
 )
@@ -36,6 +37,7 @@ from app.publishing.snapshot import (
 )
 from app.repositories.sqlalchemy._errors import constraint_name, sqlstate
 from app.repositories.sqlalchemy.skin_repository import to_skin_read
+from app.repositories.sqlalchemy.view3d_repository import to_binding
 from app.schemas.bubble import BubbleRead
 from app.schemas.course_map import SkinRule
 from app.schemas.map_settings import MapSettings
@@ -47,6 +49,8 @@ from app.schemas.publication import (
 )
 from app.schemas.published import PublishedRow
 from app.schemas.skin import SkinRead
+from app.schemas.view3d import View3d
+from app.view3d import scenes
 
 SERIALIZATION_FAILURE = "40001"  # PostgreSQL SQLSTATE
 
@@ -60,9 +64,9 @@ async def load_drafts(
 ) -> dict[uuid.UUID, DraftInputs]:
     """The draft of each map, for several maps in a handful of queries.
 
-    One query each for the maps, their skin rules, their bubbles and the skins
-    involved (the ones the drafts name plus the application's default skin):
-    the same five whatever the number of maps. Maps that do not exist are
+    One query each for the maps, their skin rules, their bubbles, their 3D
+    bindings and the skins involved (the ones the drafts name plus the
+    application's default skin): the same six whatever the number of maps. Maps that do not exist are
     absent from the result.
     """
     if not course_map_ids:
@@ -89,6 +93,13 @@ async def load_drafts(
             .execution_options(populate_existing=True)
         )
     ).all()
+    bindings = (
+        await session.scalars(
+            select(CourseMapView3dBinding)
+            .where(CourseMapView3dBinding.course_map_id.in_(ids))
+            .execution_options(populate_existing=True)
+        )
+    ).all()
     wanted = {r.skin_id for r in rules}
     wanted.update(m.default_skin_id for m in maps if m.default_skin_id)
     wanted.update(b.skin_id for b in bubbles if b.skin_id)
@@ -111,6 +122,9 @@ async def load_drafts(
         bubbles_by_map.setdefault(bubble.course_map_id, []).append(
             BubbleRead.model_validate(bubble)
         )
+    bindings_by_map: dict[uuid.UUID, list[CourseMapView3dBinding]] = {}
+    for binding in bindings:
+        bindings_by_map.setdefault(binding.course_map_id, []).append(binding)
     return {
         m.id: DraftInputs(
             title=m.title,
@@ -120,6 +134,19 @@ async def load_drafts(
             skin_rules=rules_by_map.get(m.id, []),
             bubbles=bubbles_by_map.get(m.id, []),
             skins=skins,
+            view3d=(
+                View3d(
+                    scene=m.view3d_scene,
+                    bindings=[
+                        to_binding(b)
+                        for b in sorted(
+                            bindings_by_map.get(m.id, []), key=lambda b: b.zone_id
+                        )
+                    ],
+                )
+                if m.view3d_scene is not None
+                else None
+            ),
         )
         for m in maps
     }
@@ -435,6 +462,14 @@ class SqlAlchemyPublicationRepository:
                             ),
                         )
                     )
+        view3d = snapshot.get("view3d")
+        if view3d is not None and scenes.zone_count(view3d["scene"]) is None:
+            problems.append(
+                (
+                    "scene_unknown",
+                    f"The 3D scene '{view3d['scene']}' is not available any more",
+                )
+            )
         known = {uuid.UUID(k) for k in snapshot["skins"]}
         for skin_id in sorted(snapshot_skin_ids(snapshot) - known, key=str):
             problems.append(("skin_missing", f"The skin {skin_id} no longer exists"))
@@ -457,7 +492,9 @@ class SqlAlchemyPublicationRepository:
         bubbles are updated by id, recreated with their original ids when they
         were deleted, and deleted when the snapshot does not have them; `sequence`
         comes from the snapshot. Skins that no longer exist are reset (with a
-        `skin_missing` warning). Bumps the map's revision, and the version of
+        `skin_missing` warning). The 3D scene and bindings are recreated from the
+        snapshot once the bubbles are back (a scene that is no longer in the
+        registry is dropped, with a `scene_unknown` warning). Bumps the map's revision, and the version of
         every bubble that changed.
         """
         warnings: list[RestoreWarning] = []
@@ -559,6 +596,7 @@ class SqlAlchemyPublicationRepository:
             await self._restore_bubbles(
                 course_map_id, moodle_course_id, snapshot, skin_or_none, warnings
             )
+            await self._restore_view3d(course_map_id, snapshot, warnings)
             await self._session.commit()
             # Core UPDATEs bypass the identity map; forget what it holds so the
             # next read of this map or its bubbles cannot return stale objects.
@@ -579,6 +617,62 @@ class SqlAlchemyPublicationRepository:
             await self._session.rollback()
             raise
         return warnings
+
+    async def _restore_view3d(
+        self,
+        course_map_id: uuid.UUID,
+        snapshot: dict[str, Any],
+        warnings: list[RestoreWarning],
+    ) -> None:
+        """The snapshot's 3D scene and bindings replace the draft's. Runs after
+        the bubbles are restored, so their ids exist again. A binding whose
+        bubble could not be brought back (that case already has its own
+        warning), or whose zone is no longer in the scene, is left out."""
+        view3d = snapshot.get("view3d")
+        scene: str | None = view3d["scene"] if view3d is not None else None
+        zones = scenes.zone_count(scene) if scene is not None else None
+        if scene is not None and zones is None:
+            warnings.append(
+                RestoreWarning(
+                    code="scene_unknown",
+                    message=(
+                        f"The 3D scene '{scene}' is not available any more, so "
+                        "the map's 3D view was removed"
+                    ),
+                )
+            )
+            scene = None
+        await self._session.execute(
+            update(CourseMap)
+            .where(CourseMap.id == course_map_id)
+            .values(view3d_scene=scene)
+            .execution_options(synchronize_session=False)
+        )
+        await self._session.execute(
+            delete(CourseMapView3dBinding).where(
+                CourseMapView3dBinding.course_map_id == course_map_id
+            )
+        )
+        if scene is None or zones is None:
+            return
+        assert view3d is not None  # a scene came from it
+        present = set(
+            await self._session.scalars(
+                select(Bubble.id).where(Bubble.course_map_id == course_map_id)
+            )
+        )
+        self._session.add_all(
+            CourseMapView3dBinding(
+                course_map_id=course_map_id,
+                zone_id=b["zoneId"],
+                bubble_id=uuid.UUID(b["bubbleId"]),
+                title=b["title"],
+                description=b["description"],
+            )
+            for b in view3d["bindings"]
+            if uuid.UUID(b["bubbleId"]) in present and 0 <= b["zoneId"] < zones
+        )
+        await self._session.flush()
 
     async def _restore_bubbles(
         self,

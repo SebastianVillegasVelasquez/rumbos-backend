@@ -15,6 +15,7 @@ from app.schemas.published import (
     PublishedSkin,
 )
 from app.schemas.resolved import ResolvedMap
+from app.schemas.view3d import View3d
 from app.services.resolution_service import MapResolutionService
 
 
@@ -104,6 +105,10 @@ class PublishedMapService:
                 )
                 for b in snap["bubbles"]
             ],
+            # Snapshots published before 3D views existed have no such key.
+            view3d=(
+                View3d.model_validate(snap["view3d"]) if "view3d" in snap else None
+            ),
             publication_number=row.number,
             published_at=row.published_at,
         )

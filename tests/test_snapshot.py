@@ -1,6 +1,7 @@
 """The snapshot builder: determinism, skin freezing, asset ids, diffing. No database."""
 
 import copy
+import dataclasses
 import json
 import math
 import uuid
@@ -12,6 +13,7 @@ from uuid_utils.compat import uuid7
 
 from app.enums import BubbleIcon, BubbleStatus
 from app.publishing.snapshot import (
+    Changes,
     DraftInputs,
     build_snapshot,
     canonical_json,
@@ -24,6 +26,7 @@ from app.schemas.bubble import BubbleRead
 from app.schemas.course_map import SkinRule
 from app.schemas.map_settings import MapSettings
 from app.schemas.skin import SkinRead, skin_config_adapter
+from app.schemas.view3d import LocalizedText, View3d, View3dBinding
 from tests import skin_configs
 
 T0 = datetime(2026, 1, 1, tzinfo=UTC)
@@ -435,3 +438,144 @@ def test_a_map_without_extras_hashes_exactly_as_it_always_did() -> None:
     )
 
     assert content_hash(snapshot) == LEGACY_HASH
+
+
+# --- 3D view ---------------------------------------------------------------------
+
+
+def make_view3d(
+    *pairs: tuple[int, uuid.UUID], title: LocalizedText | None = None
+) -> View3d:
+    return View3d(
+        scene="region-encuentros",
+        bindings=[
+            View3dBinding(zone_id=zone, bubble_id=bubble, title=title)
+            for zone, bubble in pairs
+        ],
+    )
+
+
+def test_a_map_without_a_3d_view_omits_the_key_instead_of_writing_null() -> None:
+    snapshot = build_snapshot(make_inputs())
+
+    assert "view3d" not in snapshot
+    assert "view3d" not in canonical_json(snapshot)
+    assert content_hash(snapshot) == content_hash(
+        build_snapshot(make_inputs())  # and nothing else about it is different
+    )
+
+
+def test_a_3d_view_is_stored_with_its_bindings_ordered_by_zone() -> None:
+    first, second = make_bubble(1), make_bubble(2)
+    view = make_view3d(
+        (7, second.id),
+        (2, first.id),
+        title=LocalizedText(es="Hola"),
+    )
+    inputs = make_inputs(bubbles=[first, second])
+    snapshot = build_snapshot(with_view3d(inputs, view))
+
+    assert snapshot["view3d"] == {
+        "scene": "region-encuentros",
+        "bindings": [
+            {
+                "zoneId": 2,
+                "bubbleId": str(first.id),
+                "title": {"es": "Hola"},
+                "description": None,
+            },
+            {
+                "zoneId": 7,
+                "bubbleId": str(second.id),
+                "title": {"es": "Hola"},
+                "description": None,
+            },
+        ],
+    }
+    assert set(snapshot) - set(build_snapshot(inputs)) == {"view3d"}
+
+
+def with_view3d(inputs: DraftInputs, view: View3d | None) -> DraftInputs:
+    return dataclasses.replace(inputs, view3d=view)
+
+
+def test_the_order_bindings_were_given_in_does_not_change_the_hash() -> None:
+    a, b = make_bubble(1), make_bubble(2)
+    base = make_inputs(bubbles=[a, b])
+
+    one = with_view3d(base, make_view3d((1, a.id), (5, b.id)))
+    other = with_view3d(base, make_view3d((5, b.id), (1, a.id)))
+
+    assert content_hash(build_snapshot(one)) == content_hash(build_snapshot(other))
+
+
+def test_any_change_to_the_3d_view_changes_the_hash() -> None:
+    a, b = make_bubble(1), make_bubble(2)
+    base = make_inputs(bubbles=[a, b])
+    plain = content_hash(build_snapshot(base))
+    variants = [
+        make_view3d((1, a.id)),
+        make_view3d((2, a.id)),  # another zone
+        make_view3d((1, b.id)),  # another bubble
+        make_view3d((1, a.id), (2, b.id)),
+        make_view3d((1, a.id), title=LocalizedText(es="x")),
+        make_view3d((1, a.id), title=LocalizedText(en="x")),
+        View3d(scene="otra", bindings=[]),
+        View3d(scene="region-encuentros", bindings=[]),
+    ]
+
+    hashes = {
+        content_hash(build_snapshot(with_view3d(base, view))) for view in variants
+    }
+
+    assert len(hashes) == len(variants)  # all different from each other...
+    assert plain not in hashes  # ...and from having no 3D view
+
+
+def test_removing_the_3d_view_returns_to_the_hash_it_had_before() -> None:
+    a = make_bubble(1)
+    base = make_inputs(bubbles=[a])
+    before = content_hash(build_snapshot(base))
+
+    with_it = with_view3d(base, make_view3d((0, a.id)))
+    without = with_view3d(with_it, None)
+
+    assert content_hash(build_snapshot(with_it)) != before
+    assert content_hash(build_snapshot(without)) == before
+
+
+def test_the_3d_view_adds_no_assets() -> None:
+    a = make_bubble(1)
+    base = make_inputs(bubbles=[a])
+    with_it = with_view3d(base, make_view3d((0, a.id)))
+
+    assert collect_asset_ids(build_snapshot(with_it)) == collect_asset_ids(
+        build_snapshot(base)
+    )
+
+
+def test_the_diff_reports_a_changed_3d_view() -> None:
+    a, b = make_bubble(1), make_bubble(2)
+    base = make_inputs(bubbles=[a, b])
+    plain = build_snapshot(base)
+    one = build_snapshot(with_view3d(base, make_view3d((1, a.id))))
+    moved = build_snapshot(with_view3d(base, make_view3d((2, a.id))))
+    reworded = build_snapshot(
+        with_view3d(base, make_view3d((1, a.id), title=LocalizedText(es="x")))
+    )
+
+    assert not diff_snapshots(plain, plain).view3d_changed
+    assert not diff_snapshots(one, one).view3d_changed
+    assert diff_snapshots(plain, one).view3d_changed  # added
+    assert diff_snapshots(one, plain).view3d_changed  # removed
+    assert diff_snapshots(one, moved).view3d_changed  # another zone
+    assert diff_snapshots(one, reworded).view3d_changed  # only the text
+    # And it is the only thing that differs.
+    assert diff_snapshots(plain, one) == Changes(view3d_changed=True)
+
+
+def test_an_old_snapshot_without_the_key_diffs_cleanly() -> None:
+    old = build_snapshot(make_inputs())
+    assert "view3d" not in old
+
+    assert diff_snapshots(old, build_snapshot(make_inputs())) == Changes()

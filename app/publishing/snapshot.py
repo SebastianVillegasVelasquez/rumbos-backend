@@ -5,6 +5,12 @@ Pure functions, no database and no I/O. A snapshot is a plain JSON-able dict
 live data: bubble `status`, level `position`, `moodleCourseId` and
 `moodleSectionId` are always read from the live rows.
 
+The optional `view3d` key (the map's 3D scene and zone bindings) is OMITTED when
+the map has no 3D view, never written as null. Maps published before 3D views
+existed have no such key, so a draft that still has no 3D view must build the
+very same text, and hash, as that old publication; with `"view3d": null` every
+published map would suddenly look changed.
+
 Two snapshots are "the same" exactly when their `content_hash` is: the hash is
 SHA-256 of a canonical JSON text (sorted keys, no whitespace, normalized
 numbers), so key order and float spelling (`1` vs `1.0`, `0.1` vs
@@ -24,6 +30,7 @@ from app.schemas.bubble import BubbleRead
 from app.schemas.course_map import SkinRule
 from app.schemas.map_settings import MapSettings
 from app.schemas.skin import SkinRead, dump_config
+from app.schemas.view3d import LocalizedText, View3d
 
 SCHEMA_VERSION = 1
 # Significant digits kept for floats. Coordinates are 0-1 doubles; twelve digits
@@ -44,6 +51,8 @@ class DraftInputs:
     # Skins that exist and may be referenced: the ones the draft names plus the
     # application's default skin. Anything else is ignored.
     skins: Mapping[uuid.UUID, SkinRead]
+    # The map's 3D scene and bindings; None when it has no 3D view.
+    view3d: View3d | None = None
 
 
 def normalize_numbers(value: Any) -> Any:
@@ -89,6 +98,26 @@ def referenced_skin_ids(inputs: DraftInputs) -> set[uuid.UUID]:
         ids.add(inputs.default_skin_id)
     ids.update(b.skin_id for b in inputs.bubbles if b.skin_id is not None)
     return ids
+
+
+def _localized(text: LocalizedText | None) -> dict[str, str] | None:
+    """Only the languages given, or None when there is nothing."""
+    return (text.model_dump(mode="json") or None) if text is not None else None
+
+
+def _view3d_content(view3d: View3d) -> dict[str, Any]:
+    return {
+        "scene": view3d.scene,
+        "bindings": [
+            {
+                "zoneId": b.zone_id,
+                "bubbleId": str(b.bubble_id),
+                "title": _localized(b.title),
+                "description": _localized(b.description),
+            }
+            for b in sorted(view3d.bindings, key=lambda b: b.zone_id)
+        ],
+    }
 
 
 def build_snapshot(inputs: DraftInputs) -> dict[str, Any]:
@@ -140,6 +169,8 @@ def build_snapshot(inputs: DraftInputs) -> dict[str, Any]:
             for rank, bubble in enumerate(ordered)
         ],
     }
+    if inputs.view3d is not None:
+        snapshot["view3d"] = _view3d_content(inputs.view3d)
     normalized: dict[str, Any] = normalize_numbers(snapshot)
     return normalized
 
@@ -181,6 +212,9 @@ class Changes:
     bubbles_restyled: int = 0
     # Same bubbles, different guided-path order (an additive field).
     bubbles_reordered: bool = False
+    # The 3D scene or any zone binding (or its texts) differs, or it was added
+    # or removed.
+    view3d_changed: bool = False
 
 
 def diff_snapshots(old: Mapping[str, Any], new: Mapping[str, Any]) -> Changes:
@@ -218,6 +252,8 @@ def diff_snapshots(old: Mapping[str, Any], new: Mapping[str, Any]) -> Changes:
         bubbles_moved=moved,
         bubbles_restyled=restyled,
         bubbles_reordered=old_order != new_order,
+        # `.get`: snapshots without a 3D view have no such key.
+        view3d_changed=old.get("view3d") != new.get("view3d"),
     )
 
 

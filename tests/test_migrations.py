@@ -18,7 +18,7 @@ from typing import Any
 import pytest
 from sqlalchemy import text
 from sqlalchemy.engine import make_url
-from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 from tests.conftest import _test_database_url, recreate_database
 
@@ -831,3 +831,134 @@ def test_view3d_migration_leaves_existing_maps_without_a_3d_view_and_downgrades(
         "SELECT 1 FROM information_schema.columns"
         " WHERE table_name = 'course_maps' AND column_name = 'view3d_scene'",
     )
+
+
+def test_a_map_published_before_3d_views_is_up_to_date_after_the_migration(
+    migration_db: str,
+) -> None:
+    from app.enums import PublicationStatus
+    from app.publishing.snapshot import content_hash
+    from app.repositories.sqlalchemy.bubble_repository import (
+        SqlAlchemyBubbleRepository,
+    )
+    from app.repositories.sqlalchemy.course_map_repository import (
+        SqlAlchemyCourseMapRepository,
+    )
+    from app.repositories.sqlalchemy.publication_repository import (
+        SqlAlchemyPublicationRepository,
+    )
+    from app.repositories.sqlalchemy.view3d_repository import (
+        SqlAlchemyView3dRepository,
+    )
+    from app.schemas.map_settings import MapSettings
+    from app.schemas.view3d import View3d, View3dBinding
+    from app.services.publication_service import PublicationService
+
+    assert alembic(migration_db, "upgrade", API_PREFIX_REVISION).returncode == 0
+    map_id, bubble_id = uuid.uuid4(), uuid.uuid4()
+    sql, params = insert_map(8, with_title=True)
+    run_sql(
+        migration_db,
+        [
+            (sql, {**params, "id": map_id}),
+            (
+                (
+                    "INSERT INTO bubbles (id, course_map_id, moodle_course_id,"
+                    " activity_id, x, y, status, created_at, updated_at) VALUES"
+                    " (:b, :m, 8, 5, 0.5, 0.25, 'locked', now(), now())"
+                ),
+                {"b": bubble_id, "m": map_id},
+            ),
+        ],
+    )
+    [(skin_id, skin_name, skin_config)] = fetch(
+        migration_db, "SELECT id, name, config FROM skins WHERE is_default"
+    )
+    # A snapshot exactly as the application wrote them before this change: no
+    # `view3d` key at all.
+    legacy = {
+        "schemaVersion": 1,
+        "title": "Seeded",
+        "imageUrl": "/x.png",
+        "settings": MapSettings().to_stored(),
+        "defaultSkinId": None,
+        "skinRules": [],
+        "skins": {
+            str(skin_id): {"name": skin_name, "isDefault": True, "config": skin_config}
+        },
+        "bubbles": [
+            {
+                "id": str(bubble_id),
+                "activityId": 5,
+                "x": 0.5,
+                "y": 0.25,
+                "icon": None,
+                "skinId": None,
+                "sequence": 0,
+            }
+        ],
+    }
+    run_sql(
+        migration_db,
+        [
+            (
+                (
+                    "INSERT INTO publications (id, course_map_id, number, snapshot,"
+                    " content_hash, asset_ids, created_at, updated_at) VALUES"
+                    " (:id, :m, 1, CAST(:s AS jsonb), :h, ARRAY[]::uuid[],"
+                    " now(), now())"
+                ),
+                {
+                    "id": uuid.uuid4(),
+                    "m": map_id,
+                    "s": json.dumps(legacy),
+                    "h": content_hash(legacy),
+                },
+            )
+        ],
+    )
+
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+
+    async def check() -> None:
+        engine = create_async_engine(migration_db)
+        try:
+            async with AsyncSession(engine, expire_on_commit=False) as session:
+                maps = SqlAlchemyCourseMapRepository(session)
+                view3d = SqlAlchemyView3dRepository(session)
+                service = PublicationService(
+                    SqlAlchemyPublicationRepository(session),
+                    maps,
+                    SqlAlchemyBubbleRepository(session),
+                    view3d,
+                    keep=10,
+                )
+
+                untouched = await service.state(map_id)
+                assert untouched.status is PublicationStatus.UP_TO_DATE
+                assert untouched.draft_hash == content_hash(legacy)
+                assert untouched.changes is not None
+                assert untouched.changes.view3d_changed is False
+
+                current = await maps.get_by_id(map_id)
+                assert current is not None
+                await view3d.replace(
+                    map_id,
+                    View3d(
+                        scene="region-encuentros",
+                        bindings=[View3dBinding(zone_id=0, bubble_id=bubble_id)],
+                    ),
+                    current.revision,
+                )
+                changed = await service.state(map_id)
+                assert changed.status is PublicationStatus.UNPUBLISHED_CHANGES
+                assert changed.changes is not None
+                assert changed.changes.view3d_changed is True
+
+                await view3d.replace(map_id, None, current.revision + 1)
+                back = await service.state(map_id)
+                assert back.status is PublicationStatus.UP_TO_DATE
+        finally:
+            await engine.dispose()
+
+    asyncio.run(check())

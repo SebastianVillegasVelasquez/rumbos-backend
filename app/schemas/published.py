@@ -8,10 +8,13 @@ import uuid
 from datetime import datetime
 from typing import Any
 
+from pydantic import Field
+
 from app.enums import BubbleIcon, BubbleStatus
 from app.schemas.base import ApiModel
 from app.schemas.course_map import SkinRule
 from app.schemas.map_settings import MapSettings
+from app.schemas.view3d import View3d
 
 
 class PublishedRow(ApiModel):
@@ -75,5 +78,8 @@ class PublishedMapRead(ApiModel):
     skin_rules: list[SkinRule]
     skins: dict[str, PublishedSkin]
     bubbles: list[PublishedBubble]
+    # The frozen 3D scene and zone bindings; null for a map published without
+    # one. Aliased by hand: the camelCase generator would spell it `view3D`.
+    view3d: View3d | None = Field(alias="view3d")
     publication_number: int
     published_at: datetime

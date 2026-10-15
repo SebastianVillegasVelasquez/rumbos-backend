@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from typing import Annotated, Any
 
-from pydantic import StringConstraints, field_validator
+from pydantic import Field, StringConstraints, field_validator
 
 from app.enums import PublicationStatus
 from app.schemas.base import ApiModel
@@ -47,6 +47,9 @@ class PublicationChanges(ApiModel):
     bubbles_restyled: int
     # Additive to the agreed contract: the guided path was reordered.
     bubbles_reordered: bool
+    # The 3D scene or its zone bindings differ. Aliased by hand: the camelCase
+    # generator would spell it `view3DChanged`.
+    view3d_changed: bool = Field(alias="view3dChanged")
 
 
 class PublicationState(ApiModel):

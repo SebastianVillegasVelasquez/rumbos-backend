@@ -127,6 +127,7 @@ NO_CHANGES = {
     "bubblesMoved": 0,
     "bubblesRestyled": 0,
     "bubblesReordered": False,
+    "view3dChanged": False,
 }
 
 
