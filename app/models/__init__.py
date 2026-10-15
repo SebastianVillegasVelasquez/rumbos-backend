@@ -9,6 +9,7 @@ from app.models.bubble import Bubble
 from app.models.course_map import CourseMap
 from app.models.publication import Publication
 from app.models.skin import CourseMapSkinRule, Skin
+from app.models.view3d import CourseMapView3dBinding
 
 __all__ = [
     "Asset",
@@ -16,6 +17,7 @@ __all__ = [
     "Bubble",
     "CourseMap",
     "CourseMapSkinRule",
+    "CourseMapView3dBinding",
     "Publication",
     "Skin",
 ]

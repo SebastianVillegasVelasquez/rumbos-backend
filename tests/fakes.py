@@ -41,6 +41,7 @@ from app.schemas.publication import (
 )
 from app.schemas.published import PublishedRow
 from app.schemas.skin import ImageSkin, ProceduralSkin, SkinRead
+from app.schemas.view3d import View3d
 
 
 class InMemoryCourseMapRepository:
@@ -257,6 +258,51 @@ class InMemoryBubbleRepository:
         self.writes += 1
         del self.items[bubble_id]
         self._course_maps.bubble_counts[current.course_map_id] -= 1
+        return True
+
+
+class InMemoryView3dRepository:
+    """Keeps each map's 3D view; like the database, a binding whose bubble was
+    deleted is gone (the cascade), so `get` never returns one."""
+
+    def __init__(
+        self,
+        course_maps: InMemoryCourseMapRepository,
+        bubbles: InMemoryBubbleRepository,
+    ) -> None:
+        self._course_maps = course_maps
+        self._bubbles = bubbles
+        self.items: dict[uuid.UUID, View3d] = {}
+        self.writes = 0
+
+    async def get(self, course_map_id: uuid.UUID) -> View3d | None:
+        stored = self.items.get(course_map_id)
+        if stored is None:
+            return None
+        alive = [b for b in stored.bindings if b.bubble_id in self._bubbles.items]
+        return View3d(
+            scene=stored.scene, bindings=sorted(alive, key=lambda b: b.zone_id)
+        )
+
+    async def replace(
+        self,
+        course_map_id: uuid.UUID,
+        view3d: View3d | None,
+        expected_revision: int,
+    ) -> bool:
+        current = self._course_maps.items.get(course_map_id)
+        if current is None:
+            return False
+        if current.revision != expected_revision:
+            raise VersionConflictError(current_revision=current.revision)
+        self.writes += 1
+        self._course_maps.items[course_map_id] = current.model_copy(
+            update={"revision": current.revision + 1}
+        )
+        if view3d is None:
+            self.items.pop(course_map_id, None)
+        else:
+            self.items[course_map_id] = view3d
         return True
 
 

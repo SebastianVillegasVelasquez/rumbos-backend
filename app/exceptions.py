@@ -236,3 +236,15 @@ class DuplicateSkinRuleError(DomainError):
     def __init__(self, modnames: list[str]) -> None:
         super().__init__("duplicate skin rule")
         self.modnames = modnames
+
+
+class View3dInvalidError(DomainError):
+    """A 3D view cannot be stored as sent. `code` is one of `scene_unknown`,
+    `zone_out_of_range`, `duplicate_zone`, `duplicate_bubble`,
+    `bubble_not_in_map`; `extras` go into the response next to the message."""
+
+    def __init__(self, code: str, message: str, **extras: object) -> None:
+        super().__init__(message)
+        self.code = code
+        self.message = message
+        self.extras = extras

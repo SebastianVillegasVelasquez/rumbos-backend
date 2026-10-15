@@ -1,7 +1,7 @@
 import uuid
 from typing import TYPE_CHECKING, Any
 
-from sqlalchemy import ForeignKey, Index, String, UniqueConstraint, text
+from sqlalchemy import ForeignKey, Index, String, Text, UniqueConstraint, text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -56,6 +56,10 @@ class CourseMap(BaseORM):
     default_skin_id: Mapped[uuid.UUID | None] = mapped_column(
         ForeignKey("skins.id", ondelete="SET NULL"), index=True
     )
+
+    # The 3D scene this map shows (an id from `app.view3d.scenes`), or NULL when
+    # the map has no 3D view. Its bindings are in `course_map_view3d_bindings`.
+    view3d_scene: Mapped[str | None] = mapped_column(Text)
 
     # Deleting a map deletes its bubbles. `passive_deletes` lets the
     # database's ON DELETE CASCADE do it without loading the collection

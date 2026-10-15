@@ -36,6 +36,7 @@ from app.schemas.publication import (
 )
 from app.schemas.published import PublishedRow
 from app.schemas.skin import ImageSkin, ProceduralSkin, SkinRead
+from app.schemas.view3d import View3d
 
 
 class CourseMapRepository(Protocol):
@@ -108,6 +109,30 @@ class CourseMapRepository(Protocol):
         Ordered by `(position, created_at, id)` when `moodle_course_id` is
         given (the course's levels), otherwise by `updated_at` desc.
         `q` is a case-insensitive substring match on the title.
+        """
+        ...
+
+
+class View3dRepository(Protocol):
+    async def get(self, course_map_id: uuid.UUID) -> View3d | None:
+        """The map's scene with its bindings ordered by zone, or None when the
+        map has no 3D view (or doesn't exist)."""
+        ...
+
+    async def replace(
+        self,
+        course_map_id: uuid.UUID,
+        view3d: View3d | None,
+        expected_revision: int,
+    ) -> bool:
+        """Replaces the scene and every binding in ONE transaction: all or
+        nothing, guarded and bumped like `CourseMapRepository.update`. `None`
+        clears the 3D view. False if the map doesn't exist;
+        `VersionConflictError` if the revision is stale.
+
+        Does not check the content (the service does); the database's
+        constraints are the last line of defence and are reported as
+        `View3dInvalidError`.
         """
         ...
 

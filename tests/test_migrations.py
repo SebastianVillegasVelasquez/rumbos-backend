@@ -744,3 +744,90 @@ def test_api_prefix_migration_rewrites_asset_urls_and_rehashes_publications(
         f"SELECT snapshot->>'imageUrl' FROM publications WHERE course_map_id = '{uploaded}'",
     )
     assert back == f"/assets/{ASSET_ID}"
+
+
+VIEW3D_REVISION = "a7c4e1d90b35"
+
+
+def test_view3d_migration_leaves_existing_maps_without_a_3d_view_and_downgrades(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", API_PREFIX_REVISION).returncode == 0
+    map_id, other_id = uuid.uuid4(), uuid.uuid4()
+    for new_id, course in ((map_id, 8), (other_id, 9)):
+        sql, params = insert_map(course, with_title=True)
+        run_sql(migration_db, [(sql, {**params, "id": new_id})])
+    bubble_id, other_bubble_id = uuid.uuid4(), uuid.uuid4()
+    for new_bubble, on_map, course, activity in (
+        (bubble_id, map_id, 8, 5),
+        (other_bubble_id, other_id, 9, 6),
+    ):
+        run_sql(
+            migration_db,
+            [
+                (
+                    (
+                        "INSERT INTO bubbles (id, course_map_id, moodle_course_id,"
+                        " activity_id, x, y, status, created_at, updated_at) VALUES"
+                        " (:id, :m, :c, :a, 0.5, 0.5, 'locked', now(), now())"
+                    ),
+                    {"id": new_bubble, "m": on_map, "c": course, "a": activity},
+                )
+            ],
+        )
+
+    up = alembic(migration_db, "upgrade", VIEW3D_REVISION)
+
+    assert up.returncode == 0, up.stderr
+    assert fetch(migration_db, "SELECT view3d_scene FROM course_maps") == [
+        (None,),
+        (None,),
+    ]
+    assert fetch(migration_db, "SELECT count(*) FROM course_map_view3d_bindings") == [
+        (0,)
+    ]
+
+    def bind(on_map: uuid.UUID, zone: int, bubble: uuid.UUID) -> None:
+        run_sql(
+            migration_db,
+            [
+                (
+                    (
+                        "INSERT INTO course_map_view3d_bindings (id, course_map_id,"
+                        " zone_id, bubble_id, created_at, updated_at)"
+                        " VALUES (:i, :m, :z, :b, now(), now())"
+                    ),
+                    {"i": uuid.uuid4(), "m": on_map, "z": zone, "b": bubble},
+                )
+            ],
+        )
+
+    bind(map_id, 0, bubble_id)
+    with pytest.raises(Exception, match="uq_course_map_view3d_bindings_map_zone"):
+        bind(map_id, 0, bubble_id)
+    with pytest.raises(Exception, match="uq_course_map_view3d_bindings_map_bubble"):
+        bind(map_id, 1, bubble_id)
+    with pytest.raises(Exception, match="ck_course_map_view3d_bindings_zone"):
+        bind(map_id, -1, bubble_id)
+    # Deleting the bubble takes its binding along; so does deleting the map.
+    bind(other_id, 3, other_bubble_id)
+    run_sql(migration_db, [("DELETE FROM bubbles WHERE id = :b", {"b": bubble_id})])
+    assert fetch(migration_db, "SELECT zone_id FROM course_map_view3d_bindings") == [
+        (3,)
+    ]
+    run_sql(migration_db, [("DELETE FROM course_maps WHERE id = :m", {"m": other_id})])
+    assert fetch(migration_db, "SELECT count(*) FROM course_map_view3d_bindings") == [
+        (0,)
+    ]
+
+    down = alembic(migration_db, "downgrade", API_PREFIX_REVISION)
+    assert down.returncode == 0, down.stderr
+    assert not fetch(
+        migration_db,
+        "SELECT 1 FROM pg_tables WHERE tablename = 'course_map_view3d_bindings'",
+    )
+    assert not fetch(
+        migration_db,
+        "SELECT 1 FROM information_schema.columns"
+        " WHERE table_name = 'course_maps' AND column_name = 'view3d_scene'",
+    )
