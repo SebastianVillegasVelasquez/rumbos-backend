@@ -16,7 +16,7 @@ from collections.abc import Collection
 from datetime import datetime
 from typing import Any, Protocol
 
-from app.enums import AssetKind, BubbleStatus
+from app.enums import AssetKind, BubbleStatus, TenantStatus
 from app.publishing.snapshot import DraftInputs
 from app.schemas.asset import AssetRecord, AssetUpdate, AssetUsage
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
@@ -36,6 +36,7 @@ from app.schemas.publication import (
 )
 from app.schemas.published import PublishedRow
 from app.schemas.skin import ImageSkin, ProceduralSkin, SkinRead
+from app.schemas.tenant import NewTenantKey, TenantKeyRecord, TenantRecord
 from app.schemas.view3d import View3d
 
 
@@ -353,4 +354,60 @@ class PublicationRepository(Protocol):
         self, bubble_ids: Collection[uuid.UUID]
     ) -> dict[uuid.UUID, BubbleStatus]:
         """Live status of the bubbles that still exist (others are absent)."""
+        ...
+
+
+class TenantRepository(Protocol):
+    """Tenants and their keys. Not tenant-scoped: this is what tenancy is made of."""
+
+    async def get_by_id(self, tenant_id: uuid.UUID) -> TenantRecord | None: ...
+
+    async def get_by_issuer(self, issuer: str) -> TenantRecord | None: ...
+
+    async def list_all(self) -> list[TenantRecord]:
+        """Every tenant, oldest first."""
+        ...
+
+    async def create(
+        self,
+        name: str,
+        issuer: str,
+        host_origin: str,
+        asset_quota_bytes: int,
+        key: NewTenantKey,
+    ) -> TenantRecord:
+        """The tenant and its first key, in ONE transaction. Raises
+        `TenantIssuerTakenError` if the issuer is registered."""
+        ...
+
+    async def set_status(
+        self, tenant_id: uuid.UUID, status: TenantStatus
+    ) -> TenantRecord | None:
+        """None if there is no such tenant."""
+        ...
+
+    async def add_key(self, tenant_id: uuid.UUID, key: NewTenantKey) -> TenantKeyRecord:
+        """Raises `TenantNotFoundError`, or `TenantKeyTakenError` if the tenant
+        has a key with that `kid` already (revoked ones count: a `kid` is never
+        reused)."""
+        ...
+
+    async def revoke_key(
+        self, tenant_id: uuid.UUID, kid: str
+    ) -> TenantKeyRecord | None:
+        """Marks the key revoked (idempotent). None if there is no such key."""
+        ...
+
+    async def list_keys(self, tenant_id: uuid.UUID) -> list[TenantKeyRecord]:
+        """Every key of the tenant, oldest first."""
+        ...
+
+    async def active_key(
+        self, tenant_id: uuid.UUID, kid: str
+    ) -> TenantKeyRecord | None:
+        """The tenant's key with this `kid`, only if it is active."""
+        ...
+
+    async def active_host_origins(self) -> list[str]:
+        """The distinct `host_origin` of every active tenant, sorted."""
         ...

@@ -248,3 +248,19 @@ class View3dInvalidError(DomainError):
         self.code = code
         self.message = message
         self.extras = extras
+
+
+class TenantNotFoundError(DomainError):
+    pass
+
+
+class TenantIssuerTakenError(DomainError):
+    """Another tenant is already registered for this issuer."""
+
+
+class TenantKeyNotFoundError(DomainError):
+    pass
+
+
+class TenantKeyTakenError(DomainError):
+    """The tenant already has a key with this `kid` (even a revoked one)."""

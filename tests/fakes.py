@@ -12,11 +12,14 @@ from typing import Any, Never
 
 from uuid_utils.compat import uuid7
 
-from app.enums import AssetKind, BubbleStatus
+from app.enums import AssetKind, BubbleStatus, KeyStatus, TenantStatus
 from app.exceptions import (
     ActivityAlreadyPlacedError,
     CourseMapNotFoundError,
     SectionAlreadyMappedError,
+    TenantIssuerTakenError,
+    TenantKeyTakenError,
+    TenantNotFoundError,
     VersionConflictError,
 )
 from app.moodle.exceptions import MoodleCourseNotFoundError
@@ -41,6 +44,7 @@ from app.schemas.publication import (
 )
 from app.schemas.published import PublishedRow
 from app.schemas.skin import ImageSkin, ProceduralSkin, SkinRead
+from app.schemas.tenant import NewTenantKey, TenantKeyRecord, TenantRecord
 from app.schemas.view3d import View3d
 
 
@@ -504,3 +508,108 @@ class FakeClock:
 
     def advance(self, seconds: float) -> None:
         self.now += seconds
+
+
+class InMemoryTenantRepository:
+    def __init__(self) -> None:
+        self.tenants: dict[uuid.UUID, TenantRecord] = {}
+        self.keys: list[TenantKeyRecord] = []
+
+    async def get_by_id(self, tenant_id: uuid.UUID) -> TenantRecord | None:
+        return self.tenants.get(tenant_id)
+
+    async def get_by_issuer(self, issuer: str) -> TenantRecord | None:
+        return next((t for t in self.tenants.values() if t.issuer == issuer), None)
+
+    async def list_all(self) -> list[TenantRecord]:
+        return sorted(self.tenants.values(), key=lambda t: (t.created_at, t.id))
+
+    async def create(
+        self,
+        name: str,
+        issuer: str,
+        host_origin: str,
+        asset_quota_bytes: int,
+        key: NewTenantKey,
+    ) -> TenantRecord:
+        if await self.get_by_issuer(issuer) is not None:
+            raise TenantIssuerTakenError(issuer)
+        tenant = TenantRecord(
+            id=uuid7(),
+            name=name,
+            issuer=issuer,
+            host_origin=host_origin,
+            status=TenantStatus.ACTIVE,
+            asset_quota_bytes=asset_quota_bytes,
+            created_at=datetime.now(UTC),
+        )
+        self.tenants[tenant.id] = tenant
+        await self.add_key(tenant.id, key)
+        return tenant
+
+    async def set_status(
+        self, tenant_id: uuid.UUID, status: TenantStatus
+    ) -> TenantRecord | None:
+        tenant = self.tenants.get(tenant_id)
+        if tenant is None:
+            return None
+        self.tenants[tenant_id] = tenant.model_copy(update={"status": status})
+        return self.tenants[tenant_id]
+
+    async def add_key(self, tenant_id: uuid.UUID, key: NewTenantKey) -> TenantKeyRecord:
+        if tenant_id not in self.tenants:
+            raise TenantNotFoundError(tenant_id)
+        if any(k.tenant_id == tenant_id and k.kid == key.kid for k in self.keys):
+            raise TenantKeyTakenError(key.kid)
+        record = TenantKeyRecord(
+            id=uuid7(),
+            tenant_id=tenant_id,
+            kid=key.kid,
+            public_key_pem=key.public_key_pem,
+            status=KeyStatus.ACTIVE,
+            created_at=datetime.now(UTC),
+            revoked_at=None,
+        )
+        self.keys.append(record)
+        return record
+
+    async def revoke_key(
+        self, tenant_id: uuid.UUID, kid: str
+    ) -> TenantKeyRecord | None:
+        for index, key in enumerate(self.keys):
+            if key.tenant_id == tenant_id and key.kid == kid:
+                if key.status != KeyStatus.REVOKED:
+                    self.keys[index] = key.model_copy(
+                        update={
+                            "status": KeyStatus.REVOKED,
+                            "revoked_at": datetime.now(UTC),
+                        }
+                    )
+                return self.keys[index]
+        return None
+
+    async def list_keys(self, tenant_id: uuid.UUID) -> list[TenantKeyRecord]:
+        return [k for k in self.keys if k.tenant_id == tenant_id]
+
+    async def active_key(
+        self, tenant_id: uuid.UUID, kid: str
+    ) -> TenantKeyRecord | None:
+        return next(
+            (
+                k
+                for k in self.keys
+                if k.tenant_id == tenant_id
+                and k.kid == kid
+                and k.status == KeyStatus.ACTIVE
+            ),
+            None,
+        )
+
+    async def active_host_origins(self) -> list[str]:
+        return sorted(
+            {
+                t.host_origin
+                for t in self.tenants.values()
+                if t.status == TenantStatus.ACTIVE
+            }
+        )
