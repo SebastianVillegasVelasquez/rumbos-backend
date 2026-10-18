@@ -53,15 +53,171 @@ of requests for one course makes one Moodle call) and stale-on-error. The cache
 is **per process**: with several workers each has its own copy, so Moodle may be
 called once per worker per TTL. A shared cache (Redis) is a later decision.
 
+## Tenants and authentication
+
+Rumbos is a Moodle course format: a thin plugin (`format_rumbos`) embeds the app
+in the course page. Each Moodle site that uses it is a **tenant**, registered on
+this service by an operator. Nothing here is anonymous for a tenant: the plugin
+signs a short-lived assertion, this service trades it for a bearer token bound
+to `(tenant, course, role)`, and every request is scoped to that.
+
+### Why the tenant model is the real protection against reuse
+
+The plugin's code is public and copyable, and so is the frontend bundle. What a
+copy cannot have is a **registered tenant**: an assertion is only accepted if its
+`iss` is a registered Moodle `wwwroot` and its signature verifies against a public
+key the operator registered for that site. A copied plugin on an unregistered
+site (or one that holds a different private key) gets `401 launch_invalid`, and
+the SPA's `frame-ancestors` policy only lets registered sites embed it.
+
+### Registering a Moodle site (end to end with the plugin)
+
+1. In the Moodle site, the plugin generates an RSA key pair (at least 2048 bits)
+   and keeps the private half in the site's configuration. It shows the public
+   key (PEM) and its `kid` to the administrator.
+2. The operator saves the public key to a file and registers the site:
+
+   ```
+   python -m app.scripts.tenants add --name "Universidad Demo" \
+       --issuer https://moodle.demo.edu --host-origin https://moodle.demo.edu \
+       --public-key-file demo.pub.pem [--kid <kid>] [--asset-quota-bytes N]
+   ```
+
+   `--issuer` is the Moodle `wwwroot` exactly as the plugin sends it as `iss`
+   (https, no trailing slash; the host is lower-cased and a `:443` dropped).
+   `--host-origin` is the origin that embeds the app. Without `--kid`, the kid is
+   the first 16 hex digits of the SHA-256 of the key's DER `SubjectPublicKeyInfo`;
+   the plugin must put the same `kid` in its JWS header. The key must be a
+   parseable RSA public key of at least 2048 bits. `--asset-quota-bytes` defaults
+   to `ASSETS_MAX_TOTAL_BYTES`.
+3. Run `python -m app.scripts.tenants frame-ancestors`, put the printed header in
+   the nginx that serves the SPA, and reload it (see below).
+4. In the plugin, set the Rumbos URL. Opening a course page now posts a signed
+   assertion to `POST /api/v1/auth/launch`.
+
+Other commands: `list`, `disable --issuer ...` / `enable --issuer ...` (a disabled
+tenant gets `403 tenant_disabled` on launch and all its tokens stop working at
+once), `add-key`, `revoke-key`. There is deliberately **no admin HTTP surface**.
+
+### The launch
+
+Assertion: a JWS, `RS256` only (anything else, `none` and `HS*` included, is
+rejected), header `{alg, typ: "JWT", kid}` (no other header), claims
+`iss` (Moodle wwwroot), `aud` (`AUTH_AUDIENCE`, default `rumbos`), `sub` (32 hex
+characters, pseudonymous), `course` (positive int), `role` (`editor` | `student`),
+`iat`, `exp` (at most 60 s after `iat`; 30 s of clock skew tolerated) and `jti`
+(at least 128 random bits, base64url or hex).
+
+`POST /api/v1/auth/launch` with `{"assertion": "<JWS>"}` checks, in order: size
+(at most 4 KB) → parse without trusting → tenant by `iss` → the key named by `kid`
+among the tenant's **active** keys → signature → `aud`, times, `course`, `role`,
+`sub`, `jti` format → tenant is active → **single use of the `jti`** (a primary
+key on `used_jtis`, so a replay, even a simultaneous one, fails) → token.
+
+- `200 { accessToken, tokenType: "Bearer", expiresIn, role, courseId, hostOrigin }`
+- `401 launch_invalid`: **one answer for every verification failure**. The reason
+  (`bad_signature`, `expired`, `replay`, `unknown_issuer`, ...) is only in the
+  server's `rumbos.audit` log, with the tenant and client address, never the
+  assertion or the token (untrusted values are logged with `repr`, truncated).
+- `403 tenant_disabled`, only after the signature verified (an outsider cannot
+  probe which sites exist), `429 rate_limited` (with `Retry-After`).
+
+The token is opaque, 256 random bits, stored only as its SHA-256, valid
+`ACCESS_TOKEN_TTL_SECONDS` (30 min), bound to tenant + course + role. No cookies
+anywhere; send `Authorization: Bearer <token>`. `GET /auth/me` returns
+`{ role, courseId }`. Responses under `/auth` carry `Cache-Control: no-store`.
+
+**Rate limits** (`/auth/launch`): `LAUNCH_RATE_PER_IP` (30/min, an IPv6 client is
+keyed by its /64) counts every attempt; `LAUNCH_RATE_PER_TENANT` (300/min) counts
+only assertions whose signature verified, so a forger cannot use up a site's
+allowance. The counters are in **process memory** (fixed one-minute windows): they
+reset on restart and are not shared between workers, so with `WORKERS=n` the
+effective limit is up to n times higher. Behind nginx, run uvicorn with
+`--proxy-headers --forwarded-allow-ips=<nginx>` or every client looks like the proxy.
+
+### What each role can do
+
+| | no token | student | editor |
+|---|---|---|---|
+| `GET /published/**` | 401 | its own course | its own course |
+| draft endpoints (`/course-maps/**`, `/skins`, `/assets`, `/view3d/**`) | 401 | 403 | its own tenant (maps: its own course) |
+| `GET /assets/{id}`, `/thumb` | public by id | | |
+
+Foreign resources (another course or another tenant) are **404, never 403**.
+Scoping is enforced below the repositories (`app/tenancy/scope.py`): a session
+carries the caller's tenant and course and every query is rewritten with it, new
+rows are stamped with it, and a session without a scope that touches tenant data
+raises instead of leaking. Custom skins and the asset library belong to the
+tenant (shared by its courses); built-in skins are visible to all. The asset
+quota is per tenant (`asset_quota_bytes`). In plugin mode the course-maps list
+returns only the token's course.
+
+The Moodle-web-service endpoints (`/course-maps/{id}/activities`,
+`/course-maps/{id}/resolved`, `/published/course-maps/{id}/resolved`) answer
+`501 moodle_source_not_provided` for plugin tenants: per-user Moodle state
+(visibility, restrictions, completion) comes from the plugin through the browser,
+this service never calls Moodle for them and stores no student personal data.
+Activity ids in bubbles are design data; the backend never accepts Moodle data
+from clients as proof of anything.
+
+**Image ids are the access control for images.** `GET /assets/{id}` and the
+thumbnail need no header (an `<img>` or a canvas cannot send one); the random
+UUID is the only protection. Ids are shown only to the tenant's editors and
+inside the maps its students may read.
+
+### `frame-ancestors`
+
+`python -m app.scripts.tenants frame-ancestors` prints
+`Content-Security-Policy: frame-ancestors https://a https://b` built from the
+`host_origin` of every active tenant (`'none'` when there are none). In the nginx
+that serves the SPA: `add_header Content-Security-Policy "frame-ancestors ...;" always;`.
+Re-run it and reload nginx after every `add`, `enable`, `disable` (the policy does
+not update itself).
+
+### Legacy mode and how to retire it
+
+`LEGACY_ANONYMOUS_MODE` (default: on when `APP_ENV=dev`, off in `production`)
+keeps the old behaviour for the **legacy tenant**, which every pre-existing row
+belongs to: a request without a token acts as an anonymous editor of that tenant
+over every course, and the Moodle endpoints still use `MOODLE_SERVICE_TOKEN`. A
+token that is sent but invalid is refused even then. The legacy tenant has no keys,
+so no launch can ever name it. To retire it: move each site to the plugin
+(register it, re-create its maps under its tenant), set `LEGACY_ANONYMOUS_MODE=false`
+(the production default), and finally drop the Moodle settings and client.
+
+### Key rotation
+
+`add-key` the new public key, switch the plugin to sign with it (`kid` in the
+header), then `revoke-key` the old one. Both work in between (the key is chosen by
+`kid`). A `kid` is never reused, even after revocation. Revoking a key stops
+launches with it; tokens already issued live out their 30 minutes. `disable`
+kills tokens at once.
+
+### Cleanup
+
+`python -m app.scripts.purge_auth` deletes expired tokens and redeemed `jti`s
+(expired rows are already refused; this keeps the tables small). Run it daily from
+cron. A `jti` is kept until its assertion could no longer pass the time checks.
+
+### What is NOT protected
+
+- Design data (maps, bubbles, published snapshots) is readable by **any enrolled
+  student of that course**, and the ids of its images with it. It is not secret.
+- The frontend bundle and the plugin's code are inspectable in a browser; the
+  protection is the registered tenant and its private key, not obscurity.
+- A leaked private key lets its holder launch as that site until the key is
+  revoked.
+- Image bytes are fetchable by anyone who knows the id (above).
+
 ### Uploads and security
 
 Teachers can upload their own backgrounds and bubble images (`POST /assets`,
 `multipart/form-data` with `file` and `kind` = `background` | `bubble`).
 
-> **There is no authentication yet, so the upload endpoint is anonymous.** The
-> quota and `ASSETS_UPLOADS_ENABLED` are damage limiters, not protection.
-> Uploads are **off by default** and must stay disabled on any publicly
-> reachable deployment until auth exists.
+> Uploads, edits and deletes are **editor-only** and stay inside the editor's
+> tenant (see "Tenants and authentication"); the quota is per tenant. In legacy
+> mode the endpoint is anonymous: `ASSETS_UPLOADS_ENABLED` (off by default) must
+> stay off on a publicly reachable legacy deployment.
 
 What the pipeline does with an upload:
 
@@ -88,18 +244,15 @@ Files are served from `GET /api/v1/assets/{id}` (and `/thumb`) with the stored
 Storage sits behind the `AssetStorage` Protocol (`LocalDiskAssetStorage` today;
 an S3 adapter needs no service changes).
 
-**Deleting is anonymous too.** `DELETE /assets/{id}` and `PATCH /assets/{id}`
-need no authentication (and, unlike uploads, no switch turns them off), so
-anyone who can reach the API can delete an image that nothing uses or rename
-any image. What is protected is images **in use**: a delete is refused with
+**Deleting** needs an editor of the tenant. What is protected is images **in use**: a delete is refused with
 409 `asset_in_use` (and `usage: { maps, skins, publications }`) while a draft
-map, a skin or any publication references it, so a published map can never
-lose its picture. The check and the row delete are one SQL statement; it is not
-a lock, so a map that starts using the image in the very same instant can still
-lose it. The row is deleted first and the files after: if removing the files
-fails the asset is simply gone (the failure is logged and the bytes become
-unreachable garbage), never listed-but-broken. Until auth exists, treat the API
-as trusted-network only.
+map, a skin or any publication of the tenant references it, so a published map
+can never lose its picture (usage counts every course of the tenant). The check
+and the row delete are one SQL statement; it is not a lock, so a map that starts
+using the image in the very same instant can still lose it. The row is deleted
+first and the files after: if removing the files fails the asset is simply gone
+(the failure is logged and the bytes become unreachable garbage), never
+listed-but-broken.
 
 Every asset has a `title` (default: the file name without extension), an
 optional `credit` and the sanitized `originalFilename` (display text; stored
@@ -131,13 +284,14 @@ transaction (they do **not** publish); skins that no longer exist are reset
 with `skin_missing` warnings, and a 3D scene that is no longer in the registry
 is dropped with a `scene_unknown` warning (see "3D view").
 
-Because skins are global, editing or deleting a skin a map uses changes that
+Because a tenant's skins are shared by its courses, editing or deleting a skin a map uses changes that
 map's draft (it shows as `skinsChanged`) but never what students see until the
 map is published again; `discard-changes` cannot undo a skin edit.
 
-> **This is not access control.** There is no authentication: a draft is not
-> hidden from anyone who calls the editor endpoints directly. "Published" only
-> means "what students are shown, consistently".
+> For plugin tenants this **is** access control: drafts are editor-only and a
+> student reads only the published map of its own course. In legacy mode there
+> is no authentication, and "published" only means "what students are shown,
+> consistently".
 
 ### 3D view
 
@@ -227,6 +381,7 @@ Both are **dry runs unless `--apply` is given**.
   and are invisible to students until this publishes them as #1 ("Publicación
   inicial (migración)"). Only maps with at least one bubble and no publication
   are touched, so it is safe to run again.
+- `python -m app.scripts.tenants` and `python -m app.scripts.purge_auth`: see "Tenants and authentication".
 - `python -m app.scripts.gc_assets [--older-than-days 7] [--apply]` lists, and
   with `--apply` deletes, assets that no map, skin or publication uses and that
   are older than the threshold, reporting the bytes reclaimed. It uses the same
@@ -324,5 +479,5 @@ Conflicts (409) carry `detail: { code, message }`: `map_already_exists_for_secti
 or `activity_already_placed` (plus `courseMapId` and `courseMapTitle` of the map
 that already holds the activity).
 
-`includeHidden=true` currently needs no authentication; it must require a
-teacher/editor role once auth exists.
+`includeHidden=true` is only reachable by editors (the endpoints that take it are
+editor-only, and Moodle-backed, so legacy tenant only).
