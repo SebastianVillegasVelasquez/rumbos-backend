@@ -1,17 +1,16 @@
 """The student-facing read API: published maps only.
 
-SECURITY: there is no authentication, so this is not access control; it is the
-consistent view students are given. `includeHidden` on `/resolved` has the same
-caveat as on the editor's endpoint (see `course_map.py`).
+Students (and editors) may read it, for their own course only: the session is
+scoped to the token's tenant and course, so any other map is a 404. For the
+legacy anonymous principal this is a consistent view, not access control.
 """
 
 import uuid
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.database import get_session
+from app.auth.dependencies import ScopedSession, moodle_source_route, student_route
 from app.moodle.dependencies import get_contents_provider
 from app.moodle.protocols import CourseContentsProvider
 from app.repositories.sqlalchemy.bubble_repository import SqlAlchemyBubbleRepository
@@ -26,11 +25,15 @@ from app.schemas.resolved import ResolvedMap
 from app.services.published_service import PublishedMapService
 from app.services.resolution_service import MapResolutionService
 
-router = APIRouter(prefix="/published/course-maps", tags=["published"])
+router = APIRouter(
+    prefix="/published/course-maps",
+    tags=["published"],
+    dependencies=[Depends(student_route)],
+)
 
 
 def get_published_service(
-    session: Annotated[AsyncSession, Depends(get_session)],
+    session: ScopedSession,
     contents: Annotated[CourseContentsProvider, Depends(get_contents_provider)],
 ) -> PublishedMapService:
     return PublishedMapService(
@@ -65,12 +68,14 @@ async def get_published_map(
     return await service.get_map(course_map_id)
 
 
-@router.get("/{course_map_id}/resolved", response_model=ResolvedMap)
+@router.get(
+    "/{course_map_id}/resolved",
+    response_model=ResolvedMap,
+    dependencies=[Depends(moodle_source_route)],
+)
 async def resolve_published_map(
     course_map_id: uuid.UUID,
     service: ServiceDep,
-    # TODO(auth): like the editor's `/resolved`, anyone can read the names of
-    # hidden activities with `includeHidden=true` until roles exist.
     include_hidden: Annotated[bool, Query(alias="includeHidden")] = False,
 ) -> ResolvedMap:
     return await service.resolve(course_map_id, include_hidden=include_hidden)

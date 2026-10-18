@@ -1,11 +1,14 @@
 """The 3D scenes the backend knows about (a code registry, see `app.view3d`)."""
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
+from app.auth.dependencies import editor_route
 from app.schemas.view3d import Scene, SceneList
 from app.view3d import scenes
 
-router = APIRouter(prefix="/view3d", tags=["view3d"])
+router = APIRouter(
+    prefix="/view3d", tags=["view3d"], dependencies=[Depends(editor_route)]
+)
 
 
 @router.get("/scenes", response_model=SceneList)

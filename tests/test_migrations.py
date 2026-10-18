@@ -20,6 +20,8 @@ from sqlalchemy import text
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
+from app.models.tenant import LEGACY_TENANT_ID
+from app.tenancy.scope import Scope, bind_scope
 from tests.conftest import _test_database_url, recreate_database
 
 INITIAL = "ffbafbaf2f65"  # course_maps + bubbles, before titles
@@ -924,6 +926,7 @@ def test_a_map_published_before_3d_views_is_up_to_date_after_the_migration(
         engine = create_async_engine(migration_db)
         try:
             async with AsyncSession(engine, expire_on_commit=False) as session:
+                bind_scope(session, Scope(LEGACY_TENANT_ID))
                 maps = SqlAlchemyCourseMapRepository(session)
                 view3d = SqlAlchemyView3dRepository(session)
                 service = PublicationService(
@@ -962,3 +965,163 @@ def test_a_map_published_before_3d_views_is_up_to_date_after_the_migration(
             await engine.dispose()
 
     asyncio.run(check())
+
+
+BEFORE_TENANTS = "a7c4e1d90b35"  # the last revision without tenants
+BEFORE_SCOPING = "e5b2c8f4a136"
+
+
+def _bubble(
+    map_id: uuid.UUID, course: int, activity: int
+) -> tuple[str, dict[str, Any]]:
+    return (
+        (
+            "INSERT INTO bubbles (id, course_map_id, moodle_course_id, activity_id,"
+            " x, y, status, created_at, updated_at) VALUES"
+            " (:id, :m, :c, :a, 0.5, 0.5, 'locked', now(), now())"
+        ),
+        {"id": uuid.uuid4(), "m": map_id, "c": course, "a": activity},
+    )
+
+
+def test_scoping_attaches_every_existing_row_to_the_legacy_tenant(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", BEFORE_SCOPING).returncode == 0
+    map_sql, map_params = insert_map(8, with_title=True)
+    map_id = map_params["id"]
+    run_sql(
+        migration_db,
+        [
+            (map_sql, map_params),
+            _bubble(map_id, 8, 5),
+            _bubble(map_id, 8, 6),
+            (
+                (
+                    "INSERT INTO assets (id, kind, mime, width, height, bytes, sha256,"
+                    " title, created_at, updated_at) VALUES (:id, 'bubble', 'image/png',"
+                    " 1, 1, 10, :h, 'T', now(), now())"
+                ),
+                {"id": uuid.uuid4(), "h": "a" * 64},
+            ),
+            (
+                (
+                    "INSERT INTO skins (id, name, kind, config, is_builtin, is_default,"
+                    " created_at, updated_at) VALUES (:id, 'Mine', 'procedural',"
+                    " '{}'::jsonb, false, false, now(), now())"
+                ),
+                {"id": uuid.uuid4()},
+            ),
+        ],
+    )
+    builtins_before = fetch(migration_db, "SELECT count(*) FROM skins WHERE is_builtin")
+
+    result = alembic(migration_db, "upgrade", "head")
+    assert result.returncode == 0, result.stderr
+
+    legacy = str(LEGACY_TENANT_ID)
+    for table in ("course_maps", "bubbles", "assets"):
+        rows = fetch(migration_db, f"SELECT DISTINCT tenant_id::text FROM {table}")
+        assert rows == [(legacy,)], table
+    assert fetch(
+        migration_db, "SELECT tenant_id::text FROM skins WHERE name = 'Mine'"
+    ) == [(legacy,)]
+    # The built-in skins belong to nobody.
+    assert fetch(migration_db, "SELECT count(*) FROM skins WHERE is_builtin") == (
+        builtins_before
+    )
+    assert (
+        fetch(
+            migration_db,
+            "SELECT count(*) FROM skins WHERE is_builtin AND tenant_id IS NULL",
+        )
+        == builtins_before
+    )
+    assert fetch(
+        migration_db,
+        "SELECT name, status FROM tenants WHERE id = :t".replace(":t", f"'{legacy}'"),
+    ) == [("legacy", "active")]
+    nullable = fetch(
+        migration_db,
+        "SELECT table_name, is_nullable FROM information_schema.columns"
+        " WHERE column_name = 'tenant_id'"
+        " AND table_name IN ('course_maps', 'bubbles', 'assets', 'skins')"
+        " ORDER BY table_name",
+    )
+    assert nullable == [
+        ("assets", "NO"),
+        ("bubbles", "NO"),
+        ("course_maps", "NO"),
+        ("skins", "YES"),
+    ]
+
+
+def test_after_scoping_two_tenants_can_share_course_activity_and_hash(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+    other = uuid.uuid4()
+    map_a, map_b = uuid.uuid4(), uuid.uuid4()
+
+    def tenant_map(map_id: uuid.UUID, tenant: str) -> tuple[str, dict[str, Any]]:
+        return (
+            (
+                "INSERT INTO course_maps (id, tenant_id, title, moodle_course_id,"
+                " moodle_section_id, image_url, created_at, updated_at) VALUES"
+                " (:id, CAST(:t AS uuid), 'M', 8, 1, '/x.png', now(), now())"
+            ),
+            {"id": map_id, "t": tenant},
+        )
+
+    def tenant_bubble(
+        map_id: uuid.UUID, tenant: str, activity: int = 5
+    ) -> tuple[str, dict[str, Any]]:
+        return (
+            (
+                "INSERT INTO bubbles (id, tenant_id, course_map_id, moodle_course_id,"
+                " activity_id, x, y, status, created_at, updated_at) VALUES"
+                " (:id, CAST(:t AS uuid), :m, 8, :a, 0.5, 0.5, 'locked', now(), now())"
+            ),
+            {"id": uuid.uuid4(), "t": tenant, "m": map_id, "a": activity},
+        )
+
+    run_sql(
+        migration_db,
+        [
+            (
+                (
+                    "INSERT INTO tenants (id, name, issuer, host_origin, status,"
+                    " asset_quota_bytes, created_at, updated_at) VALUES (:id, 'o',"
+                    " 'https://o.example.com', 'https://o.example.com', 'active', 1,"
+                    " now(), now())"
+                ),
+                {"id": other},
+            ),
+            tenant_map(map_a, str(LEGACY_TENANT_ID)),
+            tenant_map(map_b, str(other)),  # same course and section: fine
+            tenant_bubble(map_a, str(LEGACY_TENANT_ID)),
+            tenant_bubble(map_b, str(other)),  # same activity: fine
+        ],
+    )
+    assert fetch(migration_db, "SELECT count(*) FROM bubbles") == [(2,)]
+    # A bubble cannot sit on another tenant's map.
+    with pytest.raises(Exception, match="fk_bubbles_course_map"):
+        run_sql(migration_db, [tenant_bubble(map_b, str(LEGACY_TENANT_ID), 6)])
+
+
+def test_scoping_downgrades_and_upgrades_again(migration_db: str) -> None:
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+    down = alembic(migration_db, "downgrade", BEFORE_SCOPING)
+    assert down.returncode == 0, down.stderr
+    columns = fetch(
+        migration_db,
+        "SELECT column_name FROM information_schema.columns"
+        " WHERE table_name = 'course_maps'",
+    )
+    assert ("tenant_id",) not in columns
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+    assert alembic(migration_db, "downgrade", BEFORE_TENANTS).returncode == 0
+    tables = fetch(
+        migration_db, "SELECT tablename FROM pg_tables WHERE schemaname='public'"
+    )
+    assert ("tenants",) not in tables

@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.errors import register_exception_handlers
 from app.api.routes import (
     assets,
+    auth,
     course_map,
     health,
     publications,
@@ -15,6 +16,7 @@ from app.api.routes import (
     skins,
     view3d,
 )
+from app.api.security_headers import NoStoreForAuth
 from app.core.config import Settings, get_settings
 from app.core.database import create_engine
 from app.core.paths import API_PREFIX
@@ -80,8 +82,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             allow_headers=["Content-Type", "Authorization", "If-Match"],
             expose_headers=["ETag"],
         )
+    application.add_middleware(NoStoreForAuth)
     register_exception_handlers(application)
     application.include_router(health.router, prefix=API_PREFIX)
+    application.include_router(auth.router, prefix=API_PREFIX)
     application.include_router(course_map.router, prefix=API_PREFIX)
     application.include_router(publications.router, prefix=API_PREFIX)
     application.include_router(published.router, prefix=API_PREFIX)

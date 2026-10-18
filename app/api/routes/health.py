@@ -1,13 +1,15 @@
 import asyncio
 import logging
 
-from fastapi import APIRouter, Request, Response, status
+from fastapi import APIRouter, Depends, Request, Response, status
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncEngine
 
+from app.auth.dependencies import public_route
+
 logger = logging.getLogger(__name__)
 
-router = APIRouter(tags=["health"])
+router = APIRouter(tags=["health"], dependencies=[Depends(public_route)])
 
 # A database that hangs must answer "not ready" instead of hanging the probe.
 _READY_TIMEOUT_SECONDS = 3.0

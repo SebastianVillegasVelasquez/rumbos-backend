@@ -8,13 +8,14 @@ from typing import Any
 import httpx
 import pytest
 from sqlalchemy import text
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+from sqlalchemy.ext.asyncio import AsyncEngine
 
 from app.main import app
 from app.repositories.sqlalchemy.skin_repository import SqlAlchemySkinRepository
 from tests import skin_configs
 from tests.editor_client import EditorClient
 from tests.fakes import InMemoryMoodleClient
+from tests.sessions import new_session
 
 DEFAULT_SETTINGS: dict[str, Any] = {
     "schemaVersion": 1,
@@ -124,7 +125,7 @@ async def test_missing_keys_in_the_stored_column_read_as_defaults(
     expected_overrides: dict[str, Any],
 ) -> None:
     created = await make_map(client)
-    async with AsyncSession(engine) as session:
+    async with new_session(engine) as session:
         await session.execute(
             text("UPDATE course_maps SET settings = CAST(:s AS jsonb)"), {"s": stored}
         )
@@ -464,7 +465,7 @@ async def test_deleting_a_map_removes_its_rules(
 
     assert (await client.delete(f"/course-maps/{created['id']}")).status_code == 204
 
-    async with AsyncSession(engine) as session:
+    async with new_session(engine) as session:
         count = await session.scalar(text("SELECT count(*) FROM course_map_skin_rules"))
     assert count == 0
 

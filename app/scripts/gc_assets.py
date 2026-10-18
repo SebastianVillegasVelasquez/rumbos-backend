@@ -25,6 +25,7 @@ from app.exceptions import AssetInUseError, AssetNotFoundError
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
 from app.schemas.asset import AssetRecord
 from app.services.asset_service import AssetService, AssetSettings
+from app.tenancy.scope import SYSTEM, bind_scope
 
 DEFAULT_DAYS = 7
 _USAGE_BATCH = 500
@@ -86,6 +87,8 @@ async def _main(days: int, apply: bool) -> int:
     engine = create_engine(settings.build_database_url)
     try:
         async with AsyncSession(engine, expire_on_commit=False) as session:
+            # Housekeeping over every tenant's data, not one tenant's business.
+            bind_scope(session, SYSTEM)
             await run(
                 session,
                 LocalDiskAssetStorage(Path(settings.assets_dir)),

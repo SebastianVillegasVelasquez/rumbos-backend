@@ -17,7 +17,7 @@ def _values(enum_cls: type[BubbleStatus] | type[BubbleIcon]) -> list[str]:
     return [member.value for member in enum_cls]
 
 
-# A Moodle activity appears at most once per COURSE (on one of its maps). The
+# A Moodle activity appears at most once per COURSE of a tenant (on one of its maps). The
 # database enforces it (so concurrent requests cannot both win); the repository
 # maps a violation of this constraint to `ActivityAlreadyPlacedError`.
 UQ_BUBBLE_ACTIVITY = "uq_bubbles_moodle_course_id_activity_id"
@@ -26,12 +26,18 @@ UQ_BUBBLE_ACTIVITY = "uq_bubbles_moodle_course_id_activity_id"
 class Bubble(BaseORM):
     __tablename__ = "bubbles"
     __table_args__ = (
-        UniqueConstraint("moodle_course_id", "activity_id", name=UQ_BUBBLE_ACTIVITY),
-        # Composite so the course id copied onto the bubble must match the
-        # parent map's: it cannot drift, and the map's can't change under it.
+        UniqueConstraint(
+            "tenant_id", "moodle_course_id", "activity_id", name=UQ_BUBBLE_ACTIVITY
+        ),
+        # Composite so the tenant and course id copied onto the bubble must match
+        # the parent map's: they cannot drift, and the map's can't change under it.
         ForeignKeyConstraint(
-            ["course_map_id", "moodle_course_id"],
-            ["course_maps.id", "course_maps.moodle_course_id"],
+            ["course_map_id", "tenant_id", "moodle_course_id"],
+            [
+                "course_maps.id",
+                "course_maps.tenant_id",
+                "course_maps.moodle_course_id",
+            ],
             name="fk_bubbles_course_map",
             ondelete="CASCADE",
         ),
@@ -40,6 +46,8 @@ class Bubble(BaseORM):
     )
 
     course_map_id: Mapped[uuid.UUID] = mapped_column(index=True)
+    # Copied from the parent map by the scope on create; immutable.
+    tenant_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("tenants.id"), index=True)
     # Copied from the parent map by the service on create; immutable. It is
     # what makes "one bubble per activity per course" a plain unique constraint.
     moodle_course_id: Mapped[int]

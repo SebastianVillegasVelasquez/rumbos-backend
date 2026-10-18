@@ -248,3 +248,55 @@ class View3dInvalidError(DomainError):
         self.code = code
         self.message = message
         self.extras = extras
+
+
+class TenantNotFoundError(DomainError):
+    pass
+
+
+class TenantIssuerTakenError(DomainError):
+    """Another tenant is already registered for this issuer."""
+
+
+class TenantKeyNotFoundError(DomainError):
+    pass
+
+
+class TenantKeyTakenError(DomainError):
+    """The tenant already has a key with this `kid` (even a revoked one)."""
+
+
+class LaunchInvalidError(DomainError):
+    """A launch assertion failed verification. The caller only ever sees one
+    code; `reason` (a short slug) is for the server-side audit log."""
+
+    def __init__(self, reason: str) -> None:
+        super().__init__(reason)
+        self.reason = reason
+
+
+class TenantDisabledError(DomainError):
+    """The assertion is genuine but its tenant is disabled."""
+
+
+class LaunchRateLimitedError(DomainError):
+    def __init__(self, retry_after: int) -> None:
+        super().__init__("too many launches")
+        self.retry_after = retry_after
+
+
+class LaunchReplayedError(DomainError):
+    """The assertion's `jti` was already redeemed."""
+
+
+class UnauthorizedError(DomainError):
+    """No valid bearer token (missing, unknown, expired, or its tenant is off)."""
+
+
+class ForbiddenError(DomainError):
+    """The caller is signed in but their role does not allow this."""
+
+
+class MoodleSourceNotProvidedError(DomainError):
+    """The route answers from Moodle's web services, which a plugin tenant does
+    not have: its Moodle state comes from the plugin, through the browser."""

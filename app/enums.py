@@ -55,3 +55,20 @@ class PublicationStatus(StrEnum):
     NEVER_PUBLISHED = "never_published"
     UP_TO_DATE = "up_to_date"
     UNPUBLISHED_CHANGES = "unpublished_changes"
+
+
+class TenantStatus(StrEnum):
+    ACTIVE = "active"
+    DISABLED = "disabled"
+
+
+class KeyStatus(StrEnum):
+    ACTIVE = "active"
+    REVOKED = "revoked"
+
+
+class Role(StrEnum):
+    """What a bearer token may do (see `app.auth.principal`)."""
+
+    EDITOR = "editor"
+    STUDENT = "student"

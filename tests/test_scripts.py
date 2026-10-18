@@ -6,20 +6,21 @@ from typing import Any
 import httpx
 import pytest
 from sqlalchemy import func, select
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+from sqlalchemy.ext.asyncio import AsyncEngine
 
 from app.assets.storage import AssetFileMissingError, AssetStorage
 from app.models import Asset, Publication
 from app.scripts import gc_assets, publish_existing_maps
 from tests.asset_helpers import png_asset
 from tests.conftest import ENABLED
+from tests.sessions import new_session
 from tests.test_publications_api import add_bubble, make_map, publish, state
 
 # --- publish_existing_maps ------------------------------------------------------------
 
 
 async def publication_numbers(engine: AsyncEngine, map_id: str) -> list[int]:
-    async with AsyncSession(engine) as s:
+    async with new_session(engine) as s:
         return list(
             await s.scalars(
                 select(Publication.number)
@@ -36,7 +37,7 @@ async def test_publish_existing_maps_dry_run_changes_nothing(
     await add_bubble(client, old["id"], 1)
     lines: list[str] = []
 
-    async with AsyncSession(engine) as session:
+    async with new_session(engine) as session:
         count = await publish_existing_maps.run(
             session, apply=False, keep=20, out=lines.append
         )
@@ -58,7 +59,7 @@ async def test_publish_existing_maps_apply_publishes_only_unpublished_maps_with_
     await add_bubble(client, done["id"], 1)
     await publish(client, done["id"], "Ya publicado")
 
-    async with AsyncSession(engine) as session:
+    async with new_session(engine) as session:
         count = await publish_existing_maps.run(
             session, apply=True, keep=20, out=lambda _: None
         )
@@ -83,11 +84,11 @@ async def test_publish_existing_maps_is_idempotent(
     old = await make_map(client)
     await add_bubble(client, old["id"], 1)
 
-    async with AsyncSession(engine) as session:
+    async with new_session(engine) as session:
         first = await publish_existing_maps.run(
             session, apply=True, keep=20, out=lambda _: None
         )
-    async with AsyncSession(engine) as session:
+    async with new_session(engine) as session:
         lines: list[str] = []
         second = await publish_existing_maps.run(
             session, apply=True, keep=20, out=lines.append
@@ -119,7 +120,7 @@ async def test_publish_existing_maps_skips_a_map_whose_background_is_gone(
         )
     lines: list[str] = []
 
-    async with AsyncSession(engine) as session:
+    async with new_session(engine) as session:
         count = await publish_existing_maps.run(
             session, apply=True, keep=20, out=lines.append
         )
@@ -142,7 +143,7 @@ async def stored(storage: AssetStorage, asset: dict[str, Any]) -> bool:
 
 
 async def asset_count(engine: AsyncEngine) -> int:
-    async with AsyncSession(engine) as s:
+    async with new_session(engine) as s:
         return int(await s.scalar(select(func.count()).select_from(Asset)) or 0)
 
 
@@ -177,7 +178,7 @@ async def test_gc_assets_dry_run_lists_only_unreferenced_old_assets(
     later = datetime.now(UTC) + timedelta(days=30)
     lines: list[str] = []
 
-    async with AsyncSession(engine) as session:
+    async with new_session(engine) as session:
         reclaimed = await gc_assets.run(
             session,
             storage,
@@ -202,7 +203,7 @@ async def test_gc_assets_respects_the_age_threshold(
 ) -> None:
     await png_asset(client, 1, "background")
 
-    async with AsyncSession(engine) as session:
+    async with new_session(engine) as session:
         reclaimed = await gc_assets.run(
             session,
             storage,
@@ -225,7 +226,7 @@ async def test_gc_assets_apply_deletes_rows_and_files_and_is_idempotent(
     later = datetime.now(UTC) + timedelta(days=30)
 
     async def collect() -> int:
-        async with AsyncSession(engine) as session:
+        async with new_session(engine) as session:
             return await gc_assets.run(
                 session,
                 storage,
@@ -250,7 +251,7 @@ async def test_gc_assets_zero_days_considers_everything_old(
 ) -> None:
     made = await png_asset(client, 1, "bubble")
 
-    async with AsyncSession(engine) as session:
+    async with new_session(engine) as session:
         reclaimed = await gc_assets.run(
             session,
             storage,

@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 from app.core.database import get_session
 from app.main import app, lifespan
 from tests.conftest import Widget
+from tests.sessions import new_session
 
 
 async def test_health() -> None:
@@ -45,7 +46,7 @@ def _uow_app(engine: AsyncEngine) -> FastAPI:
 
 
 async def _count(engine: AsyncEngine) -> int:
-    async with AsyncSession(engine) as s:
+    async with new_session(engine) as s:
         return (await s.execute(select(func.count()).select_from(Widget))).scalar_one()
 
 

@@ -8,15 +8,17 @@ import httpx
 import pytest
 from sqlalchemy import select, text
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+from sqlalchemy.ext.asyncio import AsyncEngine
 from uuid_utils.compat import uuid7
 
 from app.enums import AssetKind
 from app.main import app
 from app.models import Bubble, CourseMap, CourseMapSkinRule, Skin
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
+from app.tenancy.scope import SYSTEM
 from tests import skin_configs
 from tests.api_client import ApiClient
+from tests.sessions import new_session
 
 ORBE = uuid.UUID("01900000-0000-7000-8000-000000000001")
 INSIGNIA = uuid.UUID("01900000-0000-7000-8000-000000000002")
@@ -33,9 +35,9 @@ async def client(engine: AsyncEngine) -> AsyncIterator[httpx.AsyncClient]:
 @pytest.fixture
 async def builtins(engine: AsyncEngine) -> None:
     """The test schema is built from the models, so the built-in rows (which
-    only the migration seeds) are inserted here; the real seeds are covered in
-    the migration tests."""
-    async with AsyncSession(engine) as session:
+    only the migration seeds) are inserted here, owned by no tenant like the
+    real ones; the real seeds are covered in the migration tests."""
+    async with new_session(engine, SYSTEM) as session:
         session.add_all(
             [
                 Skin(
@@ -64,7 +66,7 @@ async def make_asset(
     width: int = 256,
     height: int = 256,
 ) -> uuid.UUID:
-    async with AsyncSession(engine, expire_on_commit=False) as session:
+    async with new_session(engine, expire_on_commit=False) as session:
         record = await SqlAlchemyAssetRepository(session).create(
             uuid7(),
             kind,
@@ -334,7 +336,7 @@ async def test_deleting_a_skin_clears_the_things_that_used_it(
         await create_skin(client, "Kept"),
     )
     doomed_id, kept_id = uuid.UUID(doomed["id"]), uuid.UUID(kept["id"])
-    async with AsyncSession(engine) as session:
+    async with new_session(engine) as session:
         course_map = CourseMap(
             title="M",
             moodle_course_id=1,
@@ -374,7 +376,7 @@ async def test_deleting_a_skin_clears_the_things_that_used_it(
     r = await client.delete(f"/skins/{doomed['id']}")
 
     assert r.status_code == 204
-    async with AsyncSession(engine) as session:
+    async with new_session(engine) as session:
         bubbles = await session.execute(
             select(Bubble.activity_id, Bubble.skin_id).order_by(Bubble.activity_id)
         )
@@ -401,7 +403,7 @@ async def test_only_one_skin_can_be_the_default(engine: AsyncEngine) -> None:
             is_default=default,
         )
 
-    async with AsyncSession(engine) as session:
+    async with new_session(engine) as session:
         session.add_all([skin("a", default=True), skin("b", default=False)])
         session.add(skin("c", default=False))  # many non-defaults are fine
         await session.commit()

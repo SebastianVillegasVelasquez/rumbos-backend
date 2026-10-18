@@ -19,9 +19,13 @@ from app.exceptions import (
     CourseMapNotFoundError,
     DraftChangedSinceReviewError,
     DuplicateSkinRuleError,
+    ForbiddenError,
     InvalidAssetMetadataError,
     InvalidIfMatchError,
     InvalidUploadError,
+    LaunchInvalidError,
+    LaunchRateLimitedError,
+    MoodleSourceNotProvidedError,
     NeverPublishedError,
     NoChangesToPublishError,
     NotPublishedError,
@@ -37,6 +41,8 @@ from app.exceptions import (
     SkinIsBuiltinError,
     SkinNotFoundError,
     SkinReferenceNotFoundError,
+    TenantDisabledError,
+    UnauthorizedError,
     UploadsDisabledError,
     VersionConflictError,
     View3dInvalidError,
@@ -59,6 +65,60 @@ def register_exception_handlers(app: FastAPI) -> None:
             return JSONResponse(status_code=code, content={"detail": detail})
 
         return handle
+
+    app.add_exception_handler(
+        LaunchInvalidError,
+        _handler(
+            status.HTTP_401_UNAUTHORIZED,
+            # One answer for every verification failure, whatever went wrong.
+            {"code": "launch_invalid", "message": "The launch could not be verified"},
+        ),
+    )
+    app.add_exception_handler(
+        TenantDisabledError,
+        _handler(
+            status.HTTP_403_FORBIDDEN,
+            {"code": "tenant_disabled", "message": "This site is disabled"},
+        ),
+    )
+
+    async def rate_limited(request: Request, exc: Exception) -> JSONResponse:
+        assert isinstance(exc, LaunchRateLimitedError)
+        return JSONResponse(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            content={
+                "detail": {"code": "rate_limited", "message": "Too many launches"}
+            },
+            headers={"Retry-After": str(exc.retry_after)},
+        )
+
+    app.add_exception_handler(LaunchRateLimitedError, rate_limited)
+
+    async def unauthorized(request: Request, exc: Exception) -> JSONResponse:
+        return JSONResponse(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            content={"detail": {"code": "unauthorized", "message": "Sign in again"}},
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    app.add_exception_handler(UnauthorizedError, unauthorized)
+    app.add_exception_handler(
+        ForbiddenError,
+        _handler(
+            status.HTTP_403_FORBIDDEN,
+            {"code": "forbidden", "message": "Your role cannot do this"},
+        ),
+    )
+    app.add_exception_handler(
+        MoodleSourceNotProvidedError,
+        _handler(
+            status.HTTP_501_NOT_IMPLEMENTED,
+            {
+                "code": "moodle_source_not_provided",
+                "message": "This site's Moodle data comes from the plugin",
+            },
+        ),
+    )
 
     app.add_exception_handler(
         CourseMapNotFoundError,

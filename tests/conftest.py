@@ -1,12 +1,13 @@
 import asyncio
 import dataclasses
 from collections.abc import AsyncIterator, Iterator
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
 import httpx
 import pytest
-from sqlalchemy import text
+from sqlalchemy import insert, text
 from sqlalchemy.engine import URL, make_url
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 from sqlalchemy.orm import Mapped, mapped_column
@@ -14,11 +15,16 @@ from sqlalchemy.orm import Mapped, mapped_column
 from app.api.routes.assets import get_asset_settings, get_asset_storage
 from app.assets.storage import AssetStorage, LocalDiskAssetStorage
 from app.core.config import get_settings
+from app.enums import TenantStatus
 from app.main import app as fastapi_app
+from app.models import Tenant
 from app.models.base import BaseORM
+from app.models.tenant import LEGACY_TENANT_ID, LEGACY_TENANT_ISSUER
 from app.services.asset_service import AssetSettings
+from app.tenancy.scope import Scope, bind_scope
 from tests.editor_client import EditorClient
 from tests.fakes import InMemoryMoodleClient
+from tests.tenant_helpers import make_client  # noqa: F401  (a fixture)
 
 
 class Widget(BaseORM):
@@ -77,12 +83,29 @@ def test_database() -> str:
     return _test_database_url()
 
 
+LEGACY_QUOTA_BYTES = 1_000_000_000
+
+
 @pytest.fixture
 async def engine(test_database: str) -> AsyncIterator[AsyncEngine]:
     engine = create_async_engine(test_database)
     async with engine.begin() as conn:
         await conn.run_sync(BaseORM.metadata.drop_all)
         await conn.run_sync(BaseORM.metadata.create_all)
+        # What the migration creates: the tenant every standalone request acts as.
+        now = datetime.now(UTC)
+        await conn.execute(
+            insert(Tenant).values(
+                id=LEGACY_TENANT_ID,
+                name="legacy",
+                issuer=LEGACY_TENANT_ISSUER,
+                host_origin=LEGACY_TENANT_ISSUER,
+                status=TenantStatus.ACTIVE,
+                asset_quota_bytes=LEGACY_QUOTA_BYTES,
+                created_at=now,
+                updated_at=now,
+            )
+        )
     try:
         yield engine
     finally:
@@ -94,6 +117,7 @@ async def engine(test_database: str) -> AsyncIterator[AsyncEngine]:
 @pytest.fixture
 async def session(engine: AsyncEngine) -> AsyncIterator[AsyncSession]:
     async with AsyncSession(engine, expire_on_commit=False) as s:
+        bind_scope(s, Scope(LEGACY_TENANT_ID))  # the standalone deployment's data
         yield s
 
 
