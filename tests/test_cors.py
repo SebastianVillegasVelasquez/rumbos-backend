@@ -2,6 +2,7 @@
 
 import httpx
 import pytest
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import SecretStr
 
 from app.core.config import Settings, get_settings
@@ -97,7 +98,8 @@ async def test_other_origin_is_refused() -> None:
 
 async def test_no_origins_means_no_cors_middleware() -> None:
     app = create_app(get_settings().model_copy(update={"cors_allowed_origins": []}))
-    assert not app.user_middleware
+    middleware: list[object] = [m.cls for m in app.user_middleware]
+    assert CORSMiddleware not in middleware
 
     async with _client([]) as client:
         simple = await client.get("/health", headers={"Origin": ALLOWED})
