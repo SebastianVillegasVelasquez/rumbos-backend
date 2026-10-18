@@ -19,6 +19,7 @@ from typing import Any, Protocol
 from app.enums import AssetKind, BubbleStatus, TenantStatus
 from app.publishing.snapshot import DraftInputs
 from app.schemas.asset import AssetRecord, AssetUpdate, AssetUsage
+from app.schemas.auth import NewAccessToken, TokenGrant
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
     CourseMapBase,
@@ -410,4 +411,29 @@ class TenantRepository(Protocol):
 
     async def active_host_origins(self) -> list[str]:
         """The distinct `host_origin` of every active tenant, sorted."""
+        ...
+
+
+class AuthRepository(Protocol):
+    """Bearer tokens and redeemed `jti`s. Not tenant-scoped: a token is how a
+    request gets its tenant in the first place."""
+
+    async def register_launch(
+        self,
+        tenant_id: uuid.UUID,
+        jti: str,
+        jti_expires_at: datetime,
+        token: NewAccessToken,
+    ) -> None:
+        """Redeems the `jti` and stores the token in ONE transaction. Raises
+        `LaunchReplayedError` (nothing stored) if the `jti` was redeemed."""
+        ...
+
+    async def find_grant(self, token_hash: str, now: datetime) -> TokenGrant | None:
+        """The grant behind a token, only while the token has not expired and its
+        tenant is active."""
+        ...
+
+    async def purge_expired(self, now: datetime) -> tuple[int, int]:
+        """Deletes expired tokens and `jti`s; returns how many of each."""
         ...

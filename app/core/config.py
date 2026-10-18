@@ -1,5 +1,5 @@
 from functools import cached_property, lru_cache
-from typing import Annotated
+from typing import Annotated, Literal
 
 from pydantic import Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
@@ -46,6 +46,24 @@ class Settings(BaseSettings):
     assets_max_bubble_side: int = Field(default=1024, ge=1, le=16384)
     assets_max_total_bytes: int = Field(default=2 * 1024**3, ge=1)
 
+    # `dev` or `production`. Only decides the default of `legacy_anonymous_mode`.
+    app_env: Literal["dev", "production"] = "dev"
+    # Keeps the old behaviour for the "legacy" tenant: requests without a bearer
+    # token are served anonymously, as an editor of that tenant, and talk to
+    # Moodle with the service token. Unset: on in dev, off in production.
+    legacy_anonymous_mode: bool | None = None
+    # The `aud` a launch assertion must carry.
+    auth_audience: str = Field(default="rumbos", min_length=1)
+    # How long a bearer token lives (seconds).
+    access_token_ttl_seconds: int = Field(default=1800, ge=60, le=86400)
+    # Clock skew tolerated when checking `iat` / `exp` of an assertion (seconds).
+    launch_leeway_seconds: int = Field(default=30, ge=0, le=30)
+    # `/auth/launch` limits per minute, kept in process memory (see
+    # `app.auth.rate_limit`): per client address, and per tenant once the
+    # assertion's signature has been verified.
+    launch_rate_per_ip: int = Field(default=30, ge=1)
+    launch_rate_per_tenant: int = Field(default=300, ge=1)
+
     # How many publications of each map to keep (the latest is never pruned).
     publications_keep: int = Field(default=20, ge=1)
 
@@ -60,6 +78,13 @@ class Settings(BaseSettings):
             port=self.postgres_port,
             database=self.postgres_db,
         ).render_as_string(hide_password=False)
+
+    @property
+    def legacy_mode(self) -> bool:
+        """Whether anonymous requests are served as the legacy tenant."""
+        if self.legacy_anonymous_mode is not None:
+            return self.legacy_anonymous_mode
+        return self.app_env == "dev"
 
     @field_validator("cors_allowed_origins", mode="before")
     @classmethod

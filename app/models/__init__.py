@@ -4,6 +4,7 @@ Alembic's autogenerate only sees tables that have been imported.
 """
 
 from app.models.asset import Asset
+from app.models.auth import AccessToken, AuthORM, UsedJti
 from app.models.base import BaseORM
 from app.models.bubble import Bubble
 from app.models.course_map import CourseMap
@@ -13,7 +14,9 @@ from app.models.tenant import Tenant, TenantKey
 from app.models.view3d import CourseMapView3dBinding
 
 __all__ = [
+    "AccessToken",
     "Asset",
+    "AuthORM",
     "BaseORM",
     "Bubble",
     "CourseMap",
@@ -23,4 +26,5 @@ __all__ = [
     "Skin",
     "Tenant",
     "TenantKey",
+    "UsedJti",
 ]

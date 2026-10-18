@@ -16,6 +16,7 @@ from app.enums import AssetKind, BubbleStatus, KeyStatus, TenantStatus
 from app.exceptions import (
     ActivityAlreadyPlacedError,
     CourseMapNotFoundError,
+    LaunchReplayedError,
     SectionAlreadyMappedError,
     TenantIssuerTakenError,
     TenantKeyTakenError,
@@ -26,6 +27,7 @@ from app.moodle.exceptions import MoodleCourseNotFoundError
 from app.moodle.schemas import MoodleSection, MoodleSiteInfo
 from app.publishing.snapshot import DraftInputs
 from app.schemas.asset import AssetRecord, AssetUpdate, AssetUsage
+from app.schemas.auth import NewAccessToken, TokenGrant
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
     CourseMapBase,
@@ -613,3 +615,40 @@ class InMemoryTenantRepository:
                 if t.status == TenantStatus.ACTIVE
             }
         )
+
+
+class InMemoryAuthRepository:
+    def __init__(self, tenants: InMemoryTenantRepository) -> None:
+        self._tenants = tenants
+        self.tokens: dict[str, NewAccessToken] = {}
+        self.jtis: dict[tuple[uuid.UUID, str], datetime] = {}
+
+    async def register_launch(
+        self,
+        tenant_id: uuid.UUID,
+        jti: str,
+        jti_expires_at: datetime,
+        token: NewAccessToken,
+    ) -> None:
+        if (tenant_id, jti) in self.jtis:
+            raise LaunchReplayedError(jti)
+        self.jtis[(tenant_id, jti)] = jti_expires_at
+        self.tokens[token.token_hash] = token
+
+    async def find_grant(self, token_hash: str, now: datetime) -> TokenGrant | None:
+        token = self.tokens.get(token_hash)
+        if token is None or token.expires_at <= now:
+            return None
+        tenant = self._tenants.tenants.get(token.tenant_id)
+        if tenant is None or tenant.status is not TenantStatus.ACTIVE:
+            return None
+        return TokenGrant(**token.model_dump())
+
+    async def purge_expired(self, now: datetime) -> tuple[int, int]:
+        old_tokens = [h for h, t in self.tokens.items() if t.expires_at <= now]
+        old_jtis = [k for k, expires in self.jtis.items() if expires <= now]
+        for token_hash in old_tokens:
+            del self.tokens[token_hash]
+        for key in old_jtis:
+            del self.jtis[key]
+        return len(old_tokens), len(old_jtis)
