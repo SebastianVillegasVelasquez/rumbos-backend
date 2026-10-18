@@ -2,19 +2,20 @@ import uuid
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Response, status
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.database import get_session
+from app.auth.dependencies import ScopedSession, editor_route
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
 from app.repositories.sqlalchemy.skin_repository import SqlAlchemySkinRepository
 from app.schemas.skin import SkinCreate, SkinList, SkinRead, SkinUpdate
 from app.services.skin_service import SkinService
 
-router = APIRouter(prefix="/skins", tags=["skins"])
+router = APIRouter(
+    prefix="/skins", tags=["skins"], dependencies=[Depends(editor_route)]
+)
 
 
 def get_skin_service(
-    session: Annotated[AsyncSession, Depends(get_session)],
+    session: ScopedSession,
 ) -> SkinService:
     return SkinService(
         SqlAlchemySkinRepository(session), SqlAlchemyAssetRepository(session)

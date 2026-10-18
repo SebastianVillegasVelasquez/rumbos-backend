@@ -8,7 +8,7 @@ from typing import Any
 import httpx
 import pytest
 from sqlalchemy import event, func, select, text
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+from sqlalchemy.ext.asyncio import AsyncEngine
 
 from app.core.config import get_settings
 from app.main import app
@@ -17,6 +17,7 @@ from tests import skin_configs
 from tests.api_client import ApiClient
 from tests.asset_helpers import png_asset
 from tests.fakes import InMemoryMoodleClient
+from tests.sessions import new_session
 
 HEX64 = "0" * 64
 
@@ -162,7 +163,7 @@ async def test_creating_a_map_creates_no_publication(
 ) -> None:
     await make_map(client)
 
-    async with AsyncSession(engine) as s:
+    async with new_session(engine) as s:
         assert await s.scalar(select(func.count()).select_from(Publication)) == 0
 
 
@@ -504,7 +505,7 @@ async def test_deleting_a_map_deletes_its_publications(
 
     assert (await client.delete(f"/course-maps/{created['id']}")).status_code == 204
 
-    async with AsyncSession(engine) as s:
+    async with new_session(engine) as s:
         assert await s.scalar(select(func.count()).select_from(Publication)) == 0
 
 
@@ -928,7 +929,7 @@ async def test_published_assets_are_listed_in_the_publication_row(
     created = await make_map(client, image_url=background["url"])
     await publish(client, created["id"])
 
-    async with AsyncSession(engine) as s:
+    async with new_session(engine) as s:
         row = (await s.scalars(select(Publication))).one()
         assets = list(await s.scalars(select(Asset.id)))
 

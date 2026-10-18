@@ -9,11 +9,10 @@ import uuid
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query, Response, status
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.preconditions import IfMatch, set_etag
+from app.auth.dependencies import ScopedSession, editor_route
 from app.core.config import Settings, get_settings
-from app.core.database import get_session
 from app.repositories.sqlalchemy.bubble_repository import SqlAlchemyBubbleRepository
 from app.repositories.sqlalchemy.course_map_repository import (
     SqlAlchemyCourseMapRepository,
@@ -34,11 +33,15 @@ from app.services.publication_service import (
     PublicationService,
 )
 
-router = APIRouter(prefix="/course-maps", tags=["publications"])
+router = APIRouter(
+    prefix="/course-maps",
+    tags=["publications"],
+    dependencies=[Depends(editor_route)],
+)
 
 
 def get_publication_service(
-    session: Annotated[AsyncSession, Depends(get_session)],
+    session: ScopedSession,
     settings: Annotated[Settings, Depends(get_settings)],
 ) -> PublicationService:
     return PublicationService(

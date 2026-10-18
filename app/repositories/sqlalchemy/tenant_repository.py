@@ -12,7 +12,7 @@ from app.exceptions import (
     TenantNotFoundError,
 )
 from app.models import Tenant, TenantKey
-from app.models.tenant import UQ_TENANT_KEY_KID
+from app.models.tenant import LEGACY_TENANT_ID, UQ_TENANT_KEY_KID
 from app.repositories.sqlalchemy._errors import (
     FOREIGN_KEY_VIOLATION,
     constraint_name,
@@ -156,7 +156,8 @@ class SqlAlchemyTenantRepository:
     async def active_host_origins(self) -> list[str]:
         result = await self._session.scalars(
             select(Tenant.host_origin)
-            .where(Tenant.status == TenantStatus.ACTIVE)
+            # The legacy tenant is not a Moodle site: nothing embeds the app for it.
+            .where(Tenant.status == TenantStatus.ACTIVE, Tenant.id != LEGACY_TENANT_ID)
             .distinct()
             .order_by(Tenant.host_origin)
         )

@@ -32,6 +32,7 @@ from app.models import Bubble, CourseMap, Publication
 from app.repositories.sqlalchemy.publication_repository import (
     SqlAlchemyPublicationRepository,
 )
+from app.tenancy.scope import SYSTEM, bind_scope
 
 NOTE = "Publicación inicial (migración)"
 
@@ -93,6 +94,8 @@ async def _main(apply: bool) -> int:
     engine = create_engine(settings.build_database_url)
     try:
         async with AsyncSession(engine, expire_on_commit=False) as session:
+            # Housekeeping over every tenant's data, not one tenant's business.
+            bind_scope(session, SYSTEM)
             await run(session, apply=apply, keep=settings.publications_keep)
     finally:
         await engine.dispose()

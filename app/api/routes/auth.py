@@ -6,7 +6,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.auth.dependencies import get_bearer_principal
+from app.auth.dependencies import bearer_route, public_route
 from app.auth.launch import MAX_ASSERTION_BYTES, LaunchService, LaunchSettings
 from app.auth.principal import Principal
 from app.auth.rate_limit import FixedWindowLimiter, client_key
@@ -79,7 +79,9 @@ async def _read_assertion(request: Request) -> str:
     return assertion
 
 
-@router.post("/launch", response_model=LaunchResponse)
+@router.post(
+    "/launch", response_model=LaunchResponse, dependencies=[Depends(public_route)]
+)
 async def launch(
     request: Request,
     service: Annotated[LaunchService, Depends(get_launch_service)],
@@ -99,7 +101,7 @@ async def launch(
 
 @router.get("/me", response_model=MeResponse)
 async def me(
-    principal: Annotated[Principal, Depends(get_bearer_principal)],
+    principal: Annotated[Principal, Depends(bearer_route)],
 ) -> MeResponse:
     assert principal.course_id is not None  # tokens are always bound to a course
     return MeResponse(role=principal.role, course_id=principal.course_id)

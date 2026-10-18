@@ -26,6 +26,11 @@ class Skin(BaseORM):
         ),
     )
 
+    # The tenant that owns a custom skin. NULL for the built-in skins, which
+    # belong to nobody and are visible to every tenant.
+    tenant_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("tenants.id"), index=True
+    )
     name: Mapped[str] = mapped_column(String(60))
     # Copy of config["kind"], so skins can be filtered without opening the JSON.
     kind: Mapped[str] = mapped_column(String(20))

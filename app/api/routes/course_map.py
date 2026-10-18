@@ -3,10 +3,15 @@ from typing import Annotated
 
 from fastapi import APIRouter, Body, Depends, Header, Query, Request, Response, status
 from fastapi.exceptions import RequestValidationError
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.preconditions import IfMatch, parse_if_match, set_etag
-from app.core.database import get_session
+from app.auth.dependencies import (
+    PrincipalDep,
+    ScopedSession,
+    editor_route,
+    moodle_source_route,
+)
+from app.exceptions import CourseMapNotFoundError
 from app.moodle.dependencies import get_contents_provider, get_moodle_client
 from app.moodle.protocols import CourseContentsProvider, MoodleClient
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
@@ -41,11 +46,15 @@ from app.schemas.view3d import View3dUpdate
 from app.services.course_map_service import CourseMapService
 from app.services.resolution_service import MapResolutionService
 
-router = APIRouter(prefix="/course-maps", tags=["course-maps"])
+router = APIRouter(
+    prefix="/course-maps",
+    tags=["course-maps"],
+    dependencies=[Depends(editor_route)],
+)
 
 
 def get_course_map_service(
-    session: Annotated[AsyncSession, Depends(get_session)],
+    session: ScopedSession,
     moodle: Annotated[MoodleClient, Depends(get_moodle_client)],
 ) -> CourseMapService:
     return CourseMapService(
@@ -60,7 +69,7 @@ def get_course_map_service(
 
 
 def get_resolution_service(
-    session: Annotated[AsyncSession, Depends(get_session)],
+    session: ScopedSession,
     contents: Annotated[CourseContentsProvider, Depends(get_contents_provider)],
 ) -> MapResolutionService:
     return MapResolutionService(
@@ -98,8 +107,10 @@ async def create_course_map(
 
 @router.put("/order", response_model=CourseMapOrdered)
 async def reorder_course_maps(
-    data: CourseMapOrderUpdate, service: ServiceDep
+    data: CourseMapOrderUpdate, service: ServiceDep, principal: PrincipalDep
 ) -> CourseMapOrdered:
+    if not principal.can_see_course(data.moodle_course_id):
+        raise CourseMapNotFoundError(data.moodle_course_id)
     return await service.reorder_course_maps(data)
 
 
@@ -180,13 +191,14 @@ async def delete_course_map(course_map_id: uuid.UUID, service: ServiceDep) -> Re
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-@router.get("/{course_map_id}/activities", response_model=list[ActivityRead])
+@router.get(
+    "/{course_map_id}/activities",
+    response_model=list[ActivityRead],
+    dependencies=[Depends(moodle_source_route)],
+)
 async def list_activities(
     course_map_id: uuid.UUID,
     service: ServiceDep,
-    # TODO(auth): there is no authentication yet, so anyone can list the names
-    # of hidden activities with `includeHidden=true` (here and on `/resolved`).
-    # When auth arrives, this parameter must require a teacher/editor role.
     include_hidden: Annotated[bool, Query(alias="includeHidden")] = False,
     only_section: Annotated[bool, Query(alias="onlySection")] = False,
 ) -> list[ActivityRead]:
@@ -195,13 +207,14 @@ async def list_activities(
     )
 
 
-@router.get("/{course_map_id}/resolved", response_model=ResolvedMap)
+@router.get(
+    "/{course_map_id}/resolved",
+    response_model=ResolvedMap,
+    dependencies=[Depends(moodle_source_route)],
+)
 async def resolve_course_map(
     course_map_id: uuid.UUID,
     service: ResolutionServiceDep,
-    # TODO(auth): same as `/activities`: until there is authentication anyone
-    # can read the names of hidden activities with `includeHidden=true`. It
-    # must require a teacher/editor role once roles exist.
     include_hidden: Annotated[bool, Query(alias="includeHidden")] = False,
 ) -> ResolvedMap:
     return await service.resolve(course_map_id, include_hidden=include_hidden)

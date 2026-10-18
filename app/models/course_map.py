@@ -10,7 +10,7 @@ from app.models.base import BaseORM
 if TYPE_CHECKING:
     from app.models.bubble import Bubble
 
-# At most one map per Moodle section in a course. Partial: maps that are not
+# At most one map per Moodle section in a course of a tenant. Partial: maps that are not
 # tied to a section (NULL) can repeat. The repository maps a violation of this
 # index to `SectionAlreadyMappedError`.
 UQ_COURSE_MAP_SECTION = "uq_course_maps_course_section"
@@ -21,17 +21,26 @@ class CourseMap(BaseORM):
     __table_args__ = (
         Index(
             UQ_COURSE_MAP_SECTION,
+            "tenant_id",
             "moodle_course_id",
             "moodle_section_id",
             unique=True,
             postgresql_where=text("moodle_section_id IS NOT NULL"),
         ),
-        # Lets `bubbles` reference (id, moodle_course_id) so a bubble's course
-        # can never disagree with its map's (see `Bubble`).
-        UniqueConstraint("id", "moodle_course_id", name="uq_course_maps_id_course"),
+        # Lets `bubbles` reference (id, tenant_id, moodle_course_id) so a bubble's
+        # tenant and course can never disagree with its map's (see `Bubble`).
+        UniqueConstraint(
+            "id",
+            "tenant_id",
+            "moodle_course_id",
+            name="uq_course_maps_id_tenant_course",
+        ),
     )
 
     title: Mapped[str] = mapped_column(String(120))
+    # The Moodle site this map belongs to. Filled in from the session's scope
+    # when the map is created (see `app.tenancy.scope`); never changes.
+    tenant_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("tenants.id"), index=True)
     # A course has several maps ("levels"); this index serves the lookups.
     # Never changes after creation: no update path exists, and bubbles pin it.
     moodle_course_id: Mapped[int] = mapped_column(index=True)

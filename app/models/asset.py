@@ -1,10 +1,19 @@
-from sqlalchemy import BigInteger, CheckConstraint, Enum, String, UniqueConstraint
+import uuid
+
+from sqlalchemy import (
+    BigInteger,
+    CheckConstraint,
+    Enum,
+    ForeignKey,
+    String,
+    UniqueConstraint,
+)
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.enums import AssetKind
 from app.models.base import BaseORM
 
-# The same bytes uploaded twice as the same kind are one asset. The database
+# The same bytes uploaded twice by a tenant as the same kind are one asset. The database
 # enforces it, so two simultaneous identical uploads cannot both create a row.
 UQ_ASSET_CONTENT = "uq_assets_kind_sha256"
 
@@ -14,11 +23,13 @@ class Asset(BaseORM):
 
     __tablename__ = "assets"
     __table_args__ = (
-        UniqueConstraint("kind", "sha256", name=UQ_ASSET_CONTENT),
+        UniqueConstraint("tenant_id", "kind", "sha256", name=UQ_ASSET_CONTENT),
         CheckConstraint("width > 0 AND height > 0", name="ck_assets_dimensions"),
         CheckConstraint("bytes > 0", name="ck_assets_bytes"),
     )
 
+    # The tenant that uploaded it; its library, its quota.
+    tenant_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("tenants.id"), index=True)
     kind: Mapped[AssetKind] = mapped_column(
         Enum(
             AssetKind,

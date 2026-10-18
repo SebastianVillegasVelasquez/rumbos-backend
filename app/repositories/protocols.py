@@ -410,7 +410,8 @@ class TenantRepository(Protocol):
         ...
 
     async def active_host_origins(self) -> list[str]:
-        """The distinct `host_origin` of every active tenant, sorted."""
+        """The distinct `host_origin` of every active tenant, sorted. The legacy
+        tenant, which is no Moodle site, is left out."""
         ...
 
 

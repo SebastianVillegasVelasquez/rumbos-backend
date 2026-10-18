@@ -25,6 +25,7 @@ from tests.auth_helpers import (
     forged,
 )
 from tests.rsa_keys import keypair
+from tests.sessions import new_session
 
 
 @pytest.fixture
@@ -91,7 +92,7 @@ async def test_the_token_is_stored_only_as_a_hash(
 ) -> None:
     token = (await _launch(http, assertion())).json()["accessToken"]
 
-    async with AsyncSession(engine) as s:
+    async with new_session(engine) as s:
         rows = (await s.scalars(select(AccessToken))).all()
         jtis = (await s.scalars(select(UsedJti))).all()
     assert [r.token_hash for r in rows] == [hash_token(token)]

@@ -34,12 +34,13 @@ from app.schemas.bubble import BubbleCreate, BubbleUpdate
 from app.schemas.course_map import CourseMapCreate, CourseMapUpdate
 from app.services.course_map_service import CourseMapService
 from tests.fakes import InMemoryMoodleClient
+from tests.sessions import new_session
 
 
 @pytest.fixture
 async def observer(engine: AsyncEngine) -> AsyncIterator[AsyncSession]:
     """Independent session: only sees committed data."""
-    async with AsyncSession(engine, expire_on_commit=False) as s:
+    async with new_session(engine, expire_on_commit=False) as s:
         yield s
 
 
@@ -481,7 +482,7 @@ async def test_concurrent_duplicate_creates_yield_exactly_one_bubble(
     map_id = await _make_map(maps)
 
     async def attempt(x: float) -> str:
-        async with AsyncSession(engine, expire_on_commit=False) as s:
+        async with new_session(engine, expire_on_commit=False) as s:
             try:
                 await SqlAlchemyBubbleRepository(s).create(
                     map_id, 1, BubbleCreate(activity_id=42, x=x, y=0.5)

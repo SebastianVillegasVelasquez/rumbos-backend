@@ -19,12 +19,13 @@ from app.repositories.sqlalchemy.view3d_repository import SqlAlchemyView3dReposi
 from app.schemas.bubble import BubbleCreate
 from app.schemas.course_map import CourseMapCreate
 from app.schemas.view3d import LocalizedText, View3d, View3dBinding
+from tests.sessions import new_session
 
 
 @pytest.fixture
 async def observer(engine: AsyncEngine) -> AsyncIterator[AsyncSession]:
     """Independent session: only sees committed data."""
-    async with AsyncSession(engine, expire_on_commit=False) as s:
+    async with new_session(engine, expire_on_commit=False) as s:
         yield s
 
 

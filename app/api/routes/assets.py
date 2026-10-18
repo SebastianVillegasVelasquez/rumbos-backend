@@ -1,28 +1,36 @@
 """Upload and serving of user-provided images.
 
-SECURITY: there is no authentication yet, so `POST /assets` is anonymous.
-`ASSETS_MAX_TOTAL_BYTES` and `ASSETS_UPLOADS_ENABLED` only limit the damage;
-they are not protection. Keep uploads disabled on any publicly reachable
-deployment until auth exists. (`GET` is public by design: assets are shown to
-learners.)
+Uploading, listing, editing and deleting are for editors, inside their own
+tenant's library, and each tenant has its own storage quota. `GET /assets/{id}`
+and its thumbnail are public by design: an `<img>` or a canvas cannot send an
+`Authorization` header, so the unguessable id (a random UUID) is the only
+protection. Whoever knows an image's id can fetch it; ids are only shown to the
+tenant's editors and inside the maps its students may read.
 """
 
+import dataclasses
 import uuid
 from collections.abc import Awaitable, Callable
 from pathlib import Path
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
-from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.datastructures import UploadFile
 from starlette.types import Message
 
 from app.assets.storage import AssetStorage, LocalDiskAssetStorage
+from app.auth.dependencies import (
+    PrincipalDep,
+    ScopedSession,
+    SystemSession,
+    editor_route,
+    public_route,
+)
 from app.core.config import Settings, get_settings
-from app.core.database import get_session
 from app.enums import AssetKind
 from app.exceptions import AssetTooLargeError, InvalidUploadError
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
+from app.repositories.sqlalchemy.tenant_repository import SqlAlchemyTenantRepository
 from app.schemas.asset import AssetList, AssetRead, AssetUpdate
 from app.services.asset_service import AssetContent, AssetService, AssetSettings
 
@@ -54,15 +62,30 @@ def get_asset_storage(
 AssetSettingsDep = Annotated[AssetSettings, Depends(get_asset_settings)]
 
 
-def get_asset_service(
-    session: Annotated[AsyncSession, Depends(get_session)],
+async def get_asset_service(
+    session: ScopedSession,
+    principal: PrincipalDep,
     storage: Annotated[AssetStorage, Depends(get_asset_storage)],
     settings: AssetSettingsDep,
 ) -> AssetService:
+    """The tenant's library. Its quota replaces the global default."""
+    tenant = await SqlAlchemyTenantRepository(session).get_by_id(principal.tenant_id)
+    assert tenant is not None  # the principal's tenant exists (a foreign key)
+    own = dataclasses.replace(settings, max_total_bytes=tenant.asset_quota_bytes)
+    return AssetService(SqlAlchemyAssetRepository(session), storage, own)
+
+
+def get_public_asset_service(
+    session: SystemSession,
+    storage: Annotated[AssetStorage, Depends(get_asset_storage)],
+    settings: AssetSettingsDep,
+) -> AssetService:
+    """Serving only: an image by its id, whichever tenant it belongs to."""
     return AssetService(SqlAlchemyAssetRepository(session), storage, settings)
 
 
 ServiceDep = Annotated[AssetService, Depends(get_asset_service)]
+PublicServiceDep = Annotated[AssetService, Depends(get_public_asset_service)]
 
 
 class _BodyTooLargeError(Exception):
@@ -119,6 +142,7 @@ _UPLOAD_OPENAPI: dict[str, Any] = {
     status_code=status.HTTP_201_CREATED,
     responses={status.HTTP_200_OK: {"model": AssetRead}},
     openapi_extra=_UPLOAD_OPENAPI,
+    dependencies=[Depends(editor_route)],
 )
 async def upload_asset(
     request: Request,
@@ -168,7 +192,7 @@ async def upload_asset(
     return AssetRead.from_record(result.asset)
 
 
-@router.get("", response_model=AssetList)
+@router.get("", response_model=AssetList, dependencies=[Depends(editor_route)])
 async def list_assets(
     service: ServiceDep,
     kind: AssetKind | None = None,
@@ -179,19 +203,22 @@ async def list_assets(
     return await service.list_assets(kind=kind, q=q, limit=limit, offset=offset)
 
 
-@router.patch("/{asset_id}", response_model=AssetRead)
+@router.patch(
+    "/{asset_id}", response_model=AssetRead, dependencies=[Depends(editor_route)]
+)
 async def update_asset(
     asset_id: uuid.UUID, data: AssetUpdate, service: ServiceDep
 ) -> AssetRead:
     return AssetRead.from_record(await service.update_metadata(asset_id, data))
 
 
-@router.delete("/{asset_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete(
+    "/{asset_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(editor_route)],
+)
 async def delete_asset(asset_id: uuid.UUID, service: ServiceDep) -> Response:
-    """409 `asset_in_use` while a map, skin or publication references it.
-
-    SECURITY: anonymous like the upload. See the README.
-    """
+    """409 `asset_in_use` while a map, skin or publication references it."""
     await service.delete(asset_id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
@@ -216,15 +243,21 @@ async def _serve(request: Request, content: AssetContent) -> Response:
     return Response(content=content.data, media_type=content.mime, headers=headers)
 
 
-@router.get("/{asset_id}", response_class=Response)
-async def get_asset(asset_id: str, request: Request, service: ServiceDep) -> Response:
+@router.get(
+    "/{asset_id}", response_class=Response, dependencies=[Depends(public_route)]
+)
+async def get_asset(
+    asset_id: str, request: Request, service: PublicServiceDep
+) -> Response:
     # `asset_id` stays a plain string: anything that is not a canonical UUID
     # (including path-traversal attempts) is a 404, not a validation error.
     return await _serve(request, await service.get_content(asset_id))
 
 
-@router.get("/{asset_id}/thumb", response_class=Response)
+@router.get(
+    "/{asset_id}/thumb", response_class=Response, dependencies=[Depends(public_route)]
+)
 async def get_asset_thumbnail(
-    asset_id: str, request: Request, service: ServiceDep
+    asset_id: str, request: Request, service: PublicServiceDep
 ) -> Response:
     return await _serve(request, await service.get_content(asset_id, thumb=True))

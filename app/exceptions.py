@@ -291,3 +291,12 @@ class LaunchReplayedError(DomainError):
 
 class UnauthorizedError(DomainError):
     """No valid bearer token (missing, unknown, expired, or its tenant is off)."""
+
+
+class ForbiddenError(DomainError):
+    """The caller is signed in but their role does not allow this."""
+
+
+class MoodleSourceNotProvidedError(DomainError):
+    """The route answers from Moodle's web services, which a plugin tenant does
+    not have: its Moodle state comes from the plugin, through the browser."""

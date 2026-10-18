@@ -9,13 +9,15 @@ from typing import Any
 import httpx
 import pytest
 from PIL import Image
-from sqlalchemy import func, select
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+from sqlalchemy import func, select, update
+from sqlalchemy.ext.asyncio import AsyncEngine
 
-from app.models import Asset
+from app.models import Asset, Tenant
+from app.models.tenant import LEGACY_TENANT_ID
 from tests import images
 from tests.asset_helpers import upload
 from tests.conftest import Box
+from tests.sessions import new_session
 
 # --- uploading --------------------------------------------------------------
 
@@ -80,7 +82,7 @@ async def test_identical_content_of_the_same_kind_is_deduplicated(
     assert again.json() == first.json()
     assert other_kind.status_code == 201
     assert other_kind.json()["id"] != first.json()["id"]
-    async with AsyncSession(engine) as s:
+    async with new_session(engine) as s:
         assert await s.scalar(select(func.count()).select_from(Asset)) == 2
 
 
@@ -107,7 +109,7 @@ async def test_concurrent_identical_uploads_make_one_asset(
 
     assert sorted(r.status_code for r in responses) == [200] * 5 + [201]
     assert len({r.json()["id"] for r in responses}) == 1
-    async with AsyncSession(engine) as s:
+    async with new_session(engine) as s:
         assert await s.scalar(select(func.count()).select_from(Asset)) == 1
     # The losers' files were cleaned up: only the winner's remain.
     stored = [p for p in (tmp_path / "assets").rglob("*") if p.is_file()]
@@ -273,11 +275,21 @@ async def test_metadata_is_stripped_from_what_is_served(
     assert dict(Image.open(io.BytesIO(served)).getexif()) == {}
 
 
+async def set_quota(engine: AsyncEngine, quota_bytes: int) -> None:
+    """The legacy tenant's quota: it is the tenant's, not a global setting."""
+    async with engine.begin() as conn:
+        await conn.execute(
+            update(Tenant)
+            .where(Tenant.id == LEGACY_TENANT_ID)
+            .values(asset_quota_bytes=quota_bytes)
+        )
+
+
 async def test_the_quota_stops_uploads_with_507(
-    client: httpx.AsyncClient, box: Box
+    client: httpx.AsyncClient, engine: AsyncEngine
 ) -> None:
     first = await upload(client, images.png((60, 60)))
-    box.change(max_total_bytes=first.json()["bytes"] + 10)
+    await set_quota(engine, first.json()["bytes"] + 10)
 
     over = await upload(client, images.png((61, 61), color=(1, 2, 3)))
     # Known content is not "new storage", so it is still fine.
@@ -289,10 +301,10 @@ async def test_the_quota_stops_uploads_with_507(
 
 
 async def test_a_full_quota_refuses_before_decoding(
-    client: httpx.AsyncClient, box: Box
+    client: httpx.AsyncClient, engine: AsyncEngine
 ) -> None:
     await upload(client, images.png((60, 60)))
-    box.change(max_total_bytes=1)
+    await set_quota(engine, 1)
 
     r = await upload(client, b"not even an image")
 
@@ -308,7 +320,7 @@ async def test_disabled_uploads_answer_503_and_store_nothing(
 
     assert r.status_code == 503
     assert r.json()["detail"]["code"] == "uploads_disabled"
-    async with AsyncSession(engine) as s:
+    async with new_session(engine) as s:
         assert await s.scalar(select(func.count()).select_from(Asset)) == 0
     assert not (tmp_path / "assets").exists()
 

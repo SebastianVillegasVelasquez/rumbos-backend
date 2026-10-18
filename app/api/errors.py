@@ -19,11 +19,13 @@ from app.exceptions import (
     CourseMapNotFoundError,
     DraftChangedSinceReviewError,
     DuplicateSkinRuleError,
+    ForbiddenError,
     InvalidAssetMetadataError,
     InvalidIfMatchError,
     InvalidUploadError,
     LaunchInvalidError,
     LaunchRateLimitedError,
+    MoodleSourceNotProvidedError,
     NeverPublishedError,
     NoChangesToPublishError,
     NotPublishedError,
@@ -100,6 +102,23 @@ def register_exception_handlers(app: FastAPI) -> None:
         )
 
     app.add_exception_handler(UnauthorizedError, unauthorized)
+    app.add_exception_handler(
+        ForbiddenError,
+        _handler(
+            status.HTTP_403_FORBIDDEN,
+            {"code": "forbidden", "message": "Your role cannot do this"},
+        ),
+    )
+    app.add_exception_handler(
+        MoodleSourceNotProvidedError,
+        _handler(
+            status.HTTP_501_NOT_IMPLEMENTED,
+            {
+                "code": "moodle_source_not_provided",
+                "message": "This site's Moodle data comes from the plugin",
+            },
+        ),
+    )
 
     app.add_exception_handler(
         CourseMapNotFoundError,
