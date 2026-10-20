@@ -35,6 +35,7 @@ from app.exceptions import (
 )
 from app.repositories.protocols import AuthRepository, TenantRepository
 from app.schemas.auth import LaunchResponse, NewAccessToken
+from app.schemas.tenant import TenantRecord
 
 audit = logging.getLogger("rumbos.audit")
 
@@ -108,7 +109,22 @@ class LaunchService:
             )
             raise
 
-    async def _launch(self, assertion: str) -> LaunchResponse:
+    async def diagnose(self, assertion: str) -> str:
+        """`ok`, or the reason the assertion fails. Runs the same checks as a
+        launch but issues nothing, redeems no `jti` and counts against no
+        limiter (so a replay is not detected)."""
+        try:
+            tenant, *_ = await self._authenticate(assertion)
+        except LaunchInvalidError as exc:
+            return exc.reason
+        if tenant.status is not TenantStatus.ACTIVE:
+            return "tenant_disabled"
+        return "ok"
+
+    async def _authenticate(
+        self, assertion: str
+    ) -> tuple[TenantRecord, dict[str, Any], Role, int]:
+        """Every check that needs only the assertion and the registered keys."""
         if len(assertion.encode()) > MAX_ASSERTION_BYTES:
             raise LaunchInvalidError("oversize")
 
@@ -143,6 +159,10 @@ class LaunchService:
 
         claims = self._verify(assertion, public_key, tenant.issuer)
         role, course = self._check_claims(claims)
+        return tenant, claims, role, course
+
+    async def _launch(self, assertion: str) -> LaunchResponse:
+        tenant, claims, role, course = await self._authenticate(assertion)
 
         # Only now, with a genuine assertion in hand, may the answer differ.
         if tenant.status is not TenantStatus.ACTIVE:

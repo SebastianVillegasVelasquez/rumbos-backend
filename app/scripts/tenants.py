@@ -8,6 +8,7 @@
     python -m app.scripts.tenants add-key --issuer ... --public-key-file new.pub.pem
     python -m app.scripts.tenants revoke-key --issuer ... --kid <kid>
     python -m app.scripts.tenants frame-ancestors
+    python -m app.scripts.tenants diagnose < assertion.txt
 
 This is the only way to manage tenants: there is no HTTP surface for it. A
 tenant is identified by its `--issuer` (the Moodle `wwwroot`, unique). Nothing
@@ -19,9 +20,12 @@ import asyncio
 import sys
 from collections.abc import Callable, Sequence
 from pathlib import Path
+from typing import NoReturn, cast
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.auth.launch import LaunchService, LaunchSettings
+from app.auth.rate_limit import FixedWindowLimiter
 from app.core.config import get_settings
 from app.core.database import create_engine
 from app.enums import KeyStatus, TenantStatus
@@ -29,7 +33,7 @@ from app.exceptions import (
     TenantIssuerTakenError,
     TenantKeyTakenError,
 )
-from app.repositories.protocols import TenantRepository
+from app.repositories.protocols import AuthRepository, TenantRepository
 from app.repositories.sqlalchemy.tenant_repository import SqlAlchemyTenantRepository
 from app.schemas.tenant import NewTenantKey, TenantRecord
 from app.tenancy.validation import (
@@ -148,11 +152,39 @@ async def _frame_ancestors(
     return OK
 
 
+async def _diagnose(
+    tenants: TenantRepository,
+    settings: LaunchSettings,
+    assertion: str,
+    out: Callable[[str], None],
+) -> int:
+    """Says which check an assertion fails. Never prints the assertion."""
+    service = LaunchService(
+        tenants,
+        cast(AuthRepository, _NoAuthRepository()),
+        settings,
+        FixedWindowLimiter(1),
+        FixedWindowLimiter(1),
+    )
+    reason = await service.diagnose(assertion.strip())
+    out(f"result: {reason}")
+    return OK if reason == "ok" else FAILED
+
+
+class _NoAuthRepository:
+    """`diagnose` never reaches the token or `jti` tables."""
+
+    def __getattr__(self, name: str) -> NoReturn:
+        raise AssertionError(f"diagnose must not call auth.{name}")
+
+
 async def execute(
     tenants: TenantRepository,
     args: argparse.Namespace,
     out: Callable[[str], None] = print,
     err: Callable[[str], None] = lambda message: print(message, file=sys.stderr),
+    read_stdin: Callable[[], str] = sys.stdin.read,
+    launch_settings: LaunchSettings | None = None,
 ) -> int:
     """Runs one parsed command. Returns the process exit code."""
     try:
@@ -173,6 +205,9 @@ async def execute(
                 return await _revoke_key(tenants, args, out)
             case "frame-ancestors":
                 return await _frame_ancestors(tenants, out)
+            case "diagnose":
+                assert launch_settings is not None
+                return await _diagnose(tenants, launch_settings, read_stdin(), out)
     except TenantInputError as exc:
         err(f"error: {exc}")
     except TenantIssuerTakenError:
@@ -223,6 +258,10 @@ def build_parser() -> argparse.ArgumentParser:
     commands.add_parser(
         "frame-ancestors", help="print the CSP header value for the SPA's nginx"
     )
+    commands.add_parser(
+        "diagnose",
+        help="read an assertion on stdin and say which check it fails (read-only)",
+    )
     return parser
 
 
@@ -233,7 +272,15 @@ async def _main(args: argparse.Namespace) -> int:
     engine = create_engine(settings.build_database_url)
     try:
         async with AsyncSession(engine, expire_on_commit=False) as session:
-            return await execute(SqlAlchemyTenantRepository(session), args)
+            return await execute(
+                SqlAlchemyTenantRepository(session),
+                args,
+                launch_settings=LaunchSettings(
+                    audience=settings.auth_audience,
+                    token_ttl_seconds=settings.access_token_ttl_seconds,
+                    leeway_seconds=settings.launch_leeway_seconds,
+                ),
+            )
     finally:
         await engine.dispose()
 

@@ -1,10 +1,14 @@
 """`python -m app.scripts.tenants`, driven through `execute` against real Postgres."""
 
+import time
+from collections.abc import Callable
 from pathlib import Path
 
+import jwt
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.auth.launch import LaunchSettings
 from app.enums import KeyStatus, TenantStatus
 from app.repositories.sqlalchemy.tenant_repository import SqlAlchemyTenantRepository
 from app.scripts import tenants as cli
@@ -222,3 +226,63 @@ def test_a_non_positive_quota_is_rejected() -> None:
                 "0",
             ]
         )
+
+
+def _stdin(text: str) -> Callable[[], str]:
+    return lambda: text + "\n"
+
+
+async def test_diagnose_names_the_failed_check_and_never_echoes_the_input(
+    session: AsyncSession, pubkey: Path
+) -> None:
+    run = Run(session)
+    assert await _add(run, pubkey, "--kid", "kid-1") == 0
+    run.out.clear()
+    settings = LaunchSettings(
+        audience="rumbos", token_ttl_seconds=1800, leeway_seconds=30
+    )
+    good = jwt.encode(
+        {
+            "iss": ISSUER,
+            "aud": "rumbos",
+            "sub": "a" * 32,
+            "course": 4,
+            "role": "editor",
+            "iat": int(time.time()),
+            "exp": int(time.time()) + 60,
+            "jti": "j" * 32,
+        },
+        keypair()[0],
+        algorithm="RS256",
+        headers={"typ": "JWT", "kid": "kid-1"},
+    )
+    unsigned = good.rsplit(".", 1)[0]  # no signature part
+    results = []
+    for text in (good, unsigned, "garbage"):
+        out: list[str] = []
+        args = cli.build_parser().parse_args(["diagnose"])
+        code = await cli.execute(
+            run.repo,
+            args,
+            out.append,
+            run.err.append,
+            read_stdin=_stdin(text),
+            launch_settings=settings,
+        )
+        results.append((code, out))
+        assert all(part not in "".join(out + run.err) for part in text.split("."))
+
+    assert results[0] == (0, ["result: ok"])
+    assert results[1][0] == 1
+    assert results[2] == (1, ["result: malformed"])
+    # Nothing was redeemed: the same assertion still diagnoses as ok.
+    out = []
+    await cli.execute(
+        run.repo,
+        cli.build_parser().parse_args(["diagnose"]),
+        out.append,
+        run.err.append,
+        read_stdin=_stdin(good),
+        launch_settings=settings,
+    )
+    assert out == ["result: ok"]
