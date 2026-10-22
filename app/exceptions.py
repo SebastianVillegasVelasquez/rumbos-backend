@@ -153,6 +153,21 @@ class AssetDimensionsTooLargeError(DomainError):
         self.height = height
 
 
+class AudioInvalidError(DomainError):
+    """Not MP3 or AAC/M4A, malformed, or protected. `reason` is for the log; the
+    client only ever sees the fixed message of `audio_invalid`."""
+
+    def __init__(self, reason: str) -> None:
+        super().__init__(reason)
+        self.reason = reason
+
+
+class AudioTooLongError(DomainError):
+    def __init__(self, limit_seconds: float) -> None:
+        super().__init__(f"audio exceeds {limit_seconds} seconds")
+        self.limit_seconds = limit_seconds
+
+
 class AssetQuotaExceededError(DomainError):
     """Storing the file would pass `ASSETS_MAX_TOTAL_BYTES`."""
 
