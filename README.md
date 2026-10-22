@@ -43,6 +43,9 @@ Environment variables (or `.env`); see `.env.example`.
 | `ASSETS_MAX_BACKGROUND_SIDE` | `8192` | Longest side, in pixels, of a background. |
 | `ASSETS_MAX_BUBBLE_SIDE` | `1024` | Longest side, in pixels, of a bubble image. |
 | `ASSETS_MAX_TOTAL_BYTES` | `2147483648` | Quota: sum of every stored file (2 GB). Over it, uploads answer 507. |
+| `AUDIO_UPLOADS_ENABLED` | on in dev, **off in production** | Switch for editors uploading **their own audio** (`POST /assets` with `kind=audio`). Unset, it follows `APP_ENV`; set it to `true`/`false` to decide explicitly. It blocks only uploading (503 `audio_uploads_disabled`): serving, playing and choosing library tracks never depend on it. Independent of `ASSETS_UPLOADS_ENABLED`. See "Music". |
+| `ASSETS_MAX_AUDIO_BYTES` | `8388608` | Largest accepted audio upload (8 MB). |
+| `ASSETS_MAX_AUDIO_SECONDS` | `600` | Longest accepted track (ten minutes). |
 | `PUBLICATIONS_KEEP` | `20` | Publications kept per map; older ones are pruned when a new one is published. The latest is never pruned (minimum 1). |
 | `CORS_ALLOWED_ORIGINS` | empty | Comma-separated browser origins. Empty adds no CORS middleware. Credentials are never allowed. `If-Match` is an allowed request header and `ETag` an exposed response header. The dev frontend uses a Vite proxy and needs nothing here. |
 
@@ -207,7 +210,7 @@ cron. A `jti` is kept until its assertion could no longer pass the time checks.
   protection is the registered tenant and its private key, not obscurity.
 - A leaked private key lets its holder launch as that site until the key is
   revoked.
-- Image bytes are fetchable by anyone who knows the id (above).
+- Image and audio bytes are fetchable by anyone who knows the id (above).
 
 ### Uploads and security
 
@@ -356,6 +359,154 @@ pins the hash of a snapshot in the old format, and `tests/test_migrations.py`
 checks a publication made before the migration. The same rule applies to any
 future optional snapshot field.
 
+### Music
+
+Each map can play background music. Music is a copyright exposure (we host and
+stream audio to students of public institutions), so the model is built around
+control and traceability.
+
+**Two sources.** A map's music is an `audio` asset that is either
+
+- a **library** track: curated by the operator with the CLI below, owned by no
+  tenant, readable and selectable by every tenant, and impossible for an editor
+  to change or delete (403 `asset_is_library`); or
+- an editor's **own upload**, which belongs to their tenant (listing, quota,
+  isolation as for images) and can be switched off with `AUDIO_UPLOADS_ENABLED`.
+
+`GET /assets?kind=audio&scope=library|tenant` lists them (`tenant`, the default,
+is the caller's own uploads). Quarantined tracks are never listed.
+
+**Upload** (`POST /assets`, `multipart/form-data`, editors only): `file`,
+`kind=audio`, `title`, `credit` (required, at most 300 characters), `license`
+(optional, at most 120) and `rightsDeclared=true`. Errors: 503
+`audio_uploads_disabled`; 422 `audio_rights_declaration_required` (missing or
+not exactly `true`), `audio_credit_required`, `audio_invalid`, `audio_too_long`
+(over ten minutes, with `maxSeconds`), `audio_quarantined` (the same audio was
+taken down) and `invalid_asset_metadata` (a missing or over-long title, credit
+or licence); 413 `asset_too_large` (8 MB); 507 when the tenant quota is full.
+The same bytes are one asset: sending them again answers `200` with the
+existing one.
+
+**What is kept about the person:** only `uploaded_by_sub`, the launch's
+pseudonymous user id (nothing for the anonymous legacy editor), and
+`rights_declared_at`, with the licence text. The uploaded file name is not
+stored. Neither appears in the API; the operator sees them with `assets list`.
+
+**Parsing and cleaning** (`app/assets/audio.py`, no extra runtime dependency).
+Nothing the client says is trusted: the container is decided from the bytes and
+parsed strictly, and what is stored is **rebuilt from the audio alone**.
+
+- *MP3*: only the run of MPEG Layer III frames is kept, so ID3v2/ID3v1/APE tags,
+  cover pictures and anything appended to the file are gone. The frame
+  parameters must stay constant and the audio must not be cut by data that is
+  not audio.
+- *M4A (AAC in MP4)*: `ftyp`, a `moov` rebuilt from an allow-list of boxes (so
+  `udta`/`meta` with tags, artwork and GPS atoms, `uuid` XMP packets and `free`
+  padding are gone, and the clock fields are zeroed) and an `mdat` holding only
+  the bytes the sample tables point at. The index goes first ("fast start").
+  Encrypted tracks (`drms`/`enca`/`sinf`, the `M4P ` brand), fragmented files,
+  non-AAC codecs (ALAC, MP3-in-MP4), several tracks and references to data
+  outside the file are refused.
+- The duration comes from the frames or the sample table, never from a header
+  that can claim anything.
+- The SHA-256 (also the `ETag`) is computed over the stored bytes.
+- Raw AAC (ADTS), WAV, OGG and everything else are `audio_invalid`.
+
+`mutagen` is a development dependency only: tests use it as an independent
+parser to check that cleaned files still read and carry no tags.
+
+**Serving and `Range`.** `GET /assets/{id}` (and `HEAD`) honours a single
+`Range`: `206` with `Content-Range`, `416` with `Content-Range: bytes */size`
+when nothing of the file lies in the range, and the whole file (`200`) for
+ranges it does not honour (other units, several ranges, nonsense). `If-Range`
+with the current `ETag` keeps the range, anything else gets the whole file;
+`If-None-Match` is evaluated first. Every response says `Accept-Ranges: bytes`
+and keeps `X-Content-Type-Options: nosniff`, the stored `Content-Type` and the
+immutable cache headers. iOS Safari will not play audio it cannot seek in. With
+CORS on, `Range`/`If-Range` are allowed request headers and
+`Content-Range`/`Accept-Ranges`/`ETag` are exposed. (A ranged request reads the
+whole stored file, at most 8 MB, and slices it.)
+
+*Behind nginx:* a plain `proxy_pass` forwards `Range` and the `206` back
+untouched. If you turn on `proxy_cache` for `/api/v1/assets/`, make sure ranged
+requests still work (the cache must either hold the full file or use the
+`slice` module), and do not gzip audio. This repository does not contain the
+nginx configuration, so this was not checked against it.
+
+**In the map.** `settings.audio` is `null` or `{ assetId, volume (0..1, default
+0.4), loop (default true), startAfterInteraction (default false) }`, set through
+`PUT /course-maps/{id}/appearance` like the rest of the settings (one
+transaction, nothing is written if anything is invalid). The asset must exist,
+be `audio`, belong to the tenant or the library and not be quarantined, else
+422 `audio_asset_not_found` / `audio_asset_wrong_kind` (another tenant's track
+simply does not exist for you). `CourseMapRead.audioInfo` and
+`PublishedMapRead.audioInfo` are `null` or `{ title, credit, durationSeconds }`
+(read-only): a draft reads them live from the asset, a publication freezes them.
+`publication-state.changes.audioChanged` reports any difference in the music,
+its settings or the frozen description; `settingsChanged` does not include music.
+
+A map's music counts as a use of the asset: the `maps` and `publications`
+counts, `DELETE /assets/{id}` (409 `asset_in_use`) and `gc_assets` all see it.
+`discard-changes` and `restore` put the snapshot's music back, or drop it with
+an `audio_unavailable` warning if the track has been deleted or taken down.
+
+**Hash stability.** `settings.audio` and the top-level `audioInfo` are omitted,
+never `null`, when a map has no music (the same rule as `view3d`), so every map
+published before this feature still reports `up_to_date`.
+`tests/test_snapshot.py` pins the stored form of settings without music and
+`tests/test_migrations.py` checks a publication made before the migration.
+
+**Curating the library and taking tracks down** (the operator's CLI, run with
+the app's environment):
+
+```
+python -m app.scripts.assets import-audio --file song.mp3 \
+    --title "Brisa" --credit "Ana Perez, CC BY 4.0" [--license "CC BY 4.0"]
+python -m app.scripts.assets list
+python -m app.scripts.assets quarantine <asset-id> --reason "Complaint from X, ticket 42"
+python -m app.scripts.assets release <asset-id>
+python -m app.scripts.assets history <asset-id>
+```
+
+`import-audio` runs the same checks as an upload and makes a library track; it
+does not depend on `AUDIO_UPLOADS_ENABLED` or any quota, the operator vouches
+for the rights, and library tracks are never garbage-collected. `list` shows
+every audio track (the library's and each tenant's) with its tenant, the
+uploader's pseudonymous id, when the rights were declared, its state and its
+usage.
+
+**Takedown procedure.**
+
+1. Find the asset: the id is in the URL (`/api/v1/assets/<id>`); `assets list`
+   shows who uploaded it and when they declared the rights.
+2. `assets quarantine <id> --reason "<who asked, ticket>"`. It takes effect at
+   once: the asset answers 404 (ranged requests included), disappears from
+   lists and pickers, cannot be chosen (and cannot be uploaded again:
+   `audio_quarantined`), and maps that use it keep working without music.
+   Published snapshots keep their frozen reference, but readers are no longer
+   shown the music; the draft's `publication-state` then reports `audioChanged`
+   so an editor can republish.
+3. **Purge the proxy or CDN cache** for `/api/v1/assets/<id>`: responses are
+   `immutable` for a year, so a cache in front will keep serving the file.
+   Browsers that already hold a copy cannot be recalled, but nothing refers to
+   the track any more.
+4. Keep the complaint. Every quarantine and release is recorded with its reason
+   and time in the asset's audit trail (`assets history <id>`) and in the log
+   (`rumbos.assets`).
+5. `assets release <id>` undoes it, for example if the complaint is withdrawn.
+   The bytes stay on disk while any map or publication still refers to the
+   track; once nothing does (editors republish, old publications are pruned by
+   `PUBLICATIONS_KEEP`), an own upload is removed by `gc_assets --apply`. There
+   is no command yet to erase a library track.
+
+> **Legal notice.** The code only checks that `rightsDeclared` is `true` and that
+> a credit exists; it cannot know whether the declaration is true. The text the
+> editor sees when declaring their rights (in the frontend), the credit
+> conventions, the terms under which institutions upload music and the way
+> complaints are handled are legal matters, and the wording has to be reviewed by
+> whoever is responsible for them before audio uploads are enabled in
+> production.
+
 ### Concurrent edits (`If-Match`)
 
 `CourseMapRead.revision` and `BubbleRead.version` start at 1 and travel as the
@@ -382,10 +533,12 @@ Both are **dry runs unless `--apply` is given**.
   inicial (migración)"). Only maps with at least one bubble and no publication
   are touched, so it is safe to run again.
 - `python -m app.scripts.tenants` and `python -m app.scripts.purge_auth`: see "Tenants and authentication".
+- `python -m app.scripts.assets`: the audio library and takedowns, see "Music".
 - `python -m app.scripts.gc_assets [--older-than-days 7] [--apply]` lists, and
   with `--apply` deletes, assets that no map, skin or publication uses and that
   are older than the threshold, reporting the bytes reclaimed. It uses the same
-  usage rule as `DELETE /assets/{id}`.
+  usage rule as `DELETE /assets/{id}` (maps' music included). Library tracks are
+  never collected.
 
 ### Demo skin pack
 
@@ -449,11 +602,14 @@ never changes after creation.
   `availability` (`available`, `hidden`, `missing`, `unknown`) and the
   `moodleStatus` (`live`, `cached`, `unavailable`). Moodle outages answer 200.
 - `POST /assets` (201, or 200 for already-known content; optional form fields
-  `title`, `credit`), `GET /assets?kind=&q=&limit=&offset=` (the library, newest
-  first, with `usage` counts), `PATCH /assets/{id}` (`title`, `credit`),
-  `DELETE /assets/{id}` (409 while in use), `GET /assets/{id}`,
-  `GET /assets/{id}/thumb` (backgrounds only). A map's `imageUrl` may be a
-  bundled frontend path or `/api/v1/assets/{id}`.
+  `title`, `credit`; audio also takes `license` and needs `rightsDeclared=true`,
+  see "Music"), `GET /assets?kind=&q=&scope=tenant|library&limit=&offset=` (the
+  tenant's own assets, or the shared audio library; newest first, with `usage`
+  counts), `PATCH /assets/{id}` (`title`, `credit`),
+  `DELETE /assets/{id}` (409 while in use), `GET /assets/{id}` (also `HEAD`;
+  honours `Range`), `GET /assets/{id}/thumb` (backgrounds only). A map's
+  `imageUrl` may be a bundled frontend path or `/api/v1/assets/{id}`; its music
+  is `settings.audio` (see "Music").
 - `GET /course-maps/{id}/publication-state`, `POST .../publish`,
   `GET .../publications?limit=`, `POST .../discard-changes`,
   `POST .../publications/{n}/restore`: see "Draft and published maps". Map list
