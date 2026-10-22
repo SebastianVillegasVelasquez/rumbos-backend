@@ -25,6 +25,7 @@ packages = ["app"]
 
 [dependency-groups]
 dev = [
+    "mutagen>=1.48.1",
     "mypy>=2.4.0",
     "pre-commit>=4.6.2",
     "pytest>=9.1.1",
