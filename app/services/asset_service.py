@@ -16,10 +16,11 @@ from app.assets.storage import (
     thumb_key,
 )
 from app.core.config import Settings
-from app.enums import AssetKind
+from app.enums import AssetKind, AssetScope
 from app.exceptions import (
     AssetAlreadyExistsError,
     AssetInvalidImageError,
+    AssetIsLibraryError,
     AssetNotFoundError,
     AssetQuotaExceededError,
     AssetTooLargeError,
@@ -196,10 +197,16 @@ class AssetService:
         return UploadResult(record, created=True)
 
     async def list_assets(
-        self, *, kind: AssetKind | None, q: str | None, limit: int, offset: int
+        self,
+        *,
+        kind: AssetKind | None,
+        q: str | None,
+        limit: int,
+        offset: int,
+        scope: AssetScope = AssetScope.TENANT,
     ) -> AssetList:
         records, total = await self._assets.list(
-            kind, (q or "").strip() or None, limit, offset
+            kind, (q or "").strip() or None, limit, offset, scope
         )
         usage = await self._assets.usage([r.id for r in records])
         return AssetList(
@@ -214,6 +221,7 @@ class AssetService:
     async def update_metadata(
         self, asset_id: uuid.UUID, data: AssetUpdate
     ) -> AssetRecord:
+        await self._require_own(asset_id)
         updated = await self._assets.update_metadata(asset_id, data)
         if updated is None:
             raise AssetNotFoundError(str(asset_id))
@@ -230,6 +238,7 @@ class AssetService:
         its picture. The usage check is not a lock: a map that starts using the
         image in the same instant as the delete can still lose it.
         """
+        await self._require_own(asset_id)
         if not await self._assets.delete_if_unused(asset_id):
             raise AssetNotFoundError(str(asset_id))
         for key in (thumb_key(asset_id), content_key(asset_id)):
@@ -259,6 +268,17 @@ class AssetService:
         if thumb:
             return AssetContent(asset, data, "image/webp", f'"{asset.sha256}-thumb"')
         return AssetContent(asset, data, asset.mime, f'"{asset.sha256}"')
+
+    async def _require_own(self, asset_id: uuid.UUID) -> AssetRecord:
+        """The asset, if the caller may change it: a library track is visible
+        but not theirs (`AssetIsLibraryError`); anything else not visible does
+        not exist."""
+        asset = await self._assets.get_by_id(asset_id)
+        if asset is None:
+            raise AssetNotFoundError(str(asset_id))
+        if asset.is_library:
+            raise AssetIsLibraryError
+        return asset
 
     async def _discard(self, keys: list[str]) -> None:
         for key in keys:

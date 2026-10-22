@@ -1,9 +1,18 @@
 """Plain helpers for tests that upload images through the API."""
 
+import uuid
 from typing import Any
 
 import httpx
+from sqlalchemy import update
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+from uuid_utils.compat import uuid7
 
+from app.enums import AssetKind
+from app.models import Asset
+from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
+from app.schemas.asset import AssetCreate, AssetRecord
+from app.tenancy.scope import SYSTEM, bind_scope
 from tests import images
 
 
@@ -44,3 +53,37 @@ async def png_asset(
     assert r.status_code == 201, r.text
     body: dict[str, Any] = r.json()
     return body
+
+
+async def library_track(
+    engine: AsyncEngine,
+    *,
+    title: str = "Pista",
+    credit: str = "Autor",
+    sha256: str | None = None,
+    quarantined: bool = False,
+) -> AssetRecord:
+    """A library track row (no bytes in storage), made the way the operator's
+    tools make it: in the system scope, with no tenant."""
+    async with AsyncSession(engine, expire_on_commit=False) as session:
+        bind_scope(session, SYSTEM)
+        record = await SqlAlchemyAssetRepository(session).create(
+            AssetCreate(
+                id=uuid7(),
+                kind=AssetKind.AUDIO,
+                mime="audio/mpeg",
+                size_bytes=1000,
+                sha256=sha256 or uuid.uuid4().hex * 2,
+                title=title,
+                credit=credit,
+                duration_seconds=12.5,
+            )
+        )
+        if quarantined:
+            await session.execute(
+                update(Asset)
+                .where(Asset.id == record.id)
+                .values(quarantined_at=record.created_at, quarantine_reason="test")
+            )
+            await session.commit()
+    return record

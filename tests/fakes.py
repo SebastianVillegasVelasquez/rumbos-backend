@@ -12,7 +12,7 @@ from typing import Any, Never
 
 from uuid_utils.compat import uuid7
 
-from app.enums import AssetKind, BubbleStatus, KeyStatus, TenantStatus
+from app.enums import AssetKind, AssetScope, BubbleStatus, KeyStatus, TenantStatus
 from app.exceptions import (
     ActivityAlreadyPlacedError,
     CourseMapNotFoundError,
@@ -404,7 +404,12 @@ class InMemoryAssetRepository:
         raise NotImplementedError
 
     async def list(
-        self, kind: AssetKind | None, q: str | None, limit: int, offset: int
+        self,
+        kind: AssetKind | None,
+        q: str | None,
+        limit: int,
+        offset: int,
+        scope: AssetScope = AssetScope.TENANT,
     ) -> tuple[list[AssetRecord], int]:
         raise NotImplementedError
 

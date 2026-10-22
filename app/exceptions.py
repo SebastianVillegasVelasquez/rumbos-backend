@@ -131,6 +131,11 @@ class UploadsDisabledError(DomainError):
     """`ASSETS_UPLOADS_ENABLED` is off."""
 
 
+class AssetIsLibraryError(DomainError):
+    """Library tracks are the operator's: editors can neither change nor delete
+    them."""
+
+
 class AssetTooLargeError(DomainError):
     def __init__(self, limit_bytes: int) -> None:
         super().__init__(f"upload exceeds {limit_bytes} bytes")

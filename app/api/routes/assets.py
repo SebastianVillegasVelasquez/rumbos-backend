@@ -27,7 +27,7 @@ from app.auth.dependencies import (
     public_route,
 )
 from app.core.config import Settings, get_settings
-from app.enums import AssetKind
+from app.enums import AssetKind, AssetScope
 from app.exceptions import AssetTooLargeError, InvalidUploadError
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
 from app.repositories.sqlalchemy.tenant_repository import SqlAlchemyTenantRepository
@@ -201,8 +201,13 @@ async def list_assets(
     q: Annotated[str | None, Query(max_length=120)] = None,
     limit: Annotated[int, Query(ge=1, le=100)] = 24,
     offset: Annotated[int, Query(ge=0)] = 0,
+    scope: AssetScope = AssetScope.TENANT,
 ) -> AssetList:
-    return await service.list_assets(kind=kind, q=q, limit=limit, offset=offset)
+    """`scope=tenant` (default): this tenant's own uploads. `scope=library`:
+    the operator's audio library, readable by every tenant."""
+    return await service.list_assets(
+        kind=kind, q=q, limit=limit, offset=offset, scope=scope
+    )
 
 
 @router.patch(

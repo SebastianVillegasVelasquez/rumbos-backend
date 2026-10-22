@@ -50,6 +50,13 @@ class AssetKind(StrEnum):
     AUDIO = "audio"
 
 
+class AssetScope(StrEnum):
+    """Whose assets a listing shows."""
+
+    TENANT = "tenant"  # the caller's own uploads
+    LIBRARY = "library"  # the operator's, shared by every tenant
+
+
 class PublicationStatus(StrEnum):
     """How a map's draft relates to what students see."""
 

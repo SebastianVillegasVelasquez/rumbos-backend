@@ -9,6 +9,7 @@ from app.exceptions import (
     AssetDimensionsTooLargeError,
     AssetInUseError,
     AssetInvalidImageError,
+    AssetIsLibraryError,
     AssetNotFoundError,
     AssetQuotaExceededError,
     AssetTooLargeError,
@@ -356,6 +357,10 @@ def register_exception_handlers(app: FastAPI) -> None:
             "The map's imageUrl must be a background image, not a bubble image",
             lambda exc: {"assetId": str(exc.asset_id)},
         ),
+    )
+    app.add_exception_handler(
+        AssetIsLibraryError,
+        _coded(403, "asset_is_library", "Library tracks cannot be changed or deleted"),
     )
     app.add_exception_handler(
         UploadsDisabledError,

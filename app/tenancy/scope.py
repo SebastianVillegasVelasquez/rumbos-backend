@@ -12,7 +12,9 @@ What each table sees (`t` the scope's tenant, `c` its course, when it has one):
 - `course_maps`, `bubbles`: `tenant_id = t` and `moodle_course_id = c`;
 - `course_map_skin_rules`, `course_map_view3d_bindings`, `publications`: those
   of the maps visible by the rule above;
-- `assets`: `tenant_id = t` (a tenant's library is shared by its courses);
+- `assets`: `tenant_id = t` (a tenant's library is shared by its courses) or
+  NULL (the operator's audio library, readable by everyone), and only
+  `tenant_id = t` to change or delete one;
 - `skins`: `tenant_id = t` or NULL (built-ins), and only `tenant_id = t` to
   change or delete one.
 
@@ -33,6 +35,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import ORMExecuteState, Session, with_loader_criteria
 from sqlalchemy.orm.util import LoaderCriteriaOption
 
+from app.enums import AssetKind
 from app.exceptions import CourseMapNotFoundError
 from app.models import (
     Asset,
@@ -146,23 +149,23 @@ def _criteria(scope: Scope, state: ORMExecuteState) -> list[LoaderCriteriaOption
         for model in (CourseMapSkinRule, CourseMapView3dBinding, Publication):
             options.append(_via_course(model, tid, course))
 
-    options.append(
-        with_loader_criteria(Asset, lambda c: c.tenant_id == tid, include_aliases=True)
-    )
-    if writing:
-        options.append(
-            with_loader_criteria(
-                Skin, lambda c: c.tenant_id == tid, include_aliases=True
+    # Built-in skins and library tracks are everybody's to read and nobody's
+    # (in a tenant scope) to change.
+    for shared in (Asset, Skin):
+        if writing:
+            options.append(
+                with_loader_criteria(
+                    shared, lambda c: c.tenant_id == tid, include_aliases=True
+                )
             )
-        )
-    else:
-        options.append(
-            with_loader_criteria(
-                Skin,
-                lambda c: or_(c.tenant_id == tid, c.tenant_id.is_(None)),
-                include_aliases=True,
+        else:
+            options.append(
+                with_loader_criteria(
+                    shared,
+                    lambda c: or_(c.tenant_id == tid, c.tenant_id.is_(None)),
+                    include_aliases=True,
+                )
             )
-        )
     return options
 
 
@@ -212,7 +215,10 @@ def _stamp_new_rows(session: Session, flush_context: object, instances: object) 
                 f"session has no scope but creates a {type(obj).__name__}"
             )
         if scope.tenant_id is None:
-            if obj.tenant_id is None and not isinstance(obj, Skin):
+            shared = isinstance(obj, Skin) or (
+                isinstance(obj, Asset) and obj.kind is AssetKind.AUDIO
+            )
+            if obj.tenant_id is None and not shared:
                 raise ScopeMissingError(
                     f"a {type(obj).__name__} needs a tenant (system scope given)"
                 )

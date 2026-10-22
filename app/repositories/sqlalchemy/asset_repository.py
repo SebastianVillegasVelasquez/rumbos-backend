@@ -21,7 +21,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.paths import ASSETS_PATH
-from app.enums import AssetKind
+from app.enums import AssetKind, AssetScope
 from app.exceptions import AssetAlreadyExistsError, AssetInUseError
 from app.models import Asset, CourseMap, Publication, Skin
 from app.models.asset import UQ_ASSET_CONTENT, UQ_LIBRARY_CONTENT
@@ -200,15 +200,30 @@ class SqlAlchemyAssetRepository:
             raise
         if deleted is not None:
             return True
-        # Nothing deleted: either it never existed or something uses it.
+        # Nothing deleted: it never existed, or something uses it, or it is a
+        # library track, which can be seen but is not the caller's to delete.
         if await self.get_by_id(asset_id) is None:
             return False
-        raise AssetInUseError((await self.usage([asset_id]))[asset_id])
+        usage = (await self.usage([asset_id]))[asset_id]
+        if usage.total == 0:
+            return False
+        raise AssetInUseError(usage)
 
     async def list(
-        self, kind: AssetKind | None, q: str | None, limit: int, offset: int
+        self,
+        kind: AssetKind | None,
+        q: str | None,
+        limit: int,
+        offset: int,
+        scope: AssetScope = AssetScope.TENANT,
     ) -> tuple[list[AssetRecord], int]:
-        filters: list[ColumnElement[bool]] = []
+        # A tenant session sees its own rows and the library's; `scope` picks.
+        filters: list[ColumnElement[bool]] = [
+            Asset.tenant_id.is_(None)
+            if scope is AssetScope.LIBRARY
+            else Asset.tenant_id.is_not(None),
+            Asset.quarantined_at.is_(None),
+        ]
         if kind is not None:
             filters.append(Asset.kind == kind)
         if q:

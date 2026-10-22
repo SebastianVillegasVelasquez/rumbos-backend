@@ -16,7 +16,7 @@ from collections.abc import Collection
 from datetime import datetime
 from typing import Any, Protocol
 
-from app.enums import AssetKind, BubbleStatus, TenantStatus
+from app.enums import AssetKind, AssetScope, BubbleStatus, TenantStatus
 from app.publishing.snapshot import DraftInputs
 from app.schemas.asset import AssetCreate, AssetRecord, AssetUpdate, AssetUsage
 from app.schemas.auth import NewAccessToken, TokenGrant
@@ -229,10 +229,17 @@ class AssetRepository(Protocol):
         ...
 
     async def list(
-        self, kind: AssetKind | None, q: str | None, limit: int, offset: int
+        self,
+        kind: AssetKind | None,
+        q: str | None,
+        limit: int,
+        offset: int,
+        scope: AssetScope = AssetScope.TENANT,
     ) -> tuple[list[AssetRecord], int]:
         """Assets newest first and the total before paging. `q` is a
-        case-insensitive substring match on title and credit."""
+        case-insensitive substring match on title and credit. `scope` picks the
+        caller's own assets or the shared library; quarantined assets are never
+        listed."""
         ...
 
 
