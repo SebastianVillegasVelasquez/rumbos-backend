@@ -130,6 +130,9 @@ ENABLED = AssetSettings(
     max_bubble_bytes=50_000,
     max_background_side=2000,
     max_bubble_side=100,
+    audio_uploads_enabled=True,
+    max_audio_bytes=200_000,
+    max_audio_seconds=600.0,
 )
 
 

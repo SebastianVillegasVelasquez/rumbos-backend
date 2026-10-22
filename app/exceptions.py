@@ -158,6 +158,18 @@ class AssetDimensionsTooLargeError(DomainError):
         self.height = height
 
 
+class AudioUploadsDisabledError(DomainError):
+    """`AUDIO_UPLOADS_ENABLED` is off."""
+
+
+class AudioRightsDeclarationRequiredError(DomainError):
+    """An audio upload came without `rightsDeclared=true`."""
+
+
+class AudioCreditRequiredError(DomainError):
+    """An audio track needs a credit (who made it, and under what terms)."""
+
+
 class AudioInvalidError(DomainError):
     """Not MP3 or AAC/M4A, malformed, or protected. `reason` is for the log; the
     client only ever sees the fixed message of `audio_invalid`."""

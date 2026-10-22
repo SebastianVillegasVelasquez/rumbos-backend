@@ -14,6 +14,11 @@ from app.exceptions import (
     AssetQuotaExceededError,
     AssetTooLargeError,
     AssetTypeNotAllowedError,
+    AudioCreditRequiredError,
+    AudioInvalidError,
+    AudioRightsDeclarationRequiredError,
+    AudioTooLongError,
+    AudioUploadsDisabledError,
     BackgroundAssetNotFoundError,
     BackgroundAssetWrongKindError,
     BubbleNotFoundError,
@@ -314,7 +319,7 @@ def register_exception_handlers(app: FastAPI) -> None:
             422,
             "invalid_upload",
             "Send multipart/form-data with a `file` and a `kind` of "
-            "'background' or 'bubble'",
+            "'background', 'bubble' or 'audio'",
         ),
     )
     app.add_exception_handler(
@@ -365,6 +370,36 @@ def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(
         UploadsDisabledError,
         _coded(503, "uploads_disabled", "Image uploads are disabled"),
+    )
+    app.add_exception_handler(
+        AudioUploadsDisabledError,
+        _coded(503, "audio_uploads_disabled", "Audio uploads are disabled"),
+    )
+    app.add_exception_handler(
+        AudioRightsDeclarationRequiredError,
+        _coded(
+            422,
+            "audio_rights_declaration_required",
+            "Declare that you have the rights to this audio",
+        ),
+    )
+    app.add_exception_handler(
+        AudioCreditRequiredError,
+        _coded(422, "audio_credit_required", "An audio track needs a credit"),
+    )
+    app.add_exception_handler(
+        AudioInvalidError,
+        # The parser's reason stays in the log, never in the response.
+        _coded(422, "audio_invalid", "The file is not a valid MP3 or M4A (AAC) audio"),
+    )
+    app.add_exception_handler(
+        AudioTooLongError,
+        _coded(
+            422,
+            "audio_too_long",
+            "The audio is too long",
+            lambda exc: {"maxSeconds": exc.limit_seconds},
+        ),
     )
     app.add_exception_handler(
         AssetTooLargeError,

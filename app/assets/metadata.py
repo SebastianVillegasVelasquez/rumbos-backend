@@ -15,7 +15,11 @@ from app.schemas.asset import (
     TITLE_MAX_LENGTH,
 )
 
-_DEFAULT_TITLES = {AssetKind.BACKGROUND: "Fondo", AssetKind.BUBBLE: "Imagen"}
+_DEFAULT_TITLES = {
+    AssetKind.BACKGROUND: "Fondo",
+    AssetKind.BUBBLE: "Imagen",
+    AssetKind.AUDIO: "Audio",
+}
 
 
 def _printable(text: str) -> str:

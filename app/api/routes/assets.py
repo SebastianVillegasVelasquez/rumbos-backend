@@ -40,7 +40,8 @@ router = APIRouter(prefix="/assets", tags=["assets"])
 # file itself.
 _BODY_OVERHEAD_BYTES = 64 * 1024
 
-_FORM_FIELDS = {"file", "kind", "title", "credit"}
+_FORM_FIELDS = {"file", "kind", "title", "credit", "license", "rightsDeclared"}
+_MAX_FORM_FIELDS = len(_FORM_FIELDS) - 1  # all but the file
 
 _CACHE_CONTROL = "public, max-age=31536000, immutable"
 # An image response must never be able to run anything, whatever it contains.
@@ -125,9 +126,15 @@ _UPLOAD_OPENAPI: dict[str, Any] = {
                     "required": ["file", "kind"],
                     "properties": {
                         "file": {"type": "string", "format": "binary"},
-                        "kind": {"type": "string", "enum": ["background", "bubble"]},
+                        "kind": {
+                            "type": "string",
+                            "enum": ["background", "bubble", "audio"],
+                        },
                         "title": {"type": "string", "maxLength": 120},
                         "credit": {"type": "string", "maxLength": 300},
+                        # Audio only.
+                        "license": {"type": "string", "maxLength": 120},
+                        "rightsDeclared": {"type": "string", "enum": ["true"]},
                     },
                 }
             }
@@ -149,10 +156,15 @@ async def upload_asset(
     response: Response,
     service: ServiceDep,
     settings: AssetSettingsDep,
+    principal: PrincipalDep,
 ) -> AssetRead:
     """201 with the new asset, or 200 with the existing one when the same
     content of the same kind was already uploaded (its title and credit are
-    left as they were). Optional form fields: `title`, `credit`."""
+    left as they were). Optional form fields: `title`, `credit`.
+
+    Audio (`kind=audio`) also needs `title`, `credit` and `rightsDeclared=true`
+    (the uploader's declaration that they have the rights); `license` is
+    optional."""
     service.ensure_uploads_enabled()  # before reading a byte of the body
     limit = settings.largest_upload_bytes + _BODY_OVERHEAD_BYTES
     declared = request.headers.get("content-length", "")
@@ -161,7 +173,7 @@ async def upload_asset(
 
     limited = Request(request.scope, _limited(request.receive, limit))
     try:
-        form = await limited.form(max_files=1, max_fields=3)
+        form = await limited.form(max_files=1, max_fields=_MAX_FORM_FIELDS)
     except _BodyTooLargeError as exc:
         raise AssetTooLargeError(settings.largest_upload_bytes) from exc
     try:
@@ -173,12 +185,26 @@ async def upload_asset(
         try:
             kind = AssetKind(raw_kind if isinstance(raw_kind, str) else "")
         except ValueError as exc:
-            raise InvalidUploadError("kind must be 'background' or 'bubble'") from exc
-        if kind is AssetKind.AUDIO:  # until audio uploads exist
-            raise InvalidUploadError("kind must be 'background' or 'bubble'")
+            raise InvalidUploadError(
+                "kind must be 'background', 'bubble' or 'audio'"
+            ) from exc
         file.file.seek(0, 2)
         size = file.file.tell()
         raw_title, raw_credit = form.get("title"), form.get("credit")
+        if kind is AssetKind.AUDIO:
+            raw_license, rights = form.get("license"), form.get("rightsDeclared")
+            result = await service.upload_audio(
+                file.file,
+                size,
+                title=raw_title if isinstance(raw_title, str) else None,
+                credit=raw_credit if isinstance(raw_credit, str) else None,
+                license=raw_license if isinstance(raw_license, str) else None,
+                rights_declared=rights == "true",
+                uploaded_by_sub=principal.sub,
+            )
+            if not result.created:
+                response.status_code = status.HTTP_200_OK
+            return AssetRead.from_record(result.asset)
         result = await service.upload(
             file.file,
             size,

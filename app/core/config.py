@@ -45,6 +45,13 @@ class Settings(BaseSettings):
     assets_max_background_side: int = Field(default=8192, ge=1, le=16384)
     assets_max_bubble_side: int = Field(default=1024, ge=1, le=16384)
     assets_max_total_bytes: int = Field(default=2 * 1024**3, ge=1)
+    # Audio uploads (music for maps) are a copyright exposure, so they have
+    # their own switch. Unset: on in dev, off in production. It blocks only
+    # uploading; playing and selecting library tracks never depend on it.
+    audio_uploads_enabled: bool | None = None
+    assets_max_audio_bytes: int = Field(default=8 * 1024 * 1024, ge=1)
+    # Longest accepted track, in seconds.
+    assets_max_audio_seconds: float = Field(default=600.0, gt=0)
 
     # `dev` or `production`. Only decides the default of `legacy_anonymous_mode`.
     app_env: Literal["dev", "production"] = "dev"
@@ -78,6 +85,13 @@ class Settings(BaseSettings):
             port=self.postgres_port,
             database=self.postgres_db,
         ).render_as_string(hide_password=False)
+
+    @property
+    def audio_uploads_on(self) -> bool:
+        """Whether editors may upload their own audio."""
+        if self.audio_uploads_enabled is not None:
+            return self.audio_uploads_enabled
+        return self.app_env == "dev"
 
     @property
     def legacy_mode(self) -> bool:

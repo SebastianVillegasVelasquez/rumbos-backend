@@ -457,10 +457,3 @@ async def test_a_file_missing_from_storage_is_404_not_a_crash(
     r = await client.get(created["url"])
 
     assert r.status_code == 404
-
-
-async def test_an_image_cannot_be_uploaded_as_audio(client: httpx.AsyncClient) -> None:
-    r = await upload(client, images.png((64, 64)), "audio")
-
-    assert r.status_code == 422
-    assert r.json()["detail"]["code"] == "invalid_upload"

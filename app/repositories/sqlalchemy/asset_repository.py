@@ -74,14 +74,16 @@ class SqlAlchemyAssetRepository:
         )
         return {a.id: AssetRecord.model_validate(a) for a in result}
 
-    async def find_by_hash(self, kind: AssetKind, sha256: str) -> AssetRecord | None:
+    async def find_by_hash(
+        self, kind: AssetKind, sha256: str, *, library: bool = False
+    ) -> AssetRecord | None:
         # The caller's own copy first, then the library's: a tenant that sends
         # a track the library already has is given the library's.
+        stmt = select(Asset).where(Asset.kind == kind, Asset.sha256 == sha256)
+        if library:
+            stmt = stmt.where(Asset.tenant_id.is_(None))
         asset = await self._session.scalar(
-            select(Asset)
-            .where(Asset.kind == kind, Asset.sha256 == sha256)
-            .order_by(Asset.tenant_id.is_(None), Asset.id)
-            .limit(1)
+            stmt.order_by(Asset.tenant_id.is_(None), Asset.id).limit(1)
         )
         return AssetRecord.model_validate(asset) if asset else None
 

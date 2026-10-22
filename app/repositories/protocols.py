@@ -194,8 +194,11 @@ class AssetRepository(Protocol):
         ...
 
     async def find_by_hash(
-        self, kind: AssetKind, sha256: str
-    ) -> AssetRecord | None: ...
+        self, kind: AssetKind, sha256: str, *, library: bool = False
+    ) -> AssetRecord | None:
+        """The asset of this kind with these bytes: the caller's own, else the
+        library's. With `library`, only the library's."""
+        ...
 
     async def total_bytes(self) -> int:
         """Sum of the stored size of every asset (what the quota counts)."""

@@ -378,7 +378,9 @@ class InMemoryAssetRepository:
     ) -> dict[uuid.UUID, AssetRecord]:
         return {i: self.items[i] for i in asset_ids if i in self.items}
 
-    async def find_by_hash(self, kind: AssetKind, sha256: str) -> AssetRecord | None:
+    async def find_by_hash(
+        self, kind: AssetKind, sha256: str, *, library: bool = False
+    ) -> AssetRecord | None:
         raise NotImplementedError
 
     async def total_bytes(self) -> int:

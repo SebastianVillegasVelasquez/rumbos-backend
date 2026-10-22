@@ -10,6 +10,7 @@ from app.schemas.base import ApiModel
 
 TITLE_MAX_LENGTH = 120
 CREDIT_MAX_LENGTH = 300
+LICENSE_MAX_LENGTH = 120
 FILENAME_MAX_LENGTH = 255
 
 AssetTitle = Annotated[
