@@ -332,11 +332,14 @@ async def _serve(request: Request, content: AssetContent) -> Response:
     return Response(content=content.data, media_type=content.mime, headers=headers)
 
 
-@router.api_route(
+@router.head(
     "/{asset_id}",
-    methods=["GET", "HEAD"],
     response_class=Response,
+    include_in_schema=False,  # the same operation as GET, without the body
     dependencies=[Depends(public_route)],
+)
+@router.get(
+    "/{asset_id}", response_class=Response, dependencies=[Depends(public_route)]
 )
 async def get_asset(
     asset_id: str, request: Request, service: PublicServiceDep
