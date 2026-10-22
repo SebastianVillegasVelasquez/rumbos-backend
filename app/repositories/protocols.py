@@ -18,7 +18,7 @@ from typing import Any, Protocol
 
 from app.enums import AssetKind, BubbleStatus, TenantStatus
 from app.publishing.snapshot import DraftInputs
-from app.schemas.asset import AssetRecord, AssetUpdate, AssetUsage
+from app.schemas.asset import AssetCreate, AssetRecord, AssetUpdate, AssetUsage
 from app.schemas.auth import NewAccessToken, TokenGrant
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
@@ -201,19 +201,7 @@ class AssetRepository(Protocol):
         """Sum of the stored size of every asset (what the quota counts)."""
         ...
 
-    async def create(
-        self,
-        asset_id: uuid.UUID,
-        kind: AssetKind,
-        mime: str,
-        width: int,
-        height: int,
-        size_bytes: int,
-        sha256: str,
-        title: str,
-        credit: str | None,
-        original_filename: str | None,
-    ) -> AssetRecord:
+    async def create(self, data: AssetCreate) -> AssetRecord:
         """Raises `AssetAlreadyExistsError` if the kind and hash already exist."""
         ...
 

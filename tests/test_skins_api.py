@@ -15,6 +15,7 @@ from app.enums import AssetKind
 from app.main import app
 from app.models import Bubble, CourseMap, CourseMapSkinRule, Skin
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
+from app.schemas.asset import AssetCreate
 from app.tenancy.scope import SYSTEM
 from tests import skin_configs
 from tests.api_client import ApiClient
@@ -68,16 +69,16 @@ async def make_asset(
 ) -> uuid.UUID:
     async with new_session(engine, expire_on_commit=False) as session:
         record = await SqlAlchemyAssetRepository(session).create(
-            uuid7(),
-            kind,
-            "image/png",
-            width,
-            height,
-            1000,
-            uuid.uuid4().hex * 2,
-            "Test asset",
-            None,
-            None,
+            AssetCreate(
+                id=uuid7(),
+                kind=kind,
+                mime="image/png",
+                width=width,
+                height=height,
+                size_bytes=1000,
+                sha256=uuid.uuid4().hex * 2,
+                title="Test asset",
+            )
         )
     return record.id
 

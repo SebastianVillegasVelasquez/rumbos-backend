@@ -37,6 +37,21 @@ class AssetRecord(ApiModel):
     created_at: datetime
 
 
+class AssetCreate(ApiModel):
+    """What a repository needs to store a new asset."""
+
+    id: uuid.UUID
+    kind: AssetKind
+    mime: str
+    width: int
+    height: int
+    size_bytes: int
+    sha256: str
+    title: str
+    credit: str | None = None
+    original_filename: str | None = None
+
+
 class AssetRead(ApiModel):
     """An asset as the API shows it. URLs are relative to the API root."""
 

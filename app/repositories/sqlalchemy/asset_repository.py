@@ -26,7 +26,7 @@ from app.exceptions import AssetAlreadyExistsError, AssetInUseError
 from app.models import Asset, CourseMap, Publication, Skin
 from app.models.asset import UQ_ASSET_CONTENT
 from app.repositories.sqlalchemy._errors import constraint_name
-from app.schemas.asset import AssetRecord, AssetUpdate, AssetUsage
+from app.schemas.asset import AssetCreate, AssetRecord, AssetUpdate, AssetUsage
 from app.tenancy.scope import TENANT_WIDE
 
 
@@ -86,30 +86,18 @@ class SqlAlchemyAssetRepository:
         )
         return int(total or 0)
 
-    async def create(
-        self,
-        asset_id: uuid.UUID,
-        kind: AssetKind,
-        mime: str,
-        width: int,
-        height: int,
-        size_bytes: int,
-        sha256: str,
-        title: str,
-        credit: str | None,
-        original_filename: str | None,
-    ) -> AssetRecord:
+    async def create(self, data: AssetCreate) -> AssetRecord:
         asset = Asset(
-            id=asset_id,
-            kind=kind,
-            mime=mime,
-            width=width,
-            height=height,
-            size_bytes=size_bytes,
-            sha256=sha256,
-            title=title,
-            credit=credit,
-            original_filename=original_filename,
+            id=data.id,
+            kind=data.kind,
+            mime=data.mime,
+            width=data.width,
+            height=data.height,
+            size_bytes=data.size_bytes,
+            sha256=data.sha256,
+            title=data.title,
+            credit=data.credit,
+            original_filename=data.original_filename,
         )
         self._session.add(asset)
         try:
@@ -117,7 +105,7 @@ class SqlAlchemyAssetRepository:
         except IntegrityError as exc:
             await self._session.rollback()
             if constraint_name(exc) == UQ_ASSET_CONTENT:
-                raise AssetAlreadyExistsError(sha256) from exc
+                raise AssetAlreadyExistsError(data.sha256) from exc
             raise
         except BaseException:
             await self._session.rollback()

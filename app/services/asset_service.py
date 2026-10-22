@@ -30,6 +30,7 @@ from app.repositories.protocols import AssetRepository
 from app.schemas.asset import (
     CREDIT_MAX_LENGTH,
     TITLE_MAX_LENGTH,
+    AssetCreate,
     AssetList,
     AssetListItem,
     AssetRecord,
@@ -169,16 +170,18 @@ class AssetService:
                 keys.append(thumb_key(asset_id))
                 await self._storage.put(keys[1], processed.thumbnail)
             record = await self._assets.create(
-                asset_id,
-                kind,
-                processed.mime,
-                processed.width,
-                processed.height,
-                len(processed.data),
-                sha256,
-                clean_title,
-                clean_cred,
-                original_filename,
+                AssetCreate(
+                    id=asset_id,
+                    kind=kind,
+                    mime=processed.mime,
+                    width=processed.width,
+                    height=processed.height,
+                    size_bytes=len(processed.data),
+                    sha256=sha256,
+                    title=clean_title,
+                    credit=clean_cred,
+                    original_filename=original_filename,
+                )
             )
         except AssetAlreadyExistsError:
             # Lost a race against an identical upload: use the winner's.
