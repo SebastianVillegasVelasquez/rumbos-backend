@@ -18,7 +18,13 @@ from typing import Any, Protocol
 
 from app.enums import AssetKind, AssetScope, BubbleStatus, TenantStatus
 from app.publishing.snapshot import DraftInputs
-from app.schemas.asset import AssetCreate, AssetRecord, AssetUpdate, AssetUsage
+from app.schemas.asset import (
+    AssetAuditEntry,
+    AssetCreate,
+    AssetRecord,
+    AssetUpdate,
+    AssetUsage,
+)
 from app.schemas.auth import NewAccessToken, TokenGrant
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
@@ -229,6 +235,31 @@ class AssetRepository(Protocol):
         """Removes the row in ONE statement that also checks nothing references
         it. False if there is no such asset; raises `AssetInUseError` if it is
         referenced. Does not touch the stored files."""
+        ...
+
+    async def set_quarantine(
+        self, asset_id: uuid.UUID, reason: str | None, now: datetime
+    ) -> tuple[AssetRecord, bool] | None:
+        """Quarantines the asset with `reason`, or releases it with None, and
+        records the action, in ONE transaction. Returns the asset and whether
+        anything changed (quarantining a quarantined asset, or releasing a free
+        one, changes nothing and records nothing); None if there is no such
+        asset. For the operator's tools: it needs the system scope."""
+        ...
+
+    async def record_event(
+        self, asset_id: uuid.UUID, action: str, reason: str | None
+    ) -> None:
+        """Appends a line to the asset's audit trail."""
+        ...
+
+    async def audit_events(self, asset_id: uuid.UUID) -> list[AssetAuditEntry]:
+        """The asset's audit trail, oldest first."""
+        ...
+
+    async def list_audio(self) -> list[AssetRecord]:
+        """Every audio track, quarantined ones included, oldest first. For the
+        operator's tools: the system scope shows every tenant's."""
         ...
 
     async def list(

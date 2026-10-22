@@ -23,10 +23,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.paths import ASSETS_PATH
 from app.enums import AssetKind, AssetScope
 from app.exceptions import AssetAlreadyExistsError, AssetInUseError
-from app.models import Asset, CourseMap, Publication, Skin
+from app.models import Asset, AssetAuditEvent, CourseMap, Publication, Skin
 from app.models.asset import UQ_ASSET_CONTENT, UQ_LIBRARY_CONTENT
 from app.repositories.sqlalchemy._errors import constraint_name
-from app.schemas.asset import AssetCreate, AssetRecord, AssetUpdate, AssetUsage
+from app.schemas.asset import (
+    AssetAuditEntry,
+    AssetCreate,
+    AssetRecord,
+    AssetUpdate,
+    AssetUsage,
+)
 from app.tenancy.scope import TENANT_WIDE
 
 
@@ -210,6 +216,58 @@ class SqlAlchemyAssetRepository:
         if usage.total == 0:
             return False
         raise AssetInUseError(usage)
+
+    async def set_quarantine(
+        self, asset_id: uuid.UUID, reason: str | None, now: datetime
+    ) -> tuple[AssetRecord, bool] | None:
+        try:
+            asset = await self._session.get(Asset, asset_id)
+            if asset is None:
+                return None
+            changed = (asset.quarantined_at is None) == (reason is not None)
+            if changed:
+                asset.quarantined_at = now if reason is not None else None
+                asset.quarantine_reason = reason
+                self._session.add(
+                    AssetAuditEvent(
+                        asset_id=asset_id,
+                        action="quarantined" if reason is not None else "released",
+                        reason=reason,
+                    )
+                )
+            await self._session.commit()
+        except BaseException:
+            await self._session.rollback()
+            raise
+        return AssetRecord.model_validate(asset), changed
+
+    async def record_event(
+        self, asset_id: uuid.UUID, action: str, reason: str | None
+    ) -> None:
+        try:
+            self._session.add(
+                AssetAuditEvent(asset_id=asset_id, action=action, reason=reason)
+            )
+            await self._session.commit()
+        except BaseException:
+            await self._session.rollback()
+            raise
+
+    async def audit_events(self, asset_id: uuid.UUID) -> list[AssetAuditEntry]:
+        result = await self._session.scalars(
+            select(AssetAuditEvent)
+            .where(AssetAuditEvent.asset_id == asset_id)
+            .order_by(AssetAuditEvent.created_at, AssetAuditEvent.id)
+        )
+        return [AssetAuditEntry.model_validate(e) for e in result]
+
+    async def list_audio(self) -> list[AssetRecord]:
+        result = await self._session.scalars(
+            select(Asset)
+            .where(Asset.kind == AssetKind.AUDIO)
+            .order_by(Asset.created_at, Asset.id)
+        )
+        return [AssetRecord.model_validate(a) for a in result]
 
     async def list(
         self,

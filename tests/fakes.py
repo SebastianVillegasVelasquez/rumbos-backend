@@ -26,7 +26,7 @@ from app.exceptions import (
 from app.moodle.exceptions import MoodleCourseNotFoundError
 from app.moodle.schemas import MoodleSection, MoodleSiteInfo
 from app.publishing.snapshot import DraftInputs
-from app.schemas.asset import AssetRecord, AssetUpdate, AssetUsage
+from app.schemas.asset import AssetAuditEntry, AssetRecord, AssetUpdate, AssetUsage
 from app.schemas.auth import NewAccessToken, TokenGrant
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
@@ -403,6 +403,22 @@ class InMemoryAssetRepository:
         raise NotImplementedError
 
     async def delete_if_unused(self, asset_id: uuid.UUID) -> bool:
+        raise NotImplementedError
+
+    async def set_quarantine(
+        self, asset_id: uuid.UUID, reason: str | None, now: datetime
+    ) -> tuple[AssetRecord, bool] | None:
+        raise NotImplementedError
+
+    async def record_event(
+        self, asset_id: uuid.UUID, action: str, reason: str | None
+    ) -> None:
+        raise NotImplementedError
+
+    async def audit_events(self, asset_id: uuid.UUID) -> list[AssetAuditEntry]:
+        raise NotImplementedError
+
+    async def list_audio(self) -> list[AssetRecord]:
         raise NotImplementedError
 
     async def list(

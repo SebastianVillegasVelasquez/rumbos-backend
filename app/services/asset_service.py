@@ -433,7 +433,11 @@ class AssetService:
         """
         asset_id = _parse_asset_id(raw_id)
         asset = await self._assets.get_by_id(asset_id)
-        if asset is None or (thumb and asset.kind is not AssetKind.BACKGROUND):
+        if (
+            asset is None
+            or asset.is_quarantined  # taken down: as good as gone
+            or (thumb and asset.kind is not AssetKind.BACKGROUND)
+        ):
             raise AssetNotFoundError(raw_id)
         key = thumb_key(asset_id) if thumb else content_key(asset_id)
         try:

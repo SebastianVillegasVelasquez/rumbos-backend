@@ -54,6 +54,14 @@ class AssetRecord(ApiModel):
         return self.quarantined_at is not None
 
 
+class AssetAuditEntry(ApiModel):
+    """One line of an asset's audit trail."""
+
+    action: str  # created, quarantined or released
+    reason: str | None
+    created_at: datetime
+
+
 class AssetCreate(ApiModel):
     """What a repository needs to store a new asset."""
 
