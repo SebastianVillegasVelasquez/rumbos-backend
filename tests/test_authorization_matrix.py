@@ -55,6 +55,7 @@ ROUTES: dict[tuple[str, str], tuple[str, bool]] = {
     ("POST", "/auth/launch"): (PUBLIC, False),
     ("GET", "/auth/me"): (BEARER, False),
     ("GET", "/assets/{asset_id}"): (PUBLIC, False),
+    ("HEAD", "/assets/{asset_id}"): (PUBLIC, False),
     ("GET", "/assets/{asset_id}/thumb"): (PUBLIC, False),
     ("POST", "/assets"): (EDITOR, False),
     ("GET", "/assets"): (EDITOR, False),

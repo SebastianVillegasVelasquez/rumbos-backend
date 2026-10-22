@@ -9,10 +9,11 @@ tenant's editors and inside the maps its students may read.
 """
 
 import dataclasses
+import re
 import uuid
 from collections.abc import Awaitable, Callable
 from pathlib import Path
-from typing import Annotated, Any
+from typing import Annotated, Any, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
 from starlette.datastructures import UploadFile
@@ -263,25 +264,85 @@ def _etag_matches(header: str | None, etag: str) -> bool:
     return "*" in candidates or etag in candidates
 
 
+# One range, the only kind a player asks for: `bytes=0-99`, `bytes=100-`, `bytes=-500`.
+_RANGE = re.compile(r"bytes=([0-9]{0,18})-([0-9]{0,18})")
+
+
+def _byte_range(header: str, size: int) -> tuple[int, int] | None | Literal["bad"]:
+    """The inclusive `(first, last)` bytes a `Range` header asks for.
+
+    None: serve the whole file (the header is not one we honour, which RFC 9110
+    allows: another unit, several ranges, or nonsense). "bad": it is a range
+    but nothing of the file lies in it (416).
+    """
+    match = _RANGE.fullmatch(header.strip())
+    if match is None:
+        return None
+    start, end = match.groups()
+    if not start and not end:
+        return None
+    if not start:  # the last `end` bytes
+        wanted = int(end)
+        return "bad" if wanted == 0 else (max(0, size - wanted), size - 1)
+    first = int(start)
+    last = int(end) if end else size - 1
+    if end and last < first:
+        return None  # not a range at all
+    if first >= size:
+        return "bad"
+    return (first, min(last, size - 1))
+
+
 async def _serve(request: Request, content: AssetContent) -> Response:
+    size = len(content.data)
     headers = {
         "Cache-Control": _CACHE_CONTROL,
         "ETag": content.etag,
         "X-Content-Type-Options": "nosniff",
         "Content-Security-Policy": _CONTENT_SECURITY_POLICY,
+        # Players (iOS Safari above all) refuse to play what they cannot seek in.
+        "Accept-Ranges": "bytes",
     }
     if _etag_matches(request.headers.get("if-none-match"), content.etag):
         return Response(status_code=status.HTTP_304_NOT_MODIFIED, headers=headers)
+    wanted = request.headers.get("range")
+    # `If-Range` makes a range conditional on the file being the one the client
+    # holds; otherwise it gets the whole current file.
+    if_range = request.headers.get("if-range")
+    if wanted is not None and (if_range is None or if_range.strip() == content.etag):
+        picked = _byte_range(wanted, size)
+        if picked == "bad":
+            return Response(
+                status_code=status.HTTP_416_RANGE_NOT_SATISFIABLE,
+                headers={**headers, "Content-Range": f"bytes */{size}"},
+            )
+        if picked is not None:
+            first, last = picked
+            return Response(
+                content=content.data[first : last + 1],
+                status_code=status.HTTP_206_PARTIAL_CONTENT,
+                media_type=content.mime,
+                headers={**headers, "Content-Range": f"bytes {first}-{last}/{size}"},
+            )
     # The type comes from the database (what we wrote), never from a file name.
+    if request.method == "HEAD":
+        return Response(
+            media_type=content.mime, headers={**headers, "Content-Length": str(size)}
+        )
     return Response(content=content.data, media_type=content.mime, headers=headers)
 
 
-@router.get(
-    "/{asset_id}", response_class=Response, dependencies=[Depends(public_route)]
+@router.api_route(
+    "/{asset_id}",
+    methods=["GET", "HEAD"],
+    response_class=Response,
+    dependencies=[Depends(public_route)],
 )
 async def get_asset(
     asset_id: str, request: Request, service: PublicServiceDep
 ) -> Response:
+    """The bytes. Honours `Range` (206), `If-Range` and `If-None-Match` (304).
+    Audio players need the range support."""
     # `asset_id` stays a plain string: anything that is not a canonical UUID
     # (including path-traversal attempts) is a 404, not a validation error.
     return await _serve(request, await service.get_content(asset_id))

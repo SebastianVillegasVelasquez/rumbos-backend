@@ -79,8 +79,17 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
             # `If-Match` carries the revision/version a write is based on;
             # `ETag` is how the frontend reads it from single-resource responses.
-            allow_headers=["Content-Type", "Authorization", "If-Match"],
-            expose_headers=["ETag"],
+            # `Range`/`If-Range`: ranged playback of audio fetched cross-origin.
+            allow_headers=[
+                "Content-Type",
+                "Authorization",
+                "If-Match",
+                "Range",
+                "If-Range",
+            ],
+            # `Content-Range` and `Accept-Ranges` are not exposed to scripts by
+            # default; a player that fetches ranges needs both.
+            expose_headers=["ETag", "Content-Range", "Accept-Ranges", "Content-Length"],
         )
     application.add_middleware(NoStoreForAuth)
     register_exception_handlers(application)

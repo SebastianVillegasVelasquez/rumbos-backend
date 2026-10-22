@@ -124,3 +124,25 @@ async def test_if_match_is_allowed_and_etag_is_exposed() -> None:
     assert preflight.status_code == 200
     assert "if-match" in preflight.headers["access-control-allow-headers"].lower()
     assert "etag" in real.headers["access-control-expose-headers"].lower()
+
+
+async def test_ranged_playback_works_from_the_app_origin() -> None:
+    """A player that fetches audio in ranges from another origin may send
+    `Range` and must be able to read `Content-Range` and `Accept-Ranges`."""
+    async with _client([ALLOWED]) as client:
+        preflight = await client.options(
+            "/assets/x",
+            headers={
+                "Origin": ALLOWED,
+                "Access-Control-Request-Method": "GET",
+                "Access-Control-Request-Headers": "range, if-range",
+            },
+        )
+        real = await client.get("/health", headers={"Origin": ALLOWED})
+
+    assert preflight.status_code == 200
+    allowed = preflight.headers["access-control-allow-headers"].lower()
+    assert "range" in allowed and "if-range" in allowed
+    exposed = real.headers["access-control-expose-headers"].lower()
+    for header in ("content-range", "accept-ranges", "etag"):
+        assert header in exposed
