@@ -27,6 +27,7 @@ from app.models import Asset, CourseMap, Publication, Skin
 from app.models.asset import UQ_ASSET_CONTENT
 from app.repositories.sqlalchemy._errors import constraint_name
 from app.schemas.asset import AssetRecord, AssetUpdate, AssetUsage
+from app.tenancy.scope import TENANT_WIDE
 
 
 def _id_text(asset_id: SQLColumnExpression[Any]) -> ColumnElement[str]:
@@ -168,6 +169,9 @@ class SqlAlchemyAssetRepository:
                 .join(model, uses(Asset.id))
                 .where(Asset.id.in_(ids))
                 .group_by(Asset.id)
+                # A tenant's library is shared by its courses: count the maps
+                # of every course, not only the caller's.
+                .execution_options(**{TENANT_WIDE: True})
             )
             for asset_id, n in rows:
                 setattr(counts[asset_id], field, n)
@@ -184,7 +188,7 @@ class SqlAlchemyAssetRepository:
                 ~exists().where(publication_uses(Asset.id)),
             )
             .returning(Asset.id)
-            .execution_options(synchronize_session=False)
+            .execution_options(synchronize_session=False, **{TENANT_WIDE: True})
         )
         try:
             deleted = (await self._session.execute(stmt)).scalar_one_or_none()

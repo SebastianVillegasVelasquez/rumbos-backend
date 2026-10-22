@@ -359,3 +359,22 @@ async def test_custom_skins_are_private_and_builtins_are_shared(
         await beta.editor.patch(f"/skins/{builtin['id']}", json={"name": "x"})
     ).status_code == 403
     assert (await beta.editor.delete(f"/skins/{builtin['id']}")).status_code == 403
+
+
+async def test_an_asset_used_by_another_course_of_the_tenant_cannot_be_deleted(
+    engine: AsyncEngine, make_client: MakeClient, sites: tuple[Site, Site]
+) -> None:
+    """A tenant's library is shared by its courses, so is its usage count."""
+    alpha, _ = sites
+    asset = await png_asset(alpha.editor, 1, "background")
+    await _map(alpha.editor, imageUrl=asset["url"])
+    other_course = make_client(
+        await insert_token(engine, alpha.tenant_id, COURSE + 1, Role.EDITOR)
+    )
+
+    r = await other_course.delete(f"/assets/{asset['id']}")
+
+    assert r.status_code == 409
+    assert r.json()["detail"]["usage"]["maps"] == 1
+    listed = (await other_course.get("/assets")).json()["items"]
+    assert [i["usage"]["maps"] for i in listed] == [1]
