@@ -5,7 +5,9 @@
 
 An asset is garbage when no draft map, skin or publication uses it (the same
 usage rule as `DELETE /assets/{id}`) and it is older than the threshold, which
-leaves time for an editor who has just uploaded something to use it. Deletion
+leaves time for an editor who has just uploaded something to use it. Library
+tracks (audio with no tenant) are curated, not uploaded and forgotten, so they
+are never collected. Deletion
 goes through `AssetService.delete`, so the row goes first and then the files.
 """
 

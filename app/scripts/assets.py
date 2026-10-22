@@ -42,6 +42,7 @@ from app.exceptions import (
     AssetTooLargeError,
     AudioCreditRequiredError,
     AudioInvalidError,
+    AudioQuarantinedError,
     AudioTooLongError,
     InvalidAssetMetadataError,
 )
@@ -225,6 +226,11 @@ async def execute(
         err(f"error: {exc}")
     except AudioInvalidError as exc:
         err(f"error: not a valid MP3 or M4A (AAC) file: {exc.reason}")
+    except AudioQuarantinedError as exc:
+        err(
+            f"error: this audio is already here as {exc.asset_id} and is "
+            "quarantined; `release` it if it should come back"
+        )
     except AudioTooLongError as exc:
         err(f"error: the audio is longer than {exc.limit_seconds:.0f} seconds")
     except AssetTooLargeError as exc:

@@ -14,7 +14,7 @@ from app.models import Asset
 from app.tenancy.scope import SYSTEM
 from tests import audio_files as af
 from tests import images
-from tests.asset_helpers import png_asset, upload, upload_audio
+from tests.asset_helpers import png_asset, quarantine, upload, upload_audio
 from tests.conftest import Box
 from tests.editor_client import EditorClient
 from tests.sessions import new_session
@@ -449,3 +449,16 @@ async def test_images_still_ignore_the_audio_fields(
     image = await png_asset(client, 1, "background", license="whatever")
 
     assert image["license"] is None
+
+
+async def test_audio_that_was_taken_down_cannot_come_back_under_another_id(
+    client: httpx.AsyncClient, engine: AsyncEngine
+) -> None:
+    created = (await upload_audio(client, af.mp3(40))).json()
+    await quarantine(engine, created["id"], "complaint")
+
+    again = await upload_audio(client, af.tagged_mp3(40))  # same audio, new tags
+
+    assert again.status_code == 422
+    assert again.json()["detail"]["code"] == "audio_quarantined"
+    assert await count(engine) == 1

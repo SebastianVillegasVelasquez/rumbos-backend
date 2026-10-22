@@ -18,6 +18,7 @@ from app.exceptions import (
     AudioAssetWrongKindError,
     AudioCreditRequiredError,
     AudioInvalidError,
+    AudioQuarantinedError,
     AudioRightsDeclarationRequiredError,
     AudioTooLongError,
     AudioUploadsDisabledError,
@@ -411,6 +412,10 @@ def register_exception_handlers(app: FastAPI) -> None:
         AudioInvalidError,
         # The parser's reason stays in the log, never in the response.
         _coded(422, "audio_invalid", "The file is not a valid MP3 or M4A (AAC) audio"),
+    )
+    app.add_exception_handler(
+        AudioQuarantinedError,
+        _coded(422, "audio_quarantined", "This audio has been taken down"),
     )
     app.add_exception_handler(
         AudioTooLongError,

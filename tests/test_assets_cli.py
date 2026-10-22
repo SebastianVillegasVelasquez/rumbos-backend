@@ -386,3 +386,24 @@ async def test_a_tenants_own_upload_can_be_quarantined_too(
         bind_scope(s, SYSTEM)
         row = (await s.scalars(select(Asset))).one()
         assert row.quarantine_reason == "complaint"
+
+
+async def test_importing_a_quarantined_track_again_points_at_release(
+    run: Run, tmp_path: Path
+) -> None:
+    asset_id = await imported(run, tmp_path)
+    await run("quarantine", asset_id, "--reason", "complaint")
+    run.err.clear()
+
+    code = await run(
+        "import-audio",
+        "--file",
+        str(song(tmp_path, af.mp3(40), "again.mp3")),
+        "--title",
+        "T",
+        "--credit",
+        "C",
+    )
+
+    assert code == 1 and asset_id in run.err[0] and "release" in run.err[0]
+    assert len(await run.assets.list_audio()) == 1

@@ -166,6 +166,15 @@ class AudioRightsDeclarationRequiredError(DomainError):
     """An audio upload came without `rightsDeclared=true`."""
 
 
+class AudioQuarantinedError(DomainError):
+    """The same audio is already here and has been taken down: sending it again
+    must not bring it back under another id."""
+
+    def __init__(self, asset_id: uuid.UUID) -> None:
+        super().__init__("audio quarantined")
+        self.asset_id = asset_id
+
+
 class AudioCreditRequiredError(DomainError):
     """An audio track needs a credit (who made it, and under what terms)."""
 

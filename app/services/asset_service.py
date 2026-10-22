@@ -28,6 +28,7 @@ from app.exceptions import (
     AssetTooLargeError,
     AudioCreditRequiredError,
     AudioInvalidError,
+    AudioQuarantinedError,
     AudioRightsDeclarationRequiredError,
     AudioUploadsDisabledError,
     InvalidAssetMetadataError,
@@ -331,6 +332,8 @@ class AssetService:
             AssetKind.AUDIO, sha256, library=library
         )
         if existing is not None:
+            if existing.is_quarantined:
+                raise AudioQuarantinedError(existing.id)
             return UploadResult(existing, created=False)
         if not library and used + len(processed.data) > self._settings.max_total_bytes:
             raise AssetQuotaExceededError
@@ -362,6 +365,8 @@ class AssetService:
             )
             if winner is None:
                 raise
+            if winner.is_quarantined:
+                raise AudioQuarantinedError(winner.id) from None
             return UploadResult(winner, created=False)
         except BaseException:
             await self._discard([key])
