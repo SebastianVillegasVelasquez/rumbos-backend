@@ -13,6 +13,7 @@ from fastapi import APIRouter, Depends, Query
 from app.auth.dependencies import ScopedSession, moodle_source_route, student_route
 from app.moodle.dependencies import get_contents_provider
 from app.moodle.protocols import CourseContentsProvider
+from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
 from app.repositories.sqlalchemy.bubble_repository import SqlAlchemyBubbleRepository
 from app.repositories.sqlalchemy.course_map_repository import (
     SqlAlchemyCourseMapRepository,
@@ -43,6 +44,7 @@ def get_published_service(
             SqlAlchemyBubbleRepository(session),
             contents,
         ),
+        SqlAlchemyAssetRepository(session),
     )
 
 

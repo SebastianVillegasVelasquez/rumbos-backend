@@ -50,6 +50,9 @@ class PublicationChanges(ApiModel):
     # The 3D scene or its zone bindings differ. Aliased by hand: the camelCase
     # generator would spell it `view3DChanged`.
     view3d_changed: bool = Field(alias="view3dChanged")
+    # The music, its settings or the track's frozen title, credit or duration
+    # differ. Not counted in `settings_changed`.
+    audio_changed: bool
 
 
 class PublicationState(ApiModel):

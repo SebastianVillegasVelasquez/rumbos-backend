@@ -129,6 +129,7 @@ NO_CHANGES = {
     "bubblesRestyled": 0,
     "bubblesReordered": False,
     "view3dChanged": False,
+    "audioChanged": False,
 }
 
 

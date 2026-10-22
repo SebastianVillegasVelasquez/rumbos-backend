@@ -14,6 +14,8 @@ from app.exceptions import (
     AssetQuotaExceededError,
     AssetTooLargeError,
     AssetTypeNotAllowedError,
+    AudioAssetNotFoundError,
+    AudioAssetWrongKindError,
     AudioCreditRequiredError,
     AudioInvalidError,
     AudioRightsDeclarationRequiredError,
@@ -366,6 +368,24 @@ def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(
         AssetIsLibraryError,
         _coded(403, "asset_is_library", "Library tracks cannot be changed or deleted"),
+    )
+    app.add_exception_handler(
+        AudioAssetNotFoundError,
+        _coded(
+            422,
+            "audio_asset_not_found",
+            "The map's music points at an audio track that does not exist",
+            lambda exc: {"assetId": str(exc.asset_id)},
+        ),
+    )
+    app.add_exception_handler(
+        AudioAssetWrongKindError,
+        _coded(
+            422,
+            "audio_asset_wrong_kind",
+            "The map's music must be an audio track",
+            lambda exc: {"assetId": str(exc.asset_id)},
+        ),
     )
     app.add_exception_handler(
         UploadsDisabledError,

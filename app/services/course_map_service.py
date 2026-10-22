@@ -1,9 +1,15 @@
 import uuid
 from collections import Counter
 
-from app.assets.references import asset_id_of_image_url, is_canonical_asset_url
+from app.assets.references import (
+    asset_id_of_image_url,
+    audio_info_of,
+    is_canonical_asset_url,
+)
 from app.enums import AssetKind
 from app.exceptions import (
+    AudioAssetNotFoundError,
+    AudioAssetWrongKindError,
     BackgroundAssetNotFoundError,
     BackgroundAssetWrongKindError,
     BubbleNotFoundError,
@@ -42,6 +48,7 @@ from app.schemas.course_map import (
     CourseMapSummary,
     CourseMapUpdate,
 )
+from app.schemas.map_settings import AudioInfo, MapSettings
 from app.schemas.view3d import View3dUpdate
 from app.services.publication_service import publication_infos
 from app.view3d.validation import check_view3d
@@ -183,9 +190,11 @@ class CourseMapService:
         """Replaces settings, default skin and skin rules, all or nothing.
 
         Every skin referenced must exist and no activity type may appear in two
-        rules. Nothing is written unless all of it is valid.
+        rules; music must be an audio track the tenant can use (its own or the
+        library's). Nothing is written unless all of it is valid.
         """
         await self._require_course_map(course_map_id)
+        await self._check_audio(data.settings)
         counts = Counter(r.modname for r in data.skin_rules)
         duplicated = sorted(modname for modname, n in counts.items() if n > 1)
         if duplicated:
@@ -377,12 +386,31 @@ class CourseMapService:
         if asset.kind is not AssetKind.BACKGROUND:
             raise BackgroundAssetWrongKindError(asset_id)
 
+    async def _check_audio(self, settings: MapSettings) -> None:
+        """Music must be an existing audio asset that is in service.
+
+        Raises `AudioAssetNotFoundError` / `AudioAssetWrongKindError`. An asset
+        another tenant owns is not visible here, so it does not exist."""
+        if settings.audio is None:
+            return
+        asset = await self._assets.get_by_id(settings.audio.asset_id)
+        if asset is None or asset.is_quarantined:
+            raise AudioAssetNotFoundError(settings.audio.asset_id)
+        if asset.kind is not AssetKind.AUDIO:
+            raise AudioAssetWrongKindError(settings.audio.asset_id)
+
+    async def _audio_info(self, settings: MapSettings) -> AudioInfo | None:
+        if settings.audio is None:
+            return None
+        return audio_info_of(await self._assets.get_by_id(settings.audio.asset_id))
+
     async def _read(self, course_map: CourseMapBase) -> CourseMapRead:
         return CourseMapRead(
             **course_map.model_dump(),
             skin_rules=await self._course_maps.list_skin_rules(course_map.id),
             bubbles=await self._bubbles.list_by_course_map(course_map.id),
             view3d=await self._view3d.get(course_map.id),
+            audio_info=await self._audio_info(course_map.settings),
         )
 
     async def _require_course_map(self, course_map_id: uuid.UUID) -> CourseMapBase:

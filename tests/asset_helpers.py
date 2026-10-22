@@ -1,6 +1,7 @@
 """Plain helpers for tests that upload images through the API."""
 
 import uuid
+from datetime import UTC, datetime
 from typing import Any
 
 import httpx
@@ -111,3 +112,22 @@ async def library_track(
             )
             await session.commit()
     return record
+
+
+async def quarantine(engine: AsyncEngine, asset_id: str, reason: str = "test") -> None:
+    """Takes an asset down the way the operator's tool does."""
+    async with AsyncSession(engine, expire_on_commit=False) as session:
+        bind_scope(session, SYSTEM)
+        found = await SqlAlchemyAssetRepository(session).set_quarantine(
+            uuid.UUID(asset_id), reason, datetime.now(UTC)
+        )
+        assert found is not None
+
+
+async def release(engine: AsyncEngine, asset_id: str) -> None:
+    async with AsyncSession(engine, expire_on_commit=False) as session:
+        bind_scope(session, SYSTEM)
+        found = await SqlAlchemyAssetRepository(session).set_quarantine(
+            uuid.UUID(asset_id), None, datetime.now(UTC)
+        )
+        assert found is not None

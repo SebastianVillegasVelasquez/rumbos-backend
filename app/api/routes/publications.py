@@ -13,6 +13,7 @@ from fastapi import APIRouter, Depends, Query, Response, status
 from app.api.preconditions import IfMatch, set_etag
 from app.auth.dependencies import ScopedSession, editor_route
 from app.core.config import Settings, get_settings
+from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
 from app.repositories.sqlalchemy.bubble_repository import SqlAlchemyBubbleRepository
 from app.repositories.sqlalchemy.course_map_repository import (
     SqlAlchemyCourseMapRepository,
@@ -49,6 +50,7 @@ def get_publication_service(
         SqlAlchemyCourseMapRepository(session),
         SqlAlchemyBubbleRepository(session),
         SqlAlchemyView3dRepository(session),
+        SqlAlchemyAssetRepository(session),
         settings.publications_keep,
     )
 

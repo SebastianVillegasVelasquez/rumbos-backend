@@ -225,6 +225,23 @@ class BackgroundAssetWrongKindError(DomainError):
         self.asset_id = asset_id
 
 
+class AudioAssetNotFoundError(DomainError):
+    """A map's music names an asset that does not exist, is not visible to the
+    tenant, or has been taken down."""
+
+    def __init__(self, asset_id: uuid.UUID) -> None:
+        super().__init__("audio asset not found")
+        self.asset_id = asset_id
+
+
+class AudioAssetWrongKindError(DomainError):
+    """A map's music names an asset that is not audio."""
+
+    def __init__(self, asset_id: uuid.UUID) -> None:
+        super().__init__("asset is not audio")
+        self.asset_id = asset_id
+
+
 class SkinNotFoundError(DomainError):
     pass
 

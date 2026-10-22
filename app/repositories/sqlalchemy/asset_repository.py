@@ -44,8 +44,12 @@ def _id_text(asset_id: SQLColumnExpression[Any]) -> ColumnElement[str]:
 # the guarded delete (and so by the garbage collector). Each takes an SQL
 # expression for the asset id, so it works for a literal and for a join.
 def map_uses(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:
-    """A draft map whose background is `{ASSETS_PATH}/{id}`."""
-    return CourseMap.image_url == func.concat(f"{ASSETS_PATH}/", _id_text(asset_id))
+    """A draft map whose background is `{ASSETS_PATH}/{id}`, or whose music is
+    the asset."""
+    return or_(
+        CourseMap.image_url == func.concat(f"{ASSETS_PATH}/", _id_text(asset_id)),
+        CourseMap.settings["audio"]["assetId"].astext == _id_text(asset_id),
+    )
 
 
 def skin_uses(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:

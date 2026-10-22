@@ -138,6 +138,7 @@ async def test_the_3d_view_makes_unpublished_changes_only_when_it_changes(
         "bubblesMoved": 0,
         "bubblesRestyled": 0,
         "bubblesReordered": False,
+        "audioChanged": False,
     }
 
     await publish(client, created["id"])

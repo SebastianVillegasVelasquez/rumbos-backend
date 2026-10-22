@@ -361,6 +361,7 @@ async def test_responses_are_camel_case(client: httpx.AsyncClient) -> None:
         "defaultSkinId",
         "skinRules",
         "view3d",
+        "audioInfo",
         "moodleCourseId",
         "moodleSectionId",
         "position",

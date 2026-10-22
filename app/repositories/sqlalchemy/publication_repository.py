@@ -7,7 +7,7 @@ from sqlalchemy.dialects.postgresql import distinct_on
 from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.assets.references import skin_asset_ids, stored_asset_id
+from app.assets.references import audio_info_of, skin_asset_ids, stored_asset_id
 from app.enums import BubbleIcon, BubbleStatus
 from app.exceptions import (
     CourseMapNotFoundError,
@@ -33,11 +33,13 @@ from app.publishing.snapshot import (
     build_snapshot,
     collect_asset_ids,
     content_hash,
+    snapshot_audio_id,
     snapshot_skin_ids,
 )
 from app.repositories.sqlalchemy._errors import constraint_name, sqlstate
 from app.repositories.sqlalchemy.skin_repository import to_skin_read
 from app.repositories.sqlalchemy.view3d_repository import to_binding
+from app.schemas.asset import AssetRecord
 from app.schemas.bubble import BubbleRead
 from app.schemas.course_map import SkinRule
 from app.schemas.map_settings import MapSettings
@@ -66,7 +68,8 @@ async def load_drafts(
 
     One query each for the maps, their skin rules, their bubbles, their 3D
     bindings and the skins involved (the ones the drafts name plus the
-    application's default skin): the same six whatever the number of maps. Maps that do not exist are
+    application's default skin): the same six whatever the number of maps, plus
+    one for the tracks of the maps that have music. Maps that do not exist are
     absent from the result.
     """
     if not course_map_ids:
@@ -111,6 +114,14 @@ async def load_drafts(
         )
     ).all()
     skins: dict[uuid.UUID, SkinRead] = {s.id: to_skin_read(s) for s in skin_rows}
+    settings_of = {m.id: MapSettings.model_validate(m.settings) for m in maps}
+    tracks = await _tracks(
+        session, {s.audio.asset_id for s in settings_of.values() if s.audio}
+    )
+    audio_infos = {
+        map_id: audio_info_of(tracks.get(s.audio.asset_id)) if s.audio else None
+        for map_id, s in settings_of.items()
+    }
 
     rules_by_map: dict[uuid.UUID, list[SkinRule]] = {}
     for rule in rules:
@@ -129,7 +140,7 @@ async def load_drafts(
         m.id: DraftInputs(
             title=m.title,
             image_url=m.image_url,
-            settings=MapSettings.model_validate(m.settings),
+            settings=settings_of[m.id],
             default_skin_id=m.default_skin_id,
             skin_rules=rules_by_map.get(m.id, []),
             bubbles=bubbles_by_map.get(m.id, []),
@@ -147,9 +158,25 @@ async def load_drafts(
                 if m.view3d_scene is not None
                 else None
             ),
+            audio_info=audio_infos[m.id],
         )
         for m in maps
     }
+
+
+async def _tracks(
+    session: AsyncSession, asset_ids: set[uuid.UUID]
+) -> dict[uuid.UUID, AssetRecord]:
+    """The assets the maps use as music, as the session's scope sees them (the
+    tenant's own and the library's)."""
+    if not asset_ids:
+        return {}
+    rows = await session.scalars(
+        select(Asset)
+        .where(Asset.id.in_(asset_ids))
+        .execution_options(populate_existing=True)
+    )
+    return {a.id: AssetRecord.model_validate(a) for a in rows}
 
 
 def _record(row: Publication) -> PublicationRecord:
@@ -462,6 +489,11 @@ class SqlAlchemyPublicationRepository:
                             ),
                         )
                     )
+        music = snapshot_audio_id(snapshot)
+        if music is not None and music not in existing_assets:
+            problems.append(
+                ("audio_asset_missing", f"The music {music} no longer exists")
+            )
         view3d = snapshot.get("view3d")
         if view3d is not None and scenes.zone_count(view3d["scene"]) is None:
             problems.append(
@@ -491,7 +523,8 @@ class SqlAlchemyPublicationRepository:
         The map's title, image, settings, default skin and rules are replaced;
         bubbles are updated by id, recreated with their original ids when they
         were deleted, and deleted when the snapshot does not have them; `sequence`
-        comes from the snapshot. Skins that no longer exist are reset (with a
+        comes from the snapshot. Music that was deleted or taken down is dropped
+        with an `audio_unavailable` warning. Skins that no longer exist are reset (with a
         `skin_missing` warning). The 3D scene and bindings are recreated from the
         snapshot once the bubbles are back (a scene that is no longer in the
         registry is dropped, with a `scene_unknown` warning). Bumps the map's revision, and the version of
@@ -542,6 +575,27 @@ class SqlAlchemyPublicationRepository:
                 )
             )
 
+            settings = MapSettings.model_validate(snapshot["settings"])
+            music = snapshot_audio_id(snapshot)
+            if music is not None:
+                track = await self._session.scalar(
+                    select(Asset).where(Asset.id == music)
+                )
+                if (
+                    audio_info_of(AssetRecord.model_validate(track) if track else None)
+                    is None
+                ):
+                    settings = settings.model_copy(update={"audio": None})
+                    warnings.append(
+                        RestoreWarning(
+                            code="audio_unavailable",
+                            message=(
+                                f"The music {music} is no longer available, so "
+                                "the map was restored without music"
+                            ),
+                        )
+                    )
+
             def skin_or_none(raw: str | None, where: str) -> uuid.UUID | None:
                 if raw is None:
                     return None
@@ -565,9 +619,7 @@ class SqlAlchemyPublicationRepository:
                 .values(
                     title=snapshot["title"],
                     image_url=snapshot["imageUrl"],
-                    settings=MapSettings.model_validate(
-                        snapshot["settings"]
-                    ).to_stored(),
+                    settings=settings.to_stored(),
                     default_skin_id=skin_or_none(
                         snapshot["defaultSkinId"], "the map's default skin"
                     ),

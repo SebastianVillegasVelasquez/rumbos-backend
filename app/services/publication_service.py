@@ -1,6 +1,7 @@
 import uuid
 from collections.abc import Collection
 
+from app.assets.references import audio_info_of
 from app.enums import PublicationStatus
 from app.exceptions import (
     CourseMapNotFoundError,
@@ -14,6 +15,7 @@ from app.publishing.snapshot import (
     diff_snapshots,
 )
 from app.repositories.protocols import (
+    AssetRepository,
     BubbleRepository,
     CourseMapRepository,
     PublicationRepository,
@@ -77,6 +79,7 @@ def _changes(changes: Changes) -> PublicationChanges:
         bubbles_restyled=changes.bubbles_restyled,
         bubbles_reordered=changes.bubbles_reordered,
         view3d_changed=changes.view3d_changed,
+        audio_changed=changes.audio_changed,
     )
 
 
@@ -95,12 +98,14 @@ class PublicationService:
         course_maps: CourseMapRepository,
         bubbles: BubbleRepository,
         view3d: View3dRepository,
+        assets: AssetRepository,
         keep: int,
     ) -> None:
         self._publications = publications
         self._course_maps = course_maps
         self._bubbles = bubbles
         self._view3d = view3d
+        self._assets = assets
         self._keep = keep
 
     async def state(self, course_map_id: uuid.UUID) -> PublicationState:
@@ -185,12 +190,18 @@ class PublicationService:
         course_map = await self._course_maps.get_by_id(course_map_id)
         if course_map is None:
             raise CourseMapNotFoundError(course_map_id)
+        music = course_map.settings.audio
         return RestoreResult(
             map=CourseMapRead(
                 **course_map.model_dump(),
                 skin_rules=await self._course_maps.list_skin_rules(course_map_id),
                 bubbles=await self._bubbles.list_by_course_map(course_map_id),
                 view3d=await self._view3d.get(course_map_id),
+                audio_info=(
+                    audio_info_of(await self._assets.get_by_id(music.asset_id))
+                    if music is not None
+                    else None
+                ),
             ),
             warnings=warnings,
         )

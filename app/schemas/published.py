@@ -13,7 +13,7 @@ from pydantic import Field
 from app.enums import BubbleIcon, BubbleStatus
 from app.schemas.base import ApiModel
 from app.schemas.course_map import SkinRule
-from app.schemas.map_settings import MapSettings
+from app.schemas.map_settings import AudioInfo, MapSettings
 from app.schemas.view3d import View3d
 
 
@@ -81,5 +81,9 @@ class PublishedMapRead(ApiModel):
     # The frozen 3D scene and zone bindings; null for a map published without
     # one. Aliased by hand: the camelCase generator would spell it `view3D`.
     view3d: View3d | None = Field(alias="view3d")
+    # The music's title, credit and duration as they were when published; null
+    # when the map has no music, or the track has since been taken down (then
+    # `settings.audio` is null too).
+    audio_info: AudioInfo | None = None
     publication_number: int
     published_at: datetime

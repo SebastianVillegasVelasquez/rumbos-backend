@@ -209,6 +209,7 @@ async def test_the_published_read_contract(client: httpx.AsyncClient) -> None:
         "skins",
         "bubbles",
         "view3d",
+        "audioInfo",
         "publicationNumber",
         "publishedAt",
     }

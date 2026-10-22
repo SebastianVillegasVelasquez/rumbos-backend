@@ -10,6 +10,9 @@ from collections.abc import Mapping
 from typing import Any
 
 from app.core.paths import ASSETS_PATH
+from app.enums import AssetKind
+from app.schemas.asset import AssetRecord
+from app.schemas.map_settings import AudioInfo
 
 # A map background served by this API: exactly `{ASSETS_PATH}/{canonical uuid}`.
 _ASSET_PATH = re.compile(
@@ -37,6 +40,24 @@ def stored_asset_id(image_url: str) -> uuid.UUID | None:
     """The asset a stored `imageUrl` references: its id if canonical, else None."""
     return (
         asset_id_of_image_url(image_url) if is_canonical_asset_url(image_url) else None
+    )
+
+
+def audio_info_of(asset: AssetRecord | None) -> AudioInfo | None:
+    """What a player shows about a map's music, or None when the asset cannot
+    serve as music: it is gone, it is not audio, or it has been taken down."""
+    if (
+        asset is None
+        or asset.kind is not AssetKind.AUDIO
+        or asset.is_quarantined
+        or asset.credit is None
+        or asset.duration_seconds is None
+    ):
+        return None
+    return AudioInfo(
+        title=asset.title,
+        credit=asset.credit,
+        duration_seconds=asset.duration_seconds,
     )
 
 

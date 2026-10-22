@@ -8,7 +8,7 @@ from pydantic import AfterValidator, Field, StringConstraints, model_validator
 from app.enums import PublicationStatus
 from app.schemas.base import ApiModel
 from app.schemas.bubble import BubbleRead
-from app.schemas.map_settings import MapSettings
+from app.schemas.map_settings import AudioInfo, MapSettings
 from app.schemas.view3d import View3d
 
 TITLE_MAX_LENGTH = 120
@@ -158,3 +158,6 @@ class CourseMapRead(CourseMapBase):
     # The 3D scene and which bubble sits in each zone; null when the map has none.
     # Aliased by hand: the camelCase generator would spell it `view3D`.
     view3d: View3d | None = Field(alias="view3d")
+    # Title, credit and duration of the map's music, read live from the asset;
+    # null when there is none (or it has been taken down).
+    audio_info: AudioInfo | None = None

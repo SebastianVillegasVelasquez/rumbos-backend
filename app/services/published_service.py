@@ -1,11 +1,12 @@
 import uuid
 from typing import Any
 
+from app.assets.references import audio_info_of
 from app.enums import BubbleIcon, BubbleStatus
 from app.exceptions import NotPublishedError
-from app.repositories.protocols import PublicationRepository
+from app.repositories.protocols import AssetRepository, PublicationRepository
 from app.schemas.course_map import SkinRule
-from app.schemas.map_settings import MapSettings
+from app.schemas.map_settings import AudioInfo, MapSettings
 from app.schemas.published import (
     PublishedBubble,
     PublishedMapList,
@@ -32,10 +33,14 @@ class PublishedMapService:
     """
 
     def __init__(
-        self, publications: PublicationRepository, resolver: MapResolutionService
+        self,
+        publications: PublicationRepository,
+        resolver: MapResolutionService,
+        assets: AssetRepository,
     ) -> None:
         self._publications = publications
         self._resolver = resolver
+        self._assets = assets
 
     async def list_maps(
         self, *, moodle_course_id: int | None, limit: int, offset: int
@@ -71,6 +76,7 @@ class PublishedMapService:
         row = await self._require(course_map_id)
         statuses = await self._publications.bubble_statuses(_bubble_ids(row))
         snap: dict[str, Any] = row.snapshot
+        settings, audio_info = await self._music(snap)
         return PublishedMapRead(
             id=row.course_map_id,
             title=snap["title"],
@@ -78,7 +84,7 @@ class PublishedMapService:
             moodle_section_id=row.moodle_section_id,
             position=row.position,
             image_url=snap["imageUrl"],
-            settings=MapSettings.model_validate(snap["settings"]),
+            settings=settings,
             default_skin_id=snap["defaultSkinId"],
             skin_rules=[
                 SkinRule(modname=r["modname"], skin_id=r["skinId"])
@@ -109,9 +115,24 @@ class PublishedMapService:
             view3d=(
                 View3d.model_validate(snap["view3d"]) if "view3d" in snap else None
             ),
+            audio_info=audio_info,
             publication_number=row.number,
             published_at=row.published_at,
         )
+
+    async def _music(
+        self, snap: dict[str, Any]
+    ) -> tuple[MapSettings, AudioInfo | None]:
+        """The snapshot's settings and the music's frozen description. A track
+        that has been deleted or taken down since is left out of both: the map
+        plays without music, and the published snapshot itself is untouched."""
+        settings = MapSettings.model_validate(snap["settings"])
+        if settings.audio is None:
+            return settings, None
+        track = await self._assets.get_by_id(settings.audio.asset_id)
+        if audio_info_of(track) is None:
+            return settings.model_copy(update={"audio": None}), None
+        return settings, AudioInfo.model_validate(snap["audioInfo"])
 
     async def resolve(
         self, course_map_id: uuid.UUID, *, include_hidden: bool = False
