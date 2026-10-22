@@ -5,6 +5,7 @@ a row saved before a field existed (or an empty `{}` column) still reads as a
 complete, valid object. Unknown keys are rejected on write.
 """
 
+import uuid
 from typing import Annotated, Any, Literal
 
 from pydantic import ConfigDict, Field
@@ -37,6 +38,26 @@ class AmbientSettings(_Strict):
     intensity: Annotated[float, Field(ge=0, le=1)] = 0.5
 
 
+class MapAudio(_Strict):
+    """The map's background music: an `audio` asset (the tenant's own or the
+    library's) and how the player should play it."""
+
+    asset_id: uuid.UUID
+    volume: Annotated[float, Field(ge=0, le=1)] = 0.4
+    loop: bool = True
+    # Browsers refuse to start sound before the user has touched the page.
+    start_after_interaction: bool = False
+
+
+class AudioInfo(ApiModel):
+    """What a player shows about a map's music. Read-only: a draft reads it
+    live from the asset, a publication freezes it."""
+
+    title: str
+    credit: str
+    duration_seconds: float
+
+
 class MapSettings(_Strict):
     schema_version: Literal[1] = 1
     mode: Literal["explorative", "guided"] = "explorative"
@@ -45,7 +66,15 @@ class MapSettings(_Strict):
     path: PathSettings = Field(default_factory=PathSettings)
     ambient: AmbientSettings = Field(default_factory=AmbientSettings)
     intro: Literal["none", "flyin"] = "none"
+    audio: MapAudio | None = None
 
     def to_stored(self) -> dict[str, Any]:
-        """The JSON-able form kept in `course_maps.settings` (camelCase)."""
-        return self.model_dump(by_alias=True, mode="json")
+        """The JSON-able form kept in `course_maps.settings` (camelCase).
+
+        `audio` is left out when there is no music, never written as null: maps
+        published before music existed have no such key, and a draft that still
+        has no music must build the very same text, and hash, as they do."""
+        stored = self.model_dump(by_alias=True, mode="json")
+        if self.audio is None:
+            del stored["audio"]
+        return stored

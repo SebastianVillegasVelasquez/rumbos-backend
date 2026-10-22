@@ -25,6 +25,7 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "path": {"visible": True, "style": "dashed", "color": None, "animated": True},
     "ambient": {"kind": "none", "intensity": 0.5},
     "intro": "none",
+    "audio": None,
 }
 
 CUSTOM_SETTINGS: dict[str, Any] = {
@@ -35,6 +36,7 @@ CUSTOM_SETTINGS: dict[str, Any] = {
     "path": {"visible": True, "style": "dotted", "color": "#336699", "animated": False},
     "ambient": {"kind": "fireflies", "intensity": 0.8},
     "intro": "flyin",
+    "audio": None,
 }
 
 

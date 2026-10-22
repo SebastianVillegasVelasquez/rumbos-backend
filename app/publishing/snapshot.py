@@ -11,6 +11,10 @@ existed have no such key, so a draft that still has no 3D view must build the
 very same text, and hash, as that old publication; with `"view3d": null` every
 published map would suddenly look changed.
 
+Music works the same way: `settings.audio` and the top-level `audioInfo` (the
+track's title, credit and duration, frozen so a later edit of the track cannot
+change what was published) are OMITTED when the map has no music.
+
 Two snapshots are "the same" exactly when their `content_hash` is: the hash is
 SHA-256 of a canonical JSON text (sorted keys, no whitespace, normalized
 numbers), so key order and float spelling (`1` vs `1.0`, `0.1` vs
@@ -28,7 +32,7 @@ from typing import Any
 from app.assets.references import skin_asset_ids, stored_asset_id
 from app.schemas.bubble import BubbleRead
 from app.schemas.course_map import SkinRule
-from app.schemas.map_settings import MapSettings
+from app.schemas.map_settings import AudioInfo, MapSettings
 from app.schemas.skin import SkinRead, dump_config
 from app.schemas.view3d import LocalizedText, View3d
 
@@ -53,6 +57,9 @@ class DraftInputs:
     skins: Mapping[uuid.UUID, SkinRead]
     # The map's 3D scene and bindings; None when it has no 3D view.
     view3d: View3d | None = None
+    # What the music's asset says about it now. None when the settings name no
+    # music, or name a track that is gone or taken down: that is no music.
+    audio_info: AudioInfo | None = None
 
 
 def normalize_numbers(value: Any) -> Any:
@@ -143,11 +150,14 @@ def build_snapshot(inputs: DraftInputs) -> dict[str, Any]:
     # snapshot stores the resulting rank 0..n-1, so ties or gaps in the draft
     # never show up as a difference.
     ordered = sorted(inputs.bubbles, key=lambda b: (b.sequence, b.created_at, b.id))
+    settings = inputs.settings
+    if settings.audio is not None and inputs.audio_info is None:
+        settings = settings.model_copy(update={"audio": None})
     snapshot = {
         "schemaVersion": SCHEMA_VERSION,
         "title": inputs.title,
         "imageUrl": inputs.image_url,
-        "settings": inputs.settings.to_stored(),
+        "settings": settings.to_stored(),
         "defaultSkinId": (
             str(inputs.default_skin_id) if inputs.default_skin_id else None
         ),
@@ -171,20 +181,35 @@ def build_snapshot(inputs: DraftInputs) -> dict[str, Any]:
     }
     if inputs.view3d is not None:
         snapshot["view3d"] = _view3d_content(inputs.view3d)
+    if settings.audio is not None and inputs.audio_info is not None:
+        snapshot["audioInfo"] = {
+            "title": inputs.audio_info.title,
+            "credit": inputs.audio_info.credit,
+            "durationSeconds": inputs.audio_info.duration_seconds,
+        }
     normalized: dict[str, Any] = normalize_numbers(snapshot)
     return normalized
 
 
 def collect_asset_ids(snapshot: Mapping[str, Any]) -> list[uuid.UUID]:
-    """Assets a snapshot depends on: its background and every image of its
-    frozen skins. Sorted and without repeats, so it is a stable set."""
+    """Assets a snapshot depends on: its background, its music and every image
+    of its frozen skins. Sorted and without repeats, so it is a stable set."""
     found: set[uuid.UUID] = set()
     background = stored_asset_id(snapshot["imageUrl"])
     if background is not None:
         found.add(background)
+    music = snapshot_audio_id(snapshot)
+    if music is not None:
+        found.add(music)
     for skin in snapshot["skins"].values():
         found.update(skin_asset_ids(skin["config"]))
     return sorted(found, key=str)
+
+
+def snapshot_audio_id(snapshot: Mapping[str, Any]) -> uuid.UUID | None:
+    """The music asset a snapshot names, if it has music."""
+    audio = snapshot["settings"].get("audio")
+    return uuid.UUID(audio["assetId"]) if audio else None
 
 
 def snapshot_skin_ids(snapshot: Mapping[str, Any]) -> set[uuid.UUID]:
@@ -215,6 +240,18 @@ class Changes:
     # The 3D scene or any zone binding (or its texts) differs, or it was added
     # or removed.
     view3d_changed: bool = False
+    # The music, its settings or the track's frozen title, credit or duration
+    # differ, or it was added or removed. Kept out of `settings_changed`.
+    audio_changed: bool = False
+
+
+def _settings_without_music(snapshot: Mapping[str, Any]) -> dict[str, Any]:
+    return {k: v for k, v in snapshot["settings"].items() if k != "audio"}
+
+
+def _music(snapshot: Mapping[str, Any]) -> tuple[Any, Any]:
+    # `.get`: snapshots published before music existed have neither key.
+    return snapshot["settings"].get("audio"), snapshot.get("audioInfo")
 
 
 def diff_snapshots(old: Mapping[str, Any], new: Mapping[str, Any]) -> Changes:
@@ -241,7 +278,7 @@ def diff_snapshots(old: Mapping[str, Any], new: Mapping[str, Any]) -> Changes:
     return Changes(
         background_changed=old["imageUrl"] != new["imageUrl"],
         title_changed=old["title"] != new["title"],
-        settings_changed=old["settings"] != new["settings"],
+        settings_changed=(_settings_without_music(old) != _settings_without_music(new)),
         skins_changed=(
             old["defaultSkinId"] != new["defaultSkinId"]
             or old["skinRules"] != new["skinRules"]
@@ -254,6 +291,7 @@ def diff_snapshots(old: Mapping[str, Any], new: Mapping[str, Any]) -> Changes:
         bubbles_reordered=old_order != new_order,
         # `.get`: snapshots without a 3D view have no such key.
         view3d_changed=old.get("view3d") != new.get("view3d"),
+        audio_changed=_music(old) != _music(new),
     )
 
 

@@ -24,7 +24,7 @@ from app.publishing.snapshot import (
 )
 from app.schemas.bubble import BubbleRead
 from app.schemas.course_map import SkinRule
-from app.schemas.map_settings import MapSettings
+from app.schemas.map_settings import AudioInfo, MapSettings
 from app.schemas.skin import SkinRead, skin_config_adapter
 from app.schemas.view3d import LocalizedText, View3d, View3dBinding
 from tests import skin_configs
@@ -579,3 +579,165 @@ def test_an_old_snapshot_without_the_key_diffs_cleanly() -> None:
     assert "view3d" not in old
 
     assert diff_snapshots(old, build_snapshot(make_inputs())) == Changes()
+
+
+# --- music -----------------------------------------------------------------------
+
+TRACK = uuid.UUID(int=77)
+
+
+def music_inputs(
+    *,
+    volume: float = 0.4,
+    title: str = "Brisa",
+    credit: str = "Ana, CC BY 4.0",
+    seconds: float = 61.5,
+    info: bool = True,
+) -> DraftInputs:
+    return dataclasses.replace(
+        make_inputs(
+            settings=MapSettings.model_validate(
+                {"audio": {"assetId": str(TRACK), "volume": volume}}
+            )
+        ),
+        audio_info=(
+            AudioInfo(title=title, credit=credit, duration_seconds=seconds)
+            if info
+            else None
+        ),
+    )
+
+
+def test_the_stored_settings_of_a_map_without_music_are_the_ones_it_always_had() -> (
+    None
+):
+    """If this moves, every map published so far shows "unpublished changes"."""
+    assert MapSettings().to_stored() == {
+        "schemaVersion": 1,
+        "mode": "explorative",
+        "fit": "fit-width",
+        "initialView": None,
+        "path": {"visible": True, "style": "dashed", "color": None, "animated": True},
+        "ambient": {"kind": "none", "intensity": 0.5},
+        "intro": "none",
+    }
+
+
+def test_a_map_without_music_omits_both_keys_instead_of_writing_null() -> None:
+    snapshot = build_snapshot(make_inputs())
+
+    assert "audio" not in snapshot["settings"]
+    assert "audioInfo" not in snapshot
+    assert content_hash(snapshot) == content_hash(
+        build_snapshot(make_inputs(settings=MapSettings.model_validate({})))
+    )
+
+
+def test_music_is_stored_with_its_settings_and_a_frozen_copy_of_what_it_is() -> None:
+    snapshot = build_snapshot(music_inputs(volume=0.25))
+
+    assert snapshot["settings"]["audio"] == {
+        "assetId": str(TRACK),
+        "volume": 0.25,
+        "loop": True,
+        "startAfterInteraction": False,
+    }
+    assert snapshot["audioInfo"] == {
+        "title": "Brisa",
+        "credit": "Ana, CC BY 4.0",
+        "durationSeconds": 61.5,
+    }
+
+
+def test_the_music_asset_is_one_of_the_snapshots_assets() -> None:
+    assert collect_asset_ids(build_snapshot(music_inputs())) == [TRACK]
+    assert collect_asset_ids(build_snapshot(make_inputs())) == []
+
+
+def test_music_named_in_the_settings_but_gone_is_no_music_at_all() -> None:
+    """A track that was deleted or taken down is left out of the snapshot, and
+    the snapshot is then exactly the one of a map that never had music."""
+    gone = build_snapshot(music_inputs(info=False))
+
+    assert "audioInfo" not in gone and "audio" not in gone["settings"]
+    assert content_hash(gone) == content_hash(build_snapshot(make_inputs()))
+
+
+@pytest.mark.parametrize(
+    "other",
+    [
+        {"volume": 0.5},
+        {"title": "Otra"},
+        {"credit": "Alguien"},
+        {"seconds": 62.0},
+    ],
+)
+def test_any_change_to_the_music_changes_the_hash(other: dict[str, Any]) -> None:
+    base = content_hash(build_snapshot(music_inputs()))
+
+    assert content_hash(build_snapshot(music_inputs(**other))) != base
+    assert base != content_hash(build_snapshot(make_inputs()))
+
+
+def test_removing_the_music_returns_to_the_hash_it_had_before() -> None:
+    plain = content_hash(build_snapshot(make_inputs()))
+    with_music = build_snapshot(music_inputs())
+
+    assert content_hash(with_music) != plain
+    assert content_hash(build_snapshot(make_inputs())) == plain
+
+
+def test_the_diff_reports_music_apart_from_the_other_settings() -> None:
+    plain = build_snapshot(make_inputs())
+    music = build_snapshot(music_inputs())
+    louder = build_snapshot(music_inputs(volume=0.9))
+    renamed = build_snapshot(music_inputs(title="Otra"))
+
+    assert diff_snapshots(plain, music) == Changes(audio_changed=True)  # added
+    assert diff_snapshots(music, plain) == Changes(audio_changed=True)  # removed
+    assert diff_snapshots(music, louder) == Changes(audio_changed=True)
+    assert diff_snapshots(music, renamed) == Changes(audio_changed=True)
+    assert diff_snapshots(music, music) == Changes()
+
+
+def test_other_settings_changes_are_not_music_changes() -> None:
+    old = build_snapshot(music_inputs())
+    other = dataclasses.replace(
+        music_inputs(),
+        settings=MapSettings.model_validate(
+            {"mode": "guided", "audio": {"assetId": str(TRACK)}}
+        ),
+    )
+
+    assert diff_snapshots(old, build_snapshot(other)) == Changes(settings_changed=True)
+
+
+def test_a_snapshot_published_before_music_existed_diffs_cleanly() -> None:
+    old = build_snapshot(make_inputs())
+    assert "audioInfo" not in old and "audio" not in old["settings"]
+
+    assert diff_snapshots(old, build_snapshot(make_inputs())) == Changes()
+
+
+def test_music_settings_have_defaults_and_bounds() -> None:
+    defaults = MapSettings.model_validate({"audio": {"assetId": str(TRACK)}}).audio
+    assert defaults is not None
+    assert (defaults.volume, defaults.loop, defaults.start_after_interaction) == (
+        0.4,
+        True,
+        False,
+    )
+    for bad in (
+        {"assetId": str(TRACK), "volume": -0.01},
+        {"assetId": str(TRACK), "volume": 1.01},
+        {"assetId": "not-a-uuid"},
+        {"volume": 0.5},
+        {"assetId": str(TRACK), "autoplay": True},
+    ):
+        with pytest.raises(ValueError):
+            MapSettings.model_validate({"audio": bad})
+    assert MapSettings.model_validate({"audio": None}).audio is None
+    for edge in (0, 1):
+        assert MapSettings.model_validate(
+            {"audio": {"assetId": str(TRACK), "volume": edge}}
+        ).audio
