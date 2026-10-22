@@ -969,6 +969,7 @@ def test_a_map_published_before_3d_views_is_up_to_date_after_the_migration(
 
 BEFORE_TENANTS = "a7c4e1d90b35"  # the last revision without tenants
 BEFORE_SCOPING = "e5b2c8f4a136"
+BEFORE_AUDIO = "f6c3d9a5b247"  # the last revision without audio
 
 
 def _bubble(
@@ -1016,7 +1017,7 @@ def test_scoping_attaches_every_existing_row_to_the_legacy_tenant(
     )
     builtins_before = fetch(migration_db, "SELECT count(*) FROM skins WHERE is_builtin")
 
-    result = alembic(migration_db, "upgrade", "head")
+    result = alembic(migration_db, "upgrade", BEFORE_AUDIO)
     assert result.returncode == 0, result.stderr
 
     legacy = str(LEGACY_TENANT_ID)
@@ -1125,3 +1126,89 @@ def test_scoping_downgrades_and_upgrades_again(migration_db: str) -> None:
         migration_db, "SELECT tablename FROM pg_tables WHERE schemaname='public'"
     )
     assert ("tenants",) not in tables
+
+
+def _image_asset(sha: str) -> tuple[str, dict[str, Any]]:
+    return (
+        (
+            "INSERT INTO assets (id, tenant_id, kind, mime, width, height, bytes,"
+            " sha256, title, created_at, updated_at) VALUES (:id, :t, 'bubble',"
+            " 'image/png', 8, 8, 10, :sha, 'Old', now(), now())"
+        ),
+        {"id": uuid.uuid4(), "t": LEGACY_TENANT_ID, "sha": sha},
+    )
+
+
+def _audio_asset(
+    sha: str, *, tenant: uuid.UUID | None = None, credit: str | None = "Autor"
+) -> tuple[str, dict[str, Any]]:
+    return (
+        (
+            "INSERT INTO assets (id, tenant_id, kind, mime, bytes, sha256, title,"
+            " credit, duration_seconds, created_at, updated_at) VALUES (:id, :t,"
+            " 'audio', 'audio/mpeg', 10, :sha, 'Pista', :credit, 12.5, now(), now())"
+        ),
+        {"id": uuid.uuid4(), "t": tenant, "sha": sha, "credit": credit},
+    )
+
+
+def test_audio_migration_keeps_images_and_enforces_what_each_kind_needs(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", BEFORE_AUDIO).returncode == 0
+    run_sql(migration_db, [_image_asset("a" * 64)])
+
+    up = alembic(migration_db, "upgrade", "head")
+
+    assert up.returncode == 0, up.stderr
+    assert fetch(
+        migration_db,
+        "SELECT width, height, duration_seconds, license, uploaded_by_sub,"
+        " rights_declared_at, quarantined_at, quarantine_reason FROM assets",
+    ) == [(8, 8, None, None, None, None, None, None)]
+    # A library track (no tenant) and a tenant's own are both fine...
+    run_sql(
+        migration_db,
+        [
+            _audio_asset("b" * 64),
+            _audio_asset("b" * 64, tenant=LEGACY_TENANT_ID),
+        ],
+    )
+    # ...but the library cannot hold the same bytes twice,
+    with pytest.raises(Exception, match="uq_assets_library_kind_sha256"):
+        run_sql(migration_db, [_audio_asset("b" * 64)])
+    # audio needs a credit,
+    with pytest.raises(Exception, match="ck_assets_kind_fields"):
+        run_sql(migration_db, [_audio_asset("c" * 64, credit=None)])
+    # and an image needs its tenant and its dimensions.
+    sql, params = _image_asset("d" * 64)
+    with pytest.raises(Exception, match="ck_assets_kind_fields"):
+        run_sql(migration_db, [(sql, {**params, "t": None})])
+    with pytest.raises(Exception, match="ck_assets_kind_fields"):
+        run_sql(
+            migration_db,
+            [(sql.replace("8, 8, 10", "NULL, NULL, 10"), params)],
+        )
+
+
+def test_audio_migration_refuses_to_downgrade_over_audio_and_downgrades_without(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+    run_sql(migration_db, [_image_asset("a" * 64), _audio_asset("b" * 64)])
+
+    refused = alembic(migration_db, "downgrade", BEFORE_AUDIO)
+
+    assert refused.returncode != 0
+    assert "audio asset" in refused.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM assets") == [(2,)]
+
+    run_sql(migration_db, [("DELETE FROM assets WHERE kind = 'audio'", {})])
+    down = alembic(migration_db, "downgrade", BEFORE_AUDIO)
+    assert down.returncode == 0, down.stderr
+    assert fetch(migration_db, "SELECT width FROM assets") == [(8,)]
+    assert not fetch(
+        migration_db,
+        "SELECT 1 FROM pg_tables WHERE tablename = 'asset_audit_events'",
+    )
+    assert alembic(migration_db, "upgrade", "head").returncode == 0

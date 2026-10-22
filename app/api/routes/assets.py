@@ -174,6 +174,8 @@ async def upload_asset(
             kind = AssetKind(raw_kind if isinstance(raw_kind, str) else "")
         except ValueError as exc:
             raise InvalidUploadError("kind must be 'background' or 'bubble'") from exc
+        if kind is AssetKind.AUDIO:  # until audio uploads exist
+            raise InvalidUploadError("kind must be 'background' or 'bubble'")
         file.file.seek(0, 2)
         size = file.file.tell()
         raw_title, raw_credit = form.get("title"), form.get("credit")

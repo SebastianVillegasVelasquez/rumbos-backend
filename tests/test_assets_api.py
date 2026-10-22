@@ -35,14 +35,17 @@ async def test_upload_a_background_returns_the_contract_shape(
         "mime",
         "width",
         "height",
+        "durationSeconds",  # audio only: null for images
         "bytes",
         "url",
         "thumbUrl",
         "title",
         "credit",
+        "license",  # audio only: null for images
         "originalFilename",
         "createdAt",
     }
+    assert body["durationSeconds"] is None and body["license"] is None
     assert body["kind"] == "background" and body["mime"] == "image/png"
     assert (body["width"], body["height"]) == (1600, 900)
     assert body["url"] == f"/api/v1/assets/{body['id']}"
@@ -454,3 +457,10 @@ async def test_a_file_missing_from_storage_is_404_not_a_crash(
     r = await client.get(created["url"])
 
     assert r.status_code == 404
+
+
+async def test_an_image_cannot_be_uploaded_as_audio(client: httpx.AsyncClient) -> None:
+    r = await upload(client, images.png((64, 64)), "audio")
+
+    assert r.status_code == 422
+    assert r.json()["detail"]["code"] == "invalid_upload"

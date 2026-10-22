@@ -24,7 +24,7 @@ from app.core.paths import ASSETS_PATH
 from app.enums import AssetKind
 from app.exceptions import AssetAlreadyExistsError, AssetInUseError
 from app.models import Asset, CourseMap, Publication, Skin
-from app.models.asset import UQ_ASSET_CONTENT
+from app.models.asset import UQ_ASSET_CONTENT, UQ_LIBRARY_CONTENT
 from app.repositories.sqlalchemy._errors import constraint_name
 from app.schemas.asset import AssetCreate, AssetRecord, AssetUpdate, AssetUsage
 from app.tenancy.scope import TENANT_WIDE
@@ -75,14 +75,22 @@ class SqlAlchemyAssetRepository:
         return {a.id: AssetRecord.model_validate(a) for a in result}
 
     async def find_by_hash(self, kind: AssetKind, sha256: str) -> AssetRecord | None:
+        # The caller's own copy first, then the library's: a tenant that sends
+        # a track the library already has is given the library's.
         asset = await self._session.scalar(
-            select(Asset).where(Asset.kind == kind, Asset.sha256 == sha256)
+            select(Asset)
+            .where(Asset.kind == kind, Asset.sha256 == sha256)
+            .order_by(Asset.tenant_id.is_(None), Asset.id)
+            .limit(1)
         )
         return AssetRecord.model_validate(asset) if asset else None
 
     async def total_bytes(self) -> int:
+        # The library is the operator's, not part of any tenant's quota.
         total = await self._session.scalar(
-            select(func.coalesce(func.sum(Asset.size_bytes), 0))
+            select(func.coalesce(func.sum(Asset.size_bytes), 0)).where(
+                Asset.tenant_id.is_not(None)
+            )
         )
         return int(total or 0)
 
@@ -98,13 +106,17 @@ class SqlAlchemyAssetRepository:
             title=data.title,
             credit=data.credit,
             original_filename=data.original_filename,
+            duration_seconds=data.duration_seconds,
+            license=data.license,
+            uploaded_by_sub=data.uploaded_by_sub,
+            rights_declared_at=data.rights_declared_at,
         )
         self._session.add(asset)
         try:
             await self._session.commit()
         except IntegrityError as exc:
             await self._session.rollback()
-            if constraint_name(exc) == UQ_ASSET_CONTENT:
+            if constraint_name(exc) in (UQ_ASSET_CONTENT, UQ_LIBRARY_CONTENT):
                 raise AssetAlreadyExistsError(data.sha256) from exc
             raise
         except BaseException:
@@ -115,7 +127,9 @@ class SqlAlchemyAssetRepository:
     async def list_created_before(self, cutoff: datetime) -> list[AssetRecord]:
         result = await self._session.scalars(
             select(Asset)
-            .where(Asset.created_at < cutoff)
+            # Library tracks are curated, not uploaded and forgotten: never
+            # garbage, however long nobody has used them.
+            .where(Asset.created_at < cutoff, Asset.tenant_id.is_not(None))
             .order_by(Asset.created_at, Asset.id)
         )
         return [AssetRecord.model_validate(a) for a in result]

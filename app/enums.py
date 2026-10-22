@@ -43,10 +43,11 @@ class BubbleIcon(StrEnum):
 
 
 class AssetKind(StrEnum):
-    """What an uploaded image is for; decides its size limits."""
+    """What an uploaded file is for; decides its limits."""
 
     BACKGROUND = "background"
     BUBBLE = "bubble"
+    AUDIO = "audio"
 
 
 class PublicationStatus(StrEnum):

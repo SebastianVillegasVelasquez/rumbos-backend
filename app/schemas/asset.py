@@ -27,14 +27,30 @@ class AssetRecord(ApiModel):
     id: uuid.UUID
     kind: AssetKind
     mime: str
-    width: int
-    height: int
+    width: int | None  # none for audio
+    height: int | None
     size_bytes: int
     sha256: str
     title: str
     credit: str | None
     original_filename: str | None
     created_at: datetime
+    # None: a library track, shared by every tenant.
+    tenant_id: uuid.UUID | None = None
+    duration_seconds: float | None = None  # audio only
+    license: str | None = None
+    uploaded_by_sub: str | None = None
+    rights_declared_at: datetime | None = None
+    quarantined_at: datetime | None = None
+    quarantine_reason: str | None = None
+
+    @property
+    def is_library(self) -> bool:
+        return self.tenant_id is None
+
+    @property
+    def is_quarantined(self) -> bool:
+        return self.quarantined_at is not None
 
 
 class AssetCreate(ApiModel):
@@ -43,13 +59,18 @@ class AssetCreate(ApiModel):
     id: uuid.UUID
     kind: AssetKind
     mime: str
-    width: int
-    height: int
+    width: int | None = None
+    height: int | None = None
     size_bytes: int
     sha256: str
     title: str
     credit: str | None = None
     original_filename: str | None = None
+    duration_seconds: float | None = None
+    license: str | None = None
+    # The rights trail of an audio upload.
+    uploaded_by_sub: str | None = None
+    rights_declared_at: datetime | None = None
 
 
 class AssetRead(ApiModel):
@@ -58,13 +79,15 @@ class AssetRead(ApiModel):
     id: uuid.UUID
     kind: AssetKind
     mime: str
-    width: int
-    height: int
+    width: int | None  # images only
+    height: int | None
+    duration_seconds: float | None  # audio only
     bytes: int
     url: str
     thumb_url: str | None  # backgrounds only
     title: str
     credit: str | None
+    license: str | None
     original_filename: str | None
     created_at: datetime
 
@@ -76,6 +99,7 @@ class AssetRead(ApiModel):
             mime=record.mime,
             width=record.width,
             height=record.height,
+            duration_seconds=record.duration_seconds,
             bytes=record.size_bytes,
             url=f"{ASSETS_PATH}/{record.id}",
             thumb_url=(
@@ -85,6 +109,7 @@ class AssetRead(ApiModel):
             ),
             title=record.title,
             credit=record.credit,
+            license=record.license,
             original_filename=record.original_filename,
             created_at=record.created_at,
         )

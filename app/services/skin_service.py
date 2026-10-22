@@ -75,7 +75,11 @@ class SkinService:
         }
         if wrong:
             raise SkinAssetWrongKindError(wrong)
-        sizes = [(s, a, found[a].width, found[a].height) for s, a in referenced.items()]
+        # Bubble images always have dimensions; only audio lacks them.
+        sizes = [
+            (s, a, found[a].width or 0, found[a].height or 0)
+            for s, a in referenced.items()
+        ]
         if len({(width, height) for _, _, width, height in sizes}) > 1:
             raise SkinAssetSizeMismatchError(sizes)
 
