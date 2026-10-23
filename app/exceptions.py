@@ -358,3 +358,29 @@ class ForbiddenError(DomainError):
 class MoodleSourceNotProvidedError(DomainError):
     """The route answers from Moodle's web services, which a plugin tenant does
     not have: its Moodle state comes from the plugin, through the browser."""
+
+
+class ContentInvalidError(DomainError):
+    """The content of a bubble breaks the rules of its type.
+
+    `problems` are `{path, code, message}` dicts, every one of them. `path`
+    is relative to the content object (`body.blocks[2].url`).
+    """
+
+    def __init__(self, problems: list[dict[str, str]]) -> None:
+        super().__init__("content invalid")
+        self.problems = problems
+
+
+class ContentTooLargeError(DomainError):
+    """The content is over its size budget: `scope` is `bubble` (the one
+    bubble's limit) or `map` (all the content of the map)."""
+
+    def __init__(self, limit_bytes: int, scope: str) -> None:
+        super().__init__("content too large")
+        self.limit_bytes = limit_bytes
+        self.scope = scope
+
+
+class WidgetsDisabledError(DomainError):
+    """The tenant has not been allowed to use widgets."""
