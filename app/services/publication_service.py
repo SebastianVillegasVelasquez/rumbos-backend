@@ -80,6 +80,7 @@ def _changes(changes: Changes) -> PublicationChanges:
         bubbles_reordered=changes.bubbles_reordered,
         view3d_changed=changes.view3d_changed,
         audio_changed=changes.audio_changed,
+        content_changed=changes.content_changed,
     )
 
 

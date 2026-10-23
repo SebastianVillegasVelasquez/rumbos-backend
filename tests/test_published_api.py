@@ -224,6 +224,8 @@ async def test_the_published_read_contract(client: httpx.AsyncClient) -> None:
     assert set(body["bubbles"][0]) == {
         "id",
         "activityId",
+        "kind",
+        "content",
         "x",
         "y",
         "icon",

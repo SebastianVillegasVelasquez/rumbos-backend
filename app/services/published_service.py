@@ -2,7 +2,7 @@ import uuid
 from typing import Any
 
 from app.assets.references import audio_info_of
-from app.enums import BubbleIcon, BubbleStatus
+from app.enums import BubbleIcon, BubbleKind, BubbleStatus
 from app.exceptions import NotPublishedError
 from app.repositories.protocols import AssetRepository, PublicationRepository
 from app.schemas.course_map import SkinRule
@@ -101,7 +101,9 @@ class PublishedMapService:
             bubbles=[
                 PublishedBubble(
                     id=b["id"],
-                    activity_id=b["activityId"],
+                    activity_id=b.get("activityId"),
+                    kind=BubbleKind(b.get("kind", BubbleKind.ACTIVITY.value)),
+                    content=b.get("content"),
                     x=b["x"],
                     y=b["y"],
                     icon=BubbleIcon(b["icon"]) if b["icon"] else None,
@@ -142,7 +144,11 @@ class PublishedMapService:
         row = await self._require(course_map_id)
         return await self._resolver.resolve_activities(
             row.moodle_course_id,
-            [(uuid.UUID(b["id"]), b["activityId"]) for b in row.snapshot["bubbles"]],
+            [
+                (uuid.UUID(b["id"]), b["activityId"])
+                for b in row.snapshot["bubbles"]
+                if "activityId" in b  # content bubbles open nothing in Moodle
+            ],
             include_hidden=include_hidden,
         )
 

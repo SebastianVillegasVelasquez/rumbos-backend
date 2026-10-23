@@ -10,8 +10,9 @@ from typing import Any
 
 from pydantic import Field
 
-from app.enums import BubbleIcon, BubbleStatus
+from app.enums import BubbleIcon, BubbleKind, BubbleStatus
 from app.schemas.base import ApiModel
+from app.schemas.content import BlocksContent, WidgetContent
 from app.schemas.course_map import SkinRule
 from app.schemas.map_settings import AudioInfo, MapSettings
 from app.schemas.view3d import View3d
@@ -57,7 +58,14 @@ class PublishedSkin(ApiModel):
 
 class PublishedBubble(ApiModel):
     id: uuid.UUID
-    activity_id: int
+    # Null for a content bubble.
+    activity_id: int | None
+    kind: BubbleKind = BubbleKind.ACTIVITY
+    # Frozen as published, whatever the tenant allows today; the frontend
+    # decides whether to run a widget. Null for an activity bubble.
+    content: BlocksContent | WidgetContent | None = Field(
+        default=None, discriminator="type"
+    )
     x: float
     y: float
     icon: BubbleIcon | None

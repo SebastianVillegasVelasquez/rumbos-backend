@@ -41,6 +41,7 @@ from app.repositories.sqlalchemy.skin_repository import to_skin_read
 from app.repositories.sqlalchemy.view3d_repository import to_binding
 from app.schemas.asset import AssetRecord
 from app.schemas.bubble import BubbleRead
+from app.schemas.content import image_asset_ids
 from app.schemas.course_map import SkinRule
 from app.schemas.map_settings import MapSettings
 from app.schemas.publication import (
@@ -502,6 +503,18 @@ class SqlAlchemyPublicationRepository:
                     f"The 3D scene '{view3d['scene']}' is not available any more",
                 )
             )
+        for bubble in snapshot["bubbles"]:
+            for asset_id in image_asset_ids(bubble.get("content")):
+                if asset_id not in existing_assets:
+                    problems.append(
+                        (
+                            "content_asset_missing",
+                            (
+                                f"The content bubble {bubble['id']} shows the image "
+                                f"{asset_id}, which no longer exists"
+                            ),
+                        )
+                    )
         known = {uuid.UUID(k) for k in snapshot["skins"]}
         for skin_id in sorted(snapshot_skin_ids(snapshot) - known, key=str):
             problems.append(("skin_missing", f"The skin {skin_id} no longer exists"))

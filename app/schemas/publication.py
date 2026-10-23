@@ -53,6 +53,9 @@ class PublicationChanges(ApiModel):
     # The music, its settings or the track's frozen title, credit or duration
     # differ. Not counted in `settings_changed`.
     audio_changed: bool
+    # A content bubble's content differs (a bubble added or removed shows up in
+    # `bubblesAdded` / `bubblesRemoved`).
+    content_changed: bool
 
 
 class PublicationState(ApiModel):

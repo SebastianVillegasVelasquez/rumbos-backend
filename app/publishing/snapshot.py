@@ -11,6 +11,12 @@ existed have no such key, so a draft that still has no 3D view must build the
 very same text, and hash, as that old publication; with `"view3d": null` every
 published map would suddenly look changed.
 
+Content bubbles work the same way. An ACTIVITY bubble keeps exactly the shape
+it always had (no `kind`, no `content`), so every publication made before
+content bubbles existed still hashes the same and still reads as up to date. A
+CONTENT bubble carries `kind: "content"` and its `content` instead of an
+`activityId`.
+
 Music works the same way: `settings.audio` and the top-level `audioInfo` (the
 track's title, credit and duration, frozen so a later edit of the track cannot
 change what was published) are OMITTED when the map has no music.
@@ -30,7 +36,9 @@ from dataclasses import dataclass
 from typing import Any
 
 from app.assets.references import skin_asset_ids, stored_asset_id
+from app.enums import BubbleKind
 from app.schemas.bubble import BubbleRead
+from app.schemas.content import image_asset_ids, to_stored
 from app.schemas.course_map import SkinRule
 from app.schemas.map_settings import AudioInfo, MapSettings
 from app.schemas.skin import SkinRead, dump_config
@@ -127,6 +135,23 @@ def _view3d_content(view3d: View3d) -> dict[str, Any]:
     }
 
 
+def _bubble_content(bubble: BubbleRead, rank: int) -> dict[str, Any]:
+    entry: dict[str, Any] = {
+        "id": str(bubble.id),
+        "x": bubble.x,
+        "y": bubble.y,
+        "icon": bubble.icon.value if bubble.icon else None,
+        "skinId": str(bubble.skin_id) if bubble.skin_id else None,
+        "sequence": rank,
+    }
+    if bubble.kind is BubbleKind.CONTENT and bubble.content is not None:
+        entry["kind"] = BubbleKind.CONTENT.value
+        entry["content"] = to_stored(bubble.content)
+    else:
+        entry["activityId"] = bubble.activity_id
+    return entry
+
+
 def build_snapshot(inputs: DraftInputs) -> dict[str, Any]:
     """The snapshot content for a draft, canonical and ready to store or hash.
 
@@ -167,16 +192,7 @@ def build_snapshot(inputs: DraftInputs) -> dict[str, Any]:
         ],
         "skins": skins,
         "bubbles": [
-            {
-                "id": str(bubble.id),
-                "activityId": bubble.activity_id,
-                "x": bubble.x,
-                "y": bubble.y,
-                "icon": bubble.icon.value if bubble.icon else None,
-                "skinId": str(bubble.skin_id) if bubble.skin_id else None,
-                "sequence": rank,
-            }
-            for rank, bubble in enumerate(ordered)
+            _bubble_content(bubble, rank) for rank, bubble in enumerate(ordered)
         ],
     }
     if inputs.view3d is not None:
@@ -192,8 +208,9 @@ def build_snapshot(inputs: DraftInputs) -> dict[str, Any]:
 
 
 def collect_asset_ids(snapshot: Mapping[str, Any]) -> list[uuid.UUID]:
-    """Assets a snapshot depends on: its background, its music and every image
-    of its frozen skins. Sorted and without repeats, so it is a stable set."""
+    """Assets a snapshot depends on: its background, its music, every image
+    of its frozen skins and every image its content bubbles show. Sorted and
+    without repeats, so it is a stable set."""
     found: set[uuid.UUID] = set()
     background = stored_asset_id(snapshot["imageUrl"])
     if background is not None:
@@ -203,6 +220,8 @@ def collect_asset_ids(snapshot: Mapping[str, Any]) -> list[uuid.UUID]:
         found.add(music)
     for skin in snapshot["skins"].values():
         found.update(skin_asset_ids(skin["config"]))
+    for bubble in snapshot["bubbles"]:
+        found.update(image_asset_ids(bubble.get("content")))
     return sorted(found, key=str)
 
 
@@ -243,6 +262,8 @@ class Changes:
     # The music, its settings or the track's frozen title, credit or duration
     # differ, or it was added or removed. Kept out of `settings_changed`.
     audio_changed: bool = False
+    # A content bubble's title, blocks or widget differ.
+    content_changed: bool = False
 
 
 def _settings_without_music(snapshot: Mapping[str, Any]) -> dict[str, Any]:
@@ -273,6 +294,10 @@ def diff_snapshots(old: Mapping[str, Any], new: Mapping[str, Any]) -> Changes:
         if (old_bubbles[i]["skinId"], old_bubbles[i]["icon"])
         != (new_bubbles[i]["skinId"], new_bubbles[i]["icon"])
     )
+    # `.get`: activity bubbles have no content at all.
+    content_changed = any(
+        old_bubbles[i].get("content") != new_bubbles[i].get("content") for i in common
+    )
     old_order = [b["id"] for b in old["bubbles"] if b["id"] in common]
     new_order = [b["id"] for b in new["bubbles"] if b["id"] in common]
     return Changes(
@@ -292,6 +317,7 @@ def diff_snapshots(old: Mapping[str, Any], new: Mapping[str, Any]) -> Changes:
         # `.get`: snapshots without a 3D view have no such key.
         view3d_changed=old.get("view3d") != new.get("view3d"),
         audio_changed=_music(old) != _music(new),
+        content_changed=content_changed,
     )
 
 
