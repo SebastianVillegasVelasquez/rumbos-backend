@@ -42,6 +42,8 @@ Environment variables (or `.env`); see `.env.example`.
 | `ASSETS_MAX_BUBBLE_BYTES` | `2097152` | Largest accepted bubble image upload (2 MB). |
 | `ASSETS_MAX_BACKGROUND_SIDE` | `8192` | Longest side, in pixels, of a background. |
 | `ASSETS_MAX_BUBBLE_SIDE` | `1024` | Longest side, in pixels, of a bubble image. |
+| `ASSETS_MAX_IMAGE_BYTES` | `4194304` | Largest accepted content image upload (`kind=image`, 4 MB). |
+| `ASSETS_MAX_IMAGE_SIDE` | `2048` | Longest side, in pixels, of a content image. |
 | `ASSETS_MAX_TOTAL_BYTES` | `2147483648` | Quota: sum of every stored file (2 GB). Over it, uploads answer 507. |
 | `AUDIO_UPLOADS_ENABLED` | on in dev, **off in production** | Switch for editors uploading **their own audio** (`POST /assets` with `kind=audio`). Unset, it follows `APP_ENV`; set it to `true`/`false` to decide explicitly. It blocks only uploading (503 `audio_uploads_disabled`): serving, playing and choosing library tracks never depend on it. Independent of `ASSETS_UPLOADS_ENABLED`. See "Music". |
 | `ASSETS_MAX_AUDIO_BYTES` | `8388608` | Largest accepted audio upload (8 MB). |
@@ -215,7 +217,10 @@ cron. A `jti` is kept until its assertion could no longer pass the time checks.
 ### Uploads and security
 
 Teachers can upload their own backgrounds and bubble images (`POST /assets`,
-`multipart/form-data` with `file` and `kind` = `background` | `bubble`).
+`multipart/form-data` with `file` and `kind` = `background` | `bubble` | `image` | `audio`).
+`image` is for pictures inside content bubbles (see "Content bubbles"): up to
+2048 px per side and 4 MB, through the same pipeline as a background, with a
+WebP thumbnail (`thumbUrl`).
 
 > Uploads, edits and deletes are **editor-only** and stay inside the editor's
 > tenant (see "Tenants and authentication"); the quota is per tenant. In legacy
@@ -269,7 +274,8 @@ Every editor endpoint reads and writes the **draft** (the normalized rows).
 **Publishing** stores an immutable snapshot of it (title, background, settings,
 default skin and rules, the skins involved as frozen copies, and the bubbles'
 position/icon/skin/order) as publication `n` of that map; students read the
-latest one through `/published/...`. Live data is never in the snapshot: bubble
+latest one through `/published/...`. Content bubbles are part of it (see
+"Content bubbles"). Live data is never in the snapshot: bubble
 `status`, the level `position`, `moodleCourseId` and `moodleSectionId` are
 joined from the live rows. Bubble order is stored as the dense rank 0..n-1.
 
@@ -507,6 +513,97 @@ usage.
 > whoever is responsible for them before audio uploads are enabled in
 > production.
 
+### Content bubbles
+
+Not every bubble is a Moodle activity: an editor can also write an introduction
+or a note. A bubble has a `kind`: `activity` (the default; every bubble that
+existed before) or `content`, which has `activityId: null` and a `content`
+object that belongs to that one bubble (no reuse across bubbles). Content
+bubbles take part in the guided path (`sequence`), the order endpoint, the 3D
+zone bindings, publishing and restore like any other; they open nothing in
+Moodle, so `activities` and `resolved` ignore them.
+
+`POST /course-maps/{id}/bubbles` takes `{ kind: "content", content, x, y, icon? }`
+and `PATCH .../bubbles/{id}` takes `content` (the whole object is replaced; it is
+a content edit, so `If-Match` applies). `GET /auth/me` answers
+`{ role, courseId, features: { widgets } }` so the frontend knows what to offer.
+
+There are **two tiers**, on purpose:
+
+1. **Blocks** (`type: "blocks"`): data, validated by the server, never HTML.
+   `body = { schemaVersion: 1, blocks }` with at most 40 blocks and 20 KB, each
+   one of `heading` (level 2 or 3), `paragraph` (plain text, newlines kept),
+   `image` (an `assetId` of a `kind=image` or `background` asset of the tenant
+   that is not taken down, and **required** `alt`), `video` (`provider`
+   `youtube` or `vimeo` plus a `videoId` matching `^[A-Za-z0-9_-]{6,32}$`; a
+   free URL is never accepted), `link` (`https` only, no credentials, no
+   whitespace or control characters, host in ASCII/punycode) and `divider`.
+   Text is Unicode NFC with control and direction-override characters removed
+   (newlines survive only in paragraphs) and its length is counted after that.
+   Unknown fields are rejected and only the camelCase spelling is accepted. The
+   frontend renders blocks with its own components, so there is nothing for the
+   server to sanitize.
+2. **Widgets** (`type: "widget"`): author-written HTML, CSS and JavaScript
+   (`html` up to 200 KB, plus a required `altText` up to 300 characters). They
+   are **off for every tenant** until an operator turns them on.
+
+Both have a `title` (1 to 120) and `autoOpen` (`never` | `first_visit`).
+
+**The server does not sanitize widget HTML, and that is deliberate.** Removing
+the dangerous parts of arbitrary HTML and JavaScript on the server is an arms
+race that cannot be won, and a half-sanitized widget would look safe while not
+being so. The server only checks that the `html` is non-empty, valid UTF-8 text
+within the size limit, and stores and publishes it byte for byte. **The real
+isolation lives in the frontend**, which must run a widget only inside an
+`<iframe sandbox>` with no `allow-same-origin` (so it has an opaque origin and
+cannot read the app's token, storage or DOM), preferably served with its own
+restrictive CSP. This service sends no widget to anybody's origin itself: it
+returns the string. A frontend that renders a widget outside that sandbox
+breaks the model; there is nothing the backend can do about it.
+
+**The flag.** `tenants.widgets_enabled` defaults to `false`.
+
+    python -m app.scripts.tenants set --issuer https://moodle.uni.edu --widgets on
+    python -m app.scripts.tenants set --issuer https://moodle.uni.edu --widgets off
+    python -m app.scripts.tenants list      # shows widgets=on|off
+
+The change is logged. With the flag off, creating a widget bubble or replacing a
+bubble's content with a widget answers 403 `widgets_disabled`; everything else
+keeps working: widgets that already exist stay, can be moved, restyled, deleted
+or replaced by blocks, and **published maps keep returning the frozen content
+whatever the flag says now** (the frontend decides whether to run it).
+Restoring a publication brings widget bubbles back as published and adds a
+`widgets_disabled` warning when the flag is off.
+
+*Who should be allowed to turn widgets on.* A widget is code written by a
+teacher and run in every student's browser. Turn it on only for an institution
+that accepts that: it has editors it trusts (the editor role is whatever the
+Moodle plugin grants), a frontend deployed with the sandbox above, and someone
+accountable for what its teachers publish. It is per tenant and not per user on
+purpose: the server cannot tell a careful author from a careless one. Do not
+enable it for a site you cannot reach if something goes wrong; turning it off
+stops new widgets immediately, but a widget already published keeps being served
+until its bubble is replaced and the map published again.
+
+**Errors.** Content problems are `422 content_invalid` with
+`detail.problems: [{ path, code, message }]`, every problem at once (`path` such
+as `body.blocks[2].url`; codes include `required`, `unknown_field`, `too_short`,
+`too_long`, `too_many_blocks`, `unknown_type`, `invalid_value`, `invalid_url`,
+`invalid_video_id`, `invalid_utf8`, `asset_not_found`, `asset_wrong_kind`,
+`not_a_content_bubble`). Messages never echo the input. Sizes are
+`413 content_too_large` with `limitBytes` and `scope` (`bubble`: a blocks body
+over 20 KB or widget HTML over 200 KB; `map`: all the content of a map over
+1 MB, the bubble being replaced not counted twice). The map budget is checked
+before the write; two simultaneous writes can overshoot it slightly.
+
+**Publishing.** A content bubble's snapshot entry has `kind: "content"` and its
+`content` and no `activityId`; an activity bubble's entry has exactly the shape
+it always had, so every publication made before content bubbles still hashes the
+same and reads as `up_to_date` (a migration test checks it). `publication-state`
+gains `changes.contentChanged`. The images a map's content shows are listed in
+the publication's asset ids, so they cannot be deleted while a publication
+uses them, and they count under `maps` in an asset's `usage` while a draft does.
+
 ### Concurrent edits (`If-Match`)
 
 `CourseMapRead.revision` and `BubbleRead.version` start at 1 and travel as the
@@ -520,7 +617,8 @@ only when the body has `x`, `y`, `icon` or `skinId`). Missing header: 428
 is a single `UPDATE ... WHERE revision = :expected` that also adds 1, so of two
 editors on the same number exactly one wins. A PATCH with **only** `status` is
 live demo data: it needs no `If-Match` and does not bump the version. Creating
-maps/bubbles and the two `order` endpoints are not guarded.
+maps/bubbles and the two `order` endpoints are not guarded. Replacing a content
+bubble's `content` is a content edit and so is guarded like `x` or `icon`.
 
 ### Operations
 
@@ -533,11 +631,14 @@ Both are **dry runs unless `--apply` is given**.
   inicial (migración)"). Only maps with at least one bubble and no publication
   are touched, so it is safe to run again.
 - `python -m app.scripts.tenants` and `python -m app.scripts.purge_auth`: see "Tenants and authentication".
+  `python -m app.scripts.tenants set --issuer <iss> --widgets on|off` is how a
+  tenant is allowed widgets (see "Content bubbles").
 - `python -m app.scripts.assets`: the audio library and takedowns, see "Music".
 - `python -m app.scripts.gc_assets [--older-than-days 7] [--apply]` lists, and
   with `--apply` deletes, assets that no map, skin or publication uses and that
   are older than the threshold, reporting the bytes reclaimed. It uses the same
-  usage rule as `DELETE /assets/{id}` (maps' music included). Library tracks are
+  usage rule as `DELETE /assets/{id}` (maps' music and the images of content
+  bubbles included). Library tracks are
   never collected.
 
 ### Demo skin pack
@@ -593,7 +694,9 @@ never changes after creation.
   Must be exactly the map's bubbles (422 `order_mismatch`); sets `sequence`
   0..n-1. Only this endpoint changes `sequence`.
 - `POST|PATCH|DELETE /course-maps/{id}/bubbles[/{bubbleId}]`. An activity can
-  have one bubble per **course**, on any of its maps.
+  have one bubble per **course**, on any of its maps. A bubble is `kind`
+  `activity` (default) or `content`, whose `content` is written in Rumbos: see
+  "Content bubbles".
 - `GET /course-maps/{id}/activities?includeHidden=&onlySection=`: the course's
   activities, with `sectionId`, `placed` (on any map of the course) and
   `placedInMapId`. `onlySection=true` keeps only the map's section (ignored for
@@ -607,7 +710,7 @@ never changes after creation.
   tenant's own assets, or the shared audio library; newest first, with `usage`
   counts), `PATCH /assets/{id}` (`title`, `credit`),
   `DELETE /assets/{id}` (409 while in use), `GET /assets/{id}` (also `HEAD`;
-  honours `Range`), `GET /assets/{id}/thumb` (backgrounds only). A map's
+  honours `Range`), `GET /assets/{id}/thumb` (backgrounds and images). A map's
   `imageUrl` may be a bundled frontend path or `/api/v1/assets/{id}`; its music
   is `settings.audio` (see "Music").
 - `GET /course-maps/{id}/publication-state`, `POST .../publish`,
