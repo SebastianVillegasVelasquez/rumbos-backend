@@ -328,7 +328,8 @@ class CourseMapService:
         # and are never put in here.
         bubble_by_module: dict[int, BubbleRead] = {}
         for bubble in bubbles:
-            bubble_by_module.setdefault(bubble.activity_id, bubble)
+            if bubble.activity_id is not None:  # content bubbles have none
+                bubble_by_module.setdefault(bubble.activity_id, bubble)
         section_filter = course_map.moodle_section_id if only_section else None
 
         activities: list[ActivityRead] = []

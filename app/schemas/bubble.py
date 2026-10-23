@@ -4,8 +4,9 @@ from typing import Annotated, Self
 
 from pydantic import Field, model_validator
 
-from app.enums import BubbleIcon, BubbleStatus
+from app.enums import BubbleIcon, BubbleKind, BubbleStatus
 from app.schemas.base import ApiModel
+from app.schemas.content import BlocksContent, WidgetContent
 
 # Relative position on the map, never pixels.
 UnitFloat = Annotated[float, Field(ge=0, le=1)]
@@ -52,13 +53,19 @@ class BubbleUpdate(ApiModel):
 class BubbleRead(ApiModel):
     id: uuid.UUID
     course_map_id: uuid.UUID
-    activity_id: int
+    # Null for a content bubble.
+    activity_id: int | None
     x: float
     y: float
     icon: BubbleIcon | None
     status: BubbleStatus
     skin_id: uuid.UUID | None
     sequence: int
+    kind: BubbleKind = BubbleKind.ACTIVITY
+    # What a content bubble shows; null for an activity bubble.
+    content: BlocksContent | WidgetContent | None = Field(
+        default=None, discriminator="type"
+    )
     # Concurrency token: starts at 1, bumped by edits to x, y, icon or skin.
     version: int = 1
     created_at: datetime

@@ -14,6 +14,13 @@ class BubbleStatus(StrEnum):
     COMPLETE = "complete"
 
 
+class BubbleKind(StrEnum):
+    """What a bubble opens: a Moodle activity, or content written in Rumbos."""
+
+    ACTIVITY = "activity"
+    CONTENT = "content"
+
+
 class MoodleStatus(StrEnum):
     """How fresh the Moodle data behind a resolved map is."""
 

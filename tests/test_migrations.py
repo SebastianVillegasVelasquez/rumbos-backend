@@ -1455,3 +1455,133 @@ def test_widgets_migration_downgrades_and_upgrades_again(migration_db: str) -> N
     )
     assert alembic(migration_db, "upgrade", "head").returncode == 0
     assert fetch(migration_db, "SELECT widgets_enabled FROM tenants") == [(False,)]
+
+
+BEFORE_CONTENT = "a9d3f7b2c814"  # the last revision without content bubbles
+
+
+def _bubble_at_content_revision(
+    map_id: uuid.UUID, activity_id: int
+) -> tuple[str, dict[str, Any]]:
+    return (
+        (
+            "INSERT INTO bubbles (id, tenant_id, course_map_id, moodle_course_id,"
+            " activity_id, x, y, status, created_at, updated_at) VALUES (:id, :t,"
+            " :m, 8, :a, 0.5, 0.25, 'locked', now(), now())"
+        ),
+        {"id": uuid.uuid4(), "t": LEGACY_TENANT_ID, "m": map_id, "a": activity_id},
+    )
+
+
+def _map_at_content_revision(map_id: uuid.UUID) -> tuple[str, dict[str, Any]]:
+    return (
+        (
+            "INSERT INTO course_maps (id, tenant_id, title, moodle_course_id,"
+            " image_url, created_at, updated_at) VALUES (:id, :t, 'Seeded', 8,"
+            " '/x.png', now(), now())"
+        ),
+        {"id": map_id, "t": LEGACY_TENANT_ID},
+    )
+
+
+def _content_bubble_sql(
+    map_id: uuid.UUID, **overrides: Any
+) -> tuple[str, dict[str, Any]]:
+    params: dict[str, Any] = {
+        "id": uuid.uuid4(),
+        "t": LEGACY_TENANT_ID,
+        "m": map_id,
+        "a": None,
+        "k": "content",
+        "c": json.dumps({"type": "blocks"}),
+        **overrides,
+    }
+    return (
+        (
+            "INSERT INTO bubbles (id, tenant_id, course_map_id, moodle_course_id,"
+            " kind, activity_id, content, x, y, status, created_at, updated_at)"
+            " VALUES (:id, :t, :m, 8, :k, :a, CAST(:c AS jsonb), 0.5, 0.5, 'locked',"
+            " now(), now())"
+        ),
+        params,
+    )
+
+
+def test_content_migration_keeps_existing_bubbles_as_activity_bubbles(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", BEFORE_CONTENT).returncode == 0
+    map_id = uuid.uuid4()
+    run_sql(
+        migration_db,
+        [_map_at_content_revision(map_id), _bubble_at_content_revision(map_id, 5)],
+    )
+
+    up = alembic(migration_db, "upgrade", "head")
+
+    assert up.returncode == 0, up.stderr
+    assert fetch(migration_db, "SELECT kind, activity_id, content FROM bubbles") == [
+        ("activity", 5, None)
+    ]
+
+
+def test_content_migration_enforces_the_shape_and_the_partial_index(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+    map_id = uuid.uuid4()
+    run_sql(
+        migration_db,
+        [_map_at_content_revision(map_id), _bubble_at_content_revision(map_id, 5)],
+    )
+
+    # content bubbles need no activity, and any number of them fit,
+    run_sql(migration_db, [_content_bubble_sql(map_id), _content_bubble_sql(map_id)])
+    # an activity still cannot be placed twice in the course,
+    with pytest.raises(Exception, match="uq_bubbles_moodle_course_id_activity_id"):
+        run_sql(migration_db, [_bubble_at_content_revision(map_id, 5)])
+    # and the check refuses every mixed shape.
+    for overrides in (
+        {"a": 3},  # content with an activity
+        {"c": None},  # content without content
+        {"k": "activity"},  # activity without an activity
+        {"k": "activity", "a": 3},  # activity carrying content
+        {"k": "other"},
+    ):
+        with pytest.raises(Exception, match="ck_bubbles_kind_fields"):
+            run_sql(migration_db, [_content_bubble_sql(map_id, **overrides)])
+    [(definition,)] = fetch(
+        migration_db,
+        "SELECT indexdef FROM pg_indexes"
+        " WHERE indexname = 'uq_bubbles_moodle_course_id_activity_id'",
+    )
+    assert "UNIQUE" in definition and "WHERE" in definition
+
+
+def test_content_migration_refuses_to_downgrade_over_content_bubbles(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+    map_id = uuid.uuid4()
+    run_sql(
+        migration_db,
+        [
+            _map_at_content_revision(map_id),
+            _bubble_at_content_revision(map_id, 5),
+            _content_bubble_sql(map_id),
+        ],
+    )
+
+    refused = alembic(migration_db, "downgrade", BEFORE_CONTENT)
+
+    assert refused.returncode != 0
+    assert "content bubble" in refused.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM bubbles") == [(2,)]
+
+    run_sql(migration_db, [("DELETE FROM bubbles WHERE kind = 'content'", {})])
+    down = alembic(migration_db, "downgrade", BEFORE_CONTENT)
+    assert down.returncode == 0, down.stderr
+    assert fetch(migration_db, "SELECT activity_id FROM bubbles") == [(5,)]
+    with pytest.raises(Exception, match="uq_bubbles_moodle_course_id_activity_id"):
+        run_sql(migration_db, [_bubble_at_content_revision(map_id, 5)])
+    assert alembic(migration_db, "upgrade", "head").returncode == 0

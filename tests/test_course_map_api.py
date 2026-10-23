@@ -375,6 +375,8 @@ async def test_responses_are_camel_case(client: httpx.AsyncClient) -> None:
         "id",
         "courseMapId",
         "activityId",
+        "kind",
+        "content",
         "x",
         "y",
         "icon",

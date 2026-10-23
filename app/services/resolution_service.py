@@ -55,7 +55,8 @@ class MapResolutionService:
         bubbles = await self._bubbles.list_by_course_map(course_map_id)
         return await self.resolve_activities(
             course_map.moodle_course_id,
-            [(b.id, b.activity_id) for b in bubbles],
+            # Content bubbles open nothing in Moodle: there is nothing to resolve.
+            [(b.id, b.activity_id) for b in bubbles if b.activity_id is not None],
             include_hidden=include_hidden,
         )
 
