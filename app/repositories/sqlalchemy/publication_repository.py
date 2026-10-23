@@ -8,7 +8,7 @@ from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.assets.references import audio_info_of, skin_asset_ids, stored_asset_id
-from app.enums import BubbleIcon, BubbleStatus
+from app.enums import BubbleIcon, BubbleKind, BubbleStatus
 from app.exceptions import (
     CourseMapNotFoundError,
     DraftChangedSinceReviewError,
@@ -25,6 +25,7 @@ from app.models import (
     CourseMapView3dBinding,
     Publication,
     Skin,
+    Tenant,
 )
 from app.models.bubble import UQ_BUBBLE_ACTIVITY
 from app.models.publication import UQ_PUBLICATION_NUMBER
@@ -542,6 +543,13 @@ class SqlAlchemyPublicationRepository:
         snapshot once the bubbles are back (a scene that is no longer in the
         registry is dropped, with a `scene_unknown` warning). Bumps the map's revision, and the version of
         every bubble that changed.
+
+        Content bubbles come back with their original ids and their frozen
+        content, widgets included even if the tenant has switched widgets off
+        since (that only earns a `widgets_disabled` warning: what was published
+        is not rewritten, and the flag is enforced where content is written).
+        An image a content bubble shows that is gone earns a
+        `content_asset_missing` warning; publishing it again is refused.
         """
         warnings: list[RestoreWarning] = []
         try:
@@ -555,7 +563,7 @@ class SqlAlchemyPublicationRepository:
                         CourseMap.revision == expected_revision,
                     )
                     .values(revision=CourseMap.revision + 1)
-                    .returning(CourseMap.moodle_course_id)
+                    .returning(CourseMap.moodle_course_id, CourseMap.tenant_id)
                     .execution_options(synchronize_session=False)
                 )
             ).first()
@@ -568,6 +576,7 @@ class SqlAlchemyPublicationRepository:
                     return None
                 raise VersionConflictError(current_revision=current)
             moodle_course_id: int = row.moodle_course_id
+            tenant_id: uuid.UUID = row.tenant_id
 
             background = stored_asset_id(snapshot["imageUrl"])
             if background is not None and not await self._session.scalar(
@@ -659,7 +668,12 @@ class SqlAlchemyPublicationRepository:
                     )
 
             await self._restore_bubbles(
-                course_map_id, moodle_course_id, snapshot, skin_or_none, warnings
+                course_map_id,
+                moodle_course_id,
+                tenant_id,
+                snapshot,
+                skin_or_none,
+                warnings,
             )
             await self._restore_view3d(course_map_id, snapshot, warnings)
             await self._session.commit()
@@ -739,14 +753,60 @@ class SqlAlchemyPublicationRepository:
         )
         await self._session.flush()
 
+    async def _warn_about_content(
+        self,
+        tenant_id: uuid.UUID,
+        snapshot: dict[str, Any],
+        warnings: list[RestoreWarning],
+    ) -> None:
+        """Warnings for the content bubbles of `snapshot` that cannot be used as
+        they are today: widgets the tenant no longer allows, images that are gone."""
+        content_bubbles = [b for b in snapshot["bubbles"] if "content" in b]
+        if not content_bubbles:
+            return
+        widgets_on = bool(
+            await self._session.scalar(
+                select(Tenant.widgets_enabled).where(Tenant.id == tenant_id)
+            )
+        )
+        wanted = {i for b in content_bubbles for i in image_asset_ids(b["content"])}
+        present = set(
+            await self._session.scalars(select(Asset.id).where(Asset.id.in_(wanted)))
+        )
+        for bubble in content_bubbles:
+            if bubble["content"]["type"] == "widget" and not widgets_on:
+                warnings.append(
+                    RestoreWarning(
+                        code="widgets_disabled",
+                        message=(
+                            f"Widgets are not enabled for this site; the widget "
+                            f"bubble {bubble['id']} was restored as published but "
+                            "cannot be edited until they are"
+                        ),
+                    )
+                )
+            for asset_id in image_asset_ids(bubble["content"]):
+                if asset_id not in present:
+                    warnings.append(
+                        RestoreWarning(
+                            code="content_asset_missing",
+                            message=(
+                                f"The image {asset_id} shown by the content bubble "
+                                f"{bubble['id']} no longer exists"
+                            ),
+                        )
+                    )
+
     async def _restore_bubbles(
         self,
         course_map_id: uuid.UUID,
         moodle_course_id: int,
+        tenant_id: uuid.UUID,
         snapshot: dict[str, Any],
         skin_or_none: Any,
         warnings: list[RestoreWarning],
     ) -> None:
+        await self._warn_about_content(tenant_id, snapshot, warnings)
         wanted = {uuid.UUID(b["id"]): b for b in snapshot["bubbles"]}
         existing = {
             b.id: b
@@ -789,11 +849,26 @@ class SqlAlchemyPublicationRepository:
             await self._session.scalars(
                 select(Bubble.activity_id).where(
                     Bubble.moodle_course_id == moodle_course_id,
-                    Bubble.activity_id.in_([d["activityId"] for d in missing.values()]),
+                    Bubble.activity_id.in_(
+                        [d["activityId"] for d in missing.values() if "activityId" in d]
+                    ),
                 )
             )
         )
         for bubble_id, data in missing.items():
+            if "content" in data:
+                self._session.add(
+                    Bubble(
+                        id=bubble_id,
+                        course_map_id=course_map_id,
+                        moodle_course_id=moodle_course_id,
+                        kind=BubbleKind.CONTENT,
+                        activity_id=None,
+                        status=BubbleStatus.LOCKED,
+                        **self._bubble_values(data, skin_or_none, bubble_id),
+                    )
+                )
+                continue
             if data["activityId"] in taken:
                 warnings.append(
                     RestoreWarning(
@@ -821,10 +896,13 @@ class SqlAlchemyPublicationRepository:
     def _bubble_values(
         data: dict[str, Any], skin_or_none: Any, bubble_id: uuid.UUID
     ) -> dict[str, Any]:
-        return {
+        values: dict[str, Any] = {
             "x": data["x"],
             "y": data["y"],
             "icon": BubbleIcon(data["icon"]) if data["icon"] else None,
             "skin_id": skin_or_none(data["skinId"], f"the skin of bubble {bubble_id}"),
             "sequence": data["sequence"],
         }
+        if "content" in data:  # only content bubbles have any
+            values["content"] = data["content"]
+        return values
