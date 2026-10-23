@@ -129,7 +129,7 @@ _UPLOAD_OPENAPI: dict[str, Any] = {
                         "file": {"type": "string", "format": "binary"},
                         "kind": {
                             "type": "string",
-                            "enum": ["background", "bubble", "audio"],
+                            "enum": ["background", "bubble", "image", "audio"],
                         },
                         "title": {"type": "string", "maxLength": 120},
                         "credit": {"type": "string", "maxLength": 300},
@@ -187,7 +187,7 @@ async def upload_asset(
             kind = AssetKind(raw_kind if isinstance(raw_kind, str) else "")
         except ValueError as exc:
             raise InvalidUploadError(
-                "kind must be 'background', 'bubble' or 'audio'"
+                "kind must be 'background', 'bubble', 'image' or 'audio'"
             ) from exc
         file.file.seek(0, 2)
         size = file.file.tell()

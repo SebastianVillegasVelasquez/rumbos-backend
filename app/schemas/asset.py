@@ -93,7 +93,7 @@ class AssetRead(ApiModel):
     duration_seconds: float | None  # audio only
     bytes: int
     url: str
-    thumb_url: str | None  # backgrounds only
+    thumb_url: str | None  # backgrounds and images only
     title: str
     credit: str | None
     license: str | None
@@ -113,7 +113,7 @@ class AssetRead(ApiModel):
             url=f"{ASSETS_PATH}/{record.id}",
             thumb_url=(
                 f"{ASSETS_PATH}/{record.id}/thumb"
-                if record.kind is AssetKind.BACKGROUND
+                if record.kind.has_thumbnail
                 else None
             ),
             title=record.title,

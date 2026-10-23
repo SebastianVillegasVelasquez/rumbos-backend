@@ -62,6 +62,8 @@ class AssetSettings:
     audio_uploads_enabled: bool = True
     max_audio_bytes: int = 8 * 1024 * 1024
     max_audio_seconds: float = 600.0
+    max_image_bytes: int = 4 * 1024 * 1024
+    max_image_side: int = 2048
 
     @classmethod
     def from_app_settings(cls, settings: Settings) -> "AssetSettings":
@@ -75,6 +77,8 @@ class AssetSettings:
             audio_uploads_enabled=settings.audio_uploads_on,
             max_audio_bytes=settings.assets_max_audio_bytes,
             max_audio_seconds=settings.assets_max_audio_seconds,
+            max_image_bytes=settings.assets_max_image_bytes,
+            max_image_side=settings.assets_max_image_side,
         )
 
     def max_bytes_for(self, kind: AssetKind) -> int:
@@ -82,6 +86,8 @@ class AssetSettings:
             return self.max_audio_bytes
         if kind is AssetKind.BACKGROUND:
             return self.max_background_bytes
+        if kind is AssetKind.IMAGE:
+            return self.max_image_bytes
         return self.max_bubble_bytes
 
     def enabled_for(self, kind: AssetKind | None) -> bool:
@@ -182,7 +188,9 @@ class AssetService:
             file,
             kind,
             ImageLimits(
-                self._settings.max_background_side, self._settings.max_bubble_side
+                self._settings.max_background_side,
+                self._settings.max_bubble_side,
+                self._settings.max_image_side,
             ),
         )
         sha256 = hashlib.sha256(processed.data).hexdigest()
@@ -441,7 +449,7 @@ class AssetService:
         if (
             asset is None
             or asset.is_quarantined  # taken down: as good as gone
-            or (thumb and asset.kind is not AssetKind.BACKGROUND)
+            or (thumb and not asset.kind.has_thumbnail)
         ):
             raise AssetNotFoundError(raw_id)
         key = thumb_key(asset_id) if thumb else content_key(asset_id)

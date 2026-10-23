@@ -41,10 +41,13 @@ class ImageLimits:
 
     background_side: int
     bubble_side: int
+    image_side: int = 2048
 
     def side_for(self, kind: AssetKind) -> int:
         if kind is AssetKind.BACKGROUND:
             return self.background_side
+        if kind is AssetKind.IMAGE:
+            return self.image_side
         return self.bubble_side
 
 
@@ -54,7 +57,7 @@ class ProcessedImage:
     mime: str
     width: int
     height: int
-    thumbnail: bytes | None  # WebP, backgrounds only
+    thumbnail: bytes | None  # WebP, for the kinds that have one
 
 
 def sniff_format(head: bytes) -> str | None:
@@ -82,7 +85,9 @@ def process_image(
     max_side = limits.side_for(kind)
     # Pillow warns above this many pixels and refuses at twice as many. No
     # image within the side limit can reach it.
-    Image.MAX_IMAGE_PIXELS = max(limits.background_side, limits.bubble_side) ** 2
+    Image.MAX_IMAGE_PIXELS = (
+        max(limits.background_side, limits.bubble_side, limits.image_side) ** 2
+    )
     with _DECODE_SLOTS:
         try:
             return _process(file, fmt, kind, max_side)
@@ -117,7 +122,7 @@ def _process(
     image = _normalize_mode(image)
     image.info.clear()  # nothing from the source may be written back out
     data = _encode(image, fmt)
-    thumbnail = _thumbnail(image) if kind is AssetKind.BACKGROUND else None
+    thumbnail = _thumbnail(image) if kind.has_thumbnail else None
     return ProcessedImage(
         data=data,
         mime=_MIME[fmt],

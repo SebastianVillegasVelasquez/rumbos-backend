@@ -48,6 +48,13 @@ class AssetKind(StrEnum):
     BACKGROUND = "background"
     BUBBLE = "bubble"
     AUDIO = "audio"
+    # A picture an editor puts inside a content bubble (not a skin, not a backdrop).
+    IMAGE = "image"
+
+    @property
+    def has_thumbnail(self) -> bool:
+        """Whether uploads of this kind get a small WebP preview next to them."""
+        return self in (AssetKind.BACKGROUND, AssetKind.IMAGE)
 
 
 class AssetScope(StrEnum):

@@ -19,6 +19,7 @@ _DEFAULT_TITLES = {
     AssetKind.BACKGROUND: "Fondo",
     AssetKind.BUBBLE: "Imagen",
     AssetKind.AUDIO: "Audio",
+    AssetKind.IMAGE: "Imagen",
 }
 
 

@@ -44,6 +44,9 @@ class Settings(BaseSettings):
     assets_max_bubble_bytes: int = Field(default=2 * 1024 * 1024, ge=1)
     assets_max_background_side: int = Field(default=8192, ge=1, le=16384)
     assets_max_bubble_side: int = Field(default=1024, ge=1, le=16384)
+    # Pictures inside content bubbles.
+    assets_max_image_bytes: int = Field(default=4 * 1024 * 1024, ge=1)
+    assets_max_image_side: int = Field(default=2048, ge=1, le=16384)
     assets_max_total_bytes: int = Field(default=2 * 1024**3, ge=1)
     # Audio uploads (music for maps) are a copyright exposure, so they have
     # their own switch. Unset: on in dev, off in production. It blocks only

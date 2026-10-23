@@ -199,7 +199,9 @@ async def test_an_oversize_body_is_cut_off_without_a_content_length(
     client: httpx.AsyncClient, box: Box
 ) -> None:
     """A chunked body, as a hostile client would send: stopped at the cap."""
-    box.change(max_background_bytes=10_000, max_bubble_bytes=10_000)
+    box.change(
+        max_background_bytes=10_000, max_bubble_bytes=10_000, max_image_bytes=10_000
+    )
     sent = 0
 
     async def endless() -> AsyncIterator[bytes]:
@@ -228,7 +230,9 @@ async def test_an_oversize_body_is_cut_off_without_a_content_length(
 async def test_a_declared_oversize_body_is_refused_up_front(
     client: httpx.AsyncClient, box: Box
 ) -> None:
-    box.change(max_background_bytes=1_000, max_bubble_bytes=1_000)
+    box.change(
+        max_background_bytes=1_000, max_bubble_bytes=1_000, max_image_bytes=1_000
+    )
 
     r = await client.post(
         "/assets",

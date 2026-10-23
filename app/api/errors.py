@@ -322,7 +322,7 @@ def register_exception_handlers(app: FastAPI) -> None:
             422,
             "invalid_upload",
             "Send multipart/form-data with a `file` and a `kind` of "
-            "'background', 'bubble' or 'audio'",
+            "'background', 'bubble', 'image' or 'audio'",
         ),
     )
     app.add_exception_handler(
