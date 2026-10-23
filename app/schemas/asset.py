@@ -127,7 +127,7 @@ class AssetRead(ApiModel):
 class AssetUsage(ApiModel):
     """How many things reference an asset (an asset in use cannot be deleted)."""
 
-    maps: int = 0  # draft maps whose background or music it is
+    maps: int = 0  # draft maps whose background, music or content image it is
     skins: int = 0  # skins that mention it
     publications: int = 0  # publications (snapshots) that list it
 

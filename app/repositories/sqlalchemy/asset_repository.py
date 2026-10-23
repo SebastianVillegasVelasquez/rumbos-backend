@@ -12,6 +12,7 @@ from sqlalchemy import (
     delete,
     exists,
     func,
+    literal_column,
     or_,
     select,
     update,
@@ -23,7 +24,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.paths import ASSETS_PATH
 from app.enums import AssetKind, AssetScope
 from app.exceptions import AssetAlreadyExistsError, AssetInUseError
-from app.models import Asset, AssetAuditEvent, CourseMap, Publication, Skin
+from app.models import Asset, AssetAuditEvent, Bubble, CourseMap, Publication, Skin
 from app.models.asset import UQ_ASSET_CONTENT, UQ_LIBRARY_CONTENT
 from app.repositories.sqlalchemy._errors import constraint_name
 from app.schemas.asset import (
@@ -43,12 +44,30 @@ def _id_text(asset_id: SQLColumnExpression[Any]) -> ColumnElement[str]:
 # One definition of "uses this asset" per kind of user, shared by the counts and
 # the guarded delete (and so by the garbage collector). Each takes an SQL
 # expression for the asset id, so it works for a literal and for a join.
+def content_shows(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:
+    """A bubble with an image block that points at the asset. A path query on
+    the block list, so a widget whose HTML merely mentions the id (it is an
+    opaque string there) does not count."""
+    return func.jsonb_path_exists(
+        Bubble.content,
+        literal_column(
+            "'$.body.blocks[*] ? (@.type == \"image\" && @.assetId == $id)'::jsonpath"
+        ),
+        func.jsonb_build_object(literal_column("'id'"), _id_text(asset_id)),
+    )
+
+
 def map_uses(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:
-    """A draft map whose background is `{ASSETS_PATH}/{id}`, or whose music is
-    the asset."""
+    """A draft map whose background is `{ASSETS_PATH}/{id}`, whose music is the
+    asset, or that has a content bubble showing it as an image."""
     return or_(
         CourseMap.image_url == func.concat(f"{ASSETS_PATH}/", _id_text(asset_id)),
         CourseMap.settings["audio"]["assetId"].astext == _id_text(asset_id),
+        # Correlated by hand: the asset can be two queries up (the guarded
+        # delete), where SQLAlchemy would otherwise add its table as a FROM.
+        exists()
+        .where(Bubble.course_map_id == CourseMap.id, content_shows(asset_id))
+        .correlate(CourseMap, Asset),
     )
 
 
