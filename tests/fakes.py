@@ -581,6 +581,15 @@ class InMemoryTenantRepository:
         self.tenants[tenant_id] = tenant.model_copy(update={"status": status})
         return self.tenants[tenant_id]
 
+    async def set_widgets_enabled(
+        self, tenant_id: uuid.UUID, enabled: bool
+    ) -> TenantRecord | None:
+        tenant = self.tenants.get(tenant_id)
+        if tenant is None:
+            return None
+        self.tenants[tenant_id] = tenant.model_copy(update={"widgets_enabled": enabled})
+        return self.tenants[tenant_id]
+
     async def add_key(self, tenant_id: uuid.UUID, key: NewTenantKey) -> TenantKeyRecord:
         if tenant_id not in self.tenants:
             raise TenantNotFoundError(tenant_id)

@@ -27,6 +27,7 @@ async def insert_tenant(
     *,
     quota: int = 10**9,
     status: TenantStatus = TenantStatus.ACTIVE,
+    widgets: bool = False,
 ) -> uuid.UUID:
     """A tenant row (no keys: these tests never launch)."""
     tenant_id = uuid.uuid4()
@@ -40,6 +41,7 @@ async def insert_tenant(
                 host_origin=f"https://{name}.example.com",
                 status=status,
                 asset_quota_bytes=quota,
+                widgets_enabled=widgets,
                 created_at=now,
                 updated_at=now,
             )

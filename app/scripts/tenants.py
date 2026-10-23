@@ -7,6 +7,7 @@
     python -m app.scripts.tenants enable --issuer https://moodle.uni.edu
     python -m app.scripts.tenants add-key --issuer ... --public-key-file new.pub.pem
     python -m app.scripts.tenants revoke-key --issuer ... --kid <kid>
+    python -m app.scripts.tenants set --issuer https://moodle.uni.edu --widgets on|off
     python -m app.scripts.tenants frame-ancestors
     python -m app.scripts.tenants diagnose < assertion.txt
 
@@ -17,6 +18,7 @@ here prints a key's secret half or a token; public keys are never secret.
 
 import argparse
 import asyncio
+import logging
 import sys
 from collections.abc import Callable, Sequence
 from pathlib import Path
@@ -43,6 +45,8 @@ from app.tenancy.validation import (
     normalize_origin,
     validate_kid,
 )
+
+logger = logging.getLogger("rumbos.tenants")
 
 OK = 0
 FAILED = 1
@@ -105,7 +109,9 @@ async def _list(
         out(
             f"{tenant.id}  {tenant.status.value:<8}  {tenant.issuer}  "
             f"origin={tenant.host_origin}  keys={active} active/{len(keys)}  "
-            f"quota={tenant.asset_quota_bytes}  name={tenant.name!r}"
+            f"quota={tenant.asset_quota_bytes}  "
+            f"widgets={'on' if tenant.widgets_enabled else 'off'}  "
+            f"name={tenant.name!r}"
         )
     out(f"{len(rows)} tenant(s)")
     return OK
@@ -120,6 +126,20 @@ async def _set_status(
     tenant = await _tenant(tenants, issuer)
     await tenants.set_status(tenant.id, status)
     out(f"{tenant.issuer} is now {status.value}")
+    return OK
+
+
+async def _set_widgets(
+    tenants: TenantRepository, args: argparse.Namespace, out: Callable[[str], None]
+) -> int:
+    tenant = await _tenant(tenants, args.issuer)
+    enabled = args.widgets == "on"
+    await tenants.set_widgets_enabled(tenant.id, enabled)
+    state = "on" if enabled else "off"
+    # Widgets run author-written JavaScript in the browsers of editors and
+    # students: who turned them on, and when, belongs in the logs.
+    logger.info("Widgets turned %s for %s (tenant %s)", state, tenant.issuer, tenant.id)
+    out(f"Widgets are now {state} for {tenant.issuer}")
     return OK
 
 
@@ -199,6 +219,8 @@ async def execute(
                 )
             case "enable":
                 return await _set_status(tenants, args.issuer, TenantStatus.ACTIVE, out)
+            case "set":
+                return await _set_widgets(tenants, args, out)
             case "add-key":
                 return await _add_key(tenants, args, out)
             case "revoke-key":
@@ -250,6 +272,13 @@ def build_parser() -> argparse.ArgumentParser:
     commands.add_parser("list", help="show every tenant")
     with_issuer("disable", "refuse launches and invalidate tokens")
     with_issuer("enable", "undo `disable`")
+    set_options = with_issuer("set", "change a tenant's settings")
+    set_options.add_argument(
+        "--widgets",
+        required=True,
+        choices=("on", "off"),
+        help="whether editors may create widget bubbles (author-written HTML)",
+    )
     add_key = with_issuer("add-key", "add a public key (key rotation)")
     add_key.add_argument("--public-key-file", required=True, type=Path)
     add_key.add_argument("--kid", help="default: derived from the key")
@@ -288,6 +317,7 @@ async def _main(args: argparse.Namespace) -> int:
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
     return asyncio.run(_main(args))
 
 

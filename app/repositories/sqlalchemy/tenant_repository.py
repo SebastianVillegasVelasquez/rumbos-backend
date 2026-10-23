@@ -93,6 +93,24 @@ class SqlAlchemyTenantRepository:
             raise
         return TenantRecord.model_validate(tenant) if tenant else None
 
+    async def set_widgets_enabled(
+        self, tenant_id: uuid.UUID, enabled: bool
+    ) -> TenantRecord | None:
+        stmt = (
+            update(Tenant)
+            .where(Tenant.id == tenant_id)
+            .values(widgets_enabled=enabled)
+            .returning(Tenant)
+            .execution_options(populate_existing=True)
+        )
+        try:
+            tenant = (await self._session.scalars(stmt)).one_or_none()
+            await self._session.commit()
+        except BaseException:
+            await self._session.rollback()
+            raise
+        return TenantRecord.model_validate(tenant) if tenant else None
+
     async def add_key(self, tenant_id: uuid.UUID, key: NewTenantKey) -> TenantKeyRecord:
         row = TenantKey(
             tenant_id=tenant_id, kid=key.kid, public_key_pem=key.public_key_pem

@@ -15,7 +15,7 @@ from app.core.database import get_session
 from app.exceptions import LaunchInvalidError
 from app.repositories.sqlalchemy.auth_repository import SqlAlchemyAuthRepository
 from app.repositories.sqlalchemy.tenant_repository import SqlAlchemyTenantRepository
-from app.schemas.auth import LaunchResponse, MeResponse
+from app.schemas.auth import Features, LaunchResponse, MeResponse
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -102,6 +102,13 @@ async def launch(
 @router.get("/me", response_model=MeResponse)
 async def me(
     principal: Annotated[Principal, Depends(bearer_route)],
+    session: Annotated[AsyncSession, Depends(get_session)],
 ) -> MeResponse:
     assert principal.course_id is not None  # tokens are always bound to a course
-    return MeResponse(role=principal.role, course_id=principal.course_id)
+    tenant = await SqlAlchemyTenantRepository(session).get_by_id(principal.tenant_id)
+    assert tenant is not None  # the token's tenant exists (a foreign key)
+    return MeResponse(
+        role=principal.role,
+        course_id=principal.course_id,
+        features=Features(widgets=tenant.widgets_enabled),
+    )

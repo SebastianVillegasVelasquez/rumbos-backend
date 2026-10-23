@@ -15,9 +15,16 @@ class LaunchResponse(ApiModel):
     host_origin: str
 
 
+class Features(ApiModel):
+    """What the caller's tenant has switched on."""
+
+    widgets: bool
+
+
 class MeResponse(ApiModel):
     role: Role
     course_id: int
+    features: Features
 
 
 class NewAccessToken(ApiModel):

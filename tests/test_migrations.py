@@ -1408,3 +1408,50 @@ def test_a_map_published_before_music_is_up_to_date_after_the_migration(
             await engine.dispose()
 
     asyncio.run(check())
+
+
+BEFORE_WIDGETS = "c4f8a2d6e913"  # the last revision without the widgets flag
+
+
+def test_widgets_migration_switches_the_flag_off_for_existing_tenants(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", BEFORE_WIDGETS).returncode == 0
+
+    up = alembic(migration_db, "upgrade", "head")
+
+    assert up.returncode == 0, up.stderr
+    assert fetch(migration_db, "SELECT widgets_enabled FROM tenants") == [(False,)]
+    run_sql(
+        migration_db,
+        [
+            (
+                (
+                    "INSERT INTO tenants (id, name, issuer, host_origin, status,"
+                    " asset_quota_bytes, created_at, updated_at) VALUES (:id, 'New',"
+                    " 'https://n.example', 'https://n.example', 'active', 1,"
+                    " now(), now())"
+                ),
+                {"id": uuid.uuid4()},
+            )
+        ],
+    )
+    assert fetch(
+        migration_db, "SELECT widgets_enabled FROM tenants WHERE name = 'New'"
+    ) == [(False,)]
+
+
+def test_widgets_migration_downgrades_and_upgrades_again(migration_db: str) -> None:
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+    run_sql(migration_db, [("UPDATE tenants SET widgets_enabled = true", {})])
+
+    down = alembic(migration_db, "downgrade", BEFORE_WIDGETS)
+
+    assert down.returncode == 0, down.stderr
+    assert not fetch(
+        migration_db,
+        "SELECT 1 FROM information_schema.columns"
+        " WHERE table_name = 'tenants' AND column_name = 'widgets_enabled'",
+    )
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+    assert fetch(migration_db, "SELECT widgets_enabled FROM tenants") == [(False,)]

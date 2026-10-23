@@ -286,3 +286,88 @@ async def test_diagnose_names_the_failed_check_and_never_echoes_the_input(
         launch_settings=settings,
     )
     assert out == ["result: ok"]
+
+
+async def test_widgets_are_off_for_a_new_tenant(run: Run, pubkey: Path) -> None:
+    await _add(run, pubkey)
+
+    tenant = await run.repo.get_by_issuer(ISSUER)
+
+    assert tenant is not None and tenant.widgets_enabled is False
+
+
+async def test_set_widgets_turns_them_on_and_off_and_logs_it(
+    run: Run, pubkey: Path, caplog: pytest.LogCaptureFixture
+) -> None:
+    await _add(run, pubkey)
+
+    with caplog.at_level("INFO", logger="rumbos.tenants"):
+        assert await run("set", "--issuer", ISSUER, "--widgets", "on") == 0
+    tenant = await run.repo.get_by_issuer(ISSUER)
+    assert tenant is not None and tenant.widgets_enabled is True
+    assert run.out[-1] == f"Widgets are now on for {ISSUER}"
+    assert f"Widgets turned on for {ISSUER}" in caplog.text
+
+    with caplog.at_level("INFO", logger="rumbos.tenants"):
+        assert await run("set", "--issuer", ISSUER, "--widgets", "off") == 0
+    tenant = await run.repo.get_by_issuer(ISSUER)
+    assert tenant is not None and tenant.widgets_enabled is False
+    assert f"Widgets turned off for {ISSUER}" in caplog.text
+
+
+async def test_set_widgets_is_idempotent_and_leaves_the_rest_alone(
+    run: Run, pubkey: Path
+) -> None:
+    await _add(run, pubkey)
+    before = await run.repo.get_by_issuer(ISSUER)
+
+    assert await run("set", "--issuer", ISSUER, "--widgets", "on") == 0
+    assert await run("set", "--issuer", ISSUER, "--widgets", "on") == 0
+
+    after = await run.repo.get_by_issuer(ISSUER)
+    assert before is not None and after is not None
+    assert after.model_copy(update={"widgets_enabled": False}) == before
+
+
+async def test_set_widgets_for_an_unknown_issuer_is_an_error(run: Run) -> None:
+    code = await run("set", "--issuer", "https://nobody.example.com", "--widgets", "on")
+
+    assert code == 1
+    assert "no tenant" in run.err[-1]
+
+
+@pytest.mark.parametrize("value", ["yes", "true", "1", "ON", ""])
+def test_set_widgets_accepts_only_on_or_off(
+    value: str, capsys: pytest.CaptureFixture[str]
+) -> None:
+    with pytest.raises(SystemExit) as stop:
+        cli.build_parser().parse_args(["set", "--issuer", ISSUER, "--widgets", value])
+
+    assert stop.value.code == 2
+    assert "invalid choice" in capsys.readouterr().err
+
+
+def test_set_needs_the_widgets_option() -> None:
+    with pytest.raises(SystemExit):
+        cli.build_parser().parse_args(["set", "--issuer", ISSUER])
+
+
+async def test_set_widgets_validates_the_issuer_like_the_other_commands(
+    run: Run, pubkey: Path
+) -> None:
+    await _add(run, pubkey)
+
+    assert await run("set", "--issuer", ISSUER + "/", "--widgets", "on") == 1
+    assert "slash" in run.err[-1]
+    tenant = await run.repo.get_by_issuer(ISSUER)
+    assert tenant is not None and tenant.widgets_enabled is False
+
+
+async def test_list_shows_the_widgets_flag(run: Run, pubkey: Path) -> None:
+    await _add(run, pubkey)
+    await run("set", "--issuer", ISSUER, "--widgets", "on")
+    run.out.clear()
+
+    await run("list")
+
+    assert any("widgets=on" in line for line in run.out)

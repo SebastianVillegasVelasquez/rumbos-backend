@@ -416,6 +416,12 @@ class TenantRepository(Protocol):
         """None if there is no such tenant."""
         ...
 
+    async def set_widgets_enabled(
+        self, tenant_id: uuid.UUID, enabled: bool
+    ) -> TenantRecord | None:
+        """None if there is no such tenant."""
+        ...
+
     async def add_key(self, tenant_id: uuid.UUID, key: NewTenantKey) -> TenantKeyRecord:
         """Raises `TenantNotFoundError`, or `TenantKeyTakenError` if the tenant
         has a key with that `kid` already (revoked ones count: a `kid` is never

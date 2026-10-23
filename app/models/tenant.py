@@ -3,12 +3,14 @@ from datetime import datetime
 
 from sqlalchemy import (
     BigInteger,
+    Boolean,
     DateTime,
     Enum,
     ForeignKey,
     String,
     Text,
     UniqueConstraint,
+    false,
 )
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -49,6 +51,11 @@ class Tenant(BaseORM):
     )
     # What this tenant may store in total (`ASSETS_MAX_TOTAL_BYTES` is the default).
     asset_quota_bytes: Mapped[int] = mapped_column(BigInteger)
+    # Whether its editors may create widget bubbles (author-written HTML run in
+    # the frontend's sandbox). Off until an operator turns it on by CLI.
+    widgets_enabled: Mapped[bool] = mapped_column(
+        Boolean, default=False, server_default=false()
+    )
 
 
 class TenantKey(BaseORM):

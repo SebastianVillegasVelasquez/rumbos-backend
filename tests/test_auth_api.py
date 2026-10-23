@@ -84,7 +84,11 @@ async def test_launch_returns_a_bearer_token_that_identifies_its_holder(
         "/auth/me", headers={"Authorization": f"Bearer {body['accessToken']}"}
     )
     assert me.status_code == 200
-    assert me.json() == {"role": "student", "courseId": 12}
+    assert me.json() == {
+        "role": "student",
+        "courseId": 12,
+        "features": {"widgets": False},
+    }
 
 
 async def test_the_token_is_stored_only_as_a_hash(
@@ -265,3 +269,19 @@ async def test_the_scheme_is_case_insensitive(
     token = (await _launch(http, assertion())).json()["accessToken"]
     r = await http.get("/auth/me", headers={"Authorization": f"bearer {token}"})
     assert r.status_code == 200
+
+
+async def test_me_reports_the_widgets_feature_of_the_tokens_tenant(
+    http: httpx.AsyncClient, tenant: Tenant, session: AsyncSession
+) -> None:
+    editor = (await _launch(http, assertion(role="editor"))).json()["accessToken"]
+    student = (await _launch(http, assertion(role="student"))).json()["accessToken"]
+    headers = {"editor": {"Authorization": f"Bearer {editor}"}}
+    headers["student"] = {"Authorization": f"Bearer {student}"}
+
+    off = [(await http.get("/auth/me", headers=h)).json() for h in headers.values()]
+    await SqlAlchemyTenantRepository(session).set_widgets_enabled(tenant.id, True)
+    on = [(await http.get("/auth/me", headers=h)).json() for h in headers.values()]
+
+    assert [me["features"] for me in off] == [{"widgets": False}] * 2
+    assert [me["features"] for me in on] == [{"widgets": True}] * 2

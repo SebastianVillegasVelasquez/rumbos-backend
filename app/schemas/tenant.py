@@ -15,6 +15,7 @@ class TenantRecord(ApiModel):
     status: TenantStatus
     asset_quota_bytes: int
     created_at: datetime
+    widgets_enabled: bool = False
 
 
 class TenantKeyRecord(ApiModel):
