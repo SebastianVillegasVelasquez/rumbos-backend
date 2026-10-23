@@ -1,23 +1,27 @@
 import uuid
 from collections import Counter
+from typing import Any
 
 from app.assets.references import (
     asset_id_of_image_url,
     audio_info_of,
     is_canonical_asset_url,
 )
-from app.enums import AssetKind
+from app.enums import AssetKind, BubbleKind
 from app.exceptions import (
     AudioAssetNotFoundError,
     AudioAssetWrongKindError,
     BackgroundAssetNotFoundError,
     BackgroundAssetWrongKindError,
     BubbleNotFoundError,
+    ContentInvalidError,
+    ContentTooLargeError,
     CourseMapNotFoundError,
     DuplicateSkinRuleError,
     OrderMismatchError,
     PreconditionRequiredError,
     SkinReferenceNotFoundError,
+    WidgetsDisabledError,
 )
 from app.moodle.protocols import MoodleClient
 from app.moodle.schemas import MoodleModule, MoodleSection
@@ -27,6 +31,7 @@ from app.repositories.protocols import (
     CourseMapRepository,
     PublicationRepository,
     SkinRepository,
+    TenantRepository,
     View3dRepository,
 )
 from app.schemas.activity import ActivityRead
@@ -36,6 +41,16 @@ from app.schemas.bubble import (
     BubbleOrderUpdate,
     BubbleRead,
     BubbleUpdate,
+)
+from app.schemas.content import (
+    MAX_MAP_CONTENT_BYTES,
+    BlocksContent,
+    ImageBlock,
+    WidgetContent,
+    image_asset_ids,
+    parse_content,
+    stored_size,
+    to_stored,
 )
 from app.schemas.course_map import (
     AppearanceUpdate,
@@ -115,7 +130,12 @@ class CourseMapService:
         assets: AssetRepository,
         publications: PublicationRepository,
         view3d: View3dRepository,
+        *,
+        tenants: TenantRepository | None = None,
+        tenant_id: uuid.UUID | None = None,
     ) -> None:
+        self._tenants = tenants
+        self._tenant_id = tenant_id
         self._course_maps = course_maps
         self._bubbles = bubbles
         self._moodle = moodle
@@ -248,6 +268,9 @@ class CourseMapService:
         self, course_map_id: uuid.UUID, data: BubbleCreate
     ) -> BubbleRead:
         course_map = await self._require_course_map(course_map_id)
+        if data.kind is BubbleKind.CONTENT:
+            stored = await self._checked_content(course_map_id, data.content, None)
+            data = data.model_copy(update={"content": stored})
         # The bubble carries its map's Moodle course (immutable), which is what
         # makes an activity unique per course.
         return await self._bubbles.create(
@@ -272,7 +295,20 @@ class CourseMapService:
         guarded = bool(data.model_fields_set - {"status"})
         if guarded and expected_version is None:
             raise PreconditionRequiredError
-        await self._require_bubble(course_map_id, bubble_id)
+        bubble = await self._require_bubble(course_map_id, bubble_id)
+        if "content" in data.model_fields_set:
+            if bubble.kind is not BubbleKind.CONTENT:
+                raise ContentInvalidError(
+                    [
+                        {
+                            "path": "",
+                            "code": "not_a_content_bubble",
+                            "message": "Only a content bubble has content",
+                        }
+                    ]
+                )
+            stored = await self._checked_content(course_map_id, data.content, bubble_id)
+            data = data.model_copy(update={"content": stored})
         if data.skin_id is not None and not await self._skins.existing_ids(
             {data.skin_id}
         ):
@@ -368,6 +404,76 @@ class CourseMapService:
         whole page at once."""
         infos = await publication_infos(self._publications, [m.id for m in items])
         return [m.model_copy(update={"publication": infos[m.id]}) for m in items]
+
+    async def _checked_content(
+        self,
+        course_map_id: uuid.UUID,
+        raw: object,
+        replacing: uuid.UUID | None,
+    ) -> dict[str, Any]:
+        """The stored form of `raw` content, if the caller may write it.
+
+        In order: the content is valid (`ContentInvalidError`, or
+        `ContentTooLargeError` for one bubble's size), a widget needs the
+        tenant's flag (`WidgetsDisabledError`), its images are usable assets of
+        the tenant (`ContentInvalidError`), and the map's content stays within
+        its budget (`ContentTooLargeError`). `replacing` is the bubble whose
+        content is being swapped, which does not count twice.
+        """
+        content = parse_content(raw)
+        if isinstance(content, WidgetContent) and not await self._widgets_allowed():
+            raise WidgetsDisabledError
+        await self._check_images(content)
+        stored = to_stored(content)
+        used = sum(
+            stored_size(to_stored(b.content))
+            for b in await self._bubbles.list_by_course_map(course_map_id)
+            if b.content is not None and b.id != replacing
+        )
+        # Two simultaneous writes can each pass this check and overshoot the
+        # budget slightly; it bounds growth, it is not an accounting system.
+        if used + stored_size(stored) > MAX_MAP_CONTENT_BYTES:
+            raise ContentTooLargeError(MAX_MAP_CONTENT_BYTES, "map")
+        return stored
+
+    async def _widgets_allowed(self) -> bool:
+        if self._tenants is None or self._tenant_id is None:
+            return False
+        tenant = await self._tenants.get_by_id(self._tenant_id)
+        return tenant is not None and tenant.widgets_enabled
+
+    async def _check_images(self, content: BlocksContent | WidgetContent) -> None:
+        """Every image block names an image of this tenant that is in service.
+
+        An asset another tenant owns is not visible here, so it does not exist;
+        the operator library holds audio only, which is the wrong kind."""
+        if not isinstance(content, BlocksContent):
+            return
+        found = await self._assets.get_many(image_asset_ids(to_stored(content)))
+        problems: list[dict[str, str]] = []
+        for index, block in enumerate(content.body.blocks):
+            if not isinstance(block, ImageBlock):
+                continue
+            asset = found.get(block.asset_id)
+            path = f"body.blocks[{index}].assetId"
+            if asset is None or asset.is_quarantined:
+                problems.append(
+                    {
+                        "path": path,
+                        "code": "asset_not_found",
+                        "message": "The image does not exist",
+                    }
+                )
+            elif asset.kind not in (AssetKind.IMAGE, AssetKind.BACKGROUND):
+                problems.append(
+                    {
+                        "path": path,
+                        "code": "asset_wrong_kind",
+                        "message": "The asset is not an image",
+                    }
+                )
+        if problems:
+            raise ContentInvalidError(problems)
 
     async def _check_background(self, image_url: str) -> None:
         """A background served by this API must be an existing background asset.

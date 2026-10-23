@@ -75,8 +75,10 @@ class SqlAlchemyBubbleRepository:
             # to a map that doesn't exist, or the one-bubble-per-activity-per-
             # course constraint (which is what stops concurrent duplicates).
             await self._session.rollback()
-            if constraint_name(exc) == UQ_BUBBLE_ACTIVITY:
-                raise await self._already_placed(moodle_course_id, data) from exc
+            if constraint_name(exc) == UQ_BUBBLE_ACTIVITY and data.activity_id:
+                raise await self._already_placed(
+                    moodle_course_id, data.activity_id
+                ) from exc
             if sqlstate(exc) == FOREIGN_KEY_VIOLATION:
                 raise CourseMapNotFoundError(course_map_id) from exc
             raise
@@ -86,7 +88,7 @@ class SqlAlchemyBubbleRepository:
         return BubbleRead.model_validate(bubble)
 
     async def _already_placed(
-        self, moodle_course_id: int, data: BubbleCreate
+        self, moodle_course_id: int, activity_id: int
     ) -> ActivityAlreadyPlacedError:
         """The error for a duplicate, naming the map that already has it."""
         # This read starts a new transaction (the failed one was rolled back);
@@ -97,14 +99,14 @@ class SqlAlchemyBubbleRepository:
                 .join(Bubble, Bubble.course_map_id == CourseMap.id)
                 .where(
                     Bubble.moodle_course_id == moodle_course_id,
-                    Bubble.activity_id == data.activity_id,
+                    Bubble.activity_id == activity_id,
                 )
             )
         ).first()
         await self._session.rollback()
         if row is None:  # the other bubble was deleted since the violation
-            return ActivityAlreadyPlacedError(data.activity_id)
-        return ActivityAlreadyPlacedError(data.activity_id, row.id, row.title)
+            return ActivityAlreadyPlacedError(activity_id)
+        return ActivityAlreadyPlacedError(activity_id, row.id, row.title)
 
     async def _stale_or_missing(self, bubble_id: uuid.UUID) -> None:
         """After a guarded write matched no row: raise `VersionConflictError` if

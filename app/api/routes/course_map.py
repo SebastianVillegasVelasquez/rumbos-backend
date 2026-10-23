@@ -23,6 +23,7 @@ from app.repositories.sqlalchemy.publication_repository import (
     SqlAlchemyPublicationRepository,
 )
 from app.repositories.sqlalchemy.skin_repository import SqlAlchemySkinRepository
+from app.repositories.sqlalchemy.tenant_repository import SqlAlchemyTenantRepository
 from app.repositories.sqlalchemy.view3d_repository import SqlAlchemyView3dRepository
 from app.schemas.activity import ActivityRead
 from app.schemas.bubble import (
@@ -56,6 +57,7 @@ router = APIRouter(
 def get_course_map_service(
     session: ScopedSession,
     moodle: Annotated[MoodleClient, Depends(get_moodle_client)],
+    principal: PrincipalDep,
 ) -> CourseMapService:
     return CourseMapService(
         SqlAlchemyCourseMapRepository(session),
@@ -65,6 +67,8 @@ def get_course_map_service(
         SqlAlchemyAssetRepository(session),
         SqlAlchemyPublicationRepository(session),
         SqlAlchemyView3dRepository(session),
+        tenants=SqlAlchemyTenantRepository(session),
+        tenant_id=principal.tenant_id,
     )
 
 

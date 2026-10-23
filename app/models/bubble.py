@@ -95,7 +95,7 @@ class Bubble(BaseORM):
     # The validated content of a content bubble (see `app.schemas.content`), in
     # its stored camelCase form; belongs to this one bubble. None for an
     # activity bubble.
-    content: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    content: Mapped[dict[str, Any] | None] = mapped_column(JSONB(none_as_null=True))
     # Optimistic concurrency token, like `CourseMap.revision`. Bumped by edits to
     # draft content (position, icon, skin) and NOT by `status`, which is live data.
     version: Mapped[int] = mapped_column(default=1, server_default="1")

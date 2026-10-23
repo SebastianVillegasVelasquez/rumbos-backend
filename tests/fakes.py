@@ -199,7 +199,7 @@ class InMemoryBubbleRepository:
         if course_map_id not in self._course_maps.items:
             raise CourseMapNotFoundError(course_map_id)
         for other in await self.list_by_course(moodle_course_id):
-            if other.activity_id == data.activity_id:
+            if data.activity_id is not None and other.activity_id == data.activity_id:
                 owner = self._course_maps.items[other.course_map_id]
                 raise ActivityAlreadyPlacedError(
                     data.activity_id, owner.id, owner.title

@@ -67,7 +67,9 @@ def test_schemas_accept_camel_and_snake_and_serialize_camel() -> None:
     snake = BubbleCreate(activity_id=1, x=0, y=0)
     assert camel == snake
     assert set(snake.model_dump(by_alias=True)) == {
+        "kind",
         "activityId",
+        "content",
         "x",
         "y",
         "icon",

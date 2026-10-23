@@ -25,6 +25,8 @@ from app.exceptions import (
     BackgroundAssetNotFoundError,
     BackgroundAssetWrongKindError,
     BubbleNotFoundError,
+    ContentInvalidError,
+    ContentTooLargeError,
     CourseMapNotFoundError,
     DraftChangedSinceReviewError,
     DuplicateSkinRuleError,
@@ -55,6 +57,7 @@ from app.exceptions import (
     UploadsDisabledError,
     VersionConflictError,
     View3dInvalidError,
+    WidgetsDisabledError,
 )
 from app.moodle.exceptions import (
     MoodleAuthError,
@@ -526,6 +529,34 @@ def register_exception_handlers(app: FastAPI) -> None:
                 ]
             },
         ),
+    )
+
+    async def content_invalid(request: Request, exc: Exception) -> JSONResponse:
+        assert isinstance(exc, ContentInvalidError)
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            content={
+                "detail": {
+                    "code": "content_invalid",
+                    "message": "The content of the bubble is not valid",
+                    "problems": exc.problems,
+                }
+            },
+        )
+
+    app.add_exception_handler(ContentInvalidError, content_invalid)
+    app.add_exception_handler(
+        ContentTooLargeError,
+        _coded(
+            413,
+            "content_too_large",
+            "The content is too large",
+            lambda exc: {"limitBytes": exc.limit_bytes, "scope": exc.scope},
+        ),
+    )
+    app.add_exception_handler(
+        WidgetsDisabledError,
+        _coded(403, "widgets_disabled", "Widgets are not enabled for this site"),
     )
 
     async def view3d_invalid(request: Request, exc: Exception) -> JSONResponse:
