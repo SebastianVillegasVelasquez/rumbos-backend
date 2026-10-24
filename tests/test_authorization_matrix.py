@@ -176,7 +176,7 @@ NULL_BODY = {("PUT", "/course-maps/{course_map_id}/view3d")}
 BODIES: dict[tuple[str, str], dict[str, Any]] = {
     ("PATCH", "/course-maps/{course_map_id}"): {"title": "x"},
     ("PUT", "/course-maps/{course_map_id}/appearance"): {
-        "settings": {},
+        "settings": {"welcome": {"title": "Hola {curso}", "show": "always"}},
         "defaultSkinId": None,
         "skinRules": [],
     },
@@ -389,3 +389,19 @@ def test_the_default_for_legacy_mode_follows_the_environment() -> None:
     assert not base.model_copy(
         update={"app_env": "dev", "legacy_anonymous_mode": False}
     ).legacy_mode
+
+
+async def test_a_student_cannot_write_a_curtain_even_an_invalid_one(
+    world: World,
+) -> None:
+    student = world.clients["student"]
+    path = f"/course-maps/{world.map_id}/appearance"
+    for welcome in ({"title": "Hola"}, {"title": "{mal}"}):
+        r = await student.put(
+            path,
+            json={"settings": {"welcome": welcome}, "skinRules": []},
+            headers={"If-Match": '"1"'},
+        )
+        assert r.status_code == 403, r.text
+    editor = await world.clients["editor"].get(f"/course-maps/{world.map_id}")
+    assert editor.json()["settings"]["welcome"]["title"] is None

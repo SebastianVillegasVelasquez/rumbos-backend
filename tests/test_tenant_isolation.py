@@ -134,7 +134,11 @@ async def test_foreign_maps_and_bubbles_are_404_for_every_verb(
         await intruder.delete(map_path),
         await intruder.put(
             f"{map_path}/appearance",
-            json={"settings": mine["settings"], "defaultSkinId": None, "skinRules": []},
+            json={
+                "settings": {**mine["settings"], "welcome": {"title": "Hola {curso}"}},
+                "defaultSkinId": None,
+                "skinRules": [],
+            },
             headers={"If-Match": '"1"'},
         ),
         await intruder.put(
