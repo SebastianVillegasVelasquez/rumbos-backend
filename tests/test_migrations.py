@@ -1741,3 +1741,132 @@ def _content_bubble_sql_for(
     }
     sql, params = _content_bubble_sql(map_id, c=json.dumps(valid))
     return text(sql), params
+
+
+def test_every_existing_publication_is_up_to_date_after_the_welcome_curtain(
+    migration_db: str,
+) -> None:
+    """No migration is needed (settings are JSON), and none must be implied:
+    a publication written before the curtain existed, with a map whose stored
+    settings have no `welcome` key, must still read as up to date."""
+    from app.enums import PublicationStatus
+    from app.publishing.snapshot import content_hash
+    from app.repositories.sqlalchemy.asset_repository import (
+        SqlAlchemyAssetRepository,
+    )
+    from app.repositories.sqlalchemy.bubble_repository import (
+        SqlAlchemyBubbleRepository,
+    )
+    from app.repositories.sqlalchemy.course_map_repository import (
+        SqlAlchemyCourseMapRepository,
+    )
+    from app.repositories.sqlalchemy.publication_repository import (
+        SqlAlchemyPublicationRepository,
+    )
+    from app.repositories.sqlalchemy.view3d_repository import (
+        SqlAlchemyView3dRepository,
+    )
+    from app.services.publication_service import PublicationService
+
+    assert alembic(migration_db, "upgrade", BEFORE_CONTENT).returncode == 0
+    map_id, bubble_id = uuid.uuid4(), uuid.uuid4()
+    run_sql(
+        migration_db,
+        [
+            _map_at_content_revision(map_id),
+            (
+                (
+                    "INSERT INTO bubbles (id, tenant_id, course_map_id,"
+                    " moodle_course_id, activity_id, x, y, status, created_at,"
+                    " updated_at) VALUES (:b, :t, :m, 8, 5, 0.5, 0.25, 'locked',"
+                    " now(), now())"
+                ),
+                {"b": bubble_id, "t": LEGACY_TENANT_ID, "m": map_id},
+            ),
+        ],
+    )
+    [(skin_id, skin_name, skin_config)] = fetch(
+        migration_db, "SELECT id, name, config FROM skins WHERE is_default"
+    )
+    # Spelled out, so that it cannot drift with the code: no `audio`, no
+    # `welcome`, as every publication was written until now.
+    legacy = {
+        "schemaVersion": 1,
+        "title": "Seeded",
+        "imageUrl": "/x.png",
+        "settings": {
+            "schemaVersion": 1,
+            "mode": "explorative",
+            "fit": "fit-width",
+            "initialView": None,
+            "path": {
+                "visible": True,
+                "style": "dashed",
+                "color": None,
+                "animated": True,
+            },
+            "ambient": {"kind": "none", "intensity": 0.5},
+            "intro": "none",
+        },
+        "defaultSkinId": None,
+        "skinRules": [],
+        "skins": {
+            str(skin_id): {"name": skin_name, "isDefault": True, "config": skin_config}
+        },
+        "bubbles": [
+            {
+                "id": str(bubble_id),
+                "activityId": 5,
+                "x": 0.5,
+                "y": 0.25,
+                "icon": None,
+                "skinId": None,
+                "sequence": 0,
+            }
+        ],
+    }
+    run_sql(
+        migration_db,
+        [
+            (
+                (
+                    "INSERT INTO publications (id, course_map_id, number, snapshot,"
+                    " content_hash, asset_ids, created_at, updated_at) VALUES"
+                    " (:id, :m, 1, CAST(:s AS jsonb), :h, ARRAY[]::uuid[],"
+                    " now(), now())"
+                ),
+                {
+                    "id": uuid.uuid4(),
+                    "m": map_id,
+                    "s": json.dumps(legacy),
+                    "h": content_hash(legacy),
+                },
+            )
+        ],
+    )
+
+    # Every migration since then runs over the publication; none may move it.
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+
+    async def check() -> None:
+        engine = create_async_engine(migration_db)
+        try:
+            async with AsyncSession(engine, expire_on_commit=False) as session:
+                bind_scope(session, Scope(LEGACY_TENANT_ID))
+                service = PublicationService(
+                    SqlAlchemyPublicationRepository(session),
+                    SqlAlchemyCourseMapRepository(session),
+                    SqlAlchemyBubbleRepository(session),
+                    SqlAlchemyView3dRepository(session),
+                    SqlAlchemyAssetRepository(session),
+                    keep=10,
+                )
+                current = await service.state(map_id)
+                assert current.status is PublicationStatus.UP_TO_DATE
+                assert current.draft_hash == content_hash(legacy)
+                assert current.changes is not None
+                assert current.changes.settings_changed is False
+        finally:
+            await engine.dispose()
+
+    asyncio.run(check())
