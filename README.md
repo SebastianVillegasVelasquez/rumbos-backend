@@ -604,6 +604,52 @@ gains `changes.contentChanged`. The images a map's content shows are listed in
 the publication's asset ids, so they cannot be deleted while a publication
 uses them, and they count under `maps` in an asset's `usage` while a draft does.
 
+### Welcome curtain
+
+`settings.welcome` configures the full-screen entry screen a student sees before
+the map: a title, a message and an optional welcome video. It is part of the map
+settings, so it is saved with `PUT /course-maps/{id}/appearance` (same
+`If-Match` rules) and flows through draft, publish, history, discard and restore
+like the rest; `publication-state.changes.settingsChanged` covers it.
+
+```
+welcome: {
+  enabled: bool            (default true; false turns the curtain off)
+  title: string | null     (1..120 characters; null: the default title)
+  message: string | null   (at most 300 characters; newlines kept)
+  video: { provider: "youtube" | "vimeo", videoId } | null
+  playOnEnter: bool        (default true; only meaningful with a video)
+  show: "first_visit" | "always"   (default "first_visit")
+} | null
+```
+
+`null` or absent means all defaults: enabled, default title, no video, first
+visit only. Reads always return the complete object; writing `null` (or the
+defaults) clears it. Whether a student has already seen the curtain is kept by
+the browser, not here.
+
+**Text** is plain text: Unicode NFC, control characters removed (newlines are
+kept in `message` only), ends trimmed, and never interpreted as HTML. **The only
+placeholder allowed is `{curso}`** (the course name, filled in by the frontend).
+Any other `{...}` (`{nombre}`, `{}`, `{CURSO}`, `{{curso}}`) is refused with the
+code `welcome_invalid_placeholder`; a lone `{` or `}` is just text.
+
+**Video** follows the same rules as a video block of a content bubble: a
+provider and an id matching `^[A-Za-z0-9_-]{6,32}$`, never a URL.
+
+**Errors.** Problems under `settings.welcome` are
+`422 welcome_invalid` with `detail.problems: [{ path, code, message }]` (`path`
+such as `title` or `video.videoId`; codes include `required`, `unknown_field`,
+`too_short`, `too_long`, `invalid_type`, `invalid_value`, `invalid_video_id`,
+`welcome_invalid_placeholder`). Messages never echo the input. If something else
+in the body is wrong too, the usual validation answer lists everything. Nothing
+is written unless the whole appearance is valid.
+
+**Hash stability.** A curtain that is all defaults is left out of the stored and
+snapshot JSON, so every publication made before it existed hashes the same and
+reads as `up_to_date` (a migration test checks it, and no migration is needed:
+settings are JSON). Restoring a publication without a curtain clears it.
+
 ### Concurrent edits (`If-Match`)
 
 `CourseMapRead.revision` and `BubbleRead.version` start at 1 and travel as the
@@ -683,7 +729,7 @@ never changes after creation.
   maps; `mapIds` must be exactly its maps (422 `order_mismatch`).
 - `PUT /course-maps/{id}/appearance` `{ settings, defaultSkinId, skinRules }`:
   replaces the map's presentation settings (mode, fit, initial view, path style,
-  ambient effects, intro), its default skin and its per-activity-type skin rules
+  ambient effects, intro, welcome curtain), its default skin and its per-activity-type skin rules
   (`{ modname, skinId }`) in **one transaction**: all or nothing (422
   `skin_not_found`, `duplicate_skin_rule`). Settings are always read through the
   `MapSettings` model, so missing keys (or an empty `{}` column) read as defaults;
