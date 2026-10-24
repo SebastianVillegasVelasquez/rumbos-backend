@@ -179,9 +179,12 @@ class ImageBlock(_Strict):
         return value or None
 
 
+VideoProvider = Literal["youtube", "vimeo"]
+
+
 class VideoBlock(_Strict):
     type: Literal["video"]
-    provider: Literal["youtube", "vimeo"]
+    provider: VideoProvider
     video_id: VideoId
     title: Line = Field(min_length=1, max_length=VIDEO_TITLE_MAX)
 

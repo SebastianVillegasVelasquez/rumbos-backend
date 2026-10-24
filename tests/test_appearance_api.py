@@ -17,6 +17,15 @@ from tests.editor_client import EditorClient
 from tests.fakes import InMemoryMoodleClient
 from tests.sessions import new_session
 
+DEFAULT_WELCOME: dict[str, Any] = {
+    "enabled": True,
+    "title": None,
+    "message": None,
+    "video": None,
+    "playOnEnter": True,
+    "show": "first_visit",
+}
+
 DEFAULT_SETTINGS: dict[str, Any] = {
     "schemaVersion": 1,
     "mode": "explorative",
@@ -26,6 +35,7 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "ambient": {"kind": "none", "intensity": 0.5},
     "intro": "none",
     "audio": None,
+    "welcome": DEFAULT_WELCOME,
 }
 
 CUSTOM_SETTINGS: dict[str, Any] = {
@@ -37,6 +47,7 @@ CUSTOM_SETTINGS: dict[str, Any] = {
     "ambient": {"kind": "fireflies", "intensity": 0.8},
     "intro": "flyin",
     "audio": None,
+    "welcome": DEFAULT_WELCOME,
 }
 
 

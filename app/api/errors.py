@@ -1,7 +1,9 @@
-from collections.abc import Awaitable, Callable
+from collections.abc import Awaitable, Callable, Sequence
 from typing import Any
 
 from fastapi import FastAPI, Request, status
+from fastapi.exception_handlers import request_validation_exception_handler
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
 from app.exceptions import (
@@ -67,6 +69,54 @@ from app.moodle.exceptions import (
 )
 
 ExceptionHandler = Callable[[Request, Exception], Awaitable[JSONResponse]]
+
+_WELCOME_LOC = ("body", "settings", "welcome")
+_WELCOME_MESSAGES = {
+    "welcome_invalid_placeholder": "Only the {curso} placeholder is allowed",
+    "missing": "This field is required",
+    "extra_forbidden": "This field is not allowed here",
+    "too_short": "This text is too short",
+    "too_long": "This text is too long",
+    "literal_error": "This value is not allowed",
+    "invalid_video_id": "Not a valid video id",
+    "bool_type": "This value has the wrong type",
+    "string_type": "This value has the wrong type",
+    "model_attributes_type": "This value has the wrong type",
+}
+_WELCOME_CODES = {
+    "missing": "required",
+    "extra_forbidden": "unknown_field",
+    "literal_error": "invalid_value",
+    "bool_type": "invalid_type",
+    "string_type": "invalid_type",
+    "model_attributes_type": "invalid_type",
+}
+
+
+def _welcome_path(loc: tuple[int | str, ...]) -> str:
+    return ".".join(str(part) for part in loc[len(_WELCOME_LOC) :])
+
+
+def welcome_problems(
+    errors: Sequence[Any],
+) -> list[dict[str, str]] | None:
+    """`{path, code, message}` for each error when every one of them is about
+    `settings.welcome`; `None` when some other part of the body is wrong too
+    (the generic answer then lists them all). Never echoes the input."""
+    if not errors or any(tuple(e["loc"][:3]) != _WELCOME_LOC for e in errors):
+        return None
+    problems = []
+    for e in errors:
+        kind = e["type"]
+        code = _WELCOME_CODES.get(kind, kind)
+        if kind not in _WELCOME_MESSAGES:
+            code, message = "invalid", "Invalid value"
+        else:
+            message = _WELCOME_MESSAGES[kind]
+        problems.append(
+            {"path": _welcome_path(tuple(e["loc"])), "code": code, "message": message}
+        )
+    return problems
 
 
 def register_exception_handlers(app: FastAPI) -> None:
@@ -530,6 +580,24 @@ def register_exception_handlers(app: FastAPI) -> None:
             },
         ),
     )
+
+    async def request_invalid(request: Request, exc: Exception) -> JSONResponse:
+        assert isinstance(exc, RequestValidationError)
+        problems = welcome_problems(exc.errors())
+        if problems is None:
+            return await request_validation_exception_handler(request, exc)
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            content={
+                "detail": {
+                    "code": "welcome_invalid",
+                    "message": "The welcome curtain settings are not valid",
+                    "problems": problems,
+                }
+            },
+        )
+
+    app.add_exception_handler(RequestValidationError, request_invalid)
 
     async def content_invalid(request: Request, exc: Exception) -> JSONResponse:
         assert isinstance(exc, ContentInvalidError)

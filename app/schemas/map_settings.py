@@ -8,10 +8,11 @@ complete, valid object. Unknown keys are rejected on write.
 import uuid
 from typing import Annotated, Any, Literal
 
-from pydantic import ConfigDict, Field
+from pydantic import BeforeValidator, ConfigDict, Field
 
 from app.schemas.base import ApiModel
 from app.schemas.skin import HexColor
+from app.schemas.welcome import Welcome
 
 
 class _Strict(ApiModel):
@@ -58,6 +59,10 @@ class AudioInfo(ApiModel):
     duration_seconds: float
 
 
+def _null_is_default(value: Any) -> Any:
+    return Welcome() if value is None else value
+
+
 class MapSettings(_Strict):
     schema_version: Literal[1] = 1
     mode: Literal["explorative", "guided"] = "explorative"
@@ -67,14 +72,24 @@ class MapSettings(_Strict):
     ambient: AmbientSettings = Field(default_factory=AmbientSettings)
     intro: Literal["none", "flyin"] = "none"
     audio: MapAudio | None = None
+    # Reads always carry a complete curtain; `null` (or nothing) is all defaults.
+    welcome: Annotated[Welcome, BeforeValidator(_null_is_default)] = Field(
+        default_factory=Welcome
+    )
 
     def to_stored(self) -> dict[str, Any]:
         """The JSON-able form kept in `course_maps.settings` (camelCase).
 
         `audio` is left out when there is no music, never written as null: maps
         published before music existed have no such key, and a draft that still
-        has no music must build the very same text, and hash, as they do."""
+        has no music must build the very same text, and hash, as they do.
+
+        `welcome` follows the same rule: a curtain that is all defaults is left
+        out, so maps (and publications) from before it existed keep their hash
+        and an editor who saves back what it read does not create a change."""
         stored = self.model_dump(by_alias=True, mode="json")
         if self.audio is None:
             del stored["audio"]
+        if self.welcome.is_default():
+            del stored["welcome"]
         return stored
