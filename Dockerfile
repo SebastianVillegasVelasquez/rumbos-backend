@@ -39,8 +39,13 @@ COPY --from=builder /app/alembic ./alembic
 COPY --from=builder /app/alembic.ini ./alembic.ini
 COPY --from=builder /app/entrypoint.sh ./entrypoint.sh
 
+# Where uploads belong (see "Persistent storage" in the README). Not a VOLUME:
+# that would make Docker create an anonymous volume on every container
+# recreation. Mount a bind mount or a named volume here from the compose file;
+# a new named volume inherits the owner set below.
 RUN chmod +x ./entrypoint.sh \
-  && chown -R appuser:appuser /app
+  && mkdir -p /data/assets \
+  && chown -R appuser:appuser /app /data
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
