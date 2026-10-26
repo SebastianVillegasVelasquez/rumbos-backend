@@ -392,6 +392,12 @@ class InMemoryAssetRepository:
     async def list_created_before(self, cutoff: datetime) -> list[AssetRecord]:
         raise NotImplementedError
 
+    async def count(self) -> int:
+        raise NotImplementedError
+
+    async def list_recent(self, limit: int) -> list[AssetRecord]:
+        raise NotImplementedError
+
     async def update_metadata(
         self, asset_id: uuid.UUID, data: AssetUpdate
     ) -> AssetRecord | None:

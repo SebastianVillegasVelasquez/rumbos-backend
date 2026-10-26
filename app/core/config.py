@@ -38,6 +38,11 @@ class Settings(BaseSettings):
     assets_uploads_enabled: bool = False
     # Where `LocalDiskAssetStorage` keeps the files.
     assets_dir: str = "data/assets"
+    # Refuse to start when the storage directory does not match the database
+    # (an unmounted or replaced volume; see `app.assets.fingerprint`). Off: the
+    # app starts anyway, logs an error, refuses uploads and reports
+    # `storage: "degraded"` on `/health/ready`.
+    storage_fail_fast: bool = False
     # Upload limits: per-file bytes and longest side, by kind, and the sum of
     # every stored file.
     assets_max_background_bytes: int = Field(default=8 * 1024 * 1024, ge=1)

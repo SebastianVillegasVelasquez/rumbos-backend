@@ -13,8 +13,9 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engin
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.api.routes.assets import get_asset_settings, get_asset_storage
+from app.assets.fingerprint import StorageState
 from app.assets.storage import AssetStorage, LocalDiskAssetStorage
-from app.core.config import get_settings
+from app.core.config import Settings, get_settings
 from app.enums import TenantStatus
 from app.main import app as fastapi_app
 from app.models import Tenant
@@ -75,6 +76,18 @@ async def _ensure_test_database() -> None:
         if not exists:
             await conn.execute(text(f'CREATE DATABASE "{url.database}"'))
     await admin.dispose()
+
+
+@pytest.fixture(autouse=True)
+def no_storage_check(monkeypatch: pytest.MonkeyPatch) -> None:
+    """A lifespan run by a test must not fingerprint the developer's real
+    `ASSETS_DIR` against the real database; `test_storage_fingerprint` calls the
+    real check itself."""
+
+    async def healthy(engine: AsyncEngine, settings: Settings) -> StorageState:
+        return StorageState.OK
+
+    monkeypatch.setattr("app.main.verify_storage", healthy)
 
 
 @pytest.fixture(scope="session", autouse=True)

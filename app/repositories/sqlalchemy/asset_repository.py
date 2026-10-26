@@ -165,6 +165,21 @@ class SqlAlchemyAssetRepository:
         )
         return [AssetRecord.model_validate(a) for a in result]
 
+    async def count(self) -> int:
+        total = await self._session.scalar(select(func.count()).select_from(Asset))
+        await self._session.rollback()  # reads only: leave the session clean
+        return total or 0
+
+    async def list_recent(self, limit: int) -> list[AssetRecord]:
+        result = await self._session.scalars(
+            select(Asset)
+            .order_by(Asset.created_at.desc(), Asset.id.desc())
+            .limit(limit)
+        )
+        records = [AssetRecord.model_validate(a) for a in result]
+        await self._session.rollback()
+        return records
+
     async def update_metadata(
         self, asset_id: uuid.UUID, data: AssetUpdate
     ) -> AssetRecord | None:

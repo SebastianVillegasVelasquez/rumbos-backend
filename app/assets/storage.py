@@ -8,6 +8,7 @@ import asyncio
 import os
 import re
 import uuid
+from collections.abc import Collection
 from pathlib import Path
 from typing import Protocol
 
@@ -26,6 +27,14 @@ def thumb_key(asset_id: uuid.UUID) -> str:
     return f"{asset_id}.thumb"
 
 
+def keys_of(asset_id: uuid.UUID, *, has_thumbnail: bool) -> list[str]:
+    """Every key an asset keeps files under."""
+    keys = [content_key(asset_id)]
+    if has_thumbnail:
+        keys.append(thumb_key(asset_id))
+    return keys
+
+
 class AssetFileMissingError(Exception):
     """The database knows the asset but the storage has no bytes for it."""
 
@@ -41,6 +50,11 @@ class AssetStorage(Protocol):
 
     async def delete(self, key: str) -> None:
         """Removes `key` if present. Only used to undo a failed upload."""
+        ...
+
+    async def present(self, keys: Collection[str]) -> set[str]:
+        """The subset of `keys` that has bytes in the storage. A cheap existence
+        check (no content is read); it never raises for a missing key."""
         ...
 
 
@@ -86,3 +100,11 @@ class LocalDiskAssetStorage:
     async def delete(self, key: str) -> None:
         path = self._path(key)
         await asyncio.to_thread(path.unlink, True)
+
+    async def present(self, keys: Collection[str]) -> set[str]:
+        paths = {key: self._path(key) for key in keys}
+        return await asyncio.to_thread(self._existing, paths)
+
+    @staticmethod
+    def _existing(paths: dict[str, Path]) -> set[str]:
+        return {key for key, path in paths.items() if path.is_file()}

@@ -190,6 +190,19 @@ class BubbleRepository(Protocol):
         ...
 
 
+class AppMetaRepository(Protocol):
+    async def get(self, key: str) -> str | None: ...
+
+    async def set_if_absent(self, key: str, value: str) -> str:
+        """Stores `value` unless the key already has one; returns what the key
+        holds afterwards (safe against simultaneous starters)."""
+        ...
+
+    async def set(self, key: str, value: str) -> None:
+        """Stores `value`, replacing any previous one."""
+        ...
+
+
 class AssetRepository(Protocol):
     async def get_by_id(self, asset_id: uuid.UUID) -> AssetRecord | None: ...
 
@@ -216,6 +229,14 @@ class AssetRepository(Protocol):
 
     async def list_created_before(self, cutoff: datetime) -> list[AssetRecord]:
         """Every asset created before `cutoff`, oldest first."""
+        ...
+
+    async def count(self) -> int:
+        """How many assets exist (the system scope counts every tenant's)."""
+        ...
+
+    async def list_recent(self, limit: int) -> list[AssetRecord]:
+        """The `limit` newest assets, newest first."""
         ...
 
     async def update_metadata(

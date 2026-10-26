@@ -1,9 +1,12 @@
+import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 import httpx
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 
 from app.api.errors import register_exception_handlers
 from app.api.routes import (
@@ -17,11 +20,49 @@ from app.api.routes import (
     view3d,
 )
 from app.api.security_headers import NoStoreForAuth
+from app.assets.fingerprint import (
+    StorageDegradedError,
+    StorageState,
+    StorageUnwritableError,
+    check_storage,
+)
 from app.core.config import Settings, get_settings
 from app.core.database import create_engine
 from app.core.paths import API_PREFIX
 from app.moodle.cache import CachedMoodleClient
 from app.moodle.client import HttpMoodleClient
+from app.repositories.sqlalchemy.app_meta_repository import SqlAlchemyAppMetaRepository
+from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
+from app.tenancy.scope import SYSTEM, bind_scope
+
+logger = logging.getLogger(__name__)
+
+
+async def verify_storage(engine: AsyncEngine, settings: Settings) -> StorageState:
+    """The start-up check of `app.assets.fingerprint`. A directory that cannot
+    be written always stops the start; a mismatch stops it only with
+    `STORAGE_FAIL_FAST`, and otherwise leaves the app up but degraded."""
+    try:
+        async with AsyncSession(engine, expire_on_commit=False) as session:
+            bind_scope(session, SYSTEM)  # every tenant's assets count
+            report = await check_storage(
+                SqlAlchemyAssetRepository(session),
+                SqlAlchemyAppMetaRepository(session),
+                Path(settings.assets_dir),
+                fail_fast=settings.storage_fail_fast,
+            )
+    except (StorageUnwritableError, StorageDegradedError):
+        raise
+    except Exception:
+        # No answer is not "fine": uploads stay refused until a start can tell.
+        logger.exception(
+            "Could not verify the asset storage against the database (were "
+            "the migrations run?); treating it as degraded"
+        )
+        if settings.storage_fail_fast:
+            raise
+        return StorageState.DEGRADED
+    return report.state
 
 
 @asynccontextmanager
@@ -29,6 +70,11 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     settings = get_settings()
     engine = create_engine(settings.build_database_url)
     app.state.db_engine = engine
+    try:
+        app.state.storage_state = await verify_storage(engine, settings)
+    except BaseException:
+        await engine.dispose()
+        raise
     # No automatic retries: a Moodle failure surfaces immediately.
     timeout = httpx.Timeout(
         connect=settings.moodle_connect_timeout,

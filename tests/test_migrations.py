@@ -1870,3 +1870,30 @@ def test_every_existing_publication_is_up_to_date_after_the_welcome_curtain(
             await engine.dispose()
 
     asyncio.run(check())
+
+
+BEFORE_APP_META = "b6e1c8a4d273"  # the last revision without `app_meta`
+
+
+def test_app_meta_migration_adds_a_unique_key_value_table_and_downgrades(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", BEFORE_APP_META).returncode == 0
+
+    up = alembic(migration_db, "upgrade", "head")
+
+    assert up.returncode == 0, up.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM app_meta") == [(0,)]
+    insert = (
+        "INSERT INTO app_meta (id, key, value, created_at, updated_at)"
+        " VALUES (:id, 'storage_id', 'x', now(), now())"
+    )
+    run_sql(migration_db, [(insert, {"id": uuid.uuid4()})])
+    with pytest.raises(Exception, match="app_meta_key_key"):
+        run_sql(migration_db, [(insert, {"id": uuid.uuid4()})])
+    down = alembic(migration_db, "downgrade", BEFORE_APP_META)
+    assert down.returncode == 0, down.stderr
+    assert not fetch(
+        migration_db,
+        "SELECT 1 FROM information_schema.tables WHERE table_name = 'app_meta'",
+    )
