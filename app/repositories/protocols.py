@@ -22,6 +22,7 @@ from app.schemas.asset import (
     AssetAuditEntry,
     AssetCreate,
     AssetRecord,
+    AssetReferences,
     AssetUpdate,
     AssetUsage,
 )
@@ -233,6 +234,18 @@ class AssetRepository(Protocol):
 
     async def count(self) -> int:
         """How many assets exist (the system scope counts every tenant's)."""
+        ...
+
+    async def list_all(self) -> list[AssetRecord]:
+        """Every asset, quarantined ones included, oldest first. For the
+        operator's tools: the system scope shows every tenant's."""
+        ...
+
+    async def references(
+        self, asset_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, AssetReferences]:
+        """The draft maps, skins and publications that use each asset (the same
+        rule as `usage`, which only counts). Every requested id is in the result."""
         ...
 
     async def list_recent(self, limit: int) -> list[AssetRecord]:

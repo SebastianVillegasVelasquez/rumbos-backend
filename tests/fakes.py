@@ -26,7 +26,13 @@ from app.exceptions import (
 from app.moodle.exceptions import MoodleCourseNotFoundError
 from app.moodle.schemas import MoodleSection, MoodleSiteInfo
 from app.publishing.snapshot import DraftInputs
-from app.schemas.asset import AssetAuditEntry, AssetRecord, AssetUpdate, AssetUsage
+from app.schemas.asset import (
+    AssetAuditEntry,
+    AssetRecord,
+    AssetReferences,
+    AssetUpdate,
+    AssetUsage,
+)
 from app.schemas.auth import NewAccessToken, TokenGrant
 from app.schemas.bubble import BubbleCreate, BubbleRead, BubbleUpdate
 from app.schemas.course_map import (
@@ -393,6 +399,14 @@ class InMemoryAssetRepository:
         raise NotImplementedError
 
     async def count(self) -> int:
+        raise NotImplementedError
+
+    async def list_all(self) -> list[AssetRecord]:
+        raise NotImplementedError
+
+    async def references(
+        self, asset_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, AssetReferences]:
         raise NotImplementedError
 
     async def list_recent(self, limit: int) -> list[AssetRecord]:

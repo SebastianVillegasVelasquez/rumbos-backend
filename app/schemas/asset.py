@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from typing import Annotated, Self
 
-from pydantic import StringConstraints, field_validator, model_validator
+from pydantic import Field, StringConstraints, field_validator, model_validator
 
 from app.core.paths import ASSETS_PATH
 from app.enums import AssetKind
@@ -134,6 +134,30 @@ class AssetUsage(ApiModel):
     @property
     def total(self) -> int:
         return self.maps + self.skins + self.publications
+
+
+class ReferencingMap(ApiModel):
+    id: uuid.UUID
+    title: str
+
+
+class ReferencingSkin(ApiModel):
+    id: uuid.UUID
+    name: str
+
+
+class ReferencingPublication(ApiModel):
+    course_map_id: uuid.UUID
+    number: int
+
+
+class AssetReferences(ApiModel):
+    """What points at an asset, by name: for the operator's tools, which need
+    more than `AssetUsage`'s counts to say what a missing file breaks."""
+
+    maps: list[ReferencingMap] = Field(default_factory=list)
+    skins: list[ReferencingSkin] = Field(default_factory=list)
+    publications: list[ReferencingPublication] = Field(default_factory=list)
 
 
 class AssetListItem(AssetRead):

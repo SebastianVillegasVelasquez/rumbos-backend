@@ -6,6 +6,8 @@
     python -m app.scripts.assets quarantine <asset-id> --reason "Rights holder's complaint, ticket 123"
     python -m app.scripts.assets release <asset-id>
     python -m app.scripts.assets history <asset-id>
+    python -m app.scripts.assets verify [--json]
+    python -m app.scripts.assets storage-adopt [--apply]
 
 `import-audio` makes a library track: it is checked exactly like an editor's
 upload (real MP3 or M4A, at most the size and length limits, tags stripped) and
@@ -22,10 +24,23 @@ disappears from lists and pickers, and maps that use it go on working without
 music. Published snapshots keep their frozen reference, but readers are no
 longer shown the track. `release` undoes it. Both are recorded, with the reason
 and the time, in the asset's audit trail (`history`) and in the log.
+
+`verify` checks the storage against the database and changes nothing: it lists
+every asset whose file (original or thumbnail) is not in the storage directory,
+with its tenant, kind, title, creation date and the maps, skins and publications
+that use it, then the totals. It exits with 1 when any file is missing or the
+directory is not the one the database was filled from (see the README,
+"Persistent storage"). Run it after every deployment that touches storage.
+
+`storage-adopt` is for the day the operator has decided that the directory in
+use is the right one although the database says otherwise (files lost for good,
+a restore without the marker file): it records this directory as the storage.
+Without `--apply` it only reports. Restart the app afterwards.
 """
 
 import argparse
 import asyncio
+import json
 import logging
 import sys
 import uuid
@@ -35,7 +50,19 @@ from pathlib import Path
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.assets.storage import LocalDiskAssetStorage
+from app.assets.fingerprint import (
+    STORAGE_ID_KEY,
+    StorageState,
+    adopt_storage,
+    inspect_storage,
+    read_marker,
+)
+from app.assets.storage import (
+    AssetStorage,
+    LocalDiskAssetStorage,
+    content_key,
+    thumb_key,
+)
 from app.core.config import get_settings
 from app.core.database import create_engine
 from app.exceptions import (
@@ -46,10 +73,15 @@ from app.exceptions import (
     AudioTooLongError,
     InvalidAssetMetadataError,
 )
-from app.repositories.protocols import AssetRepository, TenantRepository
+from app.repositories.protocols import (
+    AppMetaRepository,
+    AssetRepository,
+    TenantRepository,
+)
+from app.repositories.sqlalchemy.app_meta_repository import SqlAlchemyAppMetaRepository
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
 from app.repositories.sqlalchemy.tenant_repository import SqlAlchemyTenantRepository
-from app.schemas.asset import AssetRecord
+from app.schemas.asset import AssetRecord, AssetReferences
 from app.services.asset_service import AssetService, AssetSettings
 from app.tenancy.scope import SYSTEM, bind_scope
 
@@ -201,6 +233,144 @@ async def _history(
     return OK
 
 
+def _marker_state(stored: str | None, marker: str | None) -> str:
+    if marker is None:
+        return "missing"
+    return "ok" if marker == stored else "different"
+
+
+def _uses(refs: AssetReferences) -> list[str]:
+    return (
+        [f"map {m.id} {m.title!r}" for m in refs.maps]
+        + [f"skin {s.id} {s.name!r}" for s in refs.skins]
+        + [f"publication {p.course_map_id}#{p.number}" for p in refs.publications]
+    )
+
+
+async def verify(
+    assets: AssetRepository,
+    meta: AppMetaRepository,
+    tenants: TenantRepository,
+    storage: AssetStorage,
+    root: Path,
+    *,
+    as_json: bool,
+    out: Callable[[str], None] = print,
+) -> int:
+    """Read-only: nothing is created, written or deleted. Returns `FAILED` when
+    a file is missing or the directory does not match the database."""
+    records = await assets.list_all()
+    verdict = await inspect_storage(assets, meta, root)
+    stored = await meta.get(STORAGE_ID_KEY)
+    marker = _marker_state(stored, read_marker(root))
+    parts = {
+        r.id: {
+            "original": content_key(r.id),
+            **({"thumbnail": thumb_key(r.id)} if r.kind.has_thumbnail else {}),
+        }
+        for r in records
+    }
+    present = await storage.present(
+        [k for keys in parts.values() for k in keys.values()]
+    )
+    broken = [
+        (r, [name for name, key in parts[r.id].items() if key not in present])
+        for r in records
+    ]
+    broken = [(r, lost) for r, lost in broken if lost]
+    refs = await assets.references([r.id for r, _ in broken])
+    owners: dict[uuid.UUID | None, str] = {None: "library"}
+    for record, _ in broken:
+        if record.tenant_id is not None and record.tenant_id not in owners:
+            tenant = await tenants.get_by_id(record.tenant_id)
+            owners[record.tenant_id] = (
+                tenant.issuer if tenant else str(record.tenant_id)
+            )
+    used = sum(1 for r, _ in broken if _uses(refs[r.id]))
+
+    if as_json:
+        out(
+            json.dumps(
+                {
+                    "storage": {
+                        "path": str(root),
+                        "id": stored,
+                        "marker": marker,
+                        "state": verdict.state.value,
+                        "detail": verdict.detail,
+                    },
+                    "checked": len(records),
+                    "missing": [
+                        {
+                            "id": str(r.id),
+                            "kind": r.kind.value,
+                            "tenant": owners[r.tenant_id],
+                            "title": r.title,
+                            "createdAt": r.created_at.isoformat(),
+                            "missingFiles": lost,
+                            "quarantined": r.is_quarantined,
+                            "usedBy": refs[r.id].model_dump(mode="json", by_alias=True),
+                        }
+                        for r, lost in broken
+                    ],
+                    "totals": {"missing": len(broken), "inUse": used},
+                },
+                indent=2,
+            )
+        )
+    else:
+        out(f"Storage {root}: {verdict.state.value} ({verdict.detail})")
+        out(f"  storage id in the database: {stored or '-'}; marker file: {marker}")
+        for record, lost in broken:
+            out(
+                f"MISSING {record.id}  {record.kind.value}  {owners[record.tenant_id]}  "
+                f"{record.title!r}  created {_day(record.created_at)}  "
+                f"files: {', '.join(lost)}"
+                + ("  (quarantined)" if record.is_quarantined else "")
+            )
+            uses = _uses(refs[record.id])
+            out(f"    used by: {'; '.join(uses) if uses else 'nothing'}")
+        out(
+            f"{len(records)} asset(s) checked, {len(broken)} with missing files, "
+            f"{used} of them in use"
+        )
+    if verdict.state is StorageState.DEGRADED and not as_json:
+        out(
+            "The storage does not match the database. Fix the volume mount, or, if "
+            "this directory is the right one, run `storage-adopt`."
+        )
+    return FAILED if broken or verdict.state is StorageState.DEGRADED else OK
+
+
+async def storage_adopt(
+    assets: AssetRepository,
+    meta: AppMetaRepository,
+    root: Path,
+    *,
+    apply: bool,
+    out: Callable[[str], None] = print,
+) -> int:
+    verdict = await inspect_storage(assets, meta, root)
+    stored = await meta.get(STORAGE_ID_KEY)
+    out(f"Storage {root}: {verdict.state.value} ({verdict.detail})")
+    out(
+        f"  storage id in the database: {stored or '-'}; marker file: "
+        + _marker_state(stored, read_marker(root))
+    )
+    if not apply:
+        out(
+            "Dry run: with --apply this directory is recorded as the storage the "
+            "database belongs to (a marker file is written into it). Assets whose "
+            "files are not here stay broken; `verify` lists them."
+        )
+        return OK
+    storage_id = await adopt_storage(meta, root)
+    logger.warning("Storage %s adopted by the operator with id %s", root, storage_id)
+    out(f"Adopted: storage id {storage_id} is in the database and in {root}.")
+    out("Restart the app so that it stops reporting the storage as degraded.")
+    return OK
+
+
 async def execute(
     assets: AssetRepository,
     service: AssetService,
@@ -265,6 +435,18 @@ def build_parser() -> argparse.ArgumentParser:
 
     history = commands.add_parser("history", help="an asset's audit trail")
     history.add_argument("asset_id")
+
+    check = commands.add_parser(
+        "verify",
+        help="list assets whose files are missing from the storage (read-only)",
+    )
+    check.add_argument("--json", action="store_true", help="machine-readable output")
+
+    adopt = commands.add_parser(
+        "storage-adopt",
+        help="record this storage directory as the database's (operator decision)",
+    )
+    adopt.add_argument("--apply", action="store_true", help="do it (default: report)")
     return parser
 
 
@@ -276,10 +458,22 @@ async def _main(args: argparse.Namespace) -> int:
             # The operator's view: every tenant's assets and the library.
             bind_scope(session, SYSTEM)
             assets = SqlAlchemyAssetRepository(session)
+            root = Path(settings.assets_dir)
+            storage = LocalDiskAssetStorage(root)
+            meta = SqlAlchemyAppMetaRepository(session)
+            if args.command == "verify":
+                return await verify(
+                    assets,
+                    meta,
+                    SqlAlchemyTenantRepository(session),
+                    storage,
+                    root,
+                    as_json=args.json,
+                )
+            if args.command == "storage-adopt":
+                return await storage_adopt(assets, meta, root, apply=args.apply)
             service = AssetService(
-                assets,
-                LocalDiskAssetStorage(Path(settings.assets_dir)),
-                AssetSettings.from_app_settings(settings),
+                assets, storage, AssetSettings.from_app_settings(settings)
             )
             return await execute(
                 assets, service, SqlAlchemyTenantRepository(session), args

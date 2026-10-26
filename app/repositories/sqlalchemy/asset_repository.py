@@ -31,8 +31,12 @@ from app.schemas.asset import (
     AssetAuditEntry,
     AssetCreate,
     AssetRecord,
+    AssetReferences,
     AssetUpdate,
     AssetUsage,
+    ReferencingMap,
+    ReferencingPublication,
+    ReferencingSkin,
 )
 from app.tenancy.scope import TENANT_WIDE
 
@@ -169,6 +173,55 @@ class SqlAlchemyAssetRepository:
         total = await self._session.scalar(select(func.count()).select_from(Asset))
         await self._session.rollback()  # reads only: leave the session clean
         return total or 0
+
+    async def list_all(self) -> list[AssetRecord]:
+        result = await self._session.scalars(
+            select(Asset).order_by(Asset.created_at, Asset.id)
+        )
+        records = [AssetRecord.model_validate(a) for a in result]
+        await self._session.rollback()
+        return records
+
+    async def references(
+        self, asset_ids: Collection[uuid.UUID]
+    ) -> dict[uuid.UUID, AssetReferences]:
+        ids = list(asset_ids)
+        found = {i: AssetReferences() for i in ids}
+        if not ids:
+            return found
+        # TENANT_WIDE: an asset is used by the maps of every course of its tenant.
+        wide = {TENANT_WIDE: True}
+        for asset_id, map_id, title in await self._session.execute(
+            select(Asset.id, CourseMap.id, CourseMap.title)
+            .select_from(Asset)
+            .join(CourseMap, map_uses(Asset.id))
+            .where(Asset.id.in_(ids))
+            .order_by(CourseMap.created_at, CourseMap.id)
+            .execution_options(**wide)
+        ):
+            found[asset_id].maps.append(ReferencingMap(id=map_id, title=title))
+        for asset_id, skin_id, name in await self._session.execute(
+            select(Asset.id, Skin.id, Skin.name)
+            .select_from(Asset)
+            .join(Skin, skin_uses(Asset.id))
+            .where(Asset.id.in_(ids))
+            .order_by(Skin.created_at, Skin.id)
+            .execution_options(**wide)
+        ):
+            found[asset_id].skins.append(ReferencingSkin(id=skin_id, name=name))
+        for asset_id, map_id, number in await self._session.execute(
+            select(Asset.id, Publication.course_map_id, Publication.number)
+            .select_from(Asset)
+            .join(Publication, publication_uses(Asset.id))
+            .where(Asset.id.in_(ids))
+            .order_by(Publication.course_map_id, Publication.number)
+            .execution_options(**wide)
+        ):
+            found[asset_id].publications.append(
+                ReferencingPublication(course_map_id=map_id, number=number)
+            )
+        await self._session.rollback()  # reads only: leave the session clean
+        return found
 
     async def list_recent(self, limit: int) -> list[AssetRecord]:
         result = await self._session.scalars(
