@@ -37,7 +37,8 @@ Environment variables (or `.env`); see `.env.example`.
 | `MOODLE_CONTENTS_TTL_SECONDS` | `60` | A cached copy of a course's contents is served without asking Moodle for this long. |
 | `MOODLE_STALE_MAX_SECONDS` | `3600` | When Moodle fails, a cached copy up to this old is still served (reported as `cached`). |
 | `ASSETS_UPLOADS_ENABLED` | `false` | Master switch for `POST /assets`. **Keep it off on anything reachable from the internet** (see "Uploads and security"). Serving existing assets never depends on it. |
-| `ASSETS_DIR` | `data/assets` | Directory of the local-disk asset storage (git-ignored). |
+| `ASSETS_DIR` | `data/assets` | Directory of the local-disk asset storage (git-ignored). **Must be persistent**: in a container, mount a volume on it (see "Persistent storage"). The image provides `/data/assets` for that. |
+| `STORAGE_FAIL_FAST` | `false` | Refuse to start when the storage directory does not match the database (an unmounted or replaced volume). Off, the app starts anyway, logs an error, answers `storage: "degraded"` on `/health/ready` and refuses uploads. See "Persistent storage". |
 | `ASSETS_MAX_BACKGROUND_BYTES` | `8388608` | Largest accepted background upload (8 MB). |
 | `ASSETS_MAX_BUBBLE_BYTES` | `2097152` | Largest accepted bubble image upload (2 MB). |
 | `ASSETS_MAX_BACKGROUND_SIDE` | `8192` | Longest side, in pixels, of a background. |
@@ -250,7 +251,8 @@ Files are served from `GET /api/v1/assets/{id}` (and `/thumb`) with the stored
 'none'; sandbox`. Any id that is not a known asset is a 404.
 
 Storage sits behind the `AssetStorage` Protocol (`LocalDiskAssetStorage` today;
-an S3 adapter needs no service changes).
+an S3 adapter needs no service changes). **The directory must be persistent**:
+see "Persistent storage" below.
 
 **Deleting** needs an editor of the tenant. What is protected is images **in use**: a delete is refused with
 409 `asset_in_use` (and `usage: { maps, skins, publications }`) while a draft
@@ -267,6 +269,180 @@ optional `credit` and the sanitized `originalFilename` (display text; stored
 files are named by id only). A map whose `imageUrl` is `/api/v1/assets/{id}` must name
 an existing `background` asset (422 `background_asset_not_found` /
 `background_asset_wrong_kind`); any other URL is accepted as before.
+
+### Persistent storage
+
+Uploaded files (images and music) live in a **directory**, `ASSETS_DIR`; only
+their metadata lives in the database. A container's own filesystem is thrown
+away when the container is recreated (every `docker compose up` after an image
+change, every redeploy), but the database survives. Without a volume that holds
+the directory, each deployment leaves assets that are listed, and used by maps,
+whose file no longer exists: playback and pictures answer 404.
+
+So `ASSETS_DIR` must point to a path that is **mounted from outside the
+container**. The image provides an empty `/data/assets` owned by the app user
+(uid and gid **1001**, `appuser`) for that purpose; set `ASSETS_DIR=/data/assets`
+and mount a volume there. The image deliberately declares no `VOLUME`: that would
+make Docker create a fresh anonymous volume on every recreation and strand the
+files in the previous one.
+
+#### How the app protects itself
+
+The first start with a writable directory generates a `storage_id`, keeps it in
+the database (`app_meta` table) and writes it to `ASSETS_DIR/.rumbos-storage-id`.
+Every start compares the two. If the database lists assets but the marker is
+**missing or different**, the directory is empty or is not the one those assets
+were stored in (an unmounted or replaced volume), and the app:
+
+- logs an **ERROR** saying so and what to check;
+- answers `"storage": "degraded"` on `GET /health/ready` (still HTTP 200: a wrong
+  mount must not take the maps out of rotation; `"ok"` otherwise);
+- refuses uploads with **503 `storage_unavailable`**, so new files do not land in
+  the wrong place, and the `gc_assets` command refuses to run;
+- keeps serving and listing as usual. Fix the mount and **restart** to clear it.
+
+A new database with an empty directory is the normal first run: the marker is
+created and nothing is reported. A database that predates this check (assets, but
+no id yet) adopts the directory only if some of its newest files are in it, so
+the deployment that introduces the check cannot bless an empty volume. A
+directory that cannot be created or written stops the start with a message that
+names it.
+
+`STORAGE_FAIL_FAST=true` makes the degraded case **refuse to start** instead.
+Use it in production when a restart policy and monitoring are in place: a wrong
+mount then stops a rollout, loudly, instead of serving 404s. Leave it off if you
+prefer the maps to stay readable while you fix the storage.
+
+`GET /assets` items and `audioInfo` (draft and published) carry `available`:
+`false` when a file of the asset (original or thumbnail) is missing from the
+directory. It is checked on each request with a `stat`, is never stored, and is
+not part of snapshots or hashes. Serving a missing file is a 404 (never a 500)
+and logs `Asset <id>: the file is missing from storage ...`.
+
+`python -m app.scripts.assets verify [--json]` is the read-only audit: it lists
+every asset whose file is missing (tenant, kind, title, creation date, and the
+maps, skins and publications that use it), prints the totals and exits **1** if
+anything is missing or the directory is not the database's. It deletes and
+modifies nothing. Run it after every deployment that touches storage.
+
+#### Compose: bind mount (recommended for a single VPS)
+
+A host folder is easy to see, back up with `rsync` or `tar`, and cannot be
+removed by a Docker command.
+
+```bash
+sudo mkdir -p /srv/rumbos/assets
+sudo chown 1001:1001 /srv/rumbos/assets      # the container's uid and gid
+```
+
+```yaml
+services:
+  app:
+    image: rumbos-backend
+    environment:
+      ASSETS_DIR: /data/assets
+      STORAGE_FAIL_FAST: "true"
+    volumes:
+      - /srv/rumbos/assets:/data/assets
+      # On SELinux hosts (Fedora, RHEL, Rocky...) the container may not write to
+      # a host folder until it is relabelled: add :Z, i.e.
+      # - /srv/rumbos/assets:/data/assets:Z
+```
+
+#### Compose: named volume (alternative)
+
+```yaml
+services:
+  app:
+    image: rumbos-backend
+    environment:
+      ASSETS_DIR: /data/assets
+    volumes:
+      - rumbos-assets:/data/assets
+
+volumes:
+  rumbos-assets:
+```
+
+Docker creates the volume with the image's owner (1001), so no `chown` and no
+SELinux flag are needed. Trade-offs: a named volume lives under
+`/var/lib/docker/volumes`, is harder to reach for backups (use a throwaway
+container, below) and **is deleted by `docker compose down -v` and by
+`docker volume prune`** once nothing uses it; a bind mount survives both.
+
+#### Migrating a deployment that is already running
+
+Order matters: copy the files out of the running container **before** changing
+anything, because recreating the container destroys them.
+
+```bash
+# 1. Where the files are now (empty output: the default, /app/data/assets).
+docker compose exec app printenv ASSETS_DIR
+# 2. Back up the database.
+docker compose exec -T db sh -c 'pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB"' > rumbos-$(date +%F).sql
+# 3. Prepare the host folder and copy the files out of the running container.
+sudo mkdir -p /srv/rumbos/assets && sudo chown 1001:1001 /srv/rumbos/assets
+docker cp rumbos-backend:/app/data/assets/. /srv/rumbos/assets/    # the path from step 1
+sudo chown -R 1001:1001 /srv/rumbos/assets
+find /srv/rumbos/assets -type f | wc -l                            # not zero?
+# 4. Only now edit the compose file (mount + ASSETS_DIR=/data/assets), then:
+docker compose up -d --force-recreate app
+# 5. Check.
+docker compose logs app | grep -i storage
+curl -s http://localhost:<published-port>/api/v1/health/ready    # "storage":"ok"
+docker compose exec app python -m app.scripts.assets verify
+```
+
+The first start after step 4 finds assets in the database and their files in the
+directory, and writes the marker. If `verify` lists missing files, they were lost
+in an earlier deployment: re-upload them. If the app stays `degraded` although
+the directory is the right one (the files are gone for good, or a restore lost
+the marker), record it with `python -m app.scripts.assets storage-adopt --apply`
+and restart; uploads and `gc_assets` work again from then on.
+
+#### Backups
+
+Back up the **database and the storage directory together**, and take the
+database dump **first**: a file without a row is harmless garbage, a row without
+its file is a broken asset.
+
+```bash
+docker compose exec -T db sh -c 'pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB"' > rumbos-$(date +%F).sql
+sudo rsync -a /srv/rumbos/assets/ /backups/rumbos-assets/          # keeps .rumbos-storage-id
+# named volume:
+docker run --rm -v rumbos-assets:/data:ro -v "$PWD":/backup alpine tar czf /backup/assets-$(date +%F).tgz -C /data .
+```
+
+Copy the whole directory, **dotfiles included** (`cp -a dir/.`, `rsync -a`;
+not `cp dir/*`): `.rumbos-storage-id` is what tells the app it is the right
+directory. **Test a restore** before you need one: load the dump into a scratch
+database, put the files in a scratch directory, start the app against both and
+run `assets verify`; it must exit 0.
+
+Never run `docker compose down -v` or `docker volume prune` on a host whose
+uploads live in a named volume without a backup.
+
+#### Recovering files from orphaned volumes
+
+If a compose file or image once created anonymous volumes for the uploads, the
+files may still be in one that no container uses:
+
+```bash
+docker volume ls -f dangling=true                       # candidates (hash names)
+docker run --rm -v <volume>:/v:ro alpine sh -c 'find /v -type f | head'
+docker run --rm -v <volume>:/from:ro -v /srv/rumbos/assets:/to alpine cp -a /from/. /to/
+sudo chown -R 1001:1001 /srv/rumbos/assets
+```
+
+Look for a layout of two-hex-digit folders holding files named by UUID. Restart
+the app and run `assets verify`. Do not `docker volume prune` before you have
+checked.
+
+#### Later: object storage
+
+Storage sits behind the `AssetStorage` Protocol, so an S3-compatible adapter
+(MinIO, R2, ...) is the natural next step: it removes the volume, the ownership
+and the backup-together problem. It is not implemented yet.
 
 ### Draft and published maps
 
@@ -446,8 +622,11 @@ transaction, nothing is written if anything is invalid). The asset must exist,
 be `audio`, belong to the tenant or the library and not be quarantined, else
 422 `audio_asset_not_found` / `audio_asset_wrong_kind` (another tenant's track
 simply does not exist for you). `CourseMapRead.audioInfo` and
-`PublishedMapRead.audioInfo` are `null` or `{ title, credit, durationSeconds }`
-(read-only): a draft reads them live from the asset, a publication freezes them.
+`PublishedMapRead.audioInfo` are `null` or `{ title, credit, durationSeconds,
+available }` (read-only): a draft reads them live from the asset, a publication
+freezes them. `available` is the exception: it is read from the storage on every
+request (false when the audio file is missing, see "Persistent storage") and is
+never part of a snapshot.
 `publication-state.changes.audioChanged` reports any difference in the music,
 its settings or the frozen description; `settingsChanged` does not include music.
 
@@ -679,13 +858,15 @@ Both are **dry runs unless `--apply` is given**.
 - `python -m app.scripts.tenants` and `python -m app.scripts.purge_auth`: see "Tenants and authentication".
   `python -m app.scripts.tenants set --issuer <iss> --widgets on|off` is how a
   tenant is allowed widgets (see "Content bubbles").
-- `python -m app.scripts.assets`: the audio library and takedowns, see "Music".
+- `python -m app.scripts.assets`: the audio library and takedowns, see "Music";
+  `verify [--json]` (read-only: assets whose files are missing, exit 1 if any)
+  and `storage-adopt`, see "Persistent storage".
 - `python -m app.scripts.gc_assets [--older-than-days 7] [--apply]` lists, and
   with `--apply` deletes, assets that no map, skin or publication uses and that
   are older than the threshold, reporting the bytes reclaimed. It uses the same
   usage rule as `DELETE /assets/{id}` (maps' music and the images of content
   bubbles included). Library tracks are
-  never collected.
+  never collected. It refuses to run while the storage is degraded.
 
 ### Demo skin pack
 
@@ -754,7 +935,8 @@ never changes after creation.
   `title`, `credit`; audio also takes `license` and needs `rightsDeclared=true`,
   see "Music"), `GET /assets?kind=&q=&scope=tenant|library&limit=&offset=` (the
   tenant's own assets, or the shared audio library; newest first, with `usage`
-  counts), `PATCH /assets/{id}` (`title`, `credit`),
+  counts and `available`, false when a file is missing from the storage),
+  `PATCH /assets/{id}` (`title`, `credit`),
   `DELETE /assets/{id}` (409 while in use), `GET /assets/{id}` (also `HEAD`;
   honours `Range`), `GET /assets/{id}/thumb` (backgrounds and images). A map's
   `imageUrl` may be a bundled frontend path or `/api/v1/assets/{id}`; its music
@@ -778,7 +960,8 @@ never changes after creation.
   used it. `PATCH` on a bubble also takes `skinId` (nullable); bubbles carry a
   `sequence` (their place in the guided path; new ones go last).
 - `GET /health` (liveness) and `GET /health/ready` (database `SELECT 1`; 503 if
-  it fails; never calls Moodle).
+  it fails; never calls Moodle). The readiness body also says `storage`: `"ok"`
+  or `"degraded"` (see "Persistent storage"); it never changes the status code.
 
 Conflicts (409) carry `detail: { code, message }`: `map_already_exists_for_section`,
 or `activity_already_placed` (plus `courseMapId` and `courseMapTitle` of the map
