@@ -115,6 +115,57 @@ async def adopt_storage(meta: AppMetaRepository, root: Path) -> str:
     return storage_id
 
 
+@dataclass(frozen=True, slots=True)
+class _Observation:
+    stored: str | None
+    marker: str | None
+    rows: int
+    # Only looked for when it matters: a database with assets and no id yet.
+    files_present: bool
+
+    @property
+    def mismatch(self) -> str | None:
+        """Why the directory is not this database's storage; None if it is, or
+        if nothing is registered that could be orphaned."""
+        if self.stored is None:
+            if self.rows and not self.files_present:
+                return (
+                    "the database has no storage id yet and none of its newest "
+                    "files is in this directory"
+                )
+            return None
+        if self.marker == self.stored or self.rows == 0:
+            return None
+        if self.marker is None:
+            return "the directory has no storage marker"
+        return "the directory's storage marker belongs to a different storage"
+
+
+async def _observe(
+    assets: AssetRepository, meta: AppMetaRepository, root: Path
+) -> _Observation:
+    stored = await meta.get(STORAGE_ID_KEY)
+    rows = await assets.count()
+    files_present = (
+        await _any_recent_file_present(assets, root)
+        if stored is None and rows
+        else True
+    )
+    return _Observation(stored, read_marker(root), rows, files_present)
+
+
+async def inspect_storage(
+    assets: AssetRepository, meta: AppMetaRepository, root: Path
+) -> StorageReport:
+    """The verdict of `check_storage` without acting on it: nothing is created or
+    written, and nothing is logged. For tools that must not touch the storage
+    (the garbage collector, `assets verify`)."""
+    why = (await _observe(assets, meta, root)).mismatch
+    if why is None:
+        return StorageReport(StorageState.OK, "consistent")
+    return StorageReport(StorageState.DEGRADED, why)
+
+
 async def check_storage(
     assets: AssetRepository,
     meta: AppMetaRepository,
@@ -125,41 +176,24 @@ async def check_storage(
     """Runs at every start. Raises `StorageUnwritableError` when the directory
     cannot be written, and `StorageDegradedError` on a mismatch when `fail_fast`."""
     ensure_writable(root)
-    stored = await meta.get(STORAGE_ID_KEY)
-    marker = read_marker(root)
-    rows = await assets.count()
-
-    if stored is None:
-        if rows and not await _any_recent_file_present(assets, root):
-            return _degraded(
-                root,
-                rows,
-                "the database has no storage id yet and none of its newest "
-                "files is in this directory",
-                fail_fast,
-            )
+    seen = await _observe(assets, meta, root)
+    if seen.mismatch is not None:
+        return _degraded(root, seen.rows, seen.mismatch, fail_fast)
+    if seen.stored is None:
         # A new installation, or one that predates the fingerprint and whose
         # files are here: this directory becomes the storage. A marker already
         # in it is kept, so a database rebuilt over an old volume reunites.
         storage_id = await meta.set_if_absent(
-            STORAGE_ID_KEY, marker or str(uuid.uuid4())
+            STORAGE_ID_KEY, seen.marker or str(uuid.uuid4())
         )
         write_marker(root, storage_id)
         logger.info("Asset storage %s fingerprinted with id %s", root, storage_id)
         return StorageReport(StorageState.OK, "fingerprint created")
-
-    if marker == stored:
+    if seen.marker == seen.stored:
         return StorageReport(StorageState.OK, "fingerprint matches")
-    if rows == 0:
-        # Nothing is registered, so nothing can be orphaned: take the directory.
-        write_marker(root, stored)
-        return StorageReport(StorageState.OK, "fingerprint restored")
-    why = (
-        "the directory has no storage marker"
-        if marker is None
-        else "the directory's storage marker belongs to a different storage"
-    )
-    return _degraded(root, rows, why, fail_fast)
+    # Nothing is registered, so nothing can be orphaned: take the directory.
+    write_marker(root, seen.stored)
+    return StorageReport(StorageState.OK, "fingerprint restored")
 
 
 def _degraded(root: Path, rows: int, why: str, fail_fast: bool) -> StorageReport:

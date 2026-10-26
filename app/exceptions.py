@@ -131,6 +131,11 @@ class UploadsDisabledError(DomainError):
     """`ASSETS_UPLOADS_ENABLED` is off."""
 
 
+class StorageUnavailableError(DomainError):
+    """The asset storage does not match the database (see
+    `app.assets.fingerprint`): new files would land in the wrong place."""
+
+
 class AssetIsLibraryError(DomainError):
     """Library tracks are the operator's: editors can neither change nor delete
     them."""

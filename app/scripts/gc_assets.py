@@ -9,6 +9,10 @@ leaves time for an editor who has just uploaded something to use it. Library
 tracks (audio with no tenant) are curated, not uploaded and forgotten, so they
 are never collected. Deletion
 goes through `AssetService.delete`, so the row goes first and then the files.
+
+It refuses to run (dry runs included) while the storage directory does not
+match the database (see `app.assets.fingerprint`): deleting rows of assets whose
+files are merely not mounted would destroy the only record of them.
 """
 
 import argparse
@@ -20,10 +24,12 @@ from pathlib import Path
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.assets.fingerprint import StorageState, inspect_storage
 from app.assets.storage import AssetStorage, LocalDiskAssetStorage
 from app.core.config import get_settings
 from app.core.database import create_engine
 from app.exceptions import AssetInUseError, AssetNotFoundError
+from app.repositories.sqlalchemy.app_meta_repository import SqlAlchemyAppMetaRepository
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
 from app.schemas.asset import AssetRecord
 from app.services.asset_service import AssetService, AssetSettings
@@ -91,6 +97,19 @@ async def _main(days: int, apply: bool) -> int:
         async with AsyncSession(engine, expire_on_commit=False) as session:
             # Housekeeping over every tenant's data, not one tenant's business.
             bind_scope(session, SYSTEM)
+            report = await inspect_storage(
+                SqlAlchemyAssetRepository(session),
+                SqlAlchemyAppMetaRepository(session),
+                Path(settings.assets_dir),
+            )
+            if report.state is StorageState.DEGRADED:
+                print(
+                    f"error: refusing to run: the storage at {settings.assets_dir} "
+                    f"does not match the database ({report.detail}). Fix the "
+                    "volume mount first; see the README, 'Persistent storage'.",
+                    file=sys.stderr,
+                )
+                return 1
             await run(
                 session,
                 LocalDiskAssetStorage(Path(settings.assets_dir)),

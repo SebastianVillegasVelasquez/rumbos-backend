@@ -27,7 +27,7 @@ async def test_ready_is_ok_when_the_database_answers(
     r = await client.get("/health/ready")
 
     assert r.status_code == 200
-    assert r.json() == {"status": "ok"}
+    assert r.json() == {"status": "ok", "storage": "ok"}
 
 
 async def test_ready_is_503_when_the_database_is_down(
@@ -42,7 +42,7 @@ async def test_ready_is_503_when_the_database_is_down(
         await dead.dispose()
 
     assert r.status_code == 503
-    assert r.json() == {"status": "unavailable"}
+    assert r.json() == {"status": "unavailable", "storage": "ok"}
     assert "secretpw" not in caplog.text and "secretpw" not in r.text
 
 

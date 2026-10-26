@@ -54,6 +54,7 @@ from app.exceptions import (
     SkinIsBuiltinError,
     SkinNotFoundError,
     SkinReferenceNotFoundError,
+    StorageUnavailableError,
     TenantDisabledError,
     UnauthorizedError,
     UploadsDisabledError,
@@ -444,6 +445,15 @@ def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(
         UploadsDisabledError,
         _coded(503, "uploads_disabled", "Image uploads are disabled"),
+    )
+    app.add_exception_handler(
+        StorageUnavailableError,
+        _coded(
+            503,
+            "storage_unavailable",
+            "The file storage is unavailable; uploads are refused until the "
+            "operator fixes it",
+        ),
     )
     app.add_exception_handler(
         AudioUploadsDisabledError,

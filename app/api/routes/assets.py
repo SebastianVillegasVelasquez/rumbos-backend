@@ -19,6 +19,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response,
 from starlette.datastructures import UploadFile
 from starlette.types import Message
 
+from app.assets.fingerprint import StorageState, storage_state_of
 from app.assets.storage import AssetStorage, LocalDiskAssetStorage
 from app.auth.dependencies import (
     PrincipalDep,
@@ -29,7 +30,11 @@ from app.auth.dependencies import (
 )
 from app.core.config import Settings, get_settings
 from app.enums import AssetKind, AssetScope
-from app.exceptions import AssetTooLargeError, InvalidUploadError
+from app.exceptions import (
+    AssetTooLargeError,
+    InvalidUploadError,
+    StorageUnavailableError,
+)
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
 from app.repositories.sqlalchemy.tenant_repository import SqlAlchemyTenantRepository
 from app.schemas.asset import AssetList, AssetRead, AssetUpdate
@@ -166,7 +171,10 @@ async def upload_asset(
     Audio (`kind=audio`) also needs `title`, `credit` and `rightsDeclared=true`
     (the uploader's declaration that they have the rights); `license` is
     optional."""
-    service.ensure_uploads_enabled()  # before reading a byte of the body
+    # Before reading a byte of the body.
+    if storage_state_of(request.app) is StorageState.DEGRADED:
+        raise StorageUnavailableError
+    service.ensure_uploads_enabled()
     limit = settings.largest_upload_bytes + _BODY_OVERHEAD_BYTES
     declared = request.headers.get("content-length", "")
     if declared.isdigit() and int(declared) > limit:
