@@ -9,6 +9,11 @@ services:
         condition: service_healthy
     env_file:
       - app/.env
+    environment:
+      # Uploads must outlive the container; see "Persistent storage" in the README.
+      ASSETS_DIR: /data/assets
+    volumes:
+      - assets-rumbos:/data/assets
     ports:
       - "8001:8000"
     networks:
@@ -35,6 +40,7 @@ services:
 
 volumes:
   postgres-rumbos:
+  assets-rumbos:
 
 networks:
   rumbos-network:
