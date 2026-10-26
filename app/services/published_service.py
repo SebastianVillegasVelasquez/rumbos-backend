@@ -1,7 +1,9 @@
 import uuid
 from typing import Any
 
+from app.assets.availability import availability
 from app.assets.references import audio_info_of
+from app.assets.storage import AssetStorage
 from app.enums import BubbleIcon, BubbleKind, BubbleStatus
 from app.exceptions import NotPublishedError
 from app.repositories.protocols import AssetRepository, PublicationRepository
@@ -37,10 +39,14 @@ class PublishedMapService:
         publications: PublicationRepository,
         resolver: MapResolutionService,
         assets: AssetRepository,
+        storage: AssetStorage | None = None,
     ) -> None:
         self._publications = publications
         self._resolver = resolver
         self._assets = assets
+        # Only asked whether the music's file exists (`audioInfo.available`);
+        # without one, music is reported as available.
+        self._storage = storage
 
     async def list_maps(
         self, *, moodle_course_id: int | None, limit: int, offset: int
@@ -132,9 +138,13 @@ class PublishedMapService:
         if settings.audio is None:
             return settings, None
         track = await self._assets.get_by_id(settings.audio.asset_id)
-        if audio_info_of(track) is None:
+        if track is None or audio_info_of(track) is None:
             return settings.model_copy(update={"audio": None}), None
-        return settings, AudioInfo.model_validate(snap["audioInfo"])
+        info = AudioInfo.model_validate(snap["audioInfo"])
+        if self._storage is not None:
+            present = (await availability(self._storage, [track]))[track.id]
+            info = info.model_copy(update={"available": present})
+        return settings, info
 
     async def resolve(
         self, course_map_id: uuid.UUID, *, include_hidden: bool = False

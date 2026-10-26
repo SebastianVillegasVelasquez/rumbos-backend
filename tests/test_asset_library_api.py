@@ -1,5 +1,6 @@
 """The asset library: metadata, listing, usage, deletion, background validation."""
 
+from collections.abc import Collection
 from typing import Any
 
 import httpx
@@ -313,6 +314,9 @@ async def test_a_failing_file_removal_leaves_no_listed_asset_with_missing_bytes(
 
         async def delete(self, key: str) -> None:
             raise OSError("disk on fire")
+
+        async def present(self, keys: Collection[str]) -> set[str]:
+            return await storage.present(keys)
 
     app.dependency_overrides[get_asset_storage] = lambda: Failing()
     r = await client.delete(f"/assets/{made['id']}")

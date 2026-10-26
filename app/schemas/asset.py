@@ -138,12 +138,19 @@ class AssetUsage(ApiModel):
 
 class AssetListItem(AssetRead):
     usage: AssetUsage
+    # False when a file of the asset (original or thumbnail) is missing from the
+    # storage. Read live; see `app.assets.availability`.
+    available: bool
 
     @classmethod
     def from_record_and_usage(
-        cls, record: AssetRecord, usage: AssetUsage
+        cls, record: AssetRecord, usage: AssetUsage, *, available: bool
     ) -> "AssetListItem":
-        return cls(**AssetRead.from_record(record).model_dump(), usage=usage)
+        return cls(
+            **AssetRead.from_record(record).model_dump(),
+            usage=usage,
+            available=available,
+        )
 
 
 class AssetList(ApiModel):

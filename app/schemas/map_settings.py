@@ -52,11 +52,16 @@ class MapAudio(_Strict):
 
 class AudioInfo(ApiModel):
     """What a player shows about a map's music. Read-only: a draft reads it
-    live from the asset, a publication freezes it."""
+    live from the asset, a publication freezes it.
+
+    `available` is the exception to the freezing: it is read from the storage on
+    every request (false when the audio file is missing there) and is never
+    part of a snapshot."""
 
     title: str
     credit: str
     duration_seconds: float
+    available: bool = True
 
 
 def _null_is_default(value: Any) -> Any:

@@ -10,6 +10,8 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query
 
+from app.api.routes.assets import get_asset_storage
+from app.assets.storage import AssetStorage
 from app.auth.dependencies import ScopedSession, moodle_source_route, student_route
 from app.moodle.dependencies import get_contents_provider
 from app.moodle.protocols import CourseContentsProvider
@@ -36,6 +38,7 @@ router = APIRouter(
 def get_published_service(
     session: ScopedSession,
     contents: Annotated[CourseContentsProvider, Depends(get_contents_provider)],
+    storage: Annotated[AssetStorage, Depends(get_asset_storage)],
 ) -> PublishedMapService:
     return PublishedMapService(
         SqlAlchemyPublicationRepository(session),
@@ -45,6 +48,7 @@ def get_published_service(
             contents,
         ),
         SqlAlchemyAssetRepository(session),
+        storage,
     )
 
 

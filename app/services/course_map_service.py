@@ -2,11 +2,13 @@ import uuid
 from collections import Counter
 from typing import Any
 
+from app.assets.availability import availability
 from app.assets.references import (
     asset_id_of_image_url,
     audio_info_of,
     is_canonical_asset_url,
 )
+from app.assets.storage import AssetStorage
 from app.enums import AssetKind, BubbleKind
 from app.exceptions import (
     AudioAssetNotFoundError,
@@ -133,7 +135,11 @@ class CourseMapService:
         *,
         tenants: TenantRepository | None = None,
         tenant_id: uuid.UUID | None = None,
+        storage: AssetStorage | None = None,
     ) -> None:
+        # Only asked whether the music's file exists (`audioInfo.available`);
+        # without one, music is reported as available.
+        self._storage = storage
         self._tenants = tenants
         self._tenant_id = tenant_id
         self._course_maps = course_maps
@@ -509,7 +515,12 @@ class CourseMapService:
     async def _audio_info(self, settings: MapSettings) -> AudioInfo | None:
         if settings.audio is None:
             return None
-        return audio_info_of(await self._assets.get_by_id(settings.audio.asset_id))
+        track = await self._assets.get_by_id(settings.audio.asset_id)
+        info = audio_info_of(track)
+        if info is None or track is None or self._storage is None:
+            return info
+        present = (await availability(self._storage, [track]))[track.id]
+        return info.model_copy(update={"available": present})
 
     async def _read(self, course_map: CourseMapBase) -> CourseMapRead:
         return CourseMapRead(

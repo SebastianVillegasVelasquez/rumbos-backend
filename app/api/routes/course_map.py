@@ -5,6 +5,8 @@ from fastapi import APIRouter, Body, Depends, Header, Query, Request, Response, 
 from fastapi.exceptions import RequestValidationError
 
 from app.api.preconditions import IfMatch, parse_if_match, set_etag
+from app.api.routes.assets import get_asset_storage
+from app.assets.storage import AssetStorage
 from app.auth.dependencies import (
     PrincipalDep,
     ScopedSession,
@@ -58,6 +60,7 @@ def get_course_map_service(
     session: ScopedSession,
     moodle: Annotated[MoodleClient, Depends(get_moodle_client)],
     principal: PrincipalDep,
+    storage: Annotated[AssetStorage, Depends(get_asset_storage)],
 ) -> CourseMapService:
     return CourseMapService(
         SqlAlchemyCourseMapRepository(session),
@@ -69,6 +72,7 @@ def get_course_map_service(
         SqlAlchemyView3dRepository(session),
         tenants=SqlAlchemyTenantRepository(session),
         tenant_id=principal.tenant_id,
+        storage=storage,
     )
 
 

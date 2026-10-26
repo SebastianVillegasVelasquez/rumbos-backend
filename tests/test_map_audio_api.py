@@ -128,6 +128,7 @@ async def test_music_is_chosen_through_the_appearance_with_its_defaults(
         "title": "Brisa",
         "credit": "Ana, CC BY 4.0",
         "durationSeconds": mine["durationSeconds"],
+        "available": True,
     }
     assert (await draft(client, created["id"]))["audioInfo"] == body["audioInfo"]
 
@@ -413,6 +414,7 @@ async def test_publishing_music_freezes_it_and_lists_the_asset(
         "title": "Brisa",
         "credit": "Ana",
         "durationSeconds": mine["durationSeconds"],
+        "available": True,
     }
 
 

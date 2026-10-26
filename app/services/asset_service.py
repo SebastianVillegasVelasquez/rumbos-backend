@@ -9,6 +9,7 @@ from typing import BinaryIO
 from uuid_utils.compat import uuid7
 
 from app.assets.audio import process_audio
+from app.assets.availability import availability
 from app.assets.metadata import clean_credit, clean_filename, default_title, fits_credit
 from app.assets.processing import ImageLimits, process_image
 from app.assets.storage import (
@@ -394,9 +395,13 @@ class AssetService:
             kind, (q or "").strip() or None, limit, offset, scope
         )
         usage = await self._assets.usage([r.id for r in records])
+        present = await availability(self._storage, records)
         return AssetList(
             items=[
-                AssetListItem.from_record_and_usage(r, usage[r.id]) for r in records
+                AssetListItem.from_record_and_usage(
+                    r, usage[r.id], available=present[r.id]
+                )
+                for r in records
             ],
             total=total,
             limit=limit,
@@ -457,7 +462,12 @@ class AssetService:
             data = await self._storage.get(key)
         except AssetFileMissingError as exc:
             logger.error(
-                "Asset %s is in the database but its file is missing", asset_id
+                "Asset %s: the file is missing from storage (key %s); the database "
+                "lists it but the storage directory has no bytes for it. Check the "
+                "volume mount of ASSETS_DIR and run `python -m app.scripts.assets "
+                "verify`",
+                asset_id,
+                key,
             )
             raise AssetNotFoundError(raw_id) from exc
         if thumb:
