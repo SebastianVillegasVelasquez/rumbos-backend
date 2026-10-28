@@ -16,6 +16,7 @@ collector refused) or, with `STORAGE_FAIL_FAST`, the app does not start.
 import logging
 import os
 import uuid
+from contextlib import suppress
 from dataclasses import dataclass
 from enum import StrEnum
 from pathlib import Path
@@ -72,7 +73,11 @@ def ensure_writable(root: Path) -> None:
             "(uid 1001 in the container image); see the README, 'Persistent storage'."
         ) from exc
     finally:
-        probe.unlink(missing_ok=True)
+        # Only cleanup: when the root could not be created (its parent is a file,
+        # say) the failure above is the one to report, and what `unlink` raises
+        # for that varies by platform (FileNotFoundError, NotADirectoryError).
+        with suppress(OSError):
+            probe.unlink()
 
 
 def read_marker(root: Path) -> str | None:
