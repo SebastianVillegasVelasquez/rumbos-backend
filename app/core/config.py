@@ -61,6 +61,21 @@ class Settings(BaseSettings):
     # Longest accepted track, in seconds.
     assets_max_audio_seconds: float = Field(default=600.0, gt=0)
 
+    # Export and import of maps as `.rumbos` archives (see docs/EXPORT-FORMAT.md).
+    # An archive is untrusted input: these bound what is accepted and how much is
+    # kept while an editor reviews it.
+    import_max_bytes: int = Field(default=50 * 1024 * 1024, ge=1)
+    import_max_uncompressed_bytes: int = Field(default=200 * 1024 * 1024, ge=1)
+    import_max_entries: int = Field(default=500, ge=3)
+    import_ttl_minutes: int = Field(default=30, ge=1)
+    import_max_pending_per_course: int = Field(default=3, ge=1)
+    # Where uploaded archives wait for the editor's decision. Must be writable by
+    # the app; it need not be persistent (a lost file is just an expired import).
+    import_staging_dir: str = "data/imports"
+    # Uploads per minute, per course and per tenant, kept in process memory.
+    import_rate_per_course: int = Field(default=10, ge=1)
+    import_rate_per_tenant: int = Field(default=60, ge=1)
+
     # `dev` or `production`. Only decides the default of `legacy_anonymous_mode`.
     app_env: Literal["dev", "production"] = "dev"
     # Keeps the old behaviour for the "legacy" tenant: requests without a bearer
