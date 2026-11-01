@@ -389,3 +389,29 @@ class ContentTooLargeError(DomainError):
 
 class WidgetsDisabledError(DomainError):
     """The tenant has not been allowed to use widgets."""
+
+
+class ArchiveInvalidError(DomainError):
+    """A `.rumbos` archive is malformed, hostile or inconsistent. `problems` are
+    `{path, code, message}` dicts (never the offending input)."""
+
+    def __init__(self, problems: list[dict[str, str]]) -> None:
+        super().__init__("archive invalid")
+        self.problems = problems
+
+
+class ArchiveVersionUnsupportedError(DomainError):
+    """The archive was written for a newer reader, or in a format this one does
+    not know."""
+
+    def __init__(self, supported: int) -> None:
+        super().__init__("archive version unsupported")
+        self.supported = supported
+
+
+class ArchiveTooLargeError(DomainError):
+    """The archive is bigger than `IMPORT_MAX_BYTES`."""
+
+    def __init__(self, limit_bytes: int) -> None:
+        super().__init__(f"archive exceeds {limit_bytes} bytes")
+        self.limit_bytes = limit_bytes
