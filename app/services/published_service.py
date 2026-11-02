@@ -138,9 +138,15 @@ class PublishedMapService:
         if settings.audio is None:
             return settings, None
         track = await self._assets.get_by_id(settings.audio.asset_id)
-        if track is None or audio_info_of(track) is None:
+        live = audio_info_of(track)
+        if track is None or live is None:
             return settings.model_copy(update={"audio": None}), None
-        info = AudioInfo.model_validate(snap["audioInfo"])
+        # The title, credit and duration are the frozen ones; the licence and
+        # the cover are the track's now (like `available`, they are not part
+        # of the snapshot, so changing them never makes the map "changed").
+        info = AudioInfo.model_validate(snap["audioInfo"]).model_copy(
+            update={"license": live.license, "cover_url": live.cover_url}
+        )
         if self._storage is not None:
             present = (await availability(self._storage, [track]))[track.id]
             info = info.model_copy(update={"available": present})
