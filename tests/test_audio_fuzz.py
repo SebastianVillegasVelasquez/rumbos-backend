@@ -6,6 +6,7 @@ import random
 
 import pytest
 
+from app.assets.artwork import find_artwork
 from app.assets.audio import process_audio
 from app.exceptions import AudioInvalidError, AudioTooLongError
 from tests import audio_files as af
@@ -57,6 +58,33 @@ def test_mutated_files_are_cleaned_or_refused_never_crash(name: str) -> None:
         again = process_audio(io.BytesIO(result.data))
         assert again.data == result.data
     assert accepted < ROUNDS  # the mutations really do break files
+
+
+ART_SEEDS = {
+    "id3v2.3": af.mp3_with_artwork(
+        af.id3v2_with_pictures([(0, b"a" * 40), (3, b"b" * 60)])
+    ),
+    "id3v2.4": af.mp3_with_artwork(af.id3v2_with_pictures([(3, b"c" * 60)], version=4)),
+    "id3v2.4-unsync": af.mp3_with_artwork(
+        af.id3v2_with_pictures([(3, b"\xff" * 60)], version=4, unsync=True)
+    ),
+    "id3v2.2": af.mp3_with_artwork(af.id3v2_with_pictures([(3, b"d" * 60)], version=2)),
+    "m4a": af.m4a(covers=[b"e" * 60, b"f" * 60]),
+    "m4a-moov-first": af.m4a(covers=[b"g" * 60], moov_first=True),
+}
+
+
+@pytest.mark.parametrize("name", sorted(ART_SEEDS))
+def test_looking_for_artwork_in_mutated_files_never_crashes(name: str) -> None:
+    """The artwork reader is given every mutation, even of files the audio
+    parser would refuse: it answers (a picture, or none) and raises nothing."""
+    rng = random.Random(name)
+    for _ in range(ROUNDS):
+        data = mutate(ART_SEEDS[name], rng)
+        found = find_artwork(io.BytesIO(data), 1000)
+        # Whatever it hands back respects the cap it was given.
+        if found is not None and found.data is not None:
+            assert len(found.data) <= 1000
 
 
 @pytest.mark.parametrize("size", [0, 1, 3, 4, 7, 8, 11, 12, 100])

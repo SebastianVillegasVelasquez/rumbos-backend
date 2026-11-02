@@ -53,6 +53,84 @@ def id3v2(*, size_padding: int = 0) -> bytes:
     return b"ID3\x03\x00\x00" + size + body
 
 
+def _syncsafe(value: int) -> bytes:
+    return bytes(((value >> s) & 0x7F) for s in (21, 14, 7, 0))
+
+
+def _unsync(raw: bytes) -> bytes:
+    """Unsynchronisation: a zero after an `FF` (and an `FF` before a sync) is
+    guarded with an extra zero byte."""
+    return raw.replace(b"\xff", b"\xff\x00")
+
+
+def apic_payload(
+    picture: bytes,
+    *,
+    picture_type: int = 3,
+    mime: bytes = b"image/jpeg",
+    encoding: int = 0,
+    description: str = "",
+) -> bytes:
+    text = {
+        0: description.encode("latin-1"),
+        1: b"\xff\xfe" + description.encode("utf-16-le"),
+        2: description.encode("utf-16-be"),
+        3: description.encode("utf-8"),
+    }[encoding]
+    end = b"\x00\x00" if encoding in (1, 2) else b"\x00"
+    return (
+        bytes([encoding])
+        + mime
+        + b"\x00"
+        + bytes([picture_type])
+        + text
+        + end
+        + picture
+    )
+
+
+def id3v2_with_pictures(
+    pictures: list[tuple[int, bytes]],
+    *,
+    version: int = 3,
+    unsync: bool = False,
+    encoding: int = 0,
+    description: str = "",
+) -> bytes:
+    """An ID3v2.2/2.3/2.4 tag holding `(picture type, image)` pictures."""
+    frames = b""
+    for picture_type, image in pictures:
+        if version == 2:
+            payload = (
+                bytes([encoding])
+                + b"JPG"
+                + bytes([picture_type])
+                + description.encode("latin-1")
+                + b"\x00"
+                + image
+            )
+            frames += b"PIC" + len(payload).to_bytes(3, "big") + payload
+            continue
+        payload = apic_payload(
+            image, picture_type=picture_type, encoding=encoding, description=description
+        )
+        if unsync and version == 4:
+            payload = _unsync(payload)
+        size = (
+            _syncsafe(len(payload)) if version == 4 else struct.pack(">I", len(payload))
+        )
+        flags = b"\x00\x02" if unsync and version == 4 else b"\x00\x00"
+        frames += b"APIC" + size + flags + payload
+    flag = 0
+    if unsync and version == 3:
+        frames, flag = _unsync(frames), 0x80
+    return b"ID3" + bytes([version, 0, flag]) + _syncsafe(len(frames)) + frames
+
+
+def mp3_with_artwork(tag: bytes) -> bytes:
+    return tag + mp3(40)
+
+
 def id3v1() -> bytes:
     return (b"TAG" + SECRET_TAILS[0]).ljust(128, b"\x00")
 
@@ -183,10 +261,17 @@ def _tables(offsets: list[int], *, wide: bool = False) -> bytes:
     )
 
 
-def _tags_in_udta() -> bytes:
+def _tags_in_udta(covers: list[bytes] | None = None) -> bytes:
+    """The tags of an M4A. `covers` are real pictures for `covr` (one `data` box
+    each); without them it holds a fake one made of `SECRET_ARTWORK`."""
     name = box(b"\xa9nam", full(b"data", bytes(4), SECRET_TITLE, flags=1))
+    pictures = covers or [b"\xff\xd8\xff" + SECRET_ARTWORK]
     cover = box(
-        b"covr", full(b"data", bytes(4), b"\xff\xd8\xff" + SECRET_ARTWORK, flags=13)
+        b"covr",
+        *(
+            full(b"data", bytes(4), p, flags=14 if p[:4] == b"\x89PNG" else 13)
+            for p in pictures
+        ),
     )
     ilst = box(b"ilst", name, cover)
     meta = full(b"meta", _hdlr(b"mdir", b""), ilst)
@@ -207,6 +292,7 @@ def moov(
     tracks: int = 1,
     fragmented: bool = False,
     video: bool = False,
+    covers: list[bytes] | None = None,
 ) -> bytes:
     stbl = box(
         b"stbl",
@@ -216,6 +302,7 @@ def moov(
     minf = box(b"minf", full(b"smhd", bytes(4)), _dinf(external=external), stbl)
     mdia = box(b"mdia", _mdhd(), _hdlr(handler, SECRET_HANDLER), minf)
     trak = box(b"trak", _tkhd(), mdia, *([_tags_in_udta()] if tags else []))
+    moov_tags = _tags_in_udta(covers)
     # A still picture with sound: the audio track plus a video one (its sample
     # tables are the audio's; only the handler matters to what is tested).
     video_trak = box(
@@ -227,7 +314,7 @@ def moov(
         *([trak] * tracks),
         *([video_trak] if video else []),
         *([box(b"mvex", full(b"trex", bytes(20)))] if fragmented else []),
-        *([_tags_in_udta()] if tags else []),
+        *([moov_tags] if tags else []),
     )
 
 
