@@ -32,13 +32,19 @@ from app.core.config import Settings, get_settings
 from app.enums import AssetKind, AssetScope
 from app.exceptions import (
     AssetTooLargeError,
+    CoverTooLargeError,
     InvalidUploadError,
     StorageUnavailableError,
 )
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
 from app.repositories.sqlalchemy.tenant_repository import SqlAlchemyTenantRepository
-from app.schemas.asset import AssetList, AssetRead, AssetUpdate
-from app.services.asset_service import AssetContent, AssetService, AssetSettings
+from app.schemas.asset import AssetList, AssetRead, AssetUpdate, AssetUploadRead
+from app.services.asset_service import (
+    AssetContent,
+    AssetService,
+    AssetSettings,
+    CoverUpload,
+)
 
 router = APIRouter(prefix="/assets", tags=["assets"])
 
@@ -46,8 +52,16 @@ router = APIRouter(prefix="/assets", tags=["assets"])
 # file itself.
 _BODY_OVERHEAD_BYTES = 64 * 1024
 
-_FORM_FIELDS = {"file", "kind", "title", "credit", "license", "rightsDeclared"}
-_MAX_FORM_FIELDS = len(_FORM_FIELDS) - 1  # all but the file
+_FORM_FIELDS = {
+    "file",
+    "cover",
+    "kind",
+    "title",
+    "credit",
+    "license",
+    "rightsDeclared",
+}
+_MAX_FORM_FIELDS = len(_FORM_FIELDS) - 2  # all but the two files
 
 _CACHE_CONTROL = "public, max-age=31536000, immutable"
 # An image response must never be able to run anything, whatever it contains.
@@ -132,6 +146,8 @@ _UPLOAD_OPENAPI: dict[str, Any] = {
                     "required": ["file", "kind"],
                     "properties": {
                         "file": {"type": "string", "format": "binary"},
+                        # Audio only; without one the artwork inside the file is used.
+                        "cover": {"type": "string", "format": "binary"},
                         "kind": {
                             "type": "string",
                             "enum": ["background", "bubble", "image", "audio"],
@@ -149,11 +165,27 @@ _UPLOAD_OPENAPI: dict[str, Any] = {
 }
 
 
+_COVER_OPENAPI: dict[str, Any] = {
+    "requestBody": {
+        "required": True,
+        "content": {
+            "multipart/form-data": {
+                "schema": {
+                    "type": "object",
+                    "required": ["file"],
+                    "properties": {"file": {"type": "string", "format": "binary"}},
+                }
+            }
+        },
+    }
+}
+
+
 @router.post(
     "",
-    response_model=AssetRead,
+    response_model=AssetUploadRead,
     status_code=status.HTTP_201_CREATED,
-    responses={status.HTTP_200_OK: {"model": AssetRead}},
+    responses={status.HTTP_200_OK: {"model": AssetUploadRead}},
     openapi_extra=_UPLOAD_OPENAPI,
     dependencies=[Depends(editor_route)],
 )
@@ -163,26 +195,28 @@ async def upload_asset(
     service: ServiceDep,
     settings: AssetSettingsDep,
     principal: PrincipalDep,
-) -> AssetRead:
+) -> AssetUploadRead:
     """201 with the new asset, or 200 with the existing one when the same
     content of the same kind was already uploaded (its title and credit are
     left as they were). Optional form fields: `title`, `credit`.
 
     Audio (`kind=audio`) also needs `title`, `credit` and `rightsDeclared=true`
     (the uploader's declaration that they have the rights); `license` is
-    optional."""
+    optional. An audio upload may carry a `cover` file (PNG, JPEG or WebP); with
+    none, the picture inside the audio is used if there is one, and
+    `warnings` says `cover_dropped` when it could not be."""
     # Before reading a byte of the body.
     if storage_state_of(request.app) is StorageState.DEGRADED:
         raise StorageUnavailableError
     service.ensure_uploads_enabled()
-    limit = settings.largest_upload_bytes + _BODY_OVERHEAD_BYTES
+    limit = settings.largest_body_bytes + _BODY_OVERHEAD_BYTES
     declared = request.headers.get("content-length", "")
     if declared.isdigit() and int(declared) > limit:
         raise AssetTooLargeError(settings.largest_upload_bytes)
 
     limited = Request(request.scope, _limited(request.receive, limit))
     try:
-        form = await limited.form(max_files=1, max_fields=_MAX_FORM_FIELDS)
+        form = await limited.form(max_files=2, max_fields=_MAX_FORM_FIELDS)
     except _BodyTooLargeError as exc:
         raise AssetTooLargeError(settings.largest_upload_bytes) from exc
     try:
@@ -197,11 +231,24 @@ async def upload_asset(
             raise InvalidUploadError(
                 "kind must be 'background', 'bubble', 'image' or 'audio'"
             ) from exc
+        if kind is AssetKind.COVER:  # made from an audio track, never sent alone
+            raise InvalidUploadError(
+                "kind must be 'background', 'bubble', 'image' or 'audio'"
+            )
+        raw_cover = form.get("cover")
+        if raw_cover is not None and kind is not AssetKind.AUDIO:
+            raise InvalidUploadError("a cover can only come with an audio track")
         file.file.seek(0, 2)
         size = file.file.tell()
         raw_title, raw_credit = form.get("title"), form.get("credit")
         if kind is AssetKind.AUDIO:
             raw_license, rights = form.get("license"), form.get("rightsDeclared")
+            cover = None
+            if raw_cover is not None:
+                if not isinstance(raw_cover, UploadFile):
+                    raise InvalidUploadError("cover must be a file")
+                raw_cover.file.seek(0, 2)
+                cover = CoverUpload(raw_cover.file, raw_cover.file.tell())
             result = await service.upload_audio(
                 file.file,
                 size,
@@ -210,10 +257,11 @@ async def upload_asset(
                 license=raw_license if isinstance(raw_license, str) else None,
                 rights_declared=rights == "true",
                 uploaded_by_sub=principal.sub,
+                cover=cover,
             )
             if not result.created:
                 response.status_code = status.HTTP_200_OK
-            return AssetRead.from_record(result.asset)
+            return AssetUploadRead.from_upload(result.asset, result.warnings)
         result = await service.upload(
             file.file,
             size,
@@ -226,7 +274,7 @@ async def upload_asset(
         await form.close()
     if not result.created:
         response.status_code = status.HTTP_200_OK
-    return AssetRead.from_record(result.asset)
+    return AssetUploadRead.from_upload(result.asset)
 
 
 @router.get("", response_model=AssetList, dependencies=[Depends(editor_route)])
@@ -262,6 +310,61 @@ async def update_asset(
 async def delete_asset(asset_id: uuid.UUID, service: ServiceDep) -> Response:
     """409 `asset_in_use` while a map, skin or publication references it."""
     await service.delete(asset_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.put(
+    "/{asset_id}/cover",
+    response_model=AssetRead,
+    openapi_extra=_COVER_OPENAPI,
+    dependencies=[Depends(editor_route)],
+)
+async def put_cover(
+    asset_id: uuid.UUID,
+    request: Request,
+    service: ServiceDep,
+    settings: AssetSettingsDep,
+    principal: PrincipalDep,
+) -> AssetRead:
+    """Sets or replaces the cover of one of this tenant's audio tracks (form
+    field `file`: PNG, JPEG or WebP). The old cover is released. 404 for a
+    track that is not this tenant's, 403 for a library track."""
+    if storage_state_of(request.app) is StorageState.DEGRADED:
+        raise StorageUnavailableError
+    service.ensure_uploads_enabled(AssetKind.COVER)
+    limit = settings.max_cover_bytes + _BODY_OVERHEAD_BYTES
+    declared = request.headers.get("content-length", "")
+    if declared.isdigit() and int(declared) > limit:
+        raise CoverTooLargeError(settings.max_cover_bytes)
+
+    limited = Request(request.scope, _limited(request.receive, limit))
+    try:
+        form = await limited.form(max_files=1, max_fields=0)
+    except _BodyTooLargeError as exc:
+        raise CoverTooLargeError(settings.max_cover_bytes) from exc
+    try:
+        file = form.get("file")
+        if set(form.keys()) != {"file"} or not isinstance(file, UploadFile):
+            raise InvalidUploadError("send the cover as the form file 'file'")
+        file.file.seek(0, 2)
+        size = file.file.tell()
+        track = await service.set_cover(
+            asset_id, file.file, size, uploaded_by_sub=principal.sub
+        )
+    finally:
+        await form.close()
+    return AssetRead.from_record(track)
+
+
+@router.delete(
+    "/{asset_id}/cover",
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(editor_route)],
+)
+async def delete_cover(asset_id: uuid.UUID, service: ServiceDep) -> Response:
+    """Takes the cover off one of this tenant's audio tracks (and deletes it
+    unless another track shares it). Nothing to do if it has none."""
+    await service.remove_cover(asset_id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 

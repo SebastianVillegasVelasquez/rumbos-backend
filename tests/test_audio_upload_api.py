@@ -61,6 +61,7 @@ async def test_an_mp3_upload_returns_the_contract_shape(
         "createdAt",
         "coverAssetId",
         "coverUrl",
+        "warnings",
     }
     assert (body["kind"], body["mime"]) == ("audio", "audio/mpeg")
     assert body["durationSeconds"] == pytest.approx(40 * af.FRAME_44K_SECONDS, abs=1e-3)

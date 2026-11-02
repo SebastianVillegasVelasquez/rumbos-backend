@@ -46,6 +46,7 @@ async def test_upload_a_background_returns_the_contract_shape(
         "createdAt",
         "coverAssetId",  # audio only: null for images
         "coverUrl",
+        "warnings",  # of the upload: none for an image
     }
     assert body["durationSeconds"] is None and body["license"] is None
     assert body["kind"] == "background" and body["mime"] == "image/png"

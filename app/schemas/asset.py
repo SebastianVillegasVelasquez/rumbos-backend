@@ -1,4 +1,5 @@
 import uuid
+from collections.abc import Sequence
 from datetime import datetime
 from typing import Annotated, Self
 
@@ -134,6 +135,22 @@ class AssetRead(ApiModel):
                 if record.cover_asset_id
                 else None
             ),
+        )
+
+
+class AssetUploadRead(AssetRead):
+    """The answer to `POST /assets`: the asset, and what the editor should know
+    about how the upload went (`cover_dropped`: the picture found inside the
+    audio could not be used, so the track has no cover)."""
+
+    warnings: list[str] = Field(default_factory=list)
+
+    @classmethod
+    def from_upload(
+        cls, record: AssetRecord, warnings: Sequence[str] = ()
+    ) -> "AssetUploadRead":
+        return cls(
+            **AssetRead.from_record(record).model_dump(), warnings=list(warnings)
         )
 
 
