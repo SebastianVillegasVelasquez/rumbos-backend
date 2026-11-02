@@ -20,6 +20,7 @@ _DEFAULT_TITLES = {
     AssetKind.BUBBLE: "Imagen",
     AssetKind.AUDIO: "Audio",
     AssetKind.IMAGE: "Imagen",
+    AssetKind.COVER: "Portada",
 }
 
 

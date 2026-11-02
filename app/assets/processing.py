@@ -22,9 +22,12 @@ from app.exceptions import (
     AssetDimensionsTooLargeError,
     AssetInvalidImageError,
     AssetTypeNotAllowedError,
+    CoverInvalidError,
 )
 
 THUMBNAIL_MAX_WIDTH = 640
+# A cover is a square no bigger than this (it is shown on a small disc).
+COVER_SIDE = 512
 _JPEG_QUALITY = 90
 _WEBP_QUALITY = 90
 _THUMB_QUALITY = 80
@@ -42,13 +45,30 @@ class ImageLimits:
     background_side: int
     bubble_side: int
     image_side: int = 2048
+    cover_side: int = 2048
 
     def side_for(self, kind: AssetKind) -> int:
         if kind is AssetKind.BACKGROUND:
             return self.background_side
         if kind is AssetKind.IMAGE:
             return self.image_side
+        if kind is AssetKind.COVER:
+            return self.cover_side
         return self.bubble_side
+
+    @property
+    def pixel_ceiling(self) -> int:
+        """Pillow warns above this many pixels and refuses at twice as many. No
+        image within the side limit of any kind can reach it."""
+        return (
+            max(
+                self.background_side,
+                self.bubble_side,
+                self.image_side,
+                self.cover_side,
+            )
+            ** 2
+        )
 
 
 @dataclass(frozen=True, slots=True)
@@ -83,11 +103,9 @@ def process_image(
         raise AssetTypeNotAllowedError("only PNG, JPEG and static WebP are accepted")
 
     max_side = limits.side_for(kind)
-    # Pillow warns above this many pixels and refuses at twice as many. No
-    # image within the side limit can reach it.
-    Image.MAX_IMAGE_PIXELS = (
-        max(limits.background_side, limits.bubble_side, limits.image_side) ** 2
-    )
+    # The same value for every kind, so two decodes running together never set
+    # it under each other's feet.
+    Image.MAX_IMAGE_PIXELS = limits.pixel_ceiling
     with _DECODE_SLOTS:
         try:
             return _process(file, fmt, kind, max_side)
@@ -130,6 +148,74 @@ def _process(
         height=image.height,
         thumbnail=thumbnail,
     )
+
+
+@dataclass(frozen=True, slots=True)
+class ProcessedCover:
+    data: bytes  # WebP
+    width: int
+    height: int
+
+
+def process_cover(file: BinaryIO, limits: ImageLimits) -> ProcessedCover:
+    """A track's cover: decoded, centre-cropped to a square, shrunk to at most
+    `COVER_SIDE` px a side, stripped of every piece of metadata and encoded as
+    WebP. Whatever the source was (a file the editor chose, or a picture found
+    inside the audio), none of its bytes are kept.
+
+    Raises `CoverInvalidError` for anything that is not a static PNG, JPEG or
+    WebP within `limits.cover_side`, or that does not decode."""
+    file.seek(0)
+    fmt = sniff_format(file.read(16))
+    file.seek(0)
+    if fmt is None:
+        raise CoverInvalidError("not a PNG, JPEG or WebP image")
+
+    Image.MAX_IMAGE_PIXELS = limits.pixel_ceiling
+    with _DECODE_SLOTS:
+        try:
+            return _process_cover(file, fmt, limits.cover_side)
+        except CoverInvalidError:
+            raise
+        except Image.DecompressionBombError as exc:
+            raise CoverInvalidError("far more pixels than allowed") from exc
+        except (
+            UnidentifiedImageError,
+            OSError,
+            SyntaxError,
+            ValueError,
+            EOFError,
+        ) as exc:
+            raise CoverInvalidError("the image could not be decoded") from exc
+
+
+def _process_cover(file: BinaryIO, fmt: str, max_side: int) -> ProcessedCover:
+    with Image.open(file, formats=[fmt]) as opened:
+        width, height = opened.size
+        # Judge the size from the header, before decoding a single pixel.
+        if max(width, height) > max_side:
+            raise CoverInvalidError(f"{width}x{height} exceeds {max_side} px a side")
+        if getattr(opened, "n_frames", 1) > 1:
+            raise CoverInvalidError("animated images are not accepted")
+        opened.load()
+        image = ImageOps.exif_transpose(opened)  # honor the orientation, then drop EXIF
+
+    image = _centre_square(_normalize_mode(image))
+    if image.width > COVER_SIDE:
+        image = image.resize(
+            (COVER_SIDE, COVER_SIDE), Image.Resampling.LANCZOS, reducing_gap=2.0
+        )
+    image.info.clear()  # nothing from the source may be written back out
+    out = io.BytesIO()
+    image.save(out, "WEBP", quality=_WEBP_QUALITY, method=4)
+    return ProcessedCover(out.getvalue(), image.width, image.height)
+
+
+def _centre_square(image: Image.Image) -> Image.Image:
+    """The largest centred square of the image (never scaled up)."""
+    side = min(image.size)
+    left, top = (image.width - side) // 2, (image.height - side) // 2
+    return image.crop((left, top, left + side, top + side))
 
 
 def _normalize_mode(image: Image.Image) -> Image.Image:

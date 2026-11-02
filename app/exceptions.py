@@ -163,6 +163,24 @@ class AssetDimensionsTooLargeError(DomainError):
         self.height = height
 
 
+class CoverTooLargeError(DomainError):
+    """The cover file is over the byte limit."""
+
+    def __init__(self, limit_bytes: int) -> None:
+        super().__init__(f"cover exceeds {limit_bytes} bytes")
+        self.limit_bytes = limit_bytes
+
+
+class CoverInvalidError(DomainError):
+    """Not a usable cover: not PNG, JPEG or static WebP, animated, too many
+    pixels, or it does not decode. `reason` is for the log; the client only
+    ever sees the fixed message of `cover_invalid`."""
+
+    def __init__(self, reason: str) -> None:
+        super().__init__(reason)
+        self.reason = reason
+
+
 class AudioUploadsDisabledError(DomainError):
     """`AUDIO_UPLOADS_ENABLED` is off."""
 

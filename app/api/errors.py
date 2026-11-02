@@ -31,6 +31,8 @@ from app.exceptions import (
     ContentInvalidError,
     ContentTooLargeError,
     CourseMapNotFoundError,
+    CoverInvalidError,
+    CoverTooLargeError,
     DraftChangedSinceReviewError,
     DuplicateSkinRuleError,
     ForbiddenError,
@@ -531,6 +533,24 @@ def register_exception_handlers(app: FastAPI) -> None:
                 "width": exc.width or None,
                 "height": exc.height or None,
             },
+        ),
+    )
+    app.add_exception_handler(
+        CoverTooLargeError,
+        _coded(
+            413,
+            "cover_too_large",
+            "The cover image is too large",
+            lambda exc: {"limitBytes": exc.limit_bytes},
+        ),
+    )
+    app.add_exception_handler(
+        CoverInvalidError,
+        # The reason stays in the log, never in the response.
+        _coded(
+            422,
+            "cover_invalid",
+            "The cover must be a static PNG, JPEG or WebP image",
         ),
     )
     app.add_exception_handler(

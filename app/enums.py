@@ -57,6 +57,9 @@ class AssetKind(StrEnum):
     AUDIO = "audio"
     # A picture an editor puts inside a content bubble (not a skin, not a backdrop).
     IMAGE = "image"
+    # The picture of an audio track: a square WebP made by the cover pipeline.
+    # Never uploaded on its own; an audio asset points at it.
+    COVER = "cover"
 
     @property
     def has_thumbnail(self) -> bool:

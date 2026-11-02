@@ -60,6 +60,10 @@ class Settings(BaseSettings):
     assets_max_audio_bytes: int = Field(default=8 * 1024 * 1024, ge=1)
     # Longest accepted track, in seconds.
     assets_max_audio_seconds: float = Field(default=600.0, gt=0)
+    # What a track's cover may be before it is shrunk to a 512 px square (the
+    # same limits apply to a picture found inside the audio file).
+    assets_max_cover_bytes: int = Field(default=2 * 1024 * 1024, ge=1)
+    assets_max_cover_side: int = Field(default=2048, ge=1, le=16384)
 
     # `dev` or `production`. Only decides the default of `legacy_anonymous_mode`.
     app_env: Literal["dev", "production"] = "dev"

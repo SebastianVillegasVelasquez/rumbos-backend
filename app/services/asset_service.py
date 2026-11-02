@@ -65,6 +65,8 @@ class AssetSettings:
     max_audio_seconds: float = 600.0
     max_image_bytes: int = 4 * 1024 * 1024
     max_image_side: int = 2048
+    max_cover_bytes: int = 2 * 1024 * 1024
+    max_cover_side: int = 2048
 
     @classmethod
     def from_app_settings(cls, settings: Settings) -> "AssetSettings":
@@ -80,11 +82,15 @@ class AssetSettings:
             max_audio_seconds=settings.assets_max_audio_seconds,
             max_image_bytes=settings.assets_max_image_bytes,
             max_image_side=settings.assets_max_image_side,
+            max_cover_bytes=settings.assets_max_cover_bytes,
+            max_cover_side=settings.assets_max_cover_side,
         )
 
     def max_bytes_for(self, kind: AssetKind) -> int:
         if kind is AssetKind.AUDIO:
             return self.max_audio_bytes
+        if kind is AssetKind.COVER:
+            return self.max_cover_bytes
         if kind is AssetKind.BACKGROUND:
             return self.max_background_bytes
         if kind is AssetKind.IMAGE:
@@ -95,8 +101,8 @@ class AssetSettings:
         """Whether uploads of `kind` are on; None: whether any are."""
         if kind is None:
             return self.uploads_enabled or self.audio_uploads_enabled
-        if kind is AssetKind.AUDIO:
-            return self.audio_uploads_enabled
+        if kind in (AssetKind.AUDIO, AssetKind.COVER):
+            return self.audio_uploads_enabled  # a cover is part of a track
         return self.uploads_enabled
 
     @property
