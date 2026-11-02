@@ -395,12 +395,13 @@ def register_exception_handlers(app: FastAPI) -> None:
         _coded(
             409,
             "asset_in_use",
-            "The image is used by a map, a skin or a publication",
+            "The asset is used by a map, a skin, a publication or an audio track",
             lambda exc: {
                 "usage": {
                     "maps": exc.usage.maps,
                     "skins": exc.usage.skins,
                     "publications": exc.usage.publications,
+                    "tracks": exc.usage.tracks,
                 }
             },
         ),

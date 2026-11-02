@@ -38,7 +38,12 @@ async def test_a_content_image_counts_as_used_by_its_map(
 
     await add_content(client, created["id"], blocks(image(asset["id"])))
 
-    assert await usage_of(client, asset) == {"maps": 1, "skins": 0, "publications": 0}
+    assert await usage_of(client, asset) == {
+        "maps": 1,
+        "skins": 0,
+        "publications": 0,
+        "tracks": 0,
+    }
 
 
 async def test_a_map_counts_once_however_many_bubbles_show_the_image(

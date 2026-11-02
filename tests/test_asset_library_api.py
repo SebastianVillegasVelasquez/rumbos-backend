@@ -148,7 +148,12 @@ async def test_the_library_lists_newest_first_with_paging(
     assert (body["total"], body["limit"], body["offset"]) == (5, 2, 1)
     assert [i["id"] for i in body["items"]] == [made[3]["id"], made[2]["id"]]
     assert set(body["items"][0]) >= {"id", "title", "usage", "thumbUrl", "url"}
-    assert body["items"][0]["usage"] == {"maps": 0, "skins": 0, "publications": 0}
+    assert body["items"][0]["usage"] == {
+        "maps": 0,
+        "skins": 0,
+        "publications": 0,
+        "tracks": 0,
+    }
 
 
 async def test_the_library_defaults_and_limits(client: httpx.AsyncClient) -> None:
@@ -235,12 +240,22 @@ async def test_the_library_counts_usage_in_batch(
     body = (await client.get("/assets", params={"limit": 100})).json()
 
     usage = {i["id"]: i["usage"] for i in body["items"]}
-    assert usage[bg1["id"]] == {"maps": 2, "skins": 0, "publications": 0}
-    assert usage[bg2["id"]] == {"maps": 1, "skins": 0, "publications": 0}
-    assert usage[unused["id"]] == {"maps": 0, "skins": 0, "publications": 0}
-    assert usage[bubble["id"]] == {"maps": 0, "skins": 2, "publications": 0}
+    assert usage[bg1["id"]] == {"maps": 2, "skins": 0, "publications": 0, "tracks": 0}
+    assert usage[bg2["id"]] == {"maps": 1, "skins": 0, "publications": 0, "tracks": 0}
+    assert usage[unused["id"]] == {
+        "maps": 0,
+        "skins": 0,
+        "publications": 0,
+        "tracks": 0,
+    }
+    assert usage[bubble["id"]] == {
+        "maps": 0,
+        "skins": 2,
+        "publications": 0,
+        "tracks": 0,
+    }
     # Four assets cost a fixed handful of queries, not a few each.
-    assert len(statements) <= 6
+    assert len(statements) <= 7
 
 
 # --- deleting ---------------------------------------------------------------
@@ -280,7 +295,7 @@ async def test_an_asset_used_as_a_map_background_cannot_be_deleted(
     assert r.status_code == 409
     detail = r.json()["detail"]
     assert detail["code"] == "asset_in_use"
-    assert detail["usage"] == {"maps": 1, "skins": 0, "publications": 0}
+    assert detail["usage"] == {"maps": 1, "skins": 0, "publications": 0, "tracks": 0}
     assert (await client.get(bg["url"])).status_code == 200  # still served
 
 
@@ -293,7 +308,12 @@ async def test_an_asset_used_by_a_skin_cannot_be_deleted(
     r = await client.delete(f"/assets/{bubble['id']}")
 
     assert r.status_code == 409
-    assert r.json()["detail"]["usage"] == {"maps": 0, "skins": 1, "publications": 0}
+    assert r.json()["detail"]["usage"] == {
+        "maps": 0,
+        "skins": 1,
+        "publications": 0,
+        "tracks": 0,
+    }
 
     # Once the skin is gone, the image is free to go.
     assert (await client.delete(f"/skins/{skin['id']}")).status_code == 204

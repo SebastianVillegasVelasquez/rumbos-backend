@@ -28,12 +28,12 @@ UQ_LIBRARY_CONTENT = "uq_assets_library_kind_sha256"
 
 
 class Asset(BaseORM):
-    """Metadata of an uploaded image or audio track. The bytes live in an
-    `AssetStorage`.
+    """Metadata of an uploaded image, audio track or cover. The bytes live in
+    an `AssetStorage`.
 
     An audio track with no tenant belongs to the library: curated by the
     operator, readable and selectable by every tenant, changed by nobody else.
-    Images always belong to a tenant."""
+    Images always belong to a tenant; a cover belongs to whoever its track does."""
 
     __tablename__ = "assets"
     __table_args__ = (
@@ -48,13 +48,22 @@ class Asset(BaseORM):
         CheckConstraint("width > 0 AND height > 0", name="ck_assets_dimensions"),
         CheckConstraint("bytes > 0", name="ck_assets_bytes"),
         # Images have dimensions and a tenant; audio has a duration and a credit
-        # and is the only kind that may be global.
+        # and may be global; a cover has dimensions and is global when its
+        # track is (a library track's cover belongs to the library too).
         CheckConstraint(
             "(kind = 'audio' AND width IS NULL AND height IS NULL"
             " AND duration_seconds > 0 AND credit IS NOT NULL)"
-            " OR (kind <> 'audio' AND width IS NOT NULL AND height IS NOT NULL"
-            " AND duration_seconds IS NULL AND tenant_id IS NOT NULL)",
+            " OR (kind = 'cover' AND width IS NOT NULL AND height IS NOT NULL"
+            " AND duration_seconds IS NULL)"
+            " OR (kind NOT IN ('audio', 'cover') AND width IS NOT NULL"
+            " AND height IS NOT NULL AND duration_seconds IS NULL"
+            " AND tenant_id IS NOT NULL)",
             name="ck_assets_kind_fields",
+        ),
+        # Only an audio track has a cover, and never itself.
+        CheckConstraint(
+            "cover_asset_id IS NULL OR (kind = 'audio' AND cover_asset_id <> id)",
+            name="ck_assets_cover_link",
         ),
     )
 
@@ -92,6 +101,12 @@ class Asset(BaseORM):
     license: Mapped[str | None] = mapped_column(String(120))
     uploaded_by_sub: Mapped[str | None] = mapped_column(String(32))
     rights_declared_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # The picture of an audio track: an asset of kind `cover`, shared by every
+    # track that uses the same one. While a track points at it the cover cannot
+    # be deleted (nor collected as garbage); deleting the track releases it.
+    cover_asset_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("assets.id", ondelete="RESTRICT"), index=True
+    )
     # Takedown: while set, the asset is not served, listed or selectable.
     quarantined_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     quarantine_reason: Mapped[str | None] = mapped_column(Text)

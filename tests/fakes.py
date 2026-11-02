@@ -425,6 +425,14 @@ class InMemoryAssetRepository:
     async def delete_if_unused(self, asset_id: uuid.UUID) -> bool:
         raise NotImplementedError
 
+    async def set_cover(
+        self, asset_id: uuid.UUID, cover_id: uuid.UUID | None
+    ) -> tuple[AssetRecord, uuid.UUID | None] | None:
+        raise NotImplementedError
+
+    async def cover_in_service(self, cover_id: uuid.UUID) -> bool:
+        raise NotImplementedError
+
     async def set_quarantine(
         self, asset_id: uuid.UUID, reason: str | None, now: datetime
     ) -> tuple[AssetRecord, bool] | None:

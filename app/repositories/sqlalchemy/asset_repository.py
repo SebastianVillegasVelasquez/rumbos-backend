@@ -20,6 +20,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import array as pg_array
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import aliased
 
 from app.core.paths import ASSETS_PATH
 from app.enums import AssetKind, AssetScope
@@ -37,6 +38,7 @@ from app.schemas.asset import (
     ReferencingMap,
     ReferencingPublication,
     ReferencingSkin,
+    ReferencingTrack,
 )
 from app.tenancy.scope import TENANT_WIDE
 
@@ -85,6 +87,17 @@ def publication_uses(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:
     """A publication whose snapshot depends on the asset (`asset_ids @> {id}`,
     which the GIN index serves)."""
     return Publication.asset_ids.contains(pg_array([asset_id]))
+
+
+# An audio track, seen from the cover it points at.
+_Track = aliased(Asset, name="track")
+
+
+def cover_used(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:
+    """An audio track that has the asset as its cover. This is what keeps a
+    cover alive: it cannot be deleted, or collected, while a track points at
+    it, and it is counted in the asset's usage like any other reference."""
+    return _Track.cover_asset_id == asset_id
 
 
 class SqlAlchemyAssetRepository:
@@ -145,6 +158,7 @@ class SqlAlchemyAssetRepository:
             license=data.license,
             uploaded_by_sub=data.uploaded_by_sub,
             rights_declared_at=data.rights_declared_at,
+            cover_asset_id=data.cover_asset_id,
         )
         self._session.add(asset)
         try:
@@ -220,6 +234,15 @@ class SqlAlchemyAssetRepository:
             found[asset_id].publications.append(
                 ReferencingPublication(course_map_id=map_id, number=number)
             )
+        for asset_id, track_id, title in await self._session.execute(
+            select(Asset.id, _Track.id, _Track.title)
+            .select_from(Asset)
+            .join(_Track, cover_used(Asset.id))
+            .where(Asset.id.in_(ids))
+            .order_by(_Track.created_at, _Track.id)
+            .execution_options(**wide)
+        ):
+            found[asset_id].tracks.append(ReferencingTrack(id=track_id, title=title))
         await self._session.rollback()  # reads only: leave the session clean
         return found
 
@@ -263,6 +286,7 @@ class SqlAlchemyAssetRepository:
             ("maps", CourseMap, map_uses),
             ("skins", Skin, skin_uses),
             ("publications", Publication, publication_uses),
+            ("tracks", _Track, cover_used),
         ):
             rows = await self._session.execute(
                 select(Asset.id, func.count(model.id))
@@ -287,6 +311,7 @@ class SqlAlchemyAssetRepository:
                 ~exists().where(map_uses(Asset.id)),
                 ~exists().where(skin_uses(Asset.id)),
                 ~exists().where(publication_uses(Asset.id)),
+                ~exists().where(cover_used(Asset.id)).correlate(Asset),
             )
             .returning(Asset.id)
             .execution_options(synchronize_session=False, **{TENANT_WIDE: True})
@@ -307,6 +332,35 @@ class SqlAlchemyAssetRepository:
         if usage.total == 0:
             return False
         raise AssetInUseError(usage)
+
+    async def set_cover(
+        self, asset_id: uuid.UUID, cover_id: uuid.UUID | None
+    ) -> tuple[AssetRecord, uuid.UUID | None] | None:
+        try:
+            # Locked, so two replacements of the same cover each see the other's
+            # result and each releases the right previous cover.
+            asset = await self._session.get(
+                Asset, asset_id, with_for_update=True, populate_existing=True
+            )
+            if asset is None or asset.kind is not AssetKind.AUDIO:
+                await self._session.rollback()
+                return None
+            previous = asset.cover_asset_id
+            asset.cover_asset_id = cover_id
+            await self._session.commit()
+        except BaseException:
+            await self._session.rollback()
+            raise
+        return AssetRecord.model_validate(asset), previous
+
+    async def cover_in_service(self, cover_id: uuid.UUID) -> bool:
+        found = await self._session.scalar(
+            select(_Track.id)
+            .where(_Track.cover_asset_id == cover_id, _Track.quarantined_at.is_(None))
+            .limit(1)
+        )
+        await self._session.rollback()  # reads only: leave the session clean
+        return found is not None
 
     async def set_quarantine(
         self, asset_id: uuid.UUID, reason: str | None, now: datetime
@@ -377,6 +431,9 @@ class SqlAlchemyAssetRepository:
         ]
         if kind is not None:
             filters.append(Asset.kind == kind)
+        else:
+            # A cover belongs to its track and is managed through it.
+            filters.append(Asset.kind != AssetKind.COVER)
         if q:
             # `autoescape` makes "%" and "_" in the search text literal.
             filters.append(

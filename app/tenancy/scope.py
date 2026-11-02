@@ -13,7 +13,8 @@ What each table sees (`t` the scope's tenant, `c` its course, when it has one):
 - `course_map_skin_rules`, `course_map_view3d_bindings`, `publications`: those
   of the maps visible by the rule above;
 - `assets`: `tenant_id = t` (a tenant's library is shared by its courses) or
-  NULL (the operator's audio library, readable by everyone), and only
+  NULL (the operator's audio library and those tracks' covers, readable by
+  everyone), and only
   `tenant_id = t` to change or delete one;
 - `skins`: `tenant_id = t` or NULL (built-ins), and only `tenant_id = t` to
   change or delete one.
@@ -216,7 +217,8 @@ def _stamp_new_rows(session: Session, flush_context: object, instances: object) 
             )
         if scope.tenant_id is None:
             shared = isinstance(obj, Skin) or (
-                isinstance(obj, Asset) and obj.kind is AssetKind.AUDIO
+                isinstance(obj, Asset)
+                and obj.kind in (AssetKind.AUDIO, AssetKind.COVER)
             )
             if obj.tenant_id is None and not shared:
                 raise ScopeMissingError(

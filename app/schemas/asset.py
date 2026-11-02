@@ -44,6 +44,8 @@ class AssetRecord(ApiModel):
     rights_declared_at: datetime | None = None
     quarantined_at: datetime | None = None
     quarantine_reason: str | None = None
+    # The cover asset of an audio track.
+    cover_asset_id: uuid.UUID | None = None
 
     @property
     def is_library(self) -> bool:
@@ -80,6 +82,8 @@ class AssetCreate(ApiModel):
     # The rights trail of an audio upload.
     uploaded_by_sub: str | None = None
     rights_declared_at: datetime | None = None
+    # An audio track's cover (an existing asset of kind `cover`).
+    cover_asset_id: uuid.UUID | None = None
 
 
 class AssetRead(ApiModel):
@@ -99,6 +103,9 @@ class AssetRead(ApiModel):
     license: str | None
     original_filename: str | None
     created_at: datetime
+    # An audio track's cover (audio only): its asset and where to fetch it.
+    cover_asset_id: uuid.UUID | None
+    cover_url: str | None
 
     @classmethod
     def from_record(cls, record: AssetRecord) -> "AssetRead":
@@ -121,6 +128,12 @@ class AssetRead(ApiModel):
             license=record.license,
             original_filename=record.original_filename,
             created_at=record.created_at,
+            cover_asset_id=record.cover_asset_id,
+            cover_url=(
+                f"{ASSETS_PATH}/{record.cover_asset_id}"
+                if record.cover_asset_id
+                else None
+            ),
         )
 
 
@@ -130,10 +143,11 @@ class AssetUsage(ApiModel):
     maps: int = 0  # draft maps whose background, music or content image it is
     skins: int = 0  # skins that mention it
     publications: int = 0  # publications (snapshots) that list it
+    tracks: int = 0  # audio tracks that have it as their cover
 
     @property
     def total(self) -> int:
-        return self.maps + self.skins + self.publications
+        return self.maps + self.skins + self.publications + self.tracks
 
 
 class ReferencingMap(ApiModel):
@@ -151,6 +165,11 @@ class ReferencingPublication(ApiModel):
     number: int
 
 
+class ReferencingTrack(ApiModel):
+    id: uuid.UUID
+    title: str
+
+
 class AssetReferences(ApiModel):
     """What points at an asset, by name: for the operator's tools, which need
     more than `AssetUsage`'s counts to say what a missing file breaks."""
@@ -158,6 +177,7 @@ class AssetReferences(ApiModel):
     maps: list[ReferencingMap] = Field(default_factory=list)
     skins: list[ReferencingSkin] = Field(default_factory=list)
     publications: list[ReferencingPublication] = Field(default_factory=list)
+    tracks: list[ReferencingTrack] = Field(default_factory=list)
 
 
 class AssetListItem(AssetRead):

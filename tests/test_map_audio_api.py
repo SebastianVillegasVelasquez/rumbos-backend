@@ -309,7 +309,7 @@ async def test_a_track_in_use_is_counted_and_cannot_be_deleted(
     listed = (await client.get("/assets?kind=audio")).json()["items"]
     refused = await client.delete(f"/assets/{mine['id']}")
 
-    assert listed[0]["usage"] == {"maps": 1, "skins": 0, "publications": 0}
+    assert listed[0]["usage"] == {"maps": 1, "skins": 0, "publications": 0, "tracks": 0}
     assert refused.status_code == 409
     assert refused.json()["detail"]["code"] == "asset_in_use"
     assert refused.json()["detail"]["usage"]["maps"] == 1
@@ -333,6 +333,7 @@ async def test_a_track_used_by_a_published_map_cannot_be_deleted(
         "maps": 0,
         "skins": 0,
         "publications": 1,
+        "tracks": 0,
     }
 
 
