@@ -19,6 +19,7 @@ from app.exceptions import (
     AudioAssetNotFoundError,
     AudioAssetWrongKindError,
     AudioCreditRequiredError,
+    AudioHasVideoError,
     AudioInvalidError,
     AudioQuarantinedError,
     AudioRightsDeclarationRequiredError,
@@ -475,6 +476,15 @@ def register_exception_handlers(app: FastAPI) -> None:
         AudioInvalidError,
         # The parser's reason stays in the log, never in the response.
         _coded(422, "audio_invalid", "The file is not a valid MP3 or M4A (AAC) audio"),
+    )
+    app.add_exception_handler(
+        AudioHasVideoError,
+        _coded(
+            422,
+            "audio_has_video",
+            "This MP4 contains a video track. Upload the audio only (an M4A or "
+            "MP3 file) and add the picture as the cover",
+        ),
     )
     app.add_exception_handler(
         AudioQuarantinedError,

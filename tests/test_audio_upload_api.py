@@ -225,6 +225,22 @@ async def test_a_file_that_is_not_valid_audio_is_refused(
     assert await count(engine) == 0
 
 
+@pytest.mark.parametrize(
+    "data", [af.m4a(video=True), af.m4a(handler=b"vide")], ids=["audio+video", "video"]
+)
+async def test_an_mp4_with_video_is_refused_with_its_own_code(
+    client: httpx.AsyncClient, engine: AsyncEngine, data: bytes
+) -> None:
+    r = await upload_audio(client, data, filename="clip.mp4", content_type="video/mp4")
+
+    assert r.status_code == 422
+    detail = r.json()["detail"]
+    assert detail["code"] == "audio_has_video"
+    assert "audio only" in detail["message"].lower()
+    assert set(detail) == {"code", "message"}
+    assert await count(engine) == 0
+
+
 async def test_the_claimed_type_and_extension_decide_nothing(
     client: httpx.AsyncClient,
 ) -> None:

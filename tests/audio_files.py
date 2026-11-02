@@ -206,6 +206,7 @@ def moov(
     wide: bool = False,
     tracks: int = 1,
     fragmented: bool = False,
+    video: bool = False,
 ) -> bytes:
     stbl = box(
         b"stbl",
@@ -215,10 +216,16 @@ def moov(
     minf = box(b"minf", full(b"smhd", bytes(4)), _dinf(external=external), stbl)
     mdia = box(b"mdia", _mdhd(), _hdlr(handler, SECRET_HANDLER), minf)
     trak = box(b"trak", _tkhd(), mdia, *([_tags_in_udta()] if tags else []))
+    # A still picture with sound: the audio track plus a video one (its sample
+    # tables are the audio's; only the handler matters to what is tested).
+    video_trak = box(
+        b"trak", _tkhd(), box(b"mdia", _mdhd(), _hdlr(b"vide", b"video"), minf)
+    )
     return box(
         b"moov",
         _mvhd(),
         *([trak] * tracks),
+        *([video_trak] if video else []),
         *([box(b"mvex", full(b"trex", bytes(20)))] if fragmented else []),
         *([_tags_in_udta()] if tags else []),
     )

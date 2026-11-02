@@ -193,6 +193,15 @@ class AudioInvalidError(DomainError):
         self.reason = reason
 
 
+class AudioHasVideoError(AudioInvalidError):
+    """An MP4 with a video track (a still image with sound, say). Refused on its
+    own so the editor is told what to do: send the audio alone, and the picture
+    as a cover."""
+
+    def __init__(self) -> None:
+        super().__init__("the MP4 contains a video track")
+
+
 class AudioTooLongError(DomainError):
     def __init__(self, limit_seconds: float) -> None:
         super().__init__(f"audio exceeds {limit_seconds} seconds")

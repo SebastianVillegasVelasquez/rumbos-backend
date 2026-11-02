@@ -68,6 +68,7 @@ from app.core.database import create_engine
 from app.exceptions import (
     AssetTooLargeError,
     AudioCreditRequiredError,
+    AudioHasVideoError,
     AudioInvalidError,
     AudioQuarantinedError,
     AudioTooLongError,
@@ -394,6 +395,11 @@ async def execute(
                 return await _history(assets, args, out)
     except UserError as exc:
         err(f"error: {exc}")
+    except AudioHasVideoError:
+        err(
+            "error: the MP4 contains a video track; extract the audio "
+            "(ffmpeg -i in.mp4 -vn -c:a copy audio.m4a) and import that"
+        )
     except AudioInvalidError as exc:
         err(f"error: not a valid MP3 or M4A (AAC) file: {exc.reason}")
     except AudioQuarantinedError as exc:
