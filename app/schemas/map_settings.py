@@ -101,4 +101,8 @@ class MapSettings(_Strict):
             del stored["audio"]
         if self.welcome.is_default():
             del stored["welcome"]
+        elif self.welcome.steps is None:
+            # Same rule for the flow: a curtain without one has no `steps` key,
+            # so every curtain stored before flows existed keeps its hash.
+            del stored["welcome"]["steps"]
         return stored

@@ -63,6 +63,7 @@ from app.exceptions import (
     UploadsDisabledError,
     VersionConflictError,
     View3dInvalidError,
+    WelcomeInvalidError,
     WidgetsDisabledError,
 )
 from app.moodle.exceptions import (
@@ -75,30 +76,52 @@ from app.moodle.exceptions import (
 ExceptionHandler = Callable[[Request, Exception], Awaitable[JSONResponse]]
 
 _WELCOME_LOC = ("body", "settings", "welcome")
-_WELCOME_MESSAGES = {
-    "welcome_invalid_placeholder": "Only the {curso} placeholder is allowed",
-    "missing": "This field is required",
-    "extra_forbidden": "This field is not allowed here",
-    "too_short": "This text is too short",
-    "too_long": "This text is too long",
-    "literal_error": "This value is not allowed",
-    "invalid_video_id": "Not a valid video id",
-    "bool_type": "This value has the wrong type",
-    "string_type": "This value has the wrong type",
-    "model_attributes_type": "This value has the wrong type",
+# Each pydantic error kind: the code a client sees, and a fixed message (the
+# input is never echoed).
+_WELCOME_KINDS: dict[str, tuple[str, str]] = {
+    "welcome_invalid_placeholder": (
+        "welcome_invalid_placeholder",
+        "Only the {curso} placeholder is allowed",
+    ),
+    "missing": ("required", "This field is required"),
+    "extra_forbidden": ("unknown_field", "This field is not allowed here"),
+    "too_short": ("too_short", "This text is too short"),
+    "string_too_short": ("too_short", "This text is too short"),
+    "too_long": ("too_long", "This text is too long"),
+    "string_too_long": ("too_long", "This text is too long"),
+    "literal_error": ("invalid_value", "This value is not allowed"),
+    "invalid_video_id": ("invalid_video_id", "Not a valid video id"),
+    "bool_type": ("invalid_type", "This value has the wrong type"),
+    "string_type": ("invalid_type", "This value has the wrong type"),
+    "int_type": ("invalid_type", "This value has the wrong type"),
+    "list_type": ("invalid_type", "This value has the wrong type"),
+    "model_attributes_type": ("invalid_type", "This value has the wrong type"),
+    "string_pattern_mismatch": ("invalid_format", "This value has the wrong format"),
+    "greater_than": ("out_of_range", "This number is out of range"),
+    "greater_than_equal": ("out_of_range", "This number is out of range"),
+    "less_than_equal": ("out_of_range", "This number is out of range"),
+    "uuid_parsing": ("invalid_asset_id", "Not a valid asset id"),
+    "uuid_type": ("invalid_asset_id", "Not a valid asset id"),
+    "steps_too_many": ("steps_too_many", "At most 12 steps are allowed"),
+    "union_tag_invalid": ("step_type_invalid", "Unknown step type"),
+    "union_tag_not_found": ("step_type_invalid", "Every step needs a type"),
 }
-_WELCOME_CODES = {
-    "missing": "required",
-    "extra_forbidden": "unknown_field",
-    "literal_error": "invalid_value",
-    "bool_type": "invalid_type",
-    "string_type": "invalid_type",
-    "model_attributes_type": "invalid_type",
-}
+# The tags pydantic adds to a location when it goes through a step's union.
+_STEP_TAGS = frozenset({"welcome", "video", "html", "pdf", "quiz"})
 
 
-def _welcome_path(loc: tuple[int | str, ...]) -> str:
-    return ".".join(str(part) for part in loc[len(_WELCOME_LOC) :])
+def welcome_path(loc: tuple[int | str, ...]) -> str:
+    """`welcome.steps[2].html` from pydantic's location inside `welcome`, which
+    also names the branch of the union each step went through (dropped)."""
+    out = "welcome"
+    after_index = False
+    for part in loc:
+        if after_index and part in _STEP_TAGS:
+            after_index = False
+            continue
+        after_index = isinstance(part, int)
+        out += f"[{part}]" if isinstance(part, int) else f".{part}"
+    return out
 
 
 def welcome_problems(
@@ -111,15 +134,23 @@ def welcome_problems(
         return None
     problems = []
     for e in errors:
-        kind = e["type"]
-        code = _WELCOME_CODES.get(kind, kind)
-        if kind not in _WELCOME_MESSAGES:
-            code, message = "invalid", "Invalid value"
-        else:
-            message = _WELCOME_MESSAGES[kind]
-        problems.append(
-            {"path": _welcome_path(tuple(e["loc"])), "code": code, "message": message}
-        )
+        loc = tuple(e["loc"][len(_WELCOME_LOC) :])
+        path = welcome_path(loc)
+        code, message = _WELCOME_KINDS.get(e["type"], ("invalid", "Invalid value"))
+        in_step = len(loc) > 1 and loc[0] == "steps"
+        if (
+            in_step
+            and ("video" in loc[2:])
+            and code
+            in (
+                "invalid_video_id",
+                "invalid_value",
+            )
+        ):
+            code, message = "video_invalid", "Not a valid video"
+        if code == "too_short" and loc == ("steps",):
+            message = "At least one step is required"
+        problems.append({"path": path, "code": code, "message": message})
     return problems
 
 
@@ -621,6 +652,21 @@ def register_exception_handlers(app: FastAPI) -> None:
             },
         ),
     )
+
+    async def welcome_invalid(request: Request, exc: Exception) -> JSONResponse:
+        assert isinstance(exc, WelcomeInvalidError)
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            content={
+                "detail": {
+                    "code": "welcome_invalid",
+                    "message": "The welcome curtain settings are not valid",
+                    "problems": exc.problems,
+                }
+            },
+        )
+
+    app.add_exception_handler(WelcomeInvalidError, welcome_invalid)
 
     async def request_invalid(request: Request, exc: Exception) -> JSONResponse:
         assert isinstance(exc, RequestValidationError)

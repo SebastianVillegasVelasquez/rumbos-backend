@@ -20,6 +20,7 @@ CURTAIN: dict[str, Any] = {
     "video": {"provider": "youtube", "videoId": "dQw4w9WgXcQ"},
     "playOnEnter": False,
     "show": "always",
+    "steps": None,
 }
 
 
@@ -147,7 +148,7 @@ async def test_an_invalid_curtain_is_422_welcome_invalid(
     assert r.status_code == 422, r.text
     detail = r.json()["detail"]
     assert detail["code"] == "welcome_invalid"
-    assert {"path": path, "code": code} in [
+    assert {"path": f"welcome.{path}", "code": code} in [
         {"path": p["path"], "code": p["code"]} for p in detail["problems"]
     ]
     assert all(p["message"] for p in detail["problems"])
@@ -166,7 +167,11 @@ async def test_every_problem_is_listed_and_the_input_is_not_echoed(
     )
 
     problems = r.json()["detail"]["problems"]
-    assert sorted(p["path"] for p in problems) == ["message", "show", "title"]
+    assert sorted(p["path"] for p in problems) == [
+        "welcome.message",
+        "welcome.show",
+        "welcome.title",
+    ]
     assert hostile not in r.text
 
 

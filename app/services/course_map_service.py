@@ -23,6 +23,7 @@ from app.exceptions import (
     OrderMismatchError,
     PreconditionRequiredError,
     SkinReferenceNotFoundError,
+    WelcomeInvalidError,
     WidgetsDisabledError,
 )
 from app.moodle.protocols import MoodleClient
@@ -69,6 +70,7 @@ from app.schemas.map_settings import AudioInfo, MapSettings
 from app.schemas.view3d import View3dUpdate
 from app.services.publication_service import publication_infos
 from app.view3d.validation import check_view3d
+from app.welcome_flow.flow import flow_problems
 
 
 def is_bubble_candidate(module: MoodleModule) -> bool:
@@ -220,6 +222,7 @@ class CourseMapService:
         library's). Nothing is written unless all of it is valid.
         """
         await self._require_course_map(course_map_id)
+        await self._check_welcome(data.settings)
         await self._check_audio(data.settings)
         counts = Counter(r.modname for r in data.skin_rules)
         duplicated = sorted(modname for modname, n in counts.items() if n > 1)
@@ -498,6 +501,14 @@ class CourseMapService:
             raise BackgroundAssetNotFoundError(asset_id)
         if asset.kind is not AssetKind.BACKGROUND:
             raise BackgroundAssetWrongKindError(asset_id)
+
+    async def _check_welcome(self, settings: MapSettings) -> None:
+        """The welcome flow must follow every rule of `app.welcome_flow`.
+
+        Raises `WelcomeInvalidError` listing every problem."""
+        problems = flow_problems(settings.welcome)
+        if problems:
+            raise WelcomeInvalidError(problems)
 
     async def _check_audio(self, settings: MapSettings) -> None:
         """Music must be an existing audio asset that is in service.

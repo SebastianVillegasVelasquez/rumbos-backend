@@ -404,6 +404,17 @@ class ContentInvalidError(DomainError):
         self.problems = problems
 
 
+class WelcomeInvalidError(DomainError):
+    """A welcome flow breaks a rule that needs more than a type to check.
+
+    `problems` are `{path, code, message}` dicts, every one of them, with
+    JSON-style paths from the settings root (`welcome.steps[2].html`)."""
+
+    def __init__(self, problems: list[dict[str, str]]) -> None:
+        super().__init__("welcome invalid")
+        self.problems = problems
+
+
 class ContentTooLargeError(DomainError):
     """The content is over its size budget: `scope` is `bubble` (the one
     bubble's limit) or `map` (all the content of the map)."""
