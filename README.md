@@ -223,7 +223,10 @@ Teachers can upload their own backgrounds and bubble images (`POST /assets`,
 `multipart/form-data` with `file` and `kind` = `background` | `bubble` | `image` | `audio`).
 `image` is for pictures inside content bubbles (see "Content bubbles"): up to
 2048 px per side and 4 MB, through the same pipeline as a background, with a
-WebP thumbnail (`thumbUrl`).
+WebP thumbnail (`thumbUrl`). `document` is a PDF for the steps of a welcome flow
+(up to `DOCUMENT_MAX_BYTES`, 10 MB by default; it needs a `title` and
+`rightsDeclared=true`, is checked for encryption, page count and active content,
+and is stored as uploaded). See [docs/WELCOME-FLOW.md](docs/WELCOME-FLOW.md).
 
 > Uploads, edits and deletes are **editor-only** and stay inside the editor's
 > tenant (see "Tenants and authentication"); the quota is per tenant. In legacy
@@ -838,6 +841,11 @@ the publication's asset ids, so they cannot be deleted while a publication
 uses them, and they count under `maps` in an asset's `usage` while a draft does.
 
 ### Welcome curtain
+
+A map can also open with an ordered flow of steps (welcome, video, HTML/CSS, PDF,
+quiz) through `settings.welcome.steps`; it replaces the fields below and is
+documented in [docs/WELCOME-FLOW.md](docs/WELCOME-FLOW.md). The rest of this
+section describes the single curtain, which is unchanged.
 
 `settings.welcome` configures the full-screen entry screen a student sees before
 the map: a title, a message and an optional welcome video. It is part of the map
