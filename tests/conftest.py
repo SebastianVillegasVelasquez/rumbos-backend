@@ -148,6 +148,9 @@ ENABLED = AssetSettings(
     max_audio_seconds=600.0,
     max_image_bytes=200_000,
     max_image_side=2000,
+    max_cover_bytes=100_000,
+    max_cover_side=2000,
+    max_document_bytes=200_000,
 )
 
 

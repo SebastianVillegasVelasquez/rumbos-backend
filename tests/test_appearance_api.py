@@ -24,6 +24,7 @@ DEFAULT_WELCOME: dict[str, Any] = {
     "video": None,
     "playOnEnter": True,
     "show": "first_visit",
+    "steps": None,
 }
 
 DEFAULT_SETTINGS: dict[str, Any] = {

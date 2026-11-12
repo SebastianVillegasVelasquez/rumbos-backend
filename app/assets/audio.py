@@ -13,7 +13,9 @@ never reach storage:
   are zeroed) and an `mdat` holding only the bytes the sample tables point at.
   The `moov` goes first ("fast start"), which also lets a player start before
   the whole file arrives. Encrypted (DRM) tracks, fragmented files, tracks that
-  are not AAC and files that reference data outside themselves are refused.
+  are not AAC and files that reference data outside themselves are refused, and
+  so is an MP4 with a video track (`AudioHasVideoError`): editors send the audio
+  alone and the picture as a cover.
 
 Both parsers walk untrusted input: every length is checked against the bytes
 that are really there before it is used.
@@ -25,7 +27,7 @@ from dataclasses import dataclass
 from itertools import pairwise
 from typing import BinaryIO
 
-from app.exceptions import AudioInvalidError, AudioTooLongError
+from app.exceptions import AudioHasVideoError, AudioInvalidError, AudioTooLongError
 
 MP3_MIME = "audio/mpeg"
 M4A_MIME = "audio/mp4"
@@ -424,6 +426,23 @@ def _rebuild(raw: bytes, box: _Box, track: _Track, seen: set[bytes]) -> bytes:
     return _make_box(box.kind, body)
 
 
+_VIDEO_HANDLERS = frozenset({b"vide", b"auxv"})  # video, auxiliary video
+
+
+def _is_video(data: bytes, trak: _Box) -> bool:
+    """Whether the track's media handler (`trak/mdia/hdlr`) is a video one. Reads
+    only the boxes on that path; a track too broken to say is not called video
+    here, and the strict checks that follow refuse it for what it is."""
+    try:
+        box = trak
+        for kind in (b"mdia", b"hdlr"):
+            box = next(c for c in _boxes(data, box.body, box.end) if c.kind == kind)
+    except (AudioInvalidError, StopIteration):
+        return False
+    # Version and flags (4), pre-defined (4), then the handler type.
+    return data[box.body + 8 : box.body + 12] in _VIDEO_HANDLERS
+
+
 def _clean_m4a(data: bytes) -> tuple[bytes, float]:
     top = list(_boxes(data, 0, len(data), last_may_extend=True))
     kinds = [b.kind for b in top]
@@ -440,6 +459,10 @@ def _clean_m4a(data: bytes) -> tuple[bytes, float]:
     children = list(_boxes(data, moov.body, moov.end))
     if any(c.kind == b"mvex" for c in children):
         raise AudioInvalidError("fragmented MP4 is not accepted")
+    # Before the track count: a video with sound has two tracks, and the editor
+    # must be told it is the video that is wrong, not a generic "invalid".
+    if any(_is_video(data, c) for c in children if c.kind == b"trak"):
+        raise AudioHasVideoError
     if sum(1 for c in children if c.kind == b"trak") != 1:
         raise AudioInvalidError("expected exactly one audio track")
 

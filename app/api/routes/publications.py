@@ -11,6 +11,8 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Query, Response, status
 
 from app.api.preconditions import IfMatch, set_etag
+from app.api.routes.assets import get_asset_storage
+from app.assets.storage import AssetStorage
 from app.auth.dependencies import ScopedSession, editor_route
 from app.core.config import Settings, get_settings
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
@@ -44,6 +46,7 @@ router = APIRouter(
 def get_publication_service(
     session: ScopedSession,
     settings: Annotated[Settings, Depends(get_settings)],
+    storage: Annotated[AssetStorage, Depends(get_asset_storage)],
 ) -> PublicationService:
     return PublicationService(
         SqlAlchemyPublicationRepository(session),
@@ -52,6 +55,7 @@ def get_publication_service(
         SqlAlchemyView3dRepository(session),
         SqlAlchemyAssetRepository(session),
         settings.publications_keep,
+        storage,
     )
 
 

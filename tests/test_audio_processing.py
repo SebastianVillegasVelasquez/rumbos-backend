@@ -10,7 +10,7 @@ from mutagen.mp3 import MP3
 from mutagen.mp4 import MP4
 
 from app.assets.audio import M4A_MIME, MP3_MIME, process_audio
-from app.exceptions import AudioInvalidError, AudioTooLongError
+from app.exceptions import AudioHasVideoError, AudioInvalidError, AudioTooLongError
 from tests import audio_files as af
 from tests import images
 
@@ -219,7 +219,7 @@ def test_an_m4a_with_a_sixty_four_bit_box_size_is_accepted() -> None:
         (af.m4a(object_type=0x21), "H.264 object type"),
         (af.m4a(url=True), "external stream"),
         (af.m4a(external=True), "external data reference"),
-        (af.m4a(handler=b"vide"), "video track"),
+        (af.m4a(handler=b"data"), "a track that is neither audio nor video"),
         (af.m4a(tracks=2), "two tracks"),
         (af.m4a(fragmented=True), "fragmented"),
         (af.m4a(skew=-100), "chunk before the data"),
@@ -236,6 +236,27 @@ def test_an_m4a_with_a_sixty_four_bit_box_size_is_accepted() -> None:
 def test_a_protected_or_malformed_m4a_is_refused(data: bytes, why: str) -> None:
     with pytest.raises(AudioInvalidError):
         run(data)
+
+
+@pytest.mark.parametrize(
+    "data",
+    [
+        af.m4a(video=True),  # a still image with sound: audio + video tracks
+        af.m4a(video=True, moov_first=True),
+        af.m4a(handler=b"vide"),  # a video track alone
+        af.m4a(handler=b"auxv"),  # auxiliary video
+    ],
+    ids=["audio+video", "audio+video, moov first", "video only", "auxiliary video"],
+)
+def test_an_mp4_with_a_video_track_is_refused_as_such(data: bytes) -> None:
+    with pytest.raises(AudioHasVideoError):
+        run(data)
+
+
+def test_a_video_refusal_is_still_an_invalid_audio() -> None:
+    # Callers that only know `AudioInvalidError` keep refusing it.
+    with pytest.raises(AudioInvalidError):
+        run(af.m4a(video=True))
 
 
 def test_an_m4a_over_the_limit_is_too_long() -> None:

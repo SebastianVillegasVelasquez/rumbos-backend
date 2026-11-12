@@ -28,12 +28,12 @@ UQ_LIBRARY_CONTENT = "uq_assets_library_kind_sha256"
 
 
 class Asset(BaseORM):
-    """Metadata of an uploaded image or audio track. The bytes live in an
-    `AssetStorage`.
+    """Metadata of an uploaded image, audio track or cover. The bytes live in
+    an `AssetStorage`.
 
     An audio track with no tenant belongs to the library: curated by the
     operator, readable and selectable by every tenant, changed by nobody else.
-    Images always belong to a tenant."""
+    Images always belong to a tenant; a cover belongs to whoever its track does."""
 
     __tablename__ = "assets"
     __table_args__ = (
@@ -48,13 +48,31 @@ class Asset(BaseORM):
         CheckConstraint("width > 0 AND height > 0", name="ck_assets_dimensions"),
         CheckConstraint("bytes > 0", name="ck_assets_bytes"),
         # Images have dimensions and a tenant; audio has a duration and a credit
-        # and is the only kind that may be global.
+        # and may be global; a cover has dimensions and is global when its
+        # track is (a library track's cover belongs to the library too); a
+        # document has neither dimensions nor duration and always a tenant.
         CheckConstraint(
             "(kind = 'audio' AND width IS NULL AND height IS NULL"
             " AND duration_seconds > 0 AND credit IS NOT NULL)"
-            " OR (kind <> 'audio' AND width IS NOT NULL AND height IS NOT NULL"
-            " AND duration_seconds IS NULL AND tenant_id IS NOT NULL)",
+            " OR (kind = 'cover' AND width IS NOT NULL AND height IS NOT NULL"
+            " AND duration_seconds IS NULL)"
+            " OR (kind = 'document' AND width IS NULL AND height IS NULL"
+            " AND duration_seconds IS NULL AND tenant_id IS NOT NULL)"
+            " OR (kind NOT IN ('audio', 'cover', 'document') AND width IS NOT NULL"
+            " AND height IS NOT NULL AND duration_seconds IS NULL"
+            " AND tenant_id IS NOT NULL)",
             name="ck_assets_kind_fields",
+        ),
+        # Only a document has pages.
+        CheckConstraint(
+            "(kind = 'document' AND page_count IS NOT NULL AND page_count > 0)"
+            " OR (kind <> 'document' AND page_count IS NULL)",
+            name="ck_assets_page_count",
+        ),
+        # Only an audio track has a cover, and never itself.
+        CheckConstraint(
+            "cover_asset_id IS NULL OR (kind = 'audio' AND cover_asset_id <> id)",
+            name="ck_assets_cover_link",
         ),
     )
 
@@ -78,12 +96,15 @@ class Asset(BaseORM):
     height: Mapped[int | None]
     # Seconds; audio only.
     duration_seconds: Mapped[float | None] = mapped_column(Float)
+    # Pages; documents only.
+    page_count: Mapped[int | None]
     # Size of the stored (re-encoded) file; what the quota adds up.
     size_bytes: Mapped[int] = mapped_column("bytes", BigInteger)
     # Hex digest of the stored bytes. Also the HTTP ETag.
     sha256: Mapped[str] = mapped_column(String(64))
-    # Library metadata, shown to editors. Never part of a file path.
-    title: Mapped[str] = mapped_column(String(120))
+    # Library metadata, shown to editors. Never part of a file path. Up to 200
+    # for a document, 120 for anything else (the service enforces the latter).
+    title: Mapped[str] = mapped_column(String(200))
     credit: Mapped[str | None] = mapped_column(String(300))
     # What the uploader's file was called. Display only; sanitized on the way in.
     original_filename: Mapped[str | None] = mapped_column(String(255))
@@ -92,6 +113,12 @@ class Asset(BaseORM):
     license: Mapped[str | None] = mapped_column(String(120))
     uploaded_by_sub: Mapped[str | None] = mapped_column(String(32))
     rights_declared_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # The picture of an audio track: an asset of kind `cover`, shared by every
+    # track that uses the same one. While a track points at it the cover cannot
+    # be deleted (nor collected as garbage); deleting the track releases it.
+    cover_asset_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("assets.id", ondelete="RESTRICT"), index=True
+    )
     # Takedown: while set, the asset is not served, listed or selectable.
     quarantined_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     quarantine_reason: Mapped[str | None] = mapped_column(Text)

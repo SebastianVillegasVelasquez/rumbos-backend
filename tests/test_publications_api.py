@@ -870,12 +870,18 @@ async def test_a_published_background_cannot_be_deleted_even_after_the_draft_mov
     listed = (await client.get("/assets")).json()["items"][0]
     refused = await client.delete(f"/assets/{background['id']}")
 
-    assert listed["usage"] == {"maps": 0, "skins": 0, "publications": 1}
+    assert listed["usage"] == {
+        "maps": 0,
+        "skins": 0,
+        "publications": 1,
+        "tracks": 0,
+    }
     assert refused.status_code == 409
     assert refused.json()["detail"]["usage"] == {
         "maps": 0,
         "skins": 0,
         "publications": 1,
+        "tracks": 0,
     }
 
 
@@ -921,6 +927,7 @@ async def test_a_published_skin_image_cannot_be_deleted(
         "maps": 0,
         "skins": 0,
         "publications": 1,
+        "tracks": 0,
     }
 
 

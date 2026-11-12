@@ -130,3 +130,30 @@ def test_the_audio_switch_does_not_move_the_image_switch(
 
     assert settings.audio_uploads_on is True
     assert settings.assets_uploads_enabled is False
+
+
+def test_the_cover_limits_default_to_two_megabytes_and_2048_pixels() -> None:
+    settings = make()
+
+    assert settings.assets_max_cover_bytes == 2 * 1024 * 1024
+    assert settings.assets_max_cover_side == 2048
+
+
+@pytest.mark.parametrize("field", ["assets_max_cover_bytes", "assets_max_cover_side"])
+def test_cover_limits_must_be_positive(field: str) -> None:
+    with pytest.raises(ValidationError):
+        make(**{field: 0})
+
+
+def test_a_cover_follows_the_audio_switch_and_has_its_own_size_limit() -> None:
+    from app.enums import AssetKind
+    from app.services.asset_service import AssetSettings
+
+    base = AssetSettings.from_app_settings(make(audio_uploads_enabled=True))
+    audio_off = AssetSettings.from_app_settings(
+        make(audio_uploads_enabled=False, assets_uploads_enabled=True)
+    )
+
+    assert base.enabled_for(AssetKind.COVER)
+    assert not audio_off.enabled_for(AssetKind.COVER)
+    assert base.max_bytes_for(AssetKind.COVER) == 2 * 1024 * 1024

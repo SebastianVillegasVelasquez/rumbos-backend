@@ -163,6 +163,24 @@ class AssetDimensionsTooLargeError(DomainError):
         self.height = height
 
 
+class CoverTooLargeError(DomainError):
+    """The cover file is over the byte limit."""
+
+    def __init__(self, limit_bytes: int) -> None:
+        super().__init__(f"cover exceeds {limit_bytes} bytes")
+        self.limit_bytes = limit_bytes
+
+
+class CoverInvalidError(DomainError):
+    """Not a usable cover: not PNG, JPEG or static WebP, animated, too many
+    pixels, or it does not decode. `reason` is for the log; the client only
+    ever sees the fixed message of `cover_invalid`."""
+
+    def __init__(self, reason: str) -> None:
+        super().__init__(reason)
+        self.reason = reason
+
+
 class AudioUploadsDisabledError(DomainError):
     """`AUDIO_UPLOADS_ENABLED` is off."""
 
@@ -193,10 +211,43 @@ class AudioInvalidError(DomainError):
         self.reason = reason
 
 
+class AudioHasVideoError(AudioInvalidError):
+    """An MP4 with a video track (a still image with sound, say). Refused on its
+    own so the editor is told what to do: send the audio alone, and the picture
+    as a cover."""
+
+    def __init__(self) -> None:
+        super().__init__("the MP4 contains a video track")
+
+
 class AudioTooLongError(DomainError):
     def __init__(self, limit_seconds: float) -> None:
         super().__init__(f"audio exceeds {limit_seconds} seconds")
         self.limit_seconds = limit_seconds
+
+
+class DocumentInvalidError(DomainError):
+    """Not a PDF this service will keep. `reason` is one of `not_pdf`,
+    `encrypted`, `active_content`, `too_many_pages` and `corrupt`; it is the
+    one detail the client is given (it says what to fix, and shows nothing of
+    the file)."""
+
+    def __init__(self, reason: str) -> None:
+        super().__init__(reason)
+        self.reason = reason
+
+
+class DocumentRightsDeclarationRequiredError(DomainError):
+    """A document upload came without `rightsDeclared=true`."""
+
+
+class DocumentQuarantinedError(DomainError):
+    """The same document is already here and has been taken down: sending it
+    again must not bring it back under another id."""
+
+    def __init__(self, asset_id: uuid.UUID) -> None:
+        super().__init__("document quarantined")
+        self.asset_id = asset_id
 
 
 class AssetQuotaExceededError(DomainError):
@@ -374,6 +425,17 @@ class ContentInvalidError(DomainError):
 
     def __init__(self, problems: list[dict[str, str]]) -> None:
         super().__init__("content invalid")
+        self.problems = problems
+
+
+class WelcomeInvalidError(DomainError):
+    """A welcome flow breaks a rule that needs more than a type to check.
+
+    `problems` are `{path, code, message}` dicts, every one of them, with
+    JSON-style paths from the settings root (`welcome.steps[2].html`)."""
+
+    def __init__(self, problems: list[dict[str, str]]) -> None:
+        super().__init__("welcome invalid")
         self.problems = problems
 
 

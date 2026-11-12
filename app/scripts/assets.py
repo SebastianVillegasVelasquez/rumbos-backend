@@ -1,7 +1,8 @@
 """Curates the audio library and takes assets down. For the operator.
 
     python -m app.scripts.assets import-audio --file song.mp3 \\
-        --title "Brisa" --credit "Ana Perez, CC BY 4.0" --license "CC BY 4.0"
+        --title "Brisa" --credit "Ana Perez, CC BY 4.0" --license "CC BY 4.0" \\
+        [--cover cover.jpg]
     python -m app.scripts.assets list
     python -m app.scripts.assets quarantine <asset-id> --reason "Rights holder's complaint, ticket 123"
     python -m app.scripts.assets release <asset-id>
@@ -13,16 +14,23 @@
 upload (real MP3 or M4A, at most the size and length limits, tags stripped) and
 then belongs to no tenant, so every tenant can pick it and no editor can change
 or delete it. The operator vouches for its rights; the credit and the licence
-text are shown to editors.
+text are shown to editors. `--cover` gives the track a picture (PNG, JPEG or
+static WebP): like every cover it is decoded, cropped to a square, shrunk to 512
+px, stripped of metadata and stored as WebP, and a file that is not good enough
+fails the import. Without it, the artwork inside the audio file is used if there
+is one; if that cannot be used the track is imported without a cover and the
+command says so. Several tracks may share one cover.
 
-`list` shows every audio track, the library's and each tenant's, with the
-tenant, the pseudonymous id of whoever uploaded it, when they declared the
+`list` shows every audio track, the library's and each tenant's, with whether
+it has a cover, the tenant, the pseudonymous id of whoever uploaded it, when they declared the
 rights, and how much it is in use.
 
 `quarantine` takes an asset out of service at once: it stops being served (404),
 disappears from lists and pickers, and maps that use it go on working without
 music. Published snapshots keep their frozen reference, but readers are no
-longer shown the track. `release` undoes it. Both are recorded, with the reason
+longer shown the track. A track's cover goes down with it (a cover shared by
+several tracks stays up while any of them is in service); a cover cannot be
+quarantined on its own, so quarantine its track. `release` undoes it. Both are recorded, with the reason
 and the time, in the asset's audit trail (`history`) and in the log.
 
 `verify` checks the storage against the database and changes nothing: it lists
@@ -45,8 +53,10 @@ import logging
 import sys
 import uuid
 from collections.abc import Callable, Sequence
+from contextlib import ExitStack
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import BinaryIO
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -65,12 +75,16 @@ from app.assets.storage import (
 )
 from app.core.config import get_settings
 from app.core.database import create_engine
+from app.enums import AssetKind
 from app.exceptions import (
     AssetTooLargeError,
     AudioCreditRequiredError,
+    AudioHasVideoError,
     AudioInvalidError,
     AudioQuarantinedError,
     AudioTooLongError,
+    CoverInvalidError,
+    CoverTooLargeError,
     InvalidAssetMetadataError,
 )
 from app.repositories.protocols import (
@@ -82,7 +96,7 @@ from app.repositories.sqlalchemy.app_meta_repository import SqlAlchemyAppMetaRep
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
 from app.repositories.sqlalchemy.tenant_repository import SqlAlchemyTenantRepository
 from app.schemas.asset import AssetRecord, AssetReferences
-from app.services.asset_service import AssetService, AssetSettings
+from app.services.asset_service import AssetService, AssetSettings, CoverUpload
 from app.tenancy.scope import SYSTEM, bind_scope
 
 OK = 0
@@ -107,21 +121,32 @@ def _day(moment: datetime | None) -> str:
     return moment.astimezone(UTC).strftime("%Y-%m-%d %H:%M") + " UTC" if moment else "-"
 
 
+def _open(files: ExitStack, path: Path) -> tuple[BinaryIO, int]:
+    try:
+        size = path.stat().st_size
+        return files.enter_context(path.open("rb")), size
+    except OSError as exc:
+        raise UserError(f"cannot read {path}: {exc.__class__.__name__}") from exc
+
+
 async def _import_audio(
     assets: AssetRepository,
     service: AssetService,
     args: argparse.Namespace,
     out: Callable[[str], None],
 ) -> int:
-    path: Path = args.file
-    try:
-        size = path.stat().st_size
-        handle = path.open("rb")
-    except OSError as exc:
-        raise UserError(f"cannot read {path}: {exc.__class__.__name__}") from exc
-    with handle:
+    with ExitStack() as files:
+        handle, size = _open(files, args.file)
+        cover = None
+        if args.cover is not None:
+            cover = CoverUpload(*_open(files, args.cover))
         result = await service.import_library_audio(
-            handle, size, title=args.title, credit=args.credit, license=args.license
+            handle,
+            size,
+            title=args.title,
+            credit=args.credit,
+            license=args.license,
+            cover=cover,
         )
     asset = result.asset
     if not result.created:
@@ -136,6 +161,13 @@ async def _import_audio(
     )
     out(f"  credit:   {asset.credit}")
     out(f"  license:  {asset.license or '-'}")
+    out(f"  cover:    {asset.cover_asset_id or '-'}")
+    for warning in result.warnings:
+        if warning == "cover_dropped":
+            out(
+                "  warning:  the picture inside the file could not be used, so "
+                "the track has no cover (pass one with --cover)"
+            )
     return OK
 
 
@@ -162,6 +194,7 @@ async def _list(
         out(
             f"{track.id}  {state:<11}  {await owner(track)}  "
             f"{track.duration_seconds or 0:.1f}s  {track.size_bytes}B  "
+            f"cover={'yes' if track.cover_asset_id else 'no'}  "
             f"uploader={track.uploaded_by_sub or '-'}  "
             f"declared={_day(track.rights_declared_at)}  "
             f"used={used.maps} map(s), {used.publications} publication(s)"
@@ -183,6 +216,12 @@ async def _quarantine(
     reason = " ".join(args.reason.split())
     if not reason or len(reason) > REASON_MAX_LENGTH:
         raise UserError(f"the reason must be 1-{REASON_MAX_LENGTH} characters")
+    target = await assets.get_by_id(asset_id)
+    if target is not None and target.kind is AssetKind.COVER:
+        raise UserError(
+            f"{asset_id} is a cover, which cannot be quarantined on its own: "
+            "quarantine the audio track it belongs to (its cover goes with it)"
+        )
     now = datetime.now(UTC)
     found = await assets.set_quarantine(asset_id, reason, now)
     if found is None:
@@ -244,6 +283,7 @@ def _uses(refs: AssetReferences) -> list[str]:
         [f"map {m.id} {m.title!r}" for m in refs.maps]
         + [f"skin {s.id} {s.name!r}" for s in refs.skins]
         + [f"publication {p.course_map_id}#{p.number}" for p in refs.publications]
+        + [f"track {t.id} {t.title!r}" for t in refs.tracks]
     )
 
 
@@ -394,6 +434,16 @@ async def execute(
                 return await _history(assets, args, out)
     except UserError as exc:
         err(f"error: {exc}")
+    except AudioHasVideoError:
+        err(
+            "error: the MP4 contains a video track; extract the audio "
+            "(ffmpeg -i in.mp4 -vn -c:a copy audio.m4a), import that and pass "
+            "the picture with --cover"
+        )
+    except CoverTooLargeError as exc:
+        err(f"error: the cover is larger than {exc.limit_bytes} bytes")
+    except CoverInvalidError as exc:
+        err(f"error: --cover is not a usable image: {exc.reason}")
     except AudioInvalidError as exc:
         err(f"error: not a valid MP3 or M4A (AAC) file: {exc.reason}")
     except AudioQuarantinedError as exc:
@@ -421,6 +471,12 @@ def build_parser() -> argparse.ArgumentParser:
     add.add_argument("--title", required=True)
     add.add_argument("--credit", required=True, help="who made it, shown to editors")
     add.add_argument("--license", help="e.g. 'CC BY 4.0'")
+    add.add_argument(
+        "--cover",
+        type=Path,
+        help="a PNG, JPEG or WebP picture for the track (default: the artwork "
+        "inside the audio file, if any)",
+    )
 
     commands.add_parser("list", help="show every audio track and who is behind it")
 

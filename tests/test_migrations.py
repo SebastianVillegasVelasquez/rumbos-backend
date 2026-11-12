@@ -1897,3 +1897,214 @@ def test_app_meta_migration_adds_a_unique_key_value_table_and_downgrades(
         migration_db,
         "SELECT 1 FROM information_schema.tables WHERE table_name = 'app_meta'",
     )
+
+
+BEFORE_COVERS = "d7a2f5c8b391"  # the last revision without covers
+
+
+def _cover_asset(
+    sha: str, *, tenant: uuid.UUID | None = None
+) -> tuple[str, dict[str, Any]]:
+    return (
+        (
+            "INSERT INTO assets (id, tenant_id, kind, mime, width, height, bytes,"
+            " sha256, title, created_at, updated_at) VALUES (:id, :t, 'cover',"
+            " 'image/webp', 512, 512, 10, :sha, 'Portada', now(), now())"
+        ),
+        {"id": uuid.uuid4(), "t": tenant, "sha": sha},
+    )
+
+
+def test_covers_migration_keeps_existing_assets_and_enforces_the_new_rules(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", BEFORE_COVERS).returncode == 0
+    run_sql(
+        migration_db,
+        [_image_asset("a" * 64), _audio_asset("b" * 64), _audio_asset("c" * 64)],
+    )
+
+    up = alembic(migration_db, "upgrade", "head")
+
+    assert up.returncode == 0, up.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM assets") == [(3,)]
+    assert fetch(
+        migration_db, "SELECT count(*) FROM assets WHERE cover_asset_id IS NOT NULL"
+    ) == [(0,)]
+    # A cover belongs to a tenant, or to nobody when its track is the library's,
+    run_sql(
+        migration_db,
+        [_cover_asset("d" * 64, tenant=LEGACY_TENANT_ID), _cover_asset("e" * 64)],
+    )
+    # and has its dimensions,
+    sql, params = _cover_asset("f" * 64)
+    with pytest.raises(Exception, match="ck_assets_kind_fields"):
+        run_sql(migration_db, [(sql.replace("512, 512", "NULL, NULL"), params)])
+    # but an image still needs its tenant.
+    sql, params = _image_asset("9" * 64)
+    with pytest.raises(Exception, match="ck_assets_kind_fields"):
+        run_sql(migration_db, [(sql, {**params, "t": None})])
+
+
+def test_covers_migration_only_lets_a_track_point_at_an_existing_cover(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+    cover_sql, cover = _cover_asset("a" * 64, tenant=LEGACY_TENANT_ID)
+    track_sql, track = _audio_asset("b" * 64, tenant=LEGACY_TENANT_ID)
+    image_sql, image = _image_asset("c" * 64)
+    run_sql(
+        migration_db,
+        [(cover_sql, cover), (track_sql, track), (image_sql, image)],
+    )
+
+    run_sql(
+        migration_db,
+        [
+            (
+                "UPDATE assets SET cover_asset_id = :c WHERE id = :a",
+                {"c": cover["id"], "a": track["id"]},
+            )
+        ],
+    )
+    # An image cannot have one, a track cannot be its own, and the target must exist.
+    for who, target in (
+        (image["id"], cover["id"]),
+        (track["id"], track["id"]),
+    ):
+        with pytest.raises(Exception, match="ck_assets_cover_link"):
+            run_sql(
+                migration_db,
+                [
+                    (
+                        "UPDATE assets SET cover_asset_id = :c WHERE id = :a",
+                        {"c": target, "a": who},
+                    )
+                ],
+            )
+    with pytest.raises(Exception, match="fk_assets_cover_asset_id_assets"):
+        run_sql(
+            migration_db,
+            [
+                (
+                    "UPDATE assets SET cover_asset_id = :c WHERE id = :a",
+                    {"c": uuid.uuid4(), "a": track["id"]},
+                )
+            ],
+        )
+    # A cover a track points at cannot be removed from under it.
+    with pytest.raises(Exception, match="fk_assets_cover_asset_id_assets"):
+        run_sql(
+            migration_db,
+            [("DELETE FROM assets WHERE id = :a", {"a": cover["id"]})],
+        )
+
+
+def test_covers_migration_refuses_to_downgrade_over_covers_and_downgrades_without(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+    sql, cover = _cover_asset("a" * 64, tenant=LEGACY_TENANT_ID)
+    run_sql(
+        migration_db, [(sql, cover), _audio_asset("b" * 64), _image_asset("c" * 64)]
+    )
+
+    refused = alembic(migration_db, "downgrade", BEFORE_COVERS)
+
+    assert refused.returncode != 0
+    assert "cover asset" in refused.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM assets") == [(3,)]
+
+    run_sql(migration_db, [("DELETE FROM assets WHERE kind = 'cover'", {})])
+    down = alembic(migration_db, "downgrade", BEFORE_COVERS)
+    assert down.returncode == 0, down.stderr
+    assert not fetch(
+        migration_db,
+        "SELECT 1 FROM information_schema.columns"
+        " WHERE table_name = 'assets' AND column_name = 'cover_asset_id'",
+    )
+    assert fetch(migration_db, "SELECT count(*) FROM assets") == [(2,)]
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+
+
+BEFORE_DOCUMENTS = "e8c4b1a6d392"  # the last revision without documents
+
+
+def _document_asset(
+    sha: str, *, tenant: uuid.UUID | None = LEGACY_TENANT_ID, pages: int | None = 3
+) -> tuple[str, dict[str, Any]]:
+    return (
+        (
+            "INSERT INTO assets (id, tenant_id, kind, mime, bytes, sha256, title,"
+            " page_count, created_at, updated_at) VALUES (:id, :t, 'document',"
+            " 'application/pdf', 10, :sha, :title, :pages, now(), now())"
+        ),
+        {
+            "id": uuid.uuid4(),
+            "t": tenant,
+            "sha": sha,
+            "pages": pages,
+            "title": "T" * 200,
+        },
+    )
+
+
+def test_documents_migration_keeps_assets_and_enforces_the_new_rules(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", BEFORE_DOCUMENTS).returncode == 0
+    run_sql(migration_db, [_image_asset("a" * 64), _audio_asset("b" * 64)])
+
+    up = alembic(migration_db, "upgrade", "head")
+
+    assert up.returncode == 0, up.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM assets") == [(2,)]
+    assert fetch(
+        migration_db, "SELECT count(*) FROM assets WHERE page_count IS NOT NULL"
+    ) == [(0,)]
+    # A document has a tenant, pages, and a title of up to 200 characters,
+    run_sql(migration_db, [_document_asset("c" * 64)])
+    with pytest.raises(Exception, match="ck_assets_kind_fields"):
+        run_sql(migration_db, [_document_asset("d" * 64, tenant=None)])
+    with pytest.raises(Exception, match="ck_assets_page_count"):
+        run_sql(migration_db, [_document_asset("e" * 64, pages=None)])
+    with pytest.raises(Exception, match="ck_assets_page_count"):
+        run_sql(migration_db, [_document_asset("f" * 64, pages=0)])
+    # and nothing else has pages.
+    sql, params = _image_asset("9" * 64)
+    with pytest.raises(Exception, match="ck_assets_page_count"):
+        run_sql(
+            migration_db,
+            [
+                (
+                    sql.replace("sha256,", "sha256, page_count,").replace(
+                        ":sha,", ":sha, 2,"
+                    ),
+                    params,
+                )
+            ],
+        )
+
+
+def test_documents_migration_refuses_to_downgrade_over_documents_and_downgrades_without(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+    run_sql(migration_db, [_document_asset("a" * 64), _image_asset("c" * 64)])
+
+    refused = alembic(migration_db, "downgrade", BEFORE_DOCUMENTS)
+
+    assert refused.returncode != 0
+    assert "document asset" in refused.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM assets") == [(2,)]
+
+    run_sql(migration_db, [("DELETE FROM assets WHERE kind = 'document'", {})])
+    down = alembic(migration_db, "downgrade", BEFORE_DOCUMENTS)
+    assert down.returncode == 0, down.stderr
+    assert not fetch(
+        migration_db,
+        "SELECT 1 FROM information_schema.columns"
+        " WHERE table_name = 'assets' AND column_name = 'page_count'",
+    )
+    assert fetch(migration_db, "SELECT count(*) FROM assets") == [(1,)]
+    assert alembic(migration_db, "upgrade", "head").returncode == 0

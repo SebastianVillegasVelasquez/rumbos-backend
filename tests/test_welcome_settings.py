@@ -115,7 +115,9 @@ def test_invalid_fields_are_reported_with_path_and_code(
 ) -> None:
     found = problems_of(raw)
 
-    assert any(p["path"] == path and p["code"] == code for p in found), found
+    assert any(p["path"] == f"welcome.{path}" and p["code"] == code for p in found), (
+        found
+    )
     assert all(p["message"] for p in found)
 
 
@@ -138,7 +140,7 @@ def test_hostile_video_ids_are_refused(video_id: str) -> None:
     found = problems_of({"video": {"provider": "youtube", "videoId": video_id}})
 
     assert [(p["path"], p["code"]) for p in found] == [
-        ("video.videoId", "invalid_video_id")
+        ("welcome.video.videoId", "invalid_video_id")
     ]
 
 
@@ -160,7 +162,7 @@ def test_any_placeholder_other_than_curso_is_refused(field: str, text: str) -> N
     found = problems_of({field: text})
 
     assert [(p["path"], p["code"]) for p in found] == [
-        (field, "welcome_invalid_placeholder")
+        (f"welcome.{field}", "welcome_invalid_placeholder")
     ]
 
 

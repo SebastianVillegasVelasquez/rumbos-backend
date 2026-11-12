@@ -60,6 +60,15 @@ class Settings(BaseSettings):
     assets_max_audio_bytes: int = Field(default=8 * 1024 * 1024, ge=1)
     # Longest accepted track, in seconds.
     assets_max_audio_seconds: float = Field(default=600.0, gt=0)
+    # What a track's cover may be before it is shrunk to a 512 px square (the
+    # same limits apply to a picture found inside the audio file).
+    assets_max_cover_bytes: int = Field(default=2 * 1024 * 1024, ge=1)
+    assets_max_cover_side: int = Field(default=2048, ge=1, le=16384)
+    # PDF documents for welcome-flow steps (see `app.assets.document`): the
+    # largest accepted file, and how long inspecting one may take before it is
+    # refused as corrupt. They count against the same storage quota.
+    document_max_bytes: int = Field(default=10 * 1024 * 1024, ge=1)
+    document_scan_timeout_seconds: float = Field(default=10.0, gt=0)
 
     # Export and import of maps as `.rumbos` archives (see docs/EXPORT-FORMAT.md).
     # An archive is untrusted input: these bound what is accepted and how much is

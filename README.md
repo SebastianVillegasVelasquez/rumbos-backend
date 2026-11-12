@@ -49,6 +49,8 @@ Environment variables (or `.env`); see `.env.example`.
 | `AUDIO_UPLOADS_ENABLED` | on in dev, **off in production** | Switch for editors uploading **their own audio** (`POST /assets` with `kind=audio`). Unset, it follows `APP_ENV`; set it to `true`/`false` to decide explicitly. It blocks only uploading (503 `audio_uploads_disabled`): serving, playing and choosing library tracks never depend on it. Independent of `ASSETS_UPLOADS_ENABLED`. See "Music". |
 | `ASSETS_MAX_AUDIO_BYTES` | `8388608` | Largest accepted audio upload (8 MB). |
 | `ASSETS_MAX_AUDIO_SECONDS` | `600` | Longest accepted track (ten minutes). |
+| `ASSETS_MAX_COVER_BYTES` | `2097152` | Largest accepted cover picture for an audio track (2 MB), whether sent or found inside the audio. |
+| `ASSETS_MAX_COVER_SIDE` | `2048` | Longest side, in pixels, of a cover before it is shrunk. |
 | `PUBLICATIONS_KEEP` | `20` | Publications kept per map; older ones are pruned when a new one is published. The latest is never pruned (minimum 1). |
 | `CORS_ALLOWED_ORIGINS` | empty | Comma-separated browser origins. Empty adds no CORS middleware. Credentials are never allowed. `If-Match` is an allowed request header and `ETag` an exposed response header. The dev frontend uses a Vite proxy and needs nothing here. |
 
@@ -221,7 +223,10 @@ Teachers can upload their own backgrounds and bubble images (`POST /assets`,
 `multipart/form-data` with `file` and `kind` = `background` | `bubble` | `image` | `audio`).
 `image` is for pictures inside content bubbles (see "Content bubbles"): up to
 2048 px per side and 4 MB, through the same pipeline as a background, with a
-WebP thumbnail (`thumbUrl`).
+WebP thumbnail (`thumbUrl`). `document` is a PDF for the steps of a welcome flow
+(up to `DOCUMENT_MAX_BYTES`, 10 MB by default; it needs a `title` and
+`rightsDeclared=true`, is checked for encryption, page count and active content,
+and is stored as uploaded). See [docs/WELCOME-FLOW.md](docs/WELCOME-FLOW.md).
 
 > Uploads, edits and deletes are **editor-only** and stay inside the editor's
 > tenant (see "Tenants and authentication"); the quota is per tenant. In legacy
@@ -593,9 +598,51 @@ parsed strictly, and what is stored is **rebuilt from the audio alone**.
   that can claim anything.
 - The SHA-256 (also the `ETag`) is computed over the stored bytes.
 - Raw AAC (ADTS), WAV, OGG and everything else are `audio_invalid`.
+- An MP4 with a video track (`vide` handler) is refused with 422
+  `audio_has_video`. Audio is not extracted from video: the editor extracts it
+  first (`ffmpeg -i in.mp4 -vn -c:a copy audio.m4a`).
 
 `mutagen` is a development dependency only: tests use it as an independent
 parser to check that cleaned files still read and carry no tags.
+
+**Covers.** An audio track may have a picture. The cover is always **an asset of
+its own** (`kind=cover`), built by the image pipeline and never the bytes the
+editor or the audio file supplied: it is decoded and verified, checked against
+the decompression-bomb guard, centre-cropped to a square, shrunk to at most
+512x512, stripped of all metadata (EXIF, ICC, XMP, text chunks) and re-encoded
+as WebP (transparency is kept). Accepted input: PNG, JPEG or static WebP, at most
+`ASSETS_MAX_COVER_SIDE` (2048) pixels a side and `ASSETS_MAX_COVER_BYTES` (2 MB).
+Animated images, SVG, GIF and anything else are refused.
+
+- *Where it comes from.* `POST /assets` (`kind=audio`) accepts an optional
+  multipart part `cover`. Without it, the artwork inside the audio is used (MP4
+  `covr`, ID3 `APIC`/`PIC`; the front cover is preferred, else the first
+  picture). The audio file that is stored never carries the artwork.
+- *A cover the editor sent has to be good*: 422 `cover_invalid` or 413
+  `cover_too_large`, and nothing is stored. *Artwork found inside the audio never
+  fails the upload*: if it is corrupt, hostile, animated, over the limits or in an
+  unknown format it is dropped and the response (`POST /assets` now answers the
+  asset plus `warnings: []`) carries `"warnings": ["cover_dropped"]`.
+- `PUT /assets/{id}/cover` (multipart `file`; 200 with the track) sets or replaces
+  the cover, `DELETE /assets/{id}/cover` (204, also when there is none) removes
+  it. Errors: 404 for a track that is not the tenant's (or is not audio or is
+  quarantined), 403 `asset_is_library` for a library track, 413
+  `cover_too_large`, 422 `cover_invalid`, 503 `audio_uploads_disabled`. Audio
+  assets carry `coverAssetId` and `coverUrl` (both `null` without a cover); the
+  cover asset itself appears in `GET /assets?kind=cover` only, with the `tracks`
+  usage count.
+- *Ownership.* A cover belongs to the tenant of its track (global for a library
+  track), counts in the tenant's quota and is deduplicated by content, so one
+  album picture used by several tracks is stored once. The track is what refers
+  to it: it is protected from `DELETE /assets/{id}` (409 `asset_in_use` with a
+  `tracks` count) and `gc_assets` while a track uses it, and deleting or
+  replacing the track releases it (unless another track still uses it).
+- *Takedown.* A cover is served like any asset (immutable cache, `nosniff`, `image/webp`),
+  but only while at least one track that uses it is not quarantined: quarantining
+  the track hides its cover and `release` restores both. A cover cannot be
+  quarantined on its own (the CLI says so); quarantine its track.
+- The rights declaration, `uploaded_by_sub` and the licence apply to the audio
+  and its cover as a unit.
 
 **Serving and `Range`.** `GET /assets/{id}` (and `HEAD`) honours a single
 `Range`: `206` with `Content-Range`, `416` with `Content-Range: bytes */size`
@@ -623,10 +670,13 @@ be `audio`, belong to the tenant or the library and not be quarantined, else
 422 `audio_asset_not_found` / `audio_asset_wrong_kind` (another tenant's track
 simply does not exist for you). `CourseMapRead.audioInfo` and
 `PublishedMapRead.audioInfo` are `null` or `{ title, credit, durationSeconds,
-available }` (read-only): a draft reads them live from the asset, a publication
-freezes them. `available` is the exception: it is read from the storage on every
-request (false when the audio file is missing, see "Persistent storage") and is
-never part of a snapshot.
+available, license, coverUrl }` (read-only): a draft reads them live from the
+asset, a publication freezes `title`, `credit` and `durationSeconds`. The rest is
+read from the track on every request, for drafts and publications alike, and is
+never part of a snapshot or of its hash: `available` (false when the audio file
+is missing, see "Persistent storage"), `license` and `coverUrl` (`null` when the
+track has no licence text or no cover). Changing a track's licence or cover
+therefore never turns a published map into "unpublished changes".
 `publication-state.changes.audioChanged` reports any difference in the music,
 its settings or the frozen description; `settingsChanged` does not include music.
 
@@ -640,13 +690,17 @@ never `null`, when a map has no music (the same rule as `view3d`), so every map
 published before this feature still reports `up_to_date`.
 `tests/test_snapshot.py` pins the stored form of settings without music and
 `tests/test_migrations.py` checks a publication made before the migration.
+Covers did not change any snapshot: `snapshot.py` writes only `title`, `credit`
+and `durationSeconds` into `audioInfo`, and `tests/test_cover_read_models.py` pins
+the hashes that `main` produced before covers existed.
 
 **Curating the library and taking tracks down** (the operator's CLI, run with
 the app's environment):
 
 ```
 python -m app.scripts.assets import-audio --file song.mp3 \
-    --title "Brisa" --credit "Ana Perez, CC BY 4.0" [--license "CC BY 4.0"]
+    --title "Brisa" --credit "Ana Perez, CC BY 4.0" [--license "CC BY 4.0"] \
+    [--cover cover.jpg]
 python -m app.scripts.assets list
 python -m app.scripts.assets quarantine <asset-id> --reason "Complaint from X, ticket 42"
 python -m app.scripts.assets release <asset-id>
@@ -655,8 +709,11 @@ python -m app.scripts.assets history <asset-id>
 
 `import-audio` runs the same checks as an upload and makes a library track; it
 does not depend on `AUDIO_UPLOADS_ENABLED` or any quota, the operator vouches
-for the rights, and library tracks are never garbage-collected. `list` shows
-every audio track (the library's and each tenant's) with its tenant, the
+for the rights, and library tracks are never garbage-collected. `--cover` gives
+the track a picture through the cover pipeline (a bad file fails the import);
+without it the artwork inside the file is used, and if that cannot be used the
+track is imported anyway and the command says so. `list` shows every audio track
+(the library's and each tenant's) with whether it has a cover, its tenant, the
 uploader's pseudonymous id, when the rights were declared, its state and its
 usage.
 
@@ -784,6 +841,11 @@ the publication's asset ids, so they cannot be deleted while a publication
 uses them, and they count under `maps` in an asset's `usage` while a draft does.
 
 ### Welcome curtain
+
+A map can also open with an ordered flow of steps (welcome, video, HTML/CSS, PDF,
+quiz) through `settings.welcome.steps`; it replaces the fields below and is
+documented in [docs/WELCOME-FLOW.md](docs/WELCOME-FLOW.md). The rest of this
+section describes the single curtain, which is unchanged.
 
 `settings.welcome` configures the full-screen entry screen a student sees before
 the map: a title, a message and an optional welcome video. It is part of the map
@@ -932,8 +994,9 @@ never changes after creation.
   `availability` (`available`, `hidden`, `missing`, `unknown`) and the
   `moodleStatus` (`live`, `cached`, `unavailable`). Moodle outages answer 200.
 - `POST /assets` (201, or 200 for already-known content; optional form fields
-  `title`, `credit`; audio also takes `license` and needs `rightsDeclared=true`,
-  see "Music"), `GET /assets?kind=&q=&scope=tenant|library&limit=&offset=` (the
+  `title`, `credit`; audio also takes `license`, an optional `cover` file and
+  needs `rightsDeclared=true`, see "Music"; the answer carries `warnings`),
+  `PUT`/`DELETE /assets/{id}/cover` (see "Music"), `GET /assets?kind=&q=&scope=tenant|library&limit=&offset=` (the
   tenant's own assets, or the shared audio library; newest first, with `usage`
   counts and `available`, false when a file is missing from the storage),
   `PATCH /assets/{id}` (`title`, `credit`),

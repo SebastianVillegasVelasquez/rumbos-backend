@@ -16,6 +16,7 @@ from app.schemas.content import BlocksContent, WidgetContent
 from app.schemas.course_map import SkinRule
 from app.schemas.map_settings import AudioInfo, MapSettings
 from app.schemas.view3d import View3d
+from app.schemas.welcome import WelcomeDocument
 
 
 class PublishedRow(ApiModel):
@@ -93,5 +94,8 @@ class PublishedMapRead(ApiModel):
     # when the map has no music, or the track has since been taken down (then
     # `settings.audio` is null too).
     audio_info: AudioInfo | None = None
+    # The documents of the frozen welcome flow's PDF steps, read live: whether
+    # each is still available is not part of the publication.
+    welcome_documents: list[WelcomeDocument] = Field(default_factory=list)
     publication_number: int
     published_at: datetime

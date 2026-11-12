@@ -1,4 +1,5 @@
 import uuid
+from collections.abc import Sequence
 from datetime import datetime
 from typing import Annotated, Self
 
@@ -9,13 +10,18 @@ from app.enums import AssetKind
 from app.schemas.base import ApiModel
 
 TITLE_MAX_LENGTH = 120
+DOCUMENT_TITLE_MAX_LENGTH = 200
 CREDIT_MAX_LENGTH = 300
 LICENSE_MAX_LENGTH = 120
 FILENAME_MAX_LENGTH = 255
 
+# The longest any kind allows; the service holds every kind but a document to
+# `TITLE_MAX_LENGTH`.
 AssetTitle = Annotated[
     str,
-    StringConstraints(strip_whitespace=True, min_length=1, max_length=TITLE_MAX_LENGTH),
+    StringConstraints(
+        strip_whitespace=True, min_length=1, max_length=DOCUMENT_TITLE_MAX_LENGTH
+    ),
 ]
 AssetCredit = Annotated[
     str, StringConstraints(strip_whitespace=True, max_length=CREDIT_MAX_LENGTH)
@@ -39,11 +45,14 @@ class AssetRecord(ApiModel):
     # None: a library track, shared by every tenant.
     tenant_id: uuid.UUID | None = None
     duration_seconds: float | None = None  # audio only
+    page_count: int | None = None  # documents only
     license: str | None = None
     uploaded_by_sub: str | None = None
     rights_declared_at: datetime | None = None
     quarantined_at: datetime | None = None
     quarantine_reason: str | None = None
+    # The cover asset of an audio track.
+    cover_asset_id: uuid.UUID | None = None
 
     @property
     def is_library(self) -> bool:
@@ -76,10 +85,13 @@ class AssetCreate(ApiModel):
     credit: str | None = None
     original_filename: str | None = None
     duration_seconds: float | None = None
+    page_count: int | None = None
     license: str | None = None
-    # The rights trail of an audio upload.
+    # The rights trail of an audio or document upload.
     uploaded_by_sub: str | None = None
     rights_declared_at: datetime | None = None
+    # An audio track's cover (an existing asset of kind `cover`).
+    cover_asset_id: uuid.UUID | None = None
 
 
 class AssetRead(ApiModel):
@@ -91,6 +103,7 @@ class AssetRead(ApiModel):
     width: int | None  # images only
     height: int | None
     duration_seconds: float | None  # audio only
+    page_count: int | None  # documents only
     bytes: int
     url: str
     thumb_url: str | None  # backgrounds and images only
@@ -99,6 +112,9 @@ class AssetRead(ApiModel):
     license: str | None
     original_filename: str | None
     created_at: datetime
+    # An audio track's cover (audio only): its asset and where to fetch it.
+    cover_asset_id: uuid.UUID | None
+    cover_url: str | None
 
     @classmethod
     def from_record(cls, record: AssetRecord) -> "AssetRead":
@@ -109,6 +125,7 @@ class AssetRead(ApiModel):
             width=record.width,
             height=record.height,
             duration_seconds=record.duration_seconds,
+            page_count=record.page_count,
             bytes=record.size_bytes,
             url=f"{ASSETS_PATH}/{record.id}",
             thumb_url=(
@@ -119,8 +136,34 @@ class AssetRead(ApiModel):
             title=record.title,
             credit=record.credit,
             license=record.license,
-            original_filename=record.original_filename,
+            # A document's file name is never shown: it can carry names and
+            # case numbers, and nothing needs it.
+            original_filename=(
+                None if record.kind is AssetKind.DOCUMENT else record.original_filename
+            ),
             created_at=record.created_at,
+            cover_asset_id=record.cover_asset_id,
+            cover_url=(
+                f"{ASSETS_PATH}/{record.cover_asset_id}"
+                if record.cover_asset_id
+                else None
+            ),
+        )
+
+
+class AssetUploadRead(AssetRead):
+    """The answer to `POST /assets`: the asset, and what the editor should know
+    about how the upload went (`cover_dropped`: the picture found inside the
+    audio could not be used, so the track has no cover)."""
+
+    warnings: list[str] = Field(default_factory=list)
+
+    @classmethod
+    def from_upload(
+        cls, record: AssetRecord, warnings: Sequence[str] = ()
+    ) -> "AssetUploadRead":
+        return cls(
+            **AssetRead.from_record(record).model_dump(), warnings=list(warnings)
         )
 
 
@@ -130,10 +173,11 @@ class AssetUsage(ApiModel):
     maps: int = 0  # draft maps whose background, music or content image it is
     skins: int = 0  # skins that mention it
     publications: int = 0  # publications (snapshots) that list it
+    tracks: int = 0  # audio tracks that have it as their cover
 
     @property
     def total(self) -> int:
-        return self.maps + self.skins + self.publications
+        return self.maps + self.skins + self.publications + self.tracks
 
 
 class ReferencingMap(ApiModel):
@@ -151,6 +195,11 @@ class ReferencingPublication(ApiModel):
     number: int
 
 
+class ReferencingTrack(ApiModel):
+    id: uuid.UUID
+    title: str
+
+
 class AssetReferences(ApiModel):
     """What points at an asset, by name: for the operator's tools, which need
     more than `AssetUsage`'s counts to say what a missing file breaks."""
@@ -158,6 +207,7 @@ class AssetReferences(ApiModel):
     maps: list[ReferencingMap] = Field(default_factory=list)
     skins: list[ReferencingSkin] = Field(default_factory=list)
     publications: list[ReferencingPublication] = Field(default_factory=list)
+    tracks: list[ReferencingTrack] = Field(default_factory=list)
 
 
 class AssetListItem(AssetRead):

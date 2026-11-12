@@ -271,6 +271,20 @@ class AssetRepository(Protocol):
         referenced. Does not touch the stored files."""
         ...
 
+    async def set_cover(
+        self, asset_id: uuid.UUID, cover_id: uuid.UUID | None
+    ) -> tuple[AssetRecord, uuid.UUID | None] | None:
+        """Points the audio track at `cover_id` (None: no cover) and returns the
+        track and the cover it had before, in ONE transaction. None if there is
+        no such audio track. Does not touch the stored files, and does not delete
+        the previous cover: that is the caller's to release."""
+        ...
+
+    async def cover_in_service(self, cover_id: uuid.UUID) -> bool:
+        """Whether some audio track that is not quarantined has this cover: a
+        cover is served only while one does."""
+        ...
+
     async def set_quarantine(
         self, asset_id: uuid.UUID, reason: str | None, now: datetime
     ) -> tuple[AssetRecord, bool] | None:

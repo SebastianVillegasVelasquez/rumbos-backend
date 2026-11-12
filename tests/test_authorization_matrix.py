@@ -61,6 +61,8 @@ ROUTES: dict[tuple[str, str], tuple[str, bool]] = {
     ("GET", "/assets"): (EDITOR, False),
     ("PATCH", "/assets/{asset_id}"): (EDITOR, False),
     ("DELETE", "/assets/{asset_id}"): (EDITOR, False),
+    ("PUT", "/assets/{asset_id}/cover"): (EDITOR, False),
+    ("DELETE", "/assets/{asset_id}/cover"): (EDITOR, False),
     ("GET", "/skins"): (EDITOR, False),
     ("POST", "/skins"): (EDITOR, False),
     ("PATCH", "/skins/{skin_id}"): (EDITOR, False),

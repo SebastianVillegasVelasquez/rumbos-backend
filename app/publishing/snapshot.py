@@ -43,6 +43,7 @@ from app.schemas.course_map import SkinRule
 from app.schemas.map_settings import AudioInfo, MapSettings
 from app.schemas.skin import SkinRead, dump_config
 from app.schemas.view3d import LocalizedText, View3d
+from app.welcome_flow.flow import stored_flow_asset_ids
 
 SCHEMA_VERSION = 1
 # Significant digits kept for floats. Coordinates are 0-1 doubles; twelve digits
@@ -209,7 +210,8 @@ def build_snapshot(inputs: DraftInputs) -> dict[str, Any]:
 
 def collect_asset_ids(snapshot: Mapping[str, Any]) -> list[uuid.UUID]:
     """Assets a snapshot depends on: its background, its music, every image
-    of its frozen skins and every image its content bubbles show. Sorted and
+    of its frozen skins, every image its content bubbles show, and the
+    documents and images of its welcome flow. Sorted and
     without repeats, so it is a stable set."""
     found: set[uuid.UUID] = set()
     background = stored_asset_id(snapshot["imageUrl"])
@@ -222,6 +224,7 @@ def collect_asset_ids(snapshot: Mapping[str, Any]) -> list[uuid.UUID]:
         found.update(skin_asset_ids(skin["config"]))
     for bubble in snapshot["bubbles"]:
         found.update(image_asset_ids(bubble.get("content")))
+    found.update(stored_flow_asset_ids(snapshot["settings"].get("welcome")))
     return sorted(found, key=str)
 
 

@@ -58,6 +58,10 @@ def audio_info_of(asset: AssetRecord | None) -> AudioInfo | None:
         title=asset.title,
         credit=asset.credit,
         duration_seconds=asset.duration_seconds,
+        license=asset.license,
+        cover_url=(
+            f"{ASSETS_PATH}/{asset.cover_asset_id}" if asset.cover_asset_id else None
+        ),
     )
 
 
