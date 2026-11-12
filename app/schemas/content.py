@@ -134,6 +134,15 @@ def _check_https_url(value: Any) -> Any:
 HttpsUrl = Annotated[StrictStr, BeforeValidator(_check_https_url)]
 
 
+def is_https_url(value: str) -> bool:
+    """Whether `value` passes the same https URL rules a link block does."""
+    try:
+        _check_https_url(value)
+    except PydanticCustomError:
+        return False
+    return True
+
+
 def _check_video_id(value: Any) -> Any:
     if isinstance(value, str) and not _VIDEO_ID.fullmatch(value):
         raise PydanticCustomError("invalid_video_id", "Not a valid video id")

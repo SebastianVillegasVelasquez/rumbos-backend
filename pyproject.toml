@@ -45,6 +45,11 @@ strict = true
 plugins = ["pydantic.mypy"]
 exclude = ["^alembic/versions/"]
 
+[[tool.mypy.overrides]]
+# tinycss2 ships no type information.
+module = ["tinycss2"]
+ignore_missing_imports = true
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
