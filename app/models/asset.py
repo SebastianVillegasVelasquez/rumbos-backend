@@ -49,16 +49,25 @@ class Asset(BaseORM):
         CheckConstraint("bytes > 0", name="ck_assets_bytes"),
         # Images have dimensions and a tenant; audio has a duration and a credit
         # and may be global; a cover has dimensions and is global when its
-        # track is (a library track's cover belongs to the library too).
+        # track is (a library track's cover belongs to the library too); a
+        # document has neither dimensions nor duration and always a tenant.
         CheckConstraint(
             "(kind = 'audio' AND width IS NULL AND height IS NULL"
             " AND duration_seconds > 0 AND credit IS NOT NULL)"
             " OR (kind = 'cover' AND width IS NOT NULL AND height IS NOT NULL"
             " AND duration_seconds IS NULL)"
-            " OR (kind NOT IN ('audio', 'cover') AND width IS NOT NULL"
+            " OR (kind = 'document' AND width IS NULL AND height IS NULL"
+            " AND duration_seconds IS NULL AND tenant_id IS NOT NULL)"
+            " OR (kind NOT IN ('audio', 'cover', 'document') AND width IS NOT NULL"
             " AND height IS NOT NULL AND duration_seconds IS NULL"
             " AND tenant_id IS NOT NULL)",
             name="ck_assets_kind_fields",
+        ),
+        # Only a document has pages.
+        CheckConstraint(
+            "(kind = 'document' AND page_count IS NOT NULL AND page_count > 0)"
+            " OR (kind <> 'document' AND page_count IS NULL)",
+            name="ck_assets_page_count",
         ),
         # Only an audio track has a cover, and never itself.
         CheckConstraint(
@@ -87,12 +96,15 @@ class Asset(BaseORM):
     height: Mapped[int | None]
     # Seconds; audio only.
     duration_seconds: Mapped[float | None] = mapped_column(Float)
+    # Pages; documents only.
+    page_count: Mapped[int | None]
     # Size of the stored (re-encoded) file; what the quota adds up.
     size_bytes: Mapped[int] = mapped_column("bytes", BigInteger)
     # Hex digest of the stored bytes. Also the HTTP ETag.
     sha256: Mapped[str] = mapped_column(String(64))
-    # Library metadata, shown to editors. Never part of a file path.
-    title: Mapped[str] = mapped_column(String(120))
+    # Library metadata, shown to editors. Never part of a file path. Up to 200
+    # for a document, 120 for anything else (the service enforces the latter).
+    title: Mapped[str] = mapped_column(String(200))
     credit: Mapped[str | None] = mapped_column(String(300))
     # What the uploader's file was called. Display only; sanitized on the way in.
     original_filename: Mapped[str | None] = mapped_column(String(255))

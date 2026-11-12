@@ -60,6 +60,9 @@ class AssetKind(StrEnum):
     # The picture of an audio track: a square WebP made by the cover pipeline.
     # Never uploaded on its own; an audio asset points at it.
     COVER = "cover"
+    # A PDF a welcome-flow step shows. Tenant-owned, never in the library, no
+    # thumbnail; its bytes are stored exactly as uploaded.
+    DOCUMENT = "document"
 
     @property
     def has_thumbnail(self) -> bool:

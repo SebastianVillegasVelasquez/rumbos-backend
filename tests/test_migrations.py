@@ -2025,3 +2025,86 @@ def test_covers_migration_refuses_to_downgrade_over_covers_and_downgrades_withou
     )
     assert fetch(migration_db, "SELECT count(*) FROM assets") == [(2,)]
     assert alembic(migration_db, "upgrade", "head").returncode == 0
+
+
+BEFORE_DOCUMENTS = "e8c4b1a6d392"  # the last revision without documents
+
+
+def _document_asset(
+    sha: str, *, tenant: uuid.UUID | None = LEGACY_TENANT_ID, pages: int | None = 3
+) -> tuple[str, dict[str, Any]]:
+    return (
+        (
+            "INSERT INTO assets (id, tenant_id, kind, mime, bytes, sha256, title,"
+            " page_count, created_at, updated_at) VALUES (:id, :t, 'document',"
+            " 'application/pdf', 10, :sha, :title, :pages, now(), now())"
+        ),
+        {
+            "id": uuid.uuid4(),
+            "t": tenant,
+            "sha": sha,
+            "pages": pages,
+            "title": "T" * 200,
+        },
+    )
+
+
+def test_documents_migration_keeps_assets_and_enforces_the_new_rules(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", BEFORE_DOCUMENTS).returncode == 0
+    run_sql(migration_db, [_image_asset("a" * 64), _audio_asset("b" * 64)])
+
+    up = alembic(migration_db, "upgrade", "head")
+
+    assert up.returncode == 0, up.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM assets") == [(2,)]
+    assert fetch(
+        migration_db, "SELECT count(*) FROM assets WHERE page_count IS NOT NULL"
+    ) == [(0,)]
+    # A document has a tenant, pages, and a title of up to 200 characters,
+    run_sql(migration_db, [_document_asset("c" * 64)])
+    with pytest.raises(Exception, match="ck_assets_kind_fields"):
+        run_sql(migration_db, [_document_asset("d" * 64, tenant=None)])
+    with pytest.raises(Exception, match="ck_assets_page_count"):
+        run_sql(migration_db, [_document_asset("e" * 64, pages=None)])
+    with pytest.raises(Exception, match="ck_assets_page_count"):
+        run_sql(migration_db, [_document_asset("f" * 64, pages=0)])
+    # and nothing else has pages.
+    sql, params = _image_asset("9" * 64)
+    with pytest.raises(Exception, match="ck_assets_page_count"):
+        run_sql(
+            migration_db,
+            [
+                (
+                    sql.replace("sha256,", "sha256, page_count,").replace(
+                        ":sha,", ":sha, 2,"
+                    ),
+                    params,
+                )
+            ],
+        )
+
+
+def test_documents_migration_refuses_to_downgrade_over_documents_and_downgrades_without(
+    migration_db: str,
+) -> None:
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
+    run_sql(migration_db, [_document_asset("a" * 64), _image_asset("c" * 64)])
+
+    refused = alembic(migration_db, "downgrade", BEFORE_DOCUMENTS)
+
+    assert refused.returncode != 0
+    assert "document asset" in refused.stderr
+    assert fetch(migration_db, "SELECT count(*) FROM assets") == [(2,)]
+
+    run_sql(migration_db, [("DELETE FROM assets WHERE kind = 'document'", {})])
+    down = alembic(migration_db, "downgrade", BEFORE_DOCUMENTS)
+    assert down.returncode == 0, down.stderr
+    assert not fetch(
+        migration_db,
+        "SELECT 1 FROM information_schema.columns"
+        " WHERE table_name = 'assets' AND column_name = 'page_count'",
+    )
+    assert fetch(migration_db, "SELECT count(*) FROM assets") == [(1,)]
+    assert alembic(migration_db, "upgrade", "head").returncode == 0
