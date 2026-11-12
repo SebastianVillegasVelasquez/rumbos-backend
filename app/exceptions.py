@@ -226,6 +226,21 @@ class AudioTooLongError(DomainError):
         self.limit_seconds = limit_seconds
 
 
+class DocumentInvalidError(DomainError):
+    """Not a PDF this service will keep. `reason` is one of `not_pdf`,
+    `encrypted`, `active_content`, `too_many_pages` and `corrupt`; it is the
+    one detail the client is given (it says what to fix, and shows nothing of
+    the file)."""
+
+    def __init__(self, reason: str) -> None:
+        super().__init__(reason)
+        self.reason = reason
+
+
+class DocumentRightsDeclarationRequiredError(DomainError):
+    """A document upload came without `rightsDeclared=true`."""
+
+
 class AssetQuotaExceededError(DomainError):
     """Storing the file would pass `ASSETS_MAX_TOTAL_BYTES`."""
 
