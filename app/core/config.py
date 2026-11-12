@@ -64,6 +64,11 @@ class Settings(BaseSettings):
     # same limits apply to a picture found inside the audio file).
     assets_max_cover_bytes: int = Field(default=2 * 1024 * 1024, ge=1)
     assets_max_cover_side: int = Field(default=2048, ge=1, le=16384)
+    # PDF documents for welcome-flow steps (see `app.assets.document`): the
+    # largest accepted file, and how long inspecting one may take before it is
+    # refused as corrupt. They count against the same storage quota.
+    document_max_bytes: int = Field(default=10 * 1024 * 1024, ge=1)
+    document_scan_timeout_seconds: float = Field(default=10.0, gt=0)
 
     # `dev` or `production`. Only decides the default of `legacy_anonymous_mode`.
     app_env: Literal["dev", "production"] = "dev"

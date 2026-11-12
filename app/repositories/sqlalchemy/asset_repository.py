@@ -155,6 +155,7 @@ class SqlAlchemyAssetRepository:
             credit=data.credit,
             original_filename=data.original_filename,
             duration_seconds=data.duration_seconds,
+            page_count=data.page_count,
             license=data.license,
             uploaded_by_sub=data.uploaded_by_sub,
             rights_declared_at=data.rights_declared_at,

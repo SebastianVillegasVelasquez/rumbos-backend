@@ -241,6 +241,15 @@ class DocumentRightsDeclarationRequiredError(DomainError):
     """A document upload came without `rightsDeclared=true`."""
 
 
+class DocumentQuarantinedError(DomainError):
+    """The same document is already here and has been taken down: sending it
+    again must not bring it back under another id."""
+
+    def __init__(self, asset_id: uuid.UUID) -> None:
+        super().__init__("document quarantined")
+        self.asset_id = asset_id
+
+
 class AssetQuotaExceededError(DomainError):
     """Storing the file would pass `ASSETS_MAX_TOTAL_BYTES`."""
 

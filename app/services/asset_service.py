@@ -12,6 +12,7 @@ from uuid_utils.compat import uuid7
 from app.assets.artwork import find_artwork
 from app.assets.audio import process_audio
 from app.assets.availability import availability
+from app.assets.document import inspect_pdf
 from app.assets.metadata import clean_credit, clean_filename, default_title, fits_credit
 from app.assets.processing import (
     ImageLimits,
@@ -42,12 +43,17 @@ from app.exceptions import (
     AudioUploadsDisabledError,
     CoverInvalidError,
     CoverTooLargeError,
+    DocumentInvalidError,
+    DocumentQuarantinedError,
+    DocumentRightsDeclarationRequiredError,
     InvalidAssetMetadataError,
+    InvalidUploadError,
     UploadsDisabledError,
 )
 from app.repositories.protocols import AssetRepository
 from app.schemas.asset import (
     CREDIT_MAX_LENGTH,
+    DOCUMENT_TITLE_MAX_LENGTH,
     LICENSE_MAX_LENGTH,
     TITLE_MAX_LENGTH,
     AssetCreate,
@@ -77,6 +83,8 @@ class AssetSettings:
     max_image_side: int = 2048
     max_cover_bytes: int = 2 * 1024 * 1024
     max_cover_side: int = 2048
+    max_document_bytes: int = 10 * 1024 * 1024
+    document_scan_timeout_seconds: float = 10.0
 
     @classmethod
     def from_app_settings(cls, settings: Settings) -> "AssetSettings":
@@ -94,6 +102,8 @@ class AssetSettings:
             max_image_side=settings.assets_max_image_side,
             max_cover_bytes=settings.assets_max_cover_bytes,
             max_cover_side=settings.assets_max_cover_side,
+            max_document_bytes=settings.document_max_bytes,
+            document_scan_timeout_seconds=settings.document_scan_timeout_seconds,
         )
 
     def max_bytes_for(self, kind: AssetKind) -> int:
@@ -105,6 +115,8 @@ class AssetSettings:
             return self.max_background_bytes
         if kind is AssetKind.IMAGE:
             return self.max_image_bytes
+        if kind is AssetKind.DOCUMENT:
+            return self.max_document_bytes
         return self.max_bubble_bytes
 
     def enabled_for(self, kind: AssetKind | None) -> bool:
@@ -214,6 +226,8 @@ class AssetService:
         upload returns the existing asset untouched: its title and credit are
         NOT overwritten by the new ones.
         """
+        if kind is AssetKind.DOCUMENT:
+            raise InvalidUploadError("documents are uploaded with upload_document")
         self.ensure_uploads_enabled(kind)
         original_filename = clean_filename(filename)
         clean_title = (
@@ -284,6 +298,98 @@ class AssetService:
         except BaseException:
             await self._discard(keys)
             raise
+        return UploadResult(record, created=True)
+
+    async def upload_document(
+        self,
+        file: BinaryIO,
+        size: int,
+        *,
+        title: str | None,
+        rights_declared: bool,
+        uploaded_by_sub: str | None,
+    ) -> UploadResult:
+        """A PDF for the welcome flows of this tenant.
+
+        It must come with a title and with the declaration that the uploader
+        may share it. The file is inspected (`app.assets.document`) in a worker
+        thread under a timeout and, if accepted, stored EXACTLY as uploaded:
+        its metadata is not stripped. Only the title, the page count, the
+        size and the pseudonymous `uploaded_by_sub` are kept about it; the
+        name the client gave the file is dropped. An identical document
+        already there is returned untouched."""
+        self.ensure_uploads_enabled(AssetKind.DOCUMENT)
+        if not rights_declared:
+            raise DocumentRightsDeclarationRequiredError
+        if title is None or not title.strip():
+            raise InvalidAssetMetadataError("a document needs a title")
+        clean_title = _clean_title(title, DOCUMENT_TITLE_MAX_LENGTH)
+        limit = self._settings.max_document_bytes
+        if size > limit:
+            raise AssetTooLargeError(limit)
+        if size == 0:
+            raise DocumentInvalidError("not_pdf")
+        used = await self._assets.total_bytes()
+        if used >= self._settings.max_total_bytes:
+            raise AssetQuotaExceededError  # skip the parse when already full
+
+        data = await asyncio.to_thread(_read_all, file)
+        try:
+            processed = await asyncio.wait_for(
+                asyncio.to_thread(inspect_pdf, io.BytesIO(data)),
+                timeout=self._settings.document_scan_timeout_seconds,
+            )
+        except TimeoutError:
+            # The worker thread cannot be stopped, but the request is not held.
+            logger.warning("Document inspection timed out; refused as corrupt")
+            raise DocumentInvalidError("corrupt") from None
+        except DocumentInvalidError as exc:
+            logger.info("Document refused: %s", exc.reason)
+            raise
+        sha256 = hashlib.sha256(data).hexdigest()
+        existing = await self._assets.find_by_hash(AssetKind.DOCUMENT, sha256)
+        if existing is not None:
+            if existing.is_quarantined:
+                raise DocumentQuarantinedError(existing.id)
+            return UploadResult(existing, created=False)
+        if used + len(data) > self._settings.max_total_bytes:
+            raise AssetQuotaExceededError
+
+        asset_id: uuid.UUID = uuid7()
+        key = content_key(asset_id)
+        await self._storage.put(key, data)
+        try:
+            record = await self._assets.create(
+                AssetCreate(
+                    id=asset_id,
+                    kind=AssetKind.DOCUMENT,
+                    mime="application/pdf",
+                    size_bytes=len(data),
+                    sha256=sha256,
+                    title=clean_title,
+                    page_count=processed.page_count,
+                    uploaded_by_sub=uploaded_by_sub,
+                    rights_declared_at=datetime.now(UTC),
+                )
+            )
+        except AssetAlreadyExistsError:
+            # Lost a race against an identical upload: use the winner's.
+            await self._discard([key])
+            winner = await self._assets.find_by_hash(AssetKind.DOCUMENT, sha256)
+            if winner is None:
+                raise
+            if winner.is_quarantined:
+                raise DocumentQuarantinedError(winner.id) from None
+            return UploadResult(winner, created=False)
+        except BaseException:
+            await self._discard([key])
+            raise
+        logger.info(
+            "Document %s uploaded by sub=%s, rights declared, %d page(s)",
+            asset_id,
+            uploaded_by_sub,
+            processed.page_count,
+        )
         return UploadResult(record, created=True)
 
     async def upload_audio(
@@ -663,6 +769,12 @@ class AssetService:
     ) -> AssetRecord:
         asset = await self._require_own(asset_id)
         if (
+            data.title is not None
+            and asset.kind is not AssetKind.DOCUMENT
+            and len(data.title) > TITLE_MAX_LENGTH
+        ):
+            raise InvalidAssetMetadataError(f"title over {TITLE_MAX_LENGTH}")
+        if (
             asset.kind is AssetKind.AUDIO
             and "credit" in data.model_fields_set
             and not data.credit
@@ -752,11 +864,16 @@ class AssetService:
                 logger.warning("Could not remove %s after a failed upload", key)
 
 
-def _clean_title(raw: str) -> str:
+def _clean_title(raw: str, limit: int = TITLE_MAX_LENGTH) -> str:
     cleaned = " ".join(raw.split())
-    if not cleaned or len(cleaned) > TITLE_MAX_LENGTH:
-        raise InvalidAssetMetadataError(f"title must be 1-{TITLE_MAX_LENGTH} chars")
+    if not cleaned or len(cleaned) > limit:
+        raise InvalidAssetMetadataError(f"title must be 1-{limit} chars")
     return cleaned
+
+
+def _read_all(file: BinaryIO) -> bytes:
+    file.seek(0)
+    return file.read()
 
 
 def _parse_asset_id(raw_id: str) -> uuid.UUID:

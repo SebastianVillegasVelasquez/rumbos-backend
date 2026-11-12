@@ -56,6 +56,29 @@ async def upload_audio(
     )
 
 
+async def upload_document(
+    client: httpx.AsyncClient,
+    data: bytes,
+    *,
+    filename: str = "guia.pdf",
+    content_type: str = "application/pdf",
+    **form: str | None,
+) -> httpx.Response:
+    """Uploads a PDF with a complete, valid form; a field given as `None` is
+    left out, any other value replaces the default."""
+    fields: dict[str, str | None] = {
+        "kind": "document",
+        "title": "Guia del curso",
+        "rightsDeclared": "true",
+        **form,
+    }
+    return await client.post(
+        "/assets",
+        data={k: v for k, v in fields.items() if v is not None},
+        files={"file": (filename, data, content_type)},
+    )
+
+
 async def png_asset(
     client: httpx.AsyncClient,
     n: int,

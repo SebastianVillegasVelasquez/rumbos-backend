@@ -10,13 +10,18 @@ from app.enums import AssetKind
 from app.schemas.base import ApiModel
 
 TITLE_MAX_LENGTH = 120
+DOCUMENT_TITLE_MAX_LENGTH = 200
 CREDIT_MAX_LENGTH = 300
 LICENSE_MAX_LENGTH = 120
 FILENAME_MAX_LENGTH = 255
 
+# The longest any kind allows; the service holds every kind but a document to
+# `TITLE_MAX_LENGTH`.
 AssetTitle = Annotated[
     str,
-    StringConstraints(strip_whitespace=True, min_length=1, max_length=TITLE_MAX_LENGTH),
+    StringConstraints(
+        strip_whitespace=True, min_length=1, max_length=DOCUMENT_TITLE_MAX_LENGTH
+    ),
 ]
 AssetCredit = Annotated[
     str, StringConstraints(strip_whitespace=True, max_length=CREDIT_MAX_LENGTH)
@@ -40,6 +45,7 @@ class AssetRecord(ApiModel):
     # None: a library track, shared by every tenant.
     tenant_id: uuid.UUID | None = None
     duration_seconds: float | None = None  # audio only
+    page_count: int | None = None  # documents only
     license: str | None = None
     uploaded_by_sub: str | None = None
     rights_declared_at: datetime | None = None
@@ -79,8 +85,9 @@ class AssetCreate(ApiModel):
     credit: str | None = None
     original_filename: str | None = None
     duration_seconds: float | None = None
+    page_count: int | None = None
     license: str | None = None
-    # The rights trail of an audio upload.
+    # The rights trail of an audio or document upload.
     uploaded_by_sub: str | None = None
     rights_declared_at: datetime | None = None
     # An audio track's cover (an existing asset of kind `cover`).
@@ -96,6 +103,7 @@ class AssetRead(ApiModel):
     width: int | None  # images only
     height: int | None
     duration_seconds: float | None  # audio only
+    page_count: int | None  # documents only
     bytes: int
     url: str
     thumb_url: str | None  # backgrounds and images only
@@ -117,6 +125,7 @@ class AssetRead(ApiModel):
             width=record.width,
             height=record.height,
             duration_seconds=record.duration_seconds,
+            page_count=record.page_count,
             bytes=record.size_bytes,
             url=f"{ASSETS_PATH}/{record.id}",
             thumb_url=(
@@ -127,7 +136,11 @@ class AssetRead(ApiModel):
             title=record.title,
             credit=record.credit,
             license=record.license,
-            original_filename=record.original_filename,
+            # A document's file name is never shown: it can carry names and
+            # case numbers, and nothing needs it.
+            original_filename=(
+                None if record.kind is AssetKind.DOCUMENT else record.original_filename
+            ),
             created_at=record.created_at,
             cover_asset_id=record.cover_asset_id,
             cover_url=(

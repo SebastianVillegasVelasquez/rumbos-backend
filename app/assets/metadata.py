@@ -21,6 +21,7 @@ _DEFAULT_TITLES = {
     AssetKind.AUDIO: "Audio",
     AssetKind.IMAGE: "Imagen",
     AssetKind.COVER: "Portada",
+    AssetKind.DOCUMENT: "Documento",
 }
 
 

@@ -66,6 +66,9 @@ _MAX_FORM_FIELDS = len(_FORM_FIELDS) - 2  # all but the two files
 _CACHE_CONTROL = "public, max-age=31536000, immutable"
 # An image response must never be able to run anything, whatever it contains.
 _CONTENT_SECURITY_POLICY = "default-src 'none'; sandbox"
+# A PDF is shown by the browser's own viewer, which a `sandbox` policy would
+# stop, so a document gets none: it holds no script (refused at upload), and
+# `nosniff` plus its fixed type keep it from being read as anything else.
 
 
 def get_asset_settings(
@@ -150,12 +153,21 @@ _UPLOAD_OPENAPI: dict[str, Any] = {
                         "cover": {"type": "string", "format": "binary"},
                         "kind": {
                             "type": "string",
-                            "enum": ["background", "bubble", "image", "audio"],
+                            "enum": [
+                                "background",
+                                "bubble",
+                                "image",
+                                "audio",
+                                "document",
+                            ],
                         },
-                        "title": {"type": "string", "maxLength": 120},
+                        # Required for audio and documents (a document's may be
+                        # 200 characters).
+                        "title": {"type": "string", "maxLength": 200},
                         "credit": {"type": "string", "maxLength": 300},
                         # Audio only.
                         "license": {"type": "string", "maxLength": 120},
+                        # Audio and documents.
                         "rightsDeclared": {"type": "string", "enum": ["true"]},
                     },
                 }
@@ -204,7 +216,13 @@ async def upload_asset(
     (the uploader's declaration that they have the rights); `license` is
     optional. An audio upload may carry a `cover` file (PNG, JPEG or WebP); with
     none, the picture inside the audio is used if there is one, and
-    `warnings` says `cover_dropped` when it could not be."""
+    `warnings` says `cover_dropped` when it could not be.
+
+    A document (`kind=document`) is a PDF for welcome-flow steps: it needs a
+    `title` (up to 200 characters) and `rightsDeclared=true`. It is checked for
+    encryption, page count (at most 200) and active content, and stored as
+    uploaded. Documents are reachable by their unguessable URL like every
+    asset: they must not hold confidential material."""
     # Before reading a byte of the body.
     if storage_state_of(request.app) is StorageState.DEGRADED:
         raise StorageUnavailableError
@@ -229,11 +247,11 @@ async def upload_asset(
             kind = AssetKind(raw_kind if isinstance(raw_kind, str) else "")
         except ValueError as exc:
             raise InvalidUploadError(
-                "kind must be 'background', 'bubble', 'image' or 'audio'"
+                "kind must be 'background', 'bubble', 'image', 'audio' or 'document'"
             ) from exc
         if kind is AssetKind.COVER:  # made from an audio track, never sent alone
             raise InvalidUploadError(
-                "kind must be 'background', 'bubble', 'image' or 'audio'"
+                "kind must be 'background', 'bubble', 'image', 'audio' or 'document'"
             )
         raw_cover = form.get("cover")
         if raw_cover is not None and kind is not AssetKind.AUDIO:
@@ -241,6 +259,20 @@ async def upload_asset(
         file.file.seek(0, 2)
         size = file.file.tell()
         raw_title, raw_credit = form.get("title"), form.get("credit")
+        if kind is AssetKind.DOCUMENT:
+            for audio_only in ("credit", "license"):
+                if form.get(audio_only) is not None:
+                    raise InvalidUploadError(f"{audio_only} is for audio only")
+            document = await service.upload_document(
+                file.file,
+                size,
+                title=raw_title if isinstance(raw_title, str) else None,
+                rights_declared=form.get("rightsDeclared") == "true",
+                uploaded_by_sub=principal.sub,
+            )
+            if not document.created:
+                response.status_code = status.HTTP_200_OK
+            return AssetUploadRead.from_upload(document.asset)
         if kind is AssetKind.AUDIO:
             raw_license, rights = form.get("license"), form.get("rightsDeclared")
             cover = None
@@ -410,10 +442,15 @@ async def _serve(request: Request, content: AssetContent) -> Response:
         "Cache-Control": _CACHE_CONTROL,
         "ETag": content.etag,
         "X-Content-Type-Options": "nosniff",
-        "Content-Security-Policy": _CONTENT_SECURITY_POLICY,
         # Players (iOS Safari above all) refuse to play what they cannot seek in.
         "Accept-Ranges": "bytes",
     }
+    if content.asset.kind is AssetKind.DOCUMENT:
+        # Shown in the page, never downloaded under the uploader's file name
+        # (which is not kept, and never reaches the client).
+        headers["Content-Disposition"] = "inline"
+    else:
+        headers["Content-Security-Policy"] = _CONTENT_SECURITY_POLICY
     if _etag_matches(request.headers.get("if-none-match"), content.etag):
         return Response(status_code=status.HTTP_304_NOT_MODIFIED, headers=headers)
     wanted = request.headers.get("range")

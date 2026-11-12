@@ -340,6 +340,7 @@ async def test_a_published_image_cannot_be_deleted_even_after_the_draft_drops_it
         "maps": 0,
         "skins": 0,
         "publications": 1,
+        "tracks": 0,
     }
 
 

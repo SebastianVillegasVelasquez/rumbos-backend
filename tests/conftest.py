@@ -150,6 +150,7 @@ ENABLED = AssetSettings(
     max_image_side=2000,
     max_cover_bytes=100_000,
     max_cover_side=2000,
+    max_document_bytes=200_000,
 )
 
 

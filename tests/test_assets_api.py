@@ -36,6 +36,7 @@ async def test_upload_a_background_returns_the_contract_shape(
         "width",
         "height",
         "durationSeconds",  # audio only: null for images
+        "pageCount",  # documents only
         "bytes",
         "url",
         "thumbUrl",
@@ -203,7 +204,10 @@ async def test_an_oversize_body_is_cut_off_without_a_content_length(
 ) -> None:
     """A chunked body, as a hostile client would send: stopped at the cap."""
     box.change(
-        max_background_bytes=10_000, max_bubble_bytes=10_000, max_image_bytes=10_000
+        max_background_bytes=10_000,
+        max_bubble_bytes=10_000,
+        max_image_bytes=10_000,
+        max_document_bytes=10_000,
     )
     sent = 0
 
@@ -234,7 +238,10 @@ async def test_a_declared_oversize_body_is_refused_up_front(
     client: httpx.AsyncClient, box: Box
 ) -> None:
     box.change(
-        max_background_bytes=1_000, max_bubble_bytes=1_000, max_image_bytes=1_000
+        max_background_bytes=1_000,
+        max_bubble_bytes=1_000,
+        max_image_bytes=1_000,
+        max_document_bytes=1_000,
     )
 
     r = await client.post(

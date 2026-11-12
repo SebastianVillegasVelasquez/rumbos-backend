@@ -51,6 +51,7 @@ async def test_an_mp3_upload_returns_the_contract_shape(
         "width",
         "height",
         "durationSeconds",
+        "pageCount",
         "bytes",
         "url",
         "thumbUrl",

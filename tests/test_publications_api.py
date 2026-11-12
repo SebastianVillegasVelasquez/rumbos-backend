@@ -927,6 +927,7 @@ async def test_a_published_skin_image_cannot_be_deleted(
         "maps": 0,
         "skins": 0,
         "publications": 1,
+        "tracks": 0,
     }
 
 

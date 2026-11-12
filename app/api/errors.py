@@ -33,6 +33,9 @@ from app.exceptions import (
     CourseMapNotFoundError,
     CoverInvalidError,
     CoverTooLargeError,
+    DocumentInvalidError,
+    DocumentQuarantinedError,
+    DocumentRightsDeclarationRequiredError,
     DraftChangedSinceReviewError,
     DuplicateSkinRuleError,
     ForbiddenError,
@@ -418,7 +421,8 @@ def register_exception_handlers(app: FastAPI) -> None:
         _coded(
             422,
             "invalid_asset_metadata",
-            "The title must be 1-120 characters and the credit at most 300",
+            "The title must be 1-120 characters (200 for a document) and the "
+            "credit at most 300",
         ),
     )
     app.add_exception_handler(
@@ -523,6 +527,28 @@ def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(
         AudioQuarantinedError,
         _coded(422, "audio_quarantined", "This audio has been taken down"),
+    )
+    app.add_exception_handler(
+        DocumentInvalidError,
+        # What to fix, and nothing of the file: the reason is one of a fixed set.
+        _coded(
+            422,
+            "document_invalid",
+            "The file is not a PDF this site can use",
+            lambda exc: {"reason": exc.reason},
+        ),
+    )
+    app.add_exception_handler(
+        DocumentRightsDeclarationRequiredError,
+        _coded(
+            422,
+            "document_rights_declaration_required",
+            "Declare that you have the right to share this document",
+        ),
+    )
+    app.add_exception_handler(
+        DocumentQuarantinedError,
+        _coded(422, "document_quarantined", "This document has been taken down"),
     )
     app.add_exception_handler(
         AudioTooLongError,
