@@ -65,10 +65,18 @@ def content_shows(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:
 
 def map_uses(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:
     """A draft map whose background is `{ASSETS_PATH}/{id}`, whose music is the
-    asset, or that has a content bubble showing it as an image."""
+    asset, whose welcome flow shows it, or that has a content bubble showing it
+    as an image."""
     return or_(
         CourseMap.image_url == func.concat(f"{ASSETS_PATH}/", _id_text(asset_id)),
         CourseMap.settings["audio"]["assetId"].astext == _id_text(asset_id),
+        # A welcome-flow step: a PDF's assetId or an image in its HTML. `strpos`
+        # on the steps' text, so a mention is enough to keep the asset.
+        func.strpos(
+            func.coalesce(CourseMap.settings["welcome"]["steps"].astext, ""),
+            _id_text(asset_id),
+        )
+        > 0,
         # Correlated by hand: the asset can be two queries up (the guarded
         # delete), where SQLAlchemy would otherwise add its table as a FROM.
         exists()

@@ -194,6 +194,49 @@ class Welcome(_Strict):
     `playOnEnter` are null (`play_on_enter` reads as None then). `show` applies
     to both."""
 
+    model_config = ConfigDict(
+        extra="forbid",
+        json_schema_extra={
+            "examples": [
+                {
+                    "show": "first_visit",
+                    "steps": [
+                        {
+                            "type": "welcome",
+                            "key": "bienvenida",
+                            "title": "Bienvenida",
+                            "message": "Hola, te damos la bienvenida a {curso}",
+                            "buttonLabel": "Empezar",
+                        },
+                        {
+                            "type": "html",
+                            "key": "lectura01",
+                            "title": "Lectura inicial",
+                            "html": "<h2>Antes de empezar</h2><p>Lee con calma.</p>",
+                            "css": "h2 { color: #036 }",
+                            "ack": {"label": "Lo he leido"},
+                            "minSeconds": 20,
+                        },
+                        {
+                            "type": "pdf",
+                            "key": "reglamento",
+                            "title": "Reglamento",
+                            "assetId": "0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b",
+                            "ack": {"label": "Acepto el reglamento"},
+                            "minSeconds": 30,
+                        },
+                        {
+                            "type": "quiz",
+                            "key": "cuestionario",
+                            "title": "Cuestionario de entrada",
+                            "cmid": 77,
+                        },
+                    ],
+                }
+            ]
+        },
+    )
+
     enabled: StrictBool = True
     # Declared first so the legacy fields can tell which mode they are in.
     steps: Steps = None
@@ -228,3 +271,17 @@ class Welcome(_Strict):
 
     def is_default(self) -> bool:
         return self == Welcome()
+
+
+class WelcomeDocument(ApiModel):
+    """A document a welcome flow shows, as it is now (read live, never part of a
+    snapshot or its hash). `available` is false when the asset is gone, taken
+    down, of another kind, or its file is missing; the other fields are then
+    empty."""
+
+    asset_id: uuid.UUID
+    url: str
+    title: str
+    page_count: int
+    bytes: int
+    available: bool

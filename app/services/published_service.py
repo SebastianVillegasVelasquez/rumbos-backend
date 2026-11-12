@@ -19,7 +19,10 @@ from app.schemas.published import (
 )
 from app.schemas.resolved import ResolvedMap
 from app.schemas.view3d import View3d
+from app.schemas.welcome import WelcomeDocument
 from app.services.resolution_service import MapResolutionService
+from app.welcome_flow.documents import unique_in_order, usable_documents
+from app.welcome_flow.flow import stored_pdf_ids
 
 
 def _bubble_ids(row: PublishedRow) -> list[uuid.UUID]:
@@ -78,6 +81,13 @@ class PublishedMapService:
             )
         return PublishedMapList(items=items, total=total, limit=limit, offset=offset)
 
+    async def _welcome_documents(self, snap: dict[str, Any]) -> list[WelcomeDocument]:
+        ids = unique_in_order(stored_pdf_ids(snap["settings"].get("welcome")))
+        if not ids:
+            return []
+        found = await usable_documents(self._assets, self._storage, ids)
+        return [found[i] for i in ids]
+
     async def get_map(self, course_map_id: uuid.UUID) -> PublishedMapRead:
         row = await self._require(course_map_id)
         statuses = await self._publications.bubble_statuses(_bubble_ids(row))
@@ -124,6 +134,7 @@ class PublishedMapService:
                 View3d.model_validate(snap["view3d"]) if "view3d" in snap else None
             ),
             audio_info=audio_info,
+            welcome_documents=await self._welcome_documents(snap),
             publication_number=row.number,
             published_at=row.published_at,
         )

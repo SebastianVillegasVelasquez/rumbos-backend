@@ -68,9 +68,11 @@ from app.schemas.course_map import (
 )
 from app.schemas.map_settings import AudioInfo, MapSettings
 from app.schemas.view3d import View3dUpdate
+from app.schemas.welcome import WelcomeDocument
 from app.services.publication_service import publication_infos
 from app.view3d.validation import check_view3d
-from app.welcome_flow.flow import flow_problems
+from app.welcome_flow.documents import unique_in_order, usable_documents
+from app.welcome_flow.flow import flow_problems, pdf_steps
 
 
 def is_bubble_candidate(module: MoodleModule) -> bool:
@@ -507,6 +509,21 @@ class CourseMapService:
 
         Raises `WelcomeInvalidError` listing every problem."""
         problems = flow_problems(settings.welcome)
+        steps = pdf_steps(settings.welcome)
+        if steps:
+            documents = await usable_documents(
+                self._assets, self._storage, [s.asset_id for _, s in steps]
+            )
+            for index, step in steps:
+                if not documents[step.asset_id].available:
+                    problems.append(
+                        {
+                            "path": f"welcome.steps[{index}].assetId",
+                            "code": "document_unavailable",
+                            "message": "The document does not exist or is not "
+                            "available",
+                        }
+                    )
         if problems:
             raise WelcomeInvalidError(problems)
 
@@ -540,7 +557,15 @@ class CourseMapService:
             bubbles=await self._bubbles.list_by_course_map(course_map.id),
             view3d=await self._view3d.get(course_map.id),
             audio_info=await self._audio_info(course_map.settings),
+            welcome_documents=await self._welcome_documents(course_map.settings),
         )
+
+    async def _welcome_documents(self, settings: MapSettings) -> list[WelcomeDocument]:
+        ids = unique_in_order(s.asset_id for _, s in pdf_steps(settings.welcome))
+        if not ids:
+            return []
+        found = await usable_documents(self._assets, self._storage, ids)
+        return [found[i] for i in ids]
 
     async def _require_course_map(self, course_map_id: uuid.UUID) -> CourseMapBase:
         course_map = await self._course_maps.get_by_id(course_map_id)

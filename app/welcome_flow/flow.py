@@ -9,6 +9,10 @@ is read: a stored flow always loads, whatever rules tighten afterwards. Messages
 are fixed texts; only the name of an offending tag or attribute is shown back.
 """
 
+import uuid
+from collections.abc import Mapping
+from typing import Any
+
 from app.schemas.welcome import (
     MAX_CSS_BYTES,
     MAX_FLOW_MARKUP_BYTES,
@@ -21,7 +25,7 @@ from app.schemas.welcome import (
     WelcomeStep,
 )
 from app.welcome_flow.css import check_css
-from app.welcome_flow.html import check_html
+from app.welcome_flow.html import asset_ids_in, check_html
 
 Problem = dict[str, str]
 
@@ -111,6 +115,36 @@ def pdf_steps(welcome: Welcome) -> list[tuple[int, PdfStep]]:
         for index, step in enumerate(welcome.steps or [])
         if isinstance(step, PdfStep)
     ]
+
+
+def stored_pdf_ids(welcome: Mapping[str, Any] | None) -> list[uuid.UUID]:
+    """The document of every PDF step of a stored flow, in step order."""
+    found: list[uuid.UUID] = []
+    for step in (welcome or {}).get("steps") or []:
+        if isinstance(step, Mapping) and step.get("type") == "pdf":
+            try:
+                found.append(uuid.UUID(str(step.get("assetId"))))
+            except ValueError:
+                pass
+    return found
+
+
+def stored_flow_asset_ids(welcome: Mapping[str, Any] | None) -> set[uuid.UUID]:
+    """The assets a stored welcome flow depends on: the document of every PDF
+    step and every image its HTML steps show. Read from the stored JSON, so it
+    works on a snapshot and never raises on what it does not recognise."""
+    found: set[uuid.UUID] = set()
+    for step in (welcome or {}).get("steps") or []:
+        if not isinstance(step, Mapping):
+            continue
+        if step.get("type") == "pdf":
+            try:
+                found.add(uuid.UUID(str(step.get("assetId"))))
+            except ValueError:
+                pass
+        elif step.get("type") == "html" and isinstance(step.get("html"), str):
+            found.update(asset_ids_in(step["html"]))
+    return found
 
 
 def _byte_size(text: str) -> int:

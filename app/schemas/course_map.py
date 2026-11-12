@@ -10,6 +10,7 @@ from app.schemas.base import ApiModel
 from app.schemas.bubble import BubbleRead
 from app.schemas.map_settings import AudioInfo, MapSettings
 from app.schemas.view3d import View3d
+from app.schemas.welcome import WelcomeDocument
 
 TITLE_MAX_LENGTH = 120
 IMAGE_URL_MAX_LENGTH = 2048
@@ -161,3 +162,6 @@ class CourseMapRead(CourseMapBase):
     # Title, credit and duration of the map's music, read live from the asset;
     # null when there is none (or it has been taken down).
     audio_info: AudioInfo | None = None
+    # The documents the welcome flow's PDF steps show, read live (never in a
+    # snapshot); empty when the flow has none.
+    welcome_documents: list[WelcomeDocument] = Field(default_factory=list)

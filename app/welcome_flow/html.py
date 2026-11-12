@@ -19,6 +19,7 @@ import base64
 import binascii
 import re
 import unicodedata
+import uuid
 from html.parser import HTMLParser
 
 from app.core.paths import ASSETS_PATH
@@ -223,6 +224,15 @@ def _check_attribute(tag: str, name: str, value: str | None) -> None:
             )
         return
     raise _Refused(f"the attribute {_named(name)} on <{_named(tag)}>")
+
+
+def asset_ids_in(html: str) -> set[uuid.UUID]:
+    """The assets an HTML step shows (`{ASSETS_PATH}/{id}` anywhere in it, so
+    that a mention counts as a use: better to keep a file than to lose one)."""
+    return {
+        uuid.UUID(found.group(0).removeprefix(ASSETS_PATH + "/")[:36])
+        for found in _ASSET_SRC.finditer(html)
+    }
 
 
 def is_allowed_image(value: str) -> bool:

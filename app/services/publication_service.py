@@ -2,6 +2,7 @@ import uuid
 from collections.abc import Collection
 
 from app.assets.references import audio_info_of
+from app.assets.storage import AssetStorage
 from app.enums import PublicationStatus
 from app.exceptions import (
     CourseMapNotFoundError,
@@ -22,6 +23,7 @@ from app.repositories.protocols import (
     View3dRepository,
 )
 from app.schemas.course_map import CourseMapRead, PublicationInfo
+from app.schemas.map_settings import MapSettings
 from app.schemas.publication import (
     PublicationChanges,
     PublicationList,
@@ -30,6 +32,9 @@ from app.schemas.publication import (
     PublishRequest,
     RestoreResult,
 )
+from app.schemas.welcome import WelcomeDocument
+from app.welcome_flow.documents import unique_in_order, usable_documents
+from app.welcome_flow.flow import pdf_steps
 
 MAX_PUBLICATIONS_LISTED = 100
 
@@ -101,6 +106,7 @@ class PublicationService:
         view3d: View3dRepository,
         assets: AssetRepository,
         keep: int,
+        storage: AssetStorage | None = None,
     ) -> None:
         self._publications = publications
         self._course_maps = course_maps
@@ -108,6 +114,7 @@ class PublicationService:
         self._view3d = view3d
         self._assets = assets
         self._keep = keep
+        self._storage = storage
 
     async def state(self, course_map_id: uuid.UUID) -> PublicationState:
         draft = await self._publications.load_draft(course_map_id)
@@ -177,6 +184,13 @@ class PublicationService:
             raise PublicationNotFoundError(number)
         return await self._load(course_map_id, record.snapshot, expected_revision)
 
+    async def _welcome_documents(self, settings: MapSettings) -> list[WelcomeDocument]:
+        ids = unique_in_order(s.asset_id for _, s in pdf_steps(settings.welcome))
+        if not ids:
+            return []
+        found = await usable_documents(self._assets, self._storage, ids)
+        return [found[i] for i in ids]
+
     async def _load(
         self,
         course_map_id: uuid.UUID,
@@ -203,6 +217,7 @@ class PublicationService:
                     if music is not None
                     else None
                 ),
+                welcome_documents=await self._welcome_documents(course_map.settings),
             ),
             warnings=warnings,
         )
