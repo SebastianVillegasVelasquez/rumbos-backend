@@ -1,0 +1,169 @@
+{
+  "entries": [
+    {
+      "id": "listening.a.01",
+      "text": "The tour leaves at seven fifteen.",
+      "voices": [],
+      "file": "audio/listening.a.01.mp3",
+      "duration_s": null,
+      "transcript": "The tour leaves at seven fifteen."
+    },
+    {
+      "id": "listening.a.02",
+      "text": "The room number is three-oh-four.",
+      "voices": [],
+      "file": "audio/listening.a.02.mp3",
+      "duration_s": null,
+      "transcript": "The room number is three-oh-four."
+    },
+    {
+      "id": "listening.a.03",
+      "text": "The soup is twelve thousand pesos.",
+      "voices": [],
+      "file": "audio/listening.a.03.mp3",
+      "duration_s": null,
+      "transcript": "The soup is twelve thousand pesos."
+    },
+    {
+      "id": "listening.a.04",
+      "text": "The market opens at nine, and it closes at six.",
+      "voices": [],
+      "file": "audio/listening.a.04.mp3",
+      "duration_s": null,
+      "transcript": "The market opens at nine, and it closes at six."
+    },
+    {
+      "id": "listening.a.05",
+      "text": "She is forty years old.",
+      "voices": [],
+      "file": "audio/listening.a.05.mp3",
+      "duration_s": null,
+      "transcript": "She is forty years old."
+    },
+    {
+      "id": "listening.b.01",
+      "text": "— Good afternoon, sir. Welcome. — Thank you.",
+      "voices": [
+        {
+          "voice": "speaker_a",
+          "text": "Good afternoon, sir. Welcome."
+        },
+        {
+          "voice": "speaker_b",
+          "text": "Thank you."
+        }
+      ],
+      "file": "audio/listening.b.01.mp3",
+      "duration_s": null,
+      "transcript": "— Good afternoon, sir. Welcome. — Thank you."
+    },
+    {
+      "id": "listening.b.02",
+      "text": "— Does the soup have peanuts? — No, it doesn’t.",
+      "voices": [
+        {
+          "voice": "speaker_a",
+          "text": "Does the soup have peanuts?"
+        },
+        {
+          "voice": "speaker_b",
+          "text": "No, it doesn’t."
+        }
+      ],
+      "file": "audio/listening.b.02.mp3",
+      "duration_s": null,
+      "transcript": "— Does the soup have peanuts? — No, it doesn’t."
+    },
+    {
+      "id": "listening.b.03",
+      "text": "— How do you go to the reserve? — By boat.",
+      "voices": [
+        {
+          "voice": "speaker_a",
+          "text": "How do you go to the reserve?"
+        },
+        {
+          "voice": "speaker_b",
+          "text": "By boat."
+        }
+      ],
+      "file": "audio/listening.b.03.mp3",
+      "duration_s": null,
+      "transcript": "— How do you go to the reserve? — By boat."
+    },
+    {
+      "id": "listening.b.04",
+      "text": "— Is there a pharmacy near here? — Yes, next to the market.",
+      "voices": [
+        {
+          "voice": "speaker_a",
+          "text": "Is there a pharmacy near here?"
+        },
+        {
+          "voice": "speaker_b",
+          "text": "Yes, next to the market."
+        }
+      ],
+      "file": "audio/listening.b.04.mp3",
+      "duration_s": null,
+      "transcript": "— Is there a pharmacy near here? — Yes, next to the market."
+    },
+    {
+      "id": "listening.b.05",
+      "text": "— What’s the matter? — I have a headache.",
+      "voices": [
+        {
+          "voice": "speaker_a",
+          "text": "What’s the matter?"
+        },
+        {
+          "voice": "speaker_b",
+          "text": "I have a headache."
+        }
+      ],
+      "file": "audio/listening.b.05.mp3",
+      "duration_s": null,
+      "transcript": "— What’s the matter? — I have a headache."
+    },
+    {
+      "id": "listening.c.01.1",
+      "text": "The boat leaves at 7:00 a.m.",
+      "voices": [],
+      "file": "audio/listening.c.01.1.mp3",
+      "duration_s": null,
+      "transcript": "The boat leaves at 7:00 a.m."
+    },
+    {
+      "id": "listening.c.01.2",
+      "text": "I would like a soup, please.",
+      "voices": [],
+      "file": "audio/listening.c.01.2.mp3",
+      "duration_s": null,
+      "transcript": "I would like a soup, please."
+    },
+    {
+      "id": "listening.c.01.3",
+      "text": "I need medicine for a cough.",
+      "voices": [],
+      "file": "audio/listening.c.01.3.mp3",
+      "duration_s": null,
+      "transcript": "I need medicine for a cough."
+    },
+    {
+      "id": "listening.c.01.4",
+      "text": "Put the bottle in the white bin.",
+      "voices": [],
+      "file": "audio/listening.c.01.4.mp3",
+      "duration_s": null,
+      "transcript": "Put the bottle in the white bin."
+    },
+    {
+      "id": "listening.c.01.5",
+      "text": "Welcome! May I help you?",
+      "voices": [],
+      "file": "audio/listening.c.01.5.mp3",
+      "duration_s": null,
+      "transcript": "Welcome! May I help you?"
+    }
+  ]
+}
