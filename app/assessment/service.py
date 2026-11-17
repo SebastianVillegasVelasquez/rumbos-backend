@@ -354,6 +354,10 @@ class AssessmentService:
             raise AssessmentConflictError("in_progress")
         return await self._result(attempt)
 
+    async def expire(self, attempt: AttemptRecord) -> AttemptRecord:
+        """Closes a past-deadline attempt (the sweeper uses this too)."""
+        return await self._close(attempt, "expired")
+
     async def _expire(self, attempt: AttemptRecord) -> AttemptRecord:
         return await self._close(attempt, "expired")
 
