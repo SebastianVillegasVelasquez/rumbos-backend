@@ -39,6 +39,8 @@ from sqlalchemy.orm.util import LoaderCriteriaOption
 from app.enums import AssetKind
 from app.exceptions import CourseMapNotFoundError
 from app.models import (
+    AssessmentAnswer,
+    AssessmentAttempt,
     Asset,
     Bubble,
     CourseMap,
@@ -52,10 +54,11 @@ SCOPE_KEY = "rumbos.scope"
 TENANT_WIDE = "tenant_wide"
 
 # Tables whose rows carry a `tenant_id`, stamped when they are created.
-_STAMPED = (CourseMap, Bubble, Asset, Skin)
+_STAMPED = (CourseMap, Bubble, Asset, Skin, AssessmentAttempt)
 # Tables that hang off a map and have no `tenant_id` of their own.
 _VIA_MAP = (CourseMapSkinRule, CourseMapView3dBinding, Publication)
-_SCOPED = frozenset((*_STAMPED, *_VIA_MAP))
+# An answer belongs to an attempt, which carries the tenant and the course.
+_SCOPED = frozenset((*_STAMPED, *_VIA_MAP, AssessmentAnswer))
 
 
 @dataclass(frozen=True)
@@ -150,6 +153,44 @@ def _criteria(scope: Scope, state: ORMExecuteState) -> list[LoaderCriteriaOption
         for model in (CourseMapSkinRule, CourseMapView3dBinding, Publication):
             options.append(_via_course(model, tid, course))
 
+    if course is None or wide:
+        options.append(
+            with_loader_criteria(
+                AssessmentAttempt, lambda c: c.tenant_id == tid, include_aliases=True
+            )
+        )
+        options.append(
+            with_loader_criteria(
+                AssessmentAnswer,
+                lambda c: c.attempt_id.in_(
+                    select(AssessmentAttempt.id).where(
+                        AssessmentAttempt.tenant_id == tid
+                    )
+                ),
+                include_aliases=True,
+            )
+        )
+    else:
+        options.append(
+            with_loader_criteria(
+                AssessmentAttempt,
+                lambda c: (c.tenant_id == tid) & (c.moodle_course_id == course),
+                include_aliases=True,
+            )
+        )
+        options.append(
+            with_loader_criteria(
+                AssessmentAnswer,
+                lambda c: c.attempt_id.in_(
+                    select(AssessmentAttempt.id).where(
+                        AssessmentAttempt.tenant_id == tid,
+                        AssessmentAttempt.moodle_course_id == course,
+                    )
+                ),
+                include_aliases=True,
+            )
+        )
+
     # Built-in skins and library tracks are everybody's to read and nobody's
     # (in a tenant scope) to change.
     for shared in (Asset, Skin):
@@ -233,7 +274,7 @@ def _stamp_new_rows(session: Session, flush_context: object, instances: object) 
             )
         if (
             scope.course_id is not None
-            and isinstance(obj, CourseMap | Bubble)
+            and isinstance(obj, CourseMap | Bubble | AssessmentAttempt)
             and obj.moodle_course_id != scope.course_id
         ):
             # A course the principal cannot see: the same answer as for any
