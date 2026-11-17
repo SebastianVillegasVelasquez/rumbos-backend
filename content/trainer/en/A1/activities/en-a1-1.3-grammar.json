@@ -1,0 +1,197 @@
+{
+  "id": "en-a1-1.3-grammar",
+  "lesson_id": "1.3",
+  "skill": "grammar",
+  "title": "Practice 1.3",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Front desk telling guests the hours",
+  "can_do": [
+    "I can say and ask the time.",
+    "I can tell a guest the hours of meals and tours."
+  ],
+  "items": [
+    {
+      "id": "1.3.ex.01",
+      "type": "mcq",
+      "prompt": "How do you say 3:30?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Half past three"
+        },
+        {
+          "id": "o2",
+          "text": "Half to three"
+        },
+        {
+          "id": "o3",
+          "text": "Three past half"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Half past three is three thirty.",
+      "error_tags": {
+        "o2": {
+          "tag": "time",
+          "text": "Half past means thirty minutes after the hour."
+        }
+      }
+    },
+    {
+      "id": "1.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "The tour starts {1} ten.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "on"
+            },
+            {
+              "id": "o2",
+              "text": "at"
+            },
+            {
+              "id": "o3",
+              "text": "in"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "preposition",
+            "text": "Use at with a clock time."
+          }
+        }
+      ],
+      "explanation": "Use at with clock times."
+    },
+    {
+      "id": "1.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "What {1} is it?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "time"
+          ],
+          "error_tag": {
+            "tag": "question_word",
+            "text": "Ask the time with What time."
+          }
+        }
+      ],
+      "explanation": "We ask What time is it?"
+    },
+    {
+      "id": "1.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "What"
+        },
+        {
+          "id": "t2",
+          "text": "time"
+        },
+        {
+          "id": "t3",
+          "text": "is"
+        },
+        {
+          "id": "t4",
+          "text": "breakfast"
+        },
+        {
+          "id": "t5",
+          "text": "?"
+        }
+      ],
+      "explanation": "The question word comes first.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with What time."
+      }
+    },
+    {
+      "id": "1.3.ex.05",
+      "type": "match",
+      "prompt": "Match the clock time with the words.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "6:00"
+        },
+        {
+          "id": "l2",
+          "text": "6:15"
+        },
+        {
+          "id": "l3",
+          "text": "6:30"
+        },
+        {
+          "id": "l4",
+          "text": "6:45"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "six o'clock"
+        },
+        {
+          "id": "r2",
+          "text": "quarter past six"
+        },
+        {
+          "id": "r3",
+          "text": "half past six"
+        },
+        {
+          "id": "r4",
+          "text": "quarter to seven"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Quarter is fifteen minutes; half is thirty."
+    },
+    {
+      "id": "1.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Answer: What day comes after Monday?",
+      "accepted": [
+        "Tuesday"
+      ],
+      "explanation": "The days are Monday, Tuesday, Wednesday...",
+      "error_tag": {
+        "tag": "days",
+        "text": "After Monday comes Tuesday."
+      }
+    }
+  ]
+}

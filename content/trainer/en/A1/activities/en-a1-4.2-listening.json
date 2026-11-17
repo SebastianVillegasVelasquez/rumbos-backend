@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-4.2-listening",
+  "lesson_id": "4.2",
+  "skill": "listening",
+  "title": "Listen and choose 4.2",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Host welcoming guests from many countries",
+  "can_do": [
+    "I can welcome international guests politely.",
+    "I can use greetings and polite phrases from around the world."
+  ],
+  "items": [
+    {
+      "id": "en-a1-4.2.l1",
+      "type": "listen_choose",
+      "prompt": "What does bonjour mean?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Good morning"
+        },
+        {
+          "id": "o2",
+          "text": "Thank you"
+        },
+        {
+          "id": "o3",
+          "text": "Goodbye"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Bonjour is good morning.",
+      "audio": "en-a1-4.2.l1"
+    },
+    {
+      "id": "en-a1-4.2.l2",
+      "type": "listen_choose",
+      "prompt": "How do people say hello in Japan?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "With a small bow"
+        },
+        {
+          "id": "o2",
+          "text": "With a kiss"
+        },
+        {
+          "id": "o3",
+          "text": "With a song"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "A small bow.",
+      "audio": "en-a1-4.2.l2"
+    },
+    {
+      "id": "en-a1-4.2.l3",
+      "type": "listen_choose",
+      "prompt": "What does the speaker ask for?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "To speak slowly"
+        },
+        {
+          "id": "o2",
+          "text": "To speak loudly"
+        },
+        {
+          "id": "o3",
+          "text": "To stop"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "To speak slowly.",
+      "audio": "en-a1-4.2.l3"
+    }
+  ]
+}

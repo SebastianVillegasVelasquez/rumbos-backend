@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-3.4-listening",
+  "lesson_id": "3.4",
+  "skill": "listening",
+  "title": "Listen and choose 3.4",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Hotel staff helping a guest who feels ill",
+  "can_do": [
+    "I can say what is wrong with me.",
+    "I can understand simple advice about health."
+  ],
+  "items": [
+    {
+      "id": "en-a1-3.4.l1",
+      "type": "listen_choose",
+      "prompt": "What is wrong?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "A headache and a cold"
+        },
+        {
+          "id": "o2",
+          "text": "A broken leg"
+        },
+        {
+          "id": "o3",
+          "text": "A sore foot"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Headache and cold.",
+      "audio": "en-a1-3.4.l1"
+    },
+    {
+      "id": "en-a1-3.4.l2",
+      "type": "listen_choose",
+      "prompt": "How often is the medicine taken?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Two times a day"
+        },
+        {
+          "id": "o2",
+          "text": "Once a week"
+        },
+        {
+          "id": "o3",
+          "text": "Six times a day"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Two times a day.",
+      "audio": "en-a1-3.4.l2"
+    },
+    {
+      "id": "en-a1-3.4.l3",
+      "type": "listen_choose",
+      "prompt": "When does it hurt?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "After dinner"
+        },
+        {
+          "id": "o2",
+          "text": "Before breakfast"
+        },
+        {
+          "id": "o3",
+          "text": "At lunch"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "After dinner.",
+      "audio": "en-a1-3.4.l3"
+    }
+  ]
+}

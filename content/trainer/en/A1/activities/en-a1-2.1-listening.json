@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-2.1-listening",
+  "lesson_id": "2.1",
+  "skill": "listening",
+  "title": "Listen and choose 2.1",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Waiter taking an order",
+  "can_do": [
+    "I can order food and drinks.",
+    "I can ask and say how much something costs."
+  ],
+  "items": [
+    {
+      "id": "en-a1-2.1.l1",
+      "type": "listen_choose",
+      "prompt": "What does the person want?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Tea with milk"
+        },
+        {
+          "id": "o2",
+          "text": "Coffee with sugar"
+        },
+        {
+          "id": "o3",
+          "text": "Juice with ice"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker orders tea with milk.",
+      "audio": "en-a1-2.1.l1"
+    },
+    {
+      "id": "en-a1-2.1.l2",
+      "type": "listen_choose",
+      "prompt": "How much is the fish?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "8,000 pesos"
+        },
+        {
+          "id": "o2",
+          "text": "18,000 pesos"
+        },
+        {
+          "id": "o3",
+          "text": "80,000 pesos"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "Eighteen thousand is 18,000.",
+      "audio": "en-a1-2.1.l2"
+    },
+    {
+      "id": "en-a1-2.1.l3",
+      "type": "listen_choose",
+      "prompt": "Which food is on the list?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Beans"
+        },
+        {
+          "id": "o2",
+          "text": "Fish"
+        },
+        {
+          "id": "o3",
+          "text": "Pizza"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The list is rice, beans and chicken.",
+      "audio": "en-a1-2.1.l3"
+    }
+  ]
+}

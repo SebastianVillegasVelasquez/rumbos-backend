@@ -1,0 +1,178 @@
+{
+  "id": "en-a1-4.3-dialogue",
+  "lesson_id": "4.3",
+  "skill": "dialogue",
+  "title": "Talk it through 4.3",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Concierge giving directions to hotel facilities and landmarks",
+  "can_do": [
+    "I can give simple directions inside a hotel.",
+    "I can name places in the city and say when they are open."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Excuse me. Where is the restaurant?",
+        "translation": "Disculpe. ¿Dónde está el restaurante?",
+        "audio": "en-a1-4.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is on the first floor.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "It is next to the lobby.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Go straight, then turn left.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "And the swimming pool?",
+        "translation": "¿Y la piscina?",
+        "audio": "en-a1-4.3.d2",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is behind the hotel.",
+            "next": "n3"
+          },
+          {
+            "id": "o2",
+            "text": "It is on the second floor.",
+            "next": "n3"
+          },
+          {
+            "id": "o3",
+            "text": "It is next to the garden.",
+            "next": "n3"
+          }
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "What time does the pool open?",
+        "translation": "¿A qué hora abre la piscina?",
+        "audio": "en-a1-4.3.d3",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "it",
+              "opens"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "at"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "opens"
+            ],
+            "next": "n4"
+          }
+        ],
+        "model_reply": "It opens at eight.",
+        "starters": [
+          "It opens at ..."
+        ],
+        "word_bank": [
+          "It",
+          "opens",
+          "at",
+          "eight",
+          "nine",
+          "closes"
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Is there a church in the city?",
+        "translation": "¿Hay una iglesia en la ciudad?",
+        "audio": "en-a1-4.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, it is in the main square.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, it is very old.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, near the market.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "What is a good place to see?",
+        "translation": "¿Qué lugar es bueno para visitar?",
+        "audio": "en-a1-4.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "The old town is beautiful.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "The castle is famous.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "The museum is interesting.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you for your help.",
+        "translation": "Gracias por su ayuda.",
+        "audio": "en-a1-4.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Enjoy your day.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "You are welcome.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Come back soon.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

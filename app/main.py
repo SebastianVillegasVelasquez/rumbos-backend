@@ -10,13 +10,16 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 
 from app.api.errors import register_exception_handlers
 from app.api.routes import (
+    assessments,
     assets,
     auth,
     course_map,
     health,
+    practice,
     publications,
     published,
     skins,
+    trainer_audio,
     view3d,
 )
 from app.api.security_headers import NoStoreForAuth
@@ -34,6 +37,7 @@ from app.moodle.client import HttpMoodleClient
 from app.repositories.sqlalchemy.app_meta_repository import SqlAlchemyAppMetaRepository
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
 from app.tenancy.scope import SYSTEM, bind_scope
+from app.trainer.catalog import load_catalog
 
 logger = logging.getLogger(__name__)
 
@@ -71,6 +75,8 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     engine = create_engine(settings.build_database_url)
     app.state.db_engine = engine
     try:
+        # A pack that does not load stops the start: nothing is served half-loaded.
+        app.state.catalog = load_catalog(Path(settings.trainer_content_dir))
         app.state.storage_state = await verify_storage(engine, settings)
     except BaseException:
         await engine.dispose()
@@ -147,6 +153,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(assets.router, prefix=API_PREFIX)
     application.include_router(skins.router, prefix=API_PREFIX)
     application.include_router(view3d.router, prefix=API_PREFIX)
+    application.include_router(assessments.router, prefix=API_PREFIX)
+    application.include_router(trainer_audio.router, prefix=API_PREFIX)
+    application.include_router(practice.router, prefix=API_PREFIX)
+    application.include_router(practice.editor_router, prefix=API_PREFIX)
     return application
 
 

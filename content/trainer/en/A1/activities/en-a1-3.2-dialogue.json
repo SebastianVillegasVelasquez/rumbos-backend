@@ -1,0 +1,189 @@
+{
+  "id": "en-a1-3.2-dialogue",
+  "lesson_id": "3.2",
+  "skill": "dialogue",
+  "title": "Talk it through 3.2",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Guide talking about the weather",
+  "can_do": [
+    "I can say what the weather is like.",
+    "I can suggest what to wear or bring."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "What is the weather like today?",
+        "translation": "¿Cómo está el clima hoy?",
+        "audio": "en-a1-3.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is sunny.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "It is cloudy.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "It is warm.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Is it going to rain?",
+        "translation": "¿Va a llover?",
+        "audio": "en-a1-3.2.d2",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Maybe in the afternoon.",
+            "next": "n3"
+          },
+          {
+            "id": "o2",
+            "text": "No, it is not.",
+            "next": "n3"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, bring an umbrella.",
+            "next": "n3"
+          }
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "What should I bring?",
+        "translation": "¿Qué debo llevar?",
+        "audio": "en-a1-3.2.d3",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "umbrella"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "jacket"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "hat"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "sunscreen"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "water"
+            ],
+            "next": "n4"
+          }
+        ],
+        "model_reply": "Bring an umbrella and a jacket.",
+        "starters": [
+          "Bring ..."
+        ],
+        "word_bank": [
+          "Bring",
+          "an",
+          "umbrella",
+          "a",
+          "jacket",
+          "hat"
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Is it hot at the beach?",
+        "translation": "¿Hace calor en la playa?",
+        "audio": "en-a1-3.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, it is hot.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, it is very hot.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "It is warm, not hot.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "And at night?",
+        "translation": "¿Y de noche?",
+        "audio": "en-a1-3.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is cool at night.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "It is cold in the mountains.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "It is windy.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. I will take my jacket.",
+        "translation": "Gracias. Llevaré mi chaqueta.",
+        "audio": "en-a1-3.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Good idea!",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Have a nice day!",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Enjoy the tour!",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

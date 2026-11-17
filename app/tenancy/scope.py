@@ -30,6 +30,7 @@ maintenance scripts.
 
 import uuid
 from dataclasses import dataclass
+from typing import Any
 
 from sqlalchemy import event, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -39,12 +40,18 @@ from sqlalchemy.orm.util import LoaderCriteriaOption
 from app.enums import AssetKind
 from app.exceptions import CourseMapNotFoundError
 from app.models import (
+    AssessmentAnswer,
+    AssessmentAttempt,
     Asset,
     Bubble,
     CourseMap,
     CourseMapSkinRule,
     CourseMapView3dBinding,
+    PracticeAnswer,
+    PracticeReport,
+    PracticeSession,
     Publication,
+    SavedWord,
     Skin,
 )
 
@@ -52,10 +59,14 @@ SCOPE_KEY = "rumbos.scope"
 TENANT_WIDE = "tenant_wide"
 
 # Tables whose rows carry a `tenant_id`, stamped when they are created.
-_STAMPED = (CourseMap, Bubble, Asset, Skin)
+# Rows of one user of one course (tenant and course stamped).
+_COURSE_ROWS = (AssessmentAttempt, PracticeSession, SavedWord, PracticeReport)
+_STAMPED = (CourseMap, Bubble, Asset, Skin, *_COURSE_ROWS)
 # Tables that hang off a map and have no `tenant_id` of their own.
 _VIA_MAP = (CourseMapSkinRule, CourseMapView3dBinding, Publication)
-_SCOPED = frozenset((*_STAMPED, *_VIA_MAP))
+# An answer belongs to an attempt, which carries the tenant and the course.
+# An answer belongs to a session or attempt, which carry tenant and course.
+_SCOPED = frozenset((*_STAMPED, *_VIA_MAP, AssessmentAnswer, PracticeAnswer))
 
 
 @dataclass(frozen=True)
@@ -150,6 +161,11 @@ def _criteria(scope: Scope, state: ORMExecuteState) -> list[LoaderCriteriaOption
         for model in (CourseMapSkinRule, CourseMapView3dBinding, Publication):
             options.append(_via_course(model, tid, course))
 
+    narrow = course is not None and not wide
+    for row_model in _COURSE_ROWS:
+        options.append(_row_criteria(row_model, tid, course if narrow else None))
+    options.extend(_answer_criteria(tid, course if narrow else None))
+
     # Built-in skins and library tracks are everybody's to read and nobody's
     # (in a tenant scope) to change.
     for shared in (Asset, Skin):
@@ -168,6 +184,69 @@ def _criteria(scope: Scope, state: ORMExecuteState) -> list[LoaderCriteriaOption
                 )
             )
     return options
+
+
+def _row_criteria(
+    model: Any, tid: uuid.UUID | None, course: int | None
+) -> LoaderCriteriaOption:
+    if course is None:
+        return with_loader_criteria(
+            model, lambda c: c.tenant_id == tid, include_aliases=True
+        )
+    return with_loader_criteria(
+        model,
+        lambda c: (c.tenant_id == tid) & (c.moodle_course_id == course),
+        include_aliases=True,
+    )
+
+
+def _answer_criteria(
+    tid: uuid.UUID | None, course: int | None
+) -> list[LoaderCriteriaOption]:
+    """An answer (to an exam or to a practice step) is visible when the
+    attempt or session it belongs to is. Written out per model: SQLAlchemy
+    analyses these lambdas, so they cannot be built from variables."""
+    if course is None:
+        return [
+            with_loader_criteria(
+                AssessmentAnswer,
+                lambda c: c.attempt_id.in_(
+                    select(AssessmentAttempt.id).where(
+                        AssessmentAttempt.tenant_id == tid
+                    )
+                ),
+                include_aliases=True,
+            ),
+            with_loader_criteria(
+                PracticeAnswer,
+                lambda c: c.session_id.in_(
+                    select(PracticeSession.id).where(PracticeSession.tenant_id == tid)
+                ),
+                include_aliases=True,
+            ),
+        ]
+    return [
+        with_loader_criteria(
+            AssessmentAnswer,
+            lambda c: c.attempt_id.in_(
+                select(AssessmentAttempt.id).where(
+                    AssessmentAttempt.tenant_id == tid,
+                    AssessmentAttempt.moodle_course_id == course,
+                )
+            ),
+            include_aliases=True,
+        ),
+        with_loader_criteria(
+            PracticeAnswer,
+            lambda c: c.session_id.in_(
+                select(PracticeSession.id).where(
+                    PracticeSession.tenant_id == tid,
+                    PracticeSession.moodle_course_id == course,
+                )
+            ),
+            include_aliases=True,
+        ),
+    ]
 
 
 def _via_course(
@@ -233,7 +312,7 @@ def _stamp_new_rows(session: Session, flush_context: object, instances: object) 
             )
         if (
             scope.course_id is not None
-            and isinstance(obj, CourseMap | Bubble)
+            and isinstance(obj, (CourseMap, Bubble, *_COURSE_ROWS))
             and obj.moodle_course_id != scope.course_id
         ):
             # A course the principal cannot see: the same answer as for any

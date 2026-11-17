@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-2.3-listening",
+  "lesson_id": "2.3",
+  "skill": "listening",
+  "title": "Listen and choose 2.3",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Host talking about people and places of origin",
+  "can_do": [
+    "I can say where people are from.",
+    "I can describe where I live."
+  ],
+  "items": [
+    {
+      "id": "en-a1-2.3.l1",
+      "type": "listen_choose",
+      "prompt": "Where is she from?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "A small village"
+        },
+        {
+          "id": "o2",
+          "text": "A big city"
+        },
+        {
+          "id": "o3",
+          "text": "An island"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "She is from a small village.",
+      "audio": "en-a1-2.3.l1"
+    },
+    {
+      "id": "en-a1-2.3.l2",
+      "type": "listen_choose",
+      "prompt": "Where is Cartagena?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "On the coast"
+        },
+        {
+          "id": "o2",
+          "text": "In the mountains"
+        },
+        {
+          "id": "o3",
+          "text": "In the desert"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says on the coast.",
+      "audio": "en-a1-2.3.l2"
+    },
+    {
+      "id": "en-a1-2.3.l3",
+      "type": "listen_choose",
+      "prompt": "Where are her parents from?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Spain"
+        },
+        {
+          "id": "o2",
+          "text": "Italy"
+        },
+        {
+          "id": "o3",
+          "text": "Peru"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Parents from Spain.",
+      "audio": "en-a1-2.3.l3"
+    }
+  ]
+}

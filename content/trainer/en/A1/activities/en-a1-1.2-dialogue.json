@@ -1,0 +1,172 @@
+{
+  "id": "en-a1-1.2-dialogue",
+  "lesson_id": "1.2",
+  "skill": "dialogue",
+  "title": "Talk it through 1.2",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Guide meeting visitors from other countries",
+  "can_do": [
+    "I can say where I am from.",
+    "I can ask a visitor where they are from and what languages they speak."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Hello! Are you the guide?",
+        "translation": "¡Hola! ¿Usted es el guía?",
+        "audio": "en-a1-1.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, I am.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, I am your guide today.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, welcome!",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Where are you from?",
+        "translation": "¿De dónde es usted?",
+        "audio": "en-a1-1.2.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "i",
+              "am",
+              "from"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "from"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "I am from Colombia.",
+        "starters": [
+          "I am from ..."
+        ],
+        "word_bank": [
+          "I",
+          "am",
+          "from",
+          "Colombia",
+          "Medellin"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "I am from Canada. Do you speak English?",
+        "translation": "Soy de Canadá. ¿Habla inglés?",
+        "audio": "en-a1-1.2.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, I speak a little English.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, I do.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "A little.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Do you speak French?",
+        "translation": "¿Habla francés?",
+        "audio": "en-a1-1.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "No, I do not.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "No, but I speak Spanish.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Only a little.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Great. I speak English and French.",
+        "translation": "Muy bien. Hablo inglés y francés.",
+        "audio": "en-a1-1.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "That is great!",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Nice. English is good for me.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Welcome to Colombia!",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Are your friends from Canada too?",
+        "translation": "¿Sus amigos también son de Canadá?",
+        "audio": "en-a1-1.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, they are.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "No, they are from the United States.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Yes, they are Canadian.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

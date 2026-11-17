@@ -1,0 +1,190 @@
+{
+  "id": "en-a1-2.4-dialogue",
+  "lesson_id": "2.4",
+  "skill": "dialogue",
+  "title": "Talk it through 2.4",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Nature guide naming animals and plants",
+  "can_do": [
+    "I can name common animals and plants of the region.",
+    "I can say what a plant or animal is like."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Look! What is that animal?",
+        "translation": "¡Mire! ¿Qué animal es ese?",
+        "audio": "en-a1-2.4.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is a monkey.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "It is a bird.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "It is a frog.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Is it big or small?",
+        "translation": "¿Es grande o pequeño?",
+        "audio": "en-a1-2.4.d2",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is small.",
+            "next": "n3"
+          },
+          {
+            "id": "o2",
+            "text": "It is big.",
+            "next": "n3"
+          },
+          {
+            "id": "o3",
+            "text": "It is very small.",
+            "next": "n3"
+          }
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "What colour is the bird?",
+        "translation": "¿De qué color es el pájaro?",
+        "audio": "en-a1-2.4.d3",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "it",
+              "is"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "red"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "green"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "yellow"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "blue"
+            ],
+            "next": "n4"
+          }
+        ],
+        "model_reply": "It is red and yellow.",
+        "starters": [
+          "It is ..."
+        ],
+        "word_bank": [
+          "It",
+          "is",
+          "red",
+          "green",
+          "yellow",
+          "blue"
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Are there flowers in the forest?",
+        "translation": "¿Hay flores en el bosque?",
+        "audio": "en-a1-2.4.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, there are many.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, there are orchids.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, there are red flowers.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is this tree old?",
+        "translation": "¿Este árbol es viejo?",
+        "audio": "en-a1-2.4.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, it is very old.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, it is a hundred years old.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "No, it is young.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Please do not touch the plants.",
+        "translation": "Por favor no toque las plantas.",
+        "audio": "en-a1-2.4.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "OK, I understand.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Sorry!",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Thank you for telling me.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

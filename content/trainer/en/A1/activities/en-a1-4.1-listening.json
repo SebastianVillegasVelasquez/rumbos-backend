@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-4.1-listening",
+  "lesson_id": "4.1",
+  "skill": "listening",
+  "title": "Listen and choose 4.1",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Lodge staff explaining recycling and green signs",
+  "can_do": [
+    "I can name the colours of recycling bins.",
+    "I can understand and give basic conservation instructions."
+  ],
+  "items": [
+    {
+      "id": "en-a1-4.1.l1",
+      "type": "listen_choose",
+      "prompt": "Where do plastic bottles go?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "In the white bin"
+        },
+        {
+          "id": "o2",
+          "text": "In the black bin"
+        },
+        {
+          "id": "o3",
+          "text": "In the river"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The white bin.",
+      "audio": "en-a1-4.1.l1"
+    },
+    {
+      "id": "en-a1-4.1.l2",
+      "type": "listen_choose",
+      "prompt": "What should you do with the tap?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Turn it off"
+        },
+        {
+          "id": "o2",
+          "text": "Turn it on"
+        },
+        {
+          "id": "o3",
+          "text": "Break it"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Turn off the tap.",
+      "audio": "en-a1-4.1.l2"
+    },
+    {
+      "id": "en-a1-4.1.l3",
+      "type": "listen_choose",
+      "prompt": "What is not allowed?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Leaving trash"
+        },
+        {
+          "id": "o2",
+          "text": "Swimming"
+        },
+        {
+          "id": "o3",
+          "text": "Walking"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Do not leave trash.",
+      "audio": "en-a1-4.1.l3"
+    }
+  ]
+}

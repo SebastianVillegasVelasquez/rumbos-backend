@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-1.4-listening",
+  "lesson_id": "1.4",
+  "skill": "listening",
+  "title": "Listen and choose 1.4",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Receptionist filling in a guest card",
+  "can_do": [
+    "I can ask for and give names, ages and phone numbers.",
+    "I can spell a name."
+  ],
+  "items": [
+    {
+      "id": "en-a1-1.4.l1",
+      "type": "listen_choose",
+      "prompt": "What is the number?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "2519"
+        },
+        {
+          "id": "o2",
+          "text": "2915"
+        },
+        {
+          "id": "o3",
+          "text": "5219"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The digits are two, five, one, nine.",
+      "audio": "en-a1-1.4.l1"
+    },
+    {
+      "id": "en-a1-1.4.l2",
+      "type": "listen_choose",
+      "prompt": "What is her age?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "12"
+        },
+        {
+          "id": "o2",
+          "text": "22"
+        },
+        {
+          "id": "o3",
+          "text": "32"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "Twenty-two is 22.",
+      "audio": "en-a1-1.4.l2"
+    },
+    {
+      "id": "en-a1-1.4.l3",
+      "type": "listen_choose",
+      "prompt": "What is the last name?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Torres"
+        },
+        {
+          "id": "o2",
+          "text": "Torez"
+        },
+        {
+          "id": "o3",
+          "text": "Tores"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker spells T-O-R-R-E-S.",
+      "audio": "en-a1-1.4.l3"
+    }
+  ]
+}

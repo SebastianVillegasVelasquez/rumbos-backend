@@ -1,0 +1,171 @@
+{
+  "id": "en-a1-3.1-dialogue",
+  "lesson_id": "3.1",
+  "skill": "dialogue",
+  "title": "Talk it through 3.1",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Guide giving directions to a tourist place",
+  "can_do": [
+    "I can ask where a place is.",
+    "I can give simple directions."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Excuse me. Where is the museum?",
+        "translation": "Disculpe. ¿Dónde está el museo?",
+        "audio": "en-a1-3.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is on Main Street.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "It is near the church.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "It is next to the bank.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "How do I get there?",
+        "translation": "¿Cómo llego allá?",
+        "audio": "en-a1-3.1.d2",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Go straight.",
+            "next": "n3"
+          },
+          {
+            "id": "o2",
+            "text": "Turn left at the corner.",
+            "next": "n3"
+          },
+          {
+            "id": "o3",
+            "text": "Walk two blocks.",
+            "next": "n3"
+          }
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Is it on the left or on the right?",
+        "translation": "¿Queda a la izquierda o a la derecha?",
+        "audio": "en-a1-3.1.d3",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "left"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "right"
+            ],
+            "next": "n4"
+          }
+        ],
+        "model_reply": "It is on the right.",
+        "starters": [
+          "It is on the ..."
+        ],
+        "word_bank": [
+          "It",
+          "is",
+          "on",
+          "the",
+          "left",
+          "right"
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Is it far from here?",
+        "translation": "¿Queda lejos de aquí?",
+        "audio": "en-a1-3.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "No, it is five minutes on foot.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "No, it is close.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, take a taxi.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is there a bank near the museum?",
+        "translation": "¿Hay un banco cerca del museo?",
+        "audio": "en-a1-3.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, there is one.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, it is across from the museum.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "No, there is not.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you very much!",
+        "translation": "¡Muchas gracias!",
+        "audio": "en-a1-3.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You are welcome.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "No problem.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Enjoy the museum!",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

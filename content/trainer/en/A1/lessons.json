@@ -1,0 +1,25 @@
+{
+  "modules": [
+    {"key": "M1", "title": "Asking for and giving personal information"},
+    {"key": "M2", "title": "Describing destinations and managing visitor services"},
+    {"key": "M3", "title": "Giving information about places of interest and weather conditions"},
+    {"key": "M4", "title": "Fundamental pillars of the training program"}
+  ],
+  "lessons": [
+    {"id": "1.1", "module": "M1", "code": "1.1", "title": "Greetings and making introductions", "description": "Greet people and introduce yourself."},
+    {"id": "1.2", "module": "M1", "code": "1.2", "title": "Nationalities and languages", "description": "Say where people are from and what languages they speak."},
+    {"id": "1.3", "module": "M1", "code": "1.3", "title": "Talking about schedules", "description": "Say and ask the time, and talk about daily schedules."},
+    {"id": "1.4", "module": "M1", "code": "1.4", "title": "Asking for and giving personal information", "description": "Ask for and give names, ages, numbers and contact details."},
+    {"id": "2.1", "module": "M2", "code": "2.1", "title": "Food and drinks", "description": "Order food and drinks and ask about prices."},
+    {"id": "2.2", "module": "M2", "code": "2.2", "title": "Means of transportation", "description": "Talk about how to get to places."},
+    {"id": "2.3", "module": "M2", "code": "2.3", "title": "Where you and other people are from", "description": "Describe where you and other people are from."},
+    {"id": "2.4", "module": "M2", "code": "2.4", "title": "Animals and plants of the region", "description": "Name common animals and plants found in the region."},
+    {"id": "3.1", "module": "M3", "code": "3.1", "title": "Directions to tourist places", "description": "Ask for and give directions to places and attractions."},
+    {"id": "3.2", "module": "M3", "code": "3.2", "title": "The weather", "description": "Talk about the weather."},
+    {"id": "3.3", "module": "M3", "code": "3.3", "title": "Free time and leisure activities", "description": "Talk about free time and leisure."},
+    {"id": "3.4", "module": "M3", "code": "3.4", "title": "Health problems and symptoms", "description": "Say what is wrong and describe simple symptoms."},
+    {"id": "4.1", "module": "M4", "code": "4.1", "title": "Sustainable tourism (green communication)", "description": "Recycling bins, basic conservation instructions, colours and green signs."},
+    {"id": "4.2", "module": "M4", "code": "4.2", "title": "Tourism as a culture for peace (intercultural mediation)", "description": "Welcome international guests with courtesy; greetings from around the world."},
+    {"id": "4.3", "module": "M4", "code": "4.3", "title": "Tourism culture (service and storytelling)", "description": "Give simple directions to landmarks or hotel facilities; places in the city and telling the time."}
+  ]
+}

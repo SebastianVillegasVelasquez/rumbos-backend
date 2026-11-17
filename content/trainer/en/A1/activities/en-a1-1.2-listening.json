@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-1.2-listening",
+  "lesson_id": "1.2",
+  "skill": "listening",
+  "title": "Listen and choose 1.2",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Guide meeting visitors from other countries",
+  "can_do": [
+    "I can say where I am from.",
+    "I can ask a visitor where they are from and what languages they speak."
+  ],
+  "items": [
+    {
+      "id": "en-a1-1.2.l1",
+      "type": "listen_choose",
+      "prompt": "What language does he speak?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Portuguese"
+        },
+        {
+          "id": "o2",
+          "text": "Spanish"
+        },
+        {
+          "id": "o3",
+          "text": "French"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says he speaks Portuguese.",
+      "audio": "en-a1-1.2.l1"
+    },
+    {
+      "id": "en-a1-1.2.l2",
+      "type": "listen_choose",
+      "prompt": "What nationality are they?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "German"
+        },
+        {
+          "id": "o2",
+          "text": "French"
+        },
+        {
+          "id": "o3",
+          "text": "Italian"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "From Germany means German.",
+      "audio": "en-a1-1.2.l2"
+    },
+    {
+      "id": "en-a1-1.2.l3",
+      "type": "listen_choose",
+      "prompt": "How well does the person speak English?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Very well"
+        },
+        {
+          "id": "o2",
+          "text": "A little"
+        },
+        {
+          "id": "o3",
+          "text": "Not at all"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "A little means not much.",
+      "audio": "en-a1-1.2.l3"
+    }
+  ]
+}

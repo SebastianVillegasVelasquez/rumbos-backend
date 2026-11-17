@@ -1,0 +1,181 @@
+{
+  "id": "en-a1-3.3-dialogue",
+  "lesson_id": "3.3",
+  "skill": "dialogue",
+  "title": "Talk it through 3.3",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Guide asking visitors about free time",
+  "can_do": [
+    "I can say what I like to do in my free time.",
+    "I can ask a visitor about their hobbies."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "What do you do in your free time?",
+        "translation": "¿Qué hace en su tiempo libre?",
+        "audio": "en-a1-3.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I play football.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "I listen to music.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "I read books.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Do you like sports?",
+        "translation": "¿Le gustan los deportes?",
+        "audio": "en-a1-3.3.d2",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, I do.",
+            "next": "n3"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, I like football.",
+            "next": "n3"
+          },
+          {
+            "id": "o3",
+            "text": "No, I do not.",
+            "next": "n3"
+          }
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "What do you like to do on weekends?",
+        "translation": "¿Qué le gusta hacer los fines de semana?",
+        "audio": "en-a1-3.3.d3",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "i",
+              "like"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "i",
+              "play"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "i",
+              "go"
+            ],
+            "next": "n4"
+          }
+        ],
+        "model_reply": "I like to swim at the beach.",
+        "starters": [
+          "I like to ..."
+        ],
+        "word_bank": [
+          "I",
+          "like",
+          "to",
+          "swim",
+          "walk",
+          "dance",
+          "play"
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Do you like dancing?",
+        "translation": "¿Le gusta bailar?",
+        "audio": "en-a1-3.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, I love it!",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, a lot.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "No, I prefer walking.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Do you want to join the salsa class tonight?",
+        "translation": "¿Quiere unirse a la clase de salsa esta noche?",
+        "audio": "en-a1-3.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, please.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Sure, what time?",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "No, thank you. I am tired.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "It starts at eight.",
+        "translation": "Empieza a las ocho.",
+        "audio": "en-a1-3.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Great, see you at eight.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "OK, thank you.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Perfect!",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

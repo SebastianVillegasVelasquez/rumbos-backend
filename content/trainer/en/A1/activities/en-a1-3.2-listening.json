@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-3.2-listening",
+  "lesson_id": "3.2",
+  "skill": "listening",
+  "title": "Listen and choose 3.2",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Guide talking about the weather",
+  "can_do": [
+    "I can say what the weather is like.",
+    "I can suggest what to wear or bring."
+  ],
+  "items": [
+    {
+      "id": "en-a1-3.2.l1",
+      "type": "listen_choose",
+      "prompt": "What is the weather?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Cloudy and cool"
+        },
+        {
+          "id": "o2",
+          "text": "Sunny and hot"
+        },
+        {
+          "id": "o3",
+          "text": "Rainy and cold"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Cloudy and cool.",
+      "audio": "en-a1-3.2.l1"
+    },
+    {
+      "id": "en-a1-3.2.l2",
+      "type": "listen_choose",
+      "prompt": "When does it rain a lot?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "In April"
+        },
+        {
+          "id": "o2",
+          "text": "In January"
+        },
+        {
+          "id": "o3",
+          "text": "In July"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "In April.",
+      "audio": "en-a1-3.2.l2"
+    },
+    {
+      "id": "en-a1-3.2.l3",
+      "type": "listen_choose",
+      "prompt": "Why bring a hat?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Because it is sunny"
+        },
+        {
+          "id": "o2",
+          "text": "Because it is cold"
+        },
+        {
+          "id": "o3",
+          "text": "Because it rains"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "It is very sunny.",
+      "audio": "en-a1-3.2.l3"
+    }
+  ]
+}

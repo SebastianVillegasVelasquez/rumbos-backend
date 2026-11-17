@@ -18,6 +18,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 # COPY the source code after the depndencies because it's most likely to change
 COPY ./app/ ./app/
+COPY ./content/ ./content/
 COPY ./entrypoint.sh ./entrypoint.sh
 COPY ./alembic ./alembic/
 COPY ./alembic.ini ./alembic.ini
@@ -35,6 +36,7 @@ RUN adduser --no-create-home --shell /bin/false --uid 1001 --disabled-password a
 
 COPY --from=builder /app/.venv ./.venv
 COPY --from=builder /app/app ./app
+COPY --from=builder /app/content ./content
 COPY --from=builder /app/alembic ./alembic
 COPY --from=builder /app/alembic.ini ./alembic.ini
 COPY --from=builder /app/entrypoint.sh ./entrypoint.sh

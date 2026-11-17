@@ -1,0 +1,1249 @@
+{
+  "entries": [
+    {
+      "id": "listening.a.01",
+      "text": "The tour leaves at seven fifteen.",
+      "voices": [],
+      "file": "audio/listening.a.01.mp3",
+      "duration_s": null,
+      "transcript": "The tour leaves at seven fifteen."
+    },
+    {
+      "id": "listening.a.02",
+      "text": "The room number is three-oh-four.",
+      "voices": [],
+      "file": "audio/listening.a.02.mp3",
+      "duration_s": null,
+      "transcript": "The room number is three-oh-four."
+    },
+    {
+      "id": "listening.a.03",
+      "text": "The soup is twelve thousand pesos.",
+      "voices": [],
+      "file": "audio/listening.a.03.mp3",
+      "duration_s": null,
+      "transcript": "The soup is twelve thousand pesos."
+    },
+    {
+      "id": "listening.a.04",
+      "text": "The market opens at nine, and it closes at six.",
+      "voices": [],
+      "file": "audio/listening.a.04.mp3",
+      "duration_s": null,
+      "transcript": "The market opens at nine, and it closes at six."
+    },
+    {
+      "id": "listening.a.05",
+      "text": "She is forty years old.",
+      "voices": [],
+      "file": "audio/listening.a.05.mp3",
+      "duration_s": null,
+      "transcript": "She is forty years old."
+    },
+    {
+      "id": "listening.b.01",
+      "text": "— Good afternoon, sir. Welcome. — Thank you.",
+      "voices": [
+        {
+          "voice": "speaker_a",
+          "text": "Good afternoon, sir. Welcome."
+        },
+        {
+          "voice": "speaker_b",
+          "text": "Thank you."
+        }
+      ],
+      "file": "audio/listening.b.01.mp3",
+      "duration_s": null,
+      "transcript": "— Good afternoon, sir. Welcome. — Thank you."
+    },
+    {
+      "id": "listening.b.02",
+      "text": "— Does the soup have peanuts? — No, it doesn’t.",
+      "voices": [
+        {
+          "voice": "speaker_a",
+          "text": "Does the soup have peanuts?"
+        },
+        {
+          "voice": "speaker_b",
+          "text": "No, it doesn’t."
+        }
+      ],
+      "file": "audio/listening.b.02.mp3",
+      "duration_s": null,
+      "transcript": "— Does the soup have peanuts? — No, it doesn’t."
+    },
+    {
+      "id": "listening.b.03",
+      "text": "— How do you go to the reserve? — By boat.",
+      "voices": [
+        {
+          "voice": "speaker_a",
+          "text": "How do you go to the reserve?"
+        },
+        {
+          "voice": "speaker_b",
+          "text": "By boat."
+        }
+      ],
+      "file": "audio/listening.b.03.mp3",
+      "duration_s": null,
+      "transcript": "— How do you go to the reserve? — By boat."
+    },
+    {
+      "id": "listening.b.04",
+      "text": "— Is there a pharmacy near here? — Yes, next to the market.",
+      "voices": [
+        {
+          "voice": "speaker_a",
+          "text": "Is there a pharmacy near here?"
+        },
+        {
+          "voice": "speaker_b",
+          "text": "Yes, next to the market."
+        }
+      ],
+      "file": "audio/listening.b.04.mp3",
+      "duration_s": null,
+      "transcript": "— Is there a pharmacy near here? — Yes, next to the market."
+    },
+    {
+      "id": "listening.b.05",
+      "text": "— What’s the matter? — I have a headache.",
+      "voices": [
+        {
+          "voice": "speaker_a",
+          "text": "What’s the matter?"
+        },
+        {
+          "voice": "speaker_b",
+          "text": "I have a headache."
+        }
+      ],
+      "file": "audio/listening.b.05.mp3",
+      "duration_s": null,
+      "transcript": "— What’s the matter? — I have a headache."
+    },
+    {
+      "id": "listening.c.01.1",
+      "text": "The boat leaves at 7:00 a.m.",
+      "voices": [],
+      "file": "audio/listening.c.01.1.mp3",
+      "duration_s": null,
+      "transcript": "The boat leaves at 7:00 a.m."
+    },
+    {
+      "id": "listening.c.01.2",
+      "text": "I would like a soup, please.",
+      "voices": [],
+      "file": "audio/listening.c.01.2.mp3",
+      "duration_s": null,
+      "transcript": "I would like a soup, please."
+    },
+    {
+      "id": "listening.c.01.3",
+      "text": "I need medicine for a cough.",
+      "voices": [],
+      "file": "audio/listening.c.01.3.mp3",
+      "duration_s": null,
+      "transcript": "I need medicine for a cough."
+    },
+    {
+      "id": "listening.c.01.4",
+      "text": "Put the bottle in the white bin.",
+      "voices": [],
+      "file": "audio/listening.c.01.4.mp3",
+      "duration_s": null,
+      "transcript": "Put the bottle in the white bin."
+    },
+    {
+      "id": "listening.c.01.5",
+      "text": "Welcome! May I help you?",
+      "voices": [],
+      "file": "audio/listening.c.01.5.mp3",
+      "duration_s": null,
+      "transcript": "Welcome! May I help you?"
+    },
+    {
+      "id": "en-a1-1.1.d1",
+      "text": "Good morning! Welcome to the hotel.",
+      "voices": [],
+      "file": "audio/en-a1-1.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Good morning! Welcome to the hotel."
+    },
+    {
+      "id": "en-a1-1.1.d2",
+      "text": "I am Maria. What is your name?",
+      "voices": [],
+      "file": "audio/en-a1-1.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "I am Maria. What is your name?"
+    },
+    {
+      "id": "en-a1-1.1.d3",
+      "text": "Nice to meet you.",
+      "voices": [],
+      "file": "audio/en-a1-1.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "Nice to meet you."
+    },
+    {
+      "id": "en-a1-1.1.d4",
+      "text": "How are you today?",
+      "voices": [],
+      "file": "audio/en-a1-1.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "How are you today?"
+    },
+    {
+      "id": "en-a1-1.1.d5",
+      "text": "Is this your first visit?",
+      "voices": [],
+      "file": "audio/en-a1-1.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is this your first visit?"
+    },
+    {
+      "id": "en-a1-1.1.d6",
+      "text": "Please enjoy your stay.",
+      "voices": [],
+      "file": "audio/en-a1-1.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "Please enjoy your stay."
+    },
+    {
+      "id": "en-a1-1.1.l1",
+      "text": "Good evening. My name is Laura.",
+      "voices": [],
+      "file": "audio/en-a1-1.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "Good evening. My name is Laura."
+    },
+    {
+      "id": "en-a1-1.1.l2",
+      "text": "Hello, Mr. Brown. How are you today?",
+      "voices": [],
+      "file": "audio/en-a1-1.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "Hello, Mr. Brown. How are you today?"
+    },
+    {
+      "id": "en-a1-1.1.l3",
+      "text": "Goodbye, and have a nice day!",
+      "voices": [],
+      "file": "audio/en-a1-1.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "Goodbye, and have a nice day!"
+    },
+    {
+      "id": "en-a1-1.2.d1",
+      "text": "Hello! Are you the guide?",
+      "voices": [],
+      "file": "audio/en-a1-1.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hello! Are you the guide?"
+    },
+    {
+      "id": "en-a1-1.2.d2",
+      "text": "Where are you from?",
+      "voices": [],
+      "file": "audio/en-a1-1.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "Where are you from?"
+    },
+    {
+      "id": "en-a1-1.2.d3",
+      "text": "I am from Canada. Do you speak English?",
+      "voices": [],
+      "file": "audio/en-a1-1.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "I am from Canada. Do you speak English?"
+    },
+    {
+      "id": "en-a1-1.2.d4",
+      "text": "Do you speak French?",
+      "voices": [],
+      "file": "audio/en-a1-1.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "Do you speak French?"
+    },
+    {
+      "id": "en-a1-1.2.d5",
+      "text": "Great. I speak English and French.",
+      "voices": [],
+      "file": "audio/en-a1-1.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "Great. I speak English and French."
+    },
+    {
+      "id": "en-a1-1.2.d6",
+      "text": "Are your friends from Canada too?",
+      "voices": [],
+      "file": "audio/en-a1-1.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Are your friends from Canada too?"
+    },
+    {
+      "id": "en-a1-1.2.l1",
+      "text": "He is from Brazil, and he speaks Portuguese.",
+      "voices": [],
+      "file": "audio/en-a1-1.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "He is from Brazil, and he speaks Portuguese."
+    },
+    {
+      "id": "en-a1-1.2.l2",
+      "text": "We are from Germany. We are German.",
+      "voices": [],
+      "file": "audio/en-a1-1.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "We are from Germany. We are German."
+    },
+    {
+      "id": "en-a1-1.2.l3",
+      "text": "Do you speak English? Yes, a little.",
+      "voices": [],
+      "file": "audio/en-a1-1.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "Do you speak English? Yes, a little."
+    },
+    {
+      "id": "en-a1-1.3.d1",
+      "text": "Excuse me. What time is breakfast?",
+      "voices": [],
+      "file": "audio/en-a1-1.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "Excuse me. What time is breakfast?"
+    },
+    {
+      "id": "en-a1-1.3.d2",
+      "text": "And what time is lunch?",
+      "voices": [],
+      "file": "audio/en-a1-1.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "And what time is lunch?"
+    },
+    {
+      "id": "en-a1-1.3.d3",
+      "text": "What time is it now?",
+      "voices": [],
+      "file": "audio/en-a1-1.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "What time is it now?"
+    },
+    {
+      "id": "en-a1-1.3.d4",
+      "text": "The tour starts at ten. Is that right?",
+      "voices": [],
+      "file": "audio/en-a1-1.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "The tour starts at ten. Is that right?"
+    },
+    {
+      "id": "en-a1-1.3.d5",
+      "text": "Is the museum open on Sunday?",
+      "voices": [],
+      "file": "audio/en-a1-1.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is the museum open on Sunday?"
+    },
+    {
+      "id": "en-a1-1.3.d6",
+      "text": "Thank you. See you at breakfast!",
+      "voices": [],
+      "file": "audio/en-a1-1.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. See you at breakfast!"
+    },
+    {
+      "id": "en-a1-1.3.l1",
+      "text": "Dinner is at eight o'clock.",
+      "voices": [],
+      "file": "audio/en-a1-1.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "Dinner is at eight o'clock."
+    },
+    {
+      "id": "en-a1-1.3.l2",
+      "text": "The bus leaves at half past nine.",
+      "voices": [],
+      "file": "audio/en-a1-1.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "The bus leaves at half past nine."
+    },
+    {
+      "id": "en-a1-1.3.l3",
+      "text": "The shop is closed on Monday.",
+      "voices": [],
+      "file": "audio/en-a1-1.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "The shop is closed on Monday."
+    },
+    {
+      "id": "en-a1-1.4.d1",
+      "text": "Welcome. Can I have your name, please?",
+      "voices": [],
+      "file": "audio/en-a1-1.4.d1.mp3",
+      "duration_s": null,
+      "transcript": "Welcome. Can I have your name, please?"
+    },
+    {
+      "id": "en-a1-1.4.d2",
+      "text": "How do you spell your last name?",
+      "voices": [],
+      "file": "audio/en-a1-1.4.d2.mp3",
+      "duration_s": null,
+      "transcript": "How do you spell your last name?"
+    },
+    {
+      "id": "en-a1-1.4.d3",
+      "text": "How old are you?",
+      "voices": [],
+      "file": "audio/en-a1-1.4.d3.mp3",
+      "duration_s": null,
+      "transcript": "How old are you?"
+    },
+    {
+      "id": "en-a1-1.4.d4",
+      "text": "What is your phone number?",
+      "voices": [],
+      "file": "audio/en-a1-1.4.d4.mp3",
+      "duration_s": null,
+      "transcript": "What is your phone number?"
+    },
+    {
+      "id": "en-a1-1.4.d5",
+      "text": "Where do you live?",
+      "voices": [],
+      "file": "audio/en-a1-1.4.d5.mp3",
+      "duration_s": null,
+      "transcript": "Where do you live?"
+    },
+    {
+      "id": "en-a1-1.4.d6",
+      "text": "Thank you. Here is your key.",
+      "voices": [],
+      "file": "audio/en-a1-1.4.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. Here is your key."
+    },
+    {
+      "id": "en-a1-1.4.l1",
+      "text": "My phone number is two, five, one, nine.",
+      "voices": [],
+      "file": "audio/en-a1-1.4.l1.mp3",
+      "duration_s": null,
+      "transcript": "My phone number is two, five, one, nine."
+    },
+    {
+      "id": "en-a1-1.4.l2",
+      "text": "She is twenty-two years old.",
+      "voices": [],
+      "file": "audio/en-a1-1.4.l2.mp3",
+      "duration_s": null,
+      "transcript": "She is twenty-two years old."
+    },
+    {
+      "id": "en-a1-1.4.l3",
+      "text": "My last name is Torres. T-O-R-R-E-S.",
+      "voices": [],
+      "file": "audio/en-a1-1.4.l3.mp3",
+      "duration_s": null,
+      "transcript": "My last name is Torres. T-O-R-R-E-S."
+    },
+    {
+      "id": "en-a1-2.1.d1",
+      "text": "Good afternoon. Here is the menu.",
+      "voices": [],
+      "file": "audio/en-a1-2.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Good afternoon. Here is the menu."
+    },
+    {
+      "id": "en-a1-2.1.d2",
+      "text": "What would you like to eat?",
+      "voices": [],
+      "file": "audio/en-a1-2.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "What would you like to eat?"
+    },
+    {
+      "id": "en-a1-2.1.d3",
+      "text": "And what would you like to drink?",
+      "voices": [],
+      "file": "audio/en-a1-2.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "And what would you like to drink?"
+    },
+    {
+      "id": "en-a1-2.1.d4",
+      "text": "Do you want sugar with your coffee?",
+      "voices": [],
+      "file": "audio/en-a1-2.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Do you want sugar with your coffee?"
+    },
+    {
+      "id": "en-a1-2.1.d5",
+      "text": "Is that all?",
+      "voices": [],
+      "file": "audio/en-a1-2.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is that all?"
+    },
+    {
+      "id": "en-a1-2.1.d6",
+      "text": "The total is fifteen thousand pesos.",
+      "voices": [],
+      "file": "audio/en-a1-2.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "The total is fifteen thousand pesos."
+    },
+    {
+      "id": "en-a1-2.1.l1",
+      "text": "I would like a tea with milk, please.",
+      "voices": [],
+      "file": "audio/en-a1-2.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "I would like a tea with milk, please."
+    },
+    {
+      "id": "en-a1-2.1.l2",
+      "text": "The fish costs eighteen thousand pesos.",
+      "voices": [],
+      "file": "audio/en-a1-2.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "The fish costs eighteen thousand pesos."
+    },
+    {
+      "id": "en-a1-2.1.l3",
+      "text": "We have rice, beans and chicken today.",
+      "voices": [],
+      "file": "audio/en-a1-2.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "We have rice, beans and chicken today."
+    },
+    {
+      "id": "en-a1-2.2.d1",
+      "text": "How do I get to the beach from here?",
+      "voices": [],
+      "file": "audio/en-a1-2.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "How do I get to the beach from here?"
+    },
+    {
+      "id": "en-a1-2.2.d2",
+      "text": "Is it far?",
+      "voices": [],
+      "file": "audio/en-a1-2.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "Is it far?"
+    },
+    {
+      "id": "en-a1-2.2.d3",
+      "text": "How much is the bus?",
+      "voices": [],
+      "file": "audio/en-a1-2.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "How much is the bus?"
+    },
+    {
+      "id": "en-a1-2.2.d4",
+      "text": "Where is the bus stop?",
+      "voices": [],
+      "file": "audio/en-a1-2.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "Where is the bus stop?"
+    },
+    {
+      "id": "en-a1-2.2.d5",
+      "text": "Can I go by bike?",
+      "voices": [],
+      "file": "audio/en-a1-2.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "Can I go by bike?"
+    },
+    {
+      "id": "en-a1-2.2.d6",
+      "text": "Thanks for your help!",
+      "voices": [],
+      "file": "audio/en-a1-2.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thanks for your help!"
+    },
+    {
+      "id": "en-a1-2.2.l1",
+      "text": "The boat to the island leaves at nine.",
+      "voices": [],
+      "file": "audio/en-a1-2.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "The boat to the island leaves at nine."
+    },
+    {
+      "id": "en-a1-2.2.l2",
+      "text": "Take the red bus to the market.",
+      "voices": [],
+      "file": "audio/en-a1-2.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "Take the red bus to the market."
+    },
+    {
+      "id": "en-a1-2.2.l3",
+      "text": "It is ten minutes on foot.",
+      "voices": [],
+      "file": "audio/en-a1-2.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "It is ten minutes on foot."
+    },
+    {
+      "id": "en-a1-2.3.d1",
+      "text": "Where is your friend from?",
+      "voices": [],
+      "file": "audio/en-a1-2.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "Where is your friend from?"
+    },
+    {
+      "id": "en-a1-2.3.d2",
+      "text": "Is your town big or small?",
+      "voices": [],
+      "file": "audio/en-a1-2.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "Is your town big or small?"
+    },
+    {
+      "id": "en-a1-2.3.d3",
+      "text": "Tell me about your town.",
+      "voices": [],
+      "file": "audio/en-a1-2.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "Tell me about your town."
+    },
+    {
+      "id": "en-a1-2.3.d4",
+      "text": "Is it far from the coast?",
+      "voices": [],
+      "file": "audio/en-a1-2.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "Is it far from the coast?"
+    },
+    {
+      "id": "en-a1-2.3.d5",
+      "text": "Are the people friendly there?",
+      "voices": [],
+      "file": "audio/en-a1-2.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "Are the people friendly there?"
+    },
+    {
+      "id": "en-a1-2.3.d6",
+      "text": "I would like to visit it one day.",
+      "voices": [],
+      "file": "audio/en-a1-2.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "I would like to visit it one day."
+    },
+    {
+      "id": "en-a1-2.3.l1",
+      "text": "My grandmother is from a small village in the mountains.",
+      "voices": [],
+      "file": "audio/en-a1-2.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "My grandmother is from a small village in the mountains."
+    },
+    {
+      "id": "en-a1-2.3.l2",
+      "text": "Carlos is from Cartagena. It is on the coast.",
+      "voices": [],
+      "file": "audio/en-a1-2.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "Carlos is from Cartagena. It is on the coast."
+    },
+    {
+      "id": "en-a1-2.3.l3",
+      "text": "Her parents are from Spain.",
+      "voices": [],
+      "file": "audio/en-a1-2.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "Her parents are from Spain."
+    },
+    {
+      "id": "en-a1-2.4.d1",
+      "text": "Look! What is that animal?",
+      "voices": [],
+      "file": "audio/en-a1-2.4.d1.mp3",
+      "duration_s": null,
+      "transcript": "Look! What is that animal?"
+    },
+    {
+      "id": "en-a1-2.4.d2",
+      "text": "Is it big or small?",
+      "voices": [],
+      "file": "audio/en-a1-2.4.d2.mp3",
+      "duration_s": null,
+      "transcript": "Is it big or small?"
+    },
+    {
+      "id": "en-a1-2.4.d3",
+      "text": "What colour is the bird?",
+      "voices": [],
+      "file": "audio/en-a1-2.4.d3.mp3",
+      "duration_s": null,
+      "transcript": "What colour is the bird?"
+    },
+    {
+      "id": "en-a1-2.4.d4",
+      "text": "Are there flowers in the forest?",
+      "voices": [],
+      "file": "audio/en-a1-2.4.d4.mp3",
+      "duration_s": null,
+      "transcript": "Are there flowers in the forest?"
+    },
+    {
+      "id": "en-a1-2.4.d5",
+      "text": "Is this tree old?",
+      "voices": [],
+      "file": "audio/en-a1-2.4.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is this tree old?"
+    },
+    {
+      "id": "en-a1-2.4.d6",
+      "text": "Please do not touch the plants.",
+      "voices": [],
+      "file": "audio/en-a1-2.4.d6.mp3",
+      "duration_s": null,
+      "transcript": "Please do not touch the plants."
+    },
+    {
+      "id": "en-a1-2.4.l1",
+      "text": "There are many birds in this forest.",
+      "voices": [],
+      "file": "audio/en-a1-2.4.l1.mp3",
+      "duration_s": null,
+      "transcript": "There are many birds in this forest."
+    },
+    {
+      "id": "en-a1-2.4.l2",
+      "text": "The orchid is a beautiful flower.",
+      "voices": [],
+      "file": "audio/en-a1-2.4.l2.mp3",
+      "duration_s": null,
+      "transcript": "The orchid is a beautiful flower."
+    },
+    {
+      "id": "en-a1-2.4.l3",
+      "text": "The monkey is in the tall tree.",
+      "voices": [],
+      "file": "audio/en-a1-2.4.l3.mp3",
+      "duration_s": null,
+      "transcript": "The monkey is in the tall tree."
+    },
+    {
+      "id": "en-a1-3.1.d1",
+      "text": "Excuse me. Where is the museum?",
+      "voices": [],
+      "file": "audio/en-a1-3.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Excuse me. Where is the museum?"
+    },
+    {
+      "id": "en-a1-3.1.d2",
+      "text": "How do I get there?",
+      "voices": [],
+      "file": "audio/en-a1-3.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "How do I get there?"
+    },
+    {
+      "id": "en-a1-3.1.d3",
+      "text": "Is it on the left or on the right?",
+      "voices": [],
+      "file": "audio/en-a1-3.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "Is it on the left or on the right?"
+    },
+    {
+      "id": "en-a1-3.1.d4",
+      "text": "Is it far from here?",
+      "voices": [],
+      "file": "audio/en-a1-3.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Is it far from here?"
+    },
+    {
+      "id": "en-a1-3.1.d5",
+      "text": "Is there a bank near the museum?",
+      "voices": [],
+      "file": "audio/en-a1-3.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is there a bank near the museum?"
+    },
+    {
+      "id": "en-a1-3.1.d6",
+      "text": "Thank you very much!",
+      "voices": [],
+      "file": "audio/en-a1-3.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you very much!"
+    },
+    {
+      "id": "en-a1-3.1.l1",
+      "text": "Turn right at the corner.",
+      "voices": [],
+      "file": "audio/en-a1-3.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "Turn right at the corner."
+    },
+    {
+      "id": "en-a1-3.1.l2",
+      "text": "The market is across from the church.",
+      "voices": [],
+      "file": "audio/en-a1-3.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "The market is across from the church."
+    },
+    {
+      "id": "en-a1-3.1.l3",
+      "text": "Go straight for two blocks.",
+      "voices": [],
+      "file": "audio/en-a1-3.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "Go straight for two blocks."
+    },
+    {
+      "id": "en-a1-3.2.d1",
+      "text": "What is the weather like today?",
+      "voices": [],
+      "file": "audio/en-a1-3.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "What is the weather like today?"
+    },
+    {
+      "id": "en-a1-3.2.d2",
+      "text": "Is it going to rain?",
+      "voices": [],
+      "file": "audio/en-a1-3.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "Is it going to rain?"
+    },
+    {
+      "id": "en-a1-3.2.d3",
+      "text": "What should I bring?",
+      "voices": [],
+      "file": "audio/en-a1-3.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "What should I bring?"
+    },
+    {
+      "id": "en-a1-3.2.d4",
+      "text": "Is it hot at the beach?",
+      "voices": [],
+      "file": "audio/en-a1-3.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "Is it hot at the beach?"
+    },
+    {
+      "id": "en-a1-3.2.d5",
+      "text": "And at night?",
+      "voices": [],
+      "file": "audio/en-a1-3.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "And at night?"
+    },
+    {
+      "id": "en-a1-3.2.d6",
+      "text": "Thank you. I will take my jacket.",
+      "voices": [],
+      "file": "audio/en-a1-3.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. I will take my jacket."
+    },
+    {
+      "id": "en-a1-3.2.l1",
+      "text": "Today it is cloudy and cool.",
+      "voices": [],
+      "file": "audio/en-a1-3.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "Today it is cloudy and cool."
+    },
+    {
+      "id": "en-a1-3.2.l2",
+      "text": "It rains a lot in April.",
+      "voices": [],
+      "file": "audio/en-a1-3.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "It rains a lot in April."
+    },
+    {
+      "id": "en-a1-3.2.l3",
+      "text": "Bring a hat. It is very sunny.",
+      "voices": [],
+      "file": "audio/en-a1-3.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "Bring a hat. It is very sunny."
+    },
+    {
+      "id": "en-a1-3.3.d1",
+      "text": "What do you do in your free time?",
+      "voices": [],
+      "file": "audio/en-a1-3.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "What do you do in your free time?"
+    },
+    {
+      "id": "en-a1-3.3.d2",
+      "text": "Do you like sports?",
+      "voices": [],
+      "file": "audio/en-a1-3.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "Do you like sports?"
+    },
+    {
+      "id": "en-a1-3.3.d3",
+      "text": "What do you like to do on weekends?",
+      "voices": [],
+      "file": "audio/en-a1-3.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "What do you like to do on weekends?"
+    },
+    {
+      "id": "en-a1-3.3.d4",
+      "text": "Do you like dancing?",
+      "voices": [],
+      "file": "audio/en-a1-3.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "Do you like dancing?"
+    },
+    {
+      "id": "en-a1-3.3.d5",
+      "text": "Do you want to join the salsa class tonight?",
+      "voices": [],
+      "file": "audio/en-a1-3.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "Do you want to join the salsa class tonight?"
+    },
+    {
+      "id": "en-a1-3.3.d6",
+      "text": "It starts at eight.",
+      "voices": [],
+      "file": "audio/en-a1-3.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "It starts at eight."
+    },
+    {
+      "id": "en-a1-3.3.l1",
+      "text": "I like swimming and I like reading.",
+      "voices": [],
+      "file": "audio/en-a1-3.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "I like swimming and I like reading."
+    },
+    {
+      "id": "en-a1-3.3.l2",
+      "text": "On Saturdays we play football.",
+      "voices": [],
+      "file": "audio/en-a1-3.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "On Saturdays we play football."
+    },
+    {
+      "id": "en-a1-3.3.l3",
+      "text": "She does not like cooking.",
+      "voices": [],
+      "file": "audio/en-a1-3.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "She does not like cooking."
+    },
+    {
+      "id": "en-a1-3.4.d1",
+      "text": "Good evening. Are you OK?",
+      "voices": [],
+      "file": "audio/en-a1-3.4.d1.mp3",
+      "duration_s": null,
+      "transcript": "Good evening. Are you OK?"
+    },
+    {
+      "id": "en-a1-3.4.d2",
+      "text": "Where does it hurt?",
+      "voices": [],
+      "file": "audio/en-a1-3.4.d2.mp3",
+      "duration_s": null,
+      "transcript": "Where does it hurt?"
+    },
+    {
+      "id": "en-a1-3.4.d3",
+      "text": "Do you have a fever?",
+      "voices": [],
+      "file": "audio/en-a1-3.4.d3.mp3",
+      "duration_s": null,
+      "transcript": "Do you have a fever?"
+    },
+    {
+      "id": "en-a1-3.4.d4",
+      "text": "You need to rest. Do you want a doctor?",
+      "voices": [],
+      "file": "audio/en-a1-3.4.d4.mp3",
+      "duration_s": null,
+      "transcript": "You need to rest. Do you want a doctor?"
+    },
+    {
+      "id": "en-a1-3.4.d5",
+      "text": "The pharmacy is next to the hotel.",
+      "voices": [],
+      "file": "audio/en-a1-3.4.d5.mp3",
+      "duration_s": null,
+      "transcript": "The pharmacy is next to the hotel."
+    },
+    {
+      "id": "en-a1-3.4.d6",
+      "text": "I hope you feel better soon.",
+      "voices": [],
+      "file": "audio/en-a1-3.4.d6.mp3",
+      "duration_s": null,
+      "transcript": "I hope you feel better soon."
+    },
+    {
+      "id": "en-a1-3.4.l1",
+      "text": "I have a headache and a cold.",
+      "voices": [],
+      "file": "audio/en-a1-3.4.l1.mp3",
+      "duration_s": null,
+      "transcript": "I have a headache and a cold."
+    },
+    {
+      "id": "en-a1-3.4.l2",
+      "text": "Take this medicine two times a day.",
+      "voices": [],
+      "file": "audio/en-a1-3.4.l2.mp3",
+      "duration_s": null,
+      "transcript": "Take this medicine two times a day."
+    },
+    {
+      "id": "en-a1-3.4.l3",
+      "text": "My stomach hurts after dinner.",
+      "voices": [],
+      "file": "audio/en-a1-3.4.l3.mp3",
+      "duration_s": null,
+      "transcript": "My stomach hurts after dinner."
+    },
+    {
+      "id": "en-a1-4.1.d1",
+      "text": "Hello! Where can I throw this bottle?",
+      "voices": [],
+      "file": "audio/en-a1-4.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hello! Where can I throw this bottle?"
+    },
+    {
+      "id": "en-a1-4.1.d2",
+      "text": "What colour is the bin for paper?",
+      "voices": [],
+      "file": "audio/en-a1-4.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "What colour is the bin for paper?"
+    },
+    {
+      "id": "en-a1-4.1.d3",
+      "text": "And where do I put food waste?",
+      "voices": [],
+      "file": "audio/en-a1-4.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "And where do I put food waste?"
+    },
+    {
+      "id": "en-a1-4.1.d4",
+      "text": "Can I use the shower for a long time?",
+      "voices": [],
+      "file": "audio/en-a1-4.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Can I use the shower for a long time?"
+    },
+    {
+      "id": "en-a1-4.1.d5",
+      "text": "Do you have a sign for the lights?",
+      "voices": [],
+      "file": "audio/en-a1-4.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "Do you have a sign for the lights?"
+    },
+    {
+      "id": "en-a1-4.1.d6",
+      "text": "Thank you for taking care of nature!",
+      "voices": [],
+      "file": "audio/en-a1-4.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you for taking care of nature!"
+    },
+    {
+      "id": "en-a1-4.1.l1",
+      "text": "Please put the plastic bottles in the white bin.",
+      "voices": [],
+      "file": "audio/en-a1-4.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "Please put the plastic bottles in the white bin."
+    },
+    {
+      "id": "en-a1-4.1.l2",
+      "text": "Save water. Turn off the tap.",
+      "voices": [],
+      "file": "audio/en-a1-4.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "Save water. Turn off the tap."
+    },
+    {
+      "id": "en-a1-4.1.l3",
+      "text": "Do not leave trash on the beach.",
+      "voices": [],
+      "file": "audio/en-a1-4.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "Do not leave trash on the beach."
+    },
+    {
+      "id": "en-a1-4.2.d1",
+      "text": "Hello! We are from Japan.",
+      "voices": [],
+      "file": "audio/en-a1-4.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hello! We are from Japan."
+    },
+    {
+      "id": "en-a1-4.2.d2",
+      "text": "Thank you. Your country is beautiful.",
+      "voices": [],
+      "file": "audio/en-a1-4.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. Your country is beautiful."
+    },
+    {
+      "id": "en-a1-4.2.d3",
+      "text": "How do you say hello in Spanish?",
+      "voices": [],
+      "file": "audio/en-a1-4.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "How do you say hello in Spanish?"
+    },
+    {
+      "id": "en-a1-4.2.d4",
+      "text": "Can you say thank you in Spanish too?",
+      "voices": [],
+      "file": "audio/en-a1-4.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "Can you say thank you in Spanish too?"
+    },
+    {
+      "id": "en-a1-4.2.d5",
+      "text": "Sorry, I do not understand.",
+      "voices": [],
+      "file": "audio/en-a1-4.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "Sorry, I do not understand."
+    },
+    {
+      "id": "en-a1-4.2.d6",
+      "text": "Thank you for your patience!",
+      "voices": [],
+      "file": "audio/en-a1-4.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you for your patience!"
+    },
+    {
+      "id": "en-a1-4.2.l1",
+      "text": "Bonjour means good morning in French.",
+      "voices": [],
+      "file": "audio/en-a1-4.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "Bonjour means good morning in French."
+    },
+    {
+      "id": "en-a1-4.2.l2",
+      "text": "In Japan, people often say hello with a small bow.",
+      "voices": [],
+      "file": "audio/en-a1-4.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "In Japan, people often say hello with a small bow."
+    },
+    {
+      "id": "en-a1-4.2.l3",
+      "text": "Please speak slowly. I am learning English.",
+      "voices": [],
+      "file": "audio/en-a1-4.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "Please speak slowly. I am learning English."
+    },
+    {
+      "id": "en-a1-4.3.d1",
+      "text": "Excuse me. Where is the restaurant?",
+      "voices": [],
+      "file": "audio/en-a1-4.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "Excuse me. Where is the restaurant?"
+    },
+    {
+      "id": "en-a1-4.3.d2",
+      "text": "And the swimming pool?",
+      "voices": [],
+      "file": "audio/en-a1-4.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "And the swimming pool?"
+    },
+    {
+      "id": "en-a1-4.3.d3",
+      "text": "What time does the pool open?",
+      "voices": [],
+      "file": "audio/en-a1-4.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "What time does the pool open?"
+    },
+    {
+      "id": "en-a1-4.3.d4",
+      "text": "Is there a church in the city?",
+      "voices": [],
+      "file": "audio/en-a1-4.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "Is there a church in the city?"
+    },
+    {
+      "id": "en-a1-4.3.d5",
+      "text": "What is a good place to see?",
+      "voices": [],
+      "file": "audio/en-a1-4.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "What is a good place to see?"
+    },
+    {
+      "id": "en-a1-4.3.d6",
+      "text": "Thank you for your help.",
+      "voices": [],
+      "file": "audio/en-a1-4.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you for your help."
+    },
+    {
+      "id": "en-a1-4.3.l1",
+      "text": "The lobby is on the ground floor.",
+      "voices": [],
+      "file": "audio/en-a1-4.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "The lobby is on the ground floor."
+    },
+    {
+      "id": "en-a1-4.3.l2",
+      "text": "The old town opens at nine and closes at five.",
+      "voices": [],
+      "file": "audio/en-a1-4.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "The old town opens at nine and closes at five."
+    },
+    {
+      "id": "en-a1-4.3.l3",
+      "text": "The castle is across from the main square.",
+      "voices": [],
+      "file": "audio/en-a1-4.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "The castle is across from the main square."
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+{
+  "id": "en-a1-4.1-grammar",
+  "lesson_id": "4.1",
+  "skill": "grammar",
+  "title": "Practice 4.1",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Lodge staff explaining recycling and green signs",
+  "can_do": [
+    "I can name the colours of recycling bins.",
+    "I can understand and give basic conservation instructions."
+  ],
+  "items": [
+    {
+      "id": "4.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which word means paper, plastic and glass can be used again?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Recycle"
+        },
+        {
+          "id": "o2",
+          "text": "Waste"
+        },
+        {
+          "id": "o3",
+          "text": "Break"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "To recycle is to use again.",
+      "error_tags": {
+        "o2": {
+          "tag": "vocabulary",
+          "text": "Waste is what you throw away."
+        }
+      }
+    },
+    {
+      "id": "4.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "Please {1} the lights.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "turn off"
+            },
+            {
+              "id": "o2",
+              "text": "turn out of"
+            },
+            {
+              "id": "o3",
+              "text": "turn up in"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "phrasal_verb",
+            "text": "The phrase is turn off."
+          }
+        }
+      ],
+      "explanation": "Turn off the lights saves energy."
+    },
+    {
+      "id": "4.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "Do not {1} trash on the ground. (throw)",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "throw"
+          ],
+          "error_tag": {
+            "tag": "imperative",
+            "text": "After do not use the base verb."
+          }
+        }
+      ],
+      "explanation": "Do not throw trash."
+    },
+    {
+      "id": "4.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Please"
+        },
+        {
+          "id": "t2",
+          "text": "save"
+        },
+        {
+          "id": "t3",
+          "text": "water"
+        },
+        {
+          "id": "t4",
+          "text": "."
+        }
+      ],
+      "explanation": "A polite instruction.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with Please."
+      }
+    },
+    {
+      "id": "4.1.ex.05",
+      "type": "match",
+      "prompt": "Match the colour with the waste.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "blue"
+        },
+        {
+          "id": "l2",
+          "text": "white"
+        },
+        {
+          "id": "l3",
+          "text": "green"
+        },
+        {
+          "id": "l4",
+          "text": "black"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "paper"
+        },
+        {
+          "id": "r2",
+          "text": "plastic"
+        },
+        {
+          "id": "r3",
+          "text": "food waste"
+        },
+        {
+          "id": "r4",
+          "text": "other trash"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Colours help separate waste."
+    },
+    {
+      "id": "4.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Write a sign for a guest: turn off the lights. Use please.",
+      "accepted": [
+        "Please turn off the lights"
+      ],
+      "explanation": "Please + base verb.",
+      "error_tag": {
+        "tag": "politeness",
+        "text": "Start with Please."
+      }
+    }
+  ]
+}

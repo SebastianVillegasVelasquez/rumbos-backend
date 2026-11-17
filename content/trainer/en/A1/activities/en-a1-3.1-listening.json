@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-3.1-listening",
+  "lesson_id": "3.1",
+  "skill": "listening",
+  "title": "Listen and choose 3.1",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Guide giving directions to a tourist place",
+  "can_do": [
+    "I can ask where a place is.",
+    "I can give simple directions."
+  ],
+  "items": [
+    {
+      "id": "en-a1-3.1.l1",
+      "type": "listen_choose",
+      "prompt": "Which way do you turn?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Right"
+        },
+        {
+          "id": "o2",
+          "text": "Left"
+        },
+        {
+          "id": "o3",
+          "text": "Back"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says turn right.",
+      "audio": "en-a1-3.1.l1"
+    },
+    {
+      "id": "en-a1-3.1.l2",
+      "type": "listen_choose",
+      "prompt": "What is across from the church?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The market"
+        },
+        {
+          "id": "o2",
+          "text": "The bank"
+        },
+        {
+          "id": "o3",
+          "text": "The hotel"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The market is across from the church.",
+      "audio": "en-a1-3.1.l2"
+    },
+    {
+      "id": "en-a1-3.1.l3",
+      "type": "listen_choose",
+      "prompt": "How far do you go straight?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Two blocks"
+        },
+        {
+          "id": "o2",
+          "text": "Ten blocks"
+        },
+        {
+          "id": "o3",
+          "text": "One block"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Two blocks straight.",
+      "audio": "en-a1-3.1.l3"
+    }
+  ]
+}

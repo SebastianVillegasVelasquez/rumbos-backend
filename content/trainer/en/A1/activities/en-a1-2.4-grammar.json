@@ -1,0 +1,199 @@
+{
+  "id": "en-a1-2.4-grammar",
+  "lesson_id": "2.4",
+  "skill": "grammar",
+  "title": "Practice 2.4",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Nature guide naming animals and plants",
+  "can_do": [
+    "I can name common animals and plants of the region.",
+    "I can say what a plant or animal is like."
+  ],
+  "items": [
+    {
+      "id": "2.4.ex.01",
+      "type": "mcq",
+      "prompt": "Which one is a plant?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Tree"
+        },
+        {
+          "id": "o2",
+          "text": "Frog"
+        },
+        {
+          "id": "o3",
+          "text": "Fish"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "A tree is a plant.",
+      "error_tags": {
+        "o2": {
+          "tag": "vocabulary",
+          "text": "A frog is an animal."
+        }
+      }
+    },
+    {
+      "id": "2.4.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "There {1} many birds here.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "is"
+            },
+            {
+              "id": "o2",
+              "text": "are"
+            },
+            {
+              "id": "o3",
+              "text": "am"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "there_is_are",
+            "text": "Use there are with plural nouns."
+          }
+        }
+      ],
+      "explanation": "Many birds is plural: there are."
+    },
+    {
+      "id": "2.4.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "There {1} a snake on the path.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "is"
+          ],
+          "error_tag": {
+            "tag": "there_is_are",
+            "text": "Use there is with one thing."
+          }
+        }
+      ],
+      "explanation": "A snake is singular: there is."
+    },
+    {
+      "id": "2.4.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "The"
+        },
+        {
+          "id": "t2",
+          "text": "flower"
+        },
+        {
+          "id": "t3",
+          "text": "is"
+        },
+        {
+          "id": "t4",
+          "text": "yellow"
+        },
+        {
+          "id": "t5",
+          "text": "."
+        }
+      ],
+      "explanation": "Subject, verb, colour.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with The flower."
+      }
+    },
+    {
+      "id": "2.4.ex.05",
+      "type": "match",
+      "prompt": "Match the animal with the place.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "fish"
+        },
+        {
+          "id": "l2",
+          "text": "bird"
+        },
+        {
+          "id": "l3",
+          "text": "monkey"
+        },
+        {
+          "id": "l4",
+          "text": "frog"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "river"
+        },
+        {
+          "id": "r2",
+          "text": "tree"
+        },
+        {
+          "id": "r3",
+          "text": "forest"
+        },
+        {
+          "id": "r4",
+          "text": "pond"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Where does each animal live?"
+    },
+    {
+      "id": "2.4.ex.06",
+      "type": "short_answer",
+      "prompt": "Say the colour of a banana in a short sentence.",
+      "accepted": [
+        "It is yellow",
+        "A banana is yellow",
+        "Yellow"
+      ],
+      "explanation": "Bananas are yellow.",
+      "error_tag": {
+        "tag": "colours",
+        "text": "A ripe banana is yellow."
+      }
+    }
+  ]
+}

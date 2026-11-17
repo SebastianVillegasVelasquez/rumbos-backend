@@ -103,6 +103,25 @@ class Settings(BaseSettings):
     launch_rate_per_ip: int = Field(default=30, ge=1)
     launch_rate_per_tenant: int = Field(default=300, ge=1)
 
+    # Trainer and assessment content packs (see docs/TRAINER.md). Drafts are
+    # served only when this is on (dev and staging); production serves
+    # `published` content only.
+    trainer_content_dir: str = "content/trainer"
+    trainer_serve_drafts: bool = False
+    # Requests per minute one user may send to the trainer (the exam
+    # autosaves, so this is generous). Counted per process.
+    trainer_rate_per_minute: int = Field(default=240, ge=1)
+    # Reporting exam results to Moodle (see docs/TRAINER.md). `none` leaves the
+    # outbox pending (the real sender waits for the plugin's endpoint decision),
+    # `fake` records them in memory (development).
+    passback_sender: Literal["none", "fake"] = "none"
+    passback_issuer: str = "rumbos-backend"
+    passback_key_id: str = "passback-1"
+    # EC P-256 private key in PEM; the public half goes to Moodle.
+    passback_signing_key_pem: SecretStr | None = None
+    # Practice attempts older than this many days are purged by the CLI.
+    trainer_retention_days: int = Field(default=90, ge=1)
+
     # How many publications of each map to keep (the latest is never pruned).
     publications_keep: int = Field(default=20, ge=1)
 

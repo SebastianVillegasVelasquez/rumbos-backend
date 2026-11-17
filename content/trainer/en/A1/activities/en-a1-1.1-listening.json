@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-1.1-listening",
+  "lesson_id": "1.1",
+  "skill": "listening",
+  "title": "Listen and choose 1.1",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Receptionist welcoming a guest",
+  "can_do": [
+    "I can greet a guest and say my name.",
+    "I can ask a guest for their name."
+  ],
+  "items": [
+    {
+      "id": "en-a1-1.1.l1",
+      "type": "listen_choose",
+      "prompt": "What is the speaker's name?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Laura"
+        },
+        {
+          "id": "o2",
+          "text": "Lucia"
+        },
+        {
+          "id": "o3",
+          "text": "Lara"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: My name is Laura.",
+      "audio": "en-a1-1.1.l1"
+    },
+    {
+      "id": "en-a1-1.1.l2",
+      "type": "listen_choose",
+      "prompt": "Who is the speaker talking to?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Mr. Brown"
+        },
+        {
+          "id": "o2",
+          "text": "A child"
+        },
+        {
+          "id": "o3",
+          "text": "A taxi driver"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says Mr. Brown.",
+      "audio": "en-a1-1.1.l2"
+    },
+    {
+      "id": "en-a1-1.1.l3",
+      "type": "listen_choose",
+      "prompt": "When do people say this?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "When they arrive"
+        },
+        {
+          "id": "o2",
+          "text": "When they leave"
+        },
+        {
+          "id": "o3",
+          "text": "When they eat"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "Goodbye is for leaving.",
+      "audio": "en-a1-1.1.l3"
+    }
+  ]
+}

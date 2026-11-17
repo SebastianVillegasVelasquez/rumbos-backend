@@ -1,0 +1,178 @@
+{
+  "id": "en-a1-4.2-dialogue",
+  "lesson_id": "4.2",
+  "skill": "dialogue",
+  "title": "Talk it through 4.2",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Host welcoming guests from many countries",
+  "can_do": [
+    "I can welcome international guests politely.",
+    "I can use greetings and polite phrases from around the world."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Hello! We are from Japan.",
+        "translation": "¡Hola! Somos de Japón.",
+        "audio": "en-a1-4.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Welcome to Colombia!",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Konnichiwa! Welcome!",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Hello! Nice to meet you.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Thank you. Your country is beautiful.",
+        "translation": "Gracias. Su país es hermoso.",
+        "audio": "en-a1-4.2.d2",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you very much.",
+            "next": "n3"
+          },
+          {
+            "id": "o2",
+            "text": "Thank you. Please enjoy it.",
+            "next": "n3"
+          },
+          {
+            "id": "o3",
+            "text": "You are very kind.",
+            "next": "n3"
+          }
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "How do you say hello in Spanish?",
+        "translation": "¿Cómo se dice hello en español?",
+        "audio": "en-a1-4.2.d3",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "hola"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "buenos",
+              "dias"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "buenas"
+            ],
+            "next": "n4"
+          }
+        ],
+        "model_reply": "We say hola.",
+        "starters": [
+          "We say ..."
+        ],
+        "word_bank": [
+          "We",
+          "say",
+          "hola",
+          "buenos",
+          "dias",
+          "gracias"
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Can you say thank you in Spanish too?",
+        "translation": "¿También puede decir thank you en español?",
+        "audio": "en-a1-4.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes: gracias.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Gracias!",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "We say gracias.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Sorry, I do not understand.",
+        "translation": "Disculpe, no entiendo.",
+        "audio": "en-a1-4.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "No problem. I can say it again.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Let me speak more slowly.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "I can show you.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you for your patience!",
+        "translation": "¡Gracias por su paciencia!",
+        "audio": "en-a1-4.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "My pleasure.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "You are welcome.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Enjoy your visit!",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

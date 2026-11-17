@@ -1,0 +1,174 @@
+{
+  "id": "en-a1-2.3-dialogue",
+  "lesson_id": "2.3",
+  "skill": "dialogue",
+  "title": "Talk it through 2.3",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Host talking about people and places of origin",
+  "can_do": [
+    "I can say where people are from.",
+    "I can describe where I live."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Where is your friend from?",
+        "translation": "¿De dónde es su amigo?",
+        "audio": "en-a1-2.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "He is from Cartagena.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "She is from Cali.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "They are from Pasto.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Is your town big or small?",
+        "translation": "¿Su pueblo es grande o pequeño?",
+        "audio": "en-a1-2.3.d2",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is small.",
+            "next": "n3"
+          },
+          {
+            "id": "o2",
+            "text": "It is big.",
+            "next": "n3"
+          },
+          {
+            "id": "o3",
+            "text": "It is small but beautiful.",
+            "next": "n3"
+          }
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Tell me about your town.",
+        "translation": "Cuénteme de su pueblo.",
+        "audio": "en-a1-2.3.d3",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "it",
+              "is"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "there",
+              "is"
+            ],
+            "next": "n4"
+          }
+        ],
+        "model_reply": "It is a quiet town near the mountains.",
+        "starters": [
+          "It is ..."
+        ],
+        "word_bank": [
+          "It",
+          "is",
+          "quiet",
+          "beautiful",
+          "near",
+          "the",
+          "mountains"
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Is it far from the coast?",
+        "translation": "¿Queda lejos de la costa?",
+        "audio": "en-a1-2.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, it is far.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "No, it is close.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "It is two hours by bus.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Are the people friendly there?",
+        "translation": "¿La gente es amable allí?",
+        "audio": "en-a1-2.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, they are very friendly.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, they are.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, everybody is kind.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "I would like to visit it one day.",
+        "translation": "Me gustaría visitarlo algún día.",
+        "audio": "en-a1-2.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You are welcome!",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Please come!",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "You can come in March.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

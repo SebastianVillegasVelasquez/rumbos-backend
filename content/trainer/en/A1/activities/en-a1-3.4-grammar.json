@@ -1,0 +1,199 @@
+{
+  "id": "en-a1-3.4-grammar",
+  "lesson_id": "3.4",
+  "skill": "grammar",
+  "title": "Practice 3.4",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Hotel staff helping a guest who feels ill",
+  "can_do": [
+    "I can say what is wrong with me.",
+    "I can understand simple advice about health."
+  ],
+  "items": [
+    {
+      "id": "3.4.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence says you feel ill?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "I feel sick."
+        },
+        {
+          "id": "o2",
+          "text": "I feel great."
+        },
+        {
+          "id": "o3",
+          "text": "I feel happy."
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Sick means ill.",
+      "error_tags": {
+        "o2": {
+          "tag": "vocabulary",
+          "text": "Great is a good feeling."
+        }
+      }
+    },
+    {
+      "id": "3.4.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "My head {1}.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "hurt"
+            },
+            {
+              "id": "o2",
+              "text": "hurts"
+            },
+            {
+              "id": "o3",
+              "text": "hurting"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "third_person_s",
+            "text": "Use hurts with one part of the body."
+          }
+        }
+      ],
+      "explanation": "Head is singular: hurts."
+    },
+    {
+      "id": "3.4.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "I have a {1} in my throat. (pain)",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "pain"
+          ],
+          "error_tag": {
+            "tag": "vocabulary",
+            "text": "The word is pain."
+          }
+        }
+      ],
+      "explanation": "I have a pain."
+    },
+    {
+      "id": "3.4.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Where"
+        },
+        {
+          "id": "t2",
+          "text": "does"
+        },
+        {
+          "id": "t3",
+          "text": "it"
+        },
+        {
+          "id": "t4",
+          "text": "hurt"
+        },
+        {
+          "id": "t5",
+          "text": "?"
+        }
+      ],
+      "explanation": "A common doctor question.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with Where."
+      }
+    },
+    {
+      "id": "3.4.ex.05",
+      "type": "match",
+      "prompt": "Match the problem with the help.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "headache"
+        },
+        {
+          "id": "l2",
+          "text": "fever"
+        },
+        {
+          "id": "l3",
+          "text": "cut"
+        },
+        {
+          "id": "l4",
+          "text": "tired"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "medicine"
+        },
+        {
+          "id": "r2",
+          "text": "doctor"
+        },
+        {
+          "id": "r3",
+          "text": "bandage"
+        },
+        {
+          "id": "r4",
+          "text": "rest"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each problem has a help."
+    },
+    {
+      "id": "3.4.ex.06",
+      "type": "short_answer",
+      "prompt": "Say you have a headache.",
+      "accepted": [
+        "I have a headache",
+        "I've got a headache",
+        "My head hurts"
+      ],
+      "explanation": "I have a headache.",
+      "error_tag": {
+        "tag": "vocabulary",
+        "text": "Headache is one word."
+      }
+    }
+  ]
+}

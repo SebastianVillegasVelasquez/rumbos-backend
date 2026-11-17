@@ -1,0 +1,178 @@
+{
+  "id": "en-a1-1.4-dialogue",
+  "lesson_id": "1.4",
+  "skill": "dialogue",
+  "title": "Talk it through 1.4",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Receptionist filling in a guest card",
+  "can_do": [
+    "I can ask for and give names, ages and phone numbers.",
+    "I can spell a name."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Welcome. Can I have your name, please?",
+        "translation": "Bienvenido. ¿Me da su nombre, por favor?",
+        "audio": "en-a1-1.4.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "My name is Daniel Ruiz.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Yes. It is Daniel Ruiz.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "I am Daniel Ruiz.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "How do you spell your last name?",
+        "translation": "¿Cómo se escribe su apellido?",
+        "audio": "en-a1-1.4.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "r",
+              "u",
+              "i",
+              "z"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "r-u-i-z"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "ruiz"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "R U I Z.",
+        "starters": [
+          "R U I Z"
+        ],
+        "word_bank": [
+          "R",
+          "U",
+          "I",
+          "Z"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "How old are you?",
+        "translation": "¿Cuántos años tiene?",
+        "audio": "en-a1-1.4.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I am thirty years old.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "I am twenty-eight.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "I am forty-five.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "What is your phone number?",
+        "translation": "¿Cuál es su número de teléfono?",
+        "audio": "en-a1-1.4.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is three one five, two two two, four four four.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "It is 315 222 4444.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "My number is 300 111 2222.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Where do you live?",
+        "translation": "¿Dónde vive?",
+        "audio": "en-a1-1.4.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I live in Bogota.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "I live in Medellin.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "I live in Cali.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. Here is your key.",
+        "translation": "Gracias. Aquí está su llave.",
+        "audio": "en-a1-1.4.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you very much.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Thanks. Good night.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Thank you. Which floor?",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

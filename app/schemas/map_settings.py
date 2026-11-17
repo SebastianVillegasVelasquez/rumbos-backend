@@ -72,6 +72,39 @@ def _null_is_default(value: Any) -> Any:
     return Welcome() if value is None else value
 
 
+class TrainerSettings(_Strict):
+    """The practice trainer of the map: off unless the editor turns it on. The
+    language and level are the editor's choice, never the student's."""
+
+    enabled: bool = False
+    language: Literal["en"] = "en"
+    level: Literal["A1", "A2", "B1", "B2"] = "A1"
+
+
+class AssessmentPolicy(_Strict):
+    """One of the two exams: which form, how many attempts, how long."""
+
+    form_id: Annotated[str, Field(min_length=1, max_length=80)]
+    max_attempts: Annotated[int, Field(strict=True, gt=0, le=20)] = 1
+    time_limit_min: Annotated[int, Field(strict=True, gt=0, le=480)] = 60
+
+
+class Exemption(_Strict):
+    enabled: bool = True
+
+
+class AssessmentSettings(_Strict):
+    """The native check-in and final exam. A pass in either completes the
+    course (through the Moodle passback) while `exemption.enabled`."""
+
+    enabled: bool = False
+    check_in: AssessmentPolicy | None = None
+    final: AssessmentPolicy | None = None
+    pass_percent: Annotated[int, Field(strict=True, ge=1, le=100)] = 80
+    pass_operator: Literal["gt", "gte"] = "gt"
+    exemption: Exemption = Field(default_factory=Exemption)
+
+
 class MapSettings(_Strict):
     schema_version: Literal[1] = 1
     mode: Literal["explorative", "guided"] = "explorative"
@@ -85,6 +118,8 @@ class MapSettings(_Strict):
     welcome: Annotated[Welcome, BeforeValidator(_null_is_default)] = Field(
         default_factory=Welcome
     )
+    trainer: TrainerSettings = Field(default_factory=TrainerSettings)
+    assessments: AssessmentSettings = Field(default_factory=AssessmentSettings)
 
     def to_stored(self) -> dict[str, Any]:
         """The JSON-able form kept in `course_maps.settings` (camelCase).
@@ -99,6 +134,12 @@ class MapSettings(_Strict):
         stored = self.model_dump(by_alias=True, mode="json")
         if self.audio is None:
             del stored["audio"]
+        # Same rule for the trainer and the assessments: all defaults (off) are
+        # left out so no stored map or publication changes its hash.
+        if self.trainer == TrainerSettings():
+            del stored["trainer"]
+        if self.assessments == AssessmentSettings():
+            del stored["assessments"]
         if self.welcome.is_default():
             del stored["welcome"]
         elif self.welcome.steps is None:

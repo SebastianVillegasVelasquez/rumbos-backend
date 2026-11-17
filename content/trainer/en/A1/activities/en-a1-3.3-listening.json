@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-3.3-listening",
+  "lesson_id": "3.3",
+  "skill": "listening",
+  "title": "Listen and choose 3.3",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Guide asking visitors about free time",
+  "can_do": [
+    "I can say what I like to do in my free time.",
+    "I can ask a visitor about their hobbies."
+  ],
+  "items": [
+    {
+      "id": "en-a1-3.3.l1",
+      "type": "listen_choose",
+      "prompt": "What does the speaker like?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Swimming and reading"
+        },
+        {
+          "id": "o2",
+          "text": "Dancing and cooking"
+        },
+        {
+          "id": "o3",
+          "text": "Football and music"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Swimming and reading.",
+      "audio": "en-a1-3.3.l1"
+    },
+    {
+      "id": "en-a1-3.3.l2",
+      "type": "listen_choose",
+      "prompt": "When do they play football?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "On Saturdays"
+        },
+        {
+          "id": "o2",
+          "text": "On Mondays"
+        },
+        {
+          "id": "o3",
+          "text": "On Fridays"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "On Saturdays.",
+      "audio": "en-a1-3.3.l2"
+    },
+    {
+      "id": "en-a1-3.3.l3",
+      "type": "listen_choose",
+      "prompt": "What does she not like?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Cooking"
+        },
+        {
+          "id": "o2",
+          "text": "Dancing"
+        },
+        {
+          "id": "o3",
+          "text": "Swimming"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "She does not like cooking.",
+      "audio": "en-a1-3.3.l3"
+    }
+  ]
+}

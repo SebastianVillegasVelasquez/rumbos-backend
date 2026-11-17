@@ -1,7 +1,13 @@
 name: CI/CD Pipeline
+# Pull requests and manual runs verify the code (lint, types, tests); a push to
+# main only builds and publishes the image, because the pull request already
+# passed the checks.
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -9,6 +15,7 @@ permissions:
 jobs:
   quality-check:
     name: Lint and formatting
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
 
     steps:
@@ -24,8 +31,12 @@ jobs:
       - name: Ruff code check
         run: uv run ruff check .
 
+      - name: Type check
+        run: uv run mypy app tests
+
   test:
     name: Testing
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
 
     services:
@@ -61,6 +72,9 @@ jobs:
           MOODLE_SERVICE_TOKEN: ""
           MOODLE_BASE_URL: ""
 
+      - name: Lint trainer content
+        run: uv run python -m app.scripts.lint_content
+
       - name: Run testing
         run: uv run pytest --maxfail=3 --disable-warnings
         env:
@@ -74,7 +88,7 @@ jobs:
 
   build-and-publish:
     name: Build image and publish image
-    needs: [quality-check, test]
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
 
     permissions:

@@ -164,8 +164,16 @@ class QuizStep(_StepBase):
     )
 
 
+class AssessmentStep(_StepBase):
+    """The native check-in exam (see `MapSettings.assessments`). The existing
+    `quiz` step stays as a fallback until the passback is verified."""
+
+    type: Literal["assessment"]
+    purpose: Literal["check_in"]
+
+
 Step = Annotated[
-    WelcomeStep | VideoStep | HtmlStep | PdfStep | QuizStep,
+    WelcomeStep | VideoStep | HtmlStep | PdfStep | QuizStep | AssessmentStep,
     Field(discriminator="type"),
 ]
 

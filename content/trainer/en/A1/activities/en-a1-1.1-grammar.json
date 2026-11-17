@@ -1,0 +1,191 @@
+{
+  "id": "en-a1-1.1-grammar",
+  "lesson_id": "1.1",
+  "skill": "grammar",
+  "title": "Practice 1.1",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Receptionist welcoming a guest",
+  "can_do": [
+    "I can greet a guest and say my name.",
+    "I can ask a guest for their name."
+  ],
+  "items": [
+    {
+      "id": "1.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which greeting is for the morning?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Good evening"
+        },
+        {
+          "id": "o2",
+          "text": "Good morning"
+        },
+        {
+          "id": "o3",
+          "text": "Good night"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "We say good morning before noon.",
+      "error_tags": {
+        "o1": {
+          "tag": "time_of_day",
+          "text": "Good evening is for the end of the day."
+        }
+      }
+    },
+    {
+      "id": "1.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "My name {1} Carlos.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "is"
+            },
+            {
+              "id": "o2",
+              "text": "are"
+            },
+            {
+              "id": "o3",
+              "text": "am"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "be_agreement",
+            "text": "Use is with my name."
+          }
+        }
+      ],
+      "explanation": "With my name we use is."
+    },
+    {
+      "id": "1.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "I {1} a tour guide.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "am"
+          ],
+          "error_tag": {
+            "tag": "be_agreement",
+            "text": "Use am with I."
+          }
+        }
+      ],
+      "explanation": "With I we use am."
+    },
+    {
+      "id": "1.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Nice"
+        },
+        {
+          "id": "t2",
+          "text": "to"
+        },
+        {
+          "id": "t3",
+          "text": "meet"
+        },
+        {
+          "id": "t4",
+          "text": "you"
+        }
+      ],
+      "explanation": "This is the polite phrase for a first meeting.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with Nice."
+      }
+    },
+    {
+      "id": "1.1.ex.05",
+      "type": "match",
+      "prompt": "Match the greeting with the moment.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "Good morning"
+        },
+        {
+          "id": "l2",
+          "text": "Good afternoon"
+        },
+        {
+          "id": "l3",
+          "text": "Good evening"
+        },
+        {
+          "id": "l4",
+          "text": "Goodbye"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "Before noon"
+        },
+        {
+          "id": "r2",
+          "text": "After lunch"
+        },
+        {
+          "id": "r3",
+          "text": "At the end of the day"
+        },
+        {
+          "id": "r4",
+          "text": "When you leave"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each greeting belongs to a moment of the day."
+    },
+    {
+      "id": "1.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Introduce yourself. Your name is Ana.",
+      "accepted": [
+        "My name is Ana",
+        "I am Ana",
+        "I'm Ana"
+      ],
+      "explanation": "My name is ... or I am ... both work."
+    }
+  ]
+}

@@ -27,6 +27,16 @@ DEFAULT_WELCOME: dict[str, Any] = {
     "steps": None,
 }
 
+DEFAULT_TRAINER: dict[str, Any] = {"enabled": False, "language": "en", "level": "A1"}
+DEFAULT_ASSESSMENTS: dict[str, Any] = {
+    "enabled": False,
+    "checkIn": None,
+    "final": None,
+    "passPercent": 80,
+    "passOperator": "gt",
+    "exemption": {"enabled": True},
+}
+
 DEFAULT_SETTINGS: dict[str, Any] = {
     "schemaVersion": 1,
     "mode": "explorative",
@@ -37,6 +47,8 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "intro": "none",
     "audio": None,
     "welcome": DEFAULT_WELCOME,
+    "trainer": DEFAULT_TRAINER,
+    "assessments": DEFAULT_ASSESSMENTS,
 }
 
 CUSTOM_SETTINGS: dict[str, Any] = {
@@ -49,6 +61,8 @@ CUSTOM_SETTINGS: dict[str, Any] = {
     "intro": "flyin",
     "audio": None,
     "welcome": DEFAULT_WELCOME,
+    "trainer": DEFAULT_TRAINER,
+    "assessments": DEFAULT_ASSESSMENTS,
 }
 
 

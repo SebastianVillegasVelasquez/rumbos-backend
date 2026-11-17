@@ -1,0 +1,178 @@
+{
+  "id": "en-a1-4.1-dialogue",
+  "lesson_id": "4.1",
+  "skill": "dialogue",
+  "title": "Talk it through 4.1",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Lodge staff explaining recycling and green signs",
+  "can_do": [
+    "I can name the colours of recycling bins.",
+    "I can understand and give basic conservation instructions."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Hello! Where can I throw this bottle?",
+        "translation": "¡Hola! ¿Dónde puedo botar esta botella?",
+        "audio": "en-a1-4.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Use the white bin.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Please use the recycling bin.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "It goes in the plastic bin.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "What colour is the bin for paper?",
+        "translation": "¿De qué color es la caneca del papel?",
+        "audio": "en-a1-4.1.d2",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is blue.",
+            "next": "n3"
+          },
+          {
+            "id": "o2",
+            "text": "The paper bin is blue.",
+            "next": "n3"
+          },
+          {
+            "id": "o3",
+            "text": "It is the blue one.",
+            "next": "n3"
+          }
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "And where do I put food waste?",
+        "translation": "¿Y dónde pongo los residuos de comida?",
+        "audio": "en-a1-4.1.d3",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "green"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "bin"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "put"
+            ],
+            "next": "n4"
+          }
+        ],
+        "model_reply": "Put it in the green bin.",
+        "starters": [
+          "Put it in the ... bin."
+        ],
+        "word_bank": [
+          "Put",
+          "it",
+          "in",
+          "the",
+          "green",
+          "black",
+          "bin"
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Can I use the shower for a long time?",
+        "translation": "¿Puedo usar la ducha por mucho tiempo?",
+        "audio": "en-a1-4.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Please save water.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Please take a short shower.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, but turn off the water.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Do you have a sign for the lights?",
+        "translation": "¿Tienen un aviso para las luces?",
+        "audio": "en-a1-4.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes: turn off the lights.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, it is next to the door.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Please turn off the lights.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you for taking care of nature!",
+        "translation": "¡Gracias por cuidar la naturaleza!",
+        "audio": "en-a1-4.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You are welcome.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "It is important.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Thank you for the information.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "id": "en-a1-3.1-grammar",
+  "lesson_id": "3.1",
+  "skill": "grammar",
+  "title": "Practice 3.1",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Guide giving directions to a tourist place",
+  "can_do": [
+    "I can ask where a place is.",
+    "I can give simple directions."
+  ],
+  "items": [
+    {
+      "id": "3.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which direction is the opposite of left?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Right"
+        },
+        {
+          "id": "o2",
+          "text": "Straight"
+        },
+        {
+          "id": "o3",
+          "text": "Back"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Left and right are opposites.",
+      "error_tags": {
+        "o2": {
+          "tag": "directions",
+          "text": "Straight means no turn."
+        }
+      }
+    },
+    {
+      "id": "3.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "The bank is {1} the hotel.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "next to"
+            },
+            {
+              "id": "o2",
+              "text": "on foot"
+            },
+            {
+              "id": "o3",
+              "text": "at night"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "preposition",
+            "text": "Use next to for position."
+          }
+        }
+      ],
+      "explanation": "Next to shows position."
+    },
+    {
+      "id": "3.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "Turn {1} at the corner. (the opposite of right)",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "left"
+          ],
+          "error_tag": {
+            "tag": "directions",
+            "text": "The opposite of right is left."
+          }
+        }
+      ],
+      "explanation": "Turn left is the opposite of turn right."
+    },
+    {
+      "id": "3.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Go"
+        },
+        {
+          "id": "t2",
+          "text": "straight"
+        },
+        {
+          "id": "t3",
+          "text": "and"
+        },
+        {
+          "id": "t4",
+          "text": "turn"
+        },
+        {
+          "id": "t5",
+          "text": "left"
+        },
+        {
+          "id": "t6",
+          "text": "."
+        }
+      ],
+      "explanation": "Directions are short commands.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with Go."
+      }
+    },
+    {
+      "id": "3.1.ex.05",
+      "type": "match",
+      "prompt": "Match the place with what you do there.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "bank"
+        },
+        {
+          "id": "l2",
+          "text": "museum"
+        },
+        {
+          "id": "l3",
+          "text": "pharmacy"
+        },
+        {
+          "id": "l4",
+          "text": "market"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "get money"
+        },
+        {
+          "id": "r2",
+          "text": "see art"
+        },
+        {
+          "id": "r3",
+          "text": "buy medicine"
+        },
+        {
+          "id": "r4",
+          "text": "buy fruit"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each place has a use."
+    },
+    {
+      "id": "3.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Ask where the bank is.",
+      "accepted": [
+        "Where is the bank"
+      ],
+      "explanation": "Where is ...? asks for a place.",
+      "error_tag": {
+        "tag": "question_word",
+        "text": "Start with Where is."
+      }
+    }
+  ]
+}
