@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-4.3-listening",
+  "lesson_id": "4.3",
+  "skill": "listening",
+  "title": "Listen and choose 4.3",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Concierge giving directions to hotel facilities and landmarks",
+  "can_do": [
+    "I can give simple directions inside a hotel.",
+    "I can name places in the city and say when they are open."
+  ],
+  "items": [
+    {
+      "id": "en-a1-4.3.l1",
+      "type": "listen_choose",
+      "prompt": "Where is the lobby?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "On the ground floor"
+        },
+        {
+          "id": "o2",
+          "text": "On the roof"
+        },
+        {
+          "id": "o3",
+          "text": "In the garden"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "On the ground floor.",
+      "audio": "en-a1-4.3.l1"
+    },
+    {
+      "id": "en-a1-4.3.l2",
+      "type": "listen_choose",
+      "prompt": "When does it close?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "At five"
+        },
+        {
+          "id": "o2",
+          "text": "At nine"
+        },
+        {
+          "id": "o3",
+          "text": "At noon"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Closes at five.",
+      "audio": "en-a1-4.3.l2"
+    },
+    {
+      "id": "en-a1-4.3.l3",
+      "type": "listen_choose",
+      "prompt": "Where is the castle?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Across from the main square"
+        },
+        {
+          "id": "o2",
+          "text": "Behind the bank"
+        },
+        {
+          "id": "o3",
+          "text": "In the pool"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Across from the main square.",
+      "audio": "en-a1-4.3.l3"
+    }
+  ]
+}

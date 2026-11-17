@@ -1028,6 +1028,222 @@
       "file": "audio/en-a1-3.4.l3.mp3",
       "duration_s": null,
       "transcript": "My stomach hurts after dinner."
+    },
+    {
+      "id": "en-a1-4.1.d1",
+      "text": "Hello! Where can I throw this bottle?",
+      "voices": [],
+      "file": "audio/en-a1-4.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hello! Where can I throw this bottle?"
+    },
+    {
+      "id": "en-a1-4.1.d2",
+      "text": "What colour is the bin for paper?",
+      "voices": [],
+      "file": "audio/en-a1-4.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "What colour is the bin for paper?"
+    },
+    {
+      "id": "en-a1-4.1.d3",
+      "text": "And where do I put food waste?",
+      "voices": [],
+      "file": "audio/en-a1-4.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "And where do I put food waste?"
+    },
+    {
+      "id": "en-a1-4.1.d4",
+      "text": "Can I use the shower for a long time?",
+      "voices": [],
+      "file": "audio/en-a1-4.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Can I use the shower for a long time?"
+    },
+    {
+      "id": "en-a1-4.1.d5",
+      "text": "Do you have a sign for the lights?",
+      "voices": [],
+      "file": "audio/en-a1-4.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "Do you have a sign for the lights?"
+    },
+    {
+      "id": "en-a1-4.1.d6",
+      "text": "Thank you for taking care of nature!",
+      "voices": [],
+      "file": "audio/en-a1-4.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you for taking care of nature!"
+    },
+    {
+      "id": "en-a1-4.1.l1",
+      "text": "Please put the plastic bottles in the white bin.",
+      "voices": [],
+      "file": "audio/en-a1-4.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "Please put the plastic bottles in the white bin."
+    },
+    {
+      "id": "en-a1-4.1.l2",
+      "text": "Save water. Turn off the tap.",
+      "voices": [],
+      "file": "audio/en-a1-4.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "Save water. Turn off the tap."
+    },
+    {
+      "id": "en-a1-4.1.l3",
+      "text": "Do not leave trash on the beach.",
+      "voices": [],
+      "file": "audio/en-a1-4.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "Do not leave trash on the beach."
+    },
+    {
+      "id": "en-a1-4.2.d1",
+      "text": "Hello! We are from Japan.",
+      "voices": [],
+      "file": "audio/en-a1-4.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hello! We are from Japan."
+    },
+    {
+      "id": "en-a1-4.2.d2",
+      "text": "Thank you. Your country is beautiful.",
+      "voices": [],
+      "file": "audio/en-a1-4.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. Your country is beautiful."
+    },
+    {
+      "id": "en-a1-4.2.d3",
+      "text": "How do you say hello in Spanish?",
+      "voices": [],
+      "file": "audio/en-a1-4.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "How do you say hello in Spanish?"
+    },
+    {
+      "id": "en-a1-4.2.d4",
+      "text": "Can you say thank you in Spanish too?",
+      "voices": [],
+      "file": "audio/en-a1-4.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "Can you say thank you in Spanish too?"
+    },
+    {
+      "id": "en-a1-4.2.d5",
+      "text": "Sorry, I do not understand.",
+      "voices": [],
+      "file": "audio/en-a1-4.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "Sorry, I do not understand."
+    },
+    {
+      "id": "en-a1-4.2.d6",
+      "text": "Thank you for your patience!",
+      "voices": [],
+      "file": "audio/en-a1-4.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you for your patience!"
+    },
+    {
+      "id": "en-a1-4.2.l1",
+      "text": "Bonjour means good morning in French.",
+      "voices": [],
+      "file": "audio/en-a1-4.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "Bonjour means good morning in French."
+    },
+    {
+      "id": "en-a1-4.2.l2",
+      "text": "In Japan, people often say hello with a small bow.",
+      "voices": [],
+      "file": "audio/en-a1-4.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "In Japan, people often say hello with a small bow."
+    },
+    {
+      "id": "en-a1-4.2.l3",
+      "text": "Please speak slowly. I am learning English.",
+      "voices": [],
+      "file": "audio/en-a1-4.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "Please speak slowly. I am learning English."
+    },
+    {
+      "id": "en-a1-4.3.d1",
+      "text": "Excuse me. Where is the restaurant?",
+      "voices": [],
+      "file": "audio/en-a1-4.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "Excuse me. Where is the restaurant?"
+    },
+    {
+      "id": "en-a1-4.3.d2",
+      "text": "And the swimming pool?",
+      "voices": [],
+      "file": "audio/en-a1-4.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "And the swimming pool?"
+    },
+    {
+      "id": "en-a1-4.3.d3",
+      "text": "What time does the pool open?",
+      "voices": [],
+      "file": "audio/en-a1-4.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "What time does the pool open?"
+    },
+    {
+      "id": "en-a1-4.3.d4",
+      "text": "Is there a church in the city?",
+      "voices": [],
+      "file": "audio/en-a1-4.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "Is there a church in the city?"
+    },
+    {
+      "id": "en-a1-4.3.d5",
+      "text": "What is a good place to see?",
+      "voices": [],
+      "file": "audio/en-a1-4.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "What is a good place to see?"
+    },
+    {
+      "id": "en-a1-4.3.d6",
+      "text": "Thank you for your help.",
+      "voices": [],
+      "file": "audio/en-a1-4.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you for your help."
+    },
+    {
+      "id": "en-a1-4.3.l1",
+      "text": "The lobby is on the ground floor.",
+      "voices": [],
+      "file": "audio/en-a1-4.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "The lobby is on the ground floor."
+    },
+    {
+      "id": "en-a1-4.3.l2",
+      "text": "The old town opens at nine and closes at five.",
+      "voices": [],
+      "file": "audio/en-a1-4.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "The old town opens at nine and closes at five."
+    },
+    {
+      "id": "en-a1-4.3.l3",
+      "text": "The castle is across from the main square.",
+      "voices": [],
+      "file": "audio/en-a1-4.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "The castle is across from the main square."
     }
   ]
 }

@@ -575,6 +575,150 @@
       "lesson_id": "3.4",
       "word": "rest",
       "translation": "descansar"
+    },
+    {
+      "id": "en-a1-4.1.v1",
+      "lesson_id": "4.1",
+      "word": "recycle",
+      "translation": "reciclar"
+    },
+    {
+      "id": "en-a1-4.1.v2",
+      "lesson_id": "4.1",
+      "word": "trash",
+      "translation": "basura"
+    },
+    {
+      "id": "en-a1-4.1.v3",
+      "lesson_id": "4.1",
+      "word": "bin",
+      "translation": "caneca"
+    },
+    {
+      "id": "en-a1-4.1.v4",
+      "lesson_id": "4.1",
+      "word": "plastic",
+      "translation": "plástico"
+    },
+    {
+      "id": "en-a1-4.1.v5",
+      "lesson_id": "4.1",
+      "word": "paper",
+      "translation": "papel"
+    },
+    {
+      "id": "en-a1-4.1.v6",
+      "lesson_id": "4.1",
+      "word": "glass",
+      "translation": "vidrio"
+    },
+    {
+      "id": "en-a1-4.1.v7",
+      "lesson_id": "4.1",
+      "word": "save water",
+      "translation": "ahorrar agua"
+    },
+    {
+      "id": "en-a1-4.1.v8",
+      "lesson_id": "4.1",
+      "word": "nature",
+      "translation": "naturaleza"
+    },
+    {
+      "id": "en-a1-4.2.v1",
+      "lesson_id": "4.2",
+      "word": "welcome",
+      "translation": "bienvenido"
+    },
+    {
+      "id": "en-a1-4.2.v2",
+      "lesson_id": "4.2",
+      "word": "polite",
+      "translation": "cortés"
+    },
+    {
+      "id": "en-a1-4.2.v3",
+      "lesson_id": "4.2",
+      "word": "respect",
+      "translation": "respeto"
+    },
+    {
+      "id": "en-a1-4.2.v4",
+      "lesson_id": "4.2",
+      "word": "culture",
+      "translation": "cultura"
+    },
+    {
+      "id": "en-a1-4.2.v5",
+      "lesson_id": "4.2",
+      "word": "friend",
+      "translation": "amigo"
+    },
+    {
+      "id": "en-a1-4.2.v6",
+      "lesson_id": "4.2",
+      "word": "guest",
+      "translation": "visitante"
+    },
+    {
+      "id": "en-a1-4.2.v7",
+      "lesson_id": "4.2",
+      "word": "slowly",
+      "translation": "despacio"
+    },
+    {
+      "id": "en-a1-4.2.v8",
+      "lesson_id": "4.2",
+      "word": "repeat",
+      "translation": "repetir"
+    },
+    {
+      "id": "en-a1-4.3.v1",
+      "lesson_id": "4.3",
+      "word": "lobby",
+      "translation": "recepción"
+    },
+    {
+      "id": "en-a1-4.3.v2",
+      "lesson_id": "4.3",
+      "word": "floor",
+      "translation": "piso"
+    },
+    {
+      "id": "en-a1-4.3.v3",
+      "lesson_id": "4.3",
+      "word": "square",
+      "translation": "plaza"
+    },
+    {
+      "id": "en-a1-4.3.v4",
+      "lesson_id": "4.3",
+      "word": "church",
+      "translation": "iglesia"
+    },
+    {
+      "id": "en-a1-4.3.v5",
+      "lesson_id": "4.3",
+      "word": "castle",
+      "translation": "castillo"
+    },
+    {
+      "id": "en-a1-4.3.v6",
+      "lesson_id": "4.3",
+      "word": "pool",
+      "translation": "piscina"
+    },
+    {
+      "id": "en-a1-4.3.v7",
+      "lesson_id": "4.3",
+      "word": "open",
+      "translation": "abrir"
+    },
+    {
+      "id": "en-a1-4.3.v8",
+      "lesson_id": "4.3",
+      "word": "close",
+      "translation": "cerrar"
     }
   ]
 }

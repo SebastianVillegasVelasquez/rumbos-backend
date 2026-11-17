@@ -1,0 +1,210 @@
+{
+  "id": "en-a1-4.3-grammar",
+  "lesson_id": "4.3",
+  "skill": "grammar",
+  "title": "Practice 4.3",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Concierge giving directions to hotel facilities and landmarks",
+  "can_do": [
+    "I can give simple directions inside a hotel.",
+    "I can name places in the city and say when they are open."
+  ],
+  "items": [
+    {
+      "id": "4.3.ex.01",
+      "type": "mcq",
+      "prompt": "Which place is part of a hotel?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Lobby"
+        },
+        {
+          "id": "o2",
+          "text": "Airport"
+        },
+        {
+          "id": "o3",
+          "text": "Market"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "A lobby is the entrance hall.",
+      "error_tags": {
+        "o2": {
+          "tag": "vocabulary",
+          "text": "An airport is not in a hotel."
+        }
+      }
+    },
+    {
+      "id": "4.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "The restaurant is {1} the first floor.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "on"
+            },
+            {
+              "id": "o2",
+              "text": "at"
+            },
+            {
+              "id": "o3",
+              "text": "by"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "preposition",
+            "text": "Use on with a floor."
+          }
+        }
+      ],
+      "explanation": "Use on with floors."
+    },
+    {
+      "id": "4.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "The shop {1} at six. (finishes work)",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "closes"
+          ],
+          "error_tag": {
+            "tag": "verb_form",
+            "text": "Use closes with it."
+          }
+        }
+      ],
+      "explanation": "The shop closes at six."
+    },
+    {
+      "id": "4.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "The"
+        },
+        {
+          "id": "t2",
+          "text": "lobby"
+        },
+        {
+          "id": "t3",
+          "text": "is"
+        },
+        {
+          "id": "t4",
+          "text": "on"
+        },
+        {
+          "id": "t5",
+          "text": "the"
+        },
+        {
+          "id": "t6",
+          "text": "ground"
+        },
+        {
+          "id": "t7",
+          "text": "floor"
+        },
+        {
+          "id": "t8",
+          "text": "."
+        }
+      ],
+      "explanation": "Subject, verb, place.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with The lobby."
+      }
+    },
+    {
+      "id": "4.3.ex.05",
+      "type": "match",
+      "prompt": "Match the place with its use.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "lobby"
+        },
+        {
+          "id": "l2",
+          "text": "pool"
+        },
+        {
+          "id": "l3",
+          "text": "restaurant"
+        },
+        {
+          "id": "l4",
+          "text": "room"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "meet people"
+        },
+        {
+          "id": "r2",
+          "text": "swim"
+        },
+        {
+          "id": "r3",
+          "text": "eat"
+        },
+        {
+          "id": "r4",
+          "text": "sleep"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each hotel place has a use."
+    },
+    {
+      "id": "4.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Say when the museum opens. It opens at nine.",
+      "accepted": [
+        "It opens at nine",
+        "It opens at 9"
+      ],
+      "explanation": "It opens at + time.",
+      "error_tag": {
+        "tag": "time",
+        "text": "Use at with the time."
+      }
+    }
+  ]
+}

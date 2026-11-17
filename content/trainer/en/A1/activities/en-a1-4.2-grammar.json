@@ -1,0 +1,205 @@
+{
+  "id": "en-a1-4.2-grammar",
+  "lesson_id": "4.2",
+  "skill": "grammar",
+  "title": "Practice 4.2",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Host welcoming guests from many countries",
+  "can_do": [
+    "I can welcome international guests politely.",
+    "I can use greetings and polite phrases from around the world."
+  ],
+  "items": [
+    {
+      "id": "4.2.ex.01",
+      "type": "mcq",
+      "prompt": "Which phrase is polite when you do not understand?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Sorry, can you repeat?"
+        },
+        {
+          "id": "o2",
+          "text": "What?"
+        },
+        {
+          "id": "o3",
+          "text": "No!"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Sorry, can you repeat? is polite.",
+      "error_tags": {
+        "o2": {
+          "tag": "politeness",
+          "text": "What? sounds rude."
+        }
+      }
+    },
+    {
+      "id": "4.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "You are very {1}. Thank you!",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "kind"
+            },
+            {
+              "id": "o2",
+              "text": "kinds"
+            },
+            {
+              "id": "o3",
+              "text": "kindly"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "adjective",
+            "text": "Use the adjective kind here."
+          }
+        }
+      ],
+      "explanation": "Kind is an adjective after are."
+    },
+    {
+      "id": "4.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "{1} to Colombia! (we greet a guest)",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "Welcome"
+          ],
+          "error_tag": {
+            "tag": "vocabulary",
+            "text": "The word is Welcome."
+          }
+        }
+      ],
+      "explanation": "Welcome to ... greets a guest."
+    },
+    {
+      "id": "4.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Nice"
+        },
+        {
+          "id": "t2",
+          "text": "to"
+        },
+        {
+          "id": "t3",
+          "text": "meet"
+        },
+        {
+          "id": "t4",
+          "text": "all"
+        },
+        {
+          "id": "t5",
+          "text": "of"
+        },
+        {
+          "id": "t6",
+          "text": "you"
+        },
+        {
+          "id": "t7",
+          "text": "."
+        }
+      ],
+      "explanation": "A warm welcome for a group.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with Nice."
+      }
+    },
+    {
+      "id": "4.2.ex.05",
+      "type": "match",
+      "prompt": "Match the greeting with the language.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "hola"
+        },
+        {
+          "id": "l2",
+          "text": "bonjour"
+        },
+        {
+          "id": "l3",
+          "text": "ciao"
+        },
+        {
+          "id": "l4",
+          "text": "hallo"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "Spanish"
+        },
+        {
+          "id": "r2",
+          "text": "French"
+        },
+        {
+          "id": "r3",
+          "text": "Italian"
+        },
+        {
+          "id": "r4",
+          "text": "German"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Greetings differ by language."
+    },
+    {
+      "id": "4.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Welcome a guest from Japan in one sentence. Start with Welcome.",
+      "accepted": [
+        "Welcome to Colombia"
+      ],
+      "explanation": "Welcome to + place.",
+      "error_tag": {
+        "tag": "politeness",
+        "text": "Start with Welcome."
+      }
+    }
+  ]
+}

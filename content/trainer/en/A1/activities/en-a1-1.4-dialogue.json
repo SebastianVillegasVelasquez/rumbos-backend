@@ -55,14 +55,20 @@
           },
           {
             "all_of": [
+              "r-u-i-z"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
               "ruiz"
             ],
             "next": "n3"
           }
         ],
-        "model_reply": "R-U-I-Z.",
+        "model_reply": "R U I Z.",
         "starters": [
-          "R - U - I - Z"
+          "R U I Z"
         ],
         "word_bank": [
           "R",
