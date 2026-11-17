@@ -29,3 +29,7 @@ Thumbs.db
 
 # Generated test fixtures (scripts/make_demo_skin_pack.py)
 /tmp/
+
+# Client source documents (inputs of tools/import_forma_a.py; never committed)
+/docs/*.docx
+/docs/*.pdf
