@@ -3,6 +3,8 @@ import shutil
 from pathlib import Path
 from typing import Any
 
+import pytest
+
 from app.scripts.lint_content import main as lint_main
 from app.trainer.lint import lint
 from app.trainer.pack import load_pack
@@ -176,3 +178,20 @@ def test_coverage_lists_lessons_with_missing_skills(tmp_path: Path) -> None:
 def test_the_spanish_word_todo_is_not_an_unfinished_marker(tmp_path: Path) -> None:
     activity = good_activity(title="Eso es todo")
     assert "unfinished text" not in problems(make_pack(tmp_path, [activity]))
+
+
+def test_the_linter_needs_no_database_or_moodle_settings(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """CI runs it before any service is configured."""
+    for name in (
+        "POSTGRES_USER",
+        "POSTGRES_PASSWORD",
+        "POSTGRES_DB",
+        "POSTGRES_HOST",
+        "MOODLE_BASE_URL",
+        "MOODLE_SERVICE_TOKEN",
+    ):
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.delenv("TRAINER_CONTENT_DIR", raising=False)
+    assert lint_main([]) == 0

@@ -2,13 +2,15 @@
 
     python -m app.scripts.lint_content [content/trainer]
 
-Exits 1 when a pack fails to load or has errors (CI runs it).
+Exits 1 when a pack fails to load or has errors (CI runs it). It reads only
+the content: no database or Moodle settings are needed, so the directory comes
+from the argument, then `TRAINER_CONTENT_DIR`, then `content/trainer`.
 """
 
+import os
 import sys
 from pathlib import Path
 
-from app.core.config import get_settings
 from app.trainer.catalog import load_catalog
 from app.trainer.lint import lint
 from app.trainer.pack import PackError
@@ -16,7 +18,9 @@ from app.trainer.pack import PackError
 
 def main(argv: list[str] | None = None) -> int:
     args = sys.argv[1:] if argv is None else argv
-    base = Path(args[0] if args else get_settings().trainer_content_dir)
+    base = Path(
+        args[0] if args else os.environ.get("TRAINER_CONTENT_DIR", "content/trainer")
+    )
     try:
         catalog = load_catalog(base)
     except PackError as exc:
