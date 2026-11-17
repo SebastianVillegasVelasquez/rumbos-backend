@@ -62,6 +62,7 @@ from app.exceptions import (
     SkinReferenceNotFoundError,
     StorageUnavailableError,
     TenantDisabledError,
+    TrainerSettingsInvalidError,
     UnauthorizedError,
     UploadsDisabledError,
     VersionConflictError,
@@ -110,7 +111,7 @@ _WELCOME_KINDS: dict[str, tuple[str, str]] = {
     "union_tag_not_found": ("step_type_invalid", "Every step needs a type"),
 }
 # The tags pydantic adds to a location when it goes through a step's union.
-_STEP_TAGS = frozenset({"welcome", "video", "html", "pdf", "quiz"})
+_STEP_TAGS = frozenset({"welcome", "video", "html", "pdf", "quiz", "assessment"})
 
 
 def welcome_path(loc: tuple[int | str, ...]) -> str:
@@ -693,6 +694,23 @@ def register_exception_handlers(app: FastAPI) -> None:
         )
 
     app.add_exception_handler(WelcomeInvalidError, welcome_invalid)
+
+    async def trainer_settings_invalid(
+        request: Request, exc: Exception
+    ) -> JSONResponse:
+        assert isinstance(exc, TrainerSettingsInvalidError)
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            content={
+                "detail": {
+                    "code": "trainer_settings_invalid",
+                    "message": "The trainer or assessment settings are not valid",
+                    "problems": exc.problems,
+                }
+            },
+        )
+
+    app.add_exception_handler(TrainerSettingsInvalidError, trainer_settings_invalid)
 
     async def request_invalid(request: Request, exc: Exception) -> JSONResponse:
         assert isinstance(exc, RequestValidationError)

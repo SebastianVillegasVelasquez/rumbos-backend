@@ -18,6 +18,7 @@ from app.schemas.welcome import (
     MAX_FLOW_MARKUP_BYTES,
     MAX_HTML_BYTES,
     MAX_QUIZ_STEPS,
+    AssessmentStep,
     HtmlStep,
     PdfStep,
     QuizStep,
@@ -59,6 +60,7 @@ def flow_problems(welcome: Welcome) -> list[Problem]:
 
     seen: set[str] = set()
     quizzes = 0
+    assessments = 0
     markup_bytes = 0
     for index, step in enumerate(steps):
         where = f"welcome.steps[{index}]"
@@ -79,6 +81,16 @@ def flow_problems(welcome: Welcome) -> list[Problem]:
                     "The welcome step must be the first step, and there can be only one",
                 )
             )
+        if isinstance(step, AssessmentStep):
+            assessments += 1
+            if assessments > 1:
+                problems.append(
+                    _problem(
+                        where,
+                        "assessment_too_many",
+                        "Only one assessment step is allowed",
+                    )
+                )
         if isinstance(step, QuizStep):
             quizzes += 1
             if quizzes > MAX_QUIZ_STEPS:

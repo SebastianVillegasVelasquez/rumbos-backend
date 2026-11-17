@@ -428,6 +428,15 @@ class ContentInvalidError(DomainError):
         self.problems = problems
 
 
+class TrainerSettingsInvalidError(DomainError):
+    """The trainer or assessment settings name content that is not deployed,
+    or an assessment step without an exam. `problems` as `WelcomeInvalidError`."""
+
+    def __init__(self, problems: list[dict[str, str]]) -> None:
+        super().__init__("trainer settings invalid")
+        self.problems = problems
+
+
 class WelcomeInvalidError(DomainError):
     """A welcome flow breaks a rule that needs more than a type to check.
 

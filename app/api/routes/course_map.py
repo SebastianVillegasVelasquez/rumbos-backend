@@ -13,7 +13,7 @@ from app.auth.dependencies import (
     editor_route,
     moodle_source_route,
 )
-from app.exceptions import CourseMapNotFoundError
+from app.exceptions import CourseMapNotFoundError, TrainerSettingsInvalidError
 from app.moodle.dependencies import get_contents_provider, get_moodle_client
 from app.moodle.protocols import CourseContentsProvider, MoodleClient
 from app.repositories.sqlalchemy.asset_repository import SqlAlchemyAssetRepository
@@ -44,10 +44,14 @@ from app.schemas.course_map import (
     CourseMapRead,
     CourseMapUpdate,
 )
+from app.schemas.map_settings import MapSettings
 from app.schemas.resolved import ResolvedMap
 from app.schemas.view3d import View3dUpdate
 from app.services.course_map_service import CourseMapService
 from app.services.resolution_service import MapResolutionService
+from app.trainer.catalog import Catalog
+from app.trainer.dependencies import CatalogDep
+from app.trainer.settings_check import trainer_settings_problems
 
 router = APIRouter(
     prefix="/course-maps",
@@ -87,6 +91,12 @@ def get_resolution_service(
     )
 
 
+def check_trainer_settings(settings: MapSettings, catalog: Catalog) -> None:
+    problems = trainer_settings_problems(settings, catalog)
+    if problems:
+        raise TrainerSettingsInvalidError(problems)
+
+
 ServiceDep = Annotated[CourseMapService, Depends(get_course_map_service)]
 ResolutionServiceDep = Annotated[MapResolutionService, Depends(get_resolution_service)]
 
@@ -106,7 +116,9 @@ async def list_course_maps(
 
 @router.post("", response_model=CourseMapRead, status_code=status.HTTP_201_CREATED)
 async def create_course_map(
-    data: CourseMapCreate, service: ServiceDep, response: Response
+    data: CourseMapCreate,
+    service: ServiceDep,
+    response: Response,
 ) -> CourseMapRead:
     created = await service.create_course_map(data)
     set_etag(response, created.revision)
@@ -152,8 +164,10 @@ async def update_appearance(
     service: ServiceDep,
     response: Response,
     revision: IfMatch,
+    catalog: CatalogDep,
 ) -> CourseMapRead:
     """Needs `If-Match: "<revision>"` (428 without, 412 when stale)."""
+    check_trainer_settings(data.settings, catalog)
     updated = await service.update_appearance(course_map_id, data, revision)
     set_etag(response, updated.revision)
     return updated
