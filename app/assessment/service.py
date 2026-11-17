@@ -27,6 +27,7 @@ from app.assessment.engine import (
 from app.assessment.metrics import METRICS
 from app.assessment.scoring import decimal_string, passes
 from app.exceptions import AssessmentConflictError, TrainerNotFoundError
+from app.passback.statement import claims_for
 from app.repositories.sqlalchemy.assessment_repository import (
     AttemptRecord,
     SqlAlchemyAssessmentRepository,
@@ -80,7 +81,9 @@ class AssessmentService:
         *,
         serve_drafts: bool,
         audio_url: Callable[[str, str], str],
+        issuer: str = "rumbos-backend",
     ) -> None:
+        self._issuer = issuer
         self._attempts = attempts
         self._catalog = catalog
         self._settings = settings
@@ -397,7 +400,24 @@ class AssessmentService:
             if status == "expired"
             else self._clock()
         )
-        if await self._attempts.close(attempt.id, status, finished, result):
+        statement = None
+        if not attempt.preview:
+            statement = claims_for(
+                attempt_id=attempt.id,
+                tenant_id=attempt.tenant_id,
+                course_id=attempt.moodle_course_id,
+                sub=attempt.sub,
+                purpose=attempt.purpose,
+                ordinal=attempt.ordinal,
+                form_id=attempt.form_id,
+                content_version=attempt.content_version,
+                policy=policy,
+                result=result,
+                finished_at=finished.isoformat(),
+                issuer=self._issuer,
+                issued_at=int(self._clock().timestamp()),
+            )
+        if await self._attempts.close(attempt.id, status, finished, result, statement):
             METRICS.count(status, attempt.purpose, preview=attempt.preview)
             METRICS.count_band(result["band"], preview=attempt.preview)
             log.info(
@@ -437,9 +457,15 @@ class AssessmentService:
                 "max": attempt.policy["max_attempts"],
             },
             "gain": gain,
-            "sync": {"state": self.sync_state(attempt)},
+            "sync": {"state": await self._sync_state(attempt)},
         }
 
-    def sync_state(self, attempt: AttemptRecord) -> str:
-        """Phase A has no Moodle effects; the passback replaces this."""
-        return "not_required"
+    async def _sync_state(self, attempt: AttemptRecord) -> str:
+        """Where the report to Moodle stands: `not_required` (preview),
+        `pending`, `synced` or `failed` (refused for good; an operator looks)."""
+        found = await self._attempts.sync_states([attempt.id])
+        return {
+            "pending": "pending",
+            "sent": "synced",
+            "failed_permanent": "failed",
+        }.get(found.get(attempt.id, ""), "not_required")

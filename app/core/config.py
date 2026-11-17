@@ -111,6 +111,14 @@ class Settings(BaseSettings):
     # Requests per minute one user may send to the trainer (the exam
     # autosaves, so this is generous). Counted per process.
     trainer_rate_per_minute: int = Field(default=240, ge=1)
+    # Reporting exam results to Moodle (see docs/TRAINER.md). `none` leaves the
+    # outbox pending (the real sender waits for the plugin's endpoint decision),
+    # `fake` records them in memory (development).
+    passback_sender: Literal["none", "fake"] = "none"
+    passback_issuer: str = "rumbos-backend"
+    passback_key_id: str = "passback-1"
+    # EC P-256 private key in PEM; the public half goes to Moodle.
+    passback_signing_key_pem: SecretStr | None = None
     # Practice attempts older than this many days are purged by the CLI.
     trainer_retention_days: int = Field(default=90, ge=1)
 

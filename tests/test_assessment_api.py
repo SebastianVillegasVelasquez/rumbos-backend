@@ -397,7 +397,7 @@ async def test_a_perfect_attempt_passes_and_is_idempotent(env: dict[str, Any]) -
         "achieved",
     )
     assert body["attempts"] == {"used": 1, "max": 1}
-    assert body["sync"] == {"state": "not_required"} and body["gain"] is None
+    assert body["sync"] == {"state": "pending"} and body["gain"] is None
     assert {x["key"] for x in body["by_section"]} == {
         "listening",
         "reading",

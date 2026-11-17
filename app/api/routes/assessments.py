@@ -59,6 +59,7 @@ def get_service(
         clock,
         serve_drafts=app_settings.trainer_serve_drafts,
         audio_url=audio_url,
+        issuer=app_settings.passback_issuer,
     )
 
 

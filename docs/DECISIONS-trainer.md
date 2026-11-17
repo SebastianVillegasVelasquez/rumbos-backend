@@ -81,3 +81,46 @@ verbally).
 The existing limiter keeps counts in process memory, so with `WORKERS=n` the
 effective limit is up to n times the configured one. The assessment endpoints
 reuse it; a shared limit belongs in the reverse proxy.
+
+## D12. The trainer API names its fields in snake_case
+
+The shared contract v2 spells fields as `attempt_id`, `deadline_at`,
+`pass_percent`, while the rest of this API uses camelCase aliases. The trainer
+schemas follow the contract and do not use the alias generator. The map
+settings the editor writes (`assessments.checkIn`, ...) stay camelCase because
+they belong to the existing settings document.
+
+## D13. The Moodle passback has a port and a fake, not a real sender
+
+The plugin repository records no decision on which endpoint receives exam
+statements, so the HTTP sender is not written. `MoodleResultPort` has a fake
+for tests and development; with `PASSBACK_SENDER=none` (the default) results
+wait in the outbox as `pending`. Statements are ES256 JWS tokens signed at send
+time (so a key can be rotated while rows wait); `jti` is the attempt id, which
+lets Moodle accept each once. Rows are never dropped on a transient failure.
+
+## D14. Every real closed attempt is reported, not only passes
+
+The outbox gets one row per non-preview closed attempt, passed or not. The
+statement says `completes_course` (passed and the exemption was on when the
+attempt started), so Moodle decides what to record; a pass-only feed would hide
+failed attempts from the teacher. The rule comes from the attempt's frozen
+policy, never from today's settings.
+
+## D15. Which course settings an exam reads
+
+A student reads the settings of the first published map of the course that
+turns assessments on (then trainer, then defaults). An editor in preview reads
+the drafts, so an exam can be tried before publishing. The anonymous legacy
+principal has no user and gets 404.
+
+## D16. Draft content is not served unless the server says so
+
+A form or pack whose status is `draft` (all of them today) is served only with
+`TRAINER_SERVE_DRAFTS=true`. Production stays off until a person has reviewed
+the keys and flipped the status (see the final report for the steps).
+
+## D17. The image ships the content directory
+
+The app loads the packs at start-up and refuses to start if one is invalid, so
+`content/` is copied into the image and CI runs the linter first.

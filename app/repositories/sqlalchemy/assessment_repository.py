@@ -16,7 +16,12 @@ from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import AssessmentAnswer, AssessmentAttempt
+from app.models import (
+    AssessmentAnswer,
+    AssessmentAttempt,
+    CompletionAudit,
+    PassbackOutbox,
+)
 
 
 @dataclass(frozen=True)
@@ -218,9 +223,13 @@ class SqlAlchemyAssessmentRepository:
         status: str,
         finished_at: datetime,
         result: Mapping[str, Any],
+        statement: Mapping[str, Any] | None = None,
     ) -> bool:
         """Closes an attempt that is still in progress; False if someone else
-        closed it first (the caller then reads the stored result)."""
+        closed it first (the caller then reads the stored result). With a
+        `statement` (a real attempt's claims for Moodle) it is put in the
+        passback outbox in the same transaction, so the result and its report
+        stand or fall together."""
         try:
             done = await self._session.execute(
                 update(AssessmentAttempt)
@@ -230,11 +239,48 @@ class SqlAlchemyAssessmentRepository:
                 )
                 .values(status=status, finished_at=finished_at, result=dict(result))
             )
+            closed = bool(done.rowcount)  # type: ignore[attr-defined]
+            if closed and statement is not None:
+                attempt = await self._session.get(AssessmentAttempt, attempt_id)
+                assert attempt is not None
+                self._session.add(
+                    PassbackOutbox(
+                        tenant_id=attempt.tenant_id,
+                        moodle_course_id=attempt.moodle_course_id,
+                        attempt_id=attempt_id,
+                        statement=dict(statement),
+                        status="pending",
+                        attempts=0,
+                        next_try_at=finished_at,
+                    )
+                )
+                self._session.add(
+                    CompletionAudit(
+                        tenant_id=attempt.tenant_id,
+                        moodle_course_id=attempt.moodle_course_id,
+                        attempt_id=attempt_id,
+                        event="enqueued",
+                        detail={"passed": statement["passed"]},
+                        at=finished_at,
+                    )
+                )
             await self._session.commit()
-            return bool(done.rowcount)  # type: ignore[attr-defined]
+            return closed
         except BaseException:
             await self._session.rollback()
             raise
+
+    async def sync_states(self, attempt_ids: list[uuid.UUID]) -> dict[uuid.UUID, str]:
+        """The outbox status of each attempt that has a row."""
+        rows = (
+            await self._session.execute(
+                select(PassbackOutbox.attempt_id, PassbackOutbox.status).where(
+                    PassbackOutbox.attempt_id.in_(attempt_ids)
+                )
+            )
+        ).all()
+        await self._session.rollback()
+        return {attempt_id: status for attempt_id, status in rows}
 
     async def expired_open(self, now: datetime, limit: int) -> list[AttemptRecord]:
         rows = (

@@ -10,6 +10,7 @@ from app.models.auth import AccessToken, AuthORM, UsedJti
 from app.models.base import BaseORM
 from app.models.bubble import Bubble
 from app.models.course_map import CourseMap
+from app.models.passback import CompletionAudit, PassbackOutbox
 from app.models.publication import Publication
 from app.models.skin import CourseMapSkinRule, Skin
 from app.models.tenant import Tenant, TenantKey
@@ -25,9 +26,11 @@ __all__ = [
     "AuthORM",
     "BaseORM",
     "Bubble",
+    "CompletionAudit",
     "CourseMap",
     "CourseMapSkinRule",
     "CourseMapView3dBinding",
+    "PassbackOutbox",
     "Publication",
     "Skin",
     "Tenant",

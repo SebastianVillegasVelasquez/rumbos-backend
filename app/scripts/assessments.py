@@ -74,6 +74,7 @@ async def sweep(
             lambda: now,
             serve_drafts=True,
             audio_url=lambda *_: "",
+            issuer=get_settings().passback_issuer,
         )
         await service.expire(attempt)
         closed += 1
