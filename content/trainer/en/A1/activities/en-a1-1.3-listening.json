@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-1.3-listening",
+  "lesson_id": "1.3",
+  "skill": "listening",
+  "title": "Listen and choose 1.3",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Front desk telling guests the hours",
+  "can_do": [
+    "I can say and ask the time.",
+    "I can tell a guest the hours of meals and tours."
+  ],
+  "items": [
+    {
+      "id": "en-a1-1.3.l1",
+      "type": "listen_choose",
+      "prompt": "What time is dinner?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Six o'clock"
+        },
+        {
+          "id": "o2",
+          "text": "Seven o'clock"
+        },
+        {
+          "id": "o3",
+          "text": "Eight o'clock"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says eight.",
+      "audio": "en-a1-1.3.l1"
+    },
+    {
+      "id": "en-a1-1.3.l2",
+      "type": "listen_choose",
+      "prompt": "When does the bus leave?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "9:15"
+        },
+        {
+          "id": "o2",
+          "text": "9:30"
+        },
+        {
+          "id": "o3",
+          "text": "9:45"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "Half past nine is nine thirty.",
+      "audio": "en-a1-1.3.l2"
+    },
+    {
+      "id": "en-a1-1.3.l3",
+      "type": "listen_choose",
+      "prompt": "On which day is the shop closed?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Monday"
+        },
+        {
+          "id": "o2",
+          "text": "Sunday"
+        },
+        {
+          "id": "o3",
+          "text": "Friday"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says Monday.",
+      "audio": "en-a1-1.3.l3"
+    }
+  ]
+}

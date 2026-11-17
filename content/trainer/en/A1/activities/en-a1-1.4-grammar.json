@@ -1,0 +1,202 @@
+{
+  "id": "en-a1-1.4-grammar",
+  "lesson_id": "1.4",
+  "skill": "grammar",
+  "title": "Practice 1.4",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Receptionist filling in a guest card",
+  "can_do": [
+    "I can ask for and give names, ages and phone numbers.",
+    "I can spell a name."
+  ],
+  "items": [
+    {
+      "id": "1.4.ex.01",
+      "type": "mcq",
+      "prompt": "Which question asks for an age?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "How old are you?"
+        },
+        {
+          "id": "o2",
+          "text": "How are you?"
+        },
+        {
+          "id": "o3",
+          "text": "Who are you?"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "How old ... asks for age.",
+      "error_tags": {
+        "o2": {
+          "tag": "question_word",
+          "text": "How are you asks about feelings, not age."
+        }
+      }
+    },
+    {
+      "id": "1.4.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "I {1} thirty years old.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "is"
+            },
+            {
+              "id": "o2",
+              "text": "am"
+            },
+            {
+              "id": "o3",
+              "text": "have"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "be_age",
+            "text": "In English we say I am + number, not I have."
+          }
+        }
+      ],
+      "explanation": "We use am for age in English."
+    },
+    {
+      "id": "1.4.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "What is your phone {1}?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "number"
+          ],
+          "error_tag": {
+            "tag": "vocabulary",
+            "text": "The word is number."
+          }
+        }
+      ],
+      "explanation": "We say phone number."
+    },
+    {
+      "id": "1.4.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "How"
+        },
+        {
+          "id": "t2",
+          "text": "old"
+        },
+        {
+          "id": "t3",
+          "text": "are"
+        },
+        {
+          "id": "t4",
+          "text": "you"
+        },
+        {
+          "id": "t5",
+          "text": "?"
+        }
+      ],
+      "explanation": "Age questions start with How old.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with How old."
+      }
+    },
+    {
+      "id": "1.4.ex.05",
+      "type": "match",
+      "prompt": "Match the number with the word.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "12"
+        },
+        {
+          "id": "l2",
+          "text": "15"
+        },
+        {
+          "id": "l3",
+          "text": "20"
+        },
+        {
+          "id": "l4",
+          "text": "40"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "twelve"
+        },
+        {
+          "id": "r2",
+          "text": "fifteen"
+        },
+        {
+          "id": "r3",
+          "text": "twenty"
+        },
+        {
+          "id": "r4",
+          "text": "forty"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Learn the teens and the tens."
+    },
+    {
+      "id": "1.4.ex.06",
+      "type": "short_answer",
+      "prompt": "Say your age. You are 30.",
+      "accepted": [
+        "I am thirty",
+        "I am 30",
+        "I am thirty years old",
+        "I am 30 years old",
+        "I'm thirty",
+        "I'm 30"
+      ],
+      "explanation": "I am + number.",
+      "error_tag": {
+        "tag": "be_age",
+        "text": "Use I am + number."
+      }
+    }
+  ]
+}

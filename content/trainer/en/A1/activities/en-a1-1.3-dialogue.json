@@ -1,0 +1,173 @@
+{
+  "id": "en-a1-1.3-dialogue",
+  "lesson_id": "1.3",
+  "skill": "dialogue",
+  "title": "Talk it through 1.3",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Front desk telling guests the hours",
+  "can_do": [
+    "I can say and ask the time.",
+    "I can tell a guest the hours of meals and tours."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Excuse me. What time is breakfast?",
+        "translation": "Disculpe. ¿A qué hora es el desayuno?",
+        "audio": "en-a1-1.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Breakfast is at seven.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "It is at seven thirty.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "From seven to ten.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "And what time is lunch?",
+        "translation": "¿Y a qué hora es el almuerzo?",
+        "audio": "en-a1-1.3.d2",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Lunch is at twelve.",
+            "next": "n3"
+          },
+          {
+            "id": "o2",
+            "text": "It is at half past twelve.",
+            "next": "n3"
+          },
+          {
+            "id": "o3",
+            "text": "At one o'clock.",
+            "next": "n3"
+          }
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "What time is it now?",
+        "translation": "¿Qué hora es ahora?",
+        "audio": "en-a1-1.3.d3",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "it",
+              "is"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "it's"
+            ],
+            "next": "n4"
+          }
+        ],
+        "model_reply": "It is nine o'clock.",
+        "starters": [
+          "It is ..."
+        ],
+        "word_bank": [
+          "It",
+          "is",
+          "nine",
+          "ten",
+          "o'clock",
+          "half",
+          "past"
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "The tour starts at ten. Is that right?",
+        "translation": "El recorrido empieza a las diez. ¿Es correcto?",
+        "audio": "en-a1-1.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, it is at ten.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, ten o'clock.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "No, it is at eleven.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is the museum open on Sunday?",
+        "translation": "¿El museo abre el domingo?",
+        "audio": "en-a1-1.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, it is open.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "No, it is closed on Sunday.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "It is open from nine to five.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. See you at breakfast!",
+        "translation": "Gracias. ¡Nos vemos en el desayuno!",
+        "audio": "en-a1-1.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "See you!",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "See you tomorrow morning.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Have a good night.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

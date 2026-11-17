@@ -1,0 +1,198 @@
+{
+  "id": "en-a1-1.2-grammar",
+  "lesson_id": "1.2",
+  "skill": "grammar",
+  "title": "Practice 1.2",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Guide meeting visitors from other countries",
+  "can_do": [
+    "I can say where I am from.",
+    "I can ask a visitor where they are from and what languages they speak."
+  ],
+  "items": [
+    {
+      "id": "1.2.ex.01",
+      "type": "mcq",
+      "prompt": "Pick the nationality: a person from France is...",
+      "options": [
+        {
+          "id": "o1",
+          "text": "French"
+        },
+        {
+          "id": "o2",
+          "text": "Franch"
+        },
+        {
+          "id": "o3",
+          "text": "Francian"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "France gives French.",
+      "error_tags": {
+        "o2": {
+          "tag": "spelling",
+          "text": "The word is French."
+        }
+      }
+    },
+    {
+      "id": "1.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "They {1} from Peru.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "is"
+            },
+            {
+              "id": "o2",
+              "text": "are"
+            },
+            {
+              "id": "o3",
+              "text": "am"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "be_agreement",
+            "text": "Use are with they."
+          }
+        }
+      ],
+      "explanation": "They takes are."
+    },
+    {
+      "id": "1.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "She {1} from Italy.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "is"
+          ],
+          "error_tag": {
+            "tag": "be_agreement",
+            "text": "Use is with she."
+          }
+        }
+      ],
+      "explanation": "She takes is."
+    },
+    {
+      "id": "1.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Do"
+        },
+        {
+          "id": "t2",
+          "text": "you"
+        },
+        {
+          "id": "t3",
+          "text": "speak"
+        },
+        {
+          "id": "t4",
+          "text": "English"
+        },
+        {
+          "id": "t5",
+          "text": "?"
+        }
+      ],
+      "explanation": "Questions with speak start with Do.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start a yes/no question with Do."
+      }
+    },
+    {
+      "id": "1.2.ex.05",
+      "type": "match",
+      "prompt": "Match the country with the language.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "Brazil"
+        },
+        {
+          "id": "l2",
+          "text": "Germany"
+        },
+        {
+          "id": "l3",
+          "text": "Japan"
+        },
+        {
+          "id": "l4",
+          "text": "Colombia"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "Portuguese"
+        },
+        {
+          "id": "r2",
+          "text": "German"
+        },
+        {
+          "id": "r3",
+          "text": "Japanese"
+        },
+        {
+          "id": "r4",
+          "text": "Spanish"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each country here has one main language."
+    },
+    {
+      "id": "1.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Say where you are from. You are from Peru.",
+      "accepted": [
+        "I am from Peru",
+        "I'm from Peru"
+      ],
+      "explanation": "I am from + country.",
+      "error_tag": {
+        "tag": "be_from",
+        "text": "Use I am from before the country."
+      }
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "id": "en-a1-1.1-dialogue",
+  "lesson_id": "1.1",
+  "skill": "dialogue",
+  "title": "Talk it through 1.1",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Receptionist welcoming a guest",
+  "can_do": [
+    "I can greet a guest and say my name.",
+    "I can ask a guest for their name."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Good morning! Welcome to the hotel.",
+        "translation": "¡Buenos días! Bienvenido al hotel.",
+        "audio": "en-a1-1.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Good morning! Thank you.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Hello! Nice to be here.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Hi, good morning.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "I am Maria. What is your name?",
+        "translation": "Soy María. ¿Cómo se llama usted?",
+        "audio": "en-a1-1.1.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "my",
+              "name",
+              "is"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "i",
+              "am"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "My name is Tom.",
+        "starters": [
+          "My name is ...",
+          "I am ..."
+        ],
+        "word_bank": [
+          "my",
+          "name",
+          "is",
+          "I",
+          "am"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Nice to meet you.",
+        "translation": "Mucho gusto.",
+        "audio": "en-a1-1.1.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Nice to meet you too.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Pleased to meet you.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Nice to meet you, Maria.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "How are you today?",
+        "translation": "¿Cómo está hoy?",
+        "audio": "en-a1-1.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I am fine, thank you.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "I am very well, thanks.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "I am tired, but happy.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is this your first visit?",
+        "translation": "¿Es su primera visita?",
+        "audio": "en-a1-1.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, it is.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "No, it is not.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, it is my first visit.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Please enjoy your stay.",
+        "translation": "Que disfrute su estadía.",
+        "audio": "en-a1-1.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you very much!",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Thanks, see you later.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Thank you. Goodbye.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

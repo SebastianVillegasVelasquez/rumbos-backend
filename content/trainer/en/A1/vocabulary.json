@@ -1,0 +1,196 @@
+{
+  "entries": [
+    {
+      "id": "en-a1-1.1.v1",
+      "lesson_id": "1.1",
+      "word": "hello",
+      "translation": "hola"
+    },
+    {
+      "id": "en-a1-1.1.v2",
+      "lesson_id": "1.1",
+      "word": "goodbye",
+      "translation": "adiós"
+    },
+    {
+      "id": "en-a1-1.1.v3",
+      "lesson_id": "1.1",
+      "word": "please",
+      "translation": "por favor"
+    },
+    {
+      "id": "en-a1-1.1.v4",
+      "lesson_id": "1.1",
+      "word": "thank you",
+      "translation": "gracias"
+    },
+    {
+      "id": "en-a1-1.1.v5",
+      "lesson_id": "1.1",
+      "word": "welcome",
+      "translation": "bienvenido"
+    },
+    {
+      "id": "en-a1-1.1.v6",
+      "lesson_id": "1.1",
+      "word": "guest",
+      "translation": "huésped"
+    },
+    {
+      "id": "en-a1-1.1.v7",
+      "lesson_id": "1.1",
+      "word": "name",
+      "translation": "nombre"
+    },
+    {
+      "id": "en-a1-1.1.v8",
+      "lesson_id": "1.1",
+      "word": "sir",
+      "translation": "señor"
+    },
+    {
+      "id": "en-a1-1.2.v1",
+      "lesson_id": "1.2",
+      "word": "country",
+      "translation": "país"
+    },
+    {
+      "id": "en-a1-1.2.v2",
+      "lesson_id": "1.2",
+      "word": "language",
+      "translation": "idioma"
+    },
+    {
+      "id": "en-a1-1.2.v3",
+      "lesson_id": "1.2",
+      "word": "English",
+      "translation": "inglés"
+    },
+    {
+      "id": "en-a1-1.2.v4",
+      "lesson_id": "1.2",
+      "word": "Spanish",
+      "translation": "español"
+    },
+    {
+      "id": "en-a1-1.2.v5",
+      "lesson_id": "1.2",
+      "word": "French",
+      "translation": "francés"
+    },
+    {
+      "id": "en-a1-1.2.v6",
+      "lesson_id": "1.2",
+      "word": "German",
+      "translation": "alemán"
+    },
+    {
+      "id": "en-a1-1.2.v7",
+      "lesson_id": "1.2",
+      "word": "from",
+      "translation": "de (origen)"
+    },
+    {
+      "id": "en-a1-1.2.v8",
+      "lesson_id": "1.2",
+      "word": "speak",
+      "translation": "hablar"
+    },
+    {
+      "id": "en-a1-1.3.v1",
+      "lesson_id": "1.3",
+      "word": "breakfast",
+      "translation": "desayuno"
+    },
+    {
+      "id": "en-a1-1.3.v2",
+      "lesson_id": "1.3",
+      "word": "lunch",
+      "translation": "almuerzo"
+    },
+    {
+      "id": "en-a1-1.3.v3",
+      "lesson_id": "1.3",
+      "word": "dinner",
+      "translation": "cena"
+    },
+    {
+      "id": "en-a1-1.3.v4",
+      "lesson_id": "1.3",
+      "word": "open",
+      "translation": "abierto"
+    },
+    {
+      "id": "en-a1-1.3.v5",
+      "lesson_id": "1.3",
+      "word": "closed",
+      "translation": "cerrado"
+    },
+    {
+      "id": "en-a1-1.3.v6",
+      "lesson_id": "1.3",
+      "word": "o'clock",
+      "translation": "en punto"
+    },
+    {
+      "id": "en-a1-1.3.v7",
+      "lesson_id": "1.3",
+      "word": "half past",
+      "translation": "y media"
+    },
+    {
+      "id": "en-a1-1.3.v8",
+      "lesson_id": "1.3",
+      "word": "Monday",
+      "translation": "lunes"
+    },
+    {
+      "id": "en-a1-1.4.v1",
+      "lesson_id": "1.4",
+      "word": "age",
+      "translation": "edad"
+    },
+    {
+      "id": "en-a1-1.4.v2",
+      "lesson_id": "1.4",
+      "word": "phone number",
+      "translation": "número de teléfono"
+    },
+    {
+      "id": "en-a1-1.4.v3",
+      "lesson_id": "1.4",
+      "word": "last name",
+      "translation": "apellido"
+    },
+    {
+      "id": "en-a1-1.4.v4",
+      "lesson_id": "1.4",
+      "word": "spell",
+      "translation": "deletrear"
+    },
+    {
+      "id": "en-a1-1.4.v5",
+      "lesson_id": "1.4",
+      "word": "live",
+      "translation": "vivir"
+    },
+    {
+      "id": "en-a1-1.4.v6",
+      "lesson_id": "1.4",
+      "word": "address",
+      "translation": "dirección"
+    },
+    {
+      "id": "en-a1-1.4.v7",
+      "lesson_id": "1.4",
+      "word": "number",
+      "translation": "número"
+    },
+    {
+      "id": "en-a1-1.4.v8",
+      "lesson_id": "1.4",
+      "word": "years old",
+      "translation": "años"
+    }
+  ]
+}

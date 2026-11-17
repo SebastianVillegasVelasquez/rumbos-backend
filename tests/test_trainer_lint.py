@@ -13,6 +13,9 @@ BASE = Path(__file__).resolve().parent.parent / "content/trainer"
 def make_pack(tmp: Path, activities: list[dict[str, Any]]) -> Path:
     root = tmp / "t/en/A1"
     shutil.copytree(BASE / "en/A1", root)
+    # Start from no practice content, so each test controls what exists.
+    for shipped in (root / "activities").glob("*.json"):
+        shipped.unlink()
     for n, activity in enumerate(activities):
         (root / "activities" / f"a{n}.json").write_text(
             json.dumps(activity), encoding="utf-8"
