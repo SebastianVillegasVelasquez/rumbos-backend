@@ -103,6 +103,14 @@ class Settings(BaseSettings):
     launch_rate_per_ip: int = Field(default=30, ge=1)
     launch_rate_per_tenant: int = Field(default=300, ge=1)
 
+    # Trainer and assessment content packs (see docs/TRAINER.md). Drafts are
+    # served only when this is on (dev and staging); production serves
+    # `published` content only.
+    trainer_content_dir: str = "content/trainer"
+    trainer_serve_drafts: bool = False
+    # Practice attempts older than this many days are purged by the CLI.
+    trainer_retention_days: int = Field(default=90, ge=1)
+
     # How many publications of each map to keep (the latest is never pruned).
     publications_keep: int = Field(default=20, ge=1)
 
