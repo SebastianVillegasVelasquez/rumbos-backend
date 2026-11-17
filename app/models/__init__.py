@@ -11,6 +11,12 @@ from app.models.base import BaseORM
 from app.models.bubble import Bubble
 from app.models.course_map import CourseMap
 from app.models.passback import CompletionAudit, PassbackOutbox
+from app.models.practice import (
+    PracticeAnswer,
+    PracticeReport,
+    PracticeSession,
+    SavedWord,
+)
 from app.models.publication import Publication
 from app.models.skin import CourseMapSkinRule, Skin
 from app.models.tenant import Tenant, TenantKey
@@ -31,7 +37,11 @@ __all__ = [
     "CourseMapSkinRule",
     "CourseMapView3dBinding",
     "PassbackOutbox",
+    "PracticeAnswer",
+    "PracticeReport",
+    "PracticeSession",
     "Publication",
+    "SavedWord",
     "Skin",
     "Tenant",
     "TenantKey",

@@ -69,12 +69,15 @@ Encuentro" already breaks it). The proxy keeps the document's range; it costs
 at most half a point in the intelligibility criterion. Raise the range if the
 client agrees.
 
-## D10. Exactly 80 does not pass; it is still "A1 logrado"
+## D10. Exactly 80 does not pass; results show two decimals
 
-Under `pass_operator = "gt"` a total of exactly 80.00 is band `achieved` and
-does not pass. Every reachable total is a multiple of 1/6, so the smallest
-passing total is 80.17. **ASK: to be confirmed in writing** (the rule was given
-verbally).
+The rule is strictly greater than 80 (confirmed by the product owner in the
+conversation; written confirmation still to be attached). Under
+`pass_operator = "gt"` a total of exactly 80.00 is band `achieved` and does not
+pass. Every reachable total is a multiple of 1/6, so the smallest passing total
+is 80.17, and the result shows two decimals (`80.17`), so nobody sees a
+"80.00" that passes. Rounding up to 81 was considered and not adopted: it would
+change the number the student sees without changing who passes.
 
 ## D11. Rate limiting is per process
 
