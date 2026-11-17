@@ -61,6 +61,9 @@ jobs:
           MOODLE_SERVICE_TOKEN: ""
           MOODLE_BASE_URL: ""
 
+      - name: Lint trainer content
+        run: uv run python -m app.scripts.lint_content
+
       - name: Run testing
         run: uv run pytest --maxfail=3 --disable-warnings
         env:
