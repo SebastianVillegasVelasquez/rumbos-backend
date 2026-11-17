@@ -1,0 +1,203 @@
+{
+  "id": "en-a1-2.1-grammar",
+  "lesson_id": "2.1",
+  "skill": "grammar",
+  "title": "Practice 2.1",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Waiter taking an order",
+  "can_do": [
+    "I can order food and drinks.",
+    "I can ask and say how much something costs."
+  ],
+  "items": [
+    {
+      "id": "2.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is a polite order?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "I want a coffee."
+        },
+        {
+          "id": "o2",
+          "text": "I would like a coffee, please."
+        },
+        {
+          "id": "o3",
+          "text": "Give me coffee."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "I would like ..., please is the polite way.",
+      "error_tags": {
+        "o3": {
+          "tag": "politeness",
+          "text": "Give me is too direct."
+        }
+      }
+    },
+    {
+      "id": "2.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "How {1} is the soup?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "many"
+            },
+            {
+              "id": "o2",
+              "text": "much"
+            },
+            {
+              "id": "o3",
+              "text": "long"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "question_word",
+            "text": "Ask the price with How much."
+          }
+        }
+      ],
+      "explanation": "Use how much for price."
+    },
+    {
+      "id": "2.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "I would {1} a glass of water.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "like"
+          ],
+          "error_tag": {
+            "tag": "modal",
+            "text": "Say I would like."
+          }
+        }
+      ],
+      "explanation": "The phrase is would like."
+    },
+    {
+      "id": "2.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "How"
+        },
+        {
+          "id": "t2",
+          "text": "much"
+        },
+        {
+          "id": "t3",
+          "text": "is"
+        },
+        {
+          "id": "t4",
+          "text": "the"
+        },
+        {
+          "id": "t5",
+          "text": "juice"
+        },
+        {
+          "id": "t6",
+          "text": "?"
+        }
+      ],
+      "explanation": "The price question starts with How much.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with How much."
+      }
+    },
+    {
+      "id": "2.1.ex.05",
+      "type": "match",
+      "prompt": "Match the food with its group.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "apple"
+        },
+        {
+          "id": "l2",
+          "text": "chicken"
+        },
+        {
+          "id": "l3",
+          "text": "rice"
+        },
+        {
+          "id": "l4",
+          "text": "milk"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "fruit"
+        },
+        {
+          "id": "r2",
+          "text": "meat"
+        },
+        {
+          "id": "r3",
+          "text": "grain"
+        },
+        {
+          "id": "r4",
+          "text": "drink"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Group foods by kind."
+    },
+    {
+      "id": "2.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Ask for the bill politely in one sentence (use: the bill, please).",
+      "accepted": [
+        "The bill, please",
+        "Can I have the bill, please",
+        "The check, please"
+      ],
+      "explanation": "The bill, please is short and polite.",
+      "error_tag": {
+        "tag": "politeness",
+        "text": "Add please."
+      }
+    }
+  ]
+}

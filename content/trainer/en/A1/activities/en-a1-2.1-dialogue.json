@@ -1,0 +1,174 @@
+{
+  "id": "en-a1-2.1-dialogue",
+  "lesson_id": "2.1",
+  "skill": "dialogue",
+  "title": "Talk it through 2.1",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Waiter taking an order",
+  "can_do": [
+    "I can order food and drinks.",
+    "I can ask and say how much something costs."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Good afternoon. Here is the menu.",
+        "translation": "Buenas tardes. Aquí está el menú.",
+        "audio": "en-a1-2.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Thanks. What do you recommend?",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Thank you. Can we sit here?",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "What would you like to eat?",
+        "translation": "¿Qué le gustaría comer?",
+        "audio": "en-a1-2.1.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "i",
+              "would",
+              "like"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "i'd",
+              "like"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "I would like the chicken soup.",
+        "starters": [
+          "I would like ..."
+        ],
+        "word_bank": [
+          "I",
+          "would",
+          "like",
+          "soup",
+          "chicken",
+          "rice"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "And what would you like to drink?",
+        "translation": "¿Y qué le gustaría beber?",
+        "audio": "en-a1-2.1.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Water, please.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Orange juice, please.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "A coffee, please.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Do you want sugar with your coffee?",
+        "translation": "¿Quiere azúcar con el café?",
+        "audio": "en-a1-2.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "No, thank you.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, please.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "A little, please.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is that all?",
+        "translation": "¿Eso es todo?",
+        "audio": "en-a1-2.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, that is all.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Yes. How much is it?",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "No, one dessert too, please.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "The total is fifteen thousand pesos.",
+        "translation": "El total son quince mil pesos.",
+        "audio": "en-a1-2.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Here you are.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Can I pay by card?",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Thank you. It was delicious.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

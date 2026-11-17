@@ -1,0 +1,199 @@
+{
+  "id": "en-a1-2.3-grammar",
+  "lesson_id": "2.3",
+  "skill": "grammar",
+  "title": "Practice 2.3",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Host talking about people and places of origin",
+  "can_do": [
+    "I can say where people are from.",
+    "I can describe where I live."
+  ],
+  "items": [
+    {
+      "id": "2.3.ex.01",
+      "type": "mcq",
+      "prompt": "Choose the correct sentence.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "He are from Peru."
+        },
+        {
+          "id": "o2",
+          "text": "He is from Peru."
+        },
+        {
+          "id": "o3",
+          "text": "He am from Peru."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "He takes is.",
+      "error_tags": {
+        "o1": {
+          "tag": "be_agreement",
+          "text": "Use is with he."
+        }
+      }
+    },
+    {
+      "id": "2.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "My parents {1} from Chile.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "is"
+            },
+            {
+              "id": "o2",
+              "text": "are"
+            },
+            {
+              "id": "o3",
+              "text": "am"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "be_agreement",
+            "text": "Use are with plural subjects."
+          }
+        }
+      ],
+      "explanation": "Parents is plural, so use are."
+    },
+    {
+      "id": "2.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "My town {1} small.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "is"
+          ],
+          "error_tag": {
+            "tag": "be_agreement",
+            "text": "Use is with a singular noun."
+          }
+        }
+      ],
+      "explanation": "Town is singular: is."
+    },
+    {
+      "id": "2.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "She"
+        },
+        {
+          "id": "t2",
+          "text": "is"
+        },
+        {
+          "id": "t3",
+          "text": "from"
+        },
+        {
+          "id": "t4",
+          "text": "Brazil"
+        },
+        {
+          "id": "t5",
+          "text": "."
+        }
+      ],
+      "explanation": "Subject, verb, origin.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with She is."
+      }
+    },
+    {
+      "id": "2.3.ex.05",
+      "type": "match",
+      "prompt": "Match the opposite words.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "big"
+        },
+        {
+          "id": "l2",
+          "text": "near"
+        },
+        {
+          "id": "l3",
+          "text": "old"
+        },
+        {
+          "id": "l4",
+          "text": "quiet"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "small"
+        },
+        {
+          "id": "r2",
+          "text": "far"
+        },
+        {
+          "id": "r3",
+          "text": "new"
+        },
+        {
+          "id": "r4",
+          "text": "noisy"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Opposites help you describe a place."
+    },
+    {
+      "id": "2.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Describe your town in one short sentence. Use: It is small.",
+      "accepted": [
+        "It is small",
+        "It's small",
+        "My town is small"
+      ],
+      "explanation": "It is + adjective.",
+      "error_tag": {
+        "tag": "be_adjective",
+        "text": "Use It is + adjective."
+      }
+    }
+  ]
+}

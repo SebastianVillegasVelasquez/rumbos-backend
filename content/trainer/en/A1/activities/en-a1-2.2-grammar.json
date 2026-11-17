@@ -1,0 +1,203 @@
+{
+  "id": "en-a1-2.2-grammar",
+  "lesson_id": "2.2",
+  "skill": "grammar",
+  "title": "Practice 2.2",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Guide explaining how to get somewhere",
+  "can_do": [
+    "I can name means of transportation.",
+    "I can say how to get to a place."
+  ],
+  "items": [
+    {
+      "id": "2.2.ex.01",
+      "type": "mcq",
+      "prompt": "Which one travels on water?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "A bus"
+        },
+        {
+          "id": "o2",
+          "text": "A boat"
+        },
+        {
+          "id": "o3",
+          "text": "A bike"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "A boat goes on water.",
+      "error_tags": {
+        "o1": {
+          "tag": "vocabulary",
+          "text": "A bus travels on the road."
+        }
+      }
+    },
+    {
+      "id": "2.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "I go to work {1} bus.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "by"
+            },
+            {
+              "id": "o2",
+              "text": "in"
+            },
+            {
+              "id": "o3",
+              "text": "with"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "preposition",
+            "text": "Use by with a means of transportation."
+          }
+        }
+      ],
+      "explanation": "We say by bus, by car, by taxi."
+    },
+    {
+      "id": "2.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "We can go on {1} (no vehicle).",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "foot"
+          ],
+          "error_tag": {
+            "tag": "vocabulary",
+            "text": "The phrase is on foot."
+          }
+        }
+      ],
+      "explanation": "On foot means walking."
+    },
+    {
+      "id": "2.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "The"
+        },
+        {
+          "id": "t2",
+          "text": "bus"
+        },
+        {
+          "id": "t3",
+          "text": "stop"
+        },
+        {
+          "id": "t4",
+          "text": "is"
+        },
+        {
+          "id": "t5",
+          "text": "near"
+        },
+        {
+          "id": "t6",
+          "text": "."
+        }
+      ],
+      "explanation": "Subject, verb, place.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with The bus stop."
+      }
+    },
+    {
+      "id": "2.2.ex.05",
+      "type": "match",
+      "prompt": "Match the transport with the place.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "plane"
+        },
+        {
+          "id": "l2",
+          "text": "bus"
+        },
+        {
+          "id": "l3",
+          "text": "boat"
+        },
+        {
+          "id": "l4",
+          "text": "taxi"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "airport"
+        },
+        {
+          "id": "r2",
+          "text": "bus station"
+        },
+        {
+          "id": "r3",
+          "text": "port"
+        },
+        {
+          "id": "r4",
+          "text": "street"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each vehicle has its usual stop."
+    },
+    {
+      "id": "2.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Say how you go to the beach. You go by bus.",
+      "accepted": [
+        "I go by bus",
+        "I take the bus",
+        "By bus"
+      ],
+      "explanation": "By bus is the answer.",
+      "error_tag": {
+        "tag": "preposition",
+        "text": "Use by + transport."
+      }
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "id": "en-a1-2.2-dialogue",
+  "lesson_id": "2.2",
+  "skill": "dialogue",
+  "title": "Talk it through 2.2",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Guide explaining how to get somewhere",
+  "can_do": [
+    "I can name means of transportation.",
+    "I can say how to get to a place."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "How do I get to the beach from here?",
+        "translation": "¿Cómo llego a la playa desde aquí?",
+        "audio": "en-a1-2.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You can take a bus.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "You can go by taxi.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "You can walk.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Is it far?",
+        "translation": "¿Queda lejos?",
+        "audio": "en-a1-2.2.d2",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "No, it is near.",
+            "next": "n3"
+          },
+          {
+            "id": "o2",
+            "text": "It is twenty minutes by bus.",
+            "next": "n3"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, a little far.",
+            "next": "n3"
+          }
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "How much is the bus?",
+        "translation": "¿Cuánto cuesta el bus?",
+        "audio": "en-a1-2.2.d3",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "two",
+              "thousand"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "it",
+              "is"
+            ],
+            "next": "n4"
+          }
+        ],
+        "model_reply": "It is two thousand pesos.",
+        "starters": [
+          "It is ..."
+        ],
+        "word_bank": [
+          "It",
+          "is",
+          "two",
+          "thousand",
+          "pesos"
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Where is the bus stop?",
+        "translation": "¿Dónde está la parada del bus?",
+        "audio": "en-a1-2.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is next to the park.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "It is in front of the hotel.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "It is over there.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Can I go by bike?",
+        "translation": "¿Puedo ir en bicicleta?",
+        "audio": "en-a1-2.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, you can.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, there is a bike path.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "No, it is dangerous.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thanks for your help!",
+        "translation": "¡Gracias por su ayuda!",
+        "audio": "en-a1-2.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You are welcome.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "My pleasure.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Have a nice trip!",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

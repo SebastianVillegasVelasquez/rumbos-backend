@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-2.4-listening",
+  "lesson_id": "2.4",
+  "skill": "listening",
+  "title": "Listen and choose 2.4",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Nature guide naming animals and plants",
+  "can_do": [
+    "I can name common animals and plants of the region.",
+    "I can say what a plant or animal is like."
+  ],
+  "items": [
+    {
+      "id": "en-a1-2.4.l1",
+      "type": "listen_choose",
+      "prompt": "What is in the forest?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Birds"
+        },
+        {
+          "id": "o2",
+          "text": "Cars"
+        },
+        {
+          "id": "o3",
+          "text": "Boats"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says many birds.",
+      "audio": "en-a1-2.4.l1"
+    },
+    {
+      "id": "en-a1-2.4.l2",
+      "type": "listen_choose",
+      "prompt": "What is the orchid?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "A flower"
+        },
+        {
+          "id": "o2",
+          "text": "An animal"
+        },
+        {
+          "id": "o3",
+          "text": "A river"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The orchid is a flower.",
+      "audio": "en-a1-2.4.l2"
+    },
+    {
+      "id": "en-a1-2.4.l3",
+      "type": "listen_choose",
+      "prompt": "Where is the monkey?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "In a tree"
+        },
+        {
+          "id": "o2",
+          "text": "In the river"
+        },
+        {
+          "id": "o3",
+          "text": "In a house"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "In the tall tree.",
+      "audio": "en-a1-2.4.l3"
+    }
+  ]
+}

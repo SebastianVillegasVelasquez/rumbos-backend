@@ -452,6 +452,294 @@
       "file": "audio/en-a1-1.4.l3.mp3",
       "duration_s": null,
       "transcript": "My last name is Torres. T-O-R-R-E-S."
+    },
+    {
+      "id": "en-a1-2.1.d1",
+      "text": "Good afternoon. Here is the menu.",
+      "voices": [],
+      "file": "audio/en-a1-2.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Good afternoon. Here is the menu."
+    },
+    {
+      "id": "en-a1-2.1.d2",
+      "text": "What would you like to eat?",
+      "voices": [],
+      "file": "audio/en-a1-2.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "What would you like to eat?"
+    },
+    {
+      "id": "en-a1-2.1.d3",
+      "text": "And what would you like to drink?",
+      "voices": [],
+      "file": "audio/en-a1-2.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "And what would you like to drink?"
+    },
+    {
+      "id": "en-a1-2.1.d4",
+      "text": "Do you want sugar with your coffee?",
+      "voices": [],
+      "file": "audio/en-a1-2.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Do you want sugar with your coffee?"
+    },
+    {
+      "id": "en-a1-2.1.d5",
+      "text": "Is that all?",
+      "voices": [],
+      "file": "audio/en-a1-2.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is that all?"
+    },
+    {
+      "id": "en-a1-2.1.d6",
+      "text": "The total is fifteen thousand pesos.",
+      "voices": [],
+      "file": "audio/en-a1-2.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "The total is fifteen thousand pesos."
+    },
+    {
+      "id": "en-a1-2.1.l1",
+      "text": "I would like a tea with milk, please.",
+      "voices": [],
+      "file": "audio/en-a1-2.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "I would like a tea with milk, please."
+    },
+    {
+      "id": "en-a1-2.1.l2",
+      "text": "The fish costs eighteen thousand pesos.",
+      "voices": [],
+      "file": "audio/en-a1-2.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "The fish costs eighteen thousand pesos."
+    },
+    {
+      "id": "en-a1-2.1.l3",
+      "text": "We have rice, beans and chicken today.",
+      "voices": [],
+      "file": "audio/en-a1-2.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "We have rice, beans and chicken today."
+    },
+    {
+      "id": "en-a1-2.2.d1",
+      "text": "How do I get to the beach from here?",
+      "voices": [],
+      "file": "audio/en-a1-2.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "How do I get to the beach from here?"
+    },
+    {
+      "id": "en-a1-2.2.d2",
+      "text": "Is it far?",
+      "voices": [],
+      "file": "audio/en-a1-2.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "Is it far?"
+    },
+    {
+      "id": "en-a1-2.2.d3",
+      "text": "How much is the bus?",
+      "voices": [],
+      "file": "audio/en-a1-2.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "How much is the bus?"
+    },
+    {
+      "id": "en-a1-2.2.d4",
+      "text": "Where is the bus stop?",
+      "voices": [],
+      "file": "audio/en-a1-2.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "Where is the bus stop?"
+    },
+    {
+      "id": "en-a1-2.2.d5",
+      "text": "Can I go by bike?",
+      "voices": [],
+      "file": "audio/en-a1-2.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "Can I go by bike?"
+    },
+    {
+      "id": "en-a1-2.2.d6",
+      "text": "Thanks for your help!",
+      "voices": [],
+      "file": "audio/en-a1-2.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thanks for your help!"
+    },
+    {
+      "id": "en-a1-2.2.l1",
+      "text": "The boat to the island leaves at nine.",
+      "voices": [],
+      "file": "audio/en-a1-2.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "The boat to the island leaves at nine."
+    },
+    {
+      "id": "en-a1-2.2.l2",
+      "text": "Take the red bus to the market.",
+      "voices": [],
+      "file": "audio/en-a1-2.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "Take the red bus to the market."
+    },
+    {
+      "id": "en-a1-2.2.l3",
+      "text": "It is ten minutes on foot.",
+      "voices": [],
+      "file": "audio/en-a1-2.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "It is ten minutes on foot."
+    },
+    {
+      "id": "en-a1-2.3.d1",
+      "text": "Where is your friend from?",
+      "voices": [],
+      "file": "audio/en-a1-2.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "Where is your friend from?"
+    },
+    {
+      "id": "en-a1-2.3.d2",
+      "text": "Is your town big or small?",
+      "voices": [],
+      "file": "audio/en-a1-2.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "Is your town big or small?"
+    },
+    {
+      "id": "en-a1-2.3.d3",
+      "text": "Tell me about your town.",
+      "voices": [],
+      "file": "audio/en-a1-2.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "Tell me about your town."
+    },
+    {
+      "id": "en-a1-2.3.d4",
+      "text": "Is it far from the coast?",
+      "voices": [],
+      "file": "audio/en-a1-2.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "Is it far from the coast?"
+    },
+    {
+      "id": "en-a1-2.3.d5",
+      "text": "Are the people friendly there?",
+      "voices": [],
+      "file": "audio/en-a1-2.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "Are the people friendly there?"
+    },
+    {
+      "id": "en-a1-2.3.d6",
+      "text": "I would like to visit it one day.",
+      "voices": [],
+      "file": "audio/en-a1-2.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "I would like to visit it one day."
+    },
+    {
+      "id": "en-a1-2.3.l1",
+      "text": "My grandmother is from a small village in the mountains.",
+      "voices": [],
+      "file": "audio/en-a1-2.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "My grandmother is from a small village in the mountains."
+    },
+    {
+      "id": "en-a1-2.3.l2",
+      "text": "Carlos is from Cartagena. It is on the coast.",
+      "voices": [],
+      "file": "audio/en-a1-2.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "Carlos is from Cartagena. It is on the coast."
+    },
+    {
+      "id": "en-a1-2.3.l3",
+      "text": "Her parents are from Spain.",
+      "voices": [],
+      "file": "audio/en-a1-2.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "Her parents are from Spain."
+    },
+    {
+      "id": "en-a1-2.4.d1",
+      "text": "Look! What is that animal?",
+      "voices": [],
+      "file": "audio/en-a1-2.4.d1.mp3",
+      "duration_s": null,
+      "transcript": "Look! What is that animal?"
+    },
+    {
+      "id": "en-a1-2.4.d2",
+      "text": "Is it big or small?",
+      "voices": [],
+      "file": "audio/en-a1-2.4.d2.mp3",
+      "duration_s": null,
+      "transcript": "Is it big or small?"
+    },
+    {
+      "id": "en-a1-2.4.d3",
+      "text": "What colour is the bird?",
+      "voices": [],
+      "file": "audio/en-a1-2.4.d3.mp3",
+      "duration_s": null,
+      "transcript": "What colour is the bird?"
+    },
+    {
+      "id": "en-a1-2.4.d4",
+      "text": "Are there flowers in the forest?",
+      "voices": [],
+      "file": "audio/en-a1-2.4.d4.mp3",
+      "duration_s": null,
+      "transcript": "Are there flowers in the forest?"
+    },
+    {
+      "id": "en-a1-2.4.d5",
+      "text": "Is this tree old?",
+      "voices": [],
+      "file": "audio/en-a1-2.4.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is this tree old?"
+    },
+    {
+      "id": "en-a1-2.4.d6",
+      "text": "Please do not touch the plants.",
+      "voices": [],
+      "file": "audio/en-a1-2.4.d6.mp3",
+      "duration_s": null,
+      "transcript": "Please do not touch the plants."
+    },
+    {
+      "id": "en-a1-2.4.l1",
+      "text": "There are many birds in this forest.",
+      "voices": [],
+      "file": "audio/en-a1-2.4.l1.mp3",
+      "duration_s": null,
+      "transcript": "There are many birds in this forest."
+    },
+    {
+      "id": "en-a1-2.4.l2",
+      "text": "The orchid is a beautiful flower.",
+      "voices": [],
+      "file": "audio/en-a1-2.4.l2.mp3",
+      "duration_s": null,
+      "transcript": "The orchid is a beautiful flower."
+    },
+    {
+      "id": "en-a1-2.4.l3",
+      "text": "The monkey is in the tall tree.",
+      "voices": [],
+      "file": "audio/en-a1-2.4.l3.mp3",
+      "duration_s": null,
+      "transcript": "The monkey is in the tall tree."
     }
   ]
 }

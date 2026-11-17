@@ -1,0 +1,81 @@
+{
+  "id": "en-a1-2.2-listening",
+  "lesson_id": "2.2",
+  "skill": "listening",
+  "title": "Listen and choose 2.2",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Guide explaining how to get somewhere",
+  "can_do": [
+    "I can name means of transportation.",
+    "I can say how to get to a place."
+  ],
+  "items": [
+    {
+      "id": "en-a1-2.2.l1",
+      "type": "listen_choose",
+      "prompt": "How do people go to the island?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "By boat"
+        },
+        {
+          "id": "o2",
+          "text": "By plane"
+        },
+        {
+          "id": "o3",
+          "text": "By bike"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker mentions the boat.",
+      "audio": "en-a1-2.2.l1"
+    },
+    {
+      "id": "en-a1-2.2.l2",
+      "type": "listen_choose",
+      "prompt": "Which bus goes to the market?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The red bus"
+        },
+        {
+          "id": "o2",
+          "text": "The blue bus"
+        },
+        {
+          "id": "o3",
+          "text": "The green bus"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says the red bus.",
+      "audio": "en-a1-2.2.l2"
+    },
+    {
+      "id": "en-a1-2.2.l3",
+      "type": "listen_choose",
+      "prompt": "How long is the walk?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "5 minutes"
+        },
+        {
+          "id": "o2",
+          "text": "10 minutes"
+        },
+        {
+          "id": "o3",
+          "text": "15 minutes"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "Ten minutes on foot is the walk.",
+      "audio": "en-a1-2.2.l3"
+    }
+  ]
+}

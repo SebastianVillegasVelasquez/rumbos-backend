@@ -191,6 +191,198 @@
       "lesson_id": "1.4",
       "word": "years old",
       "translation": "años"
+    },
+    {
+      "id": "en-a1-2.1.v1",
+      "lesson_id": "2.1",
+      "word": "menu",
+      "translation": "menú"
+    },
+    {
+      "id": "en-a1-2.1.v2",
+      "lesson_id": "2.1",
+      "word": "water",
+      "translation": "agua"
+    },
+    {
+      "id": "en-a1-2.1.v3",
+      "lesson_id": "2.1",
+      "word": "coffee",
+      "translation": "café"
+    },
+    {
+      "id": "en-a1-2.1.v4",
+      "lesson_id": "2.1",
+      "word": "juice",
+      "translation": "jugo"
+    },
+    {
+      "id": "en-a1-2.1.v5",
+      "lesson_id": "2.1",
+      "word": "soup",
+      "translation": "sopa"
+    },
+    {
+      "id": "en-a1-2.1.v6",
+      "lesson_id": "2.1",
+      "word": "chicken",
+      "translation": "pollo"
+    },
+    {
+      "id": "en-a1-2.1.v7",
+      "lesson_id": "2.1",
+      "word": "bill",
+      "translation": "cuenta"
+    },
+    {
+      "id": "en-a1-2.1.v8",
+      "lesson_id": "2.1",
+      "word": "expensive",
+      "translation": "caro"
+    },
+    {
+      "id": "en-a1-2.2.v1",
+      "lesson_id": "2.2",
+      "word": "bus",
+      "translation": "bus"
+    },
+    {
+      "id": "en-a1-2.2.v2",
+      "lesson_id": "2.2",
+      "word": "taxi",
+      "translation": "taxi"
+    },
+    {
+      "id": "en-a1-2.2.v3",
+      "lesson_id": "2.2",
+      "word": "boat",
+      "translation": "bote"
+    },
+    {
+      "id": "en-a1-2.2.v4",
+      "lesson_id": "2.2",
+      "word": "bike",
+      "translation": "bicicleta"
+    },
+    {
+      "id": "en-a1-2.2.v5",
+      "lesson_id": "2.2",
+      "word": "plane",
+      "translation": "avión"
+    },
+    {
+      "id": "en-a1-2.2.v6",
+      "lesson_id": "2.2",
+      "word": "airport",
+      "translation": "aeropuerto"
+    },
+    {
+      "id": "en-a1-2.2.v7",
+      "lesson_id": "2.2",
+      "word": "far",
+      "translation": "lejos"
+    },
+    {
+      "id": "en-a1-2.2.v8",
+      "lesson_id": "2.2",
+      "word": "near",
+      "translation": "cerca"
+    },
+    {
+      "id": "en-a1-2.3.v1",
+      "lesson_id": "2.3",
+      "word": "town",
+      "translation": "pueblo"
+    },
+    {
+      "id": "en-a1-2.3.v2",
+      "lesson_id": "2.3",
+      "word": "city",
+      "translation": "ciudad"
+    },
+    {
+      "id": "en-a1-2.3.v3",
+      "lesson_id": "2.3",
+      "word": "village",
+      "translation": "vereda"
+    },
+    {
+      "id": "en-a1-2.3.v4",
+      "lesson_id": "2.3",
+      "word": "mountain",
+      "translation": "montaña"
+    },
+    {
+      "id": "en-a1-2.3.v5",
+      "lesson_id": "2.3",
+      "word": "coast",
+      "translation": "costa"
+    },
+    {
+      "id": "en-a1-2.3.v6",
+      "lesson_id": "2.3",
+      "word": "big",
+      "translation": "grande"
+    },
+    {
+      "id": "en-a1-2.3.v7",
+      "lesson_id": "2.3",
+      "word": "small",
+      "translation": "pequeño"
+    },
+    {
+      "id": "en-a1-2.3.v8",
+      "lesson_id": "2.3",
+      "word": "friendly",
+      "translation": "amable"
+    },
+    {
+      "id": "en-a1-2.4.v1",
+      "lesson_id": "2.4",
+      "word": "animal",
+      "translation": "animal"
+    },
+    {
+      "id": "en-a1-2.4.v2",
+      "lesson_id": "2.4",
+      "word": "plant",
+      "translation": "planta"
+    },
+    {
+      "id": "en-a1-2.4.v3",
+      "lesson_id": "2.4",
+      "word": "tree",
+      "translation": "árbol"
+    },
+    {
+      "id": "en-a1-2.4.v4",
+      "lesson_id": "2.4",
+      "word": "flower",
+      "translation": "flor"
+    },
+    {
+      "id": "en-a1-2.4.v5",
+      "lesson_id": "2.4",
+      "word": "bird",
+      "translation": "pájaro"
+    },
+    {
+      "id": "en-a1-2.4.v6",
+      "lesson_id": "2.4",
+      "word": "monkey",
+      "translation": "mono"
+    },
+    {
+      "id": "en-a1-2.4.v7",
+      "lesson_id": "2.4",
+      "word": "river",
+      "translation": "río"
+    },
+    {
+      "id": "en-a1-2.4.v8",
+      "lesson_id": "2.4",
+      "word": "forest",
+      "translation": "bosque"
     }
   ]
 }
