@@ -18,6 +18,7 @@ from app.api.routes import (
     publications,
     published,
     skins,
+    trainer_audio,
     view3d,
 )
 from app.api.security_headers import NoStoreForAuth
@@ -152,6 +153,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(skins.router, prefix=API_PREFIX)
     application.include_router(view3d.router, prefix=API_PREFIX)
     application.include_router(assessments.router, prefix=API_PREFIX)
+    application.include_router(trainer_audio.router, prefix=API_PREFIX)
     return application
 
 

@@ -94,6 +94,7 @@ ROUTES: dict[tuple[str, str], tuple[str, bool]] = {
     ("GET", "/published/course-maps/{course_map_id}"): (STUDENT, False),
     ("GET", "/published/course-maps/{course_map_id}/resolved"): (STUDENT, True),
     ("GET", "/trainer/assessments"): (STUDENT, False),
+    ("GET", "/trainer/audio/{audio_id}"): (STUDENT, False),
     ("POST", "/trainer/assessments/{purpose}/attempts"): (STUDENT, False),
     ("GET", "/trainer/attempts/{attempt_id}/sections/{key}"): (STUDENT, False),
     ("PUT", "/trainer/attempts/{attempt_id}/answers"): (STUDENT, False),
@@ -213,6 +214,7 @@ def _path(template: str, map_id: str) -> str:
         purpose="check_in",
         attempt_id=uuid.uuid4(),
         key="reading",
+        audio_id="listening.a.01",
     )
 
 
