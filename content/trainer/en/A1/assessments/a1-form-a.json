@@ -1,0 +1,1588 @@
+{
+  "form_id": "a1-form-a",
+  "title": "Evaluación diagnóstica · Forma A · Diagnóstico de entrada",
+  "language": "en",
+  "level": "A1",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "sections": [
+    {
+      "key": "listening",
+      "title": "Listening",
+      "instructions": null,
+      "weight": 25,
+      "parts": [
+        {
+          "part_key": "a",
+          "title": "Part A — Numbers, times and prices (5)",
+          "instructions": "Escucha cada audio y elige la opción correcta.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "listening.a.01",
+              "prompt": "What time does the tour leave?",
+              "competence": {
+                "raw": "M-I · 1.3.2 · la hora · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.3.2",
+                "topic": "la hora"
+              },
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "7:50"
+                },
+                {
+                  "id": "b",
+                  "text": "7:15"
+                },
+                {
+                  "id": "c",
+                  "text": "5:07"
+                }
+              ],
+              "key": "b",
+              "audio": {
+                "audio": "listening.a.01",
+                "transcript": "The tour leaves at seven fifteen."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "listening.a.02",
+              "prompt": "What is the room number?",
+              "competence": {
+                "raw": "M-I · 1.4 · números · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "números"
+              },
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "340"
+                },
+                {
+                  "id": "b",
+                  "text": "304"
+                },
+                {
+                  "id": "c",
+                  "text": "314"
+                }
+              ],
+              "key": "b",
+              "audio": {
+                "audio": "listening.a.02",
+                "transcript": "The room number is three-oh-four."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "listening.a.03",
+              "prompt": "How much is the soup?",
+              "competence": {
+                "raw": "M-II · 2.1.3 · precios 100–1000 · listening",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1.3",
+                "topic": "precios 100–1000"
+              },
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "2,000"
+                },
+                {
+                  "id": "b",
+                  "text": "12,000"
+                },
+                {
+                  "id": "c",
+                  "text": "20,000"
+                }
+              ],
+              "key": "b",
+              "audio": {
+                "audio": "listening.a.03",
+                "transcript": "The soup is twelve thousand pesos."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "listening.a.04",
+              "prompt": "What time does the market open?",
+              "competence": {
+                "raw": "M-I · 1.3.2 · la hora · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.3.2",
+                "topic": "la hora"
+              },
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "9:00"
+                },
+                {
+                  "id": "b",
+                  "text": "6:00"
+                },
+                {
+                  "id": "c",
+                  "text": "19:00"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "listening.a.04",
+                "transcript": "The market opens at nine, and it closes at six."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "listening.a.05",
+              "prompt": "How old is she?",
+              "competence": {
+                "raw": "M-I · 1.3.1 · números -teen/-ty · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.3.1",
+                "topic": "números -teen/-ty"
+              },
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "14"
+                },
+                {
+                  "id": "b",
+                  "text": "40"
+                },
+                {
+                  "id": "c",
+                  "text": "4"
+                }
+              ],
+              "key": "b",
+              "audio": {
+                "audio": "listening.a.05",
+                "transcript": "She is forty years old."
+              },
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "b",
+          "title": "Part B — Short dialogues (5)",
+          "instructions": "Escucha el diálogo breve y responde.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "listening.b.01",
+              "prompt": "What time of day is it?",
+              "competence": {
+                "raw": "M-I · 1.1 · saludo/registro · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.1",
+                "topic": "saludo/registro"
+              },
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "morning"
+                },
+                {
+                  "id": "b",
+                  "text": "afternoon"
+                },
+                {
+                  "id": "c",
+                  "text": "night"
+                }
+              ],
+              "key": "b",
+              "audio": {
+                "audio": "listening.b.01",
+                "transcript": "— Good afternoon, sir. Welcome. — Thank you."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "listening.b.02",
+              "prompt": "Does the soup have peanuts?",
+              "competence": {
+                "raw": "M-II · 2.1 · alergias/ingredientes · listening",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "alergias/ingredientes"
+              },
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Yes"
+                },
+                {
+                  "id": "b",
+                  "text": "No"
+                },
+                {
+                  "id": "c",
+                  "text": "We don’t know"
+                }
+              ],
+              "key": "b",
+              "audio": {
+                "audio": "listening.b.02",
+                "transcript": "— Does the soup have peanuts? — No, it doesn’t."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "listening.b.03",
+              "prompt": "How do they go to the reserve?",
+              "competence": {
+                "raw": "M-II · 2.2 · transporte · listening",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.2",
+                "topic": "transporte"
+              },
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "by bus"
+                },
+                {
+                  "id": "b",
+                  "text": "by boat"
+                },
+                {
+                  "id": "c",
+                  "text": "on foot"
+                }
+              ],
+              "key": "b",
+              "audio": {
+                "audio": "listening.b.03",
+                "transcript": "— How do you go to the reserve? — By boat."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "listening.b.04",
+              "prompt": "Where is the pharmacy?",
+              "competence": {
+                "raw": "M-II · 2.3 · there is / lugares · listening",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.3",
+                "topic": "there is / lugares"
+              },
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "next to the market"
+                },
+                {
+                  "id": "b",
+                  "text": "in the hotel"
+                },
+                {
+                  "id": "c",
+                  "text": "there is no pharmacy"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "listening.b.04",
+                "transcript": "— Is there a pharmacy near here? — Yes, next to the market."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "listening.b.05",
+              "prompt": "What is the problem?",
+              "competence": {
+                "raw": "M-III · 3.4 · síntomas · listening",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.4",
+                "topic": "síntomas"
+              },
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "a headache"
+                },
+                {
+                  "id": "b",
+                  "text": "a stomachache"
+                },
+                {
+                  "id": "c",
+                  "text": "a cold"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "listening.b.05",
+                "transcript": "— What’s the matter? — I have a headache."
+              },
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "c",
+          "title": "Part C — Matching (5)",
+          "instructions": "Escucha las cinco frases (11–15) y empareja cada una con el lugar correcto (A–E), según la imagen.",
+          "shared": {
+            "kind": "image",
+            "title": null,
+            "text": null,
+            "image_id": "LA",
+            "alt_text": "Cinco escenas pequeñas etiquetadas: muelle, restaurante, farmacia, punto de reciclaje y recepción.",
+            "design_note": "Panel con cinco escenas pequeñas etiquetadas A–E: (A) muelle con lancha, (B) restaurante con una mesa servida, (C) farmacia con termómetro, (D) punto ecológico con canecas de colores, (E) recepción con anfitrión.",
+            "image_text": "Etiquetas A–E: dock · restaurant · pharmacy · recycling point · reception."
+          },
+          "items": [
+            {
+              "item_id": "listening.c.01",
+              "prompt": "Empareja cada audio (1–5) con el lugar correcto: dock · restaurant · pharmacy · recycling point · reception.",
+              "competence": {
+                "raw": "M-I a M-IV · comprensión situada · listening (cuenta como 5 ítems)",
+                "modules": [
+                  "M1",
+                  "M2",
+                  "M3",
+                  "M4"
+                ],
+                "lesson": null,
+                "topic": "comprensión situada · listening (cuenta como 5 ítems)"
+              },
+              "type": "match_audio",
+              "clips": [
+                {
+                  "audio": "listening.c.01.1",
+                  "transcript": "The boat leaves at 7:00 a.m."
+                },
+                {
+                  "audio": "listening.c.01.2",
+                  "transcript": "I would like a soup, please."
+                },
+                {
+                  "audio": "listening.c.01.3",
+                  "transcript": "I need medicine for a cough."
+                },
+                {
+                  "audio": "listening.c.01.4",
+                  "transcript": "Put the bottle in the white bin."
+                },
+                {
+                  "audio": "listening.c.01.5",
+                  "transcript": "Welcome! May I help you?"
+                }
+              ],
+              "places": [
+                {
+                  "id": "dock",
+                  "text": "dock"
+                },
+                {
+                  "id": "restaurant",
+                  "text": "restaurant"
+                },
+                {
+                  "id": "pharmacy",
+                  "text": "pharmacy"
+                },
+                {
+                  "id": "recycling_point",
+                  "text": "recycling point"
+                },
+                {
+                  "id": "reception",
+                  "text": "reception"
+                }
+              ],
+              "key": [
+                [
+                  0,
+                  "dock"
+                ],
+                [
+                  1,
+                  "restaurant"
+                ],
+                [
+                  2,
+                  "pharmacy"
+                ],
+                [
+                  3,
+                  "recycling_point"
+                ],
+                [
+                  4,
+                  "reception"
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "reading",
+      "title": "Reading",
+      "instructions": null,
+      "weight": 25,
+      "parts": [
+        {
+          "part_key": "a",
+          "title": "Part A — Signs and notices (5)",
+          "instructions": "Lee cada señal y elige qué significa.",
+          "shared": {
+            "kind": "image",
+            "title": null,
+            "text": null,
+            "image_id": "RA",
+            "alt_text": "Cinco señales turísticas: prohibido fumar, recepción en el primer piso, recorrido en lancha 8:15, caneca blanca y horario de farmacia.",
+            "design_note": "Cinco señales/avisos ilustrados en estilo pictograma, uno por ítem: NO SMOKING, RECEPTION 1st FLOOR, BOAT TOUR 8:15 A.M., WHITE BIN PLASTIC AND GLASS, PHARMACY OPEN 9:00–18:00.",
+            "image_text": "Texto de cada señal (en inglés, mayúsculas) tal como aparece en las preguntas."
+          },
+          "items": [
+            {
+              "item_id": "reading.a.01",
+              "prompt": "Sign: “NO SMOKING”",
+              "competence": {
+                "raw": "M-IV · señales · reading",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": null,
+                "topic": "señales"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "You can’t smoke here."
+                },
+                {
+                  "id": "b",
+                  "text": "You can smoke here."
+                },
+                {
+                  "id": "c",
+                  "text": "This is the smoking area."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "reading.a.02",
+              "prompt": "Sign: “RECEPTION — 1st FLOOR”",
+              "competence": {
+                "raw": "M-IV · 4.3 · servicios · reading",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.3",
+                "topic": "servicios"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Reception is on the first floor."
+                },
+                {
+                  "id": "b",
+                  "text": "Reception is closed."
+                },
+                {
+                  "id": "c",
+                  "text": "There is no reception."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "reading.a.03",
+              "prompt": "Sign: “BOAT TOUR — 8:15 A.M.”",
+              "competence": {
+                "raw": "M-II · 2.2 · horarios · reading",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.2",
+                "topic": "horarios"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "The boat tour is at 8:15 in the morning."
+                },
+                {
+                  "id": "b",
+                  "text": "The tour is at night."
+                },
+                {
+                  "id": "c",
+                  "text": "The tour is at 8:50."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "reading.a.04",
+              "prompt": "Sign: “WHITE BIN — PLASTIC AND GLASS”",
+              "competence": {
+                "raw": "M-IV · 4.1 · reciclaje · reading",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "reciclaje"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Put plastic and glass in this bin."
+                },
+                {
+                  "id": "b",
+                  "text": "This bin is for food."
+                },
+                {
+                  "id": "c",
+                  "text": "This bin is for paper only."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "reading.a.05",
+              "prompt": "Sign: “PHARMACY — OPEN 9:00–18:00”",
+              "competence": {
+                "raw": "M-III · 3.4 · reading",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.4",
+                "topic": null
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "The pharmacy opens at 9:00."
+                },
+                {
+                  "id": "b",
+                  "text": "The pharmacy is closed all day."
+                },
+                {
+                  "id": "c",
+                  "text": "The pharmacy opens at night."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "b",
+          "title": "Part B — Read the text and answer (5)",
+          "instructions": "",
+          "shared": {
+            "kind": "passage",
+            "title": "Welcome message",
+            "text": "Welcome to Posada El Encuentro! There is a beautiful garden and a restaurant on the first floor. Breakfast is at 7:00 a.m. The boat tour leaves at 8:15 a.m. You can visit the market, next to the church. Enjoy your stay!",
+            "image_id": null,
+            "alt_text": null,
+            "design_note": null,
+            "image_text": null
+          },
+          "items": [
+            {
+              "item_id": "reading.b.01",
+              "prompt": "Where is the restaurant?",
+              "competence": {
+                "raw": "M-II · 2.3 · lugares · reading",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.3",
+                "topic": "lugares"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "on the first floor"
+                },
+                {
+                  "id": "b",
+                  "text": "in the garden"
+                },
+                {
+                  "id": "c",
+                  "text": "in the market"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "reading.b.02",
+              "prompt": "What time is breakfast?",
+              "competence": {
+                "raw": "M-I · 1.3 · la hora · reading",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.3",
+                "topic": "la hora"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "8:15"
+                },
+                {
+                  "id": "b",
+                  "text": "7:00"
+                },
+                {
+                  "id": "c",
+                  "text": "9:00"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "reading.b.03",
+              "prompt": "When does the boat tour leave?",
+              "competence": {
+                "raw": "M-II · 2.2 · horarios · reading",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.2",
+                "topic": "horarios"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "8:15 a.m."
+                },
+                {
+                  "id": "b",
+                  "text": "7:00 a.m."
+                },
+                {
+                  "id": "c",
+                  "text": "in the afternoon"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "reading.b.04",
+              "prompt": "Where is the market?",
+              "competence": {
+                "raw": "M-III · 3.1 · ubicación · reading",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.1",
+                "topic": "ubicación"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "next to the church"
+                },
+                {
+                  "id": "b",
+                  "text": "in the garden"
+                },
+                {
+                  "id": "c",
+                  "text": "on the first floor"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "reading.b.05",
+              "prompt": "Is there a garden?",
+              "competence": {
+                "raw": "M-II · 2.3 · there is · reading",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.3",
+                "topic": "there is"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Yes, there is."
+                },
+                {
+                  "id": "b",
+                  "text": "No, there isn’t."
+                },
+                {
+                  "id": "c",
+                  "text": "The text doesn’t say."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "c",
+          "title": "Part C — Choose the correct word (5)",
+          "instructions": "Lee el diálogo y elige la palabra correcta para cada espacio (26–30).",
+          "shared": {
+            "kind": "passage",
+            "title": "Registration",
+            "text": "Guest: Good (a)___! My name (b)___ Sarah. — Host: Welcome! (c)___ you from? — Guest: I (d)___ from Canada. — Host: How (e)___ is the room?",
+            "image_id": null,
+            "alt_text": null,
+            "design_note": null,
+            "image_text": null
+          },
+          "items": [
+            {
+              "item_id": "reading.c.01",
+              "prompt": "Gap (a):",
+              "competence": {
+                "raw": "M-I · 1.1 · saludo · reading/uso",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.1",
+                "topic": "saludo"
+              },
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "morning"
+                },
+                {
+                  "id": "b",
+                  "text": "night"
+                },
+                {
+                  "id": "c",
+                  "text": "bye"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(a)"
+            },
+            {
+              "item_id": "reading.c.02",
+              "prompt": "Gap (b):",
+              "competence": {
+                "raw": "M-I · 1.4 · to be · reading/uso",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "to be"
+              },
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "are"
+                },
+                {
+                  "id": "b",
+                  "text": "is"
+                },
+                {
+                  "id": "c",
+                  "text": "am"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": "(b)"
+            },
+            {
+              "item_id": "reading.c.03",
+              "prompt": "Gap (c):",
+              "competence": {
+                "raw": "M-I · 1.2 · Wh- origen · reading/uso",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "Wh- origen"
+              },
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Where are"
+                },
+                {
+                  "id": "b",
+                  "text": "What is"
+                },
+                {
+                  "id": "c",
+                  "text": "How many"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(c)"
+            },
+            {
+              "item_id": "reading.c.04",
+              "prompt": "Gap (d):",
+              "competence": {
+                "raw": "M-I · 1.2 · to be · reading/uso",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "to be"
+              },
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "am"
+                },
+                {
+                  "id": "b",
+                  "text": "is"
+                },
+                {
+                  "id": "c",
+                  "text": "are"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(d)"
+            },
+            {
+              "item_id": "reading.c.05",
+              "prompt": "Gap (e):",
+              "competence": {
+                "raw": "M-II · 2.1 · How much · reading/uso",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "How much"
+              },
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "many"
+                },
+                {
+                  "id": "b",
+                  "text": "much"
+                },
+                {
+                  "id": "c",
+                  "text": "old"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": "(e)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "use_of_english",
+      "title": "Use of English — grammar & vocabulary",
+      "instructions": null,
+      "weight": 20,
+      "parts": [
+        {
+          "part_key": "grammar",
+          "title": "Grammar (8)",
+          "instructions": "Elige la opción gramaticalmente correcta.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "use_of_english.grammar.01",
+              "prompt": "She ___ from Brazil.",
+              "competence": {
+                "raw": "M-I · 1.2 · verb to be",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "verb to be"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "am"
+                },
+                {
+                  "id": "b",
+                  "text": "is"
+                },
+                {
+                  "id": "c",
+                  "text": "are"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "use_of_english.grammar.02",
+              "prompt": "I am ___ guide. He is ___ assistant.",
+              "competence": {
+                "raw": "M-I · 1.1 · articles a/an",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.1",
+                "topic": "articles a/an"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "a / an"
+                },
+                {
+                  "id": "b",
+                  "text": "an / a"
+                },
+                {
+                  "id": "c",
+                  "text": "a / a"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "use_of_english.grammar.03",
+              "prompt": "___ two bathrooms in the house.",
+              "competence": {
+                "raw": "M-II · 2.3 · there are",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.3",
+                "topic": "there are"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "There is"
+                },
+                {
+                  "id": "b",
+                  "text": "There are"
+                },
+                {
+                  "id": "c",
+                  "text": "It is"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "use_of_english.grammar.04",
+              "prompt": "The museum ___ at 9:00 a.m.",
+              "competence": {
+                "raw": "M-IV · 4.3 · present simple (horarios)",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.3",
+                "topic": "present simple (horarios)"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "open"
+                },
+                {
+                  "id": "b",
+                  "text": "opens"
+                },
+                {
+                  "id": "c",
+                  "text": "opening"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "use_of_english.grammar.05",
+              "prompt": "___ the plastic in the white bin.",
+              "competence": {
+                "raw": "M-IV · 4.1 · imperativo",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "imperativo"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Put"
+                },
+                {
+                  "id": "b",
+                  "text": "Puts"
+                },
+                {
+                  "id": "c",
+                  "text": "Putting"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "use_of_english.grammar.06",
+              "prompt": "The bank is ___ the hotel. (side by side)",
+              "competence": {
+                "raw": "M-III · 3.1 · preposiciones",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.1",
+                "topic": "preposiciones"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "next to"
+                },
+                {
+                  "id": "b",
+                  "text": "under"
+                },
+                {
+                  "id": "c",
+                  "text": "behind"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "use_of_english.grammar.07",
+              "prompt": "I ___ a headache.",
+              "competence": {
+                "raw": "M-III · 3.4 · I have a…",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.4",
+                "topic": "I have a…"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "am"
+                },
+                {
+                  "id": "b",
+                  "text": "have"
+                },
+                {
+                  "id": "c",
+                  "text": "has"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "use_of_english.grammar.08",
+              "prompt": "___ tickets do you need?",
+              "competence": {
+                "raw": "M-II · 2.1 · How many",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "How many"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "How much"
+                },
+                {
+                  "id": "b",
+                  "text": "How many"
+                },
+                {
+                  "id": "c",
+                  "text": "How old"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "vocabulary",
+          "title": "Vocabulary (7)",
+          "instructions": "Elige la palabra correcta.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "use_of_english.vocabulary.01",
+              "prompt": "Which one is a drink?",
+              "competence": {
+                "raw": "M-II · 2.1 · léxico comida/bebida",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "léxico comida/bebida"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "soup"
+                },
+                {
+                  "id": "b",
+                  "text": "juice"
+                },
+                {
+                  "id": "c",
+                  "text": "rice"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "use_of_english.vocabulary.02",
+              "prompt": "Which one is a means of transport?",
+              "competence": {
+                "raw": "M-II · 2.2 · léxico transporte",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.2",
+                "topic": "léxico transporte"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "boat"
+                },
+                {
+                  "id": "b",
+                  "text": "kitchen"
+                },
+                {
+                  "id": "c",
+                  "text": "orchid"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "use_of_english.vocabulary.03",
+              "prompt": "Which one is a place in a city?",
+              "competence": {
+                "raw": "M-II · 2.3 · léxico lugares",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.3",
+                "topic": "léxico lugares"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "market"
+                },
+                {
+                  "id": "b",
+                  "text": "fever"
+                },
+                {
+                  "id": "c",
+                  "text": "morning"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "use_of_english.vocabulary.04",
+              "prompt": "Which word describes the weather?",
+              "competence": {
+                "raw": "M-III · 3.2 · léxico clima",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.2",
+                "topic": "léxico clima"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "sunny"
+                },
+                {
+                  "id": "b",
+                  "text": "tall"
+                },
+                {
+                  "id": "c",
+                  "text": "married"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "use_of_english.vocabulary.05",
+              "prompt": "Which one is a part of the body?",
+              "competence": {
+                "raw": "M-III · 3.4 · léxico cuerpo",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.4",
+                "topic": "léxico cuerpo"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "head"
+                },
+                {
+                  "id": "b",
+                  "text": "bin"
+                },
+                {
+                  "id": "c",
+                  "text": "ticket"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "use_of_english.vocabulary.06",
+              "prompt": "A polite word to receive a guest:",
+              "competence": {
+                "raw": "M-IV · 4.2 · cortesía",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.2",
+                "topic": "cortesía"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Welcome"
+                },
+                {
+                  "id": "b",
+                  "text": "Run"
+                },
+                {
+                  "id": "c",
+                  "text": "No"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "use_of_english.vocabulary.07",
+              "prompt": "The colour of the recyclable (plastic) bin:",
+              "competence": {
+                "raw": "M-IV · 4.1 · colores/señales",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "colores/señales"
+              },
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "white"
+                },
+                {
+                  "id": "b",
+                  "text": "pink"
+                },
+                {
+                  "id": "c",
+                  "text": "brown"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "writing",
+      "title": "Writing",
+      "instructions": null,
+      "weight": 15,
+      "parts": [
+        {
+          "part_key": "tasks",
+          "title": "Writing — 2 short guided tasks",
+          "instructions": "",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "writing.tasks.01",
+              "prompt": "Task 1 — Complete the Host Card",
+              "competence": null,
+              "type": "form_fields",
+              "rubric": "writing.host_card",
+              "fields": [
+                {
+                  "id": "name",
+                  "text": "Name"
+                },
+                {
+                  "id": "country",
+                  "text": "Country"
+                },
+                {
+                  "id": "nationality",
+                  "text": "Nationality"
+                },
+                {
+                  "id": "occupation",
+                  "text": "Occupation"
+                },
+                {
+                  "id": "phone_number",
+                  "text": "Phone number"
+                }
+              ],
+              "template": null,
+              "min_words": null,
+              "max_words": null,
+              "questions": [],
+              "source_rubric": "Se evalúa con rúbrica: campos completos · uso de mayúscula inicial · ortografía básica de las palabras del curso. (0–5 pts)",
+              "written_equivalent_of": null
+            },
+            {
+              "item_id": "writing.tasks.02",
+              "prompt": "Task 2 — Write a short welcome note (15–25 words)",
+              "competence": null,
+              "type": "template_text",
+              "rubric": "writing.welcome_note",
+              "fields": [],
+              "template": "Hello! Welcome to ______. My name is ______ and I am a ______. Breakfast is at ______. You can visit ______. Enjoy your stay!",
+              "min_words": 15,
+              "max_words": 25,
+              "questions": [],
+              "source_rubric": "Se evalúa con rúbrica: usa la plantilla · información coherente · frases modelo del curso · inteligibilidad básica. (0–5 pts)",
+              "written_equivalent_of": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "speaking",
+      "title": "Speaking",
+      "instructions": "el estudiante graba una nota de voz breve (o entrega la versión escrita equivalente / video en LSC). El reconocimiento de voz es formativo y no bloquea el avance.",
+      "weight": 15,
+      "parts": [
+        {
+          "part_key": "tasks",
+          "title": "Speaking — 2 short recorded tasks (bajo peso, formativo)",
+          "instructions": "",
+          "shared": {
+            "kind": "image",
+            "title": null,
+            "text": null,
+            "image_id": "SA",
+            "alt_text": "Recepción de la posada con un anfitrión, un huésped con maleta y un cartel con el horario del desayuno.",
+            "design_note": "Escena de recepción de la posada para la tarea de descripción oral: anfitrión detrás del mostrador, un huésped con maleta y un cartel con el horario del desayuno.",
+            "image_text": "Cartel: “Breakfast — 7:00 a.m. — 1st floor”."
+          },
+          "items": [
+            {
+              "item_id": "speaking.tasks.01",
+              "prompt": "Task 1 — Read aloud (20–30 s)",
+              "competence": null,
+              "type": "written_answers",
+              "rubric": "speaking.read_aloud_written",
+              "fields": [],
+              "template": null,
+              "min_words": null,
+              "max_words": null,
+              "questions": [
+                {
+                  "id": "q1",
+                  "text": "Write the welcome note you wrote in Writing Task 2, reading it carefully."
+                }
+              ],
+              "source_rubric": "Se evalúa con rúbrica: pronunciación inteligible · ritmo pausado · lectura completa. (0–5 pts)",
+              "written_equivalent_of": "Task 1 — Read aloud (20–30 s)"
+            },
+            {
+              "item_id": "speaking.tasks.02",
+              "prompt": "Task 2 — Answer 3 questions",
+              "competence": null,
+              "type": "written_answers",
+              "rubric": "speaking.three_questions_written",
+              "fields": [],
+              "template": null,
+              "min_words": null,
+              "max_words": null,
+              "questions": [
+                {
+                  "id": "q1",
+                  "text": "What is your name?"
+                },
+                {
+                  "id": "q2",
+                  "text": "Where are you from?"
+                },
+                {
+                  "id": "q3",
+                  "text": "What is your job?"
+                }
+              ],
+              "source_rubric": "Se evalúa con rúbrica: responde las 3 preguntas · usa frases modelo (I am… / I am from… / I am a…) · inteligibilidad. (0–5 pts)",
+              "written_equivalent_of": "Task 2 — Answer 3 questions"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source_notes": [
+    "listening.c.01: the matching task's code spans modules ('M-I a M-IV · comprensión situada · listening (cuenta como 5 ítems)'); it counts as 5 items and is left out of the per-module map",
+    "reading.a.01: the source gives no lesson number ('M-IV · señales · reading')",
+    "writing.tasks.01: the source gives this task no competence code",
+    "writing.tasks.02: the source gives this task no competence code",
+    "speaking.tasks.01: the source gives this task no competence code",
+    "speaking.tasks.01: the written equivalent is ours, not the source's; it needs pedagogical sign-off",
+    "speaking.tasks.02: the source gives this task no competence code",
+    "speaking.tasks.02: the written equivalent is ours, not the source's; it needs pedagogical sign-off"
+  ]
+}
