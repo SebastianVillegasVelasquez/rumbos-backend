@@ -30,6 +30,10 @@ class LanguageRules(Protocol):
         """The words and numbers of a text, in order, already normalized."""
         ...
 
+    def tokenize_cased(self, text: str) -> list[str]:
+        """The same words as `tokenize`, with the student's capitals kept."""
+        ...
+
 
 def _joins(ch: str, before: str, after: str) -> bool:
     """Whether a separator character belongs inside the word or number it sits in."""
@@ -50,20 +54,27 @@ class EnglishRules:
         return text.rstrip(_TERMINAL + " ")
 
     def tokenize(self, text: str) -> list[str]:
-        text = self.normalize(text)
-        tokens: list[str] = []
-        current: list[str] = []
-        for index, ch in enumerate(text):
-            before = text[index - 1] if index else ""
-            after = text[index + 1] if index + 1 < len(text) else ""
-            if ch.isalnum() or _joins(ch, before, after):
-                current.append(ch)
-            elif current:
-                tokens.append("".join(current))
-                current = []
-        if current:
+        return _split(self.normalize(text))
+
+    def tokenize_cased(self, text: str) -> list[str]:
+        text = unicodedata.normalize("NFKC", text[:MAX_FREE_TEXT_CHARS])
+        return _split("".join(_APOSTROPHES.get(ch, ch) for ch in text))
+
+
+def _split(text: str) -> list[str]:
+    tokens: list[str] = []
+    current: list[str] = []
+    for index, ch in enumerate(text):
+        before = text[index - 1] if index else ""
+        after = text[index + 1] if index + 1 < len(text) else ""
+        if ch.isalnum() or _joins(ch, before, after):
+            current.append(ch)
+        elif current:
             tokens.append("".join(current))
-        return tokens
+            current = []
+    if current:
+        tokens.append("".join(current))
+    return tokens
 
 
 ENGLISH = EnglishRules()

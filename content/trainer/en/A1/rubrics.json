@@ -1,0 +1,314 @@
+{
+  "status": "draft",
+  "note": "Deterministic proxy for the client's human rubric (Writing and Speaking). Each criterion scores points x mean(checks). Needs pedagogical sign-off before it decides anything real.",
+  "rubrics": [
+    {
+      "id": "writing.host_card",
+      "criteria": [
+        {
+          "id": "complete_fields",
+          "points": 2,
+          "checks": [
+            {
+              "check": "not_placeholder",
+              "on": [
+                "*"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "initial_capital",
+          "points": 1,
+          "checks": [
+            {
+              "check": "starts_with_capital",
+              "on": [
+                "name",
+                "country",
+                "nationality",
+                "occupation"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "basic_spelling",
+          "points": 1,
+          "checks": [
+            {
+              "check": "token_in_course_vocabulary_or_capitalized_name",
+              "on": [
+                "name",
+                "country",
+                "nationality",
+                "occupation"
+              ],
+              "allow_sentence_initial": true
+            }
+          ]
+        },
+        {
+          "id": "plausible_values",
+          "points": 1,
+          "checks": [
+            {
+              "check": "values_distinct",
+              "on": [
+                "name",
+                "country",
+                "nationality",
+                "occupation"
+              ]
+            },
+            {
+              "check": "digits_at_least",
+              "on": [
+                "phone_number"
+              ],
+              "min": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "writing.welcome_note",
+      "criteria": [
+        {
+          "id": "uses_template",
+          "points": 2,
+          "checks": [
+            {
+              "check": "template_phrases_present",
+              "on": [
+                "@text"
+              ],
+              "phrases": [
+                "welcome to",
+                "my name is",
+                "i am a",
+                "breakfast is at",
+                "you can visit",
+                "enjoy your stay"
+              ]
+            },
+            {
+              "check": "not_placeholder",
+              "on": [
+                "*"
+              ],
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "coherent_information",
+          "points": 1,
+          "checks": [
+            {
+              "check": "no_blank_left",
+              "on": [
+                "*"
+              ]
+            },
+            {
+              "check": "not_placeholder",
+              "on": [
+                "*"
+              ]
+            },
+            {
+              "check": "values_distinct",
+              "on": [
+                "*"
+              ]
+            },
+            {
+              "check": "contains_number",
+              "on": [
+                "b4"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "model_phrases",
+          "points": 1,
+          "checks": [
+            {
+              "check": "template_phrases_present",
+              "on": [
+                "@text"
+              ],
+              "phrases": [
+                "my name is",
+                "i am a"
+              ]
+            },
+            {
+              "check": "not_placeholder",
+              "on": [
+                "*"
+              ],
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "basic_intelligibility",
+          "points": 1,
+          "checks": [
+            {
+              "check": "token_in_course_vocabulary_or_capitalized_name",
+              "on": [
+                "@text"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "@text"
+              ],
+              "min": 15,
+              "max": 25
+            },
+            {
+              "check": "not_placeholder",
+              "on": [
+                "*"
+              ],
+              "multiplier": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "speaking.read_aloud_written",
+      "criteria": [
+        {
+          "id": "complete_reading",
+          "points": 2,
+          "checks": [
+            {
+              "check": "template_phrases_present",
+              "on": [
+                "@text"
+              ],
+              "phrases": [
+                "welcome to",
+                "my name is",
+                "i am a",
+                "breakfast is at",
+                "you can visit",
+                "enjoy your stay"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "paced_sentences",
+          "points": 1,
+          "checks": [
+            {
+              "check": "sentence_terminals_at_least",
+              "on": [
+                "@text"
+              ],
+              "min": 5
+            }
+          ]
+        },
+        {
+          "id": "intelligibility",
+          "points": 2,
+          "checks": [
+            {
+              "check": "token_in_course_vocabulary_or_capitalized_name",
+              "on": [
+                "@text"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "@text"
+              ],
+              "min": 15,
+              "max": 40
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "speaking.three_questions_written",
+      "criteria": [
+        {
+          "id": "answers_all_questions",
+          "points": 2,
+          "checks": [
+            {
+              "check": "not_placeholder",
+              "on": [
+                "*"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "model_phrases",
+          "points": 2,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "my name is",
+                "i am",
+                "i'm"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q2"
+              ],
+              "phrases": [
+                "i am from",
+                "i'm from"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q3"
+              ],
+              "phrases": [
+                "i am a",
+                "i am an",
+                "i'm a",
+                "i'm an"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "intelligibility",
+          "points": 1,
+          "checks": [
+            {
+              "check": "token_in_course_vocabulary_or_capitalized_name",
+              "on": [
+                "*"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
