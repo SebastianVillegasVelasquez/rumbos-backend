@@ -93,6 +93,12 @@ ROUTES: dict[tuple[str, str], tuple[str, bool]] = {
     ("GET", "/published/course-maps"): (STUDENT, False),
     ("GET", "/published/course-maps/{course_map_id}"): (STUDENT, False),
     ("GET", "/published/course-maps/{course_map_id}/resolved"): (STUDENT, True),
+    ("GET", "/trainer/assessments"): (STUDENT, False),
+    ("POST", "/trainer/assessments/{purpose}/attempts"): (STUDENT, False),
+    ("GET", "/trainer/attempts/{attempt_id}/sections/{key}"): (STUDENT, False),
+    ("PUT", "/trainer/attempts/{attempt_id}/answers"): (STUDENT, False),
+    ("POST", "/trainer/attempts/{attempt_id}/submit"): (STUDENT, False),
+    ("GET", "/trainer/attempts/{attempt_id}/result"): (STUDENT, False),
 }
 
 
@@ -193,6 +199,7 @@ BODIES: dict[tuple[str, str], dict[str, Any]] = {
         "y": 0.2,
     },
     ("POST", "/course-maps/{course_map_id}/publish"): {"draftHash": "0" * 64},
+    ("PUT", "/trainer/attempts/{attempt_id}/answers"): {"answers": []},
 }
 
 
@@ -203,6 +210,9 @@ def _path(template: str, map_id: str) -> str:
         asset_id=uuid.uuid4(),
         skin_id=uuid.uuid4(),
         number=1,
+        purpose="check_in",
+        attempt_id=uuid.uuid4(),
+        key="reading",
     )
 
 

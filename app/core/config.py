@@ -108,6 +108,9 @@ class Settings(BaseSettings):
     # `published` content only.
     trainer_content_dir: str = "content/trainer"
     trainer_serve_drafts: bool = False
+    # Requests per minute one user may send to the trainer (the exam
+    # autosaves, so this is generous). Counted per process.
+    trainer_rate_per_minute: int = Field(default=240, ge=1)
     # Practice attempts older than this many days are purged by the CLI.
     trainer_retention_days: int = Field(default=90, ge=1)
 

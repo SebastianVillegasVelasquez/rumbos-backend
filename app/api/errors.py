@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse
 
 from app.exceptions import (
     ActivityAlreadyPlacedError,
+    AssessmentConflictError,
     AssetDimensionsTooLargeError,
     AssetInUseError,
     AssetInvalidImageError,
@@ -62,6 +63,8 @@ from app.exceptions import (
     SkinReferenceNotFoundError,
     StorageUnavailableError,
     TenantDisabledError,
+    TrainerNotFoundError,
+    TrainerRateLimitedError,
     TrainerSettingsInvalidError,
     UnauthorizedError,
     UploadsDisabledError,
@@ -76,6 +79,7 @@ from app.moodle.exceptions import (
     MoodleError,
     MoodleUnavailableError,
 )
+from app.trainer.grading import InvalidResponseError
 
 ExceptionHandler = Callable[[Request, Exception], Awaitable[JSONResponse]]
 
@@ -711,6 +715,49 @@ def register_exception_handlers(app: FastAPI) -> None:
         )
 
     app.add_exception_handler(TrainerSettingsInvalidError, trainer_settings_invalid)
+
+    app.add_exception_handler(
+        TrainerNotFoundError, _handler(status.HTTP_404_NOT_FOUND, "Not found")
+    )
+
+    async def assessment_conflict(request: Request, exc: Exception) -> JSONResponse:
+        assert isinstance(exc, AssessmentConflictError)
+        return JSONResponse(
+            status_code=status.HTTP_409_CONFLICT,
+            content={
+                "detail": {
+                    "code": exc.code,
+                    "message": "The request conflicts with the state of the exam",
+                }
+            },
+        )
+
+    app.add_exception_handler(AssessmentConflictError, assessment_conflict)
+
+    async def trainer_rate_limited(request: Request, exc: Exception) -> JSONResponse:
+        assert isinstance(exc, TrainerRateLimitedError)
+        return JSONResponse(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            content={
+                "detail": {"code": "rate_limited", "message": "Too many requests"}
+            },
+            headers={"Retry-After": str(exc.retry_after)},
+        )
+
+    app.add_exception_handler(TrainerRateLimitedError, trainer_rate_limited)
+
+    async def invalid_response(request: Request, exc: Exception) -> JSONResponse:
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            content={
+                "detail": {
+                    "code": "invalid_response",
+                    "message": "That is not a possible answer to this item",
+                }
+            },
+        )
+
+    app.add_exception_handler(InvalidResponseError, invalid_response)
 
     async def request_invalid(request: Request, exc: Exception) -> JSONResponse:
         assert isinstance(exc, RequestValidationError)
