@@ -127,3 +127,35 @@ the keys and flipped the status (see the final report for the steps).
 
 The app loads the packs at start-up and refuses to start if one is invalid, so
 `content/` is copied into the image and CI runs the linter first.
+
+## D18. Practice content was authored per module, not per lesson
+
+The brief asked for one commit per lesson. The four lessons of a module share
+`vocabulary.json` and `audio_manifest.json`, so a per-lesson commit would have
+rewritten the same two files four times; there is one commit per module. Every
+activity is `draft`. Each lesson has a scripted dialogue (6 turns), a listening
+set (3 items), an exercise set (6 items) and 8 words. There are no Writing or
+Vocabulary-skill activities: vocabulary is the saved-word flashcards.
+
+## D19. Dialogue choices are all valid replies
+
+A scripted dialogue is not graded: each "choose" turn offers natural replies
+that all move on, and a "type" turn accepts any reply containing the key words
+of one accepted set (hyphenated spellings such as R-U-I-Z are one token, so the
+content also accepts that form). A test finishes every dialogue with its model
+replies.
+
+## D20. Vocabulary review is self-reported
+
+`POST /vocabulary/{id}/review` takes `knew_it` from the student; the backend
+cannot check it. Leitner boxes follow the answer (right: next box, wrong: box 1).
+
+## D21. Exam attempts are not touched by `DELETE /me`
+
+`DELETE /me` removes only practice data. Exam attempts are certification records
+and are erased only through the operator command on a written request.
+
+## D22. The linter's unfinished-text markers are upper case
+
+`todo` is the Spanish word for "all" and appears in translations, so only TODO,
+FIXME, TBD and XXX count.
