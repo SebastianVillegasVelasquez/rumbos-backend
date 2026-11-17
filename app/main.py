@@ -15,6 +15,7 @@ from app.api.routes import (
     auth,
     course_map,
     health,
+    practice,
     publications,
     published,
     skins,
@@ -154,6 +155,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(view3d.router, prefix=API_PREFIX)
     application.include_router(assessments.router, prefix=API_PREFIX)
     application.include_router(trainer_audio.router, prefix=API_PREFIX)
+    application.include_router(practice.router, prefix=API_PREFIX)
+    application.include_router(practice.editor_router, prefix=API_PREFIX)
     return application
 
 

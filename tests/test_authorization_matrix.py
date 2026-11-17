@@ -95,6 +95,20 @@ ROUTES: dict[tuple[str, str], tuple[str, bool]] = {
     ("GET", "/published/course-maps/{course_map_id}/resolved"): (STUDENT, True),
     ("GET", "/trainer/assessments"): (STUDENT, False),
     ("GET", "/trainer/audio/{audio_id}"): (STUDENT, False),
+    ("GET", "/trainer/catalog"): (STUDENT, False),
+    ("GET", "/trainer/progress"): (STUDENT, False),
+    ("POST", "/trainer/sessions"): (STUDENT, False),
+    ("GET", "/trainer/sessions/{session_id}"): (STUDENT, False),
+    ("POST", "/trainer/sessions/{session_id}/answers"): (STUDENT, False),
+    ("POST", "/trainer/sessions/{session_id}/finish"): (STUDENT, False),
+    ("GET", "/trainer/vocabulary"): (STUDENT, False),
+    ("GET", "/trainer/vocabulary/saved"): (STUDENT, False),
+    ("PUT", "/trainer/vocabulary/{entry_id}"): (STUDENT, False),
+    ("DELETE", "/trainer/vocabulary/{entry_id}"): (STUDENT, False),
+    ("POST", "/trainer/vocabulary/{entry_id}/review"): (STUDENT, False),
+    ("POST", "/trainer/reports"): (STUDENT, False),
+    ("GET", "/trainer/reports"): (EDITOR, False),
+    ("DELETE", "/trainer/me"): (STUDENT, False),
     ("POST", "/trainer/assessments/{purpose}/attempts"): (STUDENT, False),
     ("GET", "/trainer/attempts/{attempt_id}/sections/{key}"): (STUDENT, False),
     ("PUT", "/trainer/attempts/{attempt_id}/answers"): (STUDENT, False),
@@ -201,6 +215,13 @@ BODIES: dict[tuple[str, str], dict[str, Any]] = {
     },
     ("POST", "/course-maps/{course_map_id}/publish"): {"draftHash": "0" * 64},
     ("PUT", "/trainer/attempts/{attempt_id}/answers"): {"answers": []},
+    ("POST", "/trainer/sessions"): {"activity_id": "x"},
+    (
+        "POST",
+        "/trainer/sessions/{session_id}/answers",
+    ): {"step_id": "x", "attempt_id": str(uuid.uuid4()), "response": {}},
+    ("POST", "/trainer/vocabulary/{entry_id}/review"): {"knew_it": True},
+    ("POST", "/trainer/reports"): {"activity_id": "x", "text": "x"},
 }
 
 
@@ -215,6 +236,8 @@ def _path(template: str, map_id: str) -> str:
         attempt_id=uuid.uuid4(),
         key="reading",
         audio_id="listening.a.01",
+        session_id=uuid.uuid4(),
+        entry_id="v.1",
     )
 
 
