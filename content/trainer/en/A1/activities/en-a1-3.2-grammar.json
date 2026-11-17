@@ -1,0 +1,202 @@
+{
+  "id": "en-a1-3.2-grammar",
+  "lesson_id": "3.2",
+  "skill": "grammar",
+  "title": "Practice 3.2",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Guide talking about the weather",
+  "can_do": [
+    "I can say what the weather is like.",
+    "I can suggest what to wear or bring."
+  ],
+  "items": [
+    {
+      "id": "3.2.ex.01",
+      "type": "mcq",
+      "prompt": "Which word means no clouds and lots of sun?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Sunny"
+        },
+        {
+          "id": "o2",
+          "text": "Rainy"
+        },
+        {
+          "id": "o3",
+          "text": "Windy"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Sunny means lots of sun.",
+      "error_tags": {
+        "o2": {
+          "tag": "weather",
+          "text": "Rainy means there is rain."
+        }
+      }
+    },
+    {
+      "id": "3.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "It {1} cold in the mountains.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "is"
+            },
+            {
+              "id": "o2",
+              "text": "are"
+            },
+            {
+              "id": "o3",
+              "text": "am"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "be_agreement",
+            "text": "Use is with it."
+          }
+        }
+      ],
+      "explanation": "It takes is."
+    },
+    {
+      "id": "3.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "Take an {1} when it rains.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "umbrella"
+          ],
+          "error_tag": {
+            "tag": "vocabulary",
+            "text": "The word is umbrella."
+          }
+        }
+      ],
+      "explanation": "An umbrella keeps you dry."
+    },
+    {
+      "id": "3.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "What"
+        },
+        {
+          "id": "t2",
+          "text": "is"
+        },
+        {
+          "id": "t3",
+          "text": "the"
+        },
+        {
+          "id": "t4",
+          "text": "weather"
+        },
+        {
+          "id": "t5",
+          "text": "like"
+        },
+        {
+          "id": "t6",
+          "text": "?"
+        }
+      ],
+      "explanation": "A common weather question.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with What."
+      }
+    },
+    {
+      "id": "3.2.ex.05",
+      "type": "match",
+      "prompt": "Match the weather with the thing to bring.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "rain"
+        },
+        {
+          "id": "l2",
+          "text": "sun"
+        },
+        {
+          "id": "l3",
+          "text": "cold"
+        },
+        {
+          "id": "l4",
+          "text": "heat"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "umbrella"
+        },
+        {
+          "id": "r2",
+          "text": "hat"
+        },
+        {
+          "id": "r3",
+          "text": "jacket"
+        },
+        {
+          "id": "r4",
+          "text": "water"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Bring the right thing for the weather."
+    },
+    {
+      "id": "3.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Say the weather today. It is hot.",
+      "accepted": [
+        "It is hot",
+        "It's hot"
+      ],
+      "explanation": "It is + weather word.",
+      "error_tag": {
+        "tag": "be_adjective",
+        "text": "Use It is + word."
+      }
+    }
+  ]
+}

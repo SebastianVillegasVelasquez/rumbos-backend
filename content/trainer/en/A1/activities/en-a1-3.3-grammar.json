@@ -1,0 +1,197 @@
+{
+  "id": "en-a1-3.3-grammar",
+  "lesson_id": "3.3",
+  "skill": "grammar",
+  "title": "Practice 3.3",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Guide asking visitors about free time",
+  "can_do": [
+    "I can say what I like to do in my free time.",
+    "I can ask a visitor about their hobbies."
+  ],
+  "items": [
+    {
+      "id": "3.3.ex.01",
+      "type": "mcq",
+      "prompt": "Which one is a free-time activity?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Swimming"
+        },
+        {
+          "id": "o2",
+          "text": "Working"
+        },
+        {
+          "id": "o3",
+          "text": "Paying"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Swimming is a hobby.",
+      "error_tags": {
+        "o2": {
+          "tag": "vocabulary",
+          "text": "Working is not free time."
+        }
+      }
+    },
+    {
+      "id": "3.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "She {1} music every day.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "listen to"
+            },
+            {
+              "id": "o2",
+              "text": "listens to"
+            },
+            {
+              "id": "o3",
+              "text": "listening to"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "third_person_s",
+            "text": "Add -s with he, she or it."
+          }
+        }
+      ],
+      "explanation": "He, she and it take the -s form."
+    },
+    {
+      "id": "3.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "I like {1} football. (the verb for the game)",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "playing"
+          ],
+          "error_tag": {
+            "tag": "verb_form",
+            "text": "Use the -ing form after like."
+          }
+        }
+      ],
+      "explanation": "Like + verb-ing."
+    },
+    {
+      "id": "3.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Do"
+        },
+        {
+          "id": "t2",
+          "text": "you"
+        },
+        {
+          "id": "t3",
+          "text": "like"
+        },
+        {
+          "id": "t4",
+          "text": "music"
+        },
+        {
+          "id": "t5",
+          "text": "?"
+        }
+      ],
+      "explanation": "Yes/no questions start with Do.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with Do."
+      }
+    },
+    {
+      "id": "3.3.ex.05",
+      "type": "match",
+      "prompt": "Match the activity with the place.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "swim"
+        },
+        {
+          "id": "l2",
+          "text": "dance"
+        },
+        {
+          "id": "l3",
+          "text": "read"
+        },
+        {
+          "id": "l4",
+          "text": "walk"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "beach"
+        },
+        {
+          "id": "r2",
+          "text": "club"
+        },
+        {
+          "id": "r3",
+          "text": "library"
+        },
+        {
+          "id": "r4",
+          "text": "park"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each hobby has a place."
+    },
+    {
+      "id": "3.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Say one thing you like. Use: I like music.",
+      "accepted": [
+        "I like music"
+      ],
+      "explanation": "I like + noun.",
+      "error_tag": {
+        "tag": "verb_form",
+        "text": "I like + noun or -ing."
+      }
+    }
+  ]
+}

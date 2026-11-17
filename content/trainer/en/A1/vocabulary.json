@@ -383,6 +383,198 @@
       "lesson_id": "2.4",
       "word": "forest",
       "translation": "bosque"
+    },
+    {
+      "id": "en-a1-3.1.v1",
+      "lesson_id": "3.1",
+      "word": "left",
+      "translation": "izquierda"
+    },
+    {
+      "id": "en-a1-3.1.v2",
+      "lesson_id": "3.1",
+      "word": "right",
+      "translation": "derecha"
+    },
+    {
+      "id": "en-a1-3.1.v3",
+      "lesson_id": "3.1",
+      "word": "straight",
+      "translation": "derecho"
+    },
+    {
+      "id": "en-a1-3.1.v4",
+      "lesson_id": "3.1",
+      "word": "corner",
+      "translation": "esquina"
+    },
+    {
+      "id": "en-a1-3.1.v5",
+      "lesson_id": "3.1",
+      "word": "block",
+      "translation": "cuadra"
+    },
+    {
+      "id": "en-a1-3.1.v6",
+      "lesson_id": "3.1",
+      "word": "street",
+      "translation": "calle"
+    },
+    {
+      "id": "en-a1-3.1.v7",
+      "lesson_id": "3.1",
+      "word": "next to",
+      "translation": "al lado de"
+    },
+    {
+      "id": "en-a1-3.1.v8",
+      "lesson_id": "3.1",
+      "word": "across from",
+      "translation": "frente a"
+    },
+    {
+      "id": "en-a1-3.2.v1",
+      "lesson_id": "3.2",
+      "word": "weather",
+      "translation": "clima"
+    },
+    {
+      "id": "en-a1-3.2.v2",
+      "lesson_id": "3.2",
+      "word": "sunny",
+      "translation": "soleado"
+    },
+    {
+      "id": "en-a1-3.2.v3",
+      "lesson_id": "3.2",
+      "word": "rainy",
+      "translation": "lluvioso"
+    },
+    {
+      "id": "en-a1-3.2.v4",
+      "lesson_id": "3.2",
+      "word": "cloudy",
+      "translation": "nublado"
+    },
+    {
+      "id": "en-a1-3.2.v5",
+      "lesson_id": "3.2",
+      "word": "hot",
+      "translation": "caliente"
+    },
+    {
+      "id": "en-a1-3.2.v6",
+      "lesson_id": "3.2",
+      "word": "cold",
+      "translation": "frío"
+    },
+    {
+      "id": "en-a1-3.2.v7",
+      "lesson_id": "3.2",
+      "word": "windy",
+      "translation": "ventoso"
+    },
+    {
+      "id": "en-a1-3.2.v8",
+      "lesson_id": "3.2",
+      "word": "umbrella",
+      "translation": "paraguas"
+    },
+    {
+      "id": "en-a1-3.3.v1",
+      "lesson_id": "3.3",
+      "word": "free time",
+      "translation": "tiempo libre"
+    },
+    {
+      "id": "en-a1-3.3.v2",
+      "lesson_id": "3.3",
+      "word": "music",
+      "translation": "música"
+    },
+    {
+      "id": "en-a1-3.3.v3",
+      "lesson_id": "3.3",
+      "word": "dance",
+      "translation": "bailar"
+    },
+    {
+      "id": "en-a1-3.3.v4",
+      "lesson_id": "3.3",
+      "word": "swim",
+      "translation": "nadar"
+    },
+    {
+      "id": "en-a1-3.3.v5",
+      "lesson_id": "3.3",
+      "word": "read",
+      "translation": "leer"
+    },
+    {
+      "id": "en-a1-3.3.v6",
+      "lesson_id": "3.3",
+      "word": "sport",
+      "translation": "deporte"
+    },
+    {
+      "id": "en-a1-3.3.v7",
+      "lesson_id": "3.3",
+      "word": "weekend",
+      "translation": "fin de semana"
+    },
+    {
+      "id": "en-a1-3.3.v8",
+      "lesson_id": "3.3",
+      "word": "like",
+      "translation": "gustar"
+    },
+    {
+      "id": "en-a1-3.4.v1",
+      "lesson_id": "3.4",
+      "word": "headache",
+      "translation": "dolor de cabeza"
+    },
+    {
+      "id": "en-a1-3.4.v2",
+      "lesson_id": "3.4",
+      "word": "fever",
+      "translation": "fiebre"
+    },
+    {
+      "id": "en-a1-3.4.v3",
+      "lesson_id": "3.4",
+      "word": "doctor",
+      "translation": "médico"
+    },
+    {
+      "id": "en-a1-3.4.v4",
+      "lesson_id": "3.4",
+      "word": "medicine",
+      "translation": "medicina"
+    },
+    {
+      "id": "en-a1-3.4.v5",
+      "lesson_id": "3.4",
+      "word": "pharmacy",
+      "translation": "farmacia"
+    },
+    {
+      "id": "en-a1-3.4.v6",
+      "lesson_id": "3.4",
+      "word": "hurt",
+      "translation": "doler"
+    },
+    {
+      "id": "en-a1-3.4.v7",
+      "lesson_id": "3.4",
+      "word": "sick",
+      "translation": "enfermo"
+    },
+    {
+      "id": "en-a1-3.4.v8",
+      "lesson_id": "3.4",
+      "word": "rest",
+      "translation": "descansar"
     }
   ]
 }

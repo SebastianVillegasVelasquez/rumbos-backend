@@ -740,6 +740,294 @@
       "file": "audio/en-a1-2.4.l3.mp3",
       "duration_s": null,
       "transcript": "The monkey is in the tall tree."
+    },
+    {
+      "id": "en-a1-3.1.d1",
+      "text": "Excuse me. Where is the museum?",
+      "voices": [],
+      "file": "audio/en-a1-3.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Excuse me. Where is the museum?"
+    },
+    {
+      "id": "en-a1-3.1.d2",
+      "text": "How do I get there?",
+      "voices": [],
+      "file": "audio/en-a1-3.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "How do I get there?"
+    },
+    {
+      "id": "en-a1-3.1.d3",
+      "text": "Is it on the left or on the right?",
+      "voices": [],
+      "file": "audio/en-a1-3.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "Is it on the left or on the right?"
+    },
+    {
+      "id": "en-a1-3.1.d4",
+      "text": "Is it far from here?",
+      "voices": [],
+      "file": "audio/en-a1-3.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Is it far from here?"
+    },
+    {
+      "id": "en-a1-3.1.d5",
+      "text": "Is there a bank near the museum?",
+      "voices": [],
+      "file": "audio/en-a1-3.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is there a bank near the museum?"
+    },
+    {
+      "id": "en-a1-3.1.d6",
+      "text": "Thank you very much!",
+      "voices": [],
+      "file": "audio/en-a1-3.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you very much!"
+    },
+    {
+      "id": "en-a1-3.1.l1",
+      "text": "Turn right at the corner.",
+      "voices": [],
+      "file": "audio/en-a1-3.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "Turn right at the corner."
+    },
+    {
+      "id": "en-a1-3.1.l2",
+      "text": "The market is across from the church.",
+      "voices": [],
+      "file": "audio/en-a1-3.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "The market is across from the church."
+    },
+    {
+      "id": "en-a1-3.1.l3",
+      "text": "Go straight for two blocks.",
+      "voices": [],
+      "file": "audio/en-a1-3.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "Go straight for two blocks."
+    },
+    {
+      "id": "en-a1-3.2.d1",
+      "text": "What is the weather like today?",
+      "voices": [],
+      "file": "audio/en-a1-3.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "What is the weather like today?"
+    },
+    {
+      "id": "en-a1-3.2.d2",
+      "text": "Is it going to rain?",
+      "voices": [],
+      "file": "audio/en-a1-3.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "Is it going to rain?"
+    },
+    {
+      "id": "en-a1-3.2.d3",
+      "text": "What should I bring?",
+      "voices": [],
+      "file": "audio/en-a1-3.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "What should I bring?"
+    },
+    {
+      "id": "en-a1-3.2.d4",
+      "text": "Is it hot at the beach?",
+      "voices": [],
+      "file": "audio/en-a1-3.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "Is it hot at the beach?"
+    },
+    {
+      "id": "en-a1-3.2.d5",
+      "text": "And at night?",
+      "voices": [],
+      "file": "audio/en-a1-3.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "And at night?"
+    },
+    {
+      "id": "en-a1-3.2.d6",
+      "text": "Thank you. I will take my jacket.",
+      "voices": [],
+      "file": "audio/en-a1-3.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. I will take my jacket."
+    },
+    {
+      "id": "en-a1-3.2.l1",
+      "text": "Today it is cloudy and cool.",
+      "voices": [],
+      "file": "audio/en-a1-3.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "Today it is cloudy and cool."
+    },
+    {
+      "id": "en-a1-3.2.l2",
+      "text": "It rains a lot in April.",
+      "voices": [],
+      "file": "audio/en-a1-3.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "It rains a lot in April."
+    },
+    {
+      "id": "en-a1-3.2.l3",
+      "text": "Bring a hat. It is very sunny.",
+      "voices": [],
+      "file": "audio/en-a1-3.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "Bring a hat. It is very sunny."
+    },
+    {
+      "id": "en-a1-3.3.d1",
+      "text": "What do you do in your free time?",
+      "voices": [],
+      "file": "audio/en-a1-3.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "What do you do in your free time?"
+    },
+    {
+      "id": "en-a1-3.3.d2",
+      "text": "Do you like sports?",
+      "voices": [],
+      "file": "audio/en-a1-3.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "Do you like sports?"
+    },
+    {
+      "id": "en-a1-3.3.d3",
+      "text": "What do you like to do on weekends?",
+      "voices": [],
+      "file": "audio/en-a1-3.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "What do you like to do on weekends?"
+    },
+    {
+      "id": "en-a1-3.3.d4",
+      "text": "Do you like dancing?",
+      "voices": [],
+      "file": "audio/en-a1-3.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "Do you like dancing?"
+    },
+    {
+      "id": "en-a1-3.3.d5",
+      "text": "Do you want to join the salsa class tonight?",
+      "voices": [],
+      "file": "audio/en-a1-3.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "Do you want to join the salsa class tonight?"
+    },
+    {
+      "id": "en-a1-3.3.d6",
+      "text": "It starts at eight.",
+      "voices": [],
+      "file": "audio/en-a1-3.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "It starts at eight."
+    },
+    {
+      "id": "en-a1-3.3.l1",
+      "text": "I like swimming and I like reading.",
+      "voices": [],
+      "file": "audio/en-a1-3.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "I like swimming and I like reading."
+    },
+    {
+      "id": "en-a1-3.3.l2",
+      "text": "On Saturdays we play football.",
+      "voices": [],
+      "file": "audio/en-a1-3.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "On Saturdays we play football."
+    },
+    {
+      "id": "en-a1-3.3.l3",
+      "text": "She does not like cooking.",
+      "voices": [],
+      "file": "audio/en-a1-3.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "She does not like cooking."
+    },
+    {
+      "id": "en-a1-3.4.d1",
+      "text": "Good evening. Are you OK?",
+      "voices": [],
+      "file": "audio/en-a1-3.4.d1.mp3",
+      "duration_s": null,
+      "transcript": "Good evening. Are you OK?"
+    },
+    {
+      "id": "en-a1-3.4.d2",
+      "text": "Where does it hurt?",
+      "voices": [],
+      "file": "audio/en-a1-3.4.d2.mp3",
+      "duration_s": null,
+      "transcript": "Where does it hurt?"
+    },
+    {
+      "id": "en-a1-3.4.d3",
+      "text": "Do you have a fever?",
+      "voices": [],
+      "file": "audio/en-a1-3.4.d3.mp3",
+      "duration_s": null,
+      "transcript": "Do you have a fever?"
+    },
+    {
+      "id": "en-a1-3.4.d4",
+      "text": "You need to rest. Do you want a doctor?",
+      "voices": [],
+      "file": "audio/en-a1-3.4.d4.mp3",
+      "duration_s": null,
+      "transcript": "You need to rest. Do you want a doctor?"
+    },
+    {
+      "id": "en-a1-3.4.d5",
+      "text": "The pharmacy is next to the hotel.",
+      "voices": [],
+      "file": "audio/en-a1-3.4.d5.mp3",
+      "duration_s": null,
+      "transcript": "The pharmacy is next to the hotel."
+    },
+    {
+      "id": "en-a1-3.4.d6",
+      "text": "I hope you feel better soon.",
+      "voices": [],
+      "file": "audio/en-a1-3.4.d6.mp3",
+      "duration_s": null,
+      "transcript": "I hope you feel better soon."
+    },
+    {
+      "id": "en-a1-3.4.l1",
+      "text": "I have a headache and a cold.",
+      "voices": [],
+      "file": "audio/en-a1-3.4.l1.mp3",
+      "duration_s": null,
+      "transcript": "I have a headache and a cold."
+    },
+    {
+      "id": "en-a1-3.4.l2",
+      "text": "Take this medicine two times a day.",
+      "voices": [],
+      "file": "audio/en-a1-3.4.l2.mp3",
+      "duration_s": null,
+      "transcript": "Take this medicine two times a day."
+    },
+    {
+      "id": "en-a1-3.4.l3",
+      "text": "My stomach hurts after dinner.",
+      "voices": [],
+      "file": "audio/en-a1-3.4.l3.mp3",
+      "duration_s": null,
+      "transcript": "My stomach hurts after dinner."
     }
   ]
 }

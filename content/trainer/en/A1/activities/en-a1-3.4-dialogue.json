@@ -1,0 +1,179 @@
+{
+  "id": "en-a1-3.4-dialogue",
+  "lesson_id": "3.4",
+  "skill": "dialogue",
+  "title": "Talk it through 3.4",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Hotel staff helping a guest who feels ill",
+  "can_do": [
+    "I can say what is wrong with me.",
+    "I can understand simple advice about health."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Good evening. Are you OK?",
+        "translation": "Buenas noches. ¿Se encuentra bien?",
+        "audio": "en-a1-3.4.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "No, I feel sick.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "No, I have a headache.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "No, I am not well.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Where does it hurt?",
+        "translation": "¿Dónde le duele?",
+        "audio": "en-a1-3.4.d2",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "My head hurts.",
+            "next": "n3"
+          },
+          {
+            "id": "o2",
+            "text": "My stomach hurts.",
+            "next": "n3"
+          },
+          {
+            "id": "o3",
+            "text": "My throat hurts.",
+            "next": "n3"
+          }
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Do you have a fever?",
+        "translation": "¿Tiene fiebre?",
+        "audio": "en-a1-3.4.d3",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "yes"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "no"
+            ],
+            "next": "n4"
+          },
+          {
+            "all_of": [
+              "i",
+              "have"
+            ],
+            "next": "n4"
+          }
+        ],
+        "model_reply": "Yes, I have a fever.",
+        "starters": [
+          "Yes, I ...",
+          "No, I ..."
+        ],
+        "word_bank": [
+          "Yes",
+          "No",
+          "I",
+          "have",
+          "a",
+          "fever"
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "You need to rest. Do you want a doctor?",
+        "translation": "Necesita descansar. ¿Quiere un médico?",
+        "audio": "en-a1-3.4.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, please.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "No, thank you. Only water.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, I think so.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "The pharmacy is next to the hotel.",
+        "translation": "La farmacia está al lado del hotel.",
+        "audio": "en-a1-3.4.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you. Is it open now?",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Thanks. I will go there.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Can you call a taxi?",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "I hope you feel better soon.",
+        "translation": "Espero que se mejore pronto.",
+        "audio": "en-a1-3.4.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you very much.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Thanks for your help.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Good night.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}
