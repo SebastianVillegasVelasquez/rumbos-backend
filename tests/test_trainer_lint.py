@@ -171,3 +171,8 @@ def test_coverage_lists_lessons_with_missing_skills(tmp_path: Path) -> None:
     report = lint(load_pack(root))
     assert report.coverage["1.1"] == {"grammar": 1}
     assert any("lesson 1.2: no activity" in w for w in report.warnings)
+
+
+def test_the_spanish_word_todo_is_not_an_unfinished_marker(tmp_path: Path) -> None:
+    activity = good_activity(title="Eso es todo")
+    assert "unfinished text" not in problems(make_pack(tmp_path, [activity]))

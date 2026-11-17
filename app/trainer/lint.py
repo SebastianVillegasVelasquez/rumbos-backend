@@ -25,9 +25,9 @@ from app.trainer.items import (
 from app.trainer.language import ENGLISH, LanguageRules
 from app.trainer.pack import SKILLS, Activity, Pack
 
-_UNFINISHED = re.compile(
-    r"\b(todo|fixme|tbd|xxx|lorem ipsum|placeholder)\b", re.IGNORECASE
-)
+# Markers are upper case: "todo" is also the Spanish word for "all", and
+# translations are shown next to the English text.
+_UNFINISHED = re.compile(r"\b(?:TODO|FIXME|TBD|XXX)\b|\b(?i:lorem ipsum|placeholder)\b")
 _PLACEHOLDER = re.compile(r"\{(\w+)\}")
 _MIN_DUPLICATE_CHARS = 12
 
