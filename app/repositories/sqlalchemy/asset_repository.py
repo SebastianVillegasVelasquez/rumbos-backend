@@ -77,6 +77,12 @@ def map_uses(asset_id: SQLColumnExpression[Any]) -> ColumnElement[bool]:
             _id_text(asset_id),
         )
         > 0,
+        # The same for the closing flow's steps.
+        func.strpos(
+            func.coalesce(CourseMap.settings["closing"]["steps"].astext, ""),
+            _id_text(asset_id),
+        )
+        > 0,
         # Correlated by hand: the asset can be two queries up (the guarded
         # delete), where SQLAlchemy would otherwise add its table as a FROM.
         exists()
