@@ -118,4 +118,20 @@ def trainer_settings_check(settings: MapSettings, catalog: Catalog) -> SettingsC
                     "An assessment step needs assessments enabled with a checkIn",
                 )
             )
+    # The closing flow's final-exam step needs the final exam configured; the
+    # form it names is checked above (unknown: 422, unpublished: warning).
+    for index, step in enumerate(
+        settings.closing.steps or [] if settings.closing else []
+    ):
+        if isinstance(step, AssessmentStep) and not (
+            exams.enabled and exams.final is not None
+        ):
+            problems.append(
+                _finding(
+                    f"closing.steps[{index}]",
+                    "assessment_step_needs_final",
+                    "assessment_step_needs_final",
+                    "An assessment step needs assessments enabled with a final",
+                )
+            )
     return SettingsCheck(problems, warnings)
