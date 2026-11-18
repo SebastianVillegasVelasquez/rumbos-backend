@@ -1,7 +1,7 @@
 """`POST /assets` with `kind=document`: rights, title, inspection, limits, the
 switch, serving, and who owns the result."""
 
-import time
+import threading
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
@@ -350,17 +350,27 @@ async def test_the_inspection_runs_under_a_timeout(
     box: Box,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    def slow(*args: Any, **kwargs: Any) -> object:
-        time.sleep(0.5)
-        raise AssertionError("must not be waited for")
+    # No wall-clock bound: the scan is held open on an event, so the upload can
+    # only answer if it stopped waiting for it, however slow the machine is.
+    release = threading.Event()
+    returned = threading.Event()
 
-    monkeypatch.setattr("app.services.asset_service.inspect_pdf", slow)
+    def stuck(*args: Any, **kwargs: Any) -> object:
+        try:
+            release.wait(timeout=30)
+            raise AssertionError("must not be waited for")
+        finally:
+            returned.set()
+
+    monkeypatch.setattr("app.services.asset_service.inspect_pdf", stuck)
     box.change(document_scan_timeout_seconds=0.05)
+    try:
+        r = await upload_document(client, PDF)
+        scan_still_running = not returned.is_set()
+    finally:
+        release.set()
 
-    started = time.monotonic()
-    r = await upload_document(client, PDF)
-
-    assert time.monotonic() - started < 0.4
+    assert scan_still_running
     assert r.status_code == 422 and r.json()["detail"]["reason"] == "corrupt"
     assert await count(engine) == 0
 
