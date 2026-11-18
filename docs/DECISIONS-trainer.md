@@ -216,3 +216,49 @@ stays off. The editor also builds its exam settings with a guessed form id
 (`forma_a`; the real one is `a1-form-a`), so the save that would turn the trainer
 on is refused as one document. The editor should send `a1-form-a` and, better,
 read the available forms from the backend (a read-only list is not built yet).
+
+## D29. The closing flow: what the backend can and cannot know
+
+Audit before building (`feat/closing-flow`, from `af17d20`):
+
+- The welcome flow is only a *definition* here (`MapSettings.welcome`). Who saw,
+  completed or escaped a step is stored in Moodle (`format_rumbos_flow`, unique
+  on course, user, map and step key; methods `completed`, `fallback`,
+  `unavailable`) and read and written by the host protocol (`flow-step-done`,
+  `flow-reset`). The backend has no table, endpoint or column for it.
+- The backend has **no signal that a level is finished**. Its Moodle client only
+  calls `core_webservice_get_site_info` and `core_course_get_contents`, whose
+  modules carry the completion *configuration*, not any user's state. The
+  completion counts and the per-user state go from the plugin to the frontend
+  (`rumbos:host-state`, `request-stats`), never to the backend. The only
+  per-user facts it owns are the exam attempts.
+- So the closing flow's per-user state needs no backend table (the Moodle store
+  is keyed by map and step key, and works for any step), and `closing.available`
+  is **not implemented**: it would need an invented criterion. The frontend
+  already has the course state from the host. If the backend must decide, the
+  plugin has to send it a signed progress statement first (a new contract, like
+  the exam passback).
+- Generalising `welcome` into `flows[flow_key]` was not needed and was not done:
+  a new optional key `closing` is backward compatible by construction (absent is
+  disabled, left out of `to_stored()`, so no stored map or publication changes
+  its hash). A `flows` map would have moved `welcome` and broken every client.
+
+Judgment calls:
+
+- "`content` steps" is read as the welcome flow's content types (`html`, `pdf`,
+  `video`); there is no `content` type and none was invented. `welcome` and
+  `quiz` are refused in the closing flow.
+- The flows share `AssessmentStep` and one validator (`flow_problems(name=...)`)
+  instead of a copy. The purpose is checked per flow (`assessment_purpose`), so
+  `final` in the welcome flow is still a 422, now from the flow check.
+- Step keys must be unique across both flows (Moodle keys progress by map and
+  step key, with no flow). Reported at `closing.steps[i].key`.
+- The closing problems keep the code `welcome_invalid` (and its message) so the
+  frontend handles one error shape; the path says which flow.
+- The closing PDFs are listed in the existing `welcomeDocuments` (looked up by
+  `assetId`) instead of adding a second list to three response models.
+- `already_passed` is a hint on each exam list item and changes nothing else:
+  `state`, the attempt limits, the lock after a pass and the pass rule are as
+  before, so a student with a check-in pass can still start the final. It is
+  `true` for a pass in this exam, or in the other while `exemption.enabled`,
+  and always `false` for an editor in preview.

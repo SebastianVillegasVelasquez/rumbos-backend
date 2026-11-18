@@ -177,11 +177,46 @@ or losing its file shows at once and never makes a publication `unpublished
 changes`. An unavailable document keeps its entry with `available: false` and
 empty `title`, `pageCount` and `bytes`; the student side should skip that step.
 
+## The closing flow
+
+`settings.closing` is the welcome flow's twin, shown when the student finishes
+the level. It has the same shape (`steps`, `show`, `enabled`) and goes through
+the same validators, with the same error shape (`422 welcome_invalid`, paths
+under `closing.`). `null` or absent: there is no closing flow, and the map is
+stored and hashed exactly as before (`to_stored()` leaves the key out).
+
+What it may hold: **content steps** (`html`, `pdf`, `video`, same rules as in
+the welcome flow) and at most one `assessment` step with `purpose: "final"`.
+Refused: the `welcome` greeting and the Moodle `quiz` step
+(`step_type_not_allowed`), an assessment step with another purpose
+(`assessment_purpose`, which also refuses `final` in the welcome flow), and a
+closing flow without steps (`closing_needs_steps`). Steps reorder freely.
+
+The final-exam step needs `assessments.enabled` and a `final` policy (422
+`trainer_settings_invalid`, rule `assessment_step_needs_final`, path
+`closing.steps[i]`). The form it points at is the one of `assessments.final`: an
+unknown form is a 422 `unknown_form` at `assessments.final.form_id`, an
+unpublished one saves with a `content_not_published` warning.
+
+**Step keys are unique across both flows.** Moodle keeps the progress of a step
+in `format_rumbos_flow` under (course, user, map, step key), with no flow in
+the key, so a key shared by a welcome step and a closing step would share one
+row. The duplicate is reported at `closing.steps[i].key`.
+
+The PDFs of the closing flow are listed in `welcomeDocuments` next to those of
+the welcome flow, and the assets of both keep a publication or a draft from
+losing them.
+
+**Not decided here: when the level is finished.** The backend has no such
+signal, and per-student progress of the flows lives in Moodle (see
+`docs/DECISIONS-trainer.md`, D29). `closing` only carries the definition.
+
 ## Hash stability
 
 A flow with no `steps` is stored and hashed exactly as before: `to_stored()`
 leaves `welcome.steps` out when it is null, and a default curtain is left out
 altogether. Publications made before flows existed still read as `up_to_date`.
+The same holds for `closing`: a map without one has no `closing` key.
 `tests/test_welcome_flow.py::PRE_FLOW_HASHES` pins the hashes of five legacy
 cases that were computed with the code before this feature.
 

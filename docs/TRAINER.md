@@ -16,7 +16,8 @@ Everything is off until a course map's settings say so (appearance settings):
 Students read the **published** settings of the first map of their course that
 enables the feature, so saving in the editor is not enough: **publish the map**.
 Editors (preview) read the drafts. A welcome flow can hold
-an `assessment` step (`purpose: check_in`).
+an `assessment` step (`purpose: check_in`); a closing flow (`closing`, see
+`WELCOME-FLOW.md`) can hold one with `purpose: final`.
 
 ## Content
 
@@ -78,7 +79,8 @@ time with the new key.
 `PUT /course-maps/{id}/appearance` checks the trainer and exam settings against
 the deployed content. 422 `trainer_settings_invalid` carries `problems` and
 `errors[{path, rule, message_key}]` (`unknown_form`, `unknown_pack`,
-`no_exam_configured`, `assessment_step_needs_check_in`). A form or level that
+`no_exam_configured`, `assessment_step_needs_check_in`,
+`assessment_step_needs_final`). A form or level that
 exists but is not published saves, with `warnings[{path, rule:
 "content_not_published", message_key}]` in the answer. Forms: `a1-form-a`.
 
@@ -150,6 +152,12 @@ Student free text exists only in exam answers; logs never contain it.
 | `GET /trainer/catalog` | `preview` | `true` when the caller is an editor in preview, `false` otherwise; always present |
 | catalog activity | `publication_state` | `draft`, `reviewed` or `published` |
 | exam list item | `publication_state` | editors in preview only |
+| exam list item | `already_passed` | **new.** `true` when the student has passed this exam, or the other one while `exemption.enabled`; always `false` for an editor in preview. A hint so the client does not force another attempt: `state`, the attempt policy and the pass rule are unchanged |
+| `settings.closing` | `Welcome` or `null` | **new.** The closing flow, same shape as `settings.welcome`; `null` or absent: there is none |
+| `AssessmentStep.purpose` | `check_in` or `final` | **widened.** `check_in` in the welcome flow, `final` in the closing flow; the other one is `assessment_purpose` |
+| 422 `trainer_settings_invalid` | rule `assessment_step_needs_final` | a closing flow's final-exam step needs `assessments.enabled` and a `final` policy |
+| 422 `welcome_invalid` | paths under `closing.` | the same codes as the welcome flow, plus `closing_needs_steps`, `step_type_not_allowed`, `assessment_purpose` |
+| `welcomeDocuments` | now lists the PDFs of both flows | read live, as before; look a document up by `assetId` |
 | `GET /trainer/assessments/forms` | `[{id, title, publication_state}]` | editors only (403 for students), read-only: every exam form in the deployed content, drafts included, ordered by `id`; `id` is what `assessments.check_in.form_id` takes |
 
 `openapi.json` is generated from the code (`python -m app.scripts.export_openapi`);
