@@ -14,7 +14,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Header, Response, status
 from fastapi.responses import FileResponse
 
-from app.assessment.access import CourseSettingsDep, rate_limited
+from app.assessment.access import CallerDep, CourseSettingsDep, rate_limited
 from app.auth.dependencies import student_route
 from app.core.config import Settings, get_settings
 from app.exceptions import TrainerNotFoundError
@@ -77,13 +77,16 @@ async def get_audio(
     audio_id: str,
     catalog: CatalogDep,
     course: CourseSettingsDep,
+    caller: CallerDep,
     app_settings: Annotated[Settings, Depends(get_settings)],
     range_: Annotated[str | None, Header(alias="Range")] = None,
     v: str | None = None,
 ) -> Response:
     if not (course.assessments.enabled or course.trainer.enabled):
         raise TrainerNotFoundError
-    found = _usable(catalog, audio_id, app_settings.trainer_serve_drafts)
+    found = _usable(
+        catalog, audio_id, app_settings.trainer_serve_drafts or caller.preview
+    )
     if found is None:
         raise TrainerNotFoundError
     pack, path = found

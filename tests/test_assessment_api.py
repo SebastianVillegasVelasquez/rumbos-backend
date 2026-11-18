@@ -639,3 +639,22 @@ async def test_logs_never_carry_student_text(
         await s.post(f"/trainer/attempts/{a}/submit")
     assert secret not in caplog.text
     assert "attempt_closed" in caplog.text
+
+
+async def test_an_editor_previews_a_draft_form_a_student_does_not(
+    env: dict[str, Any],
+) -> None:
+    await env["setup"]({"assessments": exams()})
+    base = get_settings()
+    app.dependency_overrides[get_settings] = lambda: base.model_copy(
+        update={"trainer_serve_drafts": False}  # as in production
+    )
+    ed = await env["editor"]()
+    item = (await ed.get("/trainer/assessments")).json()["items"][0]
+    assert item["publication_state"] == "draft"
+    assert item["state"] == "available"
+    assert (await ed.post("/trainer/assessments/check_in/attempts")).status_code == 201
+    s = await env["student"]()
+    seen = (await s.get("/trainer/assessments")).json()["items"][0]
+    assert (seen["state"], seen["locked_reason"]) == ("locked", "not_available")
+    assert "publication_state" not in seen
