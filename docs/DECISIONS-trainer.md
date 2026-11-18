@@ -159,3 +159,60 @@ and are erased only through the operator command on a written request.
 
 `todo` is the Spanish word for "all" and appears in translations, so only TODO,
 FIXME, TBD and XXX count.
+
+## D23. Settings errors name the field, in the editor's spelling
+
+A 422 `trainer_settings_invalid` keeps `problems[{path, code, message}]` as it
+was and adds `errors[{path, rule, message_key}]`. `errors[].path` is snake_case
+(`assessments.check_in.form_id`), the spelling of the editor's own model, while
+`problems[].path` stays camelCase (the stored document). Rules: `unknown_form`,
+`unknown_pack`, `no_exam_configured`, `assessment_step_needs_check_in`.
+`message_key` is `trainer_settings.<rule>`. No value of the request is echoed.
+Only the appearance save runs this check; creating a map with settings in the
+same call does not (it did not before either).
+
+## D24. A form in any state can be configured; a warning says it is not live
+
+Validation looks only at whether the form (or the pack for the level) exists.
+A `draft` or `reviewed` form saves, and the answer carries
+`warnings[{path, rule: "content_not_published", message_key}]` so the editor can
+set the exam up before a person publishes it. A trainer whose pack has no
+published activity warns at `trainer.level`. Unknown ids stay a 422.
+
+## D25. The practice catalog says why it is empty
+
+`GET /trainer/catalog` answers `200 {enabled: false, reason}` where it used to
+answer 404 or an empty map: `disabled_for_map` (the course's settings do not
+turn the trainer on) or `no_published_content` (on, but nothing the caller may
+see). Two fixed words, so a student learns nothing about packs or drafts. A real
+fault is still a 5xx. Every other trainer route keeps its 404 when the feature is
+off. The frontend maps 404 to "closed", so it needs to read `enabled` too.
+
+## D26. Editors review unpublished content in the real UI
+
+For an editor in preview (`caller.preview`) drafts and reviewed content are
+served whatever `TRAINER_SERVE_DRAFTS` says: practice activities and sessions,
+the exam form and its audio. Each practice activity carries `publication_state`;
+the exam list carries it for editors only. Students get published content only.
+The environment flag stays for local development and must stay off in production.
+
+## D27. Publishing is a reviewed, confirmed, audited file change
+
+`python -m app.scripts.content publish` only moves `reviewed` content to
+`published` (a draft is refused), prints a dry run, and writes only with
+`--confirm`. It also flips `pack.json` because the audio route serves audio
+only for a published pack. After writing it lints the pack and restores every
+file if the linter objects (so an exam without its audio files cannot go live).
+`--reviewer` overwrites `reviewed_by`/`reviewed_at` with the person confirming.
+The audit line goes to `content/trainer/publication-audit.jsonl`, in the repo,
+because publishing is a commit plus a deploy: the image ships `content/`.
+
+## D28. What blocked the trainer for course 10
+
+Read from the code and the repository, not from a deployment (none is reachable
+from the development machine): every activity, the exam form and the pack are
+`draft`, and production serves drafts only with `TRAINER_SERVE_DRAFTS`, which
+stays off. The editor also builds its exam settings with a guessed form id
+(`forma_a`; the real one is `a1-form-a`), so the save that would turn the trainer
+on is refused as one document. The editor should send `a1-form-a` and, better,
+read the available forms from the backend (a read-only list is not built yet).

@@ -14,7 +14,8 @@ Everything is off until a course map's settings say so (appearance settings):
   `gte`), `exemption.enabled`.
 
 Students read the **published** settings of the first map of their course that
-enables the feature; editors (preview) read the drafts. A welcome flow can hold
+enables the feature, so saving in the editor is not enough: **publish the map**.
+Editors (preview) read the drafts. A welcome flow can hold
 an `assessment` step (`purpose: check_in`).
 
 ## Content
@@ -24,7 +25,9 @@ an `assessment` step (`purpose: check_in`).
 `rubrics.json`, `course_words.json`, `audio_manifest.json`, `audio/`. The app
 loads the whole catalog at start-up and refuses to start on an invalid pack.
 `content_version` is a hash of every file. Drafts are served only with
-`TRAINER_SERVE_DRAFTS=true`. Check a pack with
+`TRAINER_SERVE_DRAFTS=true`; the exception is an editor in preview, who always
+sees `draft` and `reviewed` content (each item carries `publication_state`) so
+the team can review it in the real UI. Check a pack with
 `python -m app.scripts.lint_content` (CI runs it).
 
 Audio: `tools/build_audio_manifest.py` lists what is needed,
@@ -70,9 +73,20 @@ fixed the receiving endpoint. Key rotation: add the new public key to Moodle,
 change `PASSBACK_KEY_ID` and the key, restart; pending rows are signed at send
 time with the new key.
 
+## Saving the settings
+
+`PUT /course-maps/{id}/appearance` checks the trainer and exam settings against
+the deployed content. 422 `trainer_settings_invalid` carries `problems` and
+`errors[{path, rule, message_key}]` (`unknown_form`, `unknown_pack`,
+`no_exam_configured`, `assessment_step_needs_check_in`). A form or level that
+exists but is not published saves, with `warnings[{path, rule:
+"content_not_published", message_key}]` in the answer. Forms: `a1-form-a`.
+
 ## Practice
 
-`GET /catalog`, `GET /progress`, `POST /sessions` (201/200), `GET /sessions/{id}`,
+`GET /catalog` answers `{enabled: false, reason: "disabled_for_map" |
+"no_published_content"}` when there is nothing to practise, else the map with
+`enabled: true` and a `publication_state` per activity. Then `GET /progress`, `POST /sessions` (201/200), `GET /sessions/{id}`,
 `POST /sessions/{id}/answers` (`attempt_id` makes a retry idempotent),
 `POST /sessions/{id}/finish` (first-try summary and the mistake kinds to revise),
 vocabulary (`GET /vocabulary`, `GET /vocabulary/saved?due=`,
@@ -91,6 +105,7 @@ Leitner boxes 1 to 5, due after 1, 2, 4, 8, 16 days), `POST /reports` (students)
 | `app.scripts.passback sync-run / sync-reconcile / status` | the passback |
 | `app.scripts.practice purge` | delete practice sessions older than `TRAINER_RETENTION_DAYS` (90) |
 | `app.scripts.practice reports / erase` | flagged content / erase one user's practice data |
+| `app.scripts.content publish` | publish reviewed content (dry run unless `--confirm`) |
 
 Retention: practice sessions 90 days; saved words and reports until erased; exam
 attempts are records of a certification and stay until an erasure request.
@@ -98,9 +113,37 @@ Student free text exists only in exam answers; logs never contain it.
 
 ## Releasing content
 
-1. A person checks every answer key against the client's document.
-2. Set `status` to `reviewed`, then `published` (with `reviewed_by` and
-   `reviewed_at` on activities) in the form or activity file.
-3. `python -m app.scripts.lint_content` must report 0 errors.
-4. Produce the audio files and durations.
-5. Keep `TRAINER_SERVE_DRAFTS` off in production.
+1. A person checks every answer key and practice item against the client's
+   document, and listens to the audio.
+2. That person sets `status` to `reviewed` in each activity or form file they
+   checked (and nothing else).
+3. Produce the audio files and durations (`tools/`), then
+   `python -m app.scripts.lint_content` must report 0 errors.
+4. Dry run: `python -m app.scripts.content publish --pack en/A1 --activities all
+   --forms a1-form-a --reviewer "<name>"`. Read the list. `all` means every
+   `reviewed` item; ids can be named instead.
+5. Run it again with `--confirm`. It sets `published`, `reviewed_by`,
+   `reviewed_at`, flips the pack, lints, undoes everything if the linter
+   objects, and appends a line to `content/trainer/publication-audit.jsonl`.
+6. Commit the content and the audit line, open a pull request, deploy.
+7. Keep `TRAINER_SERVE_DRAFTS` off in production.
+
+## Enabling it for a course
+
+1. Deploy a build with the trainer migrations applied (`alembic upgrade head`).
+2. In the editor, turn on the trainer and the exams for the map (form id
+   `a1-form-a`); a yellow warning means the content is not published yet.
+3. Review in the real UI as an editor: drafts and reviewed content show there.
+4. Publish the content (above), deploy, then **publish the map**: students read
+   published settings only.
+5. As a student, `GET /trainer/catalog` should answer `enabled: true`.
+
+## Contract notes (additive)
+
+| Where | Field | Meaning |
+| --- | --- | --- |
+| 422 of `PUT /course-maps/{id}/appearance` | `detail.errors[{path, rule, message_key}]` | which field and rule; `problems` unchanged |
+| 200 of that PUT | `warnings[{path, rule, message_key}]` | saved, but the content is not published |
+| `GET /trainer/catalog` | `enabled`, `reason` | `false` + `disabled_for_map` / `no_published_content`; `true` with the map |
+| catalog activity | `publication_state` | `draft`, `reviewed` or `published` |
+| exam list item | `publication_state` | editors in preview only |
