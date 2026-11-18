@@ -50,6 +50,8 @@ class Best(_Out):
 class AssessmentListItem(_Out):
     purpose: Purpose
     title: str
+    # State of the exam form, shown only to an editor in preview.
+    publication_state: Literal["draft", "reviewed", "published"] | None = None
     section_count: int
     item_count: int
     attempts: Attempts

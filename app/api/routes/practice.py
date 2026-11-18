@@ -23,6 +23,7 @@ from app.schemas.practice import (
     AnswerIn,
     AnswerOut,
     Catalog,
+    CatalogUnavailable,
     Erased,
     FinishOut,
     Progress,
@@ -65,21 +66,24 @@ def get_service(
         if settings.trainer.enabled
         else None
     )
+    # An editor in preview reviews draft and reviewed content in the real UI;
+    # students get only `published` unless the server itself serves drafts.
     return PracticeService(
         SqlAlchemyPracticeRepository(session),
         pack,
         course_id=caller.course_id,
         sub=caller.sub,
         clock=clock,
-        serve_drafts=app_settings.trainer_serve_drafts,
+        serve_drafts=app_settings.trainer_serve_drafts or caller.preview,
         audio_url=audio_url,
+        trainer_enabled=settings.trainer.enabled,
     )
 
 
 ServiceDep = Annotated[PracticeService, Depends(get_service)]
 
 
-@router.get("/catalog", response_model=Catalog)
+@router.get("/catalog", response_model=Catalog | CatalogUnavailable)
 async def get_catalog(service: ServiceDep) -> Any:
     return await service.catalog()
 

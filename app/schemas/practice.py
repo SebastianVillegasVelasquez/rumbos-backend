@@ -23,6 +23,9 @@ class CatalogActivity(_Out):
     skill: str
     title: str
     estimated_minutes: int
+    # Students only ever receive `published` (unless the server serves drafts);
+    # an editor in preview also sees `draft` and `reviewed` items, marked here.
+    publication_state: Literal["draft", "reviewed", "published"]
     step_count: int
     role: str | None = None
     can_do: list[str]
@@ -45,7 +48,15 @@ class CatalogModule(_Out):
     lessons: list[CatalogLesson]
 
 
+class CatalogUnavailable(_Out):
+    """Nothing to practise for this caller. `reason` is deliberately coarse."""
+
+    enabled: Literal[False]
+    reason: Literal["disabled_for_map", "no_published_content"]
+
+
 class Catalog(_Out):
+    enabled: Literal[True] = True
     language: str
     level: str
     title: str

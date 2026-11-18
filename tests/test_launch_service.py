@@ -45,12 +45,14 @@ class Env:
     def make_service(
         self, ip_limit: int = 1000, tenant_limit: int = 1000
     ) -> LaunchService:
+        # A frozen clock: with the real one, a test whose calls straddle a
+        # 60 s window boundary gets a fresh count and the limit never trips.
         return LaunchService(
             self.tenants,
             self.auth,
             SETTINGS,
-            FixedWindowLimiter(ip_limit),
-            FixedWindowLimiter(tenant_limit),
+            FixedWindowLimiter(ip_limit, clock=lambda: 1_000.0),
+            FixedWindowLimiter(tenant_limit, clock=lambda: 1_000.0),
         )
 
     async def register(self) -> TenantRecord:

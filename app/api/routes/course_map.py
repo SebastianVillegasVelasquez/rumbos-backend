@@ -36,6 +36,7 @@ from app.schemas.bubble import (
     BubbleUpdate,
 )
 from app.schemas.course_map import (
+    AppearanceSaved,
     AppearanceUpdate,
     CourseMapCreate,
     CourseMapList,
@@ -43,6 +44,7 @@ from app.schemas.course_map import (
     CourseMapOrderUpdate,
     CourseMapRead,
     CourseMapUpdate,
+    SettingsWarning,
 )
 from app.schemas.map_settings import MapSettings
 from app.schemas.resolved import ResolvedMap
@@ -51,7 +53,7 @@ from app.services.course_map_service import CourseMapService
 from app.services.resolution_service import MapResolutionService
 from app.trainer.catalog import Catalog
 from app.trainer.dependencies import CatalogDep
-from app.trainer.settings_check import trainer_settings_problems
+from app.trainer.settings_check import error_entry, trainer_settings_check
 
 router = APIRouter(
     prefix="/course-maps",
@@ -91,10 +93,15 @@ def get_resolution_service(
     )
 
 
-def check_trainer_settings(settings: MapSettings, catalog: Catalog) -> None:
-    problems = trainer_settings_problems(settings, catalog)
-    if problems:
-        raise TrainerSettingsInvalidError(problems)
+def check_trainer_settings(
+    settings: MapSettings, catalog: Catalog
+) -> list[SettingsWarning]:
+    """Raises the 422 for a problem; returns the warnings of a save that goes
+    through (content that exists but is not published yet)."""
+    check = trainer_settings_check(settings, catalog)
+    if check.problems:
+        raise TrainerSettingsInvalidError(check.problems)
+    return [SettingsWarning(**error_entry(w)) for w in check.warnings]
 
 
 ServiceDep = Annotated[CourseMapService, Depends(get_course_map_service)]
@@ -157,7 +164,7 @@ async def update_course_map(
     return updated
 
 
-@router.put("/{course_map_id}/appearance", response_model=CourseMapRead)
+@router.put("/{course_map_id}/appearance", response_model=AppearanceSaved)
 async def update_appearance(
     course_map_id: uuid.UUID,
     data: AppearanceUpdate,
@@ -165,12 +172,16 @@ async def update_appearance(
     response: Response,
     revision: IfMatch,
     catalog: CatalogDep,
-) -> CourseMapRead:
-    """Needs `If-Match: "<revision>"` (428 without, 412 when stale)."""
-    check_trainer_settings(data.settings, catalog)
+) -> AppearanceSaved:
+    """Needs `If-Match: "<revision>"` (428 without, 412 when stale). 422
+    `trainer_settings_invalid` with `errors[{path, rule, message_key}]`; a save
+    that names content which is not published yet succeeds with `warnings`."""
+    warnings = check_trainer_settings(data.settings, catalog)
     updated = await service.update_appearance(course_map_id, data, revision)
     set_etag(response, updated.revision)
-    return updated
+    return AppearanceSaved.model_validate(
+        {**updated.model_dump(), "warnings": warnings}
+    )
 
 
 async def require_request_body(request: Request) -> None:

@@ -80,6 +80,7 @@ from app.moodle.exceptions import (
     MoodleUnavailableError,
 )
 from app.trainer.grading import InvalidResponseError
+from app.trainer.settings_check import error_entry
 
 ExceptionHandler = Callable[[Request, Exception], Awaitable[JSONResponse]]
 
@@ -709,7 +710,14 @@ def register_exception_handlers(app: FastAPI) -> None:
                 "detail": {
                     "code": "trainer_settings_invalid",
                     "message": "The trainer or assessment settings are not valid",
-                    "problems": exc.problems,
+                    # The first shape, kept as it was.
+                    "problems": [
+                        {k: p[k] for k in ("path", "code", "message")}
+                        for p in exc.problems
+                    ],
+                    # One entry per broken rule, with the path the editor's own
+                    # model uses and a key to translate; no values, no personal data.
+                    "errors": [error_entry(p) for p in exc.problems],
                 }
             },
         )

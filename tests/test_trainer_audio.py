@@ -115,3 +115,17 @@ async def test_a_path_in_the_manifest_cannot_leave_the_pack(
         assert (await s.get(URL)).status_code == 404
     finally:
         app.dependency_overrides.pop(get_catalog, None)
+
+
+async def test_an_editor_may_hear_draft_audio_a_student_may_not(
+    env: dict[str, Any], audio_root: Path
+) -> None:
+    from app.core.config import get_settings
+
+    await env["setup"]({"assessments": exams()})
+    base = get_settings()
+    app.dependency_overrides[get_settings] = lambda: base.model_copy(
+        update={"trainer_serve_drafts": False}  # as in production
+    )
+    assert (await (await env["editor"]()).get(URL)).status_code == 200
+    assert (await (await env["student"]()).get(URL)).status_code == 404

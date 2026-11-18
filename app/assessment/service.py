@@ -171,7 +171,7 @@ class AssessmentService:
         elif used >= policy.max_attempts and not self._caller.preview:
             state = "exhausted"
         form = runtime[1].form if runtime else self._any_form(policy.form_id)
-        return {
+        item: dict[str, Any] = {
             "purpose": purpose,
             "title": TITLES[purpose],
             "section_count": len(form.sections) if form else 0,
@@ -194,6 +194,9 @@ class AssessmentService:
                 else None
             ),
         }
+        if self._caller.preview and form is not None:
+            item["publication_state"] = form.status
+        return item
 
     def _any_form(self, form_id: str) -> Any:
         found = self._catalog.form(form_id)
