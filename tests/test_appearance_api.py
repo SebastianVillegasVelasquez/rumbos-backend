@@ -47,6 +47,7 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "intro": "none",
     "audio": None,
     "welcome": DEFAULT_WELCOME,
+    "closing": None,
     "trainer": DEFAULT_TRAINER,
     "assessments": DEFAULT_ASSESSMENTS,
 }
@@ -61,6 +62,7 @@ CUSTOM_SETTINGS: dict[str, Any] = {
     "intro": "flyin",
     "audio": None,
     "welcome": DEFAULT_WELCOME,
+    "closing": None,
     "trainer": DEFAULT_TRAINER,
     "assessments": DEFAULT_ASSESSMENTS,
 }
