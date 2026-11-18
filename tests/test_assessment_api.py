@@ -678,3 +678,77 @@ async def test_the_forms_list_is_for_editors_only(env: dict[str, Any]) -> None:
     assert (await s.get("/trainer/assessments/forms")).status_code == 403
     unknown = env["client"]("x" * 43)
     assert (await unknown.get("/trainer/assessments/forms")).status_code == 401
+
+
+# --- already passed (the closing flow's final-exam step) ---------------------------------
+
+
+async def pass_exam(c: httpx.AsyncClient, purpose: str) -> None:
+    a = (await start(c, purpose))["attempt_id"]
+    await put(c, a, "right")
+    assert (await c.post(f"/trainer/attempts/{a}/submit")).json()["passed"] is True
+
+
+async def passed_flags(c: httpx.AsyncClient) -> dict[str, Any]:
+    items = (await c.get("/trainer/assessments")).json()["items"]
+    return {i["purpose"]: i["already_passed"] for i in items}
+
+
+async def test_nobody_has_passed_before_taking_an_exam(env: dict[str, Any]) -> None:
+    await env["setup"]({"assessments": exams()})
+    s = await env["student"]()
+    assert await passed_flags(s) == {"check_in": False, "final": False}
+
+
+async def test_a_check_in_pass_means_the_final_is_already_passed(
+    env: dict[str, Any],
+) -> None:
+    await env["setup"]({"assessments": exams()})
+    s = await env["student"]()
+    await pass_exam(s, "check_in")
+    assert await passed_flags(s) == {"check_in": True, "final": True}
+    # Only a hint: the pass rule and the attempt policy do not change.
+    items = (await s.get("/trainer/assessments")).json()["items"]
+    assert [i["state"] for i in items] == ["passed", "available"]
+    assert (await s.post("/trainer/assessments/final/attempts")).status_code == 201
+
+
+async def test_without_the_exemption_the_check_in_does_not_cover_the_final(
+    env: dict[str, Any],
+) -> None:
+    await env["setup"]({"assessments": exams(exemption={"enabled": False})})
+    s = await env["student"]()
+    await pass_exam(s, "check_in")
+    assert await passed_flags(s) == {"check_in": True, "final": False}
+
+
+async def test_a_final_pass_is_already_passed(env: dict[str, Any]) -> None:
+    await env["setup"]({"assessments": exams()})
+    s = await env["student"]()
+    await pass_exam(s, "final")
+    assert (await passed_flags(s))["final"] is True
+
+
+async def test_a_failed_attempt_is_not_a_pass(env: dict[str, Any]) -> None:
+    await env["setup"]({"assessments": exams()})
+    s = await env["student"]()
+    a = (await start(s))["attempt_id"]
+    await put(s, a, "wrong")
+    await s.post(f"/trainer/attempts/{a}/submit")
+    assert await passed_flags(s) == {"check_in": False, "final": False}
+
+
+async def test_a_pass_belongs_to_its_student(env: dict[str, Any]) -> None:
+    await env["setup"]({"assessments": exams()})
+    await pass_exam(await env["student"]("student-1"), "check_in")
+    other = await env["student"]("student-2")
+    assert await passed_flags(other) == {"check_in": False, "final": False}
+
+
+async def test_an_editor_in_preview_is_never_already_passed(
+    env: dict[str, Any],
+) -> None:
+    await env["setup"]({"assessments": exams()})
+    ed = await env["editor"]()
+    await pass_exam(ed, "check_in")
+    assert await passed_flags(ed) == {"check_in": False, "final": False}
