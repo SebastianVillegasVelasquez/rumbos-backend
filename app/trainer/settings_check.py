@@ -1,5 +1,14 @@
 """Write-time checks of the trainer and assessment settings of a map against
-the content that is actually deployed."""
+the content that is actually deployed.
+
+A **problem** blocks the save (422): the settings name content that does not
+exist at all, or break a rule between settings. A **warning** does not: the
+content exists but is not `published` yet, so an editor can configure it
+before a person has reviewed and published it.
+"""
+
+import re
+from dataclasses import dataclass, field
 
 from app.schemas.map_settings import MapSettings
 from app.schemas.welcome import AssessmentStep
@@ -8,38 +17,92 @@ from app.trainer.catalog import Catalog
 Problem = dict[str, str]
 
 
-def _problem(path: str, code: str, message: str) -> Problem:
-    return {"path": path, "code": code, "message": message}
+@dataclass(frozen=True)
+class SettingsCheck:
+    problems: list[Problem] = field(default_factory=list)
+    warnings: list[Problem] = field(default_factory=list)
 
 
-def trainer_settings_problems(settings: MapSettings, catalog: Catalog) -> list[Problem]:
+def _finding(path: str, rule: str, code: str, message: str) -> Problem:
+    # `code` is the first spelling of the rule, kept in `problems[].code`.
+    return {"path": path, "rule": rule, "code": code, "message": message}
+
+
+def snake_path(path: str) -> str:
+    """`assessments.checkIn.formId` -> `assessments.check_in.form_id`, the
+    spelling the editor's own model uses."""
+    return re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", path).lower()
+
+
+def error_entry(problem: Problem) -> dict[str, str]:
+    """The public `errors[]` entry of a problem: where, which rule and a key
+    the frontend translates. Never carries a value the user typed."""
+    rule = problem["rule"]
+    return {
+        "path": snake_path(problem["path"]),
+        "rule": rule,
+        "message_key": f"trainer_settings.{rule}",
+    }
+
+
+def trainer_settings_check(settings: MapSettings, catalog: Catalog) -> SettingsCheck:
     problems: list[Problem] = []
+    warnings: list[Problem] = []
     trainer = settings.trainer
-    if trainer.enabled and catalog.pack(trainer.language, trainer.level) is None:
-        problems.append(
-            _problem(
-                "trainer.level",
-                "pack_not_found",
-                "There is no content for this language and level",
+    if trainer.enabled:
+        pack = catalog.pack(trainer.language, trainer.level)
+        if pack is None:
+            problems.append(
+                _finding(
+                    "trainer.level",
+                    "unknown_pack",
+                    "pack_not_found",
+                    "There is no content for this language and level",
+                )
             )
-        )
+        elif not pack.served_activities(False):
+            warnings.append(
+                _finding(
+                    "trainer.level",
+                    "content_not_published",
+                    "content_not_published",
+                    "The content of this level is not published yet",
+                )
+            )
     exams = settings.assessments
     if exams.enabled:
         if exams.check_in is None and exams.final is None:
             problems.append(
-                _problem(
+                _finding(
                     "assessments",
+                    "no_exam_configured",
                     "no_exam_configured",
                     "Configure checkIn, final or both",
                 )
             )
         for name, policy in (("checkIn", exams.check_in), ("final", exams.final)):
-            if policy is not None and catalog.form(policy.form_id) is None:
+            if policy is None:
+                continue
+            path = f"assessments.{name}.formId"
+            # A form in any state is accepted: it can be configured before it
+            # is published. Only a form that does not exist at all is refused.
+            found = catalog.form(policy.form_id)
+            if found is None:
                 problems.append(
-                    _problem(
-                        f"assessments.{name}.formId",
+                    _finding(
+                        path,
+                        "unknown_form",
                         "form_not_found",
                         "There is no exam form with this id",
+                    )
+                )
+            elif found[0].forms[policy.form_id].status != "published":
+                warnings.append(
+                    _finding(
+                        path,
+                        "content_not_published",
+                        "content_not_published",
+                        "This exam form is not published yet",
                     )
                 )
     steps = settings.welcome.steps or []
@@ -48,10 +111,11 @@ def trainer_settings_problems(settings: MapSettings, catalog: Catalog) -> list[P
             exams.enabled and exams.check_in is not None
         ):
             problems.append(
-                _problem(
+                _finding(
                     f"welcome.steps[{index}]",
+                    "assessment_step_needs_check_in",
                     "assessment_step_needs_check_in",
                     "An assessment step needs assessments enabled with a checkIn",
                 )
             )
-    return problems
+    return SettingsCheck(problems, warnings)

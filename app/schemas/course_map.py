@@ -1,9 +1,15 @@
 import uuid
 from datetime import datetime
-from typing import Annotated, Self
+from typing import Annotated, Literal, Self
 from urllib.parse import urlsplit
 
-from pydantic import AfterValidator, Field, StringConstraints, model_validator
+from pydantic import (
+    AfterValidator,
+    BaseModel,
+    Field,
+    StringConstraints,
+    model_validator,
+)
 
 from app.enums import PublicationStatus
 from app.schemas.base import ApiModel
@@ -165,3 +171,19 @@ class CourseMapRead(CourseMapBase):
     # The documents the welcome flow's PDF steps show, read live (never in a
     # snapshot); empty when the flow has none.
     welcome_documents: list[WelcomeDocument] = Field(default_factory=list)
+
+
+class SettingsWarning(BaseModel):
+    """Something saved that still needs attention. Not an error: the save went
+    through. Spelled in snake_case like the 422 `errors` entries."""
+
+    path: str
+    rule: Literal["content_not_published"]
+    message_key: str
+
+
+class AppearanceSaved(CourseMapRead):
+    """The answer to saving a map's appearance: the map, plus what the editor
+    should know about the trainer settings it just saved."""
+
+    warnings: list[SettingsWarning] = Field(default_factory=list)
