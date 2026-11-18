@@ -150,3 +150,7 @@ Student free text exists only in exam answers; logs never contain it.
 | `GET /trainer/catalog` | `preview` | `true` when the caller is an editor in preview, `false` otherwise; always present |
 | catalog activity | `publication_state` | `draft`, `reviewed` or `published` |
 | exam list item | `publication_state` | editors in preview only |
+| `GET /trainer/assessments/forms` | `[{id, title, publication_state}]` | editors only (403 for students), read-only: every exam form in the deployed content, drafts included, ordered by `id`; `id` is what `assessments.check_in.form_id` takes |
+
+`openapi.json` is generated from the code (`python -m app.scripts.export_openapi`);
+CI runs it with `--check` and fails when the committed file is stale.

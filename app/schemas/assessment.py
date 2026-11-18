@@ -61,6 +61,15 @@ class AssessmentListItem(_Out):
     best: Best | None = None
 
 
+class AssessmentFormEntry(_Out):
+    """An exam form the deployed content has, whatever its state: what an editor
+    picks from when configuring `assessments.check_in.form_id`."""
+
+    id: str
+    title: str
+    publication_state: Literal["draft", "reviewed", "published"]
+
+
 class AssessmentList(_Out):
     enabled: bool
     preview: bool = False

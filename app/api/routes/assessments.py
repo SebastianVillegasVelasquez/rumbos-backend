@@ -16,13 +16,14 @@ from app.assessment.access import (
     rate_limited,
 )
 from app.assessment.service import AssessmentService
-from app.auth.dependencies import ScopedSession, student_route
+from app.auth.dependencies import ScopedSession, editor_route, student_route
 from app.core.config import Settings, get_settings
 from app.core.paths import API_PREFIX
 from app.repositories.sqlalchemy.assessment_repository import (
     SqlAlchemyAssessmentRepository,
 )
 from app.schemas.assessment import (
+    AssessmentFormEntry,
     AssessmentList,
     AttemptStarted,
     Result,
@@ -36,6 +37,14 @@ router = APIRouter(
     prefix="/trainer",
     tags=["trainer"],
     dependencies=[Depends(student_route), Depends(rate_limited)],
+)
+
+
+# Editors only, kept apart so every route declares exactly one access level.
+editor_router = APIRouter(
+    prefix="/trainer",
+    tags=["trainer"],
+    dependencies=[Depends(editor_route), Depends(rate_limited)],
 )
 
 
@@ -64,6 +73,19 @@ def get_service(
 
 
 ServiceDep = Annotated[AssessmentService, Depends(get_service)]
+
+
+@editor_router.get("/assessments/forms", response_model=list[AssessmentFormEntry])
+async def list_forms(catalog: CatalogDep) -> Any:
+    """Editors only, read-only: every exam form in the deployed content with its
+    publication state, drafts included, so a map can be configured before the
+    form is published (saving it only warns). Ordered by id."""
+    forms = [
+        {"id": form.form_id, "title": form.title, "publication_state": form.status}
+        for pack in catalog.packs.values()
+        for form in pack.forms.values()
+    ]
+    return sorted(forms, key=lambda f: f["id"])
 
 
 @router.get(
