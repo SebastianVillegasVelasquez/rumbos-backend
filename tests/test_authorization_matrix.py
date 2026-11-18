@@ -94,6 +94,7 @@ ROUTES: dict[tuple[str, str], tuple[str, bool]] = {
     ("GET", "/published/course-maps/{course_map_id}"): (STUDENT, False),
     ("GET", "/published/course-maps/{course_map_id}/resolved"): (STUDENT, True),
     ("GET", "/trainer/assessments"): (STUDENT, False),
+    ("GET", "/trainer/assessments/forms"): (EDITOR, False),
     ("GET", "/trainer/audio/{audio_id}"): (STUDENT, False),
     ("GET", "/trainer/catalog"): (STUDENT, False),
     ("GET", "/trainer/progress"): (STUDENT, False),

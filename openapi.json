@@ -2942,6 +2942,60 @@
         }
       }
     },
+    "/api/v1/trainer/assessments/forms": {
+      "get": {
+        "tags": [
+          "trainer"
+        ],
+        "summary": "List Forms",
+        "description": "Editors only, read-only: every exam form in the deployed content with its\npublication state, drafts included, so a map can be configured before the\nform is published (saving it only warns). Ordered by id.",
+        "operationId": "list_forms_api_v1_trainer_assessments_forms_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AssessmentFormEntry"
+                  },
+                  "title": "Response List Forms Api V1 Trainer Assessments Forms Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/trainer/audio/{audio_id}": {
       "get": {
         "tags": [
@@ -4200,6 +4254,35 @@
         ],
         "title": "AppearanceUpdate",
         "description": "The map's whole appearance, replaced in one go (omitted means cleared)."
+      },
+      "AssessmentFormEntry": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "publication_state": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "reviewed",
+              "published"
+            ],
+            "title": "Publication State"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "publication_state"
+        ],
+        "title": "AssessmentFormEntry",
+        "description": "An exam form the deployed content has, whatever its state: what an editor\npicks from when configuring `assessments.check_in.form_id`."
       },
       "AssessmentItem": {
         "properties": {

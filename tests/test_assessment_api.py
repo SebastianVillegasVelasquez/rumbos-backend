@@ -658,3 +658,23 @@ async def test_an_editor_previews_a_draft_form_a_student_does_not(
     seen = (await s.get("/trainer/assessments")).json()["items"][0]
     assert (seen["state"], seen["locked_reason"]) == ("locked", "not_available")
     assert "publication_state" not in seen
+
+
+# --- forms ----------------------------------------------------------------------------
+
+
+async def test_an_editor_lists_the_forms_with_their_state(env: dict[str, Any]) -> None:
+    ed = await env["editor"]()
+    r = await ed.get("/trainer/assessments/forms")
+    assert r.status_code == 200
+    forms = {f["id"]: f for f in r.json()}
+    assert set(forms["a1-form-a"]) == {"id", "title", "publication_state"}
+    assert forms["a1-form-a"]["publication_state"] in {"draft", "reviewed", "published"}
+    assert [f["id"] for f in r.json()] == sorted(forms)
+
+
+async def test_the_forms_list_is_for_editors_only(env: dict[str, Any]) -> None:
+    s = await env["student"]()
+    assert (await s.get("/trainer/assessments/forms")).status_code == 403
+    unknown = env["client"]("x" * 43)
+    assert (await unknown.get("/trainer/assessments/forms")).status_code == 401
