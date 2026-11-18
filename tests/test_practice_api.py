@@ -157,7 +157,9 @@ async def test_trainer_is_off_until_a_map_enables_it(
 ) -> None:
     await env["setup"]({})
     s = await env["student"]()
-    assert (await s.get("/trainer/catalog")).status_code == 404
+    off = await s.get("/trainer/catalog")
+    assert off.status_code == 200
+    assert off.json() == {"enabled": False, "reason": "disabled_for_map"}
     assert (
         await s.post("/trainer/sessions", json={"activity_id": "t.ex"})
     ).status_code == 404
@@ -428,7 +430,10 @@ async def test_another_course_and_tenant_see_nothing_of_mine(
     me = await env["student"]()
     sid = (await begin(me))["session_id"]
     elsewhere = await env["student"]("x", course=COURSE + 1)
-    assert (await elsewhere.get("/trainer/catalog")).status_code == 404
+    assert (await elsewhere.get("/trainer/catalog")).json() == {
+        "enabled": False,
+        "reason": "disabled_for_map",
+    }
     assert (await elsewhere.get(f"/trainer/sessions/{sid}")).status_code == 404
 
 
@@ -444,7 +449,92 @@ async def test_draft_activities_are_not_served_in_production(
     )
     s = await env["student"]()
     cat = (await s.get("/trainer/catalog")).json()
-    assert all(not l["activities"] for m in cat["modules"] for l in m["lessons"])
+    assert cat == {"enabled": False, "reason": "no_published_content"}
     assert (
         await s.post("/trainer/sessions", json={"activity_id": "t.ex"})
     ).status_code == 404
+
+
+# --- review in the real UI: editors see unpublished content, students do not -----------
+
+
+def only_published_served() -> None:
+    from app.core.config import get_settings
+
+    base = get_settings()
+    app.dependency_overrides[get_settings] = lambda: base.model_copy(
+        update={"trainer_serve_drafts": False}
+    )
+
+
+def states(cat: dict[str, Any]) -> list[str]:
+    return [
+        a["publication_state"]
+        for m in cat["modules"]
+        for lesson in m["lessons"]
+        for a in lesson["activities"]
+    ]
+
+
+async def test_an_editor_in_preview_sees_draft_and_reviewed_with_their_state(
+    env: dict[str, Any], small_pack: None
+) -> None:
+    only_published_served()  # as in production
+    await env["setup"](ON)
+    pack = app.dependency_overrides[get_catalog]()
+    pack = pack.packs[("en", "A1")]
+    reviewed = pack.activities["t.dlg"].model_copy(update={"status": "reviewed"})
+    app.dependency_overrides[get_catalog] = lambda: Catalog(
+        {
+            ("en", "A1"): dataclasses.replace(
+                pack, activities={**pack.activities, "t.dlg": reviewed}
+            )
+        }
+    )
+    ed = await env["editor"]()
+    cat = (await ed.get("/trainer/catalog")).json()
+    assert cat["enabled"] is True
+    assert sorted(states(cat)) == ["draft", "reviewed"]
+    assert (
+        await ed.post("/trainer/sessions", json={"activity_id": "t.ex"})
+    ).status_code in (200, 201)
+    # The same server, the same content: a student still gets nothing.
+    s = await env["student"]()
+    assert (await s.get("/trainer/catalog")).json() == {
+        "enabled": False,
+        "reason": "no_published_content",
+    }
+    assert (
+        await s.post("/trainer/sessions", json={"activity_id": "t.ex"})
+    ).status_code == 404
+
+
+async def test_a_student_sees_published_items_flagged_published(
+    env: dict[str, Any], small_pack: None
+) -> None:
+    only_published_served()
+    await env["setup"](ON)
+    pack = app.dependency_overrides[get_catalog]().packs[("en", "A1")]
+    live = {
+        k: a.model_copy(update={"status": "published"})
+        for k, a in pack.activities.items()
+        if k == "t.ex"
+    }
+    app.dependency_overrides[get_catalog] = lambda: Catalog(
+        {("en", "A1"): dataclasses.replace(pack, activities=live)}
+    )
+    s = await env["student"]()
+    cat = (await s.get("/trainer/catalog")).json()
+    assert states(cat) == ["published"]
+
+
+async def test_a_map_with_no_pack_for_its_level_says_no_published_content(
+    env: dict[str, Any], small_pack: None
+) -> None:
+    await env["setup"](ON)
+    app.dependency_overrides[get_catalog] = lambda: Catalog({})
+    s = await env["student"]()
+    assert (await s.get("/trainer/catalog")).json() == {
+        "enabled": False,
+        "reason": "no_published_content",
+    }

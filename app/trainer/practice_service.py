@@ -46,6 +46,7 @@ class PracticeService:
         clock: Clock,
         serve_drafts: bool,
         audio_url: Callable[[str, str], str],
+        trainer_enabled: bool = True,
     ) -> None:
         self._repo = repo
         self._pack = pack
@@ -54,6 +55,7 @@ class PracticeService:
         self._clock = clock
         self._drafts = serve_drafts
         self._audio_url = audio_url
+        self._enabled = trainer_enabled
 
     # --- helpers -----------------------------------------------------------------
 
@@ -88,6 +90,26 @@ class PracticeService:
     # --- catalog and progress ------------------------------------------------------
 
     async def catalog(self) -> dict[str, Any]:
+        """The map of lessons, or `{enabled: false, reason}` when there is
+        nothing to practise. The reason is one of two fixed words: it says
+        nothing about which packs or drafts exist."""
+        if self._pack is None:
+            return {
+                "enabled": False,
+                "reason": (
+                    "no_published_content" if self._enabled else "disabled_for_map"
+                ),
+            }
+        body = await self._catalog_body()
+        if not any(
+            lesson["activities"]
+            for module in body["modules"]
+            for lesson in module["lessons"]
+        ):
+            return {"enabled": False, "reason": "no_published_content"}
+        return {"enabled": True, **body}
+
+    async def _catalog_body(self) -> dict[str, Any]:
         pack = self._need_pack()
         sessions = await self._repo.sessions_of(self._sub)
         by_activity: dict[str, list[SessionRecord]] = {}
@@ -144,6 +166,7 @@ class PracticeService:
             "skill": a.skill,
             "title": a.title,
             "estimated_minutes": a.estimated_minutes,
+            "publication_state": a.status,
             "step_count": a.step_count,
             "role": a.role,
             "can_do": a.can_do,
@@ -152,7 +175,7 @@ class PracticeService:
         }
 
     async def progress(self) -> dict[str, Any]:
-        cat = await self.catalog()
+        cat = await self._catalog_body()
         now = self._clock()
         words = await self._repo.words(self._sub)
         lessons = []
