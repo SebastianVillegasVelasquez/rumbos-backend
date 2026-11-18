@@ -159,7 +159,11 @@ async def test_trainer_is_off_until_a_map_enables_it(
     s = await env["student"]()
     off = await s.get("/trainer/catalog")
     assert off.status_code == 200
-    assert off.json() == {"enabled": False, "reason": "disabled_for_map"}
+    assert off.json() == {
+        "enabled": False,
+        "reason": "disabled_for_map",
+        "preview": False,
+    }
     assert (
         await s.post("/trainer/sessions", json={"activity_id": "t.ex"})
     ).status_code == 404
@@ -433,6 +437,7 @@ async def test_another_course_and_tenant_see_nothing_of_mine(
     assert (await elsewhere.get("/trainer/catalog")).json() == {
         "enabled": False,
         "reason": "disabled_for_map",
+        "preview": False,
     }
     assert (await elsewhere.get(f"/trainer/sessions/{sid}")).status_code == 404
 
@@ -449,7 +454,11 @@ async def test_draft_activities_are_not_served_in_production(
     )
     s = await env["student"]()
     cat = (await s.get("/trainer/catalog")).json()
-    assert cat == {"enabled": False, "reason": "no_published_content"}
+    assert cat == {
+        "enabled": False,
+        "reason": "no_published_content",
+        "preview": False,
+    }
     assert (
         await s.post("/trainer/sessions", json={"activity_id": "t.ex"})
     ).status_code == 404
@@ -494,6 +503,7 @@ async def test_an_editor_in_preview_sees_draft_and_reviewed_with_their_state(
     ed = await env["editor"]()
     cat = (await ed.get("/trainer/catalog")).json()
     assert cat["enabled"] is True
+    assert cat["preview"] is True
     assert sorted(states(cat)) == ["draft", "reviewed"]
     assert (
         await ed.post("/trainer/sessions", json={"activity_id": "t.ex"})
@@ -503,6 +513,7 @@ async def test_an_editor_in_preview_sees_draft_and_reviewed_with_their_state(
     assert (await s.get("/trainer/catalog")).json() == {
         "enabled": False,
         "reason": "no_published_content",
+        "preview": False,
     }
     assert (
         await s.post("/trainer/sessions", json={"activity_id": "t.ex"})
@@ -525,6 +536,7 @@ async def test_a_student_sees_published_items_flagged_published(
     )
     s = await env["student"]()
     cat = (await s.get("/trainer/catalog")).json()
+    assert cat["preview"] is False
     assert states(cat) == ["published"]
 
 
@@ -537,4 +549,5 @@ async def test_a_map_with_no_pack_for_its_level_says_no_published_content(
     assert (await s.get("/trainer/catalog")).json() == {
         "enabled": False,
         "reason": "no_published_content",
+        "preview": False,
     }

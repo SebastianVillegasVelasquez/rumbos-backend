@@ -47,6 +47,7 @@ class PracticeService:
         serve_drafts: bool,
         audio_url: Callable[[str, str], str],
         trainer_enabled: bool = True,
+        preview: bool = False,
     ) -> None:
         self._repo = repo
         self._pack = pack
@@ -56,6 +57,7 @@ class PracticeService:
         self._drafts = serve_drafts
         self._audio_url = audio_url
         self._enabled = trainer_enabled
+        self._preview = preview
 
     # --- helpers -----------------------------------------------------------------
 
@@ -99,6 +101,7 @@ class PracticeService:
                 "reason": (
                     "no_published_content" if self._enabled else "disabled_for_map"
                 ),
+                "preview": self._preview,
             }
         body = await self._catalog_body()
         if not any(
@@ -106,8 +109,12 @@ class PracticeService:
             for module in body["modules"]
             for lesson in module["lessons"]
         ):
-            return {"enabled": False, "reason": "no_published_content"}
-        return {"enabled": True, **body}
+            return {
+                "enabled": False,
+                "reason": "no_published_content",
+                "preview": self._preview,
+            }
+        return {"enabled": True, "preview": self._preview, **body}
 
     async def _catalog_body(self) -> dict[str, Any]:
         pack = self._need_pack()

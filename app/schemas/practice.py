@@ -53,10 +53,16 @@ class CatalogUnavailable(_Out):
 
     enabled: Literal[False]
     reason: Literal["disabled_for_map", "no_published_content"]
+    # See `Catalog.preview`.
+    preview: bool
 
 
 class Catalog(_Out):
     enabled: Literal[True] = True
+    # True when the caller is an editor in preview (so draft and reviewed items
+    # may be listed, each marked by `publication_state`). Say it outright: the
+    # client must not infer it from the states it happens to receive.
+    preview: bool
     language: str
     level: str
     title: str

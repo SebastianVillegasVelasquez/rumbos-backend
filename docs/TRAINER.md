@@ -85,8 +85,10 @@ exists but is not published saves, with `warnings[{path, rule:
 ## Practice
 
 `GET /catalog` answers `{enabled: false, reason: "disabled_for_map" |
-"no_published_content"}` when there is nothing to practise, else the map with
-`enabled: true` and a `publication_state` per activity. Then `GET /progress`, `POST /sessions` (201/200), `GET /sessions/{id}`,
+"no_published_content", preview}` when there is nothing to practise, else the
+map with `enabled: true`, `preview` and a `publication_state` per activity.
+`preview` is `true` only for an editor in preview: read it, do not infer it from
+the states received. Then `GET /progress`, `POST /sessions` (201/200), `GET /sessions/{id}`,
 `POST /sessions/{id}/answers` (`attempt_id` makes a retry idempotent),
 `POST /sessions/{id}/finish` (first-try summary and the mistake kinds to revise),
 vocabulary (`GET /vocabulary`, `GET /vocabulary/saved?due=`,
@@ -145,5 +147,6 @@ Student free text exists only in exam answers; logs never contain it.
 | 422 of `PUT /course-maps/{id}/appearance` | `detail.errors[{path, rule, message_key}]` | which field and rule; `problems` unchanged |
 | 200 of that PUT | `warnings[{path, rule, message_key}]` | saved, but the content is not published |
 | `GET /trainer/catalog` | `enabled`, `reason` | `false` + `disabled_for_map` / `no_published_content`; `true` with the map |
+| `GET /trainer/catalog` | `preview` | `true` when the caller is an editor in preview, `false` otherwise; always present |
 | catalog activity | `publication_state` | `draft`, `reviewed` or `published` |
 | exam list item | `publication_state` | editors in preview only |
