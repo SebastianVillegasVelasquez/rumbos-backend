@@ -118,6 +118,10 @@ class MapSettings(_Strict):
     welcome: Annotated[Welcome, BeforeValidator(_null_is_default)] = Field(
         default_factory=Welcome
     )
+    # The closing flow, shown when the level is finished: the same shape as the
+    # welcome flow (see `app.welcome_flow.flow` for what it may hold). Absent or
+    # null: there is none.
+    closing: Welcome | None = None
     trainer: TrainerSettings = Field(default_factory=TrainerSettings)
     assessments: AssessmentSettings = Field(default_factory=AssessmentSettings)
 
@@ -140,6 +144,10 @@ class MapSettings(_Strict):
             del stored["trainer"]
         if self.assessments == AssessmentSettings():
             del stored["assessments"]
+        if self.closing is None:
+            # No closing flow is no key, so every map stored before it existed
+            # keeps its hash.
+            del stored["closing"]
         if self.welcome.is_default():
             del stored["welcome"]
         elif self.welcome.steps is None:
