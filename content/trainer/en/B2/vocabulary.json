@@ -527,6 +527,198 @@
       "lesson_id": "2.5",
       "word": "minutes",
       "translation": "acta"
+    },
+    {
+      "id": "en-b2-3.1.v1",
+      "lesson_id": "3.1",
+      "word": "sight",
+      "translation": "lugar de interés"
+    },
+    {
+      "id": "en-b2-3.1.v2",
+      "lesson_id": "3.1",
+      "word": "highlight",
+      "translation": "punto destacado"
+    },
+    {
+      "id": "en-b2-3.1.v3",
+      "lesson_id": "3.1",
+      "word": "protected area",
+      "translation": "área protegida"
+    },
+    {
+      "id": "en-b2-3.1.v4",
+      "lesson_id": "3.1",
+      "word": "carrying capacity",
+      "translation": "capacidad de carga"
+    },
+    {
+      "id": "en-b2-3.1.v5",
+      "lesson_id": "3.1",
+      "word": "to recommend",
+      "translation": "recomendar"
+    },
+    {
+      "id": "en-b2-3.1.v6",
+      "lesson_id": "3.1",
+      "word": "off the beaten track",
+      "translation": "fuera de los circuitos habituales"
+    },
+    {
+      "id": "en-b2-3.1.v7",
+      "lesson_id": "3.1",
+      "word": "to be advised to",
+      "translation": "se aconseja"
+    },
+    {
+      "id": "en-b2-3.1.v8",
+      "lesson_id": "3.1",
+      "word": "restricted",
+      "translation": "restringido"
+    },
+    {
+      "id": "en-b2-3.2.v1",
+      "lesson_id": "3.2",
+      "word": "legend",
+      "translation": "leyenda"
+    },
+    {
+      "id": "en-b2-3.2.v2",
+      "lesson_id": "3.2",
+      "word": "folklore",
+      "translation": "folclore"
+    },
+    {
+      "id": "en-b2-3.2.v3",
+      "lesson_id": "3.2",
+      "word": "to be said to",
+      "translation": "se dice que"
+    },
+    {
+      "id": "en-b2-3.2.v4",
+      "lesson_id": "3.2",
+      "word": "ancient",
+      "translation": "antiguo"
+    },
+    {
+      "id": "en-b2-3.2.v5",
+      "lesson_id": "3.2",
+      "word": "settlement",
+      "translation": "asentamiento"
+    },
+    {
+      "id": "en-b2-3.2.v6",
+      "lesson_id": "3.2",
+      "word": "ruins",
+      "translation": "ruinas"
+    },
+    {
+      "id": "en-b2-3.2.v7",
+      "lesson_id": "3.2",
+      "word": "to inhabit",
+      "translation": "habitar"
+    },
+    {
+      "id": "en-b2-3.2.v8",
+      "lesson_id": "3.2",
+      "word": "heritage",
+      "translation": "patrimonio"
+    },
+    {
+      "id": "en-b2-3.3.v1",
+      "lesson_id": "3.3",
+      "word": "progress",
+      "translation": "avance"
+    },
+    {
+      "id": "en-b2-3.3.v2",
+      "lesson_id": "3.3",
+      "word": "on schedule",
+      "translation": "según lo previsto"
+    },
+    {
+      "id": "en-b2-3.3.v3",
+      "lesson_id": "3.3",
+      "word": "behind schedule",
+      "translation": "con retraso"
+    },
+    {
+      "id": "en-b2-3.3.v4",
+      "lesson_id": "3.3",
+      "word": "milestone",
+      "translation": "hito"
+    },
+    {
+      "id": "en-b2-3.3.v5",
+      "lesson_id": "3.3",
+      "word": "to postpone",
+      "translation": "aplazar"
+    },
+    {
+      "id": "en-b2-3.3.v6",
+      "lesson_id": "3.3",
+      "word": "to meet a deadline",
+      "translation": "cumplir un plazo"
+    },
+    {
+      "id": "en-b2-3.3.v7",
+      "lesson_id": "3.3",
+      "word": "pending",
+      "translation": "pendiente"
+    },
+    {
+      "id": "en-b2-3.3.v8",
+      "lesson_id": "3.3",
+      "word": "outcome",
+      "translation": "resultado"
+    },
+    {
+      "id": "en-b2-3.4.v1",
+      "lesson_id": "3.4",
+      "word": "sustainable",
+      "translation": "sostenible"
+    },
+    {
+      "id": "en-b2-3.4.v2",
+      "lesson_id": "3.4",
+      "word": "footprint",
+      "translation": "huella"
+    },
+    {
+      "id": "en-b2-3.4.v3",
+      "lesson_id": "3.4",
+      "word": "responsible",
+      "translation": "responsable"
+    },
+    {
+      "id": "en-b2-3.4.v4",
+      "lesson_id": "3.4",
+      "word": "to preserve",
+      "translation": "preservar"
+    },
+    {
+      "id": "en-b2-3.4.v5",
+      "lesson_id": "3.4",
+      "word": "to reduce",
+      "translation": "reducir"
+    },
+    {
+      "id": "en-b2-3.4.v6",
+      "lesson_id": "3.4",
+      "word": "in conclusion",
+      "translation": "en conclusión"
+    },
+    {
+      "id": "en-b2-3.4.v7",
+      "lesson_id": "3.4",
+      "word": "to urge",
+      "translation": "instar"
+    },
+    {
+      "id": "en-b2-3.4.v8",
+      "lesson_id": "3.4",
+      "word": "stakeholders",
+      "translation": "partes interesadas"
     }
   ]
 }

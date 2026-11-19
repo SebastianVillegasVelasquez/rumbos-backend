@@ -1,0 +1,199 @@
+{
+  "id": "en-b2-3.2-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 3.2",
+  "estimated_minutes": 5,
+  "lesson_id": "3.2",
+  "status": "draft",
+  "role": "Guide telling the history and folklore of a place",
+  "can_do": [
+    "I can tell the history of a place using the past simple and the passive.",
+    "I can retell a local legend with narrative tenses."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Who built this old bridge?",
+        "translation": "¿Quién construyó este viejo puente?",
+        "audio": "en-b2-3.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It was built by local stonemasons in the seventeenth century.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "It is said to have been built by monks.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Nobody knows for sure; records were lost in a fire.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "What was the town like in those days?",
+        "translation": "¿Cómo era el pueblo en esa época?",
+        "audio": "en-b2-3.2.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "was"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "were"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "used"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "small"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "trade"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "market"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "It was a small trading town beside the river.",
+        "starters": [
+          "It was a ...",
+          "People used to ..."
+        ],
+        "word_bank": [
+          "It",
+          "was",
+          "a",
+          "small",
+          "trading",
+          "town",
+          "beside",
+          "the",
+          "river"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Is there a legend connected with the bridge?",
+        "translation": "¿Hay alguna leyenda relacionada con el puente?",
+        "audio": "en-b2-3.2.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes. It is said that a ghost guards it at night.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "There is one about a lost treasure under the arch.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Locals say the bridge was built in a single night.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "How did the legend start?",
+        "translation": "¿Cómo comenzó la leyenda?",
+        "audio": "en-b2-3.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "A traveller had disappeared, and people claimed to have seen his light.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "When the flood came, a boatman had saved twelve children.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Nobody remembers; it was passed down by word of mouth.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is the bridge protected today?",
+        "translation": "¿El puente está protegido hoy?",
+        "audio": "en-b2-3.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, it was declared a heritage site some years ago.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "It has been restored twice and is now closed to traffic.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "It is protected, and visitors are asked not to climb on it.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. That was fascinating.",
+        "translation": "Gracias. Fue fascinante.",
+        "audio": "en-b2-3.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "My pleasure. There are many more stories in this town.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "I am glad you enjoyed it.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Come back at dusk; the legend feels more real then.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

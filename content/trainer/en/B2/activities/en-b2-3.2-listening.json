@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-3.2-listening",
+  "skill": "listening",
+  "title": "Listen and choose 3.2",
+  "estimated_minutes": 4,
+  "lesson_id": "3.2",
+  "status": "draft",
+  "role": "Guide telling the history and folklore of a place",
+  "can_do": [
+    "I can tell the history of a place using the past simple and the passive.",
+    "I can retell a local legend with narrative tenses."
+  ],
+  "items": [
+    {
+      "id": "en-b2-3.2.l1",
+      "type": "listen_choose",
+      "prompt": "How long did the building take?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "About one year"
+        },
+        {
+          "id": "o2",
+          "text": "Almost two hundred years"
+        },
+        {
+          "id": "o3",
+          "text": "Twelve years"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "It was begun in the twelfth century and finished two hundred years later.",
+      "audio": "en-b2-3.2.l1"
+    },
+    {
+      "id": "en-b2-3.2.l2",
+      "type": "listen_choose",
+      "prompt": "How was the lake created, according to the legend?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "By a flood"
+        },
+        {
+          "id": "o2",
+          "text": "By a giant's tears"
+        },
+        {
+          "id": "o3",
+          "text": "By monks"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The giant wept for his lost love.",
+      "audio": "en-b2-3.2.l2"
+    },
+    {
+      "id": "en-b2-3.2.l3",
+      "type": "listen_choose",
+      "prompt": "What is true about the valley?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "It was empty"
+        },
+        {
+          "id": "o2",
+          "text": "People lived there for centuries before"
+        },
+        {
+          "id": "o3",
+          "text": "It was a lake"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "It had been inhabited for centuries before the first houses.",
+      "audio": "en-b2-3.2.l3"
+    }
+  ]
+}

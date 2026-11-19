@@ -1,0 +1,226 @@
+{
+  "id": "en-b2-3.2-grammar",
+  "skill": "grammar",
+  "title": "Practice 3.2",
+  "estimated_minutes": 6,
+  "lesson_id": "3.2",
+  "status": "draft",
+  "role": "Guide telling the history and folklore of a place",
+  "can_do": [
+    "I can tell the history of a place using the past simple and the passive.",
+    "I can retell a local legend with narrative tenses."
+  ],
+  "items": [
+    {
+      "id": "b2-3.2.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence uses the passive?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The monks built the chapel."
+        },
+        {
+          "id": "o2",
+          "text": "The chapel was built by monks."
+        },
+        {
+          "id": "o3",
+          "text": "The chapel stands on a hill."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The passive is was + past participle: was built.",
+      "error_tags": {
+        "o1": {
+          "tag": "voice",
+          "text": "This is active."
+        },
+        "o3": {
+          "tag": "voice",
+          "text": "This has no passive."
+        }
+      }
+    },
+    {
+      "id": "b2-3.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "The ruins {1} in the fifth century.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "were abandoned"
+            },
+            {
+              "id": "o2",
+              "text": "abandoned"
+            },
+            {
+              "id": "o3",
+              "text": "are abandoning"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "voice",
+            "text": "The ruins did not do the action; they were abandoned."
+          }
+        }
+      ],
+      "explanation": "Past passive: were abandoned."
+    },
+    {
+      "id": "b2-3.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "The spring is {1} to have healing powers.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "said",
+            "believed",
+            "thought",
+            "reputed"
+          ],
+          "error_tag": {
+            "tag": "structure",
+            "text": "Use is said to + verb."
+          }
+        }
+      ],
+      "explanation": "Is said to have + participle reports a belief."
+    },
+    {
+      "id": "b2-3.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "The"
+        },
+        {
+          "id": "t2",
+          "text": "village"
+        },
+        {
+          "id": "t3",
+          "text": "had"
+        },
+        {
+          "id": "t4",
+          "text": "been"
+        },
+        {
+          "id": "t5",
+          "text": "founded"
+        },
+        {
+          "id": "t6",
+          "text": "long"
+        },
+        {
+          "id": "t7",
+          "text": "before"
+        },
+        {
+          "id": "t8",
+          "text": "the"
+        },
+        {
+          "id": "t9",
+          "text": "road"
+        },
+        {
+          "id": "t10",
+          "text": "was"
+        },
+        {
+          "id": "t11",
+          "text": "built"
+        }
+      ],
+      "explanation": "The earlier event uses had been founded.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Past perfect passive: had been + participle."
+      }
+    },
+    {
+      "id": "b2-3.2.ex.05",
+      "type": "match",
+      "prompt": "Match the word with its meaning.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "legend"
+        },
+        {
+          "id": "l2",
+          "text": "ruins"
+        },
+        {
+          "id": "l3",
+          "text": "heritage"
+        },
+        {
+          "id": "l4",
+          "text": "settlement"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "a traditional story"
+        },
+        {
+          "id": "r2",
+          "text": "what remains of an old building"
+        },
+        {
+          "id": "r3",
+          "text": "valued things from the past"
+        },
+        {
+          "id": "r4",
+          "text": "a small community"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "These words describe history and folklore."
+    },
+    {
+      "id": "b2-3.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Say who built the bridge. Use the passive: the bridge / build / by monks.",
+      "accepted": [
+        "The bridge was built by monks",
+        "The bridge was built by the monks"
+      ],
+      "max_length": 60,
+      "explanation": "The past passive: was built by + agent."
+    }
+  ]
+}

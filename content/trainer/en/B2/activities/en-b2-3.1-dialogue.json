@@ -1,0 +1,192 @@
+{
+  "id": "en-b2-3.1-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 3.1",
+  "estimated_minutes": 5,
+  "lesson_id": "3.1",
+  "status": "draft",
+  "role": "Local guide suggesting sights and giving advice to visitors",
+  "can_do": [
+    "I can suggest sights and give advice to visitors.",
+    "I can explain rules and limits that protect a place, using the passive."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "We have one free afternoon. What would you recommend?",
+        "translation": "Tenemos una tarde libre. ¿Qué nos recomendaría?",
+        "audio": "en-b2-3.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I would strongly recommend the old fort; the view is spectacular.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "You could visit the botanical garden, which is quiet this time of day.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "If I were you, I would take the river walk.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Is it suitable for children?",
+        "translation": "¿Es apto para niños?",
+        "audio": "en-b2-3.1.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "children"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "suitable"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "safe"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "kids"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "families"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "Yes, it is safe, and children are welcome.",
+        "starters": [
+          "Yes, it is ...",
+          "It is suitable for ..."
+        ],
+        "word_bank": [
+          "Yes",
+          "it",
+          "is",
+          "safe",
+          "and",
+          "children",
+          "are",
+          "welcome"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Is there anything we should know before we go?",
+        "translation": "¿Hay algo que debamos saber antes de ir?",
+        "audio": "en-b2-3.1.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Visitors are asked to keep to the paths.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Please note that numbers are limited each day.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "You are advised to bring water and a hat.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Why are the numbers limited?",
+        "translation": "¿Por qué se limita el número de visitantes?",
+        "audio": "en-b2-3.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "To protect the site: it can only sustain a certain number of people.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "The area is fragile, so access is carefully controlled.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Too many visitors would damage the habitat.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is there a quieter alternative?",
+        "translation": "¿Hay una alternativa más tranquila?",
+        "audio": "en-b2-3.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, a lesser-known trail off the beaten track.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "The northern beach is rarely crowded.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "You might enjoy the village market, which is open until noon.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Great. Could you mark it on the map?",
+        "translation": "Genial. ¿Podría marcarlo en el mapa?",
+        "audio": "en-b2-3.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. I will circle it for you.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Gladly. It is just here, past the bridge.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Certainly. I will also write the opening hours.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

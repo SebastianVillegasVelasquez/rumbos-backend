@@ -1,0 +1,201 @@
+{
+  "id": "en-b2-3.4-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 3.4",
+  "estimated_minutes": 5,
+  "lesson_id": "3.4",
+  "status": "draft",
+  "role": "Presenter closing a talk on sustainable tourism with recommendations",
+  "can_do": [
+    "I can present sustainable tourism using key expressions.",
+    "I can end a presentation by recommending actions."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Could you start by defining sustainable tourism?",
+        "translation": "¿Podría empezar definiendo el turismo sostenible?",
+        "audio": "en-b2-3.4.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is tourism that respects people, culture and nature, today and tomorrow.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "It means visiting places in a way that does not damage them.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "In short, it balances economic gain with care for the environment.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Why is it important for this region?",
+        "translation": "¿Por qué es importante para esta región?",
+        "audio": "en-b2-3.4.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "important"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "because"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "protect"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "future"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "nature"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "community"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "It is important because it protects our nature and our future.",
+        "starters": [
+          "It is important because ...",
+          "It helps to ..."
+        ],
+        "word_bank": [
+          "It",
+          "is",
+          "important",
+          "because",
+          "it",
+          "protects",
+          "our",
+          "nature",
+          "and",
+          "our",
+          "future"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "What are the main risks of too many visitors?",
+        "translation": "¿Cuáles son los principales riesgos de tener demasiados visitantes?",
+        "audio": "en-b2-3.4.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Damage to wildlife and pressure on local resources.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Rising prices, which can push residents out.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Pollution and loss of the place's character.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "What has been done so far?",
+        "translation": "¿Qué se ha hecho hasta ahora?",
+        "audio": "en-b2-3.4.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Daily limits have been introduced on the busiest trails.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Local guides have been trained in responsible practices.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "A recycling programme has been set up in every village.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "And what do you recommend for the future?",
+        "translation": "¿Y qué recomienda para el futuro?",
+        "audio": "en-b2-3.4.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "We recommend that operators reduce their footprint.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "I urge all stakeholders to work together.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "I would suggest investing in training and monitoring.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. A strong closing message, indeed.",
+        "translation": "Gracias. Un mensaje de cierre contundente.",
+        "audio": "en-b2-3.4.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you. In conclusion, we all share the responsibility.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Thank you for having me.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "My pleasure. I hope it inspires action.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

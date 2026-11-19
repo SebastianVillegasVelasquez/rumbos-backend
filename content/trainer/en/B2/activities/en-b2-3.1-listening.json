@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-3.1-listening",
+  "skill": "listening",
+  "title": "Listen and choose 3.1",
+  "estimated_minutes": 4,
+  "lesson_id": "3.1",
+  "status": "draft",
+  "role": "Local guide suggesting sights and giving advice to visitors",
+  "can_do": [
+    "I can suggest sights and give advice to visitors.",
+    "I can explain rules and limits that protect a place, using the passive."
+  ],
+  "items": [
+    {
+      "id": "en-b2-3.1.l1",
+      "type": "listen_choose",
+      "prompt": "What are visitors expected to do?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Feed the animals"
+        },
+        {
+          "id": "o2",
+          "text": "Keep a distance"
+        },
+        {
+          "id": "o3",
+          "text": "Collect plants"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "Visitors are expected to keep a distance.",
+      "audio": "en-b2-3.1.l1"
+    },
+    {
+      "id": "en-b2-3.1.l2",
+      "type": "listen_choose",
+      "prompt": "Why is the cave closed on rainy days?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "It is too crowded"
+        },
+        {
+          "id": "o2",
+          "text": "The path becomes dangerous"
+        },
+        {
+          "id": "o3",
+          "text": "The guides are on holiday"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The entrance floods and the path becomes dangerous.",
+      "audio": "en-b2-3.1.l2"
+    },
+    {
+      "id": "en-b2-3.1.l3",
+      "type": "listen_choose",
+      "prompt": "What is the advantage of leaving early?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "It is cheaper"
+        },
+        {
+          "id": "o2",
+          "text": "The place will be nearly empty"
+        },
+        {
+          "id": "o3",
+          "text": "The guide is free"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "If you leave by five, you will have the place almost to yourselves.",
+      "audio": "en-b2-3.1.l3"
+    }
+  ]
+}

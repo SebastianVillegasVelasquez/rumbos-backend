@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-3.4-listening",
+  "skill": "listening",
+  "title": "Listen and choose 3.4",
+  "estimated_minutes": 4,
+  "lesson_id": "3.4",
+  "status": "draft",
+  "role": "Presenter closing a talk on sustainable tourism with recommendations",
+  "can_do": [
+    "I can present sustainable tourism using key expressions.",
+    "I can end a presentation by recommending actions."
+  ],
+  "items": [
+    {
+      "id": "en-b2-3.4.l1",
+      "type": "listen_choose",
+      "prompt": "What does the speaker recommend?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Raise prices"
+        },
+        {
+          "id": "o2",
+          "text": "Reduce the carbon footprint"
+        },
+        {
+          "id": "o3",
+          "text": "Close the park"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "Every operator should measure and reduce its carbon footprint.",
+      "audio": "en-b2-3.4.l1"
+    },
+    {
+      "id": "en-b2-3.4.l2",
+      "type": "listen_choose",
+      "prompt": "How does the speaker describe sustainable tourism?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "A passing trend"
+        },
+        {
+          "id": "o2",
+          "text": "The only way to keep the place alive"
+        },
+        {
+          "id": "o3",
+          "text": "Too expensive"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "It is the only way to keep this place alive.",
+      "audio": "en-b2-3.4.l2"
+    },
+    {
+      "id": "en-b2-3.4.l3",
+      "type": "listen_choose",
+      "prompt": "What can visitors do?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Choose local guides"
+        },
+        {
+          "id": "o2",
+          "text": "Take souvenirs from the site"
+        },
+        {
+          "id": "o3",
+          "text": "Ignore the rules"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker mentions choosing local guides, avoiding plastic and respecting the rules.",
+      "audio": "en-b2-3.4.l3"
+    }
+  ]
+}

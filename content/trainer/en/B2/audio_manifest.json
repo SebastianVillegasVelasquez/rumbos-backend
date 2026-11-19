@@ -1589,6 +1589,506 @@
       "file": "audio/en-b2-2.5.l3.mp3",
       "duration_s": null,
       "transcript": "— May I ask you to summarise your position? — Certainly. We oppose the plan, because it would be too costly and too slow."
+    },
+    {
+      "id": "en-b2-3.1.d1",
+      "text": "We have one free afternoon. What would you recommend?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "We have one free afternoon. What would you recommend?"
+        }
+      ],
+      "file": "audio/en-b2-3.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "We have one free afternoon. What would you recommend?"
+    },
+    {
+      "id": "en-b2-3.1.d2",
+      "text": "Is it suitable for children?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is it suitable for children?"
+        }
+      ],
+      "file": "audio/en-b2-3.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "Is it suitable for children?"
+    },
+    {
+      "id": "en-b2-3.1.d3",
+      "text": "Is there anything we should know before we go?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is there anything we should know before we go?"
+        }
+      ],
+      "file": "audio/en-b2-3.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "Is there anything we should know before we go?"
+    },
+    {
+      "id": "en-b2-3.1.d4",
+      "text": "Why are the numbers limited?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Why are the numbers limited?"
+        }
+      ],
+      "file": "audio/en-b2-3.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Why are the numbers limited?"
+    },
+    {
+      "id": "en-b2-3.1.d5",
+      "text": "Is there a quieter alternative?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is there a quieter alternative?"
+        }
+      ],
+      "file": "audio/en-b2-3.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is there a quieter alternative?"
+    },
+    {
+      "id": "en-b2-3.1.d6",
+      "text": "Great. Could you mark it on the map?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Great. Could you mark it on the map?"
+        }
+      ],
+      "file": "audio/en-b2-3.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "Great. Could you mark it on the map?"
+    },
+    {
+      "id": "en-b2-3.1.l1",
+      "text": "Can we feed the animals in the reserve? No. Feeding is strictly forbidden, and visitors are expected to keep a distance.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can we feed the animals in the reserve?"
+        },
+        {
+          "voice": "host",
+          "text": "No. Feeding is strictly forbidden, and visitors are expected to keep a distance."
+        }
+      ],
+      "file": "audio/en-b2-3.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "— Can we feed the animals in the reserve? — No. Feeding is strictly forbidden, and visitors are expected to keep a distance."
+    },
+    {
+      "id": "en-b2-3.1.l2",
+      "text": "The cave is closed on rainy days, since the entrance is easily flooded and the path becomes dangerous.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The cave is closed on rainy days, since the entrance is easily flooded and the path becomes dangerous."
+        }
+      ],
+      "file": "audio/en-b2-3.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "The cave is closed on rainy days, since the entrance is easily flooded and the path becomes dangerous."
+    },
+    {
+      "id": "en-b2-3.1.l3",
+      "text": "What would you suggest for sunrise? Go up to the lookout. If you leave by five, you will have the place almost to yourselves.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What would you suggest for sunrise?"
+        },
+        {
+          "voice": "host",
+          "text": "Go up to the lookout. If you leave by five, you will have the place almost to yourselves."
+        }
+      ],
+      "file": "audio/en-b2-3.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "— What would you suggest for sunrise? — Go up to the lookout. If you leave by five, you will have the place almost to yourselves."
+    },
+    {
+      "id": "en-b2-3.2.d1",
+      "text": "Who built this old bridge?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Who built this old bridge?"
+        }
+      ],
+      "file": "audio/en-b2-3.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "Who built this old bridge?"
+    },
+    {
+      "id": "en-b2-3.2.d2",
+      "text": "What was the town like in those days?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What was the town like in those days?"
+        }
+      ],
+      "file": "audio/en-b2-3.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "What was the town like in those days?"
+    },
+    {
+      "id": "en-b2-3.2.d3",
+      "text": "Is there a legend connected with the bridge?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is there a legend connected with the bridge?"
+        }
+      ],
+      "file": "audio/en-b2-3.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "Is there a legend connected with the bridge?"
+    },
+    {
+      "id": "en-b2-3.2.d4",
+      "text": "How did the legend start?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How did the legend start?"
+        }
+      ],
+      "file": "audio/en-b2-3.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "How did the legend start?"
+    },
+    {
+      "id": "en-b2-3.2.d5",
+      "text": "Is the bridge protected today?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is the bridge protected today?"
+        }
+      ],
+      "file": "audio/en-b2-3.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is the bridge protected today?"
+    },
+    {
+      "id": "en-b2-3.2.d6",
+      "text": "Thank you. That was fascinating.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. That was fascinating."
+        }
+      ],
+      "file": "audio/en-b2-3.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. That was fascinating."
+    },
+    {
+      "id": "en-b2-3.2.l1",
+      "text": "When was the temple built? It was begun in the twelfth century and finished almost two hundred years later.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "When was the temple built?"
+        },
+        {
+          "voice": "host",
+          "text": "It was begun in the twelfth century and finished almost two hundred years later."
+        }
+      ],
+      "file": "audio/en-b2-3.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "— When was the temple built? — It was begun in the twelfth century and finished almost two hundred years later."
+    },
+    {
+      "id": "en-b2-3.2.l2",
+      "text": "According to the legend, the lake was created when a giant wept for his lost love.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "According to the legend, the lake was created when a giant wept for his lost love."
+        }
+      ],
+      "file": "audio/en-b2-3.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "According to the legend, the lake was created when a giant wept for his lost love."
+    },
+    {
+      "id": "en-b2-3.2.l3",
+      "text": "Did people live here before the town? Yes. The valley had been inhabited for centuries before the first houses were built.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Did people live here before the town?"
+        },
+        {
+          "voice": "host",
+          "text": "Yes. The valley had been inhabited for centuries before the first houses were built."
+        }
+      ],
+      "file": "audio/en-b2-3.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "— Did people live here before the town? — Yes. The valley had been inhabited for centuries before the first houses were built."
+    },
+    {
+      "id": "en-b2-3.3.d1",
+      "text": "Can you give me a quick update on the visitor centre?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can you give me a quick update on the visitor centre?"
+        }
+      ],
+      "file": "audio/en-b2-3.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "Can you give me a quick update on the visitor centre?"
+    },
+    {
+      "id": "en-b2-3.3.d2",
+      "text": "What is still left to do?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What is still left to do?"
+        }
+      ],
+      "file": "audio/en-b2-3.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "What is still left to do?"
+    },
+    {
+      "id": "en-b2-3.3.d3",
+      "text": "When is the final deadline?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "When is the final deadline?"
+        }
+      ],
+      "file": "audio/en-b2-3.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "When is the final deadline?"
+    },
+    {
+      "id": "en-b2-3.3.d4",
+      "text": "Will you be able to meet it?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Will you be able to meet it?"
+        }
+      ],
+      "file": "audio/en-b2-3.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "Will you be able to meet it?"
+    },
+    {
+      "id": "en-b2-3.3.d5",
+      "text": "Has anything been delayed so far?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Has anything been delayed so far?"
+        }
+      ],
+      "file": "audio/en-b2-3.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "Has anything been delayed so far?"
+    },
+    {
+      "id": "en-b2-3.3.d6",
+      "text": "Thank you. Please send me a written report on Friday.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. Please send me a written report on Friday."
+        }
+      ],
+      "file": "audio/en-b2-3.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. Please send me a written report on Friday."
+    },
+    {
+      "id": "en-b2-3.3.l1",
+      "text": "How is the trail project going? Very well. Eight kilometres have been cleared, and the rest will be finished by April.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How is the trail project going?"
+        },
+        {
+          "voice": "host",
+          "text": "Very well. Eight kilometres have been cleared, and the rest will be finished by April."
+        }
+      ],
+      "file": "audio/en-b2-3.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "— How is the trail project going? — Very well. Eight kilometres have been cleared, and the rest will be finished by April."
+    },
+    {
+      "id": "en-b2-3.3.l2",
+      "text": "We have fallen behind schedule because the supplier has not delivered the timber yet.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "We have fallen behind schedule because the supplier has not delivered the timber yet."
+        }
+      ],
+      "file": "audio/en-b2-3.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "We have fallen behind schedule because the supplier has not delivered the timber yet."
+    },
+    {
+      "id": "en-b2-3.3.l3",
+      "text": "Can the opening date be changed? It has already been postponed once, so a second delay would be very unwelcome.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can the opening date be changed?"
+        },
+        {
+          "voice": "host",
+          "text": "It has already been postponed once, so a second delay would be very unwelcome."
+        }
+      ],
+      "file": "audio/en-b2-3.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "— Can the opening date be changed? — It has already been postponed once, so a second delay would be very unwelcome."
+    },
+    {
+      "id": "en-b2-3.4.d1",
+      "text": "Could you start by defining sustainable tourism?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Could you start by defining sustainable tourism?"
+        }
+      ],
+      "file": "audio/en-b2-3.4.d1.mp3",
+      "duration_s": null,
+      "transcript": "Could you start by defining sustainable tourism?"
+    },
+    {
+      "id": "en-b2-3.4.d2",
+      "text": "Why is it important for this region?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Why is it important for this region?"
+        }
+      ],
+      "file": "audio/en-b2-3.4.d2.mp3",
+      "duration_s": null,
+      "transcript": "Why is it important for this region?"
+    },
+    {
+      "id": "en-b2-3.4.d3",
+      "text": "What are the main risks of too many visitors?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What are the main risks of too many visitors?"
+        }
+      ],
+      "file": "audio/en-b2-3.4.d3.mp3",
+      "duration_s": null,
+      "transcript": "What are the main risks of too many visitors?"
+    },
+    {
+      "id": "en-b2-3.4.d4",
+      "text": "What has been done so far?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What has been done so far?"
+        }
+      ],
+      "file": "audio/en-b2-3.4.d4.mp3",
+      "duration_s": null,
+      "transcript": "What has been done so far?"
+    },
+    {
+      "id": "en-b2-3.4.d5",
+      "text": "And what do you recommend for the future?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "And what do you recommend for the future?"
+        }
+      ],
+      "file": "audio/en-b2-3.4.d5.mp3",
+      "duration_s": null,
+      "transcript": "And what do you recommend for the future?"
+    },
+    {
+      "id": "en-b2-3.4.d6",
+      "text": "Thank you. A strong closing message, indeed.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. A strong closing message, indeed."
+        }
+      ],
+      "file": "audio/en-b2-3.4.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. A strong closing message, indeed."
+    },
+    {
+      "id": "en-b2-3.4.l1",
+      "text": "What is your main recommendation? We recommend that every operator measure and reduce its carbon footprint this year.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What is your main recommendation?"
+        },
+        {
+          "voice": "host",
+          "text": "We recommend that every operator measure and reduce its carbon footprint this year."
+        }
+      ],
+      "file": "audio/en-b2-3.4.l1.mp3",
+      "duration_s": null,
+      "transcript": "— What is your main recommendation? — We recommend that every operator measure and reduce its carbon footprint this year."
+    },
+    {
+      "id": "en-b2-3.4.l2",
+      "text": "In conclusion, sustainable tourism is not a trend; it is the only way to keep this place alive.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "In conclusion, sustainable tourism is not a trend; it is the only way to keep this place alive."
+        }
+      ],
+      "file": "audio/en-b2-3.4.l2.mp3",
+      "duration_s": null,
+      "transcript": "In conclusion, sustainable tourism is not a trend; it is the only way to keep this place alive."
+    },
+    {
+      "id": "en-b2-3.4.l3",
+      "text": "What can visitors do? They can choose local guides, avoid single-use plastic and respect the rules of every site.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What can visitors do?"
+        },
+        {
+          "voice": "host",
+          "text": "They can choose local guides, avoid single-use plastic and respect the rules of every site."
+        }
+      ],
+      "file": "audio/en-b2-3.4.l3.mp3",
+      "duration_s": null,
+      "transcript": "— What can visitors do? — They can choose local guides, avoid single-use plastic and respect the rules of every site."
     }
   ]
 }

@@ -1,0 +1,209 @@
+{
+  "id": "en-b2-3.4-grammar",
+  "skill": "grammar",
+  "title": "Practice 3.4",
+  "estimated_minutes": 6,
+  "lesson_id": "3.4",
+  "status": "draft",
+  "role": "Presenter closing a talk on sustainable tourism with recommendations",
+  "can_do": [
+    "I can present sustainable tourism using key expressions.",
+    "I can end a presentation by recommending actions."
+  ],
+  "items": [
+    {
+      "id": "b2-3.4.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is a recommendation?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "We recommend that visitors stay on the paths."
+        },
+        {
+          "id": "o2",
+          "text": "Visitors stayed on the paths."
+        },
+        {
+          "id": "o3",
+          "text": "Visitors were on the paths."
+        }
+      ],
+      "correct": "o1",
+      "explanation": "We recommend that + subject + base verb gives advice.",
+      "error_tags": {
+        "o2": {
+          "tag": "function",
+          "text": "This reports a past event."
+        },
+        "o3": {
+          "tag": "function",
+          "text": "This describes a past situation."
+        }
+      }
+    },
+    {
+      "id": "b2-3.4.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "We urge operators {1} their impact.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "to reduce"
+            },
+            {
+              "id": "o2",
+              "text": "reduce"
+            },
+            {
+              "id": "o3",
+              "text": "reducing"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "pattern",
+            "text": "Urge is followed by object + to + verb."
+          }
+        }
+      ],
+      "explanation": "Urge + object + to + verb: we urge operators to reduce."
+    },
+    {
+      "id": "b2-3.4.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "{1} conclusion, the future depends on responsible choices.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "in"
+          ],
+          "error_tag": {
+            "tag": "collocation",
+            "text": "The phrase is in conclusion."
+          }
+        }
+      ],
+      "explanation": "In conclusion introduces the final point."
+    },
+    {
+      "id": "b2-3.4.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "We"
+        },
+        {
+          "id": "t2",
+          "text": "recommend"
+        },
+        {
+          "id": "t3",
+          "text": "that"
+        },
+        {
+          "id": "t4",
+          "text": "every"
+        },
+        {
+          "id": "t5",
+          "text": "guide"
+        },
+        {
+          "id": "t6",
+          "text": "be"
+        },
+        {
+          "id": "t7",
+          "text": "trained"
+        }
+      ],
+      "explanation": "After recommend that, the verb keeps its base form: be trained.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Recommend that + subject + be + participle."
+      }
+    },
+    {
+      "id": "b2-3.4.ex.05",
+      "type": "match",
+      "prompt": "Match the expression with its function.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "In conclusion,"
+        },
+        {
+          "id": "l2",
+          "text": "I urge you to ..."
+        },
+        {
+          "id": "l3",
+          "text": "We recommend that ..."
+        },
+        {
+          "id": "l4",
+          "text": "To sum up,"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "to finish"
+        },
+        {
+          "id": "r2",
+          "text": "to appeal strongly"
+        },
+        {
+          "id": "r3",
+          "text": "to suggest action"
+        },
+        {
+          "id": "r4",
+          "text": "to summarise"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each phrase has a role at the end of a presentation."
+    },
+    {
+      "id": "b2-3.4.ex.06",
+      "type": "short_answer",
+      "prompt": "Recommend an action. Use We recommend that.",
+      "accepted": [
+        "We recommend that visitors stay on the paths",
+        "We recommend that operators reduce waste",
+        "We recommend that guides be trained",
+        "We recommend that every operator reduce its footprint"
+      ],
+      "max_length": 78,
+      "explanation": "We recommend that + subject + base verb."
+    }
+  ]
+}
