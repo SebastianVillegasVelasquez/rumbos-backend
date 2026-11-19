@@ -1,0 +1,223 @@
+{
+  "entries": [
+    {
+      "id": "a2fa-1b787aef6d",
+      "text": "Tomorrow we are going to hike at eight fifteen.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Tomorrow we are going to hike at eight fifteen."
+        }
+      ],
+      "file": "audio/a2fa-1b787aef6d.mp3",
+      "duration_s": null,
+      "transcript": "Tomorrow we are going to hike at eight fifteen."
+    },
+    {
+      "id": "a2fa-1f1ed6f614",
+      "text": "The technician is fixing the heater.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The technician is fixing the heater."
+        }
+      ],
+      "file": "audio/a2fa-1f1ed6f614.mp3",
+      "duration_s": null,
+      "transcript": "The technician is fixing the heater."
+    },
+    {
+      "id": "a2fa-20a2af587c",
+      "text": "Four tickets to the town, please.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Four tickets to the town, please."
+        }
+      ],
+      "file": "audio/a2fa-20a2af587c.mp3",
+      "duration_s": null,
+      "transcript": "Four tickets to the town, please."
+    },
+    {
+      "id": "a2fa-4bf0147a1c",
+      "text": "Your room number is one, one, two.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Your room number is one, one, two."
+        }
+      ],
+      "file": "audio/a2fa-4bf0147a1c.mp3",
+      "duration_s": null,
+      "transcript": "Your room number is one-one-two."
+    },
+    {
+      "id": "a2fa-6e34cf5679",
+      "text": "The bus to the town leaves at nine, from platform two.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The bus to the town leaves at nine, from platform two."
+        }
+      ],
+      "file": "audio/a2fa-6e34cf5679.mp3",
+      "duration_s": null,
+      "transcript": "The bus to the town leaves at nine, from platform two."
+    },
+    {
+      "id": "a2fa-7edf68dfee",
+      "text": "I'd like a double room for two nights.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I'd like a double room for two nights."
+        }
+      ],
+      "file": "audio/a2fa-7edf68dfee.mp3",
+      "duration_s": null,
+      "transcript": "I’d like a double room for two nights."
+    },
+    {
+      "id": "a2fa-89955aab8f",
+      "text": "Breakfast is at seven, and the Wi-Fi password is M, A, C, I, Z, O, two, zero, two, six.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Breakfast is at seven, and the Wi-Fi password is M, A, C, I, Z, O, two, zero, two, six."
+        }
+      ],
+      "file": "audio/a2fa-89955aab8f.mp3",
+      "duration_s": null,
+      "transcript": "Breakfast is at seven and the Wi-Fi password is MACIZO2026."
+    },
+    {
+      "id": "a2fa-9e07a842b2",
+      "text": "Can someone guide a night walk? Yes, Mateo can guide it tonight.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can someone guide a night walk?"
+        },
+        {
+          "voice": "host",
+          "text": "Yes, Mateo can guide it tonight."
+        }
+      ],
+      "file": "audio/a2fa-9e07a842b2.mp3",
+      "duration_s": null,
+      "transcript": "— Can someone guide a night walk? — Yes, Mateo can guide it tonight."
+    },
+    {
+      "id": "a2fa-ae67a19dda",
+      "text": "We are going to hike the trail in the morning.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "We are going to hike the trail in the morning."
+        }
+      ],
+      "file": "audio/a2fa-ae67a19dda.mp3",
+      "duration_s": null,
+      "transcript": "We are going to hike the trail in the morning."
+    },
+    {
+      "id": "a2fa-afbacdc2af",
+      "text": "Front desk, how can I help you? Your booking is wrong! I understand, I'm so sorry.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Front desk, how can I help you?"
+        },
+        {
+          "voice": "guest",
+          "text": "Your booking is wrong!"
+        },
+        {
+          "voice": "host",
+          "text": "I understand, I'm so sorry."
+        }
+      ],
+      "file": "audio/a2fa-afbacdc2af.mp3",
+      "duration_s": null,
+      "transcript": "— Front desk, how can I help you? — Your booking is wrong! — I understand, I’m so sorry."
+    },
+    {
+      "id": "a2fa-bac78678a2",
+      "text": "I have a sore throat. I'm sorry to hear that. You should drink something warm.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I have a sore throat."
+        },
+        {
+          "voice": "host",
+          "text": "I'm sorry to hear that. You should drink something warm."
+        }
+      ],
+      "file": "audio/a2fa-bac78678a2.mp3",
+      "duration_s": null,
+      "transcript": "— I have a sore throat. — I’m sorry to hear that. You should drink something warm."
+    },
+    {
+      "id": "a2fa-be41cf2c5b",
+      "text": "Please turn off the lights when you leave.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Please turn off the lights when you leave."
+        }
+      ],
+      "file": "audio/a2fa-be41cf2c5b.mp3",
+      "duration_s": null,
+      "transcript": "Please turn off the lights when you leave."
+    },
+    {
+      "id": "a2fa-c8afa0f164",
+      "text": "A bag of coffee is twenty thousand pesos.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "A bag of coffee is twenty thousand pesos."
+        }
+      ],
+      "file": "audio/a2fa-c8afa0f164.mp3",
+      "duration_s": null,
+      "transcript": "A bag of coffee is twenty thousand pesos."
+    },
+    {
+      "id": "a2fa-ef7c4b7b9b",
+      "text": "The water is cold! I'm so sorry. The technician is fixing the heater right now.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "The water is cold!"
+        },
+        {
+          "voice": "host",
+          "text": "I'm so sorry. The technician is fixing the heater right now."
+        }
+      ],
+      "file": "audio/a2fa-ef7c4b7b9b.mp3",
+      "duration_s": null,
+      "transcript": "— The water is cold! — I’m so sorry. The technician is fixing the heater right now."
+    },
+    {
+      "id": "a2fa-f80d16a268",
+      "text": "Where is the injury? My ankle hurts. I can't move my foot.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Where is the injury?"
+        },
+        {
+          "voice": "guest",
+          "text": "My ankle hurts. I can't move my foot."
+        }
+      ],
+      "file": "audio/a2fa-f80d16a268.mp3",
+      "duration_s": null,
+      "transcript": "— Where is the injury? — My ankle hurts. I can’t move my foot."
+    }
+  ]
+}

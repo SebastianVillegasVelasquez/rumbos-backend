@@ -1,0 +1,113 @@
+{
+  "modules": [
+    {
+      "key": "M1",
+      "title": "Basic activities for tourists"
+    },
+    {
+      "key": "M2",
+      "title": "Free time and potential problems"
+    },
+    {
+      "key": "M3",
+      "title": "Dealing with people's attitudes"
+    },
+    {
+      "key": "M4",
+      "title": "Fundamental pillars of the training program"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "1.1",
+      "module": "M1",
+      "code": "1.1",
+      "title": "Plans with going to",
+      "description": "Talk about plans with going to and time markers."
+    },
+    {
+      "id": "1.2",
+      "module": "M1",
+      "code": "1.2",
+      "title": "Hotel questions and reservations",
+      "description": "Ask hotel questions and make a reservation."
+    },
+    {
+      "id": "1.3",
+      "module": "M1",
+      "code": "1.3",
+      "title": "Free time",
+      "description": "Make small talk about free time with like and enjoy plus -ing."
+    },
+    {
+      "id": "1.4",
+      "module": "M1",
+      "code": "1.4",
+      "title": "Buying things",
+      "description": "Ask and answer questions about buying things."
+    },
+    {
+      "id": "2.1",
+      "module": "M2",
+      "code": "2.1",
+      "title": "Holidays, apologies and problems",
+      "description": "Say what you did on vacation, what is happening now, apologise and solve a problem."
+    },
+    {
+      "id": "2.2",
+      "module": "M2",
+      "code": "2.2",
+      "title": "Tickets, health and clothes",
+      "description": "Buy a ticket, describe symptoms, talk about clothes and everyday life."
+    },
+    {
+      "id": "3.1",
+      "module": "M3",
+      "code": "3.1",
+      "title": "Small talk",
+      "description": "Make small talk with old and new acquaintances."
+    },
+    {
+      "id": "3.2",
+      "module": "M3",
+      "code": "3.2",
+      "title": "Skills and abilities",
+      "description": "Say what people can and cannot do."
+    },
+    {
+      "id": "3.3",
+      "module": "M3",
+      "code": "3.3",
+      "title": "On the telephone",
+      "description": "Answer the telephone and deal with a difficult person."
+    },
+    {
+      "id": "3.4",
+      "module": "M3",
+      "code": "3.4",
+      "title": "Advice and feelings",
+      "description": "Ask for and give advice with should and express feelings."
+    },
+    {
+      "id": "4.1",
+      "module": "M4",
+      "code": "4.1",
+      "title": "Sustainable tourism",
+      "description": "Talk about saving water and energy with the present simple and imperatives."
+    },
+    {
+      "id": "4.2",
+      "module": "M4",
+      "code": "4.2",
+      "title": "Tourism for peace",
+      "description": "Use basic questions and social formulas."
+    },
+    {
+      "id": "4.3",
+      "module": "M4",
+      "code": "4.3",
+      "title": "Tourism service",
+      "description": "Make functional requests at check-in, check-out and in a restaurant."
+    }
+  ]
+}
