@@ -34,6 +34,11 @@ def pack(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Pack:
     for stale in (root / "audio").glob("*"):
         stale.unlink()
     (root / tts.BUILD_FILE).unlink(missing_ok=True)
+    manifest_path = root / "audio_manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    for entry in manifest["entries"]:
+        entry["duration_s"] = None
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
     monkeypatch.setattr(tts, "duration_of", lambda _path: 1.5)
     return load_pack(root)
 
