@@ -63,6 +63,9 @@ class _ItemBase(_Frozen):
     item_id: str
     prompt: str
     competence: Competence | None = None
+    # The item's number in the client's document, for the reviewer only. Ids
+    # are stable and independent of it; it is never served.
+    source_number: int | None = None
 
 
 class ChoiceAssessmentItem(_ItemBase):
@@ -130,6 +133,10 @@ class Section(_Frozen):
     instructions: str | None = None
     # Percent of the total; the five sections add up to 100.
     weight: int = Field(ge=1, le=100)
+    # Set when the section is not delivered the way the client's document
+    # describes it (Speaking taken as typed answers). Authoring data only: it is
+    # not served, so nothing claims to measure what the section does not.
+    delivery: Literal["written_equivalent"] | None = None
     parts: list[Part] = Field(min_length=1)
 
     def items(self) -> list[AssessmentItemDef]:

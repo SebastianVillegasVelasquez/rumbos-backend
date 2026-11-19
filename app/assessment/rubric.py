@@ -15,6 +15,7 @@ sign-off. It never calls a model; the same response always scores the same.
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from fractions import Fraction
+from itertools import pairwise
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -81,6 +82,8 @@ class CheckSpec(_Frozen):
         "contains_number",
         "digits_at_least",
         "sentence_terminals_at_least",
+        "past_verbs_at_least",
+        "be_plus_ing",
     ]
     # Which fields, blanks or answers it looks at: ids, "*" for all, or "@text".
     on: list[str] = Field(default_factory=lambda: ["*"])
@@ -265,6 +268,38 @@ def _terminals_at_least(ctx: Context, spec: CheckSpec) -> Fraction:
     return min(ONE, Fraction(count, wanted))
 
 
+_BE_FORMS = frozenset(
+    {"am", "is", "are", "i'm", "he's", "she's", "it's", "we're", "they're", "you're"}
+)
+
+
+def _past_verbs(ctx: Context, spec: CheckSpec) -> Fraction:
+    """How many past-tense verbs the answer holds, against `min`: a word ending
+    in -ed, or one of the irregular forms listed in `phrases`. It cannot tell a
+    verb from a noun that ends in -ed, which is why it is a proxy."""
+    irregular = {p.casefold() for p in spec.phrases}
+    count = 0
+    for _, value in ctx.targets(spec):
+        for token in ctx.rules.tokenize(value):
+            count += token in irregular or (len(token) > 3 and token.endswith("ed"))
+    return min(ONE, Fraction(count, spec.min or 1))
+
+
+def _be_plus_ing(ctx: Context, spec: CheckSpec) -> Fraction:
+    """Each target counts when it holds a form of *be* followed by a word in
+    -ing (the present continuous). Words of four letters or fewer (ring, king)
+    do not count as the participle."""
+    items = ctx.targets(spec)
+    ok = 0
+    for _, value in items:
+        tokens = ctx.rules.tokenize(value)
+        ok += any(
+            a in _BE_FORMS and len(b) > 4 and b.endswith("ing")
+            for a, b in pairwise(tokens)
+        )
+    return _share(ok, len(items))
+
+
 CHECKS: dict[str, Callable[[Context, CheckSpec], Fraction]] = {
     "field_not_empty": _field_not_empty,
     "not_placeholder": _not_placeholder,
@@ -278,6 +313,8 @@ CHECKS: dict[str, Callable[[Context, CheckSpec], Fraction]] = {
     "contains_number": _contains_number,
     "digits_at_least": _digits_at_least,
     "sentence_terminals_at_least": _terminals_at_least,
+    "past_verbs_at_least": _past_verbs,
+    "be_plus_ing": _be_plus_ing,
 }
 
 
