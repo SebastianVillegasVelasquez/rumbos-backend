@@ -4,7 +4,7 @@
   "title": "Practice 1.5",
   "estimated_minutes": 6,
   "lesson_id": "1.5",
-  "status": "draft",
+  "status": "published",
   "role": "Account manager checking what a client said and confirming it by paraphrase",
   "can_do": [
     "I can report what someone said with the right verbs and tenses.",
@@ -215,5 +215,7 @@
       "max_length": 88,
       "explanation": "Use So you mean ... or If I understand you correctly ..."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }

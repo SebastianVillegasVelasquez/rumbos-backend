@@ -4,7 +4,7 @@
   "title": "Listen and choose 3.4",
   "estimated_minutes": 4,
   "lesson_id": "3.4",
-  "status": "draft",
+  "status": "published",
   "role": "Presenter closing a talk on sustainable tourism with recommendations",
   "can_do": [
     "I can present sustainable tourism using key expressions.",
@@ -77,5 +77,7 @@
       "explanation": "The speaker mentions choosing local guides, avoiding plastic and respecting the rules.",
       "audio": "en-b2-3.4.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }

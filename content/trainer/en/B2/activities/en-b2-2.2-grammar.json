@@ -4,7 +4,7 @@
   "title": "Practice 2.2",
   "estimated_minutes": 6,
   "lesson_id": "2.2",
-  "status": "draft",
+  "status": "published",
   "role": "Colleague giving advice to someone who is afraid of a presentation",
   "can_do": [
     "I can give advice and instructions to help someone overcome a fear.",
@@ -207,5 +207,7 @@
       "max_length": 63,
       "explanation": "If you feel nervous + an instruction."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }

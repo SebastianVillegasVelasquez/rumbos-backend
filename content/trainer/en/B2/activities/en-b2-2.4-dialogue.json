@@ -4,7 +4,7 @@
   "title": "Talk it through 2.4",
   "estimated_minutes": 5,
   "lesson_id": "2.4",
-  "status": "draft",
+  "status": "published",
   "role": "Supervisor discussing how a personal problem is affecting someone's work",
   "can_do": [
     "I can talk about how personal problems affect professional life.",
@@ -186,5 +186,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }

@@ -4,7 +4,7 @@
   "title": "Listen and choose 1.4",
   "estimated_minutes": 4,
   "lesson_id": "1.4",
-  "status": "draft",
+  "status": "published",
   "role": "Product specialist describing a travel package to a business partner",
   "can_do": [
     "I can describe typical and specific features of a service, place or package.",
@@ -77,5 +77,7 @@
       "explanation": "Fifteen percent less means it is cheaper than last season.",
       "audio": "en-b2-1.4.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }

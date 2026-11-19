@@ -4,7 +4,7 @@
   "title": "Talk it through 3.3",
   "estimated_minutes": 5,
   "lesson_id": "3.3",
-  "status": "draft",
+  "status": "published",
   "role": "Project coordinator giving an update on progress and deadlines",
   "can_do": [
     "I can give an update on a project and say what has been done.",
@@ -193,5 +193,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }

@@ -4,7 +4,7 @@
   "title": "Practice 3.1",
   "estimated_minutes": 6,
   "lesson_id": "3.1",
-  "status": "draft",
+  "status": "published",
   "role": "Local guide suggesting sights and giving advice to visitors",
   "can_do": [
     "I can suggest sights and give advice to visitors.",
@@ -207,5 +207,7 @@
       "max_length": 64,
       "explanation": "I would recommend + noun or -ing."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }

@@ -4,7 +4,7 @@
   "title": "Practice 2.5",
   "estimated_minutes": 6,
   "lesson_id": "2.5",
-  "status": "draft",
+  "status": "published",
   "role": "Delegate dealing with official and legal matters and running a meeting",
   "can_do": [
     "I can report a theft and deal with a consulate or an embassy.",
@@ -205,5 +205,7 @@
       "max_length": 68,
       "explanation": "Could you + summarise your reasons is a polite request."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }
