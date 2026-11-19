@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-1.4-listening",
+  "skill": "listening",
+  "title": "Listen and choose 1.4",
+  "estimated_minutes": 4,
+  "lesson_id": "1.4",
+  "status": "draft",
+  "role": "Product specialist describing a travel package to a business partner",
+  "can_do": [
+    "I can describe typical and specific features of a service, place or package.",
+    "I can use passive forms and modals to say what is included or allowed."
+  ],
+  "items": [
+    {
+      "id": "en-b2-1.4.l1",
+      "type": "listen_choose",
+      "prompt": "What must be paid separately?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The guide"
+        },
+        {
+          "id": "o2",
+          "text": "The entrance fee"
+        },
+        {
+          "id": "o3",
+          "text": "The transport"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The entrance fee must be paid at the gate.",
+      "audio": "en-b2-1.4.l1"
+    },
+    {
+      "id": "en-b2-1.4.l2",
+      "type": "listen_choose",
+      "prompt": "When can the towels be changed?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Only on Sundays"
+        },
+        {
+          "id": "o2",
+          "text": "On request"
+        },
+        {
+          "id": "o3",
+          "text": "Never"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: towels can be changed on request.",
+      "audio": "en-b2-1.4.l2"
+    },
+    {
+      "id": "en-b2-1.4.l3",
+      "type": "listen_choose",
+      "prompt": "What is true about the premium option?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "It is cheaper than last season"
+        },
+        {
+          "id": "o2",
+          "text": "It is more expensive than last season"
+        },
+        {
+          "id": "o3",
+          "text": "It is free"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Fifteen percent less means it is cheaper than last season.",
+      "audio": "en-b2-1.4.l3"
+    }
+  ]
+}

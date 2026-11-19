@@ -106,7 +106,7 @@ async def test_an_unknown_form_is_a_422(client: httpx.AsyncClient) -> None:
 async def test_a_trainer_without_content_is_a_422(client: httpx.AsyncClient) -> None:
     created = await make_map(client)
     r = await put_settings(
-        client, created["id"], {"trainer": {"enabled": True, "level": "B2"}}
+        client, created["id"], {"trainer": {"enabled": True, "level": "B1"}}
     )
     assert r.status_code == 422
     assert r.json()["detail"]["problems"][0]["code"] == "pack_not_found"

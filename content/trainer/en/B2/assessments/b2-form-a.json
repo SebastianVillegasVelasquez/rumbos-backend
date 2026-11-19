@@ -1,0 +1,1570 @@
+{
+  "form_id": "b2-form-a",
+  "title": "Inglés B2 · Evaluación diagnóstica · Forma A · Diagnóstico de entrada",
+  "language": "en",
+  "level": "B2",
+  "purpose": "check_in",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "sections": [
+    {
+      "key": "listening",
+      "title": "Listening",
+      "instructions": null,
+      "weight": 25,
+      "delivery": null,
+      "parts": [
+        {
+          "part_key": "a",
+          "title": "Part A — Short messages",
+          "instructions": "Listen and choose the correct answer.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "b2-fa-l-01",
+              "prompt": "When is the delegation expected to arrive?",
+              "competence": {
+                "raw": "M-I · 1.1 · información detallada + adverbios/cuantificadores precisos · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.1",
+                "topic": "información detallada + adverbios/cuantificadores precisos"
+              },
+              "source_number": 1,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "around 9:40"
+                },
+                {
+                  "id": "b",
+                  "text": "at 4:09"
+                },
+                {
+                  "id": "c",
+                  "text": "at 9:14"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b2fa-887d4269da",
+                "transcript": "Could you confirm exactly when the delegation is scheduled to arrive? — Of course. The full party is expected at approximately nine forty, and the transfer to the summit venue is fully guaranteed."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-l-02",
+              "prompt": "How much is the mediation package?",
+              "competence": {
+                "raw": "M-I · 1.1 · cifras/servicios corporativos · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.1",
+                "topic": "cifras/servicios corporativos"
+              },
+              "source_number": 2,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "£8,500"
+                },
+                {
+                  "id": "b",
+                  "text": "£85,000"
+                },
+                {
+                  "id": "c",
+                  "text": "£850,000"
+                }
+              ],
+              "key": "b",
+              "audio": {
+                "audio": "b2fa-7bbc9282d1",
+                "transcript": "The international arbitration panel has estimated the mediation package at eighty-five thousand pounds, all compliance fees included."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-l-03",
+              "prompt": "What is highly probable?",
+              "competence": {
+                "raw": "M-I · 1.2 · grados de certeza y probabilidad · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "grados de certeza y probabilidad"
+              },
+              "source_number": 3,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "the keynote will be moved to the main auditorium"
+                },
+                {
+                  "id": "b",
+                  "text": "the summit will be cancelled"
+                },
+                {
+                  "id": "c",
+                  "text": "the press room will close"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b2fa-5e47684e4c",
+                "transcript": "It is highly probable that the keynote will be moved to the main auditorium, and it is almost certain that the press room will be relocated."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-l-04",
+              "prompt": "What is likely to happen to the delegation?",
+              "competence": {
+                "raw": "M-I · 1.2 · be likely to + probabilidad · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "be likely to + probabilidad"
+              },
+              "source_number": 4,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "it is likely to be delayed"
+                },
+                {
+                  "id": "b",
+                  "text": "it will certainly cancel"
+                },
+                {
+                  "id": "c",
+                  "text": "it has already arrived"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b2fa-5e1bfb3a5e",
+                "transcript": "Owing to the storm on the route, the delegation is likely to be delayed; a revised schedule is being circulated as we speak."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-l-05",
+              "prompt": "Why is the caller phoning?",
+              "competence": {
+                "raw": "M-I · 1.3 · queja asertiva + presente perfecto continuo · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.3",
+                "topic": "queja asertiva + presente perfecto continuo"
+              },
+              "source_number": 5,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "to request an urgent review of repeated cancellations"
+                },
+                {
+                  "id": "b",
+                  "text": "to book a new tour"
+                },
+                {
+                  "id": "c",
+                  "text": "to thank the operator"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b2fa-d299b580f8",
+                "transcript": "I am calling to request an urgent review; the operator has been canceling our confirmed bookings for three days."
+              },
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "b",
+          "title": "Part B — Short conversations",
+          "instructions": "Listen to each conversation and choose the correct answer.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "b2-fa-l-06",
+              "prompt": "What does the client conclude?",
+              "competence": {
+                "raw": "M-I · 1.4 · tecnicismos + modales en pasiva · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "tecnicismos + modales en pasiva"
+              },
+              "source_number": 6,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "they cannot rebook until the account is cleared"
+                },
+                {
+                  "id": "b",
+                  "text": "the fee has already been paid"
+                },
+                {
+                  "id": "c",
+                  "text": "the account has been closed"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b2fa-d1938b039c",
+                "transcript": "— Under GDS rules, your cancellation fee might be waived, but the account is currently flagged for compliance review. — Meaning that we cannot rebook until it is cleared?"
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-l-07",
+              "prompt": "What is the investor confirming through paraphrase?",
+              "competence": {
+                "raw": "M-I · 1.5 · paráfrasis avanzada / confirmar comprensión · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.5",
+                "topic": "paráfrasis avanzada / confirmar comprensión"
+              },
+              "source_number": 7,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "that the commission would be reinvested locally"
+                },
+                {
+                  "id": "b",
+                  "text": "that the deal is cancelled"
+                },
+                {
+                  "id": "c",
+                  "text": "that the fee is fixed"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b2fa-76c7dbe9f3",
+                "transcript": "— So, if I understand you correctly, you mean that the commission would be reinvested locally? — Precisely. That is exactly what I mean."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-l-08",
+              "prompt": "What is the speaker correcting?",
+              "competence": {
+                "raw": "M-I · 1.6 · corregir malentendidos + relativo + pasiva de regulación · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.6",
+                "topic": "corregir malentendidos + relativo + pasiva de regulación"
+              },
+              "source_number": 8,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "an outdated tariff that no longer applies"
+                },
+                {
+                  "id": "b",
+                  "text": "the delegate’s name"
+                },
+                {
+                  "id": "c",
+                  "text": "the venue address"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b2fa-bf05af1958",
+                "transcript": "— Please allow me to clear up that misunderstanding: the tariff, which appears in the old catalog, is strictly regulated and no longer applies."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-l-09",
+              "prompt": "How does the colleague frame the situation?",
+              "competence": {
+                "raw": "M-II · 2.1 · sentimientos en el trabajo + pros/contras · listening",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "sentimientos en el trabajo + pros/contras"
+              },
+              "source_number": 9,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "by weighing pros and cons (on the one hand… on the other hand…)"
+                },
+                {
+                  "id": "b",
+                  "text": "by refusing to discuss it"
+                },
+                {
+                  "id": "c",
+                  "text": "by blaming the delegation"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b2fa-385e86c274",
+                "transcript": "— Honestly, I feel overwhelmed by the split in the delegation. — I understand. On the one hand, the reform is risky; on the other hand, it could secure our future."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-l-10",
+              "prompt": "What advice is given?",
+              "competence": {
+                "raw": "M-II · 2.2 · consejo y órdenes asertivas + primer condicional · listening",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.2",
+                "topic": "consejo y órdenes asertivas + primer condicional"
+              },
+              "source_number": 10,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "breathe, trust the preparation and focus on one face"
+                },
+                {
+                  "id": "b",
+                  "text": "cancel the panel"
+                },
+                {
+                  "id": "c",
+                  "text": "read faster"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b2fa-98b9bcd650",
+                "transcript": "— I have terrible stage fright before the world panel. — Calm down and take a deep breath. You need to trust your preparation; if you feel nervous, focus on one friendly face."
+              },
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "c",
+          "title": "Part C — Match the audio with the scene",
+          "instructions": "Listen to the five audios and match each one with the correct scene.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "b2-fa-l-11",
+              "prompt": "Empareja cada audio (1–5) con la escena correcta: chaired negotiation · consular theft report · certainty briefing · sustainable-tourism symposium · OTA compliance call.",
+              "competence": {
+                "raw": "M-I a M-IV · comprensión situada · listening (cuenta como 5 ítems)",
+                "modules": [
+                  "M1",
+                  "M2",
+                  "M3",
+                  "M4"
+                ],
+                "lesson": null,
+                "topic": "comprensión situada"
+              },
+              "source_number": 11,
+              "type": "match_audio",
+              "clips": [
+                {
+                  "audio": "b2fa-1d068f044e",
+                  "transcript": "I am pleased to open this session; could you provide a summary of your reasons?"
+                },
+                {
+                  "audio": "b2fa-8b42d3f325",
+                  "transcript": "I am reporting a theft; my briefcase was stolen outside the consulate."
+                },
+                {
+                  "audio": "b2fa-51317ef3c2",
+                  "transcript": "It is highly probable that the keynote will be moved to the main auditorium."
+                },
+                {
+                  "audio": "b2fa-93a228d91d",
+                  "transcript": "Visitors are instructed to stay on the marked path; the wetland is strictly protected."
+                },
+                {
+                  "audio": "b2fa-9b41ab901b",
+                  "transcript": "Under GDS rules, your cancellation fee might be waived once the account is cleared."
+                }
+              ],
+              "places": [
+                {
+                  "id": "chaired_negotiation",
+                  "text": "chaired negotiation"
+                },
+                {
+                  "id": "consular_theft_report",
+                  "text": "consular theft report"
+                },
+                {
+                  "id": "certainty_briefing",
+                  "text": "certainty briefing"
+                },
+                {
+                  "id": "sustainable_tourism_symposium",
+                  "text": "sustainable-tourism symposium"
+                },
+                {
+                  "id": "ota_compliance_call",
+                  "text": "OTA compliance call"
+                }
+              ],
+              "key": [
+                [
+                  0,
+                  "chaired_negotiation"
+                ],
+                [
+                  1,
+                  "consular_theft_report"
+                ],
+                [
+                  2,
+                  "certainty_briefing"
+                ],
+                [
+                  3,
+                  "sustainable_tourism_symposium"
+                ],
+                [
+                  4,
+                  "ota_compliance_call"
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "reading",
+      "title": "Reading",
+      "instructions": null,
+      "weight": 25,
+      "delivery": null,
+      "parts": [
+        {
+          "part_key": "a",
+          "title": "Part A — Notices",
+          "instructions": "Read each notice and choose the sentence that says the same.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "b2-fa-r-01",
+              "prompt": "Notice: “ACCOUNTS FLAGGED FOR COMPLIANCE REVIEW CANNOT BE REBOOKED UNTIL CLEARED”",
+              "competence": {
+                "raw": "M-I · 1.4 · tecnicismos + pasiva de regulación · reading",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "tecnicismos + pasiva de regulación"
+              },
+              "source_number": 12,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "A flagged account must be cleared before any rebooking."
+                },
+                {
+                  "id": "b",
+                  "text": "Flagged accounts are rebooked automatically."
+                },
+                {
+                  "id": "c",
+                  "text": "No account can ever be rebooked."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-r-02",
+              "prompt": "Notice: “THE WETLAND IS STRICTLY PROTECTED — VISITORS ARE INSTRUCTED TO STAY ON THE MARKED PATH”",
+              "competence": {
+                "raw": "M-III · 3.1 · pasiva (is protected/are instructed) · reading",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.1",
+                "topic": "pasiva (is protected/are instructed)"
+              },
+              "source_number": 13,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Visitors must remain on the marked path in a protected area."
+                },
+                {
+                  "id": "b",
+                  "text": "Visitors may walk anywhere."
+                },
+                {
+                  "id": "c",
+                  "text": "The wetland is closed forever."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-r-03",
+              "prompt": "Notice: “CANCELLATION FEES MAY BE WAIVED IN CASES OF FORCE MAJEURE”",
+              "competence": {
+                "raw": "M-I · 1.4 · modales en pasiva (may be waived) · reading",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "modales en pasiva (may be waived)"
+              },
+              "source_number": 14,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "In force-majeure cases the fee can be cancelled."
+                },
+                {
+                  "id": "b",
+                  "text": "Fees are always charged."
+                },
+                {
+                  "id": "c",
+                  "text": "Nobody may cancel."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-r-04",
+              "prompt": "Notice: “THE CHAIR MAY CLOSE THE SESSION ONCE THE ALLOTTED TIME IS UP”",
+              "competence": {
+                "raw": "M-II · 2.5 · presidir/cerrar la sesión · reading",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.5",
+                "topic": "presidir/cerrar la sesión"
+              },
+              "source_number": 15,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "The chair can end the meeting when time runs out."
+                },
+                {
+                  "id": "b",
+                  "text": "The meeting never ends."
+                },
+                {
+                  "id": "c",
+                  "text": "Only guests may close the session."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-r-05",
+              "prompt": "Notice: “DAILY VISITOR NUMBERS ARE CAPPED TO RESPECT THE CARRYING CAPACITY OF THE SITE”",
+              "competence": {
+                "raw": "M-III · 3.1 · capacidad de carga + pasiva · reading",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.1",
+                "topic": "capacidad de carga + pasiva"
+              },
+              "source_number": 16,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "A daily limit protects the site’s carrying capacity."
+                },
+                {
+                  "id": "b",
+                  "text": "The site has no limit."
+                },
+                {
+                  "id": "c",
+                  "text": "The site is for sale."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "b",
+          "title": "Part B — A briefing",
+          "instructions": "Read the text and answer the questions.",
+          "shared": {
+            "kind": "passage",
+            "title": "Summit compliance briefing",
+            "text": "If our cooperative had not filed the complaint last month, the operator would have kept canceling our confirmed bookings. The account, which is now under compliance review, has been flagged, so no rebooking is possible until it is cleared. It is highly probable that the cancellation fees will be waived once the audit is complete. The delegation is likely to arrive at approximately nine forty; a revised schedule is being circulated. On the one hand the delay is frustrating; on the other hand, the review protects every member of the network.",
+            "image_id": null,
+            "alt_text": null,
+            "design_note": null,
+            "image_text": null
+          },
+          "items": [
+            {
+              "item_id": "b2-fa-r-06",
+              "prompt": "What would have happened without the complaint?",
+              "competence": {
+                "raw": "M-IV · 4.1 · condicional de tercer tipo · reading",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "condicional de tercer tipo"
+              },
+              "source_number": 17,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "the operator would have kept canceling the bookings"
+                },
+                {
+                  "id": "b",
+                  "text": "the fees would have doubled"
+                },
+                {
+                  "id": "c",
+                  "text": "the summit would have closed"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-r-07",
+              "prompt": "Why is no rebooking possible right now?",
+              "competence": {
+                "raw": "M-I · 1.4 · pasiva de regulación (has been flagged) · reading",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "pasiva de regulación (has been flagged)"
+              },
+              "source_number": 18,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "because the account has been flagged and is under review"
+                },
+                {
+                  "id": "b",
+                  "text": "because the summit is over"
+                },
+                {
+                  "id": "c",
+                  "text": "because the delegation refused"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-r-08",
+              "prompt": "What is highly probable once the audit ends?",
+              "competence": {
+                "raw": "M-I · 1.2 · grados de certeza · reading",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "grados de certeza"
+              },
+              "source_number": 19,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "the cancellation fees will be waived"
+                },
+                {
+                  "id": "b",
+                  "text": "the account will be deleted"
+                },
+                {
+                  "id": "c",
+                  "text": "the tour will be cancelled"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-r-09",
+              "prompt": "When is the delegation likely to arrive?",
+              "competence": {
+                "raw": "M-I · 1.1 · adverbios/cuantificadores precisos · reading",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.1",
+                "topic": "adverbios/cuantificadores precisos"
+              },
+              "source_number": 20,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "at approximately nine forty"
+                },
+                {
+                  "id": "b",
+                  "text": "at exactly noon"
+                },
+                {
+                  "id": "c",
+                  "text": "next week"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-r-10",
+              "prompt": "How does the writer balance the situation?",
+              "competence": {
+                "raw": "M-II · 2.1 · pros/contras + concesión · reading",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "pros/contras + concesión"
+              },
+              "source_number": 21,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "with a pros-and-cons contrast (on the one hand… on the other hand…)"
+                },
+                {
+                  "id": "b",
+                  "text": "by ignoring the delay"
+                },
+                {
+                  "id": "c",
+                  "text": "by blaming the members"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "c",
+          "title": "Part C — A conversation with gaps",
+          "instructions": "Read the conversation and choose the right word for each gap.",
+          "shared": {
+            "kind": "passage",
+            "title": "Chairing a tense negotiation",
+            "text": "Chair: I am pleased to (a)___ this meeting. Could you provide a (b)___ of your reasons for the 40% commission? — Delegate: Forgive me for (c)___, but we strongly (d)___ with that figure. — Chair: If I understand you correctly, you (e)___ that the commission should be reinvested locally.",
+            "image_id": null,
+            "alt_text": null,
+            "design_note": null,
+            "image_text": null
+          },
+          "items": [
+            {
+              "item_id": "b2-fa-r-11",
+              "prompt": "Gap (a):",
+              "competence": {
+                "raw": "M-II · 2.5 · presidir la reunión · uso",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.5",
+                "topic": "presidir la reunión"
+              },
+              "source_number": 22,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "open"
+                },
+                {
+                  "id": "b",
+                  "text": "opening"
+                },
+                {
+                  "id": "c",
+                  "text": "opened"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(a)"
+            },
+            {
+              "item_id": "b2-fa-r-12",
+              "prompt": "Gap (b):",
+              "competence": {
+                "raw": "M-II · 2.5 · negociación · uso",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.5",
+                "topic": "negociación"
+              },
+              "source_number": 23,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "summary"
+                },
+                {
+                  "id": "b",
+                  "text": "summarize"
+                },
+                {
+                  "id": "c",
+                  "text": "summing"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(b)"
+            },
+            {
+              "item_id": "b2-fa-r-13",
+              "prompt": "Gap (c):",
+              "competence": {
+                "raw": "M-II · 2.5 · Forgive me for interrupting… · uso",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.5",
+                "topic": "Forgive me for interrupting…"
+              },
+              "source_number": 24,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "interrupting"
+                },
+                {
+                  "id": "b",
+                  "text": "interrupt"
+                },
+                {
+                  "id": "c",
+                  "text": "to interrupted"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(c)"
+            },
+            {
+              "item_id": "b2-fa-r-14",
+              "prompt": "Gap (d):",
+              "competence": {
+                "raw": "M-II · 2.5 · we strongly disagree · uso",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.5",
+                "topic": "we strongly disagree"
+              },
+              "source_number": 25,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "disagree"
+                },
+                {
+                  "id": "b",
+                  "text": "disagreeing"
+                },
+                {
+                  "id": "c",
+                  "text": "disagreement"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(d)"
+            },
+            {
+              "item_id": "b2-fa-r-15",
+              "prompt": "Gap (e):",
+              "competence": {
+                "raw": "M-I · 1.5 · you mean that… · uso",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.5",
+                "topic": "you mean that…"
+              },
+              "source_number": 26,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "mean"
+                },
+                {
+                  "id": "b",
+                  "text": "means"
+                },
+                {
+                  "id": "c",
+                  "text": "meaning"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(e)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "use_of_english",
+      "title": "Use of English",
+      "instructions": null,
+      "weight": 20,
+      "delivery": null,
+      "parts": [
+        {
+          "part_key": "tasks",
+          "title": "Use of English",
+          "instructions": "Choose the correct option.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "b2-fa-u-01",
+              "prompt": "Could you tell me ___ the full delegation is expected to arrive?",
+              "competence": {
+                "raw": "M-I · 1.1 · información detallada + question forms",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.1",
+                "topic": "información detallada + question forms"
+              },
+              "source_number": 27,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "exactly when"
+                },
+                {
+                  "id": "b",
+                  "text": "when exactly does"
+                },
+                {
+                  "id": "c",
+                  "text": "does when"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-u-02",
+              "prompt": "It is highly ___ that the keynote ___ moved to the main auditorium.",
+              "competence": {
+                "raw": "M-I · 1.2 · grados de certeza y probabilidad",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "grados de certeza y probabilidad"
+              },
+              "source_number": 28,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "probable / will be"
+                },
+                {
+                  "id": "b",
+                  "text": "probably / is being"
+                },
+                {
+                  "id": "c",
+                  "text": "probable / would"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-u-03",
+              "prompt": "The operator ___ our confirmed bookings for three days; I am calling to request a review.",
+              "competence": {
+                "raw": "M-I · 1.3 · quejas asertivas + presente perfecto continuo",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.3",
+                "topic": "quejas asertivas + presente perfecto continuo"
+              },
+              "source_number": 29,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "has been canceling"
+                },
+                {
+                  "id": "b",
+                  "text": "is canceling"
+                },
+                {
+                  "id": "c",
+                  "text": "cancels"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-u-04",
+              "prompt": "Under the new policy, the cancellation fee ___ if the delay is justified.",
+              "competence": {
+                "raw": "M-I · 1.4 · modales en pasiva (might be waived)",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "modales en pasiva (might be waived)"
+              },
+              "source_number": 30,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "might be waived"
+                },
+                {
+                  "id": "b",
+                  "text": "might waive"
+                },
+                {
+                  "id": "c",
+                  "text": "might to be waived"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-u-05",
+              "prompt": "So, ___ you correctly, you ___ that the commission would be reinvested locally?",
+              "competence": {
+                "raw": "M-I · 1.5 · paráfrasis avanzada / clarificación",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.5",
+                "topic": "paráfrasis avanzada / clarificación"
+              },
+              "source_number": 31,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "if I understand / mean"
+                },
+                {
+                  "id": "b",
+                  "text": "if I understanding / means"
+                },
+                {
+                  "id": "c",
+                  "text": "when I understand / meaning"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-u-06",
+              "prompt": "The tariff, ___ appears in the old catalog, is strictly ___.",
+              "competence": {
+                "raw": "M-I · 1.6 · oraciones de relativo + pasiva de regulación",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.6",
+                "topic": "oraciones de relativo + pasiva de regulación"
+              },
+              "source_number": 32,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "which / regulated"
+                },
+                {
+                  "id": "b",
+                  "text": "who / regulating"
+                },
+                {
+                  "id": "c",
+                  "text": "which / regulate"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-u-07",
+              "prompt": "I am reporting a theft: my briefcase ___ outside the consulate this morning.",
+              "competence": {
+                "raw": "M-II · 2.4 · registro legal/consular (past passive)",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.4",
+                "topic": "registro legal/consular (past passive)"
+              },
+              "source_number": 33,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "was stolen"
+                },
+                {
+                  "id": "b",
+                  "text": "has stolen"
+                },
+                {
+                  "id": "c",
+                  "text": "stole"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-u-08",
+              "prompt": "If our community had not chosen dialogue, we ___ a very different future.",
+              "competence": {
+                "raw": "M-IV · 4.1 · condicional de tercer tipo",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "condicional de tercer tipo"
+              },
+              "source_number": 34,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "would have faced"
+                },
+                {
+                  "id": "b",
+                  "text": "will face"
+                },
+                {
+                  "id": "c",
+                  "text": "would face"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-u-09",
+              "prompt": "Which expression signals a high degree of certainty?",
+              "competence": {
+                "raw": "M-I · 1.2 · léxico grados de certeza",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "léxico grados de certeza"
+              },
+              "source_number": 35,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "it is almost certain that…"
+                },
+                {
+                  "id": "b",
+                  "text": "it is a terrace"
+                },
+                {
+                  "id": "c",
+                  "text": "a cancellation fee"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-u-10",
+              "prompt": "In a GDS context, a fee that is “waived” is…",
+              "competence": {
+                "raw": "M-I · 1.4 · léxico compliance/tecnicismos",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "léxico compliance/tecnicismos"
+              },
+              "source_number": 36,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "no longer charged"
+                },
+                {
+                  "id": "b",
+                  "text": "doubled"
+                },
+                {
+                  "id": "c",
+                  "text": "paid twice"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-u-11",
+              "prompt": "A professional way to make an assertive complaint:",
+              "competence": {
+                "raw": "M-I · 1.3 · léxico queja asertiva",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.3",
+                "topic": "léxico queja asertiva"
+              },
+              "source_number": 37,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "I am calling to request an immediate resolution."
+                },
+                {
+                  "id": "b",
+                  "text": "You are all useless."
+                },
+                {
+                  "id": "c",
+                  "text": "Whatever, forget it."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-u-12",
+              "prompt": "Which word describes a feeling at work?",
+              "competence": {
+                "raw": "M-II · 2.1 · léxico sentimientos en el trabajo",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "léxico sentimientos en el trabajo"
+              },
+              "source_number": 38,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "overwhelmed"
+                },
+                {
+                  "id": "b",
+                  "text": "courtyard"
+                },
+                {
+                  "id": "c",
+                  "text": "briefcase"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-u-13",
+              "prompt": "A phrase to open and chair a meeting:",
+              "competence": {
+                "raw": "M-II · 2.5 · léxico presidir/negociar",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.5",
+                "topic": "léxico presidir/negociar"
+              },
+              "source_number": 39,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "I am pleased to open this meeting."
+                },
+                {
+                  "id": "b",
+                  "text": "Go away, please."
+                },
+                {
+                  "id": "c",
+                  "text": "I have no idea."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-u-14",
+              "prompt": "At the consulate, the correct formal request is:",
+              "competence": {
+                "raw": "M-II · 2.4 · léxico legal/consular",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.4",
+                "topic": "léxico legal/consular"
+              },
+              "source_number": 40,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "We require an emergency passport."
+                },
+                {
+                  "id": "b",
+                  "text": "Give me a boat ticket."
+                },
+                {
+                  "id": "c",
+                  "text": "What is your favourite colour?"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b2-fa-u-15",
+              "prompt": "“Carrying capacity” in sustainable tourism means…",
+              "competence": {
+                "raw": "M-III · 3.1 · léxico turismo sostenible",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.1",
+                "topic": "léxico turismo sostenible"
+              },
+              "source_number": 41,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "the maximum number of visitors a site can sustain"
+                },
+                {
+                  "id": "b",
+                  "text": "a type of backpack"
+                },
+                {
+                  "id": "c",
+                  "text": "a boat engine"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "writing",
+      "title": "Writing",
+      "instructions": null,
+      "weight": 15,
+      "delivery": null,
+      "parts": [
+        {
+          "part_key": "tasks",
+          "title": "Writing",
+          "instructions": "Write your answers in English.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "b2-fa-w-01",
+              "prompt": "Formal complaint / claim letter to an OTA (120-160 words). Write a formal complaint letter to an international OTA. The cooperative's account has been blocked and the operator has been cancelling confirmed bookings. Explain the problem (present perfect / present perfect continuous), demand concrete actions assertively (I am writing to request..., we require that...) and ask for the cancellation fees to be waived (might be waived).",
+              "competence": null,
+              "source_number": null,
+              "type": "written_answers",
+              "rubric": "writing.complaint_letter",
+              "fields": [],
+              "template": null,
+              "min_words": 120,
+              "max_words": 160,
+              "max_chars": 1500,
+              "questions": [
+                {
+                  "id": "q1",
+                  "text": "Write your letter here."
+                }
+              ],
+              "source_rubric": "formal and assertive register · present perfect (continuous) for the problem · clear and polite demands · correct technical terms (compliance / cancellation fees / waived) · cohesion, precision and spelling",
+              "written_equivalent_of": null
+            },
+            {
+              "item_id": "b2-fa-w-02",
+              "prompt": "Choose ONE: (a) Chair's meeting summary OR (b) 'Colombia, a Mediator's Perspective' (120-160 words). (a) the chair's summary of a negotiation: opens the session, summarises positions, records the disagreement (we strongly disagree) and closes on time; or (b) the climate defence 'Colombia, a Mediator's Perspective': integrate advanced conditionals (If we had not integrated..., ... would be...) and compound passive (has been protected, would be closed).",
+              "competence": null,
+              "source_number": null,
+              "type": "written_answers",
+              "rubric": "writing.one_of_two",
+              "fields": [],
+              "template": null,
+              "min_words": 120,
+              "max_words": 160,
+              "max_chars": 1500,
+              "questions": [
+                {
+                  "id": "q1",
+                  "text": "Write your text here. Choose option (a) or option (b)."
+                }
+              ],
+              "source_rubric": "(a) meeting-minutes structure + chairing/negotiating language + closing; or (b) persuasive defence with advanced conditionals + compound passive + narration; cohesion and precision",
+              "written_equivalent_of": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "speaking",
+      "title": "Speaking",
+      "instructions": null,
+      "weight": 15,
+      "delivery": "written_equivalent",
+      "parts": [
+        {
+          "part_key": "tasks",
+          "title": "Speaking (written answer)",
+          "instructions": "Write your answer in English, as if you were speaking.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "b2-fa-s-02",
+              "prompt": "Chair a negotiation (mini-pitch). In the London executive room: open the meeting politely (I am pleased to open...), ask for a summary of reasons (Could you provide a summary...?), record a firm disagreement (we strongly disagree) and close on time. Then briefly defend the value of the destination with an advanced conditional.",
+              "competence": null,
+              "source_number": null,
+              "type": "written_answers",
+              "rubric": "speaking.chair_negotiation_written",
+              "fields": [],
+              "template": null,
+              "min_words": null,
+              "max_words": null,
+              "max_chars": 900,
+              "questions": [
+                {
+                  "id": "q1",
+                  "text": "Write what you would say here."
+                }
+              ],
+              "source_rubric": "chairs with the right formulas · handles disagreement firmly and tactfully · uses an advanced conditional in the defence · orderly closing · intelligibility",
+              "written_equivalent_of": "Speaking Task 2 · Chair a negotiation (mini-pitch)"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source_notes": [
+    "b2-fa-l-11: source item 11 is the matching task; it counts as 5 items and is left out of the per-module map",
+    "b2-fa-w-01 and b2-fa-w-02: the source asks for 120-160 words. The platform keeps 1500 characters of each answer (the shared cap of 300 would cut a letter at about 45 words) and serves 120 and 160 as a hint; the rubric counts words in a wider window",
+    "b2-fa-w-02: the source makes Task 2 a choice of one of two prompts; the platform has no choice of task, so both prompts are shown in one item with one box, and the rubric credits the language of either one",
+    "Speaking Task 1 (b2-fa-s-01, read the Writing letter aloud) is NOT in this form: it has no written equivalent yet and needs a pedagogical decision. The Speaking section keeps its 15% weight and holds Task 2 only (0 to 5)",
+    "Speaking is delivered as a typed answer (delivery: written_equivalent); it does not measure pronunciation",
+    "The source has no figure briefs or alt text, so no item has an image and image_pending is not set anywhere; it also gives no instructions per part, so the part titles and instructions are ours (see REVIEW-B2-checkin.md)",
+    "spoken text: acronym spelled out for the voice: GDS -> G D S"
+  ]
+}

@@ -71,6 +71,10 @@ class AssessmentFormEntry(_Out):
 
     id: str
     title: str
+    # What the form is, so an editor never has to guess it from the title.
+    language: str
+    level: str
+    purpose: Literal["check_in", "final"]
     publication_state: Literal["draft", "reviewed", "published"]
 
 
@@ -130,7 +134,8 @@ class AssessmentItem(_Out):
     """One item. Which fields are present depends on `type`:
     mcq, listen_choose, gap_choice: options (listen_choose: audio;
     gap_choice: gap_label); match_audio: clips, places; form_fields: fields;
-    template_text: template, min_words, max_words; written_answers: questions."""
+    template_text: template, min_words, max_words; written_answers: questions
+    (and, if the form sets them, min_words, max_words, max_chars)."""
 
     item_id: str
     type: Literal[
@@ -152,6 +157,10 @@ class AssessmentItem(_Out):
     template: str | None = None
     min_words: int | None = None
     max_words: int | None = None
+    # form_fields and written_answers: how many characters of an answer are kept
+    # (absent: the default cap of 300). min_words/max_words are also sent for
+    # them when the form states a length, as a hint for the student.
+    max_chars: int | None = None
     questions: list[Question] | None = None
 
 

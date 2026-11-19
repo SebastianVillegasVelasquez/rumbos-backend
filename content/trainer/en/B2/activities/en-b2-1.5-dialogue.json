@@ -1,0 +1,193 @@
+{
+  "id": "en-b2-1.5-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 1.5",
+  "estimated_minutes": 5,
+  "lesson_id": "1.5",
+  "status": "draft",
+  "role": "Account manager checking what a client said and confirming it by paraphrase",
+  "can_do": [
+    "I can report what someone said with the right verbs and tenses.",
+    "I can confirm my understanding by paraphrasing."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "As I said, the supplier will cover the extra cost.",
+        "translation": "Como dije, el proveedor cubrirá el costo adicional.",
+        "audio": "en-b2-1.5.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "So, if I understand you correctly, the supplier will pay the difference?",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Let me check that I have understood: the extra cost is not ours?",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "In other words, the supplier takes responsibility for the extra charge?",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Exactly. And what did the director tell you yesterday?",
+        "translation": "Exacto. ¿Y qué le dijo ayer la directora?",
+        "audio": "en-b2-1.5.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "said"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "told"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "mentioned"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "asked"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "suggested"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "She said that the meeting would start at nine.",
+        "starters": [
+          "She said that ...",
+          "She told me that ..."
+        ],
+        "word_bank": [
+          "She",
+          "said",
+          "that",
+          "the",
+          "meeting",
+          "would",
+          "start",
+          "at",
+          "nine"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Did she say anything about the budget?",
+        "translation": "¿Dijo algo sobre el presupuesto?",
+        "audio": "en-b2-1.5.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "She mentioned that it had been approved.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "She pointed out that we could not exceed it.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "She asked me whether we had checked it again.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Sorry, I did not catch that. Could you say it again?",
+        "translation": "Perdón, no lo entendí. ¿Podría repetirlo?",
+        "audio": "en-b2-1.5.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. I said that the budget had been approved.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Certainly. What I meant was that we had enough funds.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Let me put it another way: there is no problem with the money.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "So you are saying the project can start next week?",
+        "translation": "¿Entonces dice que el proyecto puede comenzar la próxima semana?",
+        "audio": "en-b2-1.5.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, that is exactly what I meant.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, provided the contract is signed first.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Almost. It can start once the permit arrives.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you for clarifying. I will inform the team.",
+        "translation": "Gracias por aclararlo. Informaré al equipo.",
+        "audio": "en-b2-1.5.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you. Please tell them it is only provisional.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Great. Let me know if they have any questions.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Perfect. I will send a written summary as well.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

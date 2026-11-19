@@ -21,16 +21,16 @@ _NUMBER_JOINERS = ":.,"
 class LanguageRules(Protocol):
     code: str
 
-    def normalize(self, text: str) -> str:
-        """Comparable form of a text: capped, case-folded, apostrophes
-        unified, whitespace collapsed, terminal punctuation removed."""
+    def normalize(self, text: str, limit: int = MAX_FREE_TEXT_CHARS) -> str:
+        """Comparable form of a text: capped at `limit` characters, case-folded,
+        apostrophes unified, whitespace collapsed, terminal punctuation removed."""
         ...
 
-    def tokenize(self, text: str) -> list[str]:
+    def tokenize(self, text: str, limit: int = MAX_FREE_TEXT_CHARS) -> list[str]:
         """The words and numbers of a text, in order, already normalized."""
         ...
 
-    def tokenize_cased(self, text: str) -> list[str]:
+    def tokenize_cased(self, text: str, limit: int = MAX_FREE_TEXT_CHARS) -> list[str]:
         """The same words as `tokenize`, with the student's capitals kept."""
         ...
 
@@ -47,17 +47,17 @@ def _joins(ch: str, before: str, after: str) -> bool:
 class EnglishRules:
     code = "en"
 
-    def normalize(self, text: str) -> str:
-        text = unicodedata.normalize("NFKC", text[:MAX_FREE_TEXT_CHARS])
+    def normalize(self, text: str, limit: int = MAX_FREE_TEXT_CHARS) -> str:
+        text = unicodedata.normalize("NFKC", text[:limit])
         text = "".join(_APOSTROPHES.get(ch, ch) for ch in text).casefold()
         text = " ".join(text.split())
         return text.rstrip(_TERMINAL + " ")
 
-    def tokenize(self, text: str) -> list[str]:
-        return _split(self.normalize(text))
+    def tokenize(self, text: str, limit: int = MAX_FREE_TEXT_CHARS) -> list[str]:
+        return _split(self.normalize(text, limit))
 
-    def tokenize_cased(self, text: str) -> list[str]:
-        text = unicodedata.normalize("NFKC", text[:MAX_FREE_TEXT_CHARS])
+    def tokenize_cased(self, text: str, limit: int = MAX_FREE_TEXT_CHARS) -> list[str]:
+        text = unicodedata.normalize("NFKC", text[:limit])
         return _split("".join(_APOSTROPHES.get(ch, ch) for ch in text))
 
 

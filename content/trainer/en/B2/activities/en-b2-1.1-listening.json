@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-1.1-listening",
+  "skill": "listening",
+  "title": "Listen and choose 1.1",
+  "estimated_minutes": 4,
+  "lesson_id": "1.1",
+  "status": "draft",
+  "role": "Operations officer confirming travel arrangements with a colleague",
+  "can_do": [
+    "I can give and ask for precise travel details in person and by phone.",
+    "I can use adverbs and quantifiers to be exact about times and numbers."
+  ],
+  "items": [
+    {
+      "id": "en-b2-1.1.l1",
+      "type": "listen_choose",
+      "prompt": "How long will the transfer take?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "About forty minutes"
+        },
+        {
+          "id": "o2",
+          "text": "Exactly four hours"
+        },
+        {
+          "id": "o3",
+          "text": "Around fourteen minutes"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: roughly forty minutes.",
+      "audio": "en-b2-1.1.l1"
+    },
+    {
+      "id": "en-b2-1.1.l2",
+      "type": "listen_choose",
+      "prompt": "How many rooms have been reserved?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Eighty"
+        },
+        {
+          "id": "o2",
+          "text": "Eighteen"
+        },
+        {
+          "id": "o3",
+          "text": "Twelve"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: eighteen rooms.",
+      "audio": "en-b2-1.1.l2"
+    },
+    {
+      "id": "en-b2-1.1.l3",
+      "type": "listen_choose",
+      "prompt": "When should the group arrive at the latest?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "At seven thirty"
+        },
+        {
+          "id": "o2",
+          "text": "At half past eight"
+        },
+        {
+          "id": "o3",
+          "text": "At eight"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "No later than eight means eight is the final possible time.",
+      "audio": "en-b2-1.1.l3"
+    }
+  ]
+}

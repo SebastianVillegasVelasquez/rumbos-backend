@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-1.5-listening",
+  "skill": "listening",
+  "title": "Listen and choose 1.5",
+  "estimated_minutes": 4,
+  "lesson_id": "1.5",
+  "status": "draft",
+  "role": "Account manager checking what a client said and confirming it by paraphrase",
+  "can_do": [
+    "I can report what someone said with the right verbs and tenses.",
+    "I can confirm my understanding by paraphrasing."
+  ],
+  "items": [
+    {
+      "id": "en-b2-1.5.l1",
+      "type": "listen_choose",
+      "prompt": "What did the manager say?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The deadline had been moved"
+        },
+        {
+          "id": "o2",
+          "text": "The deadline was cancelled"
+        },
+        {
+          "id": "o3",
+          "text": "The deadline was today"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "She said that the deadline had been moved to the end of the month.",
+      "audio": "en-b2-1.5.l1"
+    },
+    {
+      "id": "en-b2-1.5.l2",
+      "type": "listen_choose",
+      "prompt": "What does the second speaker mean?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Postpone the launch for sure"
+        },
+        {
+          "id": "o2",
+          "text": "Cancel the launch"
+        },
+        {
+          "id": "o3",
+          "text": "Wait for the report before deciding"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker corrects the paraphrase: wait for the final report.",
+      "audio": "en-b2-1.5.l2"
+    },
+    {
+      "id": "en-b2-1.5.l3",
+      "type": "listen_choose",
+      "prompt": "When will the invoice arrive?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "On Tuesday"
+        },
+        {
+          "id": "o2",
+          "text": "On Thursday"
+        },
+        {
+          "id": "o3",
+          "text": "It already arrived"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker told him that it would arrive on Thursday.",
+      "audio": "en-b2-1.5.l3"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-3.3-listening",
+  "skill": "listening",
+  "title": "Listen and choose 3.3",
+  "estimated_minutes": 4,
+  "lesson_id": "3.3",
+  "status": "draft",
+  "role": "Project coordinator giving an update on progress and deadlines",
+  "can_do": [
+    "I can give an update on a project and say what has been done.",
+    "I can talk about deadlines and delays with the right tenses."
+  ],
+  "items": [
+    {
+      "id": "en-b2-3.3.l1",
+      "type": "listen_choose",
+      "prompt": "When will the trail be finished?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "By March"
+        },
+        {
+          "id": "o2",
+          "text": "By April"
+        },
+        {
+          "id": "o3",
+          "text": "Next year"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The rest will be finished by April.",
+      "audio": "en-b2-3.3.l1"
+    },
+    {
+      "id": "en-b2-3.3.l2",
+      "type": "listen_choose",
+      "prompt": "Why is the project behind schedule?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The staff left"
+        },
+        {
+          "id": "o2",
+          "text": "The timber has not arrived"
+        },
+        {
+          "id": "o3",
+          "text": "The budget was cut"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The supplier has not delivered the timber yet.",
+      "audio": "en-b2-3.3.l2"
+    },
+    {
+      "id": "en-b2-3.3.l3",
+      "type": "listen_choose",
+      "prompt": "What is the speaker's attitude to another delay?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "It would be welcome"
+        },
+        {
+          "id": "o2",
+          "text": "It would be unwelcome"
+        },
+        {
+          "id": "o3",
+          "text": "It does not matter"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "A second delay would be very unwelcome.",
+      "audio": "en-b2-3.3.l3"
+    }
+  ]
+}

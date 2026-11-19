@@ -1,0 +1,218 @@
+{
+  "id": "en-b2-1.2-grammar",
+  "skill": "grammar",
+  "title": "Practice 1.2",
+  "estimated_minutes": 6,
+  "lesson_id": "1.2",
+  "status": "draft",
+  "role": "Event coordinator briefing a colleague on what is certain and what is not",
+  "can_do": [
+    "I can say how sure I am about a plan or an event.",
+    "I can use likely, probable and certain in clear, precise sentences."
+  ],
+  "items": [
+    {
+      "id": "b2-1.2.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence shows the highest certainty?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The talk might start late."
+        },
+        {
+          "id": "o2",
+          "text": "The talk is almost certain to start on time."
+        },
+        {
+          "id": "o3",
+          "text": "The talk could possibly start early."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "Almost certain is stronger than might or could possibly.",
+      "error_tags": {
+        "o1": {
+          "tag": "certainty",
+          "text": "Might shows low certainty."
+        },
+        "o3": {
+          "tag": "certainty",
+          "text": "Could possibly shows low certainty."
+        }
+      }
+    },
+    {
+      "id": "b2-1.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "The guests are {1} to arrive before noon.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "likely"
+            },
+            {
+              "id": "o2",
+              "text": "likelihood"
+            },
+            {
+              "id": "o3",
+              "text": "probable"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "pattern",
+            "text": "The pattern is be likely to + verb; probable needs it is probable that."
+          }
+        }
+      ],
+      "explanation": "Be likely to + verb: the guests are likely to arrive."
+    },
+    {
+      "id": "b2-1.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "It is highly {1} that the road will reopen tonight.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "probable",
+            "likely"
+          ],
+          "error_tag": {
+            "tag": "word_form",
+            "text": "After highly we use an adjective: probable or likely."
+          }
+        }
+      ],
+      "explanation": "It is highly probable that + clause."
+    },
+    {
+      "id": "b2-1.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "It"
+        },
+        {
+          "id": "t2",
+          "text": "is"
+        },
+        {
+          "id": "t3",
+          "text": "unlikely"
+        },
+        {
+          "id": "t4",
+          "text": "that"
+        },
+        {
+          "id": "t5",
+          "text": "the"
+        },
+        {
+          "id": "t6",
+          "text": "event"
+        },
+        {
+          "id": "t7",
+          "text": "will"
+        },
+        {
+          "id": "t8",
+          "text": "be"
+        },
+        {
+          "id": "t9",
+          "text": "cancelled"
+        }
+      ],
+      "explanation": "The order is: It is unlikely that + subject + will be + verb.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with It is unlikely that."
+      }
+    },
+    {
+      "id": "b2-1.2.ex.05",
+      "type": "match",
+      "prompt": "Match the expression with the degree of certainty.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "it is almost certain"
+        },
+        {
+          "id": "l2",
+          "text": "it is quite likely"
+        },
+        {
+          "id": "l3",
+          "text": "it is possible"
+        },
+        {
+          "id": "l4",
+          "text": "it is highly unlikely"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "very high"
+        },
+        {
+          "id": "r2",
+          "text": "fairly high"
+        },
+        {
+          "id": "r3",
+          "text": "uncertain"
+        },
+        {
+          "id": "r4",
+          "text": "very low"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each expression sits at a different point between sure and unsure."
+    },
+    {
+      "id": "b2-1.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Say the keynote speaker will probably be late. Use likely.",
+      "accepted": [
+        "The keynote speaker is likely to be late",
+        "The speaker is likely to be late",
+        "She is likely to be late",
+        "He is likely to be late"
+      ],
+      "max_length": 65,
+      "explanation": "Use be likely to + be late: the speaker is likely to be late."
+    }
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "id": "en-b2-3.3-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 3.3",
+  "estimated_minutes": 5,
+  "lesson_id": "3.3",
+  "status": "draft",
+  "role": "Project coordinator giving an update on progress and deadlines",
+  "can_do": [
+    "I can give an update on a project and say what has been done.",
+    "I can talk about deadlines and delays with the right tenses."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Can you give me a quick update on the visitor centre?",
+        "translation": "¿Puede darme un resumen rápido sobre el centro de visitantes?",
+        "audio": "en-b2-3.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Certainly. The main building has been completed.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "We are on schedule. Two milestones have been reached.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Progress is good, although one task is still pending.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "What is still left to do?",
+        "translation": "¿Qué falta por hacer?",
+        "audio": "en-b2-3.3.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "still"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "left"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "remains"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "needs"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "pending"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "to"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "The signs still need to be installed.",
+        "starters": [
+          "... still needs to be ...",
+          "What remains is ..."
+        ],
+        "word_bank": [
+          "The",
+          "signs",
+          "still",
+          "need",
+          "to",
+          "be",
+          "installed"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "When is the final deadline?",
+        "translation": "¿Cuándo es el plazo final?",
+        "audio": "en-b2-3.3.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is due at the end of next month.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "We have until the fifteenth of June.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "The deadline has been fixed for early autumn.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Will you be able to meet it?",
+        "translation": "¿Podrán cumplirlo?",
+        "audio": "en-b2-3.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "We should be able to, unless the permit is delayed.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "It is likely, provided the weather holds.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "I am confident, but I will confirm next week.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Has anything been delayed so far?",
+        "translation": "¿Se ha retrasado algo hasta ahora?",
+        "audio": "en-b2-3.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "The delivery of the materials has been postponed twice.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Only the opening ceremony, which has been moved to May.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Nothing serious, just a few small adjustments.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. Please send me a written report on Friday.",
+        "translation": "Gracias. Por favor, envíeme un informe escrito el viernes.",
+        "audio": "en-b2-3.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. You will have it by Friday morning.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Certainly. I will include the budget as well.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "No problem. I will send it before noon.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

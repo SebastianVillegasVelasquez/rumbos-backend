@@ -1,0 +1,185 @@
+{
+  "id": "en-b2-1.2-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 1.2",
+  "estimated_minutes": 5,
+  "lesson_id": "1.2",
+  "status": "draft",
+  "role": "Event coordinator briefing a colleague on what is certain and what is not",
+  "can_do": [
+    "I can say how sure I am about a plan or an event.",
+    "I can use likely, probable and certain in clear, precise sentences."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Will the outdoor concert go ahead on Friday?",
+        "translation": "¿Se hará el concierto al aire libre el viernes?",
+        "audio": "en-b2-1.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is almost certain, as long as the weather holds.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "It is quite likely, but we have a backup plan.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "It is hard to say yet; the forecast is not clear.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Do you think the guest speaker will arrive on time?",
+        "translation": "¿Crees que el orador invitado llegará a tiempo?",
+        "audio": "en-b2-1.2.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "likely"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "probably"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "unlikely"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "certain"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "She is likely to arrive on time.",
+        "starters": [
+          "She is likely to ...",
+          "It is highly probable that ..."
+        ],
+        "word_bank": [
+          "She",
+          "is",
+          "likely",
+          "to",
+          "arrive",
+          "on",
+          "time"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "What happens if the road to the venue is closed?",
+        "translation": "¿Qué pasa si cierran la carretera al lugar del evento?",
+        "audio": "en-b2-1.2.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "In that case, we will move everyone by boat.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "It is unlikely, but we have a contingency plan.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "If that happens, the session will probably be postponed.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Is the new schedule final?",
+        "translation": "¿El nuevo horario es definitivo?",
+        "audio": "en-b2-1.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Almost, but one session might still change.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, it is definitely final.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Not yet. It is likely to be confirmed tomorrow.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "How sure are you that the sponsors will attend?",
+        "translation": "¿Qué tan seguro estás de que los patrocinadores asistirán?",
+        "audio": "en-b2-1.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I am fairly sure. Three of them have already confirmed.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "It is highly probable, though not guaranteed.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "I would not say it is certain, but it looks promising.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thanks. Keep me updated if anything changes.",
+        "translation": "Gracias. Mantenme informado si algo cambia.",
+        "audio": "en-b2-1.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. I will let you know as soon as I hear anything.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Certainly. You will be the first to know.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Will do. I will send you a message this afternoon.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

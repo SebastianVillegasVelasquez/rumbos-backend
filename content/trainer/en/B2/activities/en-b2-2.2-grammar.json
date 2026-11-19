@@ -1,0 +1,211 @@
+{
+  "id": "en-b2-2.2-grammar",
+  "skill": "grammar",
+  "title": "Practice 2.2",
+  "estimated_minutes": 6,
+  "lesson_id": "2.2",
+  "status": "draft",
+  "role": "Colleague giving advice to someone who is afraid of a presentation",
+  "can_do": [
+    "I can give advice and instructions to help someone overcome a fear.",
+    "I can calm someone down with firm, kind language and first conditional sentences."
+  ],
+  "items": [
+    {
+      "id": "b2-2.2.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is a first conditional?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "If you breathe slowly, you will feel calmer."
+        },
+        {
+          "id": "o2",
+          "text": "If you had breathed slowly, you would have felt calmer."
+        },
+        {
+          "id": "o3",
+          "text": "If you breathed slowly, you would feel calmer."
+        }
+      ],
+      "correct": "o1",
+      "explanation": "First conditional: if + present simple, will + verb.",
+      "error_tags": {
+        "o2": {
+          "tag": "conditional",
+          "text": "This is a third conditional about the past."
+        },
+        "o3": {
+          "tag": "conditional",
+          "text": "This is a second conditional about an unreal situation."
+        }
+      }
+    },
+    {
+      "id": "b2-2.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "If you feel nervous, {1} one friendly face.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "look at"
+            },
+            {
+              "id": "o2",
+              "text": "looking at"
+            },
+            {
+              "id": "o3",
+              "text": "you look at"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "imperative",
+            "text": "Advice often uses the base verb: look at."
+          }
+        }
+      ],
+      "explanation": "An instruction uses the base form of the verb."
+    },
+    {
+      "id": "b2-2.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "If you rehearse, you {1} feel more confident.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "will",
+            "'ll",
+            "will definitely"
+          ],
+          "error_tag": {
+            "tag": "conditional",
+            "text": "The result clause of a first conditional uses will."
+          }
+        }
+      ],
+      "explanation": "If + present simple, will + verb."
+    },
+    {
+      "id": "b2-2.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Take"
+        },
+        {
+          "id": "t2",
+          "text": "a"
+        },
+        {
+          "id": "t3",
+          "text": "deep"
+        },
+        {
+          "id": "t4",
+          "text": "breath"
+        },
+        {
+          "id": "t5",
+          "text": "and"
+        },
+        {
+          "id": "t6",
+          "text": "speak"
+        },
+        {
+          "id": "t7",
+          "text": "slowly"
+        }
+      ],
+      "explanation": "A direct instruction starts with the verb: Take a deep breath.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Instructions start with the base verb."
+      }
+    },
+    {
+      "id": "b2-2.2.ex.05",
+      "type": "match",
+      "prompt": "Match the phrase with its purpose.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "Calm down."
+        },
+        {
+          "id": "l2",
+          "text": "You will be fine."
+        },
+        {
+          "id": "l3",
+          "text": "Focus on ..."
+        },
+        {
+          "id": "l4",
+          "text": "If you feel nervous, ..."
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "to ask someone to relax"
+        },
+        {
+          "id": "r2",
+          "text": "to reassure"
+        },
+        {
+          "id": "r3",
+          "text": "to direct attention"
+        },
+        {
+          "id": "r4",
+          "text": "to give conditional advice"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each phrase has a different calming function."
+    },
+    {
+      "id": "b2-2.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Give advice to someone who is nervous. Use If you feel nervous.",
+      "accepted": [
+        "If you feel nervous take a deep breath",
+        "If you feel nervous breathe slowly",
+        "If you feel nervous focus on one face",
+        "If you feel nervous pause and breathe"
+      ],
+      "max_length": 63,
+      "explanation": "If you feel nervous + an instruction."
+    }
+  ]
+}

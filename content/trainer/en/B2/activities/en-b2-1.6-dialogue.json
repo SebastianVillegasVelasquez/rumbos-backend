@@ -1,0 +1,188 @@
+{
+  "id": "en-b2-1.6-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 1.6",
+  "estimated_minutes": 5,
+  "lesson_id": "1.6",
+  "status": "draft",
+  "role": "Team leader correcting a misunderstanding about prices and rules",
+  "can_do": [
+    "I can correct a misunderstanding politely and precisely.",
+    "I can use relative clauses and passives to explain rules and regulations."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "I thought the discount applied to all the tours this month.",
+        "translation": "Pensé que el descuento se aplicaba a todos los tours de este mes.",
+        "audio": "en-b2-1.6.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Let me clear that up: it applies only to the coastal tours.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "I am afraid there is a small misunderstanding about that.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Actually, the discount was valid only until last week.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Oh, I see. Which price list should I use, then?",
+        "translation": "Ah, entiendo. ¿Entonces qué lista de precios debo usar?",
+        "audio": "en-b2-1.6.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "new"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "current"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "latest"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "updated"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "Please use the new list, which was published in May.",
+        "starters": [
+          "Please use the ...",
+          "The current list, which ..."
+        ],
+        "word_bank": [
+          "Please",
+          "use",
+          "the",
+          "new",
+          "list",
+          "which",
+          "was",
+          "published",
+          "in",
+          "May"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "But the old brochure shows a lower price.",
+        "translation": "Pero el folleto antiguo muestra un precio más bajo.",
+        "audio": "en-b2-1.6.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "That brochure, which is outdated, should be ignored.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "On the contrary, the old price no longer applies.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "That is exactly the misunderstanding. The brochure has been withdrawn.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Can we negotiate the tariff?",
+        "translation": "¿Podemos negociar la tarifa?",
+        "audio": "en-b2-1.6.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I am afraid not. The tariff, which is set by law, is strictly regulated.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Not this one, but we can discuss the extras.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "It is regulated, rather than set by us.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "I understand. Who decides these rules?",
+        "translation": "Entiendo. ¿Quién decide estas reglas?",
+        "audio": "en-b2-1.6.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "They are set by the tourism authority, which reviews them yearly.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "The regulations are updated by the ministry every January.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "The rules are approved by a committee, which includes the operators.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thanks for explaining. That is much clearer now.",
+        "translation": "Gracias por explicarlo. Ahora está mucho más claro.",
+        "audio": "en-b2-1.6.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You are welcome. I am glad we cleared that up.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Happy to help. Do not hesitate to ask again.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "No problem. I will send the correct list by email.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

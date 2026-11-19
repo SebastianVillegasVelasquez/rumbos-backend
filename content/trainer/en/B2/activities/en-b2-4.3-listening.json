@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-4.3-listening",
+  "skill": "listening",
+  "title": "Listen and choose 4.3",
+  "estimated_minutes": 4,
+  "lesson_id": "4.3",
+  "status": "draft",
+  "role": "Tour professional telling a story with advanced narrative tenses",
+  "can_do": [
+    "I can tell a story with the past simple, the past continuous and the past perfect.",
+    "I can organise a narrative so that listeners follow what happened first."
+  ],
+  "items": [
+    {
+      "id": "en-b2-4.3.l1",
+      "type": "listen_choose",
+      "prompt": "What had the musicians already done?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Started to play"
+        },
+        {
+          "id": "o2",
+          "text": "Gone home"
+        },
+        {
+          "id": "o3",
+          "text": "Lost their instruments"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The musicians had already started to play.",
+      "audio": "en-b2-4.3.l1"
+    },
+    {
+      "id": "en-b2-4.3.l2",
+      "type": "listen_choose",
+      "prompt": "How long had the fishermen been waiting?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "A few minutes"
+        },
+        {
+          "id": "o2",
+          "text": "Almost a day"
+        },
+        {
+          "id": "o3",
+          "text": "A whole week"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "They had been waiting on the rock for almost a day.",
+      "audio": "en-b2-4.3.l2"
+    },
+    {
+      "id": "en-b2-4.3.l3",
+      "type": "listen_choose",
+      "prompt": "When did they reach the summit?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "At dawn"
+        },
+        {
+          "id": "o2",
+          "text": "Before dusk"
+        },
+        {
+          "id": "o3",
+          "text": "At midnight"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "They reached the summit just before dusk.",
+      "audio": "en-b2-4.3.l3"
+    }
+  ]
+}

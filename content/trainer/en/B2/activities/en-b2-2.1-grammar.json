@@ -1,0 +1,221 @@
+{
+  "id": "en-b2-2.1-grammar",
+  "skill": "grammar",
+  "title": "Practice 2.1",
+  "estimated_minutes": 6,
+  "lesson_id": "2.1",
+  "status": "draft",
+  "role": "Team member talking with a colleague about a change at work and how it feels",
+  "can_do": [
+    "I can talk about a change at work and how I feel about it.",
+    "I can weigh advantages and disadvantages with on the one hand and on the other hand."
+  ],
+  "items": [
+    {
+      "id": "b2-2.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence compares two sides of a situation?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The change is happening."
+        },
+        {
+          "id": "o2",
+          "text": "On the one hand it saves money; on the other hand, it costs jobs."
+        },
+        {
+          "id": "o3",
+          "text": "I changed my desk yesterday."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "On the one hand ... on the other hand ... presents two sides.",
+      "error_tags": {
+        "o1": {
+          "tag": "contrast",
+          "text": "This states a fact but gives no contrast."
+        },
+        "o3": {
+          "tag": "contrast",
+          "text": "This is a simple past sentence."
+        }
+      }
+    },
+    {
+      "id": "b2-2.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct word.",
+      "template": "{1} the plan is risky, it could improve our results.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "Although"
+            },
+            {
+              "id": "o2",
+              "text": "Because"
+            },
+            {
+              "id": "o3",
+              "text": "So"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "concession",
+            "text": "Although introduces a contrast; because gives a reason."
+          }
+        }
+      ],
+      "explanation": "Although links two ideas that seem to oppose each other."
+    },
+    {
+      "id": "b2-2.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "I feel {1} about the new role: I am worried but hopeful.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "uncertain",
+            "mixed",
+            "uneasy",
+            "anxious",
+            "nervous"
+          ],
+          "error_tag": {
+            "tag": "vocabulary",
+            "text": "Choose a word for a mixed or worried feeling."
+          }
+        }
+      ],
+      "explanation": "Uncertain, mixed, uneasy, anxious and nervous all fit."
+    },
+    {
+      "id": "b2-2.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Although"
+        },
+        {
+          "id": "t2",
+          "text": "the"
+        },
+        {
+          "id": "t3",
+          "text": "workload"
+        },
+        {
+          "id": "t4",
+          "text": "is"
+        },
+        {
+          "id": "t5",
+          "text": "heavy"
+        },
+        {
+          "id": "t6",
+          "text": "I"
+        },
+        {
+          "id": "t7",
+          "text": "enjoy"
+        },
+        {
+          "id": "t8",
+          "text": "the"
+        },
+        {
+          "id": "t9",
+          "text": "challenge"
+        }
+      ],
+      "explanation": "Although introduces the first clause; the main clause follows.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Although + clause, then the main clause."
+      }
+    },
+    {
+      "id": "b2-2.1.ex.05",
+      "type": "match",
+      "prompt": "Match the feeling with its meaning.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "overwhelmed"
+        },
+        {
+          "id": "l2",
+          "text": "relieved"
+        },
+        {
+          "id": "l3",
+          "text": "anxious"
+        },
+        {
+          "id": "l4",
+          "text": "motivated"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "unable to cope with too much"
+        },
+        {
+          "id": "r2",
+          "text": "happy that a worry has ended"
+        },
+        {
+          "id": "r3",
+          "text": "worried about what may happen"
+        },
+        {
+          "id": "r4",
+          "text": "eager to do something"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each word describes a different feeling at work."
+    },
+    {
+      "id": "b2-2.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Say how you feel about a change. Use I feel.",
+      "accepted": [
+        "I feel anxious about the change",
+        "I feel nervous about the change",
+        "I feel relieved about the change",
+        "I feel excited about the change"
+      ],
+      "max_length": 60,
+      "explanation": "I feel + adjective + about + the change."
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "id": "en-b2-4.2-grammar",
+  "skill": "grammar",
+  "title": "Practice 4.2",
+  "estimated_minutes": 6,
+  "lesson_id": "4.2",
+  "status": "draft",
+  "role": "Mediator using persuasive language to negotiate for peace through tourism",
+  "can_do": [
+    "I can use persuasive language to defend tourism as a culture for peace.",
+    "I can negotiate, propose compromises and respond to objections."
+  ],
+  "items": [
+    {
+      "id": "b2-4.2.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is the most persuasive?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Maybe tourism is good."
+        },
+        {
+          "id": "o2",
+          "text": "Tourism brings jobs, and jobs bring peace; that is why we must act."
+        },
+        {
+          "id": "o3",
+          "text": "I do not know."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "A clear reason plus a call to action is persuasive.",
+      "error_tags": {
+        "o1": {
+          "tag": "force",
+          "text": "Maybe makes the claim weak."
+        },
+        "o3": {
+          "tag": "force",
+          "text": "This gives no argument."
+        }
+      }
+    },
+    {
+      "id": "b2-4.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "What {1} the costs were shared equally?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "if"
+            },
+            {
+              "id": "o2",
+              "text": "when"
+            },
+            {
+              "id": "o3",
+              "text": "because"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "suggestion",
+            "text": "What if + past simple makes a suggestion."
+          }
+        }
+      ],
+      "explanation": "What if + past simple proposes a possibility."
+    },
+    {
+      "id": "b2-4.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "Let us look for common {1} before we decide.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "ground"
+          ],
+          "error_tag": {
+            "tag": "collocation",
+            "text": "The phrase is common ground."
+          }
+        }
+      ],
+      "explanation": "Common ground means shared agreement."
+    },
+    {
+      "id": "b2-4.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "I"
+        },
+        {
+          "id": "t2",
+          "text": "firmly"
+        },
+        {
+          "id": "t3",
+          "text": "believe"
+        },
+        {
+          "id": "t4",
+          "text": "that"
+        },
+        {
+          "id": "t5",
+          "text": "dialogue"
+        },
+        {
+          "id": "t6",
+          "text": "builds"
+        },
+        {
+          "id": "t7",
+          "text": "trust"
+        }
+      ],
+      "explanation": "I firmly believe that + clause.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Adverb between subject and verb."
+      }
+    },
+    {
+      "id": "b2-4.2.ex.05",
+      "type": "match",
+      "prompt": "Match the phrase with its purpose.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "Let us look for common ground."
+        },
+        {
+          "id": "l2",
+          "text": "What if we ...?"
+        },
+        {
+          "id": "l3",
+          "text": "I understand your concern."
+        },
+        {
+          "id": "l4",
+          "text": "That is why we must ..."
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "to seek agreement"
+        },
+        {
+          "id": "r2",
+          "text": "to propose an option"
+        },
+        {
+          "id": "r3",
+          "text": "to show you listen"
+        },
+        {
+          "id": "r4",
+          "text": "to call for action"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Negotiators use different phrases to persuade and to compromise."
+    },
+    {
+      "id": "b2-4.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Propose a compromise. Use What if.",
+      "accepted": [
+        "What if we shared the costs",
+        "What if the costs were shared",
+        "What if we shared the costs equally",
+        "What if each side paid half"
+      ],
+      "max_length": 60,
+      "explanation": "What if + past simple suggests a compromise."
+    }
+  ]
+}

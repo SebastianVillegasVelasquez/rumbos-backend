@@ -351,9 +351,10 @@ def build(source: dict[str, Any]) -> tuple[AssessmentForm, list[dict[str, Any]]]
     form = AssessmentForm.model_validate(
         {
             "form_id": FORM_ID,
-            "title": "Evaluación diagnóstica · Forma A · Diagnóstico de entrada",
+            "title": "Inglés A2 · Evaluación diagnóstica · Forma A · Diagnóstico de entrada",
             "language": "en",
             "level": "A2",
+            "purpose": "check_in",
             "status": "draft",
             "sections": ordered,
             "source_notes": notes,

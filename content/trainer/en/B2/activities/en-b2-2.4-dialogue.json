@@ -1,0 +1,190 @@
+{
+  "id": "en-b2-2.4-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 2.4",
+  "estimated_minutes": 5,
+  "lesson_id": "2.4",
+  "status": "draft",
+  "role": "Supervisor discussing how a personal problem is affecting someone's work",
+  "can_do": [
+    "I can talk about how personal problems affect professional life.",
+    "I can raise a sensitive issue and respond with empathy."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "I wanted to check in. You have seemed distracted lately.",
+        "translation": "Quería saber cómo estás. Últimamente te has visto distraído.",
+        "audio": "en-b2-2.4.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you for asking. I have been dealing with a family problem.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "I know. It has been a difficult month for me.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Sorry, I have had a lot on my mind.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "I am sorry to hear that. Is it affecting your work?",
+        "translation": "Lamento oír eso. ¿Está afectando tu trabajo?",
+        "audio": "en-b2-2.4.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "affecting"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "affected"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "concentrate"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "concentration"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "struggling"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "Yes, it has affected my concentration.",
+        "starters": [
+          "Yes, it has affected ...",
+          "I am struggling to ..."
+        ],
+        "word_bank": [
+          "Yes",
+          "it",
+          "has",
+          "affected",
+          "my",
+          "concentration"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Which tasks are the hardest for you right now?",
+        "translation": "¿Qué tareas son las más difíciles para ti ahora?",
+        "audio": "en-b2-2.4.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Meeting deadlines, mostly.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Staying focused during long meetings.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Replying to messages on time.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "What kind of support would help you most?",
+        "translation": "¿Qué tipo de apoyo te ayudaría más?",
+        "audio": "en-b2-2.4.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "A more flexible schedule for a few weeks.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Some days of leave to sort things out.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Fewer tasks until things settle down.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "That is reasonable. We can arrange it, if you keep me informed.",
+        "translation": "Es razonable. Podemos organizarlo si me mantienes informado.",
+        "audio": "en-b2-2.4.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I will, thank you. I really appreciate it.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Of course. I will update you every Friday.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "That is very kind. I will not take advantage of it.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "And remember, this conversation is confidential.",
+        "translation": "Y recuerda, esta conversación es confidencial.",
+        "audio": "en-b2-2.4.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you. That means a lot.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "I appreciate that very much.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Understood. Thanks again for your support.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

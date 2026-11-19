@@ -1,0 +1,215 @@
+{
+  "id": "en-b2-1.6-grammar",
+  "skill": "grammar",
+  "title": "Practice 1.6",
+  "estimated_minutes": 6,
+  "lesson_id": "1.6",
+  "status": "draft",
+  "role": "Team leader correcting a misunderstanding about prices and rules",
+  "can_do": [
+    "I can correct a misunderstanding politely and precisely.",
+    "I can use relative clauses and passives to explain rules and regulations."
+  ],
+  "items": [
+    {
+      "id": "b2-1.6.ex.01",
+      "type": "mcq",
+      "prompt": "Which phrase politely corrects a misunderstanding?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "You are wrong."
+        },
+        {
+          "id": "o2",
+          "text": "Let me clear that up."
+        },
+        {
+          "id": "o3",
+          "text": "That is nonsense."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "Let me clear that up is firm and polite.",
+      "error_tags": {
+        "o1": {
+          "tag": "register",
+          "text": "You are wrong is too direct for a professional setting."
+        },
+        "o3": {
+          "tag": "register",
+          "text": "That is nonsense is rude."
+        }
+      }
+    },
+    {
+      "id": "b2-1.6.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct word.",
+      "template": "The catalogue, {1} was printed in 2019, is outdated.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "which"
+            },
+            {
+              "id": "o2",
+              "text": "who"
+            },
+            {
+              "id": "o3",
+              "text": "what"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "relative",
+            "text": "Use which for things."
+          }
+        }
+      ],
+      "explanation": "A relative clause about a thing uses which."
+    },
+    {
+      "id": "b2-1.6.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "Prices are strictly {1} by the authority.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "regulated",
+            "controlled",
+            "set"
+          ],
+          "error_tag": {
+            "tag": "passive",
+            "text": "After are use a past participle."
+          }
+        }
+      ],
+      "explanation": "The passive is are + past participle: are regulated."
+    },
+    {
+      "id": "b2-1.6.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "That"
+        },
+        {
+          "id": "t2",
+          "text": "rule"
+        },
+        {
+          "id": "t3",
+          "text": "no"
+        },
+        {
+          "id": "t4",
+          "text": "longer"
+        },
+        {
+          "id": "t5",
+          "text": "applies"
+        },
+        {
+          "id": "t6",
+          "text": "to"
+        },
+        {
+          "id": "t7",
+          "text": "group"
+        },
+        {
+          "id": "t8",
+          "text": "tours"
+        }
+      ],
+      "explanation": "No longer goes between the subject and the verb: no longer applies.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "No longer goes before the main verb."
+      }
+    },
+    {
+      "id": "b2-1.6.ex.05",
+      "type": "match",
+      "prompt": "Match the phrase with its use.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "On the contrary,"
+        },
+        {
+          "id": "l2",
+          "text": "Let me clear that up."
+        },
+        {
+          "id": "l3",
+          "text": "no longer applies"
+        },
+        {
+          "id": "l4",
+          "text": "rather than"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "to say the opposite is true"
+        },
+        {
+          "id": "r2",
+          "text": "to start a correction"
+        },
+        {
+          "id": "r3",
+          "text": "used to be true, but not now"
+        },
+        {
+          "id": "r4",
+          "text": "instead of"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "These phrases help you correct a mistake clearly."
+    },
+    {
+      "id": "b2-1.6.ex.06",
+      "type": "short_answer",
+      "prompt": "Correct the idea: the old price is not valid. Use no longer.",
+      "accepted": [
+        "The old price no longer applies",
+        "The old price is no longer valid",
+        "That price is no longer valid",
+        "That price no longer applies"
+      ],
+      "max_length": 60,
+      "explanation": "No longer + applies, or be + no longer + valid."
+    }
+  ]
+}

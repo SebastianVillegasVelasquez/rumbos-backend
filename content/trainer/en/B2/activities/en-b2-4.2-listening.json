@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-4.2-listening",
+  "skill": "listening",
+  "title": "Listen and choose 4.2",
+  "estimated_minutes": 4,
+  "lesson_id": "4.2",
+  "status": "draft",
+  "role": "Mediator using persuasive language to negotiate for peace through tourism",
+  "can_do": [
+    "I can use persuasive language to defend tourism as a culture for peace.",
+    "I can negotiate, propose compromises and respond to objections."
+  ],
+  "items": [
+    {
+      "id": "en-b2-4.2.l1",
+      "type": "listen_choose",
+      "prompt": "How does tourism help, according to the speaker?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "By giving a shared goal"
+        },
+        {
+          "id": "o2",
+          "text": "By separating villages"
+        },
+        {
+          "id": "o3",
+          "text": "By raising taxes"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "A shared goal teaches people to cooperate.",
+      "audio": "en-b2-4.2.l1"
+    },
+    {
+      "id": "en-b2-4.2.l2",
+      "type": "listen_choose",
+      "prompt": "What does the speaker want the audience to do?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Consider peace as a partnership"
+        },
+        {
+          "id": "o2",
+          "text": "Leave the meeting"
+        },
+        {
+          "id": "o3",
+          "text": "Accept every offer"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker urges them to see peace as the start of a partnership.",
+      "audio": "en-b2-4.2.l2"
+    },
+    {
+      "id": "en-b2-4.2.l3",
+      "type": "listen_choose",
+      "prompt": "What does the speaker propose?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Doubling the fee"
+        },
+        {
+          "id": "o2",
+          "text": "A lower fee in the first year"
+        },
+        {
+          "id": "o3",
+          "text": "Ending the talks"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker suggests reducing the fee in the first year.",
+      "audio": "en-b2-4.2.l3"
+    }
+  ]
+}

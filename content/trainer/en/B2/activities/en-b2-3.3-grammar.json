@@ -1,0 +1,220 @@
+{
+  "id": "en-b2-3.3-grammar",
+  "skill": "grammar",
+  "title": "Practice 3.3",
+  "estimated_minutes": 6,
+  "lesson_id": "3.3",
+  "status": "draft",
+  "role": "Project coordinator giving an update on progress and deadlines",
+  "can_do": [
+    "I can give an update on a project and say what has been done.",
+    "I can talk about deadlines and delays with the right tenses."
+  ],
+  "items": [
+    {
+      "id": "b2-3.3.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence reports progress up to now?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "We have finished the first phase."
+        },
+        {
+          "id": "o2",
+          "text": "We finish the first phase."
+        },
+        {
+          "id": "o3",
+          "text": "We will finish the first phase."
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The present perfect links a completed action to now.",
+      "error_tags": {
+        "o2": {
+          "tag": "tense",
+          "text": "The present simple does not report progress."
+        },
+        "o3": {
+          "tag": "tense",
+          "text": "Will is about the future."
+        }
+      }
+    },
+    {
+      "id": "b2-3.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "The launch {1} until next month.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "has been postponed"
+            },
+            {
+              "id": "o2",
+              "text": "has postponed"
+            },
+            {
+              "id": "o3",
+              "text": "postponing"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "voice",
+            "text": "The launch is postponed by someone; use the passive."
+          }
+        }
+      ],
+      "explanation": "Present perfect passive: has been postponed."
+    },
+    {
+      "id": "b2-3.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "We are still {1} schedule, so there is no need to worry.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "on",
+            "ahead of"
+          ],
+          "error_tag": {
+            "tag": "collocation",
+            "text": "The phrase is on schedule."
+          }
+        }
+      ],
+      "explanation": "On schedule means as planned."
+    },
+    {
+      "id": "b2-3.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "The"
+        },
+        {
+          "id": "t2",
+          "text": "report"
+        },
+        {
+          "id": "t3",
+          "text": "is"
+        },
+        {
+          "id": "t4",
+          "text": "due"
+        },
+        {
+          "id": "t5",
+          "text": "at"
+        },
+        {
+          "id": "t6",
+          "text": "the"
+        },
+        {
+          "id": "t7",
+          "text": "end"
+        },
+        {
+          "id": "t8",
+          "text": "of"
+        },
+        {
+          "id": "t9",
+          "text": "the"
+        },
+        {
+          "id": "t10",
+          "text": "month"
+        }
+      ],
+      "explanation": "The report is due at the end of the month.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Subject + is due + time."
+      }
+    },
+    {
+      "id": "b2-3.3.ex.05",
+      "type": "match",
+      "prompt": "Match the phrase with its meaning.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "on schedule"
+        },
+        {
+          "id": "l2",
+          "text": "behind schedule"
+        },
+        {
+          "id": "l3",
+          "text": "pending"
+        },
+        {
+          "id": "l4",
+          "text": "milestone"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "as planned"
+        },
+        {
+          "id": "r2",
+          "text": "later than planned"
+        },
+        {
+          "id": "r3",
+          "text": "waiting to be done"
+        },
+        {
+          "id": "r4",
+          "text": "an important stage"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "These phrases are used in project updates."
+    },
+    {
+      "id": "b2-3.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Say the first phase has been completed. Use the passive.",
+      "accepted": [
+        "The first phase has been completed",
+        "The first phase has been finished"
+      ],
+      "max_length": 60,
+      "explanation": "Present perfect passive: has been completed."
+    }
+  ]
+}

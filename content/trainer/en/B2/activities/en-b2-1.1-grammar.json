@@ -1,0 +1,221 @@
+{
+  "id": "en-b2-1.1-grammar",
+  "skill": "grammar",
+  "title": "Practice 1.1",
+  "estimated_minutes": 6,
+  "lesson_id": "1.1",
+  "status": "draft",
+  "role": "Operations officer confirming travel arrangements with a colleague",
+  "can_do": [
+    "I can give and ask for precise travel details in person and by phone.",
+    "I can use adverbs and quantifiers to be exact about times and numbers."
+  ],
+  "items": [
+    {
+      "id": "b2-1.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence gives the most precise information?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The group will arrive at some point this morning."
+        },
+        {
+          "id": "o2",
+          "text": "The group will arrive at approximately ten twenty."
+        },
+        {
+          "id": "o3",
+          "text": "The group will arrive quite early."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "An adverb such as approximately plus a clock time is the most precise.",
+      "error_tags": {
+        "o1": {
+          "tag": "vague",
+          "text": "Some point this morning does not give a time."
+        },
+        "o3": {
+          "tag": "vague",
+          "text": "Quite early does not give a time."
+        }
+      }
+    },
+    {
+      "id": "b2-1.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "Could you tell me {1} the shuttle leaves?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "what time"
+            },
+            {
+              "id": "o2",
+              "text": "what time does"
+            },
+            {
+              "id": "o3",
+              "text": "when does it"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "question_order",
+            "text": "Inside an indirect question the verb keeps statement order."
+          }
+        }
+      ],
+      "explanation": "After Could you tell me we use statement order: what time the shuttle leaves."
+    },
+    {
+      "id": "b2-1.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type a word that makes the number less exact.",
+      "template": "The hotel is {1} five minutes from the station.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "approximately",
+            "roughly",
+            "about",
+            "around"
+          ],
+          "error_tag": {
+            "tag": "quantifier",
+            "text": "Use a word such as approximately, roughly or about."
+          }
+        }
+      ],
+      "explanation": "Approximately, roughly, about and around show the number is not exact."
+    },
+    {
+      "id": "b2-1.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "We"
+        },
+        {
+          "id": "t2",
+          "text": "have"
+        },
+        {
+          "id": "t3",
+          "text": "booked"
+        },
+        {
+          "id": "t4",
+          "text": "exactly"
+        },
+        {
+          "id": "t5",
+          "text": "twelve"
+        },
+        {
+          "id": "t6",
+          "text": "seats"
+        },
+        {
+          "id": "t7",
+          "text": "for"
+        },
+        {
+          "id": "t8",
+          "text": "the"
+        },
+        {
+          "id": "t9",
+          "text": "group"
+        }
+      ],
+      "explanation": "The order is: subject, have booked, adverb, number, noun, for the group.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Put the adverb exactly before the number."
+      }
+    },
+    {
+      "id": "b2-1.1.ex.05",
+      "type": "match",
+      "prompt": "Match each expression with its meaning.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "roughly"
+        },
+        {
+          "id": "l2",
+          "text": "precisely"
+        },
+        {
+          "id": "l3",
+          "text": "no later than"
+        },
+        {
+          "id": "l4",
+          "text": "at least"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "not exactly"
+        },
+        {
+          "id": "r2",
+          "text": "exactly"
+        },
+        {
+          "id": "r3",
+          "text": "the final possible time"
+        },
+        {
+          "id": "r4",
+          "text": "this number or more"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each expression says how exact a time or number is."
+    },
+    {
+      "id": "b2-1.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Politely ask for the exact arrival time. Start with Could you tell me.",
+      "accepted": [
+        "Could you tell me exactly when it arrives",
+        "Could you tell me exactly what time it arrives",
+        "Could you tell me exactly when they arrive",
+        "Could you tell me what time it arrives",
+        "Could you tell me when it arrives"
+      ],
+      "max_length": 71,
+      "explanation": "Could you tell me + when/what time + subject + verb, with no does."
+    }
+  ]
+}

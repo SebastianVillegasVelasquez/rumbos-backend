@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-2.3-listening",
+  "skill": "listening",
+  "title": "Listen and choose 2.3",
+  "estimated_minutes": 4,
+  "lesson_id": "2.3",
+  "status": "draft",
+  "role": "New employee asking about the company's mission and values",
+  "can_do": [
+    "I can talk about a company's mission and values.",
+    "I can explain what an organisation stands for and how it acts."
+  ],
+  "items": [
+    {
+      "id": "en-b2-2.3.l1",
+      "type": "listen_choose",
+      "prompt": "What does the company stand for?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The lowest prices"
+        },
+        {
+          "id": "o2",
+          "text": "Fair and respectful travel"
+        },
+        {
+          "id": "o3",
+          "text": "Luxury only"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker mentions honest prices, respect for culture and care for nature.",
+      "audio": "en-b2-2.3.l1"
+    },
+    {
+      "id": "en-b2-2.3.l2",
+      "type": "listen_choose",
+      "prompt": "What is the mission?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "To build new hotels"
+        },
+        {
+          "id": "o2",
+          "text": "To create local jobs and protect nature"
+        },
+        {
+          "id": "o3",
+          "text": "To reduce staff"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The mission combines local jobs and a protected environment.",
+      "audio": "en-b2-2.3.l2"
+    },
+    {
+      "id": "en-b2-2.3.l3",
+      "type": "listen_choose",
+      "prompt": "Why is transparency important?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "It builds long-term trust"
+        },
+        {
+          "id": "o2",
+          "text": "It is cheaper"
+        },
+        {
+          "id": "o3",
+          "text": "It is required by law"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Partners who are told the truth trust the company for many years.",
+      "audio": "en-b2-2.3.l3"
+    }
+  ]
+}

@@ -1,0 +1,185 @@
+{
+  "id": "en-b2-1.1-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 1.1",
+  "estimated_minutes": 5,
+  "lesson_id": "1.1",
+  "status": "draft",
+  "role": "Operations officer confirming travel arrangements with a colleague",
+  "can_do": [
+    "I can give and ask for precise travel details in person and by phone.",
+    "I can use adverbs and quantifiers to be exact about times and numbers."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Good morning. Could you give me the exact departure time of the group flight?",
+        "translation": "Buenos días. ¿Podría darme la hora exacta de salida del vuelo del grupo?",
+        "audio": "en-b2-1.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "The flight leaves at precisely ten twenty.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "It departs at approximately half past ten.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "It is scheduled to leave just after ten.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "And how many passengers are travelling in total?",
+        "translation": "¿Y cuántos pasajeros viajan en total?",
+        "audio": "en-b2-1.1.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "passengers"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "people"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "travellers"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "travelers"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "Exactly twenty-two passengers are coming with us.",
+        "starters": [
+          "Exactly ... passengers",
+          "Around ... people"
+        ],
+        "word_bank": [
+          "Exactly",
+          "twenty-two",
+          "passengers",
+          "are",
+          "coming",
+          "with",
+          "us"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Is the transfer to the hotel included in the price?",
+        "translation": "¿El traslado al hotel está incluido en el precio?",
+        "audio": "en-b2-1.1.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, the transfer is fully included.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "No, it costs an extra twenty pounds per person.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "It is included, apart from the porter service.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Could you repeat the booking reference, please?",
+        "translation": "¿Podría repetir el código de reserva, por favor?",
+        "audio": "en-b2-1.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Certainly. I will send it to you by email.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Of course. I will spell it slowly for you.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Sorry, I do not have it with me, but I can call you back.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Roughly how long is the layover in Madrid?",
+        "translation": "¿Aproximadamente cuánto dura la escala en Madrid?",
+        "audio": "en-b2-1.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is about two and a half hours.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Just under three hours, I believe.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Approximately ninety minutes.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Perfect. Please confirm everything in writing by tonight.",
+        "translation": "Perfecto. Por favor, confírmelo todo por escrito antes de esta noche.",
+        "audio": "en-b2-1.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Certainly, you will have it by this evening.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "I will email the full itinerary within the hour.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Of course. Is there anything else you need?",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

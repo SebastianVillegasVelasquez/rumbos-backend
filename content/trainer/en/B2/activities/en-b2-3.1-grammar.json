@@ -1,0 +1,211 @@
+{
+  "id": "en-b2-3.1-grammar",
+  "skill": "grammar",
+  "title": "Practice 3.1",
+  "estimated_minutes": 6,
+  "lesson_id": "3.1",
+  "status": "draft",
+  "role": "Local guide suggesting sights and giving advice to visitors",
+  "can_do": [
+    "I can suggest sights and give advice to visitors.",
+    "I can explain rules and limits that protect a place, using the passive."
+  ],
+  "items": [
+    {
+      "id": "b2-3.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is a polite recommendation?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Go to the museum now."
+        },
+        {
+          "id": "o2",
+          "text": "I would recommend visiting the museum in the morning."
+        },
+        {
+          "id": "o3",
+          "text": "The museum is a museum."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "I would recommend + -ing is a polite recommendation.",
+      "error_tags": {
+        "o1": {
+          "tag": "register",
+          "text": "This is a command, not a recommendation."
+        },
+        "o3": {
+          "tag": "function",
+          "text": "This does not recommend anything."
+        }
+      }
+    },
+    {
+      "id": "b2-3.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "Visitors {1} to stay on the path.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "are asked"
+            },
+            {
+              "id": "o2",
+              "text": "ask"
+            },
+            {
+              "id": "o3",
+              "text": "are asking"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "voice",
+            "text": "Visitors receive the request, so use the passive."
+          }
+        }
+      ],
+      "explanation": "The passive is are asked: visitors are asked to stay."
+    },
+    {
+      "id": "b2-3.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "Entry to the reserve is strictly {1} to fifty people a day.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "limited",
+            "restricted",
+            "capped"
+          ],
+          "error_tag": {
+            "tag": "vocabulary",
+            "text": "Choose a word about a limit."
+          }
+        }
+      ],
+      "explanation": "Limited, restricted and capped all describe a fixed maximum."
+    },
+    {
+      "id": "b2-3.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Photography"
+        },
+        {
+          "id": "t2",
+          "text": "is"
+        },
+        {
+          "id": "t3",
+          "text": "not"
+        },
+        {
+          "id": "t4",
+          "text": "permitted"
+        },
+        {
+          "id": "t5",
+          "text": "inside"
+        },
+        {
+          "id": "t6",
+          "text": "the"
+        },
+        {
+          "id": "t7",
+          "text": "temple"
+        }
+      ],
+      "explanation": "Photography is not permitted inside the temple.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Subject + is not + participle + place."
+      }
+    },
+    {
+      "id": "b2-3.1.ex.05",
+      "type": "match",
+      "prompt": "Match the term with its meaning.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "carrying capacity"
+        },
+        {
+          "id": "l2",
+          "text": "protected area"
+        },
+        {
+          "id": "l3",
+          "text": "off the beaten track"
+        },
+        {
+          "id": "l4",
+          "text": "highlight"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "the most visitors a place can support"
+        },
+        {
+          "id": "r2",
+          "text": "land with legal protection"
+        },
+        {
+          "id": "r3",
+          "text": "away from popular places"
+        },
+        {
+          "id": "r4",
+          "text": "the best part"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "These terms are common in sightseeing and conservation."
+    },
+    {
+      "id": "b2-3.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Recommend a place. Use I would recommend.",
+      "accepted": [
+        "I would recommend the old fort",
+        "I would recommend visiting the old fort",
+        "I would recommend the river walk",
+        "I would recommend the botanical garden"
+      ],
+      "max_length": 64,
+      "explanation": "I would recommend + noun or -ing."
+    }
+  ]
+}

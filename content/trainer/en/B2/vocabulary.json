@@ -1,0 +1,868 @@
+{
+  "entries": [
+    {
+      "id": "en-b2-1.1.v1",
+      "lesson_id": "1.1",
+      "word": "itinerary",
+      "translation": "itinerario"
+    },
+    {
+      "id": "en-b2-1.1.v2",
+      "lesson_id": "1.1",
+      "word": "departure",
+      "translation": "salida"
+    },
+    {
+      "id": "en-b2-1.1.v3",
+      "lesson_id": "1.1",
+      "word": "arrival",
+      "translation": "llegada"
+    },
+    {
+      "id": "en-b2-1.1.v4",
+      "lesson_id": "1.1",
+      "word": "transfer",
+      "translation": "traslado"
+    },
+    {
+      "id": "en-b2-1.1.v5",
+      "lesson_id": "1.1",
+      "word": "approximately",
+      "translation": "aproximadamente"
+    },
+    {
+      "id": "en-b2-1.1.v6",
+      "lesson_id": "1.1",
+      "word": "booking reference",
+      "translation": "código de reserva"
+    },
+    {
+      "id": "en-b2-1.1.v7",
+      "lesson_id": "1.1",
+      "word": "layover",
+      "translation": "escala"
+    },
+    {
+      "id": "en-b2-1.1.v8",
+      "lesson_id": "1.1",
+      "word": "no later than",
+      "translation": "a más tardar"
+    },
+    {
+      "id": "en-b2-1.2.v1",
+      "lesson_id": "1.2",
+      "word": "likely",
+      "translation": "probable"
+    },
+    {
+      "id": "en-b2-1.2.v2",
+      "lesson_id": "1.2",
+      "word": "unlikely",
+      "translation": "poco probable"
+    },
+    {
+      "id": "en-b2-1.2.v3",
+      "lesson_id": "1.2",
+      "word": "almost certain",
+      "translation": "casi seguro"
+    },
+    {
+      "id": "en-b2-1.2.v4",
+      "lesson_id": "1.2",
+      "word": "probably",
+      "translation": "probablemente"
+    },
+    {
+      "id": "en-b2-1.2.v5",
+      "lesson_id": "1.2",
+      "word": "definitely",
+      "translation": "sin duda"
+    },
+    {
+      "id": "en-b2-1.2.v6",
+      "lesson_id": "1.2",
+      "word": "postponed",
+      "translation": "aplazado"
+    },
+    {
+      "id": "en-b2-1.2.v7",
+      "lesson_id": "1.2",
+      "word": "forecast",
+      "translation": "pronóstico"
+    },
+    {
+      "id": "en-b2-1.2.v8",
+      "lesson_id": "1.2",
+      "word": "contingency plan",
+      "translation": "plan de contingencia"
+    },
+    {
+      "id": "en-b2-1.3.v1",
+      "lesson_id": "1.3",
+      "word": "complaint",
+      "translation": "queja"
+    },
+    {
+      "id": "en-b2-1.3.v2",
+      "lesson_id": "1.3",
+      "word": "representative",
+      "translation": "representante"
+    },
+    {
+      "id": "en-b2-1.3.v3",
+      "lesson_id": "1.3",
+      "word": "refund",
+      "translation": "reembolso"
+    },
+    {
+      "id": "en-b2-1.3.v4",
+      "lesson_id": "1.3",
+      "word": "resolution",
+      "translation": "solución"
+    },
+    {
+      "id": "en-b2-1.3.v5",
+      "lesson_id": "1.3",
+      "word": "blocked",
+      "translation": "bloqueado"
+    },
+    {
+      "id": "en-b2-1.3.v6",
+      "lesson_id": "1.3",
+      "word": "urgent",
+      "translation": "urgente"
+    },
+    {
+      "id": "en-b2-1.3.v7",
+      "lesson_id": "1.3",
+      "word": "in writing",
+      "translation": "por escrito"
+    },
+    {
+      "id": "en-b2-1.3.v8",
+      "lesson_id": "1.3",
+      "word": "to escalate",
+      "translation": "escalar"
+    },
+    {
+      "id": "en-b2-1.4.v1",
+      "lesson_id": "1.4",
+      "word": "package",
+      "translation": "paquete"
+    },
+    {
+      "id": "en-b2-1.4.v2",
+      "lesson_id": "1.4",
+      "word": "feature",
+      "translation": "característica"
+    },
+    {
+      "id": "en-b2-1.4.v3",
+      "lesson_id": "1.4",
+      "word": "included",
+      "translation": "incluido"
+    },
+    {
+      "id": "en-b2-1.4.v4",
+      "lesson_id": "1.4",
+      "word": "excluded",
+      "translation": "excluido"
+    },
+    {
+      "id": "en-b2-1.4.v5",
+      "lesson_id": "1.4",
+      "word": "tariff",
+      "translation": "tarifa"
+    },
+    {
+      "id": "en-b2-1.4.v6",
+      "lesson_id": "1.4",
+      "word": "subject to",
+      "translation": "sujeto a"
+    },
+    {
+      "id": "en-b2-1.4.v7",
+      "lesson_id": "1.4",
+      "word": "compliance",
+      "translation": "cumplimiento normativo"
+    },
+    {
+      "id": "en-b2-1.4.v8",
+      "lesson_id": "1.4",
+      "word": "on request",
+      "translation": "a petición"
+    },
+    {
+      "id": "en-b2-1.5.v1",
+      "lesson_id": "1.5",
+      "word": "to paraphrase",
+      "translation": "parafrasear"
+    },
+    {
+      "id": "en-b2-1.5.v2",
+      "lesson_id": "1.5",
+      "word": "to clarify",
+      "translation": "aclarar"
+    },
+    {
+      "id": "en-b2-1.5.v3",
+      "lesson_id": "1.5",
+      "word": "to confirm",
+      "translation": "confirmar"
+    },
+    {
+      "id": "en-b2-1.5.v4",
+      "lesson_id": "1.5",
+      "word": "to mention",
+      "translation": "mencionar"
+    },
+    {
+      "id": "en-b2-1.5.v5",
+      "lesson_id": "1.5",
+      "word": "exactly",
+      "translation": "exactamente"
+    },
+    {
+      "id": "en-b2-1.5.v6",
+      "lesson_id": "1.5",
+      "word": "in other words",
+      "translation": "en otras palabras"
+    },
+    {
+      "id": "en-b2-1.5.v7",
+      "lesson_id": "1.5",
+      "word": "to point out",
+      "translation": "señalar"
+    },
+    {
+      "id": "en-b2-1.5.v8",
+      "lesson_id": "1.5",
+      "word": "to suggest",
+      "translation": "sugerir"
+    },
+    {
+      "id": "en-b2-1.6.v1",
+      "lesson_id": "1.6",
+      "word": "misunderstanding",
+      "translation": "malentendido"
+    },
+    {
+      "id": "en-b2-1.6.v2",
+      "lesson_id": "1.6",
+      "word": "outdated",
+      "translation": "obsoleto"
+    },
+    {
+      "id": "en-b2-1.6.v3",
+      "lesson_id": "1.6",
+      "word": "regulated",
+      "translation": "regulado"
+    },
+    {
+      "id": "en-b2-1.6.v4",
+      "lesson_id": "1.6",
+      "word": "to apply",
+      "translation": "aplicarse"
+    },
+    {
+      "id": "en-b2-1.6.v5",
+      "lesson_id": "1.6",
+      "word": "to clear up",
+      "translation": "aclarar"
+    },
+    {
+      "id": "en-b2-1.6.v6",
+      "lesson_id": "1.6",
+      "word": "strictly",
+      "translation": "estrictamente"
+    },
+    {
+      "id": "en-b2-1.6.v7",
+      "lesson_id": "1.6",
+      "word": "rather",
+      "translation": "más bien"
+    },
+    {
+      "id": "en-b2-1.6.v8",
+      "lesson_id": "1.6",
+      "word": "on the contrary",
+      "translation": "al contrario"
+    },
+    {
+      "id": "en-b2-2.1.v1",
+      "lesson_id": "2.1",
+      "word": "restructuring",
+      "translation": "reestructuración"
+    },
+    {
+      "id": "en-b2-2.1.v2",
+      "lesson_id": "2.1",
+      "word": "anxious",
+      "translation": "ansioso"
+    },
+    {
+      "id": "en-b2-2.1.v3",
+      "lesson_id": "2.1",
+      "word": "relieved",
+      "translation": "aliviado"
+    },
+    {
+      "id": "en-b2-2.1.v4",
+      "lesson_id": "2.1",
+      "word": "to adapt",
+      "translation": "adaptarse"
+    },
+    {
+      "id": "en-b2-2.1.v5",
+      "lesson_id": "2.1",
+      "word": "on the one hand",
+      "translation": "por un lado"
+    },
+    {
+      "id": "en-b2-2.1.v6",
+      "lesson_id": "2.1",
+      "word": "on the other hand",
+      "translation": "por otro lado"
+    },
+    {
+      "id": "en-b2-2.1.v7",
+      "lesson_id": "2.1",
+      "word": "although",
+      "translation": "aunque"
+    },
+    {
+      "id": "en-b2-2.1.v8",
+      "lesson_id": "2.1",
+      "word": "workload",
+      "translation": "carga de trabajo"
+    },
+    {
+      "id": "en-b2-2.2.v1",
+      "lesson_id": "2.2",
+      "word": "nervous",
+      "translation": "nervioso"
+    },
+    {
+      "id": "en-b2-2.2.v2",
+      "lesson_id": "2.2",
+      "word": "stage fright",
+      "translation": "miedo escénico"
+    },
+    {
+      "id": "en-b2-2.2.v3",
+      "lesson_id": "2.2",
+      "word": "to calm down",
+      "translation": "calmarse"
+    },
+    {
+      "id": "en-b2-2.2.v4",
+      "lesson_id": "2.2",
+      "word": "to rehearse",
+      "translation": "ensayar"
+    },
+    {
+      "id": "en-b2-2.2.v5",
+      "lesson_id": "2.2",
+      "word": "to breathe",
+      "translation": "respirar"
+    },
+    {
+      "id": "en-b2-2.2.v6",
+      "lesson_id": "2.2",
+      "word": "confident",
+      "translation": "seguro de sí mismo"
+    },
+    {
+      "id": "en-b2-2.2.v7",
+      "lesson_id": "2.2",
+      "word": "to focus on",
+      "translation": "concentrarse en"
+    },
+    {
+      "id": "en-b2-2.2.v8",
+      "lesson_id": "2.2",
+      "word": "reassure",
+      "translation": "tranquilizar"
+    },
+    {
+      "id": "en-b2-2.3.v1",
+      "lesson_id": "2.3",
+      "word": "mission",
+      "translation": "misión"
+    },
+    {
+      "id": "en-b2-2.3.v2",
+      "lesson_id": "2.3",
+      "word": "vision",
+      "translation": "visión"
+    },
+    {
+      "id": "en-b2-2.3.v3",
+      "lesson_id": "2.3",
+      "word": "value",
+      "translation": "valor"
+    },
+    {
+      "id": "en-b2-2.3.v4",
+      "lesson_id": "2.3",
+      "word": "commitment",
+      "translation": "compromiso"
+    },
+    {
+      "id": "en-b2-2.3.v5",
+      "lesson_id": "2.3",
+      "word": "stakeholder",
+      "translation": "parte interesada"
+    },
+    {
+      "id": "en-b2-2.3.v6",
+      "lesson_id": "2.3",
+      "word": "integrity",
+      "translation": "integridad"
+    },
+    {
+      "id": "en-b2-2.3.v7",
+      "lesson_id": "2.3",
+      "word": "to uphold",
+      "translation": "defender"
+    },
+    {
+      "id": "en-b2-2.3.v8",
+      "lesson_id": "2.3",
+      "word": "transparent",
+      "translation": "transparente"
+    },
+    {
+      "id": "en-b2-2.4.v1",
+      "lesson_id": "2.4",
+      "word": "to affect",
+      "translation": "afectar"
+    },
+    {
+      "id": "en-b2-2.4.v2",
+      "lesson_id": "2.4",
+      "word": "concentration",
+      "translation": "concentración"
+    },
+    {
+      "id": "en-b2-2.4.v3",
+      "lesson_id": "2.4",
+      "word": "to struggle",
+      "translation": "tener dificultades"
+    },
+    {
+      "id": "en-b2-2.4.v4",
+      "lesson_id": "2.4",
+      "word": "leave",
+      "translation": "permiso"
+    },
+    {
+      "id": "en-b2-2.4.v5",
+      "lesson_id": "2.4",
+      "word": "support",
+      "translation": "apoyo"
+    },
+    {
+      "id": "en-b2-2.4.v6",
+      "lesson_id": "2.4",
+      "word": "deadline",
+      "translation": "fecha límite"
+    },
+    {
+      "id": "en-b2-2.4.v7",
+      "lesson_id": "2.4",
+      "word": "to cope",
+      "translation": "sobrellevar"
+    },
+    {
+      "id": "en-b2-2.4.v8",
+      "lesson_id": "2.4",
+      "word": "confidential",
+      "translation": "confidencial"
+    },
+    {
+      "id": "en-b2-2.5.v1",
+      "lesson_id": "2.5",
+      "word": "to report",
+      "translation": "denunciar"
+    },
+    {
+      "id": "en-b2-2.5.v2",
+      "lesson_id": "2.5",
+      "word": "theft",
+      "translation": "robo"
+    },
+    {
+      "id": "en-b2-2.5.v3",
+      "lesson_id": "2.5",
+      "word": "consulate",
+      "translation": "consulado"
+    },
+    {
+      "id": "en-b2-2.5.v4",
+      "lesson_id": "2.5",
+      "word": "embassy",
+      "translation": "embajada"
+    },
+    {
+      "id": "en-b2-2.5.v5",
+      "lesson_id": "2.5",
+      "word": "to negotiate",
+      "translation": "negociar"
+    },
+    {
+      "id": "en-b2-2.5.v6",
+      "lesson_id": "2.5",
+      "word": "agenda",
+      "translation": "orden del día"
+    },
+    {
+      "id": "en-b2-2.5.v7",
+      "lesson_id": "2.5",
+      "word": "to adjourn",
+      "translation": "levantar la sesión"
+    },
+    {
+      "id": "en-b2-2.5.v8",
+      "lesson_id": "2.5",
+      "word": "minutes",
+      "translation": "acta"
+    },
+    {
+      "id": "en-b2-3.1.v1",
+      "lesson_id": "3.1",
+      "word": "sight",
+      "translation": "lugar de interés"
+    },
+    {
+      "id": "en-b2-3.1.v2",
+      "lesson_id": "3.1",
+      "word": "highlight",
+      "translation": "punto destacado"
+    },
+    {
+      "id": "en-b2-3.1.v3",
+      "lesson_id": "3.1",
+      "word": "protected area",
+      "translation": "área protegida"
+    },
+    {
+      "id": "en-b2-3.1.v4",
+      "lesson_id": "3.1",
+      "word": "carrying capacity",
+      "translation": "capacidad de carga"
+    },
+    {
+      "id": "en-b2-3.1.v5",
+      "lesson_id": "3.1",
+      "word": "to recommend",
+      "translation": "recomendar"
+    },
+    {
+      "id": "en-b2-3.1.v6",
+      "lesson_id": "3.1",
+      "word": "off the beaten track",
+      "translation": "fuera de los circuitos habituales"
+    },
+    {
+      "id": "en-b2-3.1.v7",
+      "lesson_id": "3.1",
+      "word": "to be advised to",
+      "translation": "se aconseja"
+    },
+    {
+      "id": "en-b2-3.1.v8",
+      "lesson_id": "3.1",
+      "word": "restricted",
+      "translation": "restringido"
+    },
+    {
+      "id": "en-b2-3.2.v1",
+      "lesson_id": "3.2",
+      "word": "legend",
+      "translation": "leyenda"
+    },
+    {
+      "id": "en-b2-3.2.v2",
+      "lesson_id": "3.2",
+      "word": "folklore",
+      "translation": "folclore"
+    },
+    {
+      "id": "en-b2-3.2.v3",
+      "lesson_id": "3.2",
+      "word": "to be said to",
+      "translation": "se dice que"
+    },
+    {
+      "id": "en-b2-3.2.v4",
+      "lesson_id": "3.2",
+      "word": "ancient",
+      "translation": "antiguo"
+    },
+    {
+      "id": "en-b2-3.2.v5",
+      "lesson_id": "3.2",
+      "word": "settlement",
+      "translation": "asentamiento"
+    },
+    {
+      "id": "en-b2-3.2.v6",
+      "lesson_id": "3.2",
+      "word": "ruins",
+      "translation": "ruinas"
+    },
+    {
+      "id": "en-b2-3.2.v7",
+      "lesson_id": "3.2",
+      "word": "to inhabit",
+      "translation": "habitar"
+    },
+    {
+      "id": "en-b2-3.2.v8",
+      "lesson_id": "3.2",
+      "word": "heritage",
+      "translation": "patrimonio"
+    },
+    {
+      "id": "en-b2-3.3.v1",
+      "lesson_id": "3.3",
+      "word": "progress",
+      "translation": "avance"
+    },
+    {
+      "id": "en-b2-3.3.v2",
+      "lesson_id": "3.3",
+      "word": "on schedule",
+      "translation": "según lo previsto"
+    },
+    {
+      "id": "en-b2-3.3.v3",
+      "lesson_id": "3.3",
+      "word": "behind schedule",
+      "translation": "con retraso"
+    },
+    {
+      "id": "en-b2-3.3.v4",
+      "lesson_id": "3.3",
+      "word": "milestone",
+      "translation": "hito"
+    },
+    {
+      "id": "en-b2-3.3.v5",
+      "lesson_id": "3.3",
+      "word": "to postpone",
+      "translation": "aplazar"
+    },
+    {
+      "id": "en-b2-3.3.v6",
+      "lesson_id": "3.3",
+      "word": "to meet a deadline",
+      "translation": "cumplir un plazo"
+    },
+    {
+      "id": "en-b2-3.3.v7",
+      "lesson_id": "3.3",
+      "word": "pending",
+      "translation": "pendiente"
+    },
+    {
+      "id": "en-b2-3.3.v8",
+      "lesson_id": "3.3",
+      "word": "outcome",
+      "translation": "resultado"
+    },
+    {
+      "id": "en-b2-3.4.v1",
+      "lesson_id": "3.4",
+      "word": "sustainable",
+      "translation": "sostenible"
+    },
+    {
+      "id": "en-b2-3.4.v2",
+      "lesson_id": "3.4",
+      "word": "footprint",
+      "translation": "huella"
+    },
+    {
+      "id": "en-b2-3.4.v3",
+      "lesson_id": "3.4",
+      "word": "responsible",
+      "translation": "responsable"
+    },
+    {
+      "id": "en-b2-3.4.v4",
+      "lesson_id": "3.4",
+      "word": "to preserve",
+      "translation": "preservar"
+    },
+    {
+      "id": "en-b2-3.4.v5",
+      "lesson_id": "3.4",
+      "word": "to reduce",
+      "translation": "reducir"
+    },
+    {
+      "id": "en-b2-3.4.v6",
+      "lesson_id": "3.4",
+      "word": "in conclusion",
+      "translation": "en conclusión"
+    },
+    {
+      "id": "en-b2-3.4.v7",
+      "lesson_id": "3.4",
+      "word": "to urge",
+      "translation": "instar"
+    },
+    {
+      "id": "en-b2-3.4.v8",
+      "lesson_id": "3.4",
+      "word": "stakeholders",
+      "translation": "partes interesadas"
+    },
+    {
+      "id": "en-b2-4.1.v1",
+      "lesson_id": "4.1",
+      "word": "to conserve",
+      "translation": "conservar"
+    },
+    {
+      "id": "en-b2-4.1.v2",
+      "lesson_id": "4.1",
+      "word": "biodiversity",
+      "translation": "biodiversidad"
+    },
+    {
+      "id": "en-b2-4.1.v3",
+      "lesson_id": "4.1",
+      "word": "renewable",
+      "translation": "renovable"
+    },
+    {
+      "id": "en-b2-4.1.v4",
+      "lesson_id": "4.1",
+      "word": "to implement",
+      "translation": "implementar"
+    },
+    {
+      "id": "en-b2-4.1.v5",
+      "lesson_id": "4.1",
+      "word": "consequence",
+      "translation": "consecuencia"
+    },
+    {
+      "id": "en-b2-4.1.v6",
+      "lesson_id": "4.1",
+      "word": "had it not been for",
+      "translation": "de no haber sido por"
+    },
+    {
+      "id": "en-b2-4.1.v7",
+      "lesson_id": "4.1",
+      "word": "long-term",
+      "translation": "a largo plazo"
+    },
+    {
+      "id": "en-b2-4.1.v8",
+      "lesson_id": "4.1",
+      "word": "regulation",
+      "translation": "normativa"
+    },
+    {
+      "id": "en-b2-4.2.v1",
+      "lesson_id": "4.2",
+      "word": "to persuade",
+      "translation": "persuadir"
+    },
+    {
+      "id": "en-b2-4.2.v2",
+      "lesson_id": "4.2",
+      "word": "to propose",
+      "translation": "proponer"
+    },
+    {
+      "id": "en-b2-4.2.v3",
+      "lesson_id": "4.2",
+      "word": "compromise",
+      "translation": "compromiso"
+    },
+    {
+      "id": "en-b2-4.2.v4",
+      "lesson_id": "4.2",
+      "word": "dialogue",
+      "translation": "diálogo"
+    },
+    {
+      "id": "en-b2-4.2.v5",
+      "lesson_id": "4.2",
+      "word": "mutual",
+      "translation": "mutuo"
+    },
+    {
+      "id": "en-b2-4.2.v6",
+      "lesson_id": "4.2",
+      "word": "to bridge",
+      "translation": "tender puentes"
+    },
+    {
+      "id": "en-b2-4.2.v7",
+      "lesson_id": "4.2",
+      "word": "common ground",
+      "translation": "terreno común"
+    },
+    {
+      "id": "en-b2-4.2.v8",
+      "lesson_id": "4.2",
+      "word": "to reconcile",
+      "translation": "reconciliar"
+    },
+    {
+      "id": "en-b2-4.3.v1",
+      "lesson_id": "4.3",
+      "word": "to narrate",
+      "translation": "narrar"
+    },
+    {
+      "id": "en-b2-4.3.v2",
+      "lesson_id": "4.3",
+      "word": "plot",
+      "translation": "trama"
+    },
+    {
+      "id": "en-b2-4.3.v3",
+      "lesson_id": "4.3",
+      "word": "at that moment",
+      "translation": "en ese momento"
+    },
+    {
+      "id": "en-b2-4.3.v4",
+      "lesson_id": "4.3",
+      "word": "by the time",
+      "translation": "para cuando"
+    },
+    {
+      "id": "en-b2-4.3.v5",
+      "lesson_id": "4.3",
+      "word": "suddenly",
+      "translation": "de repente"
+    },
+    {
+      "id": "en-b2-4.3.v6",
+      "lesson_id": "4.3",
+      "word": "eventually",
+      "translation": "finalmente"
+    },
+    {
+      "id": "en-b2-4.3.v7",
+      "lesson_id": "4.3",
+      "word": "meanwhile",
+      "translation": "mientras tanto"
+    },
+    {
+      "id": "en-b2-4.3.v8",
+      "lesson_id": "4.3",
+      "word": "unforgettable",
+      "translation": "inolvidable"
+    }
+  ]
+}

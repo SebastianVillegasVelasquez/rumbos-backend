@@ -1,0 +1,213 @@
+{
+  "id": "en-b2-1.4-grammar",
+  "skill": "grammar",
+  "title": "Practice 1.4",
+  "estimated_minutes": 6,
+  "lesson_id": "1.4",
+  "status": "draft",
+  "role": "Product specialist describing a travel package to a business partner",
+  "can_do": [
+    "I can describe typical and specific features of a service, place or package.",
+    "I can use passive forms and modals to say what is included or allowed."
+  ],
+  "items": [
+    {
+      "id": "b2-1.4.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence uses a modal in the passive?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Guests may change the dates."
+        },
+        {
+          "id": "o2",
+          "text": "The dates may be changed."
+        },
+        {
+          "id": "o3",
+          "text": "The dates change quickly."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "A modal in the passive is modal + be + past participle: may be changed.",
+      "error_tags": {
+        "o1": {
+          "tag": "voice",
+          "text": "This is active: guests do the action."
+        },
+        "o3": {
+          "tag": "voice",
+          "text": "This has no modal and no passive."
+        }
+      }
+    },
+    {
+      "id": "b2-1.4.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "Breakfast {1} in the price.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "is included"
+            },
+            {
+              "id": "o2",
+              "text": "includes"
+            },
+            {
+              "id": "o3",
+              "text": "is including"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "voice",
+            "text": "Breakfast does not include; it is included."
+          }
+        }
+      ],
+      "explanation": "The passive is be + past participle: is included."
+    },
+    {
+      "id": "b2-1.4.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "The package can be extended {1} request.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "on",
+            "upon"
+          ],
+          "error_tag": {
+            "tag": "preposition",
+            "text": "The fixed phrase is on request."
+          }
+        }
+      ],
+      "explanation": "On request is a fixed phrase in service language."
+    },
+    {
+      "id": "b2-1.4.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Prices"
+        },
+        {
+          "id": "t2",
+          "text": "may"
+        },
+        {
+          "id": "t3",
+          "text": "be"
+        },
+        {
+          "id": "t4",
+          "text": "adjusted"
+        },
+        {
+          "id": "t5",
+          "text": "during"
+        },
+        {
+          "id": "t6",
+          "text": "the"
+        },
+        {
+          "id": "t7",
+          "text": "high"
+        },
+        {
+          "id": "t8",
+          "text": "season"
+        }
+      ],
+      "explanation": "The order is: subject, may be adjusted, time expression.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "A modal passive is modal + be + participle."
+      }
+    },
+    {
+      "id": "b2-1.4.ex.05",
+      "type": "match",
+      "prompt": "Match the term with its meaning.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "tariff"
+        },
+        {
+          "id": "l2",
+          "text": "subject to"
+        },
+        {
+          "id": "l3",
+          "text": "excluded"
+        },
+        {
+          "id": "l4",
+          "text": "compliance"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "an official price list"
+        },
+        {
+          "id": "r2",
+          "text": "depending on a condition"
+        },
+        {
+          "id": "r3",
+          "text": "not part of the price"
+        },
+        {
+          "id": "r4",
+          "text": "following the rules"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "These are common terms in service and package descriptions."
+    },
+    {
+      "id": "b2-1.4.ex.06",
+      "type": "short_answer",
+      "prompt": "Say that the transfer is included. Use the passive.",
+      "accepted": [
+        "The transfer is included",
+        "The transfer is included in the price",
+        "The transfer is included in the package"
+      ],
+      "max_length": 64,
+      "explanation": "Use the passive: the transfer is included."
+    }
+  ]
+}

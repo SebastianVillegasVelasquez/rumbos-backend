@@ -1,0 +1,148 @@
+{
+  "modules": [
+    {
+      "key": "M1",
+      "title": "Giving clear and detailed information"
+    },
+    {
+      "key": "M2",
+      "title": "Problems and feelings at work"
+    },
+    {
+      "key": "M3",
+      "title": "Sightseeing and sustainable tourism"
+    },
+    {
+      "key": "M4",
+      "title": "Pillars of the training program"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "1.1",
+      "module": "M1",
+      "code": "1.1",
+      "title": "Travel arrangements and precise details",
+      "description": "Give and ask for detailed travel information in person and by phone with precise adverbs and quantifiers."
+    },
+    {
+      "id": "1.2",
+      "module": "M1",
+      "code": "1.2",
+      "title": "Plans and degrees of certainty",
+      "description": "Say how sure you are about plans and events: likely, probable, almost certain."
+    },
+    {
+      "id": "1.3",
+      "module": "M1",
+      "code": "1.3",
+      "title": "Solving a service problem",
+      "description": "Explain a problem that is still going on and ask a customer-service representative for a solution."
+    },
+    {
+      "id": "1.4",
+      "module": "M1",
+      "code": "1.4",
+      "title": "Describing a service, place or package",
+      "description": "Describe typical and specific features with the passive and modals in the passive."
+    },
+    {
+      "id": "1.5",
+      "module": "M1",
+      "code": "1.5",
+      "title": "Clarifying and confirming by paraphrase",
+      "description": "Report what was said and confirm understanding by paraphrasing."
+    },
+    {
+      "id": "1.6",
+      "module": "M1",
+      "code": "1.6",
+      "title": "Correcting a misunderstanding",
+      "description": "Correct a misunderstanding politely with relative clauses and the passive of regulation."
+    },
+    {
+      "id": "2.1",
+      "module": "M2",
+      "code": "2.1",
+      "title": "Change and how we feel about it",
+      "description": "Talk about a change at work and the feelings it causes, weighing both sides."
+    },
+    {
+      "id": "2.2",
+      "module": "M2",
+      "code": "2.2",
+      "title": "Advice and calming someone down",
+      "description": "Give advice and instructions to overcome a fear and calm someone down."
+    },
+    {
+      "id": "2.3",
+      "module": "M2",
+      "code": "2.3",
+      "title": "Company missions and values",
+      "description": "Talk about a company's mission and values."
+    },
+    {
+      "id": "2.4",
+      "module": "M2",
+      "code": "2.4",
+      "title": "When personal problems affect work",
+      "description": "Discuss how personal problems affect professional life, with empathy."
+    },
+    {
+      "id": "2.5",
+      "module": "M2",
+      "code": "2.5",
+      "title": "Official and legal matters",
+      "description": "Report a theft, deal with a consulate or embassy, and open, run and close a meeting."
+    },
+    {
+      "id": "3.1",
+      "module": "M3",
+      "code": "3.1",
+      "title": "Sights, suggestions and advice",
+      "description": "Suggest sights and give advice, explaining the rules that protect a place."
+    },
+    {
+      "id": "3.2",
+      "module": "M3",
+      "code": "3.2",
+      "title": "History and folklore",
+      "description": "Tell the history and folklore of a place with the past simple and the passive."
+    },
+    {
+      "id": "3.3",
+      "module": "M3",
+      "code": "3.3",
+      "title": "Project updates and deadlines",
+      "description": "Give an update on a project, its progress and its deadlines."
+    },
+    {
+      "id": "3.4",
+      "module": "M3",
+      "code": "3.4",
+      "title": "Presenting sustainable tourism",
+      "description": "Present sustainable tourism with key expressions and recommend actions at the end."
+    },
+    {
+      "id": "4.1",
+      "module": "M4",
+      "code": "4.1",
+      "title": "Sustainable tourism: conditionals and passive",
+      "description": "Use conditionals and the passive to talk about sustainable tourism."
+    },
+    {
+      "id": "4.2",
+      "module": "M4",
+      "code": "4.2",
+      "title": "Tourism as a culture for peace",
+      "description": "Use persuasive language and negotiate to defend tourism as a culture for peace."
+    },
+    {
+      "id": "4.3",
+      "module": "M4",
+      "code": "4.3",
+      "title": "Professional storytelling",
+      "description": "Tell a story with advanced narrative tenses."
+    }
+  ]
+}

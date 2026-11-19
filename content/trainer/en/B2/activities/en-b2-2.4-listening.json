@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-2.4-listening",
+  "skill": "listening",
+  "title": "Listen and choose 2.4",
+  "estimated_minutes": 4,
+  "lesson_id": "2.4",
+  "status": "draft",
+  "role": "Supervisor discussing how a personal problem is affecting someone's work",
+  "can_do": [
+    "I can talk about how personal problems affect professional life.",
+    "I can raise a sensitive issue and respond with empathy."
+  ],
+  "items": [
+    {
+      "id": "en-b2-2.4.l1",
+      "type": "listen_choose",
+      "prompt": "Why did the speaker miss the deadlines?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "A family illness"
+        },
+        {
+          "id": "o2",
+          "text": "A holiday"
+        },
+        {
+          "id": "o3",
+          "text": "A technical failure"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker's father has been ill, and it has affected their focus.",
+      "audio": "en-b2-2.4.l1"
+    },
+    {
+      "id": "en-b2-2.4.l2",
+      "type": "listen_choose",
+      "prompt": "What can the company offer?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "A new job"
+        },
+        {
+          "id": "o2",
+          "text": "Paid leave"
+        },
+        {
+          "id": "o3",
+          "text": "A bonus"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker offers a few days of paid leave.",
+      "audio": "en-b2-2.4.l2"
+    },
+    {
+      "id": "en-b2-2.4.l3",
+      "type": "listen_choose",
+      "prompt": "What has helped the speaker?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Working longer hours"
+        },
+        {
+          "id": "o2",
+          "text": "Talking to the team"
+        },
+        {
+          "id": "o3",
+          "text": "Taking medicine"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "Talking to the team has made it easier.",
+      "audio": "en-b2-2.4.l3"
+    }
+  ]
+}

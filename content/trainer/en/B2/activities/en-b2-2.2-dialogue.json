@@ -1,0 +1,194 @@
+{
+  "id": "en-b2-2.2-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 2.2",
+  "estimated_minutes": 5,
+  "lesson_id": "2.2",
+  "status": "draft",
+  "role": "Colleague giving advice to someone who is afraid of a presentation",
+  "can_do": [
+    "I can give advice and instructions to help someone overcome a fear.",
+    "I can calm someone down with firm, kind language and first conditional sentences."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "I am so afraid of speaking in front of the board tomorrow.",
+        "translation": "Tengo mucho miedo de hablar frente a la junta mañana.",
+        "audio": "en-b2-2.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Take a deep breath. You are better prepared than you think.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Calm down. Nobody expects a perfect speech.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "I understand. Let us go through your notes together.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "But what if I forget everything?",
+        "translation": "¿Pero y si olvido todo?",
+        "audio": "en-b2-2.2.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "if"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "you"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "notes"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "pause"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "breathe"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "If you forget a point, pause and check your notes.",
+        "starters": [
+          "If you forget, ...",
+          "If you feel lost, ..."
+        ],
+        "word_bank": [
+          "If",
+          "you",
+          "forget",
+          "a",
+          "point",
+          "pause",
+          "and",
+          "check",
+          "your",
+          "notes"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "My hands shake when I stand up.",
+        "translation": "Me tiemblan las manos cuando me pongo de pie.",
+        "audio": "en-b2-2.2.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "If your hands shake, hold a pen or rest them on the table.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Do not worry about it. People rarely notice.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Breathe slowly and press your feet to the floor.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Should I memorise the whole speech?",
+        "translation": "¿Debería memorizar todo el discurso?",
+        "audio": "en-b2-2.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "No, learn the key points and trust your preparation.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Rehearse it aloud twice, but do not memorise every word.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "I would not. If you memorise it, you may sound stiff.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Where should I look while I speak?",
+        "translation": "¿Hacia dónde debería mirar mientras hablo?",
+        "audio": "en-b2-2.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Focus on one friendly face at a time.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Look at different parts of the room, not at the floor.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Try to make eye contact with someone who nods.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. I feel a bit calmer now.",
+        "translation": "Gracias. Me siento un poco más tranquilo.",
+        "audio": "en-b2-2.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Good. If you need help tomorrow, I will be in the front row.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "You will be fine. Get a good night's sleep.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "I am glad. Remember to drink some water before you start.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "id": "en-b2-2.1-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 2.1",
+  "estimated_minutes": 5,
+  "lesson_id": "2.1",
+  "status": "draft",
+  "role": "Team member talking with a colleague about a change at work and how it feels",
+  "can_do": [
+    "I can talk about a change at work and how I feel about it.",
+    "I can weigh advantages and disadvantages with on the one hand and on the other hand."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Have you heard? The company is going to merge two departments.",
+        "translation": "¿Te enteraste? La empresa va a fusionar dos departamentos.",
+        "audio": "en-b2-2.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, and honestly I feel a little anxious about it.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "I did hear. I am not sure how I feel yet.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Really? That is quite a surprise.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "How do you feel about the change?",
+        "translation": "¿Cómo te sientes con el cambio?",
+        "audio": "en-b2-2.1.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "feel"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "worried"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "anxious"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "excited"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "relieved"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "nervous"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "I feel nervous, but also a little excited.",
+        "starters": [
+          "I feel ...",
+          "To be honest, I am ..."
+        ],
+        "word_bank": [
+          "I",
+          "feel",
+          "nervous",
+          "but",
+          "also",
+          "a",
+          "little",
+          "excited"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "What worries you the most?",
+        "translation": "¿Qué es lo que más te preocupa?",
+        "audio": "en-b2-2.1.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "The workload. We are already stretched thin.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Losing the people I work well with.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Not knowing who my new manager will be.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Is there anything positive about it?",
+        "translation": "¿Hay algo positivo?",
+        "audio": "en-b2-2.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "On the one hand it is risky; on the other hand, it could open doors.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Yes. Although it is stressful, we may learn new skills.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Possibly. We will have more resources, even though the transition will be hard.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "How are you going to adapt?",
+        "translation": "¿Cómo te vas a adaptar?",
+        "audio": "en-b2-2.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I will take things one step at a time.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "I am going to talk to my team before deciding anything.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "I plan to ask for training in the new system.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Good idea. Shall we talk again next week?",
+        "translation": "Buena idea. ¿Hablamos de nuevo la próxima semana?",
+        "audio": "en-b2-2.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, please. It really helps to talk it through.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Sure. Let us have coffee on Monday.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Definitely. Thanks for listening.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

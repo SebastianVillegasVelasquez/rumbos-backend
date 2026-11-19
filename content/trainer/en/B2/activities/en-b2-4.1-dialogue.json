@@ -1,0 +1,192 @@
+{
+  "id": "en-b2-4.1-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 4.1",
+  "estimated_minutes": 5,
+  "lesson_id": "4.1",
+  "status": "draft",
+  "role": "Sustainability adviser explaining what would happen under different choices",
+  "can_do": [
+    "I can use conditionals and the passive to talk about sustainable tourism.",
+    "I can explain what would have happened if a different choice had been made."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "What would happen if the park allowed unlimited visitors?",
+        "translation": "¿Qué pasaría si el parque permitiera visitantes ilimitados?",
+        "audio": "en-b2-4.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "The wildlife would suffer, and the trails would be damaged.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "It would bring money in, but at a very high cost to nature.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "In the long term, the park would lose what made it special.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "And what would have happened without the daily limits?",
+        "translation": "¿Y qué habría pasado sin los límites diarios?",
+        "audio": "en-b2-4.1.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "would",
+              "have"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "would"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "damaged"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "destroyed"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "suffered"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "The trails would have been badly damaged.",
+        "starters": [
+          "The trails would have been ...",
+          "Without them, ... would have ..."
+        ],
+        "word_bank": [
+          "The",
+          "trails",
+          "would",
+          "have",
+          "been",
+          "badly",
+          "damaged"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "What has been done to protect the wetland?",
+        "translation": "¿Qué se ha hecho para proteger el humedal?",
+        "audio": "en-b2-4.1.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Boardwalks have been built so that visitors do not trample the plants.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Access has been limited to guided groups only.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Fishing has been banned during the nesting season.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "If you could change one thing, what would it be?",
+        "translation": "Si pudiera cambiar una cosa, ¿cuál sería?",
+        "audio": "en-b2-4.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I would introduce stricter rules for boats.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "I would invest more in local education.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "I would make the monitoring data public.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "If the community had not been consulted, would the plan have worked?",
+        "translation": "Si no se hubiera consultado a la comunidad, ¿habría funcionado el plan?",
+        "audio": "en-b2-4.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "No. Without local support, it would have failed.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Probably not; residents would have ignored the rules.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "It might have worked, but it would not have lasted.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "A clear lesson. Thank you for sharing it.",
+        "translation": "Una lección clara. Gracias por compartirla.",
+        "audio": "en-b2-4.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "My pleasure. Good planning today protects tomorrow.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "You are welcome. I hope others will follow.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Thank you. It is a lesson we learned the hard way.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

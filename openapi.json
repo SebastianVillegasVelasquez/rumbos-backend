@@ -2948,7 +2948,7 @@
           "trainer"
         ],
         "summary": "List Forms",
-        "description": "Editors only, read-only: every exam form in the deployed content with its\npublication state, drafts included, so a map can be configured before the\nform is published (saving it only warns). Ordered by id.",
+        "description": "Editors only, read-only: every exam form in the deployed content with its\nlanguage, level, purpose and publication state, drafts included, so a map\ncan be configured before the form is published (saving it only warns).\nOrdered by id.",
         "operationId": "list_forms_api_v1_trainer_assessments_forms_get",
         "parameters": [
           {
@@ -4265,6 +4265,22 @@
             "type": "string",
             "title": "Title"
           },
+          "language": {
+            "type": "string",
+            "title": "Language"
+          },
+          "level": {
+            "type": "string",
+            "title": "Level"
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "check_in",
+              "final"
+            ],
+            "title": "Purpose"
+          },
           "publication_state": {
             "type": "string",
             "enum": [
@@ -4279,6 +4295,9 @@
         "required": [
           "id",
           "title",
+          "language",
+          "level",
+          "purpose",
           "publication_state"
         ],
         "title": "AssessmentFormEntry",
@@ -4417,6 +4436,17 @@
             ],
             "title": "Max Words"
           },
+          "max_chars": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Chars"
+          },
           "questions": {
             "anyOf": [
               {
@@ -4439,7 +4469,7 @@
           "prompt"
         ],
         "title": "AssessmentItem",
-        "description": "One item. Which fields are present depends on `type`:\nmcq, listen_choose, gap_choice: options (listen_choose: audio;\ngap_choice: gap_label); match_audio: clips, places; form_fields: fields;\ntemplate_text: template, min_words, max_words; written_answers: questions."
+        "description": "One item. Which fields are present depends on `type`:\nmcq, listen_choose, gap_choice: options (listen_choose: audio;\ngap_choice: gap_label); match_audio: clips, places; form_fields: fields;\ntemplate_text: template, min_words, max_words; written_answers: questions\n(and, if the form sets them, min_words, max_words, max_chars)."
       },
       "AssessmentList": {
         "properties": {
