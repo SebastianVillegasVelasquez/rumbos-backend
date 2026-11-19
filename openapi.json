@@ -4436,6 +4436,17 @@
             ],
             "title": "Max Words"
           },
+          "max_chars": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Chars"
+          },
           "questions": {
             "anyOf": [
               {
@@ -4458,7 +4469,7 @@
           "prompt"
         ],
         "title": "AssessmentItem",
-        "description": "One item. Which fields are present depends on `type`:\nmcq, listen_choose, gap_choice: options (listen_choose: audio;\ngap_choice: gap_label); match_audio: clips, places; form_fields: fields;\ntemplate_text: template, min_words, max_words; written_answers: questions."
+        "description": "One item. Which fields are present depends on `type`:\nmcq, listen_choose, gap_choice: options (listen_choose: audio;\ngap_choice: gap_label); match_audio: clips, places; form_fields: fields;\ntemplate_text: template, min_words, max_words; written_answers: questions\n(and, if the form sets them, min_words, max_words, max_chars)."
       },
       "AssessmentList": {
         "properties": {

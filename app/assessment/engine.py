@@ -128,6 +128,11 @@ def _item_view(
         base["max_words"] = item.max_words
     else:
         base["questions"] = [{"q_id": q.id, "prompt": q.text} for q in item.questions]
+    if isinstance(item, ProductiveItem) and item.type != "template_text":
+        # Only when the form sets them, so an item without them is served as before.
+        for name in ("min_words", "max_words", "max_chars"):
+            if getattr(item, name) is not None:
+                base[name] = getattr(item, name)
     return base
 
 
@@ -178,7 +183,11 @@ def section_summaries(form: AssessmentForm) -> list[dict[str, Any]]:
 # --- responses ------------------------------------------------------------------
 
 
-def _values(response: Mapping[str, Any], allowed: list[str]) -> dict[str, str]:
+def _values(
+    response: Mapping[str, Any],
+    allowed: list[str],
+    limit: int = MAX_FREE_TEXT_CHARS,
+) -> dict[str, str]:
     values = response.get("values")
     if not isinstance(values, Mapping) or not set(values) <= set(allowed):
         raise InvalidResponseError("unknown field")
@@ -186,7 +195,7 @@ def _values(response: Mapping[str, Any], allowed: list[str]) -> dict[str, str]:
     for key, value in values.items():
         if not isinstance(value, str):
             raise InvalidResponseError("a value must be text")
-        out[key] = value[:MAX_FREE_TEXT_CHARS]
+        out[key] = value[:limit]
     return out
 
 
@@ -223,11 +232,12 @@ def clean_response(
             seen.add(pair[0])
             out.append([pair[0], pair[1]])
         return {"pairs": out}
+    limit = item.max_chars or MAX_FREE_TEXT_CHARS
     if item.type == "form_fields":
-        return {"values": _values(response, [f.id for f in item.fields])}
+        return {"values": _values(response, [f.id for f in item.fields], limit)}
     if item.type == "template_text":
         return {"values": _values(response, blank_ids(item.template or ""))}
-    return {"values": _values(response, [q.id for q in item.questions])}
+    return {"values": _values(response, [q.id for q in item.questions], limit)}
 
 
 # --- scoring --------------------------------------------------------------------
@@ -273,7 +283,11 @@ def _productive_points(
         shown = {i: values.get(i, "") for i in order}
         text = " ".join(v for v in shown.values() if v)
     result = score(
-        runtime.rubrics[item.rubric], Response(shown, text), runtime.vocabulary, rules
+        runtime.rubrics[item.rubric],
+        Response(shown, text),
+        runtime.vocabulary,
+        rules,
+        item.max_chars or MAX_FREE_TEXT_CHARS,
     )
     return result.points
 

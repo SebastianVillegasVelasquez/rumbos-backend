@@ -133,6 +133,20 @@ class Context:
     response: Response
     vocabulary: frozenset[str]
     rules: LanguageRules
+    # Characters of a value that count; 300 unless the item allows a longer text.
+    limit: int = MAX_FREE_TEXT_CHARS
+
+    def clean(self, value: str) -> str:
+        return value[: self.limit].strip()
+
+    def tokens(self, value: str) -> list[str]:
+        return self.rules.tokenize(value, self.limit)
+
+    def cased(self, value: str) -> list[str]:
+        return self.rules.tokenize_cased(value, self.limit)
+
+    def norm(self, value: str) -> str:
+        return self.rules.normalize(value, self.limit)
 
     def targets(self, spec: CheckSpec) -> list[tuple[str, str]]:
         out: list[tuple[str, str]] = []
@@ -170,7 +184,7 @@ def is_placeholder(value: str, rules: LanguageRules) -> bool:
 
 def _field_not_empty(ctx: Context, spec: CheckSpec) -> Fraction:
     items = ctx.targets(spec)
-    return _share(sum(1 for _, v in items if _clean(v)), len(items))
+    return _share(sum(1 for _, v in items if ctx.clean(v)), len(items))
 
 
 def _not_placeholder(ctx: Context, spec: CheckSpec) -> Fraction:
@@ -184,7 +198,7 @@ def _starts_with_capital(ctx: Context, spec: CheckSpec) -> Fraction:
     items = ctx.targets(spec)
     ok = 0
     for _, value in items:
-        first = next((c for c in _clean(value) if c.isalpha()), "")
+        first = next((c for c in ctx.clean(value) if c.isalpha()), "")
         ok += first.isupper()
     return _share(ok, len(items))
 
@@ -192,7 +206,7 @@ def _starts_with_capital(ctx: Context, spec: CheckSpec) -> Fraction:
 def _word_count_between(ctx: Context, spec: CheckSpec) -> Fraction:
     low, high = spec.min or 0, spec.max if spec.max is not None else 10**9
     items = ctx.targets(spec)
-    ok = sum(1 for _, v in items if low <= len(ctx.rules.tokenize(v)) <= high)
+    ok = sum(1 for _, v in items if low <= len(ctx.tokens(v)) <= high)
     return _share(ok, len(items))
 
 
@@ -204,24 +218,24 @@ def _contains(tokens: Sequence[str], phrase: Sequence[str]) -> bool:
 
 
 def _template_phrases_present(ctx: Context, spec: CheckSpec) -> Fraction:
-    tokens = [t for _, v in ctx.targets(spec) for t in ctx.rules.tokenize(v)]
-    phrases = [ctx.rules.tokenize(p) for p in spec.phrases]
+    tokens = [t for _, v in ctx.targets(spec) for t in ctx.tokens(v)]
+    phrases = [ctx.tokens(p) for p in spec.phrases]
     return _share(sum(1 for p in phrases if _contains(tokens, p)), len(phrases))
 
 
 def _no_blank_left(ctx: Context, spec: CheckSpec) -> Fraction:
     items = ctx.targets(spec)
-    ok = all(_clean(v) and "_" not in v for _, v in items)
+    ok = all(ctx.clean(v) and "_" not in v for _, v in items)
     return ONE if ok and items else ZERO
 
 
 def _uses_model_phrase(ctx: Context, spec: CheckSpec) -> Fraction:
     """Each target counts when it holds at least one of the phrases."""
-    phrases = [ctx.rules.tokenize(p) for p in spec.phrases]
+    phrases = [ctx.tokens(p) for p in spec.phrases]
     items = ctx.targets(spec)
     ok = 0
     for _, value in items:
-        tokens = ctx.rules.tokenize(value)
+        tokens = ctx.tokens(value)
         ok += any(_contains(tokens, p) for p in phrases)
     return _share(ok, len(items))
 
@@ -229,10 +243,10 @@ def _uses_model_phrase(ctx: Context, spec: CheckSpec) -> Fraction:
 def _known_words(ctx: Context, spec: CheckSpec) -> Fraction:
     known = total = 0
     for _, value in ctx.targets(spec):
-        cased = ctx.rules.tokenize_cased(value)
+        cased = ctx.cased(value)
         for index, word in enumerate(cased):
             total += 1
-            folded = ctx.rules.normalize(word)
+            folded = ctx.norm(word)
             if folded in ctx.vocabulary or any(c.isdigit() for c in word):
                 known += 1
             elif word[:1].isupper() and (index > 0 or spec.allow_sentence_initial):
@@ -241,7 +255,7 @@ def _known_words(ctx: Context, spec: CheckSpec) -> Fraction:
 
 
 def _values_distinct(ctx: Context, spec: CheckSpec) -> Fraction:
-    values = [ctx.rules.normalize(v) for _, v in ctx.targets(spec) if _clean(v)]
+    values = [ctx.norm(v) for _, v in ctx.targets(spec) if ctx.clean(v)]
     return ONE if values and len(set(values)) == len(values) else ZERO
 
 
@@ -249,7 +263,7 @@ def _contains_number(ctx: Context, spec: CheckSpec) -> Fraction:
     items = ctx.targets(spec)
     ok = 0
     for _, value in items:
-        tokens = ctx.rules.tokenize(value)
+        tokens = ctx.tokens(value)
         ok += any(any(c.isdigit() for c in t) or t in _NUMBER_WORDS for t in tokens)
     return _share(ok, len(items))
 
@@ -257,14 +271,14 @@ def _contains_number(ctx: Context, spec: CheckSpec) -> Fraction:
 def _digits_at_least(ctx: Context, spec: CheckSpec) -> Fraction:
     items = ctx.targets(spec)
     ok = sum(
-        1 for _, v in items if sum(c.isdigit() for c in _clean(v)) >= (spec.min or 1)
+        1 for _, v in items if sum(c.isdigit() for c in ctx.clean(v)) >= (spec.min or 1)
     )
     return _share(ok, len(items))
 
 
 def _terminals_at_least(ctx: Context, spec: CheckSpec) -> Fraction:
     wanted = spec.min or 1
-    count = sum(_clean(v).count(c) for _, v in ctx.targets(spec) for c in ".!?")
+    count = sum(ctx.clean(v).count(c) for _, v in ctx.targets(spec) for c in ".!?")
     return min(ONE, Fraction(count, wanted))
 
 
@@ -280,7 +294,7 @@ def _past_verbs(ctx: Context, spec: CheckSpec) -> Fraction:
     irregular = {p.casefold() for p in spec.phrases}
     count = 0
     for _, value in ctx.targets(spec):
-        for token in ctx.rules.tokenize(value):
+        for token in ctx.tokens(value):
             count += token in irregular or (len(token) > 3 and token.endswith("ed"))
     return min(ONE, Fraction(count, spec.min or 1))
 
@@ -292,7 +306,7 @@ def _be_plus_ing(ctx: Context, spec: CheckSpec) -> Fraction:
     items = ctx.targets(spec)
     ok = 0
     for _, value in items:
-        tokens = ctx.rules.tokenize(value)
+        tokens = ctx.tokens(value)
         ok += any(
             a in _BE_FORMS and len(b) > 4 and b.endswith("ing")
             for a, b in pairwise(tokens)
@@ -331,8 +345,9 @@ def score(
     response: Response,
     vocabulary: frozenset[str],
     rules: LanguageRules,
+    limit: int = MAX_FREE_TEXT_CHARS,
 ) -> RubricScore:
-    ctx = Context(response, vocabulary, rules)
+    ctx = Context(response, vocabulary, rules, limit)
     by_criterion: dict[str, Fraction] = {}
     for criterion in rubric.criteria:
         shares = [

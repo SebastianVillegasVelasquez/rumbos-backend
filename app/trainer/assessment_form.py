@@ -106,11 +106,21 @@ class ProductiveItem(_ItemBase):
     template: str | None = None
     min_words: int | None = None
     max_words: int | None = None
+    # Characters of each answer that are kept and scored. Without it the shared
+    # cap of 300 applies, which fits a sentence or two, not a 150-word letter.
+    # Not for `template_text`, whose blanks are short by construction.
+    max_chars: int | None = Field(default=None, ge=1, le=3000)
     questions: list[Option] = Field(default_factory=list)
     # What the document says about how it is evaluated, verbatim.
     source_rubric: str
     # Set when the written form is our equivalent of a spoken task.
     written_equivalent_of: str | None = None
+
+    @model_validator(mode="after")
+    def _max_chars_fits_the_type(self) -> "ProductiveItem":
+        if self.max_chars is not None and self.type == "template_text":
+            raise ValueError(f"{self.item_id}: max_chars is not for template_text")
+        return self
 
 
 AssessmentItemDef = Annotated[
