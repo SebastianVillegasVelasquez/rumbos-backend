@@ -416,3 +416,49 @@ the level of the form it selected: an A1 map could save `a2-form-a`.
   map with exams on and the trainer off can still hold a form of any level.
   Proposal, not done: make the editor send `trainer.level` whenever it enables
   exams, or add `assessments.level`, so the guard can always run. Not guessed.
+
+## B2 (`feat/b2-pack-and-form-identity`)
+
+## D42. A written task can keep a longer answer (`max_chars`)
+
+The shared cap of 300 characters cuts a 120 to 160 word letter at about 45
+words. `ProductiveItem.max_chars` (1 to 3000, not allowed on `template_text`)
+overrides it per item; without it the cap is unchanged, so A1 and A2 behave as
+before. The engine cleans the response, the rubric (`Context.limit`) and the
+served item view (`max_chars`, plus `min_words`/`max_words` for written tasks)
+with that limit. B2 Writing uses 1500, Speaking 900.
+
+## D43. Writing Task 2 is one item that shows both prompts
+
+The platform has no choice of task. The item shows (a) and (b) with one box and
+the rubric credits the language of either option. It cannot check which option
+was answered or that the text answers it (see the REVIEW file, e).
+
+## D44. B2 Module I has six lessons
+
+The exam tags lessons 1.1 to 1.6 and the linter requires every tagged lesson to
+exist, so Module I has six (not four) and the pack has 18 lessons (6, 5, 4, 3).
+The split of Module I is ours and needs review.
+
+## D45. Proxy rubrics for B2 are wide and weak, on purpose and in the open
+
+Length windows are 100 to 190 words (letters, stated 120 to 160) and 25 to 200
+(Speaking), all or nothing per criterion. The proxy checks phrase presence,
+sentence terminals, linking words and length; a list of the expected phrases
+scores 5 of 5 in Writing Task 1 and a test pins that. Pass-rule numbers
+(production needed with perfect receptive: more than 10 of 30; receptive needed
+with perfect production: 31 of 45 items) are in `REVIEW-B2-checkin.md`.
+
+## D46. Spoken text expansions are logged
+
+Only three practice clips and the exam's `GDS` (two clips) differ between the
+shown and the spoken text. `tests/test_b2_practice.py` fails if a clip is spoken
+differently and is not in the REVIEW file's table.
+
+## D47. B2 reuses the A2 audio tooling unchanged
+
+Same `tts.json` (Kokoro-82M ONNX, `am_michael` host, `af_heart` guest, speed
+0.85, 450 ms between turns, mp3 mono 24 kHz 48 kbps, -19 LUFS), same command
+(`python -m app.scripts.content tts --pack en/B2`). Conversations use both
+voices; dialogue partner lines use the guest voice; single-speaker clips use
+the host voice.
