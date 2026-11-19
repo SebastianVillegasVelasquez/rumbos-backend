@@ -354,6 +354,7 @@ def build(source: dict[str, Any]) -> tuple[AssessmentForm, list[dict[str, Any]]]
             "title": "Inglés A2 · Evaluación diagnóstica · Forma A · Diagnóstico de entrada",
             "language": "en",
             "level": "A2",
+            "purpose": "check_in",
             "status": "draft",
             "sections": ordered,
             "source_notes": notes,

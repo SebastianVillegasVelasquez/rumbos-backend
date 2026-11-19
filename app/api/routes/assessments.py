@@ -78,10 +78,18 @@ ServiceDep = Annotated[AssessmentService, Depends(get_service)]
 @editor_router.get("/assessments/forms", response_model=list[AssessmentFormEntry])
 async def list_forms(catalog: CatalogDep) -> Any:
     """Editors only, read-only: every exam form in the deployed content with its
-    publication state, drafts included, so a map can be configured before the
-    form is published (saving it only warns). Ordered by id."""
+    language, level, purpose and publication state, drafts included, so a map
+    can be configured before the form is published (saving it only warns).
+    Ordered by id."""
     forms = [
-        {"id": form.form_id, "title": form.title, "publication_state": form.status}
+        {
+            "id": form.form_id,
+            "title": form.title,
+            "language": form.language,
+            "level": form.level,
+            "purpose": form.purpose,
+            "publication_state": form.status,
+        }
         for pack in catalog.packs.values()
         for form in pack.forms.values()
     ]

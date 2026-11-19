@@ -668,7 +668,14 @@ async def test_an_editor_lists_the_forms_with_their_state(env: dict[str, Any]) -
     r = await ed.get("/trainer/assessments/forms")
     assert r.status_code == 200
     forms = {f["id"]: f for f in r.json()}
-    assert set(forms["a1-form-a"]) == {"id", "title", "publication_state"}
+    assert set(forms["a1-form-a"]) == {
+        "id",
+        "title",
+        "language",
+        "level",
+        "purpose",
+        "publication_state",
+    }
     assert forms["a1-form-a"]["publication_state"] in {"draft", "reviewed", "published"}
     assert [f["id"] for f in r.json()] == sorted(forms)
 

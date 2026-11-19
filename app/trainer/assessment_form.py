@@ -159,6 +159,9 @@ class AssessmentForm(_Frozen):
     title: str
     language: str
     level: str
+    # `check_in` (the entry diagnostic, Form A) or `final` (the exit exam). It is
+    # the form's own identity: the settings decide which one a map uses.
+    purpose: Literal["check_in", "final"] = "check_in"
     status: PublicationState = "draft"
     reviewed_by: str | None = None
     reviewed_at: datetime | None = None

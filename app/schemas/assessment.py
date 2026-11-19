@@ -71,6 +71,10 @@ class AssessmentFormEntry(_Out):
 
     id: str
     title: str
+    # What the form is, so an editor never has to guess it from the title.
+    language: str
+    level: str
+    purpose: Literal["check_in", "final"]
     publication_state: Literal["draft", "reviewed", "published"]
 
 

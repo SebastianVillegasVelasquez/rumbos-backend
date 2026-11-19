@@ -42,6 +42,9 @@ async def test_the_editor_forms_list_has_the_a2_form_as_a_draft(
     assert forms["a2-form-a"] == {
         "id": "a2-form-a",
         "title": "Inglés A2 · Evaluación diagnóstica · Forma A · Diagnóstico de entrada",
+        "language": "en",
+        "level": "A2",
+        "purpose": "check_in",
         "publication_state": "draft",
     }
     assert "a1-form-a" in forms
