@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 4.3",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Receptionist and waiter",
   "can_do": [
     "I can help a guest at check-in and check-out.",
@@ -196,5 +196,7 @@
       ],
       "explanation": "Use Could I have + the menu."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

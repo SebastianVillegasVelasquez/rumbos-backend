@@ -4,7 +4,7 @@
   "skill": "dialogue",
   "title": "Talk it through 1.2",
   "estimated_minutes": 5,
-  "status": "draft",
+  "status": "published",
   "role": "Receptionist at a small hotel",
   "can_do": [
     "I can answer a guest's questions about a room.",
@@ -170,5 +170,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 1.3",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Guide making small talk with a guest",
   "can_do": [
     "I can say what I like and enjoy doing.",
@@ -195,5 +195,7 @@
       ],
       "explanation": "Use like or enjoy + swimming."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

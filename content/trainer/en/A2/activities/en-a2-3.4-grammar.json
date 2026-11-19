@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 3.4",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Host giving advice to a guest",
   "can_do": [
     "I can ask for and give advice with should.",
@@ -192,5 +192,7 @@
       ],
       "explanation": "Use You should + rest."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

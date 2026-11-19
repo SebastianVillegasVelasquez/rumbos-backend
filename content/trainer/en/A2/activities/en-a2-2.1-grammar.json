@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 2.1",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Host helping a guest with a problem",
   "can_do": [
     "I can say what happened in the past with the past simple.",
@@ -199,5 +199,7 @@
       ],
       "explanation": "Use I am sorry + for the late breakfast."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

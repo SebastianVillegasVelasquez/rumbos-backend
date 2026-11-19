@@ -4,7 +4,7 @@
   "skill": "listening",
   "title": "Listen and choose 1.1",
   "estimated_minutes": 4,
-  "status": "draft",
+  "status": "published",
   "role": "Guide planning the day with a guest",
   "can_do": [
     "I can say what I am going to do with a time marker.",
@@ -77,5 +77,7 @@
       "explanation": "Half past six is 6:30.",
       "audio": "en-a2-1.1.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

@@ -4,7 +4,7 @@
   "skill": "listening",
   "title": "Listen and choose 2.1",
   "estimated_minutes": 4,
-  "status": "draft",
+  "status": "published",
   "role": "Host helping a guest with a problem",
   "can_do": [
     "I can say what happened in the past with the past simple.",
@@ -78,5 +78,7 @@
       "explanation": "The speaker says: I broke the lamp.",
       "audio": "en-a2-2.1.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

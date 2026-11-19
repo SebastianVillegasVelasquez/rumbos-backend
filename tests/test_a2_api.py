@@ -34,7 +34,7 @@ A2 = {
 }
 
 
-async def test_the_editor_forms_list_has_the_a2_form_as_a_draft(
+async def test_the_editor_forms_list_has_the_a2_form_as_published(
     env: dict[str, Any],
 ) -> None:
     ed = await env["editor"]()
@@ -45,43 +45,39 @@ async def test_the_editor_forms_list_has_the_a2_form_as_a_draft(
         "language": "en",
         "level": "A2",
         "purpose": "check_in",
-        "publication_state": "draft",
+        "publication_state": "published",
     }
     assert "a1-form-a" in forms
 
 
-async def test_a_map_for_level_a2_saves_with_content_warnings(
+async def test_a_map_for_level_a2_saves_without_content_warnings(
     env: dict[str, Any],
 ) -> None:
     editor = env["client"]()
     created = await make_map(editor, course=COURSE)
     r = await put_settings(editor, created["id"], A2)
     assert r.status_code == 200, r.text
-    warnings = {(w["path"], w["rule"]) for w in r.json()["warnings"]}
-    assert warnings == {
-        ("trainer.level", "content_not_published"),
-        ("assessments.check_in.form_id", "content_not_published"),
-    }
+    assert r.json()["warnings"] == []
     await publish(editor, created["id"])
 
 
-async def test_an_editor_in_preview_sees_the_whole_a2_catalog_as_draft(
+async def test_an_editor_sees_the_whole_a2_catalog_as_published(
     env: dict[str, Any],
 ) -> None:
     await env["setup"](A2)
     ed = await env["editor"]()
     catalog = (await ed.get("/trainer/catalog")).json()
-    assert catalog["enabled"] and catalog["preview"]
+    assert catalog["enabled"]
     assert (catalog["language"], catalog["level"]) == ("en", "A2")
     assert [m["key"] for m in catalog["modules"]] == ["M1", "M2", "M3", "M4"]
     lessons = [le for m in catalog["modules"] for le in m["lessons"]]
     assert len(lessons) == 13 and {le["vocabulary_count"] for le in lessons} == {8}
     activities = [a for le in lessons for a in le["activities"]]
     assert len(activities) == 39
-    assert {a["publication_state"] for a in activities} == {"draft"}
+    assert {a["publication_state"] for a in activities} == {"published"}
 
 
-async def test_a_student_sees_nothing_of_a2_while_it_is_not_published(
+async def test_a_student_sees_the_published_a2_without_draft_serving(
     env: dict[str, Any],
 ) -> None:
     base = get_settings()
@@ -90,14 +86,12 @@ async def test_a_student_sees_nothing_of_a2_while_it_is_not_published(
     )
     await env["setup"](A2)
     s = await env["student"]()
-    assert (await s.get("/trainer/catalog")).json() == {
-        "enabled": False,
-        "reason": "no_published_content",
-        "preview": False,
-    }
+    catalog = (await s.get("/trainer/catalog")).json()
+    assert catalog["enabled"] and not catalog["preview"]
+    assert (catalog["language"], catalog["level"]) == ("en", "A2")
     listed = (await s.get("/trainer/assessments")).json()["items"][0]
-    assert listed["state"] == "locked" and "publication_state" not in listed
-    assert (await s.post("/trainer/assessments/check_in/attempts")).status_code == 404
+    assert listed["state"] != "locked"
+    assert (await s.post("/trainer/assessments/check_in/attempts")).status_code == 201
 
 
 async def test_a_student_takes_the_a2_check_in_through_the_same_endpoints(

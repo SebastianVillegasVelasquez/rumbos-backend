@@ -4,7 +4,7 @@
   "skill": "listening",
   "title": "Listen and choose 4.3",
   "estimated_minutes": 4,
-  "status": "draft",
+  "status": "published",
   "role": "Receptionist and waiter",
   "can_do": [
     "I can help a guest at check-in and check-out.",
@@ -77,5 +77,7 @@
       "explanation": "The speaker says: leave your key at the desk.",
       "audio": "en-a2-4.3.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

@@ -4,7 +4,7 @@
   "skill": "dialogue",
   "title": "Talk it through 1.4",
   "estimated_minutes": 5,
-  "status": "draft",
+  "status": "published",
   "role": "Shop assistant at a craft market",
   "can_do": [
     "I can ask how much things cost.",
@@ -180,5 +180,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

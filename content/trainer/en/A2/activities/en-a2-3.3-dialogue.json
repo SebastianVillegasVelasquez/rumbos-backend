@@ -4,7 +4,7 @@
   "skill": "dialogue",
   "title": "Talk it through 3.3",
   "estimated_minutes": 5,
-  "status": "draft",
+  "status": "published",
   "role": "Receptionist on the telephone",
   "can_do": [
     "I can answer the telephone politely.",
@@ -182,5 +182,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

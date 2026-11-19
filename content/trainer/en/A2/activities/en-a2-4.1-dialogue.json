@@ -4,7 +4,7 @@
   "skill": "dialogue",
   "title": "Talk it through 4.1",
   "estimated_minutes": 5,
-  "status": "draft",
+  "status": "published",
   "role": "Eco-lodge host",
   "can_do": [
     "I can tell guests how to save water and energy.",
@@ -180,5 +180,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

@@ -4,7 +4,7 @@
   "skill": "listening",
   "title": "Listen and choose 1.4",
   "estimated_minutes": 4,
-  "status": "draft",
+  "status": "published",
   "role": "Shop assistant at a craft market",
   "can_do": [
     "I can ask how much things cost.",
@@ -77,5 +77,7 @@
       "explanation": "The speaker says: every day from eight to five.",
       "audio": "en-a2-1.4.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }
