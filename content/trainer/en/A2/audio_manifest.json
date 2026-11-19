@@ -686,6 +686,240 @@
       "file": "audio/en-a2-1.4.l3.mp3",
       "duration_s": null,
       "transcript": "The market is open every day from eight to five."
+    },
+    {
+      "id": "en-a2-2.1.d1",
+      "text": "Hi, sorry to bother you. The shower is not working.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Hi, sorry to bother you. The shower is not working."
+        }
+      ],
+      "file": "audio/en-a2-2.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hi, sorry to bother you. The shower is not working."
+    },
+    {
+      "id": "en-a2-2.1.d2",
+      "text": "There is no hot water. What should I do?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "There is no hot water. What should I do?"
+        }
+      ],
+      "file": "audio/en-a2-2.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "There is no hot water. What should I do?"
+    },
+    {
+      "id": "en-a2-2.1.d3",
+      "text": "Thank you. What are you doing now?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. What are you doing now?"
+        }
+      ],
+      "file": "audio/en-a2-2.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. What are you doing now?"
+    },
+    {
+      "id": "en-a2-2.1.d4",
+      "text": "Yesterday we visited the market. It was great!",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Yesterday we visited the market. It was great!"
+        }
+      ],
+      "file": "audio/en-a2-2.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Yesterday we visited the market. It was great!"
+    },
+    {
+      "id": "en-a2-2.1.d5",
+      "text": "I'm sorry I was late for breakfast.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I'm sorry I was late for breakfast."
+        }
+      ],
+      "file": "audio/en-a2-2.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "I'm sorry I was late for breakfast."
+    },
+    {
+      "id": "en-a2-2.1.d6",
+      "text": "Thanks for your help today.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thanks for your help today."
+        }
+      ],
+      "file": "audio/en-a2-2.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thanks for your help today."
+    },
+    {
+      "id": "en-a2-2.1.l1",
+      "text": "Yesterday we visited a small village and ate fish.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Yesterday we visited a small village and ate fish."
+        }
+      ],
+      "file": "audio/en-a2-2.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "Yesterday we visited a small village and ate fish."
+    },
+    {
+      "id": "en-a2-2.1.l2",
+      "text": "Please wait here. The manager is talking on the phone.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Please wait here. The manager is talking on the phone."
+        }
+      ],
+      "file": "audio/en-a2-2.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "Please wait here. The manager is talking on the phone."
+    },
+    {
+      "id": "en-a2-2.1.l3",
+      "text": "I'm sorry. I broke the lamp in my room.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I'm sorry. I broke the lamp in my room."
+        }
+      ],
+      "file": "audio/en-a2-2.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "I'm sorry. I broke the lamp in my room."
+    },
+    {
+      "id": "en-a2-2.2.d1",
+      "text": "Hello. I need two tickets to the lake, please.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Hello. I need two tickets to the lake, please."
+        }
+      ],
+      "file": "audio/en-a2-2.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hello. I need two tickets to the lake, please."
+    },
+    {
+      "id": "en-a2-2.2.d2",
+      "text": "Return, please. How much is it?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Return, please. How much is it?"
+        }
+      ],
+      "file": "audio/en-a2-2.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "Return, please. How much is it?"
+    },
+    {
+      "id": "en-a2-2.2.d3",
+      "text": "I don't feel well. I have a stomachache.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I don't feel well. I have a stomachache."
+        }
+      ],
+      "file": "audio/en-a2-2.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "I don't feel well. I have a stomachache."
+    },
+    {
+      "id": "en-a2-2.2.d4",
+      "text": "It's cold here. I need a jacket.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "It's cold here. I need a jacket."
+        }
+      ],
+      "file": "audio/en-a2-2.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "It's cold here. I need a jacket."
+    },
+    {
+      "id": "en-a2-2.2.d5",
+      "text": "What time do you get up every day?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What time do you get up every day?"
+        }
+      ],
+      "file": "audio/en-a2-2.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "What time do you get up every day?"
+    },
+    {
+      "id": "en-a2-2.2.d6",
+      "text": "Thank you. Have a nice trip!",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. Have a nice trip!"
+        }
+      ],
+      "file": "audio/en-a2-2.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. Have a nice trip!"
+    },
+    {
+      "id": "en-a2-2.2.l1",
+      "text": "I need a return ticket to the lake for Friday.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I need a return ticket to the lake for Friday."
+        }
+      ],
+      "file": "audio/en-a2-2.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "I need a return ticket to the lake for Friday."
+    },
+    {
+      "id": "en-a2-2.2.l2",
+      "text": "My stomach hurts and I feel tired.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "My stomach hurts and I feel tired."
+        }
+      ],
+      "file": "audio/en-a2-2.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "My stomach hurts and I feel tired."
+    },
+    {
+      "id": "en-a2-2.2.l3",
+      "text": "I want a warm jacket and a pair of boots.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I want a warm jacket and a pair of boots."
+        }
+      ],
+      "file": "audio/en-a2-2.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "I want a warm jacket and a pair of boots."
     }
   ]
 }

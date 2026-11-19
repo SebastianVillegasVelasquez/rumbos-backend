@@ -1,0 +1,203 @@
+{
+  "id": "en-a2-2.1-grammar",
+  "lesson_id": "2.1",
+  "skill": "grammar",
+  "title": "Practice 2.1",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Host helping a guest with a problem",
+  "can_do": [
+    "I can say what happened in the past with the past simple.",
+    "I can say what is happening now.",
+    "I can apologise and give a simple instruction."
+  ],
+  "items": [
+    {
+      "id": "a2-2.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is in the past?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "We are visiting the lake now."
+        },
+        {
+          "id": "o2",
+          "text": "We visited the lake yesterday."
+        },
+        {
+          "id": "o3",
+          "text": "We visit the lake every week."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "Visited is the past simple: we visited the lake yesterday.",
+      "error_tags": {
+        "o1": {
+          "tag": "tense",
+          "text": "Are visiting is happening now, not in the past."
+        }
+      }
+    },
+    {
+      "id": "a2-2.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "Last week I {1} a nice hat.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "buy"
+            },
+            {
+              "id": "o2",
+              "text": "buyed"
+            },
+            {
+              "id": "o3",
+              "text": "bought"
+            }
+          ],
+          "correct": "o3",
+          "error_tag": {
+            "tag": "irregular_verb",
+            "text": "Buy is irregular: bought, not buyed."
+          }
+        }
+      ],
+      "explanation": "Buy is irregular: the past is bought."
+    },
+    {
+      "id": "a2-2.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the verb in the present continuous.",
+      "template": "Right now the cook {1} the soup.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "is making",
+            "is cooking",
+            "is preparing"
+          ],
+          "error_tag": {
+            "tag": "present_continuous",
+            "text": "Use is + a verb with -ing."
+          }
+        }
+      ],
+      "explanation": "Use is + verb with -ing for an action in progress: is cooking."
+    },
+    {
+      "id": "a2-2.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "I"
+        },
+        {
+          "id": "t2",
+          "text": "am"
+        },
+        {
+          "id": "t3",
+          "text": "sorry"
+        },
+        {
+          "id": "t4",
+          "text": "for"
+        },
+        {
+          "id": "t5",
+          "text": "the"
+        },
+        {
+          "id": "t6",
+          "text": "problem"
+        }
+      ],
+      "explanation": "The apology is: I am sorry for + the problem.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with I am sorry."
+      }
+    },
+    {
+      "id": "a2-2.1.ex.05",
+      "type": "match",
+      "prompt": "Match the problem with the instruction.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "The light is off."
+        },
+        {
+          "id": "l2",
+          "text": "The room is cold."
+        },
+        {
+          "id": "l3",
+          "text": "The towel is dirty."
+        },
+        {
+          "id": "l4",
+          "text": "The key is lost."
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "Turn on the switch."
+        },
+        {
+          "id": "r2",
+          "text": "Close the window."
+        },
+        {
+          "id": "r3",
+          "text": "Ask for a new one."
+        },
+        {
+          "id": "r4",
+          "text": "Go to the reception."
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each instruction solves its problem."
+    },
+    {
+      "id": "a2-2.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Apologise for a late breakfast. Use I am sorry.",
+      "accepted": [
+        "I am sorry for the late breakfast",
+        "I'm sorry for the late breakfast",
+        "I am sorry the breakfast is late",
+        "I'm sorry the breakfast is late"
+      ],
+      "explanation": "Use I am sorry + for the late breakfast."
+    }
+  ]
+}

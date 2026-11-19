@@ -1,0 +1,205 @@
+{
+  "id": "en-a2-2.2-grammar",
+  "lesson_id": "2.2",
+  "skill": "grammar",
+  "title": "Practice 2.2",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Travel assistant at a station",
+  "can_do": [
+    "I can buy a ticket and ask the price.",
+    "I can say what hurts and what I need to wear.",
+    "I can talk about my daily routine."
+  ],
+  "items": [
+    {
+      "id": "a2-2.2.ex.01",
+      "type": "mcq",
+      "prompt": "Which word is a piece of clothing?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "ticket"
+        },
+        {
+          "id": "o2",
+          "text": "stomach"
+        },
+        {
+          "id": "o3",
+          "text": "jacket"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "A jacket is something you wear.",
+      "error_tags": {
+        "o1": {
+          "tag": "vocabulary",
+          "text": "A ticket is for travel, not clothing."
+        }
+      }
+    },
+    {
+      "id": "a2-2.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "My head {1}.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "hurts"
+            },
+            {
+              "id": "o2",
+              "text": "hurt"
+            },
+            {
+              "id": "o3",
+              "text": "hurting"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "agreement",
+            "text": "Use hurts with my head."
+          }
+        }
+      ],
+      "explanation": "With a singular subject we add -s: my head hurts."
+    },
+    {
+      "id": "a2-2.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "She {1} up at six every day.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "gets"
+          ],
+          "error_tag": {
+            "tag": "third_person",
+            "text": "With she, add -s: gets."
+          }
+        }
+      ],
+      "explanation": "With she we add -s in the present simple: gets."
+    },
+    {
+      "id": "a2-2.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "I"
+        },
+        {
+          "id": "t2",
+          "text": "need"
+        },
+        {
+          "id": "t3",
+          "text": "two"
+        },
+        {
+          "id": "t4",
+          "text": "tickets"
+        },
+        {
+          "id": "t5",
+          "text": "to"
+        },
+        {
+          "id": "t6",
+          "text": "the"
+        },
+        {
+          "id": "t7",
+          "text": "lake"
+        }
+      ],
+      "explanation": "The order is: I need + number + tickets + place.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with I need."
+      }
+    },
+    {
+      "id": "a2-2.2.ex.05",
+      "type": "match",
+      "prompt": "Match the problem with the body part.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "headache"
+        },
+        {
+          "id": "l2",
+          "text": "toothache"
+        },
+        {
+          "id": "l3",
+          "text": "stomachache"
+        },
+        {
+          "id": "l4",
+          "text": "sore foot"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "head"
+        },
+        {
+          "id": "r2",
+          "text": "tooth"
+        },
+        {
+          "id": "r3",
+          "text": "stomach"
+        },
+        {
+          "id": "r4",
+          "text": "foot"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each pain is named after a part of the body."
+    },
+    {
+      "id": "a2-2.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Ask for a ticket to the lake. Use I need.",
+      "accepted": [
+        "I need a ticket to the lake",
+        "I need one ticket to the lake",
+        "I need a ticket to the lake please",
+        "I need one ticket to the lake please"
+      ],
+      "explanation": "Use I need + a ticket + to the lake."
+    }
+  ]
+}
