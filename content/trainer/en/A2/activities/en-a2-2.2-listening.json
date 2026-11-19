@@ -4,7 +4,7 @@
   "skill": "listening",
   "title": "Listen and choose 2.2",
   "estimated_minutes": 4,
-  "status": "draft",
+  "status": "published",
   "role": "Travel assistant at a station",
   "can_do": [
     "I can buy a ticket and ask the price.",
@@ -78,5 +78,7 @@
       "explanation": "The speaker says: a warm jacket and a pair of boots.",
       "audio": "en-a2-2.2.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

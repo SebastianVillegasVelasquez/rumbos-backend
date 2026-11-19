@@ -4,7 +4,7 @@
   "skill": "listening",
   "title": "Listen and choose 1.2",
   "estimated_minutes": 4,
-  "status": "draft",
+  "status": "published",
   "role": "Receptionist at a small hotel",
   "can_do": [
     "I can answer a guest's questions about a room.",
@@ -77,5 +77,7 @@
       "explanation": "The speaker says: next to the reception.",
       "audio": "en-a2-1.2.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

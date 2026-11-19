@@ -4,7 +4,7 @@
   "skill": "dialogue",
   "title": "Talk it through 1.1",
   "estimated_minutes": 5,
-  "status": "draft",
+  "status": "published",
   "role": "Guide planning the day with a guest",
   "can_do": [
     "I can say what I am going to do with a time marker.",
@@ -165,5 +165,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

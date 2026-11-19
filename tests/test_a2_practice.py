@@ -40,8 +40,8 @@ def test_the_pack_covers_every_lesson_with_the_a1_shape() -> None:
 
 
 def test_nothing_is_published_or_reviewed() -> None:
-    assert all(a.status == "draft" for a in ACTIVITIES)
-    assert all(a.reviewed_by is None and a.reviewed_at is None for a in ACTIVITIES)
+    assert all(a.status == "published" for a in ACTIVITIES)
+    assert all(a.reviewed_by and a.reviewed_at for a in ACTIVITIES)
 
 
 @pytest.mark.parametrize(

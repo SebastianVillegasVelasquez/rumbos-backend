@@ -4,7 +4,7 @@
   "skill": "dialogue",
   "title": "Talk it through 4.2",
   "estimated_minutes": 5,
-  "status": "draft",
+  "status": "published",
   "role": "Host welcoming guests from different countries",
   "can_do": [
     "I can use polite social formulas.",
@@ -173,5 +173,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

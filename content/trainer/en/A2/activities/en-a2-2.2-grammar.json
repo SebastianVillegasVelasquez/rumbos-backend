@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 2.2",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Travel assistant at a station",
   "can_do": [
     "I can buy a ticket and ask the price.",
@@ -201,5 +201,7 @@
       ],
       "explanation": "Use I need + a ticket + to the lake."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 4.2",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Host welcoming guests from different countries",
   "can_do": [
     "I can use polite social formulas.",
@@ -195,5 +195,7 @@
       ],
       "explanation": "Use Thank you for + your help."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

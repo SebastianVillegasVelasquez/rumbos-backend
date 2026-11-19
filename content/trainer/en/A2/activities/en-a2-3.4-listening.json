@@ -4,7 +4,7 @@
   "skill": "listening",
   "title": "Listen and choose 3.4",
   "estimated_minutes": 4,
-  "status": "draft",
+  "status": "published",
   "role": "Host giving advice to a guest",
   "can_do": [
     "I can ask for and give advice with should.",
@@ -77,5 +77,7 @@
       "explanation": "The speaker says: You shouldn't swim in the river.",
       "audio": "en-a2-3.4.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

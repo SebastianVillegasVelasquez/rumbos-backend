@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 4.1",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Eco-lodge host",
   "can_do": [
     "I can tell guests how to save water and energy.",
@@ -199,5 +199,7 @@
       ],
       "explanation": "Use the base verb: close the tap."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

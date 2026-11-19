@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 1.1",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Guide planning the day with a guest",
   "can_do": [
     "I can say what I am going to do with a time marker.",
@@ -200,5 +200,7 @@
       ],
       "explanation": "Use am going to + rest: I am going to rest tomorrow."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

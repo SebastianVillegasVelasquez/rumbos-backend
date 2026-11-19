@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 1.4",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Shop assistant at a craft market",
   "can_do": [
     "I can ask how much things cost.",
@@ -196,5 +196,7 @@
       ],
       "explanation": "Use How much is ... to ask about a price."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }

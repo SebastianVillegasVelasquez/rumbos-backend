@@ -4,7 +4,7 @@
   "skill": "listening",
   "title": "Listen and choose 4.2",
   "estimated_minutes": 4,
-  "status": "draft",
+  "status": "published",
   "role": "Host welcoming guests from different countries",
   "can_do": [
     "I can use polite social formulas.",
@@ -77,5 +77,7 @@
       "explanation": "The speaker says: with a smile.",
       "audio": "en-a2-4.2.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T20:36:51.950103Z"
 }
