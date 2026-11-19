@@ -1,0 +1,199 @@
+{
+  "id": "en-b2-4.2-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 4.2",
+  "estimated_minutes": 5,
+  "lesson_id": "4.2",
+  "status": "draft",
+  "role": "Mediator using persuasive language to negotiate for peace through tourism",
+  "can_do": [
+    "I can use persuasive language to defend tourism as a culture for peace.",
+    "I can negotiate, propose compromises and respond to objections."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Why should we invest in tourism after the conflict?",
+        "translation": "¿Por qué deberíamos invertir en turismo después del conflicto?",
+        "audio": "en-b2-4.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Because visitors bring jobs, and jobs bring stability.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "I firmly believe that shared travel builds trust between communities.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Consider this: where people meet, understanding grows.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "But many people still do not trust each other.",
+        "translation": "Pero mucha gente todavía no confía en los demás.",
+        "audio": "en-b2-4.2.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "trust"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "dialogue"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "together"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "begin"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "start"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "build"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "That is why we must build trust through dialogue.",
+        "starters": [
+          "That is why we must ...",
+          "Trust grows when ..."
+        ],
+        "word_bank": [
+          "That",
+          "is",
+          "why",
+          "we",
+          "must",
+          "build",
+          "trust",
+          "through",
+          "dialogue"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "What do you propose as a first step?",
+        "translation": "¿Qué propone como primer paso?",
+        "audio": "en-b2-4.2.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I propose a joint route run by both communities.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Let us start with a small shared festival.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "We could begin with exchange visits for young guides.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "That would cost us a lot. Could we find a compromise?",
+        "translation": "Eso nos costaría mucho. ¿Podríamos encontrar un compromiso?",
+        "audio": "en-b2-4.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Certainly. What if the costs were shared equally?",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "I am open to that. Perhaps each side could contribute in kind.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Let us look for common ground. Which part worries you most?",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "We are worried about losing control of our own heritage.",
+        "translation": "Nos preocupa perder el control de nuestro propio patrimonio.",
+        "audio": "en-b2-4.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "That is a fair concern. The agreement could guarantee your ownership.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "I understand. You would keep the final say on cultural content.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "No one is asking you to give anything up; we want to share, not take.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Very well. We will consider your proposal seriously.",
+        "translation": "Muy bien. Consideraremos su propuesta con seriedad.",
+        "audio": "en-b2-4.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you. I believe we can build something lasting together.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "I appreciate your openness. We will await your answer.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "That is encouraging. Let us meet again next month.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

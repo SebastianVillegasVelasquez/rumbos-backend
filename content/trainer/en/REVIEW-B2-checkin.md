@@ -155,3 +155,20 @@ paragraph, not a list of questions, so it is not split.
   modals in the passive), 1.5 clarifying and confirming by paraphrase, 1.6
   correcting misunderstandings. Module II has the five lessons the brief
   numbers (2.1 to 2.5), III four, IV three: 18 lessons.
+
+## 6. Audio: what the voice says that the screen does not show
+
+The displayed text is never changed; the spoken text (`text`, `voices[].text`
+in `audio_manifest.json`) is written out when a voice would misread it. Every
+expansion is listed here (the practice tests fail if one is missing):
+
+| clip | shown | spoken |
+| --- | --- | --- |
+| `en-b2-1.1.l3` | Check-in opens at 7:30 ... no later than 8:00. | seven thirty ... eight o'clock |
+| `en-b2-1.3.l2` | ... that the OTA confirm this ... | ... that the O T A confirm ... |
+| `en-b2-1.4.l3` | It is £1,200 per person ... 15% less | twelve hundred pounds ... fifteen percent less |
+| exam clips (2) | GDS | G D S |
+
+The exam's own numbers ("nine forty", "eighty-five thousand pounds") are
+already words in the source. Real clip durations and the list to listen to
+first are added with the generated audio.

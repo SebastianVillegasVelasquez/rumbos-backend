@@ -719,6 +719,150 @@
       "lesson_id": "3.4",
       "word": "stakeholders",
       "translation": "partes interesadas"
+    },
+    {
+      "id": "en-b2-4.1.v1",
+      "lesson_id": "4.1",
+      "word": "to conserve",
+      "translation": "conservar"
+    },
+    {
+      "id": "en-b2-4.1.v2",
+      "lesson_id": "4.1",
+      "word": "biodiversity",
+      "translation": "biodiversidad"
+    },
+    {
+      "id": "en-b2-4.1.v3",
+      "lesson_id": "4.1",
+      "word": "renewable",
+      "translation": "renovable"
+    },
+    {
+      "id": "en-b2-4.1.v4",
+      "lesson_id": "4.1",
+      "word": "to implement",
+      "translation": "implementar"
+    },
+    {
+      "id": "en-b2-4.1.v5",
+      "lesson_id": "4.1",
+      "word": "consequence",
+      "translation": "consecuencia"
+    },
+    {
+      "id": "en-b2-4.1.v6",
+      "lesson_id": "4.1",
+      "word": "had it not been for",
+      "translation": "de no haber sido por"
+    },
+    {
+      "id": "en-b2-4.1.v7",
+      "lesson_id": "4.1",
+      "word": "long-term",
+      "translation": "a largo plazo"
+    },
+    {
+      "id": "en-b2-4.1.v8",
+      "lesson_id": "4.1",
+      "word": "regulation",
+      "translation": "normativa"
+    },
+    {
+      "id": "en-b2-4.2.v1",
+      "lesson_id": "4.2",
+      "word": "to persuade",
+      "translation": "persuadir"
+    },
+    {
+      "id": "en-b2-4.2.v2",
+      "lesson_id": "4.2",
+      "word": "to propose",
+      "translation": "proponer"
+    },
+    {
+      "id": "en-b2-4.2.v3",
+      "lesson_id": "4.2",
+      "word": "compromise",
+      "translation": "compromiso"
+    },
+    {
+      "id": "en-b2-4.2.v4",
+      "lesson_id": "4.2",
+      "word": "dialogue",
+      "translation": "diálogo"
+    },
+    {
+      "id": "en-b2-4.2.v5",
+      "lesson_id": "4.2",
+      "word": "mutual",
+      "translation": "mutuo"
+    },
+    {
+      "id": "en-b2-4.2.v6",
+      "lesson_id": "4.2",
+      "word": "to bridge",
+      "translation": "tender puentes"
+    },
+    {
+      "id": "en-b2-4.2.v7",
+      "lesson_id": "4.2",
+      "word": "common ground",
+      "translation": "terreno común"
+    },
+    {
+      "id": "en-b2-4.2.v8",
+      "lesson_id": "4.2",
+      "word": "to reconcile",
+      "translation": "reconciliar"
+    },
+    {
+      "id": "en-b2-4.3.v1",
+      "lesson_id": "4.3",
+      "word": "to narrate",
+      "translation": "narrar"
+    },
+    {
+      "id": "en-b2-4.3.v2",
+      "lesson_id": "4.3",
+      "word": "plot",
+      "translation": "trama"
+    },
+    {
+      "id": "en-b2-4.3.v3",
+      "lesson_id": "4.3",
+      "word": "at that moment",
+      "translation": "en ese momento"
+    },
+    {
+      "id": "en-b2-4.3.v4",
+      "lesson_id": "4.3",
+      "word": "by the time",
+      "translation": "para cuando"
+    },
+    {
+      "id": "en-b2-4.3.v5",
+      "lesson_id": "4.3",
+      "word": "suddenly",
+      "translation": "de repente"
+    },
+    {
+      "id": "en-b2-4.3.v6",
+      "lesson_id": "4.3",
+      "word": "eventually",
+      "translation": "finalmente"
+    },
+    {
+      "id": "en-b2-4.3.v7",
+      "lesson_id": "4.3",
+      "word": "meanwhile",
+      "translation": "mientras tanto"
+    },
+    {
+      "id": "en-b2-4.3.v8",
+      "lesson_id": "4.3",
+      "word": "unforgettable",
+      "translation": "inolvidable"
     }
   ]
 }

@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-4.1-listening",
+  "skill": "listening",
+  "title": "Listen and choose 4.1",
+  "estimated_minutes": 4,
+  "lesson_id": "4.1",
+  "status": "draft",
+  "role": "Sustainability adviser explaining what would happen under different choices",
+  "can_do": [
+    "I can use conditionals and the passive to talk about sustainable tourism.",
+    "I can explain what would have happened if a different choice had been made."
+  ],
+  "items": [
+    {
+      "id": "en-b2-4.1.l1",
+      "type": "listen_choose",
+      "prompt": "What would have happened if the divers had kept touching the coral?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "It would have grown"
+        },
+        {
+          "id": "o2",
+          "text": "It would have died"
+        },
+        {
+          "id": "o3",
+          "text": "Nothing"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The coral would have died within a decade.",
+      "audio": "en-b2-4.1.l1"
+    },
+    {
+      "id": "en-b2-4.1.l2",
+      "type": "listen_choose",
+      "prompt": "What saved the forest?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The new regulations"
+        },
+        {
+          "id": "o2",
+          "text": "A fire"
+        },
+        {
+          "id": "o3",
+          "text": "More tourists"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Had it not been for the regulations means because of the regulations.",
+      "audio": "en-b2-4.1.l2"
+    },
+    {
+      "id": "en-b2-4.1.l3",
+      "type": "listen_choose",
+      "prompt": "What would happen without funding?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The trails would improve"
+        },
+        {
+          "id": "o2",
+          "text": "Guides would lose their jobs"
+        },
+        {
+          "id": "o3",
+          "text": "Prices would fall"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The guides would lose their jobs and the trails would be abandoned.",
+      "audio": "en-b2-4.1.l3"
+    }
+  ]
+}

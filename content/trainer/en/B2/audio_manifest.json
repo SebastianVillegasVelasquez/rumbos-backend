@@ -2089,6 +2089,381 @@
       "file": "audio/en-b2-3.4.l3.mp3",
       "duration_s": null,
       "transcript": "— What can visitors do? — They can choose local guides, avoid single-use plastic and respect the rules of every site."
+    },
+    {
+      "id": "en-b2-4.1.d1",
+      "text": "What would happen if the park allowed unlimited visitors?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What would happen if the park allowed unlimited visitors?"
+        }
+      ],
+      "file": "audio/en-b2-4.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "What would happen if the park allowed unlimited visitors?"
+    },
+    {
+      "id": "en-b2-4.1.d2",
+      "text": "And what would have happened without the daily limits?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "And what would have happened without the daily limits?"
+        }
+      ],
+      "file": "audio/en-b2-4.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "And what would have happened without the daily limits?"
+    },
+    {
+      "id": "en-b2-4.1.d3",
+      "text": "What has been done to protect the wetland?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What has been done to protect the wetland?"
+        }
+      ],
+      "file": "audio/en-b2-4.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "What has been done to protect the wetland?"
+    },
+    {
+      "id": "en-b2-4.1.d4",
+      "text": "If you could change one thing, what would it be?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "If you could change one thing, what would it be?"
+        }
+      ],
+      "file": "audio/en-b2-4.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "If you could change one thing, what would it be?"
+    },
+    {
+      "id": "en-b2-4.1.d5",
+      "text": "If the community had not been consulted, would the plan have worked?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "If the community had not been consulted, would the plan have worked?"
+        }
+      ],
+      "file": "audio/en-b2-4.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "If the community had not been consulted, would the plan have worked?"
+    },
+    {
+      "id": "en-b2-4.1.d6",
+      "text": "A clear lesson. Thank you for sharing it.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "A clear lesson. Thank you for sharing it."
+        }
+      ],
+      "file": "audio/en-b2-4.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "A clear lesson. Thank you for sharing it."
+    },
+    {
+      "id": "en-b2-4.1.l1",
+      "text": "Was the reef ever at risk? Yes. If the divers had kept touching the coral, it would have died within a decade.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Was the reef ever at risk?"
+        },
+        {
+          "voice": "host",
+          "text": "Yes. If the divers had kept touching the coral, it would have died within a decade."
+        }
+      ],
+      "file": "audio/en-b2-4.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "— Was the reef ever at risk? — Yes. If the divers had kept touching the coral, it would have died within a decade."
+    },
+    {
+      "id": "en-b2-4.1.l2",
+      "text": "Had it not been for the new regulations, the forest would have been cleared for farmland.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Had it not been for the new regulations, the forest would have been cleared for farmland."
+        }
+      ],
+      "file": "audio/en-b2-4.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "Had it not been for the new regulations, the forest would have been cleared for farmland."
+    },
+    {
+      "id": "en-b2-4.1.l3",
+      "text": "What happens if the project is not funded? If it were not funded, the guides would lose their jobs and the trails would be abandoned.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What happens if the project is not funded?"
+        },
+        {
+          "voice": "host",
+          "text": "If it were not funded, the guides would lose their jobs and the trails would be abandoned."
+        }
+      ],
+      "file": "audio/en-b2-4.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "— What happens if the project is not funded? — If it were not funded, the guides would lose their jobs and the trails would be abandoned."
+    },
+    {
+      "id": "en-b2-4.2.d1",
+      "text": "Why should we invest in tourism after the conflict?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Why should we invest in tourism after the conflict?"
+        }
+      ],
+      "file": "audio/en-b2-4.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "Why should we invest in tourism after the conflict?"
+    },
+    {
+      "id": "en-b2-4.2.d2",
+      "text": "But many people still do not trust each other.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "But many people still do not trust each other."
+        }
+      ],
+      "file": "audio/en-b2-4.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "But many people still do not trust each other."
+    },
+    {
+      "id": "en-b2-4.2.d3",
+      "text": "What do you propose as a first step?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What do you propose as a first step?"
+        }
+      ],
+      "file": "audio/en-b2-4.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "What do you propose as a first step?"
+    },
+    {
+      "id": "en-b2-4.2.d4",
+      "text": "That would cost us a lot. Could we find a compromise?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "That would cost us a lot. Could we find a compromise?"
+        }
+      ],
+      "file": "audio/en-b2-4.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "That would cost us a lot. Could we find a compromise?"
+    },
+    {
+      "id": "en-b2-4.2.d5",
+      "text": "We are worried about losing control of our own heritage.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "We are worried about losing control of our own heritage."
+        }
+      ],
+      "file": "audio/en-b2-4.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "We are worried about losing control of our own heritage."
+    },
+    {
+      "id": "en-b2-4.2.d6",
+      "text": "Very well. We will consider your proposal seriously.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Very well. We will consider your proposal seriously."
+        }
+      ],
+      "file": "audio/en-b2-4.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Very well. We will consider your proposal seriously."
+    },
+    {
+      "id": "en-b2-4.2.l1",
+      "text": "How can tourism help to reconcile divided villages? By giving them a shared goal. When people work for the same visitors, they learn to cooperate.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How can tourism help to reconcile divided villages?"
+        },
+        {
+          "voice": "host",
+          "text": "By giving them a shared goal. When people work for the same visitors, they learn to cooperate."
+        }
+      ],
+      "file": "audio/en-b2-4.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "— How can tourism help to reconcile divided villages? — By giving them a shared goal. When people work for the same visitors, they learn to cooperate."
+    },
+    {
+      "id": "en-b2-4.2.l2",
+      "text": "I urge you to consider this: peace is not only the end of a conflict, it is the start of a partnership.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I urge you to consider this: peace is not only the end of a conflict, it is the start of a partnership."
+        }
+      ],
+      "file": "audio/en-b2-4.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "I urge you to consider this: peace is not only the end of a conflict, it is the start of a partnership."
+    },
+    {
+      "id": "en-b2-4.2.l3",
+      "text": "We cannot accept those terms. I hear you. What if we reduced the fee in the first year and reviewed it together afterwards?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "We cannot accept those terms."
+        },
+        {
+          "voice": "host",
+          "text": "I hear you. What if we reduced the fee in the first year and reviewed it together afterwards?"
+        }
+      ],
+      "file": "audio/en-b2-4.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "— We cannot accept those terms. — I hear you. What if we reduced the fee in the first year and reviewed it together afterwards?"
+    },
+    {
+      "id": "en-b2-4.3.d1",
+      "text": "You have guided thousands of visitors. What is your most memorable story?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "You have guided thousands of visitors. What is your most memorable story?"
+        }
+      ],
+      "file": "audio/en-b2-4.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "You have guided thousands of visitors. What is your most memorable story?"
+    },
+    {
+      "id": "en-b2-4.3.d2",
+      "text": "What had happened before that?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What had happened before that?"
+        }
+      ],
+      "file": "audio/en-b2-4.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "What had happened before that?"
+    },
+    {
+      "id": "en-b2-4.3.d3",
+      "text": "What were the visitors doing at that moment?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What were the visitors doing at that moment?"
+        }
+      ],
+      "file": "audio/en-b2-4.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "What were the visitors doing at that moment?"
+    },
+    {
+      "id": "en-b2-4.3.d4",
+      "text": "And then, what happened?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "And then, what happened?"
+        }
+      ],
+      "file": "audio/en-b2-4.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "And then, what happened?"
+    },
+    {
+      "id": "en-b2-4.3.d5",
+      "text": "How did it end?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How did it end?"
+        }
+      ],
+      "file": "audio/en-b2-4.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "How did it end?"
+    },
+    {
+      "id": "en-b2-4.3.d6",
+      "text": "What a story. What did you learn from it?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What a story. What did you learn from it?"
+        }
+      ],
+      "file": "audio/en-b2-4.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "What a story. What did you learn from it?"
+    },
+    {
+      "id": "en-b2-4.3.l1",
+      "text": "What was happening when you arrived? The villagers were preparing the festival, and the musicians had already started to play.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What was happening when you arrived?"
+        },
+        {
+          "voice": "host",
+          "text": "The villagers were preparing the festival, and the musicians had already started to play."
+        }
+      ],
+      "file": "audio/en-b2-4.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "— What was happening when you arrived? — The villagers were preparing the festival, and the musicians had already started to play."
+    },
+    {
+      "id": "en-b2-4.3.l2",
+      "text": "By the time the rescue boat arrived, the fishermen had been waiting on the rock for almost a day.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "By the time the rescue boat arrived, the fishermen had been waiting on the rock for almost a day."
+        }
+      ],
+      "file": "audio/en-b2-4.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "By the time the rescue boat arrived, the fishermen had been waiting on the rock for almost a day."
+    },
+    {
+      "id": "en-b2-4.3.l3",
+      "text": "How did the trip end? Meanwhile, the weather had cleared, so eventually we reached the summit just before dusk.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How did the trip end?"
+        },
+        {
+          "voice": "host",
+          "text": "Meanwhile, the weather had cleared, so eventually we reached the summit just before dusk."
+        }
+      ],
+      "file": "audio/en-b2-4.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "— How did the trip end? — Meanwhile, the weather had cleared, so eventually we reached the summit just before dusk."
     }
   ]
 }

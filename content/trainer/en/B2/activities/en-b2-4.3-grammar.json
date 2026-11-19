@@ -1,0 +1,218 @@
+{
+  "id": "en-b2-4.3-grammar",
+  "skill": "grammar",
+  "title": "Practice 4.3",
+  "estimated_minutes": 6,
+  "lesson_id": "4.3",
+  "status": "draft",
+  "role": "Tour professional telling a story with advanced narrative tenses",
+  "can_do": [
+    "I can tell a story with the past simple, the past continuous and the past perfect.",
+    "I can organise a narrative so that listeners follow what happened first."
+  ],
+  "items": [
+    {
+      "id": "b2-4.3.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence shows the first event?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "When we arrived, the show had started."
+        },
+        {
+          "id": "o2",
+          "text": "When we arrived, the show started."
+        },
+        {
+          "id": "o3",
+          "text": "When we arrived, the show was starting."
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The past perfect shows an earlier past action: the show had started.",
+      "error_tags": {
+        "o2": {
+          "tag": "tense",
+          "text": "The past simple shows a second action after arriving."
+        },
+        "o3": {
+          "tag": "tense",
+          "text": "The past continuous shows an action in progress."
+        }
+      }
+    },
+    {
+      "id": "b2-4.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "While we {1} the valley, it began to snow.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "were crossing"
+            },
+            {
+              "id": "o2",
+              "text": "crossed"
+            },
+            {
+              "id": "o3",
+              "text": "had crossed"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "tense",
+            "text": "An action in progress needs the past continuous."
+          }
+        }
+      ],
+      "explanation": "While + past continuous sets the scene."
+    },
+    {
+      "id": "b2-4.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "By the time the guide came, the group {1} left.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "had",
+            "had already"
+          ],
+          "error_tag": {
+            "tag": "tense",
+            "text": "The earlier action needs had + participle."
+          }
+        }
+      ],
+      "explanation": "By the time + past simple goes with had + participle."
+    },
+    {
+      "id": "b2-4.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "They"
+        },
+        {
+          "id": "t2",
+          "text": "had"
+        },
+        {
+          "id": "t3",
+          "text": "been"
+        },
+        {
+          "id": "t4",
+          "text": "walking"
+        },
+        {
+          "id": "t5",
+          "text": "for"
+        },
+        {
+          "id": "t6",
+          "text": "hours"
+        },
+        {
+          "id": "t7",
+          "text": "when"
+        },
+        {
+          "id": "t8",
+          "text": "it"
+        },
+        {
+          "id": "t9",
+          "text": "rained"
+        }
+      ],
+      "explanation": "They had been walking for hours when it rained.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Past perfect continuous: had been + -ing."
+      }
+    },
+    {
+      "id": "b2-4.3.ex.05",
+      "type": "match",
+      "prompt": "Match the linking word with its use.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "suddenly"
+        },
+        {
+          "id": "l2",
+          "text": "meanwhile"
+        },
+        {
+          "id": "l3",
+          "text": "eventually"
+        },
+        {
+          "id": "l4",
+          "text": "by the time"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "an unexpected moment"
+        },
+        {
+          "id": "r2",
+          "text": "at the same time elsewhere"
+        },
+        {
+          "id": "r3",
+          "text": "after a long time"
+        },
+        {
+          "id": "r4",
+          "text": "before a later point"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Narrative linkers show the order of events."
+    },
+    {
+      "id": "b2-4.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Say what the group had done before the storm. Use had already.",
+      "accepted": [
+        "They had already reached the camp",
+        "The group had already reached the camp",
+        "We had already reached the camp",
+        "They had already left"
+      ],
+      "max_length": 63,
+      "explanation": "Had already + participle shows an earlier action."
+    }
+  ]
+}

@@ -1,0 +1,185 @@
+{
+  "id": "en-b2-4.3-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 4.3",
+  "estimated_minutes": 5,
+  "lesson_id": "4.3",
+  "status": "draft",
+  "role": "Tour professional telling a story with advanced narrative tenses",
+  "can_do": [
+    "I can tell a story with the past simple, the past continuous and the past perfect.",
+    "I can organise a narrative so that listeners follow what happened first."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "You have guided thousands of visitors. What is your most memorable story?",
+        "translation": "Ha guiado a miles de visitantes. ¿Cuál es su historia más memorable?",
+        "audio": "en-b2-4.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Once, during a storm, we were crossing the river when the bridge collapsed.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "One night, while we were camping, we heard strange music in the forest.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Years ago, I led a group that had lost its way in the fog.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "What had happened before that?",
+        "translation": "¿Qué había pasado antes?",
+        "audio": "en-b2-4.3.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "had"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "before"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "already"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "been"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "We had already walked for six hours.",
+        "starters": [
+          "We had already ...",
+          "Before that, ..."
+        ],
+        "word_bank": [
+          "We",
+          "had",
+          "already",
+          "walked",
+          "for",
+          "six",
+          "hours"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "What were the visitors doing at that moment?",
+        "translation": "¿Qué estaban haciendo los visitantes en ese momento?",
+        "audio": "en-b2-4.3.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Some were taking photographs, and others were resting.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "They were singing, as they had done all day.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "They were waiting quietly, because they had been warned.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "And then, what happened?",
+        "translation": "¿Y entonces qué pasó?",
+        "audio": "en-b2-4.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Suddenly, the lights went out, and everybody fell silent.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Then a local farmer appeared and led us to safety.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "At that moment, the rain stopped.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "How did it end?",
+        "translation": "¿Cómo terminó?",
+        "audio": "en-b2-4.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "By the time we reached the village, the sun had risen.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Eventually, we got everyone home safely.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "In the end, we laughed about it over breakfast.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "What a story. What did you learn from it?",
+        "translation": "Qué historia. ¿Qué aprendió de ella?",
+        "audio": "en-b2-4.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "That preparation, and a calm voice, can change everything.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "That the best stories begin when plans fail.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "That people remember how you made them feel.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

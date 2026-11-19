@@ -1,0 +1,215 @@
+{
+  "id": "en-b2-4.1-grammar",
+  "skill": "grammar",
+  "title": "Practice 4.1",
+  "estimated_minutes": 6,
+  "lesson_id": "4.1",
+  "status": "draft",
+  "role": "Sustainability adviser explaining what would happen under different choices",
+  "can_do": [
+    "I can use conditionals and the passive to talk about sustainable tourism.",
+    "I can explain what would have happened if a different choice had been made."
+  ],
+  "items": [
+    {
+      "id": "b2-4.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is a third conditional?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "If they plant trees, the area will recover."
+        },
+        {
+          "id": "o2",
+          "text": "If they planted trees, the area would recover."
+        },
+        {
+          "id": "o3",
+          "text": "If they had planted trees, the area would have recovered."
+        }
+      ],
+      "correct": "o3",
+      "explanation": "Third conditional: if + past perfect, would have + participle.",
+      "error_tags": {
+        "o1": {
+          "tag": "conditional",
+          "text": "This is a first conditional about a real future."
+        },
+        "o2": {
+          "tag": "conditional",
+          "text": "This is a second conditional about an unreal present."
+        }
+      }
+    },
+    {
+      "id": "b2-4.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "If we had acted sooner, the lake {1} saved.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "would have been"
+            },
+            {
+              "id": "o2",
+              "text": "will be"
+            },
+            {
+              "id": "o3",
+              "text": "would be"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "conditional",
+            "text": "A past unreal condition needs would have been."
+          }
+        }
+      ],
+      "explanation": "If + past perfect needs would have + participle."
+    },
+    {
+      "id": "b2-4.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "If the coast {1} been protected, the beach would have disappeared.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "had not",
+            "hadn't",
+            "had never"
+          ],
+          "error_tag": {
+            "tag": "conditional",
+            "text": "The if-clause needs had + not + been."
+          }
+        }
+      ],
+      "explanation": "If the coast had not been protected, ..."
+    },
+    {
+      "id": "b2-4.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "The"
+        },
+        {
+          "id": "t2",
+          "text": "forest"
+        },
+        {
+          "id": "t3",
+          "text": "has"
+        },
+        {
+          "id": "t4",
+          "text": "been"
+        },
+        {
+          "id": "t5",
+          "text": "protected"
+        },
+        {
+          "id": "t6",
+          "text": "for"
+        },
+        {
+          "id": "t7",
+          "text": "twenty"
+        },
+        {
+          "id": "t8",
+          "text": "years"
+        }
+      ],
+      "explanation": "The forest has been protected for twenty years.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Present perfect passive: has been + participle."
+      }
+    },
+    {
+      "id": "b2-4.1.ex.05",
+      "type": "match",
+      "prompt": "Match the structure with its use.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "If + present, will"
+        },
+        {
+          "id": "l2",
+          "text": "If + past, would"
+        },
+        {
+          "id": "l3",
+          "text": "If + past perfect, would have"
+        },
+        {
+          "id": "l4",
+          "text": "has been protected"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "a real future possibility"
+        },
+        {
+          "id": "r2",
+          "text": "an unreal present"
+        },
+        {
+          "id": "r3",
+          "text": "an unreal past"
+        },
+        {
+          "id": "r4",
+          "text": "present perfect passive"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each structure expresses a different kind of possibility."
+    },
+    {
+      "id": "b2-4.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Finish the sentence: If the park had stayed open, ...",
+      "accepted": [
+        "the habitat would have been destroyed",
+        "the wildlife would have suffered",
+        "the trails would have been damaged",
+        "it would have been damaged"
+      ],
+      "max_length": 62,
+      "explanation": "Use would have + past participle in the result clause."
+    }
+  ]
+}
