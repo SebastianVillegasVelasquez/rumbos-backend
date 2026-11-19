@@ -1,0 +1,557 @@
+{
+  "status": "draft",
+  "note": "Deterministic proxy for the client's human rubric (Writing and Speaking at B2). Each criterion scores points x mean(checks), scaled by a word-count window. It can tell that the expected phrases, tenses markers and linking words are present; it cannot tell that a letter is formal, coherent or well spelled, and a text that lists the expected phrases scores as well as one that uses them. Speaking is delivered as a typed answer, so it never checks pronunciation. Needs pedagogical sign-off before it decides anything real.",
+  "rubrics": [
+    {
+      "id": "writing.complaint_letter",
+      "criteria": [
+        {
+          "id": "formal_register_and_demands",
+          "points": 2,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "i am writing to request",
+                "i am writing to ask",
+                "we are writing to request",
+                "we require that",
+                "we require",
+                "we request that",
+                "we demand"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "dear sir or madam",
+                "dear sir",
+                "dear madam",
+                "dear mr",
+                "dear ms",
+                "dear",
+                "yours faithfully",
+                "yours sincerely",
+                "kind regards",
+                "best regards",
+                "sincerely"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "could you",
+                "would you",
+                "we would be grateful",
+                "i would be grateful",
+                "i would appreciate",
+                "we would appreciate",
+                "please"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 100,
+              "max": 190,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "problem_in_present_perfect",
+          "points": 1,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "has been",
+                "have been"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "has been blocked",
+                "has been cancelling",
+                "has been canceling",
+                "have been cancelling",
+                "have been canceling",
+                "has been cancelled",
+                "have been cancelled",
+                "has been suspended",
+                "has not",
+                "have not"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 100,
+              "max": 190,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "technical_terms",
+          "points": 1,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "compliance"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "cancellation fee",
+                "cancellation fees"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "waived",
+                "waive"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 100,
+              "max": 190,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "sentences_and_linking",
+          "points": 1,
+          "checks": [
+            {
+              "check": "sentence_terminals_at_least",
+              "on": [
+                "q1"
+              ],
+              "min": 6
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "however",
+                "therefore",
+                "furthermore",
+                "moreover",
+                "as a result",
+                "in addition",
+                "consequently",
+                "firstly",
+                "secondly",
+                "finally",
+                "because",
+                "since",
+                "although",
+                "despite",
+                "in particular",
+                "for this reason",
+                "as well as"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 100,
+              "max": 190,
+              "multiplier": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "writing.one_of_two",
+      "criteria": [
+        {
+          "id": "task_language",
+          "points": 2,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "i am pleased to open",
+                "pleased to open",
+                "opened the session",
+                "opened the meeting",
+                "the session opened",
+                "i would like to argue",
+                "i would like to present",
+                "i am convinced",
+                "i firmly believe",
+                "we firmly believe",
+                "we believe"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "we strongly disagree",
+                "strongly disagree",
+                "disagreement",
+                "disagreed",
+                "positions",
+                "we recommend",
+                "we urge",
+                "we must",
+                "we should"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "closed the session",
+                "closed the meeting",
+                "close the session",
+                "session was closed",
+                "in conclusion",
+                "to conclude",
+                "to sum up",
+                "for these reasons",
+                "adjourned"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 100,
+              "max": 190,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "advanced_structures",
+          "points": 2,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "if we had",
+                "if they had",
+                "if it had",
+                "had not",
+                "had never",
+                "would have"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "has been protected",
+                "have been protected",
+                "would be closed",
+                "was agreed",
+                "were agreed",
+                "was recorded",
+                "it was decided",
+                "was closed",
+                "has been",
+                "have been"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 100,
+              "max": 190,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "sentences_and_linking",
+          "points": 1,
+          "checks": [
+            {
+              "check": "sentence_terminals_at_least",
+              "on": [
+                "q1"
+              ],
+              "min": 6
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "however",
+                "therefore",
+                "furthermore",
+                "moreover",
+                "as a result",
+                "in addition",
+                "consequently",
+                "firstly",
+                "secondly",
+                "finally",
+                "because",
+                "since",
+                "although",
+                "despite",
+                "in particular",
+                "for this reason",
+                "as well as"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 100,
+              "max": 190,
+              "multiplier": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "speaking.chair_negotiation_written",
+      "criteria": [
+        {
+          "id": "chairing_formulas",
+          "points": 2,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "i am pleased to open",
+                "pleased to open",
+                "i declare this meeting open",
+                "i declare the meeting open",
+                "let us begin",
+                "i call this meeting to order"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "could you provide a summary",
+                "could you summarise",
+                "could you summarize",
+                "a summary of your reasons",
+                "could you give us a summary",
+                "please summarise"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "we strongly disagree",
+                "strongly disagree",
+                "we firmly disagree",
+                "firmly disagree"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "close the meeting",
+                "close the session",
+                "closing the meeting",
+                "i now close",
+                "time is up",
+                "we are out of time",
+                "we are running out of time",
+                "adjourn"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 25,
+              "max": 200,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "firm_and_tactful",
+          "points": 1,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "strongly disagree",
+                "firmly disagree",
+                "disagree"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "respect",
+                "understand",
+                "appreciate",
+                "however",
+                "with respect",
+                "although"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 25,
+              "max": 200,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "advanced_conditional",
+          "points": 1,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "if we had",
+                "if they had",
+                "had not",
+                "had never",
+                "would have",
+                "would be"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "destination",
+                "region",
+                "country",
+                "colombia",
+                "tourism",
+                "community"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 25,
+              "max": 200,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "intelligibility",
+          "points": 1,
+          "checks": [
+            {
+              "check": "sentence_terminals_at_least",
+              "on": [
+                "q1"
+              ],
+              "min": 4
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 25,
+              "max": 200,
+              "multiplier": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
