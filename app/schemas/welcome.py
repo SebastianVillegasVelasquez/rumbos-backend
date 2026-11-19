@@ -165,11 +165,13 @@ class QuizStep(_StepBase):
 
 
 class AssessmentStep(_StepBase):
-    """The native check-in exam (see `MapSettings.assessments`). The existing
-    `quiz` step stays as a fallback until the passback is verified."""
+    """A native exam (see `MapSettings.assessments`): the check-in in the
+    welcome flow, the final exam in the closing flow (`flow_problems` refuses
+    the wrong one in each). The existing `quiz` step stays as a fallback until
+    the passback is verified."""
 
     type: Literal["assessment"]
-    purpose: Literal["check_in"]
+    purpose: Literal["check_in", "final"]
 
 
 Step = Annotated[

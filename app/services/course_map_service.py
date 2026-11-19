@@ -68,11 +68,11 @@ from app.schemas.course_map import (
 )
 from app.schemas.map_settings import AudioInfo, MapSettings
 from app.schemas.view3d import View3dUpdate
-from app.schemas.welcome import WelcomeDocument
+from app.schemas.welcome import PdfStep, WelcomeDocument
 from app.services.publication_service import publication_infos
 from app.view3d.validation import check_view3d
 from app.welcome_flow.documents import unique_in_order, usable_documents
-from app.welcome_flow.flow import flow_problems, pdf_steps
+from app.welcome_flow.flow import flow_problems, settings_flows, settings_pdf_ids
 
 
 def is_bubble_candidate(module: MoodleModule) -> bool:
@@ -505,20 +505,33 @@ class CourseMapService:
             raise BackgroundAssetWrongKindError(asset_id)
 
     async def _check_welcome(self, settings: MapSettings) -> None:
-        """The welcome flow must follow every rule of `app.welcome_flow`.
+        """The welcome flow and the closing flow, if any, must follow every
+        rule of `app.welcome_flow`.
 
         Raises `WelcomeInvalidError` listing every problem."""
-        problems = flow_problems(settings.welcome)
-        steps = pdf_steps(settings.welcome)
-        if steps:
-            documents = await usable_documents(
-                self._assets, self._storage, [s.asset_id for _, s in steps]
+        problems: list[dict[str, str]] = []
+        welcome_keys = {s.key for s in settings.welcome.steps or []}
+        pdfs: list[tuple[str, int, uuid.UUID]] = []
+        for name, flow in settings_flows(settings):
+            problems += flow_problems(
+                flow,
+                name=name,
+                other_keys=welcome_keys if name == "closing" else (),
             )
-            for index, step in steps:
-                if not documents[step.asset_id].available:
+            pdfs += [
+                (name, index, step.asset_id)
+                for index, step in enumerate(flow.steps or [])
+                if isinstance(step, PdfStep)
+            ]
+        if pdfs:
+            documents = await usable_documents(
+                self._assets, self._storage, [asset_id for _, _, asset_id in pdfs]
+            )
+            for flow_name, index, asset_id in pdfs:
+                if not documents[asset_id].available:
                     problems.append(
                         {
-                            "path": f"welcome.steps[{index}].assetId",
+                            "path": f"{flow_name}.steps[{index}].assetId",
                             "code": "document_unavailable",
                             "message": "The document does not exist or is not "
                             "available",
@@ -561,7 +574,7 @@ class CourseMapService:
         )
 
     async def _welcome_documents(self, settings: MapSettings) -> list[WelcomeDocument]:
-        ids = unique_in_order(s.asset_id for _, s in pdf_steps(settings.welcome))
+        ids = unique_in_order(settings_pdf_ids(settings))
         if not ids:
             return []
         found = await usable_documents(self._assets, self._storage, ids)

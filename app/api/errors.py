@@ -84,7 +84,9 @@ from app.trainer.settings_check import error_entry
 
 ExceptionHandler = Callable[[Request, Exception], Awaitable[JSONResponse]]
 
-_WELCOME_LOC = ("body", "settings", "welcome")
+_SETTINGS_LOC = ("body", "settings")
+# The two flows share one shape, so one error mapping.
+_FLOWS = frozenset({"welcome", "closing"})
 # Each pydantic error kind: the code a client sees, and a fixed message (the
 # input is never echoed).
 _WELCOME_KINDS: dict[str, tuple[str, str]] = {
@@ -119,10 +121,10 @@ _WELCOME_KINDS: dict[str, tuple[str, str]] = {
 _STEP_TAGS = frozenset({"welcome", "video", "html", "pdf", "quiz", "assessment"})
 
 
-def welcome_path(loc: tuple[int | str, ...]) -> str:
-    """`welcome.steps[2].html` from pydantic's location inside `welcome`, which
+def welcome_path(loc: tuple[int | str, ...], flow: str = "welcome") -> str:
+    """`welcome.steps[2].html` from pydantic's location inside the flow, which
     also names the branch of the union each step went through (dropped)."""
-    out = "welcome"
+    out = flow
     after_index = False
     for part in loc:
         if after_index and part in _STEP_TAGS:
@@ -137,14 +139,21 @@ def welcome_problems(
     errors: Sequence[Any],
 ) -> list[dict[str, str]] | None:
     """`{path, code, message}` for each error when every one of them is about
-    `settings.welcome`; `None` when some other part of the body is wrong too
-    (the generic answer then lists them all). Never echoes the input."""
-    if not errors or any(tuple(e["loc"][:3]) != _WELCOME_LOC for e in errors):
+    `settings.welcome` or `settings.closing`; `None` when some other part of
+    the body is wrong too (the generic answer then lists them all). Never
+    echoes the input."""
+    if not errors or any(
+        tuple(e["loc"][:2]) != _SETTINGS_LOC
+        or len(e["loc"]) < 3
+        or e["loc"][2] not in _FLOWS
+        for e in errors
+    ):
         return None
     problems = []
     for e in errors:
-        loc = tuple(e["loc"][len(_WELCOME_LOC) :])
-        path = welcome_path(loc)
+        flow = str(e["loc"][2])
+        loc = tuple(e["loc"][3:])
+        path = welcome_path(loc, flow)
         code, message = _WELCOME_KINDS.get(e["type"], ("invalid", "Invalid value"))
         in_step = len(loc) > 1 and loc[0] == "steps"
         if (

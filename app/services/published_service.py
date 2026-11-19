@@ -22,7 +22,7 @@ from app.schemas.view3d import View3d
 from app.schemas.welcome import WelcomeDocument
 from app.services.resolution_service import MapResolutionService
 from app.welcome_flow.documents import unique_in_order, usable_documents
-from app.welcome_flow.flow import stored_pdf_ids
+from app.welcome_flow.flow import stored_settings_pdf_ids
 
 
 def _bubble_ids(row: PublishedRow) -> list[uuid.UUID]:
@@ -82,7 +82,7 @@ class PublishedMapService:
         return PublishedMapList(items=items, total=total, limit=limit, offset=offset)
 
     async def _welcome_documents(self, snap: dict[str, Any]) -> list[WelcomeDocument]:
-        ids = unique_in_order(stored_pdf_ids(snap["settings"].get("welcome")))
+        ids = unique_in_order(stored_settings_pdf_ids(snap["settings"]))
         if not ids:
             return []
         found = await usable_documents(self._assets, self._storage, ids)

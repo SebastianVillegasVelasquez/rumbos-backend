@@ -160,6 +160,17 @@ class AssessmentService:
         best = max(done, key=lambda a: _frac(_res(a)["percent_exact"]), default=None)
         passed = any(_res(a)["passed"] for a in done)
         used = len(closed)
+        already_passed = not self._caller.preview and (
+            passed
+            or (
+                settings.exemption.enabled
+                and any(
+                    a.result and a.result["passed"]
+                    for a in attempts
+                    if a.purpose != purpose
+                )
+            )
+        )
         state = "available"
         reason = None
         if runtime is None:
@@ -177,6 +188,7 @@ class AssessmentService:
             "section_count": len(form.sections) if form else 0,
             "item_count": sum(len(s.items()) for s in form.sections) if form else 0,
             "attempts": {"used": used, "max": policy.max_attempts},
+            "already_passed": already_passed,
             "state": state,
             "locked_reason": reason,
             "in_progress": (

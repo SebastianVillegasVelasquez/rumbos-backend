@@ -59,6 +59,10 @@ class AssessmentListItem(_Out):
     locked_reason: str | None = None
     in_progress: InProgress | None = None
     best: Best | None = None
+    # The student has already passed, in this exam or (with the exemption on)
+    # in the other one, so a client must not force another attempt. Never true
+    # for an editor in preview. The pass rule and `state` do not change.
+    already_passed: bool = False
 
 
 class AssessmentFormEntry(_Out):

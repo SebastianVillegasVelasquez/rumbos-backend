@@ -34,7 +34,7 @@ from app.schemas.publication import (
 )
 from app.schemas.welcome import WelcomeDocument
 from app.welcome_flow.documents import unique_in_order, usable_documents
-from app.welcome_flow.flow import pdf_steps
+from app.welcome_flow.flow import settings_pdf_ids
 
 MAX_PUBLICATIONS_LISTED = 100
 
@@ -185,7 +185,7 @@ class PublicationService:
         return await self._load(course_map_id, record.snapshot, expected_revision)
 
     async def _welcome_documents(self, settings: MapSettings) -> list[WelcomeDocument]:
-        ids = unique_in_order(s.asset_id for _, s in pdf_steps(settings.welcome))
+        ids = unique_in_order(settings_pdf_ids(settings))
         if not ids:
             return []
         found = await usable_documents(self._assets, self._storage, ids)
