@@ -1,0 +1,167 @@
+{
+  "id": "en-a2-3.4-dialogue",
+  "lesson_id": "3.4",
+  "skill": "dialogue",
+  "title": "Talk it through 3.4",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Host giving advice to a guest",
+  "can_do": [
+    "I can ask for and give advice with should.",
+    "I can say how I feel."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "I feel tired. What should I do?",
+        "translation": "Me siento cansado. ¿Qué debo hacer?",
+        "audio": "en-a2-3.4.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You should rest for an hour.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "You should drink some water.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "You should go to bed early.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "I'm sad because it rains. What should I do?",
+        "translation": "Estoy triste porque llueve. ¿Qué debo hacer?",
+        "audio": "en-a2-3.4.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "should"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "You should visit the museum.",
+        "starters": [
+          "You should ..."
+        ],
+        "word_bank": [
+          "you",
+          "should",
+          "visit",
+          "the",
+          "museum",
+          "read",
+          "a",
+          "book"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Should I take a jacket?",
+        "translation": "¿Debo llevar una chaqueta?",
+        "audio": "en-a2-3.4.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, you should.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, it is cold at night.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "No, you shouldn't. It is warm.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "I'm nervous about the hike.",
+        "translation": "Estoy nervioso por la caminata.",
+        "audio": "en-a2-3.4.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Don't worry. You are going to be fine.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "You should go slowly.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "I understand. We can go together.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "I'm very happy today!",
+        "translation": "¡Estoy muy feliz hoy!",
+        "audio": "en-a2-3.4.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "That is wonderful!",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "I'm glad to hear that.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Great! Why are you so happy?",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thanks for your advice.",
+        "translation": "Gracias por su consejo.",
+        "audio": "en-a2-3.4.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You're welcome.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Glad I could help.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Anytime. Enjoy your day!",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

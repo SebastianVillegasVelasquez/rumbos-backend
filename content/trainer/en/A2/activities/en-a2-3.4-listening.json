@@ -1,0 +1,81 @@
+{
+  "id": "en-a2-3.4-listening",
+  "lesson_id": "3.4",
+  "skill": "listening",
+  "title": "Listen and choose 3.4",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Host giving advice to a guest",
+  "can_do": [
+    "I can ask for and give advice with should.",
+    "I can say how I feel."
+  ],
+  "items": [
+    {
+      "id": "en-a2-3.4.l1",
+      "type": "listen_choose",
+      "prompt": "What should you wear?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "boots"
+        },
+        {
+          "id": "o2",
+          "text": "a hat"
+        },
+        {
+          "id": "o3",
+          "text": "a coat"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: You should wear a hat.",
+      "audio": "en-a2-3.4.l1"
+    },
+    {
+      "id": "en-a2-3.4.l2",
+      "type": "listen_choose",
+      "prompt": "How does the speaker feel?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "happy"
+        },
+        {
+          "id": "o2",
+          "text": "bored"
+        },
+        {
+          "id": "o3",
+          "text": "worried"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: I'm worried.",
+      "audio": "en-a2-3.4.l2"
+    },
+    {
+      "id": "en-a2-3.4.l3",
+      "type": "listen_choose",
+      "prompt": "What shouldn't you do?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "swim in the river"
+        },
+        {
+          "id": "o2",
+          "text": "walk in the town"
+        },
+        {
+          "id": "o3",
+          "text": "eat lunch"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: You shouldn't swim in the river.",
+      "audio": "en-a2-3.4.l3"
+    }
+  ]
+}

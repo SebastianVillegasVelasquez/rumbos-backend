@@ -287,6 +287,198 @@
       "lesson_id": "2.2",
       "word": "every day",
       "translation": "todos los días"
+    },
+    {
+      "id": "en-a2-3.1.v1",
+      "lesson_id": "3.1",
+      "word": "meet",
+      "translation": "conocer"
+    },
+    {
+      "id": "en-a2-3.1.v2",
+      "lesson_id": "3.1",
+      "word": "friend",
+      "translation": "amigo"
+    },
+    {
+      "id": "en-a2-3.1.v3",
+      "lesson_id": "3.1",
+      "word": "family",
+      "translation": "familia"
+    },
+    {
+      "id": "en-a2-3.1.v4",
+      "lesson_id": "3.1",
+      "word": "again",
+      "translation": "otra vez"
+    },
+    {
+      "id": "en-a2-3.1.v5",
+      "lesson_id": "3.1",
+      "word": "first time",
+      "translation": "primera vez"
+    },
+    {
+      "id": "en-a2-3.1.v6",
+      "lesson_id": "3.1",
+      "word": "nice",
+      "translation": "agradable"
+    },
+    {
+      "id": "en-a2-3.1.v7",
+      "lesson_id": "3.1",
+      "word": "stay",
+      "translation": "quedarse"
+    },
+    {
+      "id": "en-a2-3.1.v8",
+      "lesson_id": "3.1",
+      "word": "visit",
+      "translation": "visita"
+    },
+    {
+      "id": "en-a2-3.2.v1",
+      "lesson_id": "3.2",
+      "word": "can",
+      "translation": "poder / saber"
+    },
+    {
+      "id": "en-a2-3.2.v2",
+      "lesson_id": "3.2",
+      "word": "cannot",
+      "translation": "no poder"
+    },
+    {
+      "id": "en-a2-3.2.v3",
+      "lesson_id": "3.2",
+      "word": "swim",
+      "translation": "nadar"
+    },
+    {
+      "id": "en-a2-3.2.v4",
+      "lesson_id": "3.2",
+      "word": "ride",
+      "translation": "montar"
+    },
+    {
+      "id": "en-a2-3.2.v5",
+      "lesson_id": "3.2",
+      "word": "speak",
+      "translation": "hablar"
+    },
+    {
+      "id": "en-a2-3.2.v6",
+      "lesson_id": "3.2",
+      "word": "cook",
+      "translation": "cocinar"
+    },
+    {
+      "id": "en-a2-3.2.v7",
+      "lesson_id": "3.2",
+      "word": "help",
+      "translation": "ayudar"
+    },
+    {
+      "id": "en-a2-3.2.v8",
+      "lesson_id": "3.2",
+      "word": "carry",
+      "translation": "cargar"
+    },
+    {
+      "id": "en-a2-3.3.v1",
+      "lesson_id": "3.3",
+      "word": "phone",
+      "translation": "teléfono"
+    },
+    {
+      "id": "en-a2-3.3.v2",
+      "lesson_id": "3.3",
+      "word": "call",
+      "translation": "llamada"
+    },
+    {
+      "id": "en-a2-3.3.v3",
+      "lesson_id": "3.3",
+      "word": "message",
+      "translation": "mensaje"
+    },
+    {
+      "id": "en-a2-3.3.v4",
+      "lesson_id": "3.3",
+      "word": "manager",
+      "translation": "gerente"
+    },
+    {
+      "id": "en-a2-3.3.v5",
+      "lesson_id": "3.3",
+      "word": "upset",
+      "translation": "molesto"
+    },
+    {
+      "id": "en-a2-3.3.v6",
+      "lesson_id": "3.3",
+      "word": "wait",
+      "translation": "esperar"
+    },
+    {
+      "id": "en-a2-3.3.v7",
+      "lesson_id": "3.3",
+      "word": "hold on",
+      "translation": "espere en línea"
+    },
+    {
+      "id": "en-a2-3.3.v8",
+      "lesson_id": "3.3",
+      "word": "calm",
+      "translation": "tranquilo"
+    },
+    {
+      "id": "en-a2-3.4.v1",
+      "lesson_id": "3.4",
+      "word": "advice",
+      "translation": "consejo"
+    },
+    {
+      "id": "en-a2-3.4.v2",
+      "lesson_id": "3.4",
+      "word": "should",
+      "translation": "debería"
+    },
+    {
+      "id": "en-a2-3.4.v3",
+      "lesson_id": "3.4",
+      "word": "tired",
+      "translation": "cansado"
+    },
+    {
+      "id": "en-a2-3.4.v4",
+      "lesson_id": "3.4",
+      "word": "nervous",
+      "translation": "nervioso"
+    },
+    {
+      "id": "en-a2-3.4.v5",
+      "lesson_id": "3.4",
+      "word": "worried",
+      "translation": "preocupado"
+    },
+    {
+      "id": "en-a2-3.4.v6",
+      "lesson_id": "3.4",
+      "word": "happy",
+      "translation": "feliz"
+    },
+    {
+      "id": "en-a2-3.4.v7",
+      "lesson_id": "3.4",
+      "word": "angry",
+      "translation": "enojado"
+    },
+    {
+      "id": "en-a2-3.4.v8",
+      "lesson_id": "3.4",
+      "word": "bored",
+      "translation": "aburrido"
     }
   ]
 }

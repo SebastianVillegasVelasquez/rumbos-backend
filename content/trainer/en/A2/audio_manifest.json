@@ -920,6 +920,474 @@
       "file": "audio/en-a2-2.2.l3.mp3",
       "duration_s": null,
       "transcript": "I want a warm jacket and a pair of boots."
+    },
+    {
+      "id": "en-a2-3.1.d1",
+      "text": "Hi! Nice to meet you. Where are you from?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Hi! Nice to meet you. Where are you from?"
+        }
+      ],
+      "file": "audio/en-a2-3.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hi! Nice to meet you. Where are you from?"
+    },
+    {
+      "id": "en-a2-3.1.d2",
+      "text": "How long are you staying here?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How long are you staying here?"
+        }
+      ],
+      "file": "audio/en-a2-3.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "How long are you staying here?"
+    },
+    {
+      "id": "en-a2-3.1.d3",
+      "text": "Is this your first time in the mountains?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is this your first time in the mountains?"
+        }
+      ],
+      "file": "audio/en-a2-3.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "Is this your first time in the mountains?"
+    },
+    {
+      "id": "en-a2-3.1.d4",
+      "text": "Long time no see! How are you?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Long time no see! How are you?"
+        }
+      ],
+      "file": "audio/en-a2-3.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Long time no see! How are you?"
+    },
+    {
+      "id": "en-a2-3.1.d5",
+      "text": "How is your family?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How is your family?"
+        }
+      ],
+      "file": "audio/en-a2-3.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "How is your family?"
+    },
+    {
+      "id": "en-a2-3.1.d6",
+      "text": "Let's have coffee later.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Let's have coffee later."
+        }
+      ],
+      "file": "audio/en-a2-3.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "Let's have coffee later."
+    },
+    {
+      "id": "en-a2-3.1.l1",
+      "text": "Hello, I'm Peter. I'm from Australia and I'm a teacher.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Hello, I'm Peter. I'm from Australia and I'm a teacher."
+        }
+      ],
+      "file": "audio/en-a2-3.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "Hello, I'm Peter. I'm from Australia and I'm a teacher."
+    },
+    {
+      "id": "en-a2-3.1.l2",
+      "text": "It's nice to see you again. How is your mother?",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "It's nice to see you again. How is your mother?"
+        }
+      ],
+      "file": "audio/en-a2-3.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "It's nice to see you again. How is your mother?"
+    },
+    {
+      "id": "en-a2-3.1.l3",
+      "text": "We are here for four days with our two children.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "We are here for four days with our two children."
+        }
+      ],
+      "file": "audio/en-a2-3.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "We are here for four days with our two children."
+    },
+    {
+      "id": "en-a2-3.2.d1",
+      "text": "Can you swim?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can you swim?"
+        }
+      ],
+      "file": "audio/en-a2-3.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "Can you swim?"
+    },
+    {
+      "id": "en-a2-3.2.d2",
+      "text": "What can you do well?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What can you do well?"
+        }
+      ],
+      "file": "audio/en-a2-3.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "What can you do well?"
+    },
+    {
+      "id": "en-a2-3.2.d3",
+      "text": "Can you ride a horse?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can you ride a horse?"
+        }
+      ],
+      "file": "audio/en-a2-3.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "Can you ride a horse?"
+    },
+    {
+      "id": "en-a2-3.2.d4",
+      "text": "Can you speak English and French?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can you speak English and French?"
+        }
+      ],
+      "file": "audio/en-a2-3.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "Can you speak English and French?"
+    },
+    {
+      "id": "en-a2-3.2.d5",
+      "text": "Can you carry this bag, please?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can you carry this bag, please?"
+        }
+      ],
+      "file": "audio/en-a2-3.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "Can you carry this bag, please?"
+    },
+    {
+      "id": "en-a2-3.2.d6",
+      "text": "Great! You can come on the hike.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Great! You can come on the hike."
+        }
+      ],
+      "file": "audio/en-a2-3.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Great! You can come on the hike."
+    },
+    {
+      "id": "en-a2-3.2.l1",
+      "text": "My sister can play the piano and the guitar.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "My sister can play the piano and the guitar."
+        }
+      ],
+      "file": "audio/en-a2-3.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "My sister can play the piano and the guitar."
+    },
+    {
+      "id": "en-a2-3.2.l2",
+      "text": "I can't drive, but I can ride a bike.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I can't drive, but I can ride a bike."
+        }
+      ],
+      "file": "audio/en-a2-3.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "I can't drive, but I can ride a bike."
+    },
+    {
+      "id": "en-a2-3.2.l3",
+      "text": "Can you help me with my bag? It is very heavy.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Can you help me with my bag? It is very heavy."
+        }
+      ],
+      "file": "audio/en-a2-3.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "Can you help me with my bag? It is very heavy."
+    },
+    {
+      "id": "en-a2-3.3.d1",
+      "text": "Hello? Is this the hotel?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Hello? Is this the hotel?"
+        }
+      ],
+      "file": "audio/en-a2-3.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hello? Is this the hotel?"
+    },
+    {
+      "id": "en-a2-3.3.d2",
+      "text": "I want to speak to the manager now!",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I want to speak to the manager now!"
+        }
+      ],
+      "file": "audio/en-a2-3.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "I want to speak to the manager now!"
+    },
+    {
+      "id": "en-a2-3.3.d3",
+      "text": "My room is dirty and nobody helps me!",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "My room is dirty and nobody helps me!"
+        }
+      ],
+      "file": "audio/en-a2-3.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "My room is dirty and nobody helps me!"
+    },
+    {
+      "id": "en-a2-3.3.d4",
+      "text": "How long is this going to take?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How long is this going to take?"
+        }
+      ],
+      "file": "audio/en-a2-3.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "How long is this going to take?"
+    },
+    {
+      "id": "en-a2-3.3.d5",
+      "text": "Okay. Please hurry.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Okay. Please hurry."
+        }
+      ],
+      "file": "audio/en-a2-3.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "Okay. Please hurry."
+    },
+    {
+      "id": "en-a2-3.3.d6",
+      "text": "Thank you. Goodbye.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. Goodbye."
+        }
+      ],
+      "file": "audio/en-a2-3.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. Goodbye."
+    },
+    {
+      "id": "en-a2-3.3.l1",
+      "text": "Hotel Sol, good morning. This is Ana speaking.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Hotel Sol, good morning. This is Ana speaking."
+        }
+      ],
+      "file": "audio/en-a2-3.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "Hotel Sol, good morning. This is Ana speaking."
+    },
+    {
+      "id": "en-a2-3.3.l2",
+      "text": "Please hold on. I am checking your booking.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Please hold on. I am checking your booking."
+        }
+      ],
+      "file": "audio/en-a2-3.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "Please hold on. I am checking your booking."
+    },
+    {
+      "id": "en-a2-3.3.l3",
+      "text": "I'm sorry, the manager is not here. Can I take a message?",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I'm sorry, the manager is not here. Can I take a message?"
+        }
+      ],
+      "file": "audio/en-a2-3.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "I'm sorry, the manager is not here. Can I take a message?"
+    },
+    {
+      "id": "en-a2-3.4.d1",
+      "text": "I feel tired. What should I do?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I feel tired. What should I do?"
+        }
+      ],
+      "file": "audio/en-a2-3.4.d1.mp3",
+      "duration_s": null,
+      "transcript": "I feel tired. What should I do?"
+    },
+    {
+      "id": "en-a2-3.4.d2",
+      "text": "I'm sad because it rains. What should I do?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I'm sad because it rains. What should I do?"
+        }
+      ],
+      "file": "audio/en-a2-3.4.d2.mp3",
+      "duration_s": null,
+      "transcript": "I'm sad because it rains. What should I do?"
+    },
+    {
+      "id": "en-a2-3.4.d3",
+      "text": "Should I take a jacket?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Should I take a jacket?"
+        }
+      ],
+      "file": "audio/en-a2-3.4.d3.mp3",
+      "duration_s": null,
+      "transcript": "Should I take a jacket?"
+    },
+    {
+      "id": "en-a2-3.4.d4",
+      "text": "I'm nervous about the hike.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I'm nervous about the hike."
+        }
+      ],
+      "file": "audio/en-a2-3.4.d4.mp3",
+      "duration_s": null,
+      "transcript": "I'm nervous about the hike."
+    },
+    {
+      "id": "en-a2-3.4.d5",
+      "text": "I'm very happy today!",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I'm very happy today!"
+        }
+      ],
+      "file": "audio/en-a2-3.4.d5.mp3",
+      "duration_s": null,
+      "transcript": "I'm very happy today!"
+    },
+    {
+      "id": "en-a2-3.4.d6",
+      "text": "Thanks for your advice.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thanks for your advice."
+        }
+      ],
+      "file": "audio/en-a2-3.4.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thanks for your advice."
+    },
+    {
+      "id": "en-a2-3.4.l1",
+      "text": "You should wear a hat. The sun is strong.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "You should wear a hat. The sun is strong."
+        }
+      ],
+      "file": "audio/en-a2-3.4.l1.mp3",
+      "duration_s": null,
+      "transcript": "You should wear a hat. The sun is strong."
+    },
+    {
+      "id": "en-a2-3.4.l2",
+      "text": "I'm worried because my bus is late.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I'm worried because my bus is late."
+        }
+      ],
+      "file": "audio/en-a2-3.4.l2.mp3",
+      "duration_s": null,
+      "transcript": "I'm worried because my bus is late."
+    },
+    {
+      "id": "en-a2-3.4.l3",
+      "text": "You shouldn't swim in the river after the rain.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "You shouldn't swim in the river after the rain."
+        }
+      ],
+      "file": "audio/en-a2-3.4.l3.mp3",
+      "duration_s": null,
+      "transcript": "You shouldn't swim in the river after the rain."
     }
   ]
 }

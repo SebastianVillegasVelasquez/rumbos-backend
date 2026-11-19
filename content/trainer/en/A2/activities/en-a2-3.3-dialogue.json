@@ -1,0 +1,186 @@
+{
+  "id": "en-a2-3.3-dialogue",
+  "lesson_id": "3.3",
+  "skill": "dialogue",
+  "title": "Talk it through 3.3",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Receptionist on the telephone",
+  "can_do": [
+    "I can answer the telephone politely.",
+    "I can stay calm and apologise to an upset caller."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Hello? Is this the hotel?",
+        "translation": "¿Aló? ¿Es el hotel?",
+        "audio": "en-a2-3.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Good afternoon, Hotel Sol. Can I help you?",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Hotel Sol, good afternoon. How may I help?",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, this is Hotel Sol. What can I do for you?",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "I want to speak to the manager now!",
+        "translation": "¡Quiero hablar con el gerente ahora!",
+        "audio": "en-a2-3.3.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "sorry"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "understand"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "moment"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "wait"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "I understand. Please wait a moment.",
+        "starters": [
+          "I am sorry ...",
+          "Please wait ..."
+        ],
+        "word_bank": [
+          "I",
+          "understand",
+          "am",
+          "sorry",
+          "please",
+          "wait",
+          "a",
+          "moment"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "My room is dirty and nobody helps me!",
+        "translation": "¡Mi habitación está sucia y nadie me ayuda!",
+        "audio": "en-a2-3.3.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I'm very sorry. I understand you are upset.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "I am so sorry. I can send someone now.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "I understand. Let me solve this.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "How long is this going to take?",
+        "translation": "¿Cuánto va a tardar esto?",
+        "audio": "en-a2-3.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is going to take ten minutes.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Someone is coming in five minutes.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Only a few minutes, I promise.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Okay. Please hurry.",
+        "translation": "Está bien. Por favor, apúrese.",
+        "audio": "en-a2-3.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. Thank you for waiting.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, right away.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Thank you for your patience.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. Goodbye.",
+        "translation": "Gracias. Adiós.",
+        "audio": "en-a2-3.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Goodbye. Have a nice day.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Thank you for calling. Goodbye.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Goodbye, and sorry again.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

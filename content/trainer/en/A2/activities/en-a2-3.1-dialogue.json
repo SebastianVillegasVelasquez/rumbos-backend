@@ -1,0 +1,185 @@
+{
+  "id": "en-a2-3.1-dialogue",
+  "lesson_id": "3.1",
+  "skill": "dialogue",
+  "title": "Talk it through 3.1",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Guide meeting old and new acquaintances",
+  "can_do": [
+    "I can greet someone I know and someone I meet.",
+    "I can ask and answer simple small-talk questions."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Hi! Nice to meet you. Where are you from?",
+        "translation": "¡Hola! Mucho gusto. ¿De dónde eres?",
+        "audio": "en-a2-3.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I'm from Colombia.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "I'm from Spain.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "I'm from Canada.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "How long are you staying here?",
+        "translation": "¿Cuánto tiempo te quedas aquí?",
+        "audio": "en-a2-3.1.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "days"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "nights"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "week"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "weekend"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "I am staying for three days.",
+        "starters": [
+          "I am staying for ..."
+        ],
+        "word_bank": [
+          "I",
+          "am",
+          "staying",
+          "for",
+          "three",
+          "days",
+          "a",
+          "week"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Is this your first time in the mountains?",
+        "translation": "¿Es tu primera vez en las montañas?",
+        "audio": "en-a2-3.1.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, it is my first time.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "No, I came last year.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, and I love it.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Long time no see! How are you?",
+        "translation": "¡Cuánto tiempo sin verte! ¿Cómo estás?",
+        "audio": "en-a2-3.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I'm great, thanks. And you?",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "I'm fine. It's good to see you.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Not bad, thank you.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "How is your family?",
+        "translation": "¿Cómo está tu familia?",
+        "audio": "en-a2-3.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "They are fine, thanks.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "My family is well.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "They are all very well.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Let's have coffee later.",
+        "translation": "Tomemos un café más tarde.",
+        "audio": "en-a2-3.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Good idea! See you later.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Great, see you at four.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Sure, I would love that.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}
