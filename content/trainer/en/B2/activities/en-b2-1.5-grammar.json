@@ -1,0 +1,219 @@
+{
+  "id": "en-b2-1.5-grammar",
+  "skill": "grammar",
+  "title": "Practice 1.5",
+  "estimated_minutes": 6,
+  "lesson_id": "1.5",
+  "status": "draft",
+  "role": "Account manager checking what a client said and confirming it by paraphrase",
+  "can_do": [
+    "I can report what someone said with the right verbs and tenses.",
+    "I can confirm my understanding by paraphrasing."
+  ],
+  "items": [
+    {
+      "id": "b2-1.5.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence reports I will send the file tomorrow?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "She said that she would send the file the next day."
+        },
+        {
+          "id": "o2",
+          "text": "She said that she will send the file tomorrow."
+        },
+        {
+          "id": "o3",
+          "text": "She said that she sent the file the next day."
+        }
+      ],
+      "correct": "o1",
+      "explanation": "In reported speech will becomes would and tomorrow becomes the next day.",
+      "error_tags": {
+        "o2": {
+          "tag": "backshift",
+          "text": "After said, will changes to would."
+        },
+        "o3": {
+          "tag": "backshift",
+          "text": "Will send does not become sent."
+        }
+      }
+    },
+    {
+      "id": "b2-1.5.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "He asked me {1} I had signed the form.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "whether"
+            },
+            {
+              "id": "o2",
+              "text": "that"
+            },
+            {
+              "id": "o3",
+              "text": "what"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "reported_question",
+            "text": "A yes/no question is reported with whether or if."
+          }
+        }
+      ],
+      "explanation": "A reported yes/no question uses whether or if."
+    },
+    {
+      "id": "b2-1.5.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "If I understand you {1}, the price includes the transfer.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "correctly",
+            "right",
+            "well"
+          ],
+          "error_tag": {
+            "tag": "collocation",
+            "text": "The usual phrase is if I understand you correctly."
+          }
+        }
+      ],
+      "explanation": "If I understand you correctly is a polite way to confirm."
+    },
+    {
+      "id": "b2-1.5.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "In"
+        },
+        {
+          "id": "t2",
+          "text": "other"
+        },
+        {
+          "id": "t3",
+          "text": "words"
+        },
+        {
+          "id": "t4",
+          "text": "the"
+        },
+        {
+          "id": "t5",
+          "text": "offer"
+        },
+        {
+          "id": "t6",
+          "text": "is"
+        },
+        {
+          "id": "t7",
+          "text": "no"
+        },
+        {
+          "id": "t8",
+          "text": "longer"
+        },
+        {
+          "id": "t9",
+          "text": "valid"
+        }
+      ],
+      "explanation": "In other words introduces a paraphrase of what was said.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with the linking phrase In other words."
+      }
+    },
+    {
+      "id": "b2-1.5.ex.05",
+      "type": "match",
+      "prompt": "Match the reporting verb with its use.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "point out"
+        },
+        {
+          "id": "l2",
+          "text": "suggest"
+        },
+        {
+          "id": "l3",
+          "text": "mention"
+        },
+        {
+          "id": "l4",
+          "text": "clarify"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "to draw attention to a fact"
+        },
+        {
+          "id": "r2",
+          "text": "to offer an idea"
+        },
+        {
+          "id": "r3",
+          "text": "to say briefly"
+        },
+        {
+          "id": "r4",
+          "text": "to make clear"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Reporting verbs show what kind of speech act it was."
+    },
+    {
+      "id": "b2-1.5.ex.06",
+      "type": "short_answer",
+      "prompt": "Paraphrase to confirm: you mean the meeting is on Monday.",
+      "accepted": [
+        "So you mean the meeting is on Monday",
+        "If I understand you correctly you mean the meeting is on Monday",
+        "If I understand you correctly the meeting is on Monday",
+        "So the meeting is on Monday"
+      ],
+      "max_length": 88,
+      "explanation": "Use So you mean ... or If I understand you correctly ..."
+    }
+  ]
+}

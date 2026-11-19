@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-1.3-listening",
+  "skill": "listening",
+  "title": "Listen and choose 1.3",
+  "estimated_minutes": 4,
+  "lesson_id": "1.3",
+  "status": "draft",
+  "role": "Tour operator solving a booking problem with a customer-service representative",
+  "can_do": [
+    "I can describe a service problem that is still going on.",
+    "I can state what I need clearly and politely, and ask for a fee to be waived."
+  ],
+  "items": [
+    {
+      "id": "en-b2-1.3.l1",
+      "type": "listen_choose",
+      "prompt": "What is the problem?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The payments have been rejected"
+        },
+        {
+          "id": "o2",
+          "text": "The tour has been moved"
+        },
+        {
+          "id": "o3",
+          "text": "The room is too small"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: our payments have been rejected for three days.",
+      "audio": "en-b2-1.3.l1"
+    },
+    {
+      "id": "en-b2-1.3.l2",
+      "type": "listen_choose",
+      "prompt": "What does the speaker want the OTA to do?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Cancel the booking"
+        },
+        {
+          "id": "o2",
+          "text": "Confirm the restored booking in writing"
+        },
+        {
+          "id": "o3",
+          "text": "Refund every guest"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker wants the booking restored and confirmed in writing.",
+      "audio": "en-b2-1.3.l2"
+    },
+    {
+      "id": "en-b2-1.3.l3",
+      "type": "listen_choose",
+      "prompt": "When might the fee be waived?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "If they pay it today"
+        },
+        {
+          "id": "o2",
+          "text": "If they call every day"
+        },
+        {
+          "id": "o3",
+          "text": "If they send a certificate by Friday"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The fee might be waived if the certificate arrives before Friday.",
+      "audio": "en-b2-1.3.l3"
+    }
+  ]
+}

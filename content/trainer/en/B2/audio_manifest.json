@@ -214,6 +214,756 @@
       "file": "audio/b2fa-d299b580f8.mp3",
       "duration_s": null,
       "transcript": "I am calling to request an urgent review; the operator has been canceling our confirmed bookings for three days."
+    },
+    {
+      "id": "en-b2-1.1.d1",
+      "text": "Good morning. Could you give me the exact departure time of the group flight?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Good morning. Could you give me the exact departure time of the group flight?"
+        }
+      ],
+      "file": "audio/en-b2-1.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Good morning. Could you give me the exact departure time of the group flight?"
+    },
+    {
+      "id": "en-b2-1.1.d2",
+      "text": "And how many passengers are travelling in total?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "And how many passengers are travelling in total?"
+        }
+      ],
+      "file": "audio/en-b2-1.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "And how many passengers are travelling in total?"
+    },
+    {
+      "id": "en-b2-1.1.d3",
+      "text": "Is the transfer to the hotel included in the price?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is the transfer to the hotel included in the price?"
+        }
+      ],
+      "file": "audio/en-b2-1.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "Is the transfer to the hotel included in the price?"
+    },
+    {
+      "id": "en-b2-1.1.d4",
+      "text": "Could you repeat the booking reference, please?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Could you repeat the booking reference, please?"
+        }
+      ],
+      "file": "audio/en-b2-1.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Could you repeat the booking reference, please?"
+    },
+    {
+      "id": "en-b2-1.1.d5",
+      "text": "Roughly how long is the layover in Madrid?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Roughly how long is the layover in Madrid?"
+        }
+      ],
+      "file": "audio/en-b2-1.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "Roughly how long is the layover in Madrid?"
+    },
+    {
+      "id": "en-b2-1.1.d6",
+      "text": "Perfect. Please confirm everything in writing by tonight.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Perfect. Please confirm everything in writing by tonight."
+        }
+      ],
+      "file": "audio/en-b2-1.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "Perfect. Please confirm everything in writing by tonight."
+    },
+    {
+      "id": "en-b2-1.1.l1",
+      "text": "How long will the transfer take? Roughly forty minutes, depending on the traffic.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How long will the transfer take?"
+        },
+        {
+          "voice": "host",
+          "text": "Roughly forty minutes, depending on the traffic."
+        }
+      ],
+      "file": "audio/en-b2-1.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "— How long will the transfer take? — Roughly forty minutes, depending on the traffic."
+    },
+    {
+      "id": "en-b2-1.1.l2",
+      "text": "Can you confirm the number of rooms? We have reserved eighteen rooms, all of them facing the river.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can you confirm the number of rooms?"
+        },
+        {
+          "voice": "host",
+          "text": "We have reserved eighteen rooms, all of them facing the river."
+        }
+      ],
+      "file": "audio/en-b2-1.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "— Can you confirm the number of rooms? — We have reserved eighteen rooms, all of them facing the river."
+    },
+    {
+      "id": "en-b2-1.1.l3",
+      "text": "Check-in opens at seven thirty, but the group should arrive no later than eight o'clock.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Check-in opens at seven thirty, but the group should arrive no later than eight o'clock."
+        }
+      ],
+      "file": "audio/en-b2-1.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "Check-in opens at 7:30, but the group should arrive no later than 8:00."
+    },
+    {
+      "id": "en-b2-1.2.d1",
+      "text": "Will the outdoor concert go ahead on Friday?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Will the outdoor concert go ahead on Friday?"
+        }
+      ],
+      "file": "audio/en-b2-1.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "Will the outdoor concert go ahead on Friday?"
+    },
+    {
+      "id": "en-b2-1.2.d2",
+      "text": "Do you think the guest speaker will arrive on time?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Do you think the guest speaker will arrive on time?"
+        }
+      ],
+      "file": "audio/en-b2-1.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "Do you think the guest speaker will arrive on time?"
+    },
+    {
+      "id": "en-b2-1.2.d3",
+      "text": "What happens if the road to the venue is closed?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What happens if the road to the venue is closed?"
+        }
+      ],
+      "file": "audio/en-b2-1.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "What happens if the road to the venue is closed?"
+    },
+    {
+      "id": "en-b2-1.2.d4",
+      "text": "Is the new schedule final?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is the new schedule final?"
+        }
+      ],
+      "file": "audio/en-b2-1.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "Is the new schedule final?"
+    },
+    {
+      "id": "en-b2-1.2.d5",
+      "text": "How sure are you that the sponsors will attend?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How sure are you that the sponsors will attend?"
+        }
+      ],
+      "file": "audio/en-b2-1.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "How sure are you that the sponsors will attend?"
+    },
+    {
+      "id": "en-b2-1.2.d6",
+      "text": "Thanks. Keep me updated if anything changes.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thanks. Keep me updated if anything changes."
+        }
+      ],
+      "file": "audio/en-b2-1.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thanks. Keep me updated if anything changes."
+    },
+    {
+      "id": "en-b2-1.2.l1",
+      "text": "Is the ferry going to run tomorrow? It is unlikely. The sea is expected to be very rough.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is the ferry going to run tomorrow?"
+        },
+        {
+          "voice": "host",
+          "text": "It is unlikely. The sea is expected to be very rough."
+        }
+      ],
+      "file": "audio/en-b2-1.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "— Is the ferry going to run tomorrow? — It is unlikely. The sea is expected to be very rough."
+    },
+    {
+      "id": "en-b2-1.2.l2",
+      "text": "The minister has not confirmed yet, but it is almost certain that she will open the conference.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The minister has not confirmed yet, but it is almost certain that she will open the conference."
+        }
+      ],
+      "file": "audio/en-b2-1.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "The minister has not confirmed yet, but it is almost certain that she will open the conference."
+    },
+    {
+      "id": "en-b2-1.2.l3",
+      "text": "Do we need the contingency plan? Probably not, but let us keep it ready in case the storm moves north.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Do we need the contingency plan?"
+        },
+        {
+          "voice": "host",
+          "text": "Probably not, but let us keep it ready in case the storm moves north."
+        }
+      ],
+      "file": "audio/en-b2-1.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "— Do we need the contingency plan? — Probably not, but let us keep it ready in case the storm moves north."
+    },
+    {
+      "id": "en-b2-1.3.d1",
+      "text": "Customer service, good afternoon. How can I help you?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Customer service, good afternoon. How can I help you?"
+        }
+      ],
+      "file": "audio/en-b2-1.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "Customer service, good afternoon. How can I help you?"
+    },
+    {
+      "id": "en-b2-1.3.d2",
+      "text": "I am sorry to hear that. What exactly has been happening?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I am sorry to hear that. What exactly has been happening?"
+        }
+      ],
+      "file": "audio/en-b2-1.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "I am sorry to hear that. What exactly has been happening?"
+    },
+    {
+      "id": "en-b2-1.3.d3",
+      "text": "I see. Have you contacted us about this before?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I see. Have you contacted us about this before?"
+        }
+      ],
+      "file": "audio/en-b2-1.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "I see. Have you contacted us about this before?"
+    },
+    {
+      "id": "en-b2-1.3.d4",
+      "text": "What would you like us to do?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What would you like us to do?"
+        }
+      ],
+      "file": "audio/en-b2-1.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "What would you like us to do?"
+    },
+    {
+      "id": "en-b2-1.3.d5",
+      "text": "There may be a cancellation fee on some of the tickets.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "There may be a cancellation fee on some of the tickets."
+        }
+      ],
+      "file": "audio/en-b2-1.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "There may be a cancellation fee on some of the tickets."
+    },
+    {
+      "id": "en-b2-1.3.d6",
+      "text": "I will escalate this now and call you back within the hour.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I will escalate this now and call you back within the hour."
+        }
+      ],
+      "file": "audio/en-b2-1.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "I will escalate this now and call you back within the hour."
+    },
+    {
+      "id": "en-b2-1.3.l1",
+      "text": "Why are you calling today? Our payments have been rejected for three days, and we need a solution.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Why are you calling today?"
+        },
+        {
+          "voice": "host",
+          "text": "Our payments have been rejected for three days, and we need a solution."
+        }
+      ],
+      "file": "audio/en-b2-1.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "— Why are you calling today? — Our payments have been rejected for three days, and we need a solution."
+    },
+    {
+      "id": "en-b2-1.3.l2",
+      "text": "I am writing to request that the booking be restored and that the O T A confirm this in writing.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I am writing to request that the booking be restored and that the O T A confirm this in writing."
+        }
+      ],
+      "file": "audio/en-b2-1.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "I am writing to request that the booking be restored and that the OTA confirm this in writing."
+    },
+    {
+      "id": "en-b2-1.3.l3",
+      "text": "Is there any way to avoid the cancellation fee? It might be waived if you send the medical certificate before Friday.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is there any way to avoid the cancellation fee?"
+        },
+        {
+          "voice": "host",
+          "text": "It might be waived if you send the medical certificate before Friday."
+        }
+      ],
+      "file": "audio/en-b2-1.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "— Is there any way to avoid the cancellation fee? — It might be waived if you send the medical certificate before Friday."
+    },
+    {
+      "id": "en-b2-1.4.d1",
+      "text": "Could you describe what the package typically includes?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Could you describe what the package typically includes?"
+        }
+      ],
+      "file": "audio/en-b2-1.4.d1.mp3",
+      "duration_s": null,
+      "transcript": "Could you describe what the package typically includes?"
+    },
+    {
+      "id": "en-b2-1.4.d2",
+      "text": "And what is specific to this particular package?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "And what is specific to this particular package?"
+        }
+      ],
+      "file": "audio/en-b2-1.4.d2.mp3",
+      "duration_s": null,
+      "transcript": "And what is specific to this particular package?"
+    },
+    {
+      "id": "en-b2-1.4.d3",
+      "text": "Are meals included?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Are meals included?"
+        }
+      ],
+      "file": "audio/en-b2-1.4.d3.mp3",
+      "duration_s": null,
+      "transcript": "Are meals included?"
+    },
+    {
+      "id": "en-b2-1.4.d4",
+      "text": "Can the dates be changed?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can the dates be changed?"
+        }
+      ],
+      "file": "audio/en-b2-1.4.d4.mp3",
+      "duration_s": null,
+      "transcript": "Can the dates be changed?"
+    },
+    {
+      "id": "en-b2-1.4.d5",
+      "text": "Is the tariff fixed?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is the tariff fixed?"
+        }
+      ],
+      "file": "audio/en-b2-1.4.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is the tariff fixed?"
+    },
+    {
+      "id": "en-b2-1.4.d6",
+      "text": "That sounds clear. Can you send me the details?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "That sounds clear. Can you send me the details?"
+        }
+      ],
+      "file": "audio/en-b2-1.4.d6.mp3",
+      "duration_s": null,
+      "transcript": "That sounds clear. Can you send me the details?"
+    },
+    {
+      "id": "en-b2-1.4.l1",
+      "text": "What is included in the price? The guided visit is included, but the entrance fee must be paid at the gate.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What is included in the price?"
+        },
+        {
+          "voice": "host",
+          "text": "The guided visit is included, but the entrance fee must be paid at the gate."
+        }
+      ],
+      "file": "audio/en-b2-1.4.l1.mp3",
+      "duration_s": null,
+      "transcript": "— What is included in the price? — The guided visit is included, but the entrance fee must be paid at the gate."
+    },
+    {
+      "id": "en-b2-1.4.l2",
+      "text": "Rooms are typically cleaned every day, but towels can be changed on request.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Rooms are typically cleaned every day, but towels can be changed on request."
+        }
+      ],
+      "file": "audio/en-b2-1.4.l2.mp3",
+      "duration_s": null,
+      "transcript": "Rooms are typically cleaned every day, but towels can be changed on request."
+    },
+    {
+      "id": "en-b2-1.4.l3",
+      "text": "How much is the premium option? It is twelve hundred pounds per person, and that is fifteen percent less than last season.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How much is the premium option?"
+        },
+        {
+          "voice": "host",
+          "text": "It is twelve hundred pounds per person, and that is fifteen percent less than last season."
+        }
+      ],
+      "file": "audio/en-b2-1.4.l3.mp3",
+      "duration_s": null,
+      "transcript": "— How much is the premium option? — It is £1,200 per person, and that is 15% less than last season."
+    },
+    {
+      "id": "en-b2-1.5.d1",
+      "text": "As I said, the supplier will cover the extra cost.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "As I said, the supplier will cover the extra cost."
+        }
+      ],
+      "file": "audio/en-b2-1.5.d1.mp3",
+      "duration_s": null,
+      "transcript": "As I said, the supplier will cover the extra cost."
+    },
+    {
+      "id": "en-b2-1.5.d2",
+      "text": "Exactly. And what did the director tell you yesterday?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Exactly. And what did the director tell you yesterday?"
+        }
+      ],
+      "file": "audio/en-b2-1.5.d2.mp3",
+      "duration_s": null,
+      "transcript": "Exactly. And what did the director tell you yesterday?"
+    },
+    {
+      "id": "en-b2-1.5.d3",
+      "text": "Did she say anything about the budget?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Did she say anything about the budget?"
+        }
+      ],
+      "file": "audio/en-b2-1.5.d3.mp3",
+      "duration_s": null,
+      "transcript": "Did she say anything about the budget?"
+    },
+    {
+      "id": "en-b2-1.5.d4",
+      "text": "Sorry, I did not catch that. Could you say it again?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Sorry, I did not catch that. Could you say it again?"
+        }
+      ],
+      "file": "audio/en-b2-1.5.d4.mp3",
+      "duration_s": null,
+      "transcript": "Sorry, I did not catch that. Could you say it again?"
+    },
+    {
+      "id": "en-b2-1.5.d5",
+      "text": "So you are saying the project can start next week?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "So you are saying the project can start next week?"
+        }
+      ],
+      "file": "audio/en-b2-1.5.d5.mp3",
+      "duration_s": null,
+      "transcript": "So you are saying the project can start next week?"
+    },
+    {
+      "id": "en-b2-1.5.d6",
+      "text": "Thank you for clarifying. I will inform the team.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you for clarifying. I will inform the team."
+        }
+      ],
+      "file": "audio/en-b2-1.5.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you for clarifying. I will inform the team."
+    },
+    {
+      "id": "en-b2-1.5.l1",
+      "text": "What did the manager say about the deadline? She said that it had been moved to the end of the month.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What did the manager say about the deadline?"
+        },
+        {
+          "voice": "host",
+          "text": "She said that it had been moved to the end of the month."
+        }
+      ],
+      "file": "audio/en-b2-1.5.l1.mp3",
+      "duration_s": null,
+      "transcript": "— What did the manager say about the deadline? — She said that it had been moved to the end of the month."
+    },
+    {
+      "id": "en-b2-1.5.l2",
+      "text": "So you mean we should postpone the launch? Not exactly. I mean we should wait for the final report before deciding.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "So you mean we should postpone the launch?"
+        },
+        {
+          "voice": "host",
+          "text": "Not exactly. I mean we should wait for the final report before deciding."
+        }
+      ],
+      "file": "audio/en-b2-1.5.l2.mp3",
+      "duration_s": null,
+      "transcript": "— So you mean we should postpone the launch? — Not exactly. I mean we should wait for the final report before deciding."
+    },
+    {
+      "id": "en-b2-1.5.l3",
+      "text": "He asked whether the invoice had been sent, and I told him that it would arrive on Thursday.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "He asked whether the invoice had been sent, and I told him that it would arrive on Thursday."
+        }
+      ],
+      "file": "audio/en-b2-1.5.l3.mp3",
+      "duration_s": null,
+      "transcript": "He asked whether the invoice had been sent, and I told him that it would arrive on Thursday."
+    },
+    {
+      "id": "en-b2-1.6.d1",
+      "text": "I thought the discount applied to all the tours this month.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I thought the discount applied to all the tours this month."
+        }
+      ],
+      "file": "audio/en-b2-1.6.d1.mp3",
+      "duration_s": null,
+      "transcript": "I thought the discount applied to all the tours this month."
+    },
+    {
+      "id": "en-b2-1.6.d2",
+      "text": "Oh, I see. Which price list should I use, then?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Oh, I see. Which price list should I use, then?"
+        }
+      ],
+      "file": "audio/en-b2-1.6.d2.mp3",
+      "duration_s": null,
+      "transcript": "Oh, I see. Which price list should I use, then?"
+    },
+    {
+      "id": "en-b2-1.6.d3",
+      "text": "But the old brochure shows a lower price.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "But the old brochure shows a lower price."
+        }
+      ],
+      "file": "audio/en-b2-1.6.d3.mp3",
+      "duration_s": null,
+      "transcript": "But the old brochure shows a lower price."
+    },
+    {
+      "id": "en-b2-1.6.d4",
+      "text": "Can we negotiate the tariff?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can we negotiate the tariff?"
+        }
+      ],
+      "file": "audio/en-b2-1.6.d4.mp3",
+      "duration_s": null,
+      "transcript": "Can we negotiate the tariff?"
+    },
+    {
+      "id": "en-b2-1.6.d5",
+      "text": "I understand. Who decides these rules?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I understand. Who decides these rules?"
+        }
+      ],
+      "file": "audio/en-b2-1.6.d5.mp3",
+      "duration_s": null,
+      "transcript": "I understand. Who decides these rules?"
+    },
+    {
+      "id": "en-b2-1.6.d6",
+      "text": "Thanks for explaining. That is much clearer now.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thanks for explaining. That is much clearer now."
+        }
+      ],
+      "file": "audio/en-b2-1.6.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thanks for explaining. That is much clearer now."
+    },
+    {
+      "id": "en-b2-1.6.l1",
+      "text": "I heard the entrance fee is free on Sundays. That is not quite right. It was free last year, but it is charged now.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I heard the entrance fee is free on Sundays."
+        },
+        {
+          "voice": "host",
+          "text": "That is not quite right. It was free last year, but it is charged now."
+        }
+      ],
+      "file": "audio/en-b2-1.6.l1.mp3",
+      "duration_s": null,
+      "transcript": "— I heard the entrance fee is free on Sundays. — That is not quite right. It was free last year, but it is charged now."
+    },
+    {
+      "id": "en-b2-1.6.l2",
+      "text": "The permit, which is required for every guide, must be renewed each spring.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The permit, which is required for every guide, must be renewed each spring."
+        }
+      ],
+      "file": "audio/en-b2-1.6.l2.mp3",
+      "duration_s": null,
+      "transcript": "The permit, which is required for every guide, must be renewed each spring."
+    },
+    {
+      "id": "en-b2-1.6.l3",
+      "text": "So the boat tour is cancelled? No, on the contrary. It has been extended to include a second island.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "So the boat tour is cancelled?"
+        },
+        {
+          "voice": "host",
+          "text": "No, on the contrary. It has been extended to include a second island."
+        }
+      ],
+      "file": "audio/en-b2-1.6.l3.mp3",
+      "duration_s": null,
+      "transcript": "— So the boat tour is cancelled? — No, on the contrary. It has been extended to include a second island."
     }
   ]
 }

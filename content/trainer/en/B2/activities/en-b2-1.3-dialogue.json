@@ -1,0 +1,183 @@
+{
+  "id": "en-b2-1.3-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 1.3",
+  "estimated_minutes": 5,
+  "lesson_id": "1.3",
+  "status": "draft",
+  "role": "Tour operator solving a booking problem with a customer-service representative",
+  "can_do": [
+    "I can describe a service problem that is still going on.",
+    "I can state what I need clearly and politely, and ask for a fee to be waived."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Customer service, good afternoon. How can I help you?",
+        "translation": "Servicio al cliente, buenas tardes. ¿En qué puedo ayudarle?",
+        "audio": "en-b2-1.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I am calling about a problem that has been going on for a week.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "I would like to report a problem with our group booking.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "I am writing on behalf of a cooperative whose account is blocked.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "I am sorry to hear that. What exactly has been happening?",
+        "translation": "Lamento oír eso. ¿Qué ha estado pasando exactamente?",
+        "audio": "en-b2-1.3.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "has",
+              "been"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "have",
+              "been"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "we",
+              "have"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "Our bookings have been cancelled without any notice.",
+        "starters": [
+          "Our bookings have been ...",
+          "The system has been ..."
+        ],
+        "word_bank": [
+          "Our",
+          "bookings",
+          "have",
+          "been",
+          "cancelled",
+          "without",
+          "any",
+          "notice"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "I see. Have you contacted us about this before?",
+        "translation": "Entiendo. ¿Ya nos había contactado antes por esto?",
+        "audio": "en-b2-1.3.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, I have been writing to you since Monday.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, twice, and nobody has replied.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "No, this is the first time I am calling.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "What would you like us to do?",
+        "translation": "¿Qué le gustaría que hiciéramos?",
+        "audio": "en-b2-1.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I would like you to restore the bookings today.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "We require a clear answer within twenty-four hours.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "I am asking you to escalate this to a manager.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "There may be a cancellation fee on some of the tickets.",
+        "translation": "Puede haber un cargo por cancelación en algunos de los billetes.",
+        "audio": "en-b2-1.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "We would be grateful if the fee could be waived.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "I would like to ask for the fee to be waived, given the circumstances.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Could you check whether the fee might be waived in this case?",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "I will escalate this now and call you back within the hour.",
+        "translation": "Lo escalaré ahora y le devolveré la llamada en una hora.",
+        "audio": "en-b2-1.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you. I would appreciate a confirmation in writing.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Thank you, I will wait for your call.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "That is helpful. Please send me the case number as well.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

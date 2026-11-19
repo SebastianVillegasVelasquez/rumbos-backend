@@ -1,0 +1,214 @@
+{
+  "id": "en-b2-1.3-grammar",
+  "skill": "grammar",
+  "title": "Practice 1.3",
+  "estimated_minutes": 6,
+  "lesson_id": "1.3",
+  "status": "draft",
+  "role": "Tour operator solving a booking problem with a customer-service representative",
+  "can_do": [
+    "I can describe a service problem that is still going on.",
+    "I can state what I need clearly and politely, and ask for a fee to be waived."
+  ],
+  "items": [
+    {
+      "id": "b2-1.3.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence describes a problem that is still going on?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The operator cancelled our booking yesterday."
+        },
+        {
+          "id": "o2",
+          "text": "The operator has been cancelling our bookings all week."
+        },
+        {
+          "id": "o3",
+          "text": "The operator will cancel our booking tomorrow."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The present perfect continuous links a repeated action to now.",
+      "error_tags": {
+        "o1": {
+          "tag": "tense",
+          "text": "The past simple finishes the action in the past."
+        },
+        "o3": {
+          "tag": "tense",
+          "text": "Will cancel is about the future."
+        }
+      }
+    },
+    {
+      "id": "b2-1.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "We {1} waiting for a reply since Monday.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "have been"
+            },
+            {
+              "id": "o2",
+              "text": "are"
+            },
+            {
+              "id": "o3",
+              "text": "were"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "tense",
+            "text": "Since Monday needs the present perfect continuous."
+          }
+        }
+      ],
+      "explanation": "Since + a starting point goes with have been waiting."
+    },
+    {
+      "id": "b2-1.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "I am writing to {1} an urgent review of the account.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "request",
+            "ask for"
+          ],
+          "error_tag": {
+            "tag": "register",
+            "text": "Use a formal verb such as request."
+          }
+        }
+      ],
+      "explanation": "I am writing to request is a formal opening for a complaint."
+    },
+    {
+      "id": "b2-1.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "We"
+        },
+        {
+          "id": "t2",
+          "text": "require"
+        },
+        {
+          "id": "t3",
+          "text": "that"
+        },
+        {
+          "id": "t4",
+          "text": "the"
+        },
+        {
+          "id": "t5",
+          "text": "account"
+        },
+        {
+          "id": "t6",
+          "text": "be"
+        },
+        {
+          "id": "t7",
+          "text": "reactivated"
+        },
+        {
+          "id": "t8",
+          "text": "today"
+        }
+      ],
+      "explanation": "We require that + subject + be + past participle.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "After require that comes the subject and be + participle."
+      }
+    },
+    {
+      "id": "b2-1.3.ex.05",
+      "type": "match",
+      "prompt": "Match the phrase with its purpose.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "I am writing to request ..."
+        },
+        {
+          "id": "l2",
+          "text": "We require that ..."
+        },
+        {
+          "id": "l3",
+          "text": "Could you check whether ..."
+        },
+        {
+          "id": "l4",
+          "text": "The fee might be waived."
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "to open a formal complaint"
+        },
+        {
+          "id": "r2",
+          "text": "to state a firm demand"
+        },
+        {
+          "id": "r3",
+          "text": "to ask politely"
+        },
+        {
+          "id": "r4",
+          "text": "to talk about a possibility"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each phrase has a different job in a complaint."
+    },
+    {
+      "id": "b2-1.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Ask politely for the fee to be waived. Use waived.",
+      "accepted": [
+        "Could the fee be waived",
+        "Could you waive the fee",
+        "We would be grateful if the fee could be waived",
+        "I would like to ask for the fee to be waived"
+      ],
+      "max_length": 72,
+      "explanation": "Use a polite frame and the passive: the fee could be waived."
+    }
+  ]
+}

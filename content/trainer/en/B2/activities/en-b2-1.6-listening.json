@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-1.6-listening",
+  "skill": "listening",
+  "title": "Listen and choose 1.6",
+  "estimated_minutes": 4,
+  "lesson_id": "1.6",
+  "status": "draft",
+  "role": "Team leader correcting a misunderstanding about prices and rules",
+  "can_do": [
+    "I can correct a misunderstanding politely and precisely.",
+    "I can use relative clauses and passives to explain rules and regulations."
+  ],
+  "items": [
+    {
+      "id": "en-b2-1.6.l1",
+      "type": "listen_choose",
+      "prompt": "What is the correction?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "It is free on Mondays"
+        },
+        {
+          "id": "o2",
+          "text": "It is charged now"
+        },
+        {
+          "id": "o3",
+          "text": "It is cheaper on Sundays"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says it was free last year, but it is charged now.",
+      "audio": "en-b2-1.6.l1"
+    },
+    {
+      "id": "en-b2-1.6.l2",
+      "type": "listen_choose",
+      "prompt": "When must the permit be renewed?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Every autumn"
+        },
+        {
+          "id": "o2",
+          "text": "Each spring"
+        },
+        {
+          "id": "o3",
+          "text": "Every month"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The permit must be renewed each spring.",
+      "audio": "en-b2-1.6.l2"
+    },
+    {
+      "id": "en-b2-1.6.l3",
+      "type": "listen_choose",
+      "prompt": "What is the correct information?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The tour was cancelled"
+        },
+        {
+          "id": "o2",
+          "text": "The tour was extended"
+        },
+        {
+          "id": "o3",
+          "text": "The tour was shortened"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "On the contrary introduces the correction: the tour has been extended.",
+      "audio": "en-b2-1.6.l3"
+    }
+  ]
+}

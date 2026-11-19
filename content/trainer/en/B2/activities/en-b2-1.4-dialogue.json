@@ -1,0 +1,193 @@
+{
+  "id": "en-b2-1.4-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 1.4",
+  "estimated_minutes": 5,
+  "lesson_id": "1.4",
+  "status": "draft",
+  "role": "Product specialist describing a travel package to a business partner",
+  "can_do": [
+    "I can describe typical and specific features of a service, place or package.",
+    "I can use passive forms and modals to say what is included or allowed."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Could you describe what the package typically includes?",
+        "translation": "¿Podría describir qué incluye normalmente el paquete?",
+        "audio": "en-b2-1.4.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It typically includes accommodation, breakfast and local transfers.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "As a rule, flights, hotel and a guided tour are included.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Generally speaking, everything except lunch is covered.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "And what is specific to this particular package?",
+        "translation": "¿Y qué es específico de este paquete en particular?",
+        "audio": "en-b2-1.4.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "included"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "offers"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "only"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "special"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "specific"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "A private boat trip is included in this package.",
+        "starters": [
+          "This package offers ...",
+          "... is included in this package."
+        ],
+        "word_bank": [
+          "A",
+          "private",
+          "boat",
+          "trip",
+          "is",
+          "included",
+          "in",
+          "this",
+          "package"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Are meals included?",
+        "translation": "¿Se incluyen las comidas?",
+        "audio": "en-b2-1.4.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Breakfast is included; other meals can be added on request.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Only dinner is provided, and drinks are charged separately.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "All meals are included, except on the last day.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Can the dates be changed?",
+        "translation": "¿Se pueden cambiar las fechas?",
+        "audio": "en-b2-1.4.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "They may be changed up to a week before departure.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, but a change fee might be charged.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "The dates cannot be changed once the tickets are issued.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is the tariff fixed?",
+        "translation": "¿La tarifa es fija?",
+        "audio": "en-b2-1.4.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is subject to change in the high season.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, the tariff is guaranteed until the end of the year.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "It is regulated, so it cannot be raised without notice.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "That sounds clear. Can you send me the details?",
+        "translation": "Suena claro. ¿Puede enviarme los detalles?",
+        "audio": "en-b2-1.4.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. A full description will be sent to you today.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Certainly. I will attach the brochure and the price list.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "With pleasure. Is there anything else you would like included?",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}
