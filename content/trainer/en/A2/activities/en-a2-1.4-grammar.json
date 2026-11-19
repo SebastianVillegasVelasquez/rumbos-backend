@@ -1,0 +1,200 @@
+{
+  "id": "en-a2-1.4-grammar",
+  "lesson_id": "1.4",
+  "skill": "grammar",
+  "title": "Practice 1.4",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Shop assistant at a craft market",
+  "can_do": [
+    "I can ask how much things cost.",
+    "I can answer simple questions about buying."
+  ],
+  "items": [
+    {
+      "id": "a2-1.4.ex.01",
+      "type": "mcq",
+      "prompt": "Which question asks about the price?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "How much is this bag?"
+        },
+        {
+          "id": "o2",
+          "text": "How many bags are there?"
+        },
+        {
+          "id": "o3",
+          "text": "How old is this bag?"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "How much asks about the price.",
+      "error_tags": {
+        "o2": {
+          "tag": "how_much_many",
+          "text": "How many asks about a number of things."
+        }
+      }
+    },
+    {
+      "id": "a2-1.4.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "How {1} postcards do you want?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "long"
+            },
+            {
+              "id": "o2",
+              "text": "many"
+            },
+            {
+              "id": "o3",
+              "text": "much"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "how_much_many",
+            "text": "Use many with things you can count."
+          }
+        }
+      ],
+      "explanation": "Postcards can be counted, so we use many."
+    },
+    {
+      "id": "a2-1.4.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "How {1} is the coffee?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "much"
+          ],
+          "error_tag": {
+            "tag": "how_much_many",
+            "text": "Use much to ask about a price."
+          }
+        }
+      ],
+      "explanation": "We ask about a price with How much."
+    },
+    {
+      "id": "a2-1.4.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Can"
+        },
+        {
+          "id": "t2",
+          "text": "I"
+        },
+        {
+          "id": "t3",
+          "text": "see"
+        },
+        {
+          "id": "t4",
+          "text": "the"
+        },
+        {
+          "id": "t5",
+          "text": "red"
+        },
+        {
+          "id": "t6",
+          "text": "bag"
+        }
+      ],
+      "explanation": "The polite question starts with Can I.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with Can I, then see."
+      }
+    },
+    {
+      "id": "a2-1.4.ex.05",
+      "type": "match",
+      "prompt": "Match the question with the answer.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "How much is it?"
+        },
+        {
+          "id": "l2",
+          "text": "How many do you want?"
+        },
+        {
+          "id": "l3",
+          "text": "Can I pay by card?"
+        },
+        {
+          "id": "l4",
+          "text": "Do you have a bigger size?"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "Ten thousand pesos."
+        },
+        {
+          "id": "r2",
+          "text": "Four, please."
+        },
+        {
+          "id": "r3",
+          "text": "Yes, you can."
+        },
+        {
+          "id": "r4",
+          "text": "No, sorry."
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each answer fits what the question asks."
+    },
+    {
+      "id": "a2-1.4.ex.06",
+      "type": "short_answer",
+      "prompt": "Ask the price of a bag. Use how much.",
+      "accepted": [
+        "How much is the bag",
+        "How much is this bag",
+        "How much is that bag",
+        "How much is it"
+      ],
+      "explanation": "Use How much is ... to ask about a price."
+    }
+  ]
+}

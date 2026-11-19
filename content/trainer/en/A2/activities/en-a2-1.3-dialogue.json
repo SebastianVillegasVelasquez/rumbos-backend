@@ -1,0 +1,182 @@
+{
+  "id": "en-a2-1.3-dialogue",
+  "lesson_id": "1.3",
+  "skill": "dialogue",
+  "title": "Talk it through 1.3",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Guide making small talk with a guest",
+  "can_do": [
+    "I can say what I like and enjoy doing.",
+    "I can ask a guest about their free time."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "What do you like doing in your free time?",
+        "translation": "¿Qué te gusta hacer en tu tiempo libre?",
+        "audio": "en-a2-1.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I like reading books.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "I enjoy walking in the forest.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "I like playing football.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Nice! Do you enjoy taking photos?",
+        "translation": "¡Qué bien! ¿Disfrutas sacando fotos?",
+        "audio": "en-a2-1.3.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "i",
+              "enjoy"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "i",
+              "like"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "yes"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "Yes, I enjoy taking photos.",
+        "starters": [
+          "Yes, I enjoy ...",
+          "No, I do not like ..."
+        ],
+        "word_bank": [
+          "yes",
+          "no",
+          "I",
+          "enjoy",
+          "like",
+          "taking",
+          "photos",
+          "not"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "What does your sister like doing?",
+        "translation": "¿Qué le gusta hacer a tu hermana?",
+        "audio": "en-a2-1.3.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "She likes swimming.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "She enjoys cooking.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "She likes dancing with friends.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Do you like cooking?",
+        "translation": "¿Te gusta cocinar?",
+        "audio": "en-a2-1.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, I do. I like cooking soup.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "No, I do not. I like eating!",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "A little. I enjoy cooking with friends.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "What do you enjoy on holiday?",
+        "translation": "¿Qué disfrutas en vacaciones?",
+        "audio": "en-a2-1.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I enjoy swimming in the sea.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "I enjoy visiting small towns.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "I like sleeping late.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Me too! It is nice to talk with you.",
+        "translation": "¡Yo también! Es agradable hablar contigo.",
+        "audio": "en-a2-1.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is nice to talk with you too.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Thank you. I enjoy talking with you.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Me too. See you later!",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

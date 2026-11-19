@@ -1,0 +1,81 @@
+{
+  "id": "en-a2-1.2-listening",
+  "lesson_id": "1.2",
+  "skill": "listening",
+  "title": "Listen and choose 1.2",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Receptionist at a small hotel",
+  "can_do": [
+    "I can answer a guest's questions about a room.",
+    "I can ask for a room with I would like."
+  ],
+  "items": [
+    {
+      "id": "en-a2-1.2.l1",
+      "type": "listen_choose",
+      "prompt": "How many nights does the guest want?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "two nights"
+        },
+        {
+          "id": "o2",
+          "text": "one night"
+        },
+        {
+          "id": "o3",
+          "text": "three nights"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: for three nights.",
+      "audio": "en-a2-1.2.l1"
+    },
+    {
+      "id": "en-a2-1.2.l2",
+      "type": "listen_choose",
+      "prompt": "What does the room have?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "a window and a desk"
+        },
+        {
+          "id": "o2",
+          "text": "a balcony and a television"
+        },
+        {
+          "id": "o3",
+          "text": "a garden and a pool"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: a window and a small desk.",
+      "audio": "en-a2-1.2.l2"
+    },
+    {
+      "id": "en-a2-1.2.l3",
+      "type": "listen_choose",
+      "prompt": "Where is the restaurant?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "in front of the gate"
+        },
+        {
+          "id": "o2",
+          "text": "next to the reception"
+        },
+        {
+          "id": "o3",
+          "text": "behind the garden"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: next to the reception.",
+      "audio": "en-a2-1.2.l3"
+    }
+  ]
+}

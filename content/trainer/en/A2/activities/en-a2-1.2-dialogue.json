@@ -1,0 +1,174 @@
+{
+  "id": "en-a2-1.2-dialogue",
+  "lesson_id": "1.2",
+  "skill": "dialogue",
+  "title": "Talk it through 1.2",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Receptionist at a small hotel",
+  "can_do": [
+    "I can answer a guest's questions about a room.",
+    "I can ask for a room with I would like."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Hello. Do you have a room for tonight?",
+        "translation": "Hola. ¿Tiene una habitación para esta noche?",
+        "audio": "en-a2-1.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, we do. Is it for one person?",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, we have a room. How many people?",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, we have one room left.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "It is for two people. Is breakfast included?",
+        "translation": "Es para dos personas. ¿Está incluido el desayuno?",
+        "audio": "en-a2-1.2.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "breakfast",
+              "included"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "yes",
+              "breakfast"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "Yes, breakfast is included.",
+        "starters": [
+          "Yes, breakfast is ...",
+          "No, breakfast is ..."
+        ],
+        "word_bank": [
+          "yes",
+          "no",
+          "breakfast",
+          "is",
+          "not",
+          "included"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "How much is the room per night?",
+        "translation": "¿Cuánto cuesta la habitación por noche?",
+        "audio": "en-a2-1.2.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is sixty thousand pesos per night.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "The room is eighty thousand pesos.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "It is seventy thousand pesos a night.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Can I pay by card?",
+        "translation": "¿Puedo pagar con tarjeta?",
+        "audio": "en-a2-1.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, you can pay by card.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, we take cards.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Sorry, cash only.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "What time is check-out?",
+        "translation": "¿A qué hora es la salida?",
+        "audio": "en-a2-1.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Check-out is at eleven.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Check-out is at half past ten.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "You can check out until eleven.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. Can I have my key, please?",
+        "translation": "Gracias. ¿Me da mi llave, por favor?",
+        "audio": "en-a2-1.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Here is your key. Enjoy your stay.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Of course. Here you are.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Yes, here is your key and your card.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

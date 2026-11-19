@@ -1,0 +1,169 @@
+{
+  "id": "en-a2-1.1-dialogue",
+  "lesson_id": "1.1",
+  "skill": "dialogue",
+  "title": "Talk it through 1.1",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Guide planning the day with a guest",
+  "can_do": [
+    "I can say what I am going to do with a time marker.",
+    "I can ask a guest about their plans."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Hi! What are we going to do this afternoon?",
+        "translation": "¡Hola! ¿Qué vamos a hacer esta tarde?",
+        "audio": "en-a2-1.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "We are going to visit the waterfall.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "We're going to walk to the river.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "We are going to see the village.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Great! And what are you going to do tomorrow?",
+        "translation": "¡Genial! ¿Y qué vas a hacer mañana?",
+        "audio": "en-a2-1.1.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "going",
+              "to"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "I am going to visit the market.",
+        "starters": [
+          "Tomorrow I am going to ...",
+          "I'm going to ..."
+        ],
+        "word_bank": [
+          "I",
+          "am",
+          "going",
+          "to",
+          "tomorrow",
+          "visit",
+          "the",
+          "market"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "What time are we going to leave?",
+        "translation": "¿A qué hora vamos a salir?",
+        "audio": "en-a2-1.1.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "We are going to leave at nine.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "We're going to leave at half past eight.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "We are going to leave at ten.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Are we going to eat lunch on the trail?",
+        "translation": "¿Vamos a almorzar en el sendero?",
+        "audio": "en-a2-1.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, we are going to eat on the trail.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "No, we are going to eat at the farm.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, we are. I have sandwiches.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is it going to rain tonight?",
+        "translation": "¿Va a llover esta noche?",
+        "audio": "en-a2-1.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "No, it is not going to rain.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, it is going to rain a little.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "I think it is going to be cloudy.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Perfect. See you tomorrow at the gate!",
+        "translation": "Perfecto. ¡Nos vemos mañana en la puerta!",
+        "audio": "en-a2-1.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "See you tomorrow!",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Great, see you at the gate.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Thank you. See you tomorrow.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

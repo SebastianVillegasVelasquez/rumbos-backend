@@ -1,0 +1,204 @@
+{
+  "id": "en-a2-1.1-grammar",
+  "lesson_id": "1.1",
+  "skill": "grammar",
+  "title": "Practice 1.1",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Guide planning the day with a guest",
+  "can_do": [
+    "I can say what I am going to do with a time marker.",
+    "I can ask a guest about their plans."
+  ],
+  "items": [
+    {
+      "id": "a2-1.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is about a plan?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "I am going to swim tomorrow."
+        },
+        {
+          "id": "o2",
+          "text": "I swim every day."
+        },
+        {
+          "id": "o3",
+          "text": "I swam yesterday."
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Going to + verb talks about a plan: I am going to swim tomorrow.",
+      "error_tags": {
+        "o2": {
+          "tag": "tense",
+          "text": "Swim every day is a habit, not a plan."
+        }
+      }
+    },
+    {
+      "id": "a2-1.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "They {1} going to rest on Sunday.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "am"
+            },
+            {
+              "id": "o2",
+              "text": "are"
+            },
+            {
+              "id": "o3",
+              "text": "is"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "be_agreement",
+            "text": "Use are with they."
+          }
+        }
+      ],
+      "explanation": "With they we use are: they are going to rest."
+    },
+    {
+      "id": "a2-1.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "I {1} going to visit my aunt next week.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "am"
+          ],
+          "error_tag": {
+            "tag": "be_agreement",
+            "text": "Use am with I."
+          }
+        }
+      ],
+      "explanation": "With I we use am: I am going to visit my aunt."
+    },
+    {
+      "id": "a2-1.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "We"
+        },
+        {
+          "id": "t2",
+          "text": "are"
+        },
+        {
+          "id": "t3",
+          "text": "going"
+        },
+        {
+          "id": "t4",
+          "text": "to"
+        },
+        {
+          "id": "t5",
+          "text": "eat"
+        },
+        {
+          "id": "t6",
+          "text": "outside"
+        },
+        {
+          "id": "t7",
+          "text": "tonight"
+        }
+      ],
+      "explanation": "The order is: subject, are going to, verb, place, time.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with We, then are going to."
+      }
+    },
+    {
+      "id": "a2-1.1.ex.05",
+      "type": "match",
+      "prompt": "Match the time marker with its meaning.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "tonight"
+        },
+        {
+          "id": "l2",
+          "text": "next week"
+        },
+        {
+          "id": "l3",
+          "text": "tomorrow"
+        },
+        {
+          "id": "l4",
+          "text": "this afternoon"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "this evening"
+        },
+        {
+          "id": "r2",
+          "text": "in seven days"
+        },
+        {
+          "id": "r3",
+          "text": "the day after today"
+        },
+        {
+          "id": "r4",
+          "text": "today after lunch"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each time marker says when the plan happens."
+    },
+    {
+      "id": "a2-1.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Say you are going to rest tomorrow. Use going to.",
+      "accepted": [
+        "I am going to rest tomorrow",
+        "I'm going to rest tomorrow",
+        "Tomorrow I am going to rest",
+        "Tomorrow I'm going to rest"
+      ],
+      "explanation": "Use am going to + rest: I am going to rest tomorrow."
+    }
+  ]
+}

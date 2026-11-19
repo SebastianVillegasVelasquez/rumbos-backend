@@ -218,6 +218,474 @@
       "file": "audio/a2fa-f80d16a268.mp3",
       "duration_s": null,
       "transcript": "— Where is the injury? — My ankle hurts. I can’t move my foot."
+    },
+    {
+      "id": "en-a2-1.1.d1",
+      "text": "Hi! What are we going to do this afternoon?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Hi! What are we going to do this afternoon?"
+        }
+      ],
+      "file": "audio/en-a2-1.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hi! What are we going to do this afternoon?"
+    },
+    {
+      "id": "en-a2-1.1.d2",
+      "text": "Great! And what are you going to do tomorrow?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Great! And what are you going to do tomorrow?"
+        }
+      ],
+      "file": "audio/en-a2-1.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "Great! And what are you going to do tomorrow?"
+    },
+    {
+      "id": "en-a2-1.1.d3",
+      "text": "What time are we going to leave?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What time are we going to leave?"
+        }
+      ],
+      "file": "audio/en-a2-1.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "What time are we going to leave?"
+    },
+    {
+      "id": "en-a2-1.1.d4",
+      "text": "Are we going to eat lunch on the trail?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Are we going to eat lunch on the trail?"
+        }
+      ],
+      "file": "audio/en-a2-1.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Are we going to eat lunch on the trail?"
+    },
+    {
+      "id": "en-a2-1.1.d5",
+      "text": "Is it going to rain tonight?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is it going to rain tonight?"
+        }
+      ],
+      "file": "audio/en-a2-1.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is it going to rain tonight?"
+    },
+    {
+      "id": "en-a2-1.1.d6",
+      "text": "Perfect. See you tomorrow at the gate!",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Perfect. See you tomorrow at the gate!"
+        }
+      ],
+      "file": "audio/en-a2-1.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "Perfect. See you tomorrow at the gate!"
+    },
+    {
+      "id": "en-a2-1.1.l1",
+      "text": "On Saturday we are going to visit a small museum.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "On Saturday we are going to visit a small museum."
+        }
+      ],
+      "file": "audio/en-a2-1.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "On Saturday we are going to visit a small museum."
+    },
+    {
+      "id": "en-a2-1.1.l2",
+      "text": "Next week Sara is going to take a boat trip.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Next week Sara is going to take a boat trip."
+        }
+      ],
+      "file": "audio/en-a2-1.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "Next week Sara is going to take a boat trip."
+    },
+    {
+      "id": "en-a2-1.1.l3",
+      "text": "We are going to leave at half past six in the morning.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "We are going to leave at half past six in the morning."
+        }
+      ],
+      "file": "audio/en-a2-1.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "We are going to leave at half past six in the morning."
+    },
+    {
+      "id": "en-a2-1.2.d1",
+      "text": "Hello. Do you have a room for tonight?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Hello. Do you have a room for tonight?"
+        }
+      ],
+      "file": "audio/en-a2-1.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hello. Do you have a room for tonight?"
+    },
+    {
+      "id": "en-a2-1.2.d2",
+      "text": "It is for two people. Is breakfast included?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "It is for two people. Is breakfast included?"
+        }
+      ],
+      "file": "audio/en-a2-1.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "It is for two people. Is breakfast included?"
+    },
+    {
+      "id": "en-a2-1.2.d3",
+      "text": "How much is the room per night?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How much is the room per night?"
+        }
+      ],
+      "file": "audio/en-a2-1.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "How much is the room per night?"
+    },
+    {
+      "id": "en-a2-1.2.d4",
+      "text": "Can I pay by card?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can I pay by card?"
+        }
+      ],
+      "file": "audio/en-a2-1.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "Can I pay by card?"
+    },
+    {
+      "id": "en-a2-1.2.d5",
+      "text": "What time is check-out?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What time is check-out?"
+        }
+      ],
+      "file": "audio/en-a2-1.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "What time is check-out?"
+    },
+    {
+      "id": "en-a2-1.2.d6",
+      "text": "Thank you. Can I have my key, please?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. Can I have my key, please?"
+        }
+      ],
+      "file": "audio/en-a2-1.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. Can I have my key, please?"
+    },
+    {
+      "id": "en-a2-1.2.l1",
+      "text": "I would like to book a single room for three nights.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I would like to book a single room for three nights."
+        }
+      ],
+      "file": "audio/en-a2-1.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "I would like to book a single room for three nights."
+    },
+    {
+      "id": "en-a2-1.2.l2",
+      "text": "The room has a window and a small desk.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The room has a window and a small desk."
+        }
+      ],
+      "file": "audio/en-a2-1.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "The room has a window and a small desk."
+    },
+    {
+      "id": "en-a2-1.2.l3",
+      "text": "The restaurant is next to the reception.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The restaurant is next to the reception."
+        }
+      ],
+      "file": "audio/en-a2-1.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "The restaurant is next to the reception."
+    },
+    {
+      "id": "en-a2-1.3.d1",
+      "text": "What do you like doing in your free time?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What do you like doing in your free time?"
+        }
+      ],
+      "file": "audio/en-a2-1.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "What do you like doing in your free time?"
+    },
+    {
+      "id": "en-a2-1.3.d2",
+      "text": "Nice! Do you enjoy taking photos?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Nice! Do you enjoy taking photos?"
+        }
+      ],
+      "file": "audio/en-a2-1.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "Nice! Do you enjoy taking photos?"
+    },
+    {
+      "id": "en-a2-1.3.d3",
+      "text": "What does your sister like doing?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What does your sister like doing?"
+        }
+      ],
+      "file": "audio/en-a2-1.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "What does your sister like doing?"
+    },
+    {
+      "id": "en-a2-1.3.d4",
+      "text": "Do you like cooking?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Do you like cooking?"
+        }
+      ],
+      "file": "audio/en-a2-1.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "Do you like cooking?"
+    },
+    {
+      "id": "en-a2-1.3.d5",
+      "text": "What do you enjoy on holiday?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What do you enjoy on holiday?"
+        }
+      ],
+      "file": "audio/en-a2-1.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "What do you enjoy on holiday?"
+    },
+    {
+      "id": "en-a2-1.3.d6",
+      "text": "Me too! It is nice to talk with you.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Me too! It is nice to talk with you."
+        }
+      ],
+      "file": "audio/en-a2-1.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "Me too! It is nice to talk with you."
+    },
+    {
+      "id": "en-a2-1.3.l1",
+      "text": "My brother likes playing the guitar in the evening.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "My brother likes playing the guitar in the evening."
+        }
+      ],
+      "file": "audio/en-a2-1.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "My brother likes playing the guitar in the evening."
+    },
+    {
+      "id": "en-a2-1.3.l2",
+      "text": "I do not like cooking, but I enjoy washing the dishes.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I do not like cooking, but I enjoy washing the dishes."
+        }
+      ],
+      "file": "audio/en-a2-1.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "I do not like cooking, but I enjoy washing the dishes."
+    },
+    {
+      "id": "en-a2-1.3.l3",
+      "text": "Maria enjoys walking on the beach with her dog.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Maria enjoys walking on the beach with her dog."
+        }
+      ],
+      "file": "audio/en-a2-1.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "Maria enjoys walking on the beach with her dog."
+    },
+    {
+      "id": "en-a2-1.4.d1",
+      "text": "Good morning. How much is this hat?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Good morning. How much is this hat?"
+        }
+      ],
+      "file": "audio/en-a2-1.4.d1.mp3",
+      "duration_s": null,
+      "transcript": "Good morning. How much is this hat?"
+    },
+    {
+      "id": "en-a2-1.4.d2",
+      "text": "That is a little expensive. Do you have a cheaper one?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "That is a little expensive. Do you have a cheaper one?"
+        }
+      ],
+      "file": "audio/en-a2-1.4.d2.mp3",
+      "duration_s": null,
+      "transcript": "That is a little expensive. Do you have a cheaper one?"
+    },
+    {
+      "id": "en-a2-1.4.d3",
+      "text": "Can I see the blue bag, please?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can I see the blue bag, please?"
+        }
+      ],
+      "file": "audio/en-a2-1.4.d3.mp3",
+      "duration_s": null,
+      "transcript": "Can I see the blue bag, please?"
+    },
+    {
+      "id": "en-a2-1.4.d4",
+      "text": "I like it. How many do you have?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I like it. How many do you have?"
+        }
+      ],
+      "file": "audio/en-a2-1.4.d4.mp3",
+      "duration_s": null,
+      "transcript": "I like it. How many do you have?"
+    },
+    {
+      "id": "en-a2-1.4.d5",
+      "text": "I will take two. How much is that?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I will take two. How much is that?"
+        }
+      ],
+      "file": "audio/en-a2-1.4.d5.mp3",
+      "duration_s": null,
+      "transcript": "I will take two. How much is that?"
+    },
+    {
+      "id": "en-a2-1.4.d6",
+      "text": "Here is the money. Thank you!",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Here is the money. Thank you!"
+        }
+      ],
+      "file": "audio/en-a2-1.4.d6.mp3",
+      "duration_s": null,
+      "transcript": "Here is the money. Thank you!"
+    },
+    {
+      "id": "en-a2-1.4.l1",
+      "text": "This blue scarf is fifteen thousand pesos.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "This blue scarf is fifteen thousand pesos."
+        }
+      ],
+      "file": "audio/en-a2-1.4.l1.mp3",
+      "duration_s": null,
+      "transcript": "This blue scarf is fifteen thousand pesos."
+    },
+    {
+      "id": "en-a2-1.4.l2",
+      "text": "I would like three postcards and a map, please.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I would like three postcards and a map, please."
+        }
+      ],
+      "file": "audio/en-a2-1.4.l2.mp3",
+      "duration_s": null,
+      "transcript": "I would like three postcards and a map, please."
+    },
+    {
+      "id": "en-a2-1.4.l3",
+      "text": "The market is open every day from eight to five.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The market is open every day from eight to five."
+        }
+      ],
+      "file": "audio/en-a2-1.4.l3.mp3",
+      "duration_s": null,
+      "transcript": "The market is open every day from eight to five."
     }
   ]
 }
