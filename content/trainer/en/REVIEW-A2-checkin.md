@@ -50,3 +50,46 @@ score is:
 words, the template, past-tense forms (`-ed` or a listed irregular), and
 *be* + *-ing*; they cannot judge meaning (see the note in `rubrics.json`).
 Speaking never evaluates pronunciation.
+
+---
+
+## Practice content (39 activities, 104 words): needs a full review
+
+Everything in `activities/` and `vocabulary.json` for A2 was **written by us**
+(there was no client source for practice), in the A1 structure: per lesson a
+6-turn dialogue, 3 listening items, 6 grammar items, 8 words. All of it is
+`draft`, with no reviewer. A reviewer should read every string, not sample.
+Known weak points:
+
+- Lessons 2.1 and 2.2 each have four topics in the curriculum and only six
+  exercises, so some topics have a single item.
+- Typed dialogue replies and short answers use accepted-word lists (`all_of`);
+  a correct reply worded differently will be marked wrong. Read the `accept`
+  lists.
+- The curriculum excludes free narration, *will* vs *going to* nuance and
+  spontaneous planning. None is evaluated.
+- Practice never reuses exam text (`tests/test_a2_practice.py` checks stems,
+  options, templates, dialogue lines and audio text against the exam).
+
+## Audio QA (a person must listen; nobody has yet)
+
+No audio has been heard by a person. The generated files are checked only by
+speech-recognition round trips on samples. Before publishing, listen to:
+
+1. **Every exam clip (15).** Each must say exactly the `text` in
+   `audio_manifest.json` and nothing that gives the answer away.
+2. **Digits and times:** "one, one, two" (a2-fa-l-11 matching), "eight fifteen",
+   prices in pesos ("pesos" must sound natural, not as an English word).
+3. **The Wi-Fi password** (a2-fa-l-05): "M, A, C, I, Z, O, two, zero, two, six",
+   one letter at a time, no merged letters ("A, C" must not sound like "ache").
+4. **Speaker turns:** in dialogues the host and the guest voices alternate in
+   the manifest order; no turn is cut or spoken by the wrong voice.
+5. **Pace and pauses:** 0.85 speed, 450 ms between turns; confirm a learner at
+   A2 can follow, and that nothing is clipped at the start or end.
+6. **Practice clips (117):** same checks; spot-check at least every lesson's
+   dialogue and one listening clip, and every clip with numbers or spelling.
+7. **Loudness:** clips should sit at the same level (target -19 LUFS).
+
+If a clip is wrong, fix its `text` or `voices[].text` in `audio_manifest.json`
+(or the voice in `tts.json`) and run `python -m app.scripts.content tts --pack
+en/A2`; only the clips whose input changed are remade.
