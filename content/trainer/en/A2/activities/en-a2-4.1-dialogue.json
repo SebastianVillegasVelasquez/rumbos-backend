@@ -1,0 +1,184 @@
+{
+  "id": "en-a2-4.1-dialogue",
+  "lesson_id": "4.1",
+  "skill": "dialogue",
+  "title": "Talk it through 4.1",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Eco-lodge host",
+  "can_do": [
+    "I can tell guests how to save water and energy.",
+    "I can use the present simple and instructions."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Where do I put my plastic bottle?",
+        "translation": "¿Dónde pongo mi botella de plástico?",
+        "audio": "en-a2-4.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Put it in the recycling bin.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Please use the recycling bin.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "The recycling bin is next to the door.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "How can I save energy in my room?",
+        "translation": "¿Cómo puedo ahorrar energía en mi habitación?",
+        "audio": "en-a2-4.1.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "turn",
+              "off"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "switch",
+              "off"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "close"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "Switch off the fan when you go out.",
+        "starters": [
+          "Turn off ...",
+          "Switch off ..."
+        ],
+        "word_bank": [
+          "switch",
+          "turn",
+          "off",
+          "the",
+          "fan",
+          "light",
+          "when",
+          "you",
+          "go",
+          "out"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Does the hotel use solar energy?",
+        "translation": "¿El hotel usa energía solar?",
+        "audio": "en-a2-4.1.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, we use the sun for hot water.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, we have solar panels.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, the sun gives us energy.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Can I wash my towel every day?",
+        "translation": "¿Puedo lavar mi toalla todos los días?",
+        "audio": "en-a2-4.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Please use it for two days. It saves water.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "We wash towels on the third day.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Put it on the hook if you want to use it again.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is the water here safe to drink?",
+        "translation": "¿Es seguro beber el agua aquí?",
+        "audio": "en-a2-4.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, it is. Please do not waste it.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Yes. We clean it every day.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, you can fill your bottle here.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "I love this eco-lodge!",
+        "translation": "¡Me encanta este ecoalojamiento!",
+        "audio": "en-a2-4.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you! We love nature too.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "We are glad you like it.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Thanks. Please come back.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

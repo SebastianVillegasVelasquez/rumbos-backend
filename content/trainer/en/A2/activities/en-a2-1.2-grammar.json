@@ -1,0 +1,200 @@
+{
+  "id": "en-a2-1.2-grammar",
+  "lesson_id": "1.2",
+  "skill": "grammar",
+  "title": "Practice 1.2",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Receptionist at a small hotel",
+  "can_do": [
+    "I can answer a guest's questions about a room.",
+    "I can ask for a room with I would like."
+  ],
+  "items": [
+    {
+      "id": "a2-1.2.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is a polite request?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "I want room."
+        },
+        {
+          "id": "o2",
+          "text": "I would like a room, please."
+        },
+        {
+          "id": "o3",
+          "text": "Give me a room."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "I would like ... please is polite.",
+      "error_tags": {
+        "o3": {
+          "tag": "politeness",
+          "text": "Give me is too direct for a guest."
+        }
+      }
+    },
+    {
+      "id": "a2-1.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "{1} the hotel have a pool?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "Do"
+            },
+            {
+              "id": "o2",
+              "text": "Is"
+            },
+            {
+              "id": "o3",
+              "text": "Does"
+            }
+          ],
+          "correct": "o3",
+          "error_tag": {
+            "tag": "auxiliary",
+            "text": "Use does with he, she and it."
+          }
+        }
+      ],
+      "explanation": "With the hotel (it) we use does: Does the hotel have a pool?"
+    },
+    {
+      "id": "a2-1.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "I {1} like a double room, please.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "would"
+          ],
+          "error_tag": {
+            "tag": "modal",
+            "text": "Say would like, not want."
+          }
+        }
+      ],
+      "explanation": "I would like is the polite way to ask."
+    },
+    {
+      "id": "a2-1.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Is"
+        },
+        {
+          "id": "t2",
+          "text": "breakfast"
+        },
+        {
+          "id": "t3",
+          "text": "included"
+        },
+        {
+          "id": "t4",
+          "text": "in"
+        },
+        {
+          "id": "t5",
+          "text": "the"
+        },
+        {
+          "id": "t6",
+          "text": "price"
+        }
+      ],
+      "explanation": "The question starts with Is.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "A question with be starts with Is."
+      }
+    },
+    {
+      "id": "a2-1.2.ex.05",
+      "type": "match",
+      "prompt": "Match the question with the answer.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "How many nights?"
+        },
+        {
+          "id": "l2",
+          "text": "How much is it?"
+        },
+        {
+          "id": "l3",
+          "text": "What time is check-in?"
+        },
+        {
+          "id": "l4",
+          "text": "Can I pay by card?"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "Three nights."
+        },
+        {
+          "id": "r2",
+          "text": "Fifty thousand pesos."
+        },
+        {
+          "id": "r3",
+          "text": "At two o'clock."
+        },
+        {
+          "id": "r4",
+          "text": "Yes, you can."
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each answer gives the information the question asks for."
+    },
+    {
+      "id": "a2-1.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Ask for a single room. Use I would like.",
+      "accepted": [
+        "I would like a single room",
+        "I'd like a single room",
+        "I would like a single room, please",
+        "I'd like a single room, please"
+      ],
+      "explanation": "Use I would like + a single room."
+    }
+  ]
+}

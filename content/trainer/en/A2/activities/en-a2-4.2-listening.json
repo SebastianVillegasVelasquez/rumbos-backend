@@ -1,0 +1,81 @@
+{
+  "id": "en-a2-4.2-listening",
+  "lesson_id": "4.2",
+  "skill": "listening",
+  "title": "Listen and choose 4.2",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Host welcoming guests from different countries",
+  "can_do": [
+    "I can use polite social formulas.",
+    "I can ask and answer basic questions with respect."
+  ],
+  "items": [
+    {
+      "id": "en-a2-4.2.l1",
+      "type": "listen_choose",
+      "prompt": "What does the speaker ask?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "if the seat is free"
+        },
+        {
+          "id": "o2",
+          "text": "for the time"
+        },
+        {
+          "id": "o3",
+          "text": "for a menu"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: is this seat free?",
+      "audio": "en-a2-4.2.l1"
+    },
+    {
+      "id": "en-a2-4.2.l2",
+      "type": "listen_choose",
+      "prompt": "Why does the speaker say thank you?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "for the ticket"
+        },
+        {
+          "id": "o2",
+          "text": "for the help"
+        },
+        {
+          "id": "o3",
+          "text": "for the food"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: for your help.",
+      "audio": "en-a2-4.2.l2"
+    },
+    {
+      "id": "en-a2-4.2.l3",
+      "type": "listen_choose",
+      "prompt": "How do people say hello?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "with a hug"
+        },
+        {
+          "id": "o2",
+          "text": "with a bow"
+        },
+        {
+          "id": "o3",
+          "text": "with a smile"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: with a smile.",
+      "audio": "en-a2-4.2.l3"
+    }
+  ]
+}

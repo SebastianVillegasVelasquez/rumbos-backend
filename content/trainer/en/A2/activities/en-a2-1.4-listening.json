@@ -1,0 +1,81 @@
+{
+  "id": "en-a2-1.4-listening",
+  "lesson_id": "1.4",
+  "skill": "listening",
+  "title": "Listen and choose 1.4",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Shop assistant at a craft market",
+  "can_do": [
+    "I can ask how much things cost.",
+    "I can answer simple questions about buying."
+  ],
+  "items": [
+    {
+      "id": "en-a2-1.4.l1",
+      "type": "listen_choose",
+      "prompt": "How much is the scarf?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "5,000"
+        },
+        {
+          "id": "o2",
+          "text": "15,000"
+        },
+        {
+          "id": "o3",
+          "text": "50,000"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "Fifteen thousand is 15,000.",
+      "audio": "en-a2-1.4.l1"
+    },
+    {
+      "id": "en-a2-1.4.l2",
+      "type": "listen_choose",
+      "prompt": "What does the speaker want?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "two postcards and a book"
+        },
+        {
+          "id": "o2",
+          "text": "three maps and a hat"
+        },
+        {
+          "id": "o3",
+          "text": "three postcards and a map"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: three postcards and a map.",
+      "audio": "en-a2-1.4.l2"
+    },
+    {
+      "id": "en-a2-1.4.l3",
+      "type": "listen_choose",
+      "prompt": "When is the market open?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "every day"
+        },
+        {
+          "id": "o2",
+          "text": "only on Sunday"
+        },
+        {
+          "id": "o3",
+          "text": "only at night"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: every day from eight to five.",
+      "audio": "en-a2-1.4.l3"
+    }
+  ]
+}

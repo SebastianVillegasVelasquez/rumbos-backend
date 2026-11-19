@@ -1,0 +1,199 @@
+{
+  "id": "en-a2-1.3-grammar",
+  "lesson_id": "1.3",
+  "skill": "grammar",
+  "title": "Practice 1.3",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Guide making small talk with a guest",
+  "can_do": [
+    "I can say what I like and enjoy doing.",
+    "I can ask a guest about their free time."
+  ],
+  "items": [
+    {
+      "id": "a2-1.3.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is correct?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "I like swim."
+        },
+        {
+          "id": "o2",
+          "text": "I like to swimming."
+        },
+        {
+          "id": "o3",
+          "text": "I like swimming."
+        }
+      ],
+      "correct": "o3",
+      "explanation": "After like we can use a verb with -ing: I like swimming.",
+      "error_tags": {
+        "o1": {
+          "tag": "verb_form",
+          "text": "After like, add -ing to the verb."
+        }
+      }
+    },
+    {
+      "id": "a2-1.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "She enjoys {1} in the garden.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "working"
+            },
+            {
+              "id": "o2",
+              "text": "work"
+            },
+            {
+              "id": "o3",
+              "text": "works"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "verb_form",
+            "text": "After enjoy, use the -ing form."
+          }
+        }
+      ],
+      "explanation": "After enjoy we use -ing: enjoys working."
+    },
+    {
+      "id": "a2-1.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the verb in the -ing form: dance.",
+      "template": "He likes {1} on Saturdays.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "dancing"
+          ],
+          "error_tag": {
+            "tag": "spelling",
+            "text": "Drop the final e before -ing: dancing."
+          }
+        }
+      ],
+      "explanation": "Dance loses the e: dancing."
+    },
+    {
+      "id": "a2-1.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "They"
+        },
+        {
+          "id": "t2",
+          "text": "enjoy"
+        },
+        {
+          "id": "t3",
+          "text": "walking"
+        },
+        {
+          "id": "t4",
+          "text": "in"
+        },
+        {
+          "id": "t5",
+          "text": "the"
+        },
+        {
+          "id": "t6",
+          "text": "rain"
+        }
+      ],
+      "explanation": "The order is: subject, enjoy, verb + -ing, place.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with They, then enjoy."
+      }
+    },
+    {
+      "id": "a2-1.3.ex.05",
+      "type": "match",
+      "prompt": "Match the activity with a related word.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "reading"
+        },
+        {
+          "id": "l2",
+          "text": "swimming"
+        },
+        {
+          "id": "l3",
+          "text": "cooking"
+        },
+        {
+          "id": "l4",
+          "text": "dancing"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "a book"
+        },
+        {
+          "id": "r2",
+          "text": "the sea"
+        },
+        {
+          "id": "r3",
+          "text": "the kitchen"
+        },
+        {
+          "id": "r4",
+          "text": "music"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each activity goes with a thing or place."
+    },
+    {
+      "id": "a2-1.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Say what you like doing. Use like and an -ing verb. The activity is swimming.",
+      "accepted": [
+        "I like swimming",
+        "I enjoy swimming",
+        "I really like swimming"
+      ],
+      "explanation": "Use like or enjoy + swimming."
+    }
+  ]
+}

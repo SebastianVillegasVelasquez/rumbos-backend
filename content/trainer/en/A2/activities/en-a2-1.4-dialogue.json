@@ -1,0 +1,184 @@
+{
+  "id": "en-a2-1.4-dialogue",
+  "lesson_id": "1.4",
+  "skill": "dialogue",
+  "title": "Talk it through 1.4",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Shop assistant at a craft market",
+  "can_do": [
+    "I can ask how much things cost.",
+    "I can answer simple questions about buying."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Good morning. How much is this hat?",
+        "translation": "Buenos días. ¿Cuánto cuesta este sombrero?",
+        "audio": "en-a2-1.4.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is thirty thousand pesos.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "This hat is twenty-five thousand pesos.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "The hat is forty thousand pesos.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "That is a little expensive. Do you have a cheaper one?",
+        "translation": "Es un poco caro. ¿Tiene uno más barato?",
+        "audio": "en-a2-1.4.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "yes"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "this",
+              "one"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "we",
+              "have"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "Yes, this one is cheaper.",
+        "starters": [
+          "Yes, this one is ...",
+          "Sorry, we do not ..."
+        ],
+        "word_bank": [
+          "yes",
+          "this",
+          "one",
+          "is",
+          "cheaper",
+          "sorry",
+          "we",
+          "do",
+          "not",
+          "have"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Can I see the blue bag, please?",
+        "translation": "¿Puedo ver la bolsa azul, por favor?",
+        "audio": "en-a2-1.4.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. Here it is.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, you can. It is on the shelf.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Sure. Do you like it?",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "I like it. How many do you have?",
+        "translation": "Me gusta. ¿Cuántas tienen?",
+        "audio": "en-a2-1.4.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "We have five blue bags.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "We have three left.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "We have many in the back.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "I will take two. How much is that?",
+        "translation": "Me llevo dos. ¿Cuánto es?",
+        "audio": "en-a2-1.4.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "That is sixty thousand pesos.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Two bags are fifty thousand pesos.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "It is seventy thousand pesos in all.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Here is the money. Thank you!",
+        "translation": "Aquí está el dinero. ¡Gracias!",
+        "audio": "en-a2-1.4.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you. Here is your change.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Thank you very much. Have a nice day!",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Thank you. Here is your bag.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

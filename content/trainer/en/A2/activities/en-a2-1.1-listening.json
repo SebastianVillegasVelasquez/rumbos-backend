@@ -1,0 +1,81 @@
+{
+  "id": "en-a2-1.1-listening",
+  "lesson_id": "1.1",
+  "skill": "listening",
+  "title": "Listen and choose 1.1",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Guide planning the day with a guest",
+  "can_do": [
+    "I can say what I am going to do with a time marker.",
+    "I can ask a guest about their plans."
+  ],
+  "items": [
+    {
+      "id": "en-a2-1.1.l1",
+      "type": "listen_choose",
+      "prompt": "When are they going to visit the museum?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Tonight"
+        },
+        {
+          "id": "o2",
+          "text": "On Saturday"
+        },
+        {
+          "id": "o3",
+          "text": "On Sunday"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: on Saturday.",
+      "audio": "en-a2-1.1.l1"
+    },
+    {
+      "id": "en-a2-1.1.l2",
+      "type": "listen_choose",
+      "prompt": "What is Sara going to do next week?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "visit a museum"
+        },
+        {
+          "id": "o2",
+          "text": "climb a mountain"
+        },
+        {
+          "id": "o3",
+          "text": "take a boat trip"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: Sara is going to take a boat trip.",
+      "audio": "en-a2-1.1.l2"
+    },
+    {
+      "id": "en-a2-1.1.l3",
+      "type": "listen_choose",
+      "prompt": "What time are they going to leave?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "6:30"
+        },
+        {
+          "id": "o2",
+          "text": "6:15"
+        },
+        {
+          "id": "o3",
+          "text": "7:30"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Half past six is 6:30.",
+      "audio": "en-a2-1.1.l3"
+    }
+  ]
+}

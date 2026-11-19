@@ -1,0 +1,171 @@
+{
+  "id": "en-a2-2.2-dialogue",
+  "lesson_id": "2.2",
+  "skill": "dialogue",
+  "title": "Talk it through 2.2",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Travel assistant at a station",
+  "can_do": [
+    "I can buy a ticket and ask the price.",
+    "I can say what hurts and what I need to wear.",
+    "I can talk about my daily routine."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Hello. I need two tickets to the lake, please.",
+        "translation": "Hola. Necesito dos boletos al lago, por favor.",
+        "audio": "en-a2-2.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Sure. One way or return?",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Of course. For which day?",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Yes. How many adults?",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Return, please. How much is it?",
+        "translation": "Ida y vuelta, por favor. ¿Cuánto cuesta?",
+        "audio": "en-a2-2.2.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "pesos"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "thousand"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "It is twenty thousand pesos.",
+        "starters": [
+          "It is ... pesos."
+        ],
+        "word_bank": [
+          "it",
+          "is",
+          "twenty",
+          "thousand",
+          "pesos"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "I don't feel well. I have a stomachache.",
+        "translation": "No me siento bien. Me duele el estómago.",
+        "audio": "en-a2-2.2.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I'm sorry to hear that. Do you want some water?",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Oh no. Please sit down.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Do you need a pharmacy?",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "It's cold here. I need a jacket.",
+        "translation": "Hace frío. Necesito una chaqueta.",
+        "audio": "en-a2-2.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "There is a shop next to the station.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "You can buy a jacket in the market.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "We sell jackets here. What size?",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "What time do you get up every day?",
+        "translation": "¿A qué hora te levantas todos los días?",
+        "audio": "en-a2-2.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I get up at six.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "I usually get up at half past five.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "I get up at seven on weekends.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. Have a nice trip!",
+        "translation": "Gracias. ¡Buen viaje!",
+        "audio": "en-a2-2.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you. Goodbye!",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Thanks. See you soon!",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "You too. Enjoy the lake!",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

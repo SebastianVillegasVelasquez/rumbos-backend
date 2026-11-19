@@ -1,0 +1,183 @@
+{
+  "id": "en-a2-2.1-dialogue",
+  "lesson_id": "2.1",
+  "skill": "dialogue",
+  "title": "Talk it through 2.1",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Host helping a guest with a problem",
+  "can_do": [
+    "I can say what happened in the past with the past simple.",
+    "I can say what is happening now.",
+    "I can apologise and give a simple instruction."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Hi, sorry to bother you. The shower is not working.",
+        "translation": "Hola, perdone la molestia. La ducha no funciona.",
+        "audio": "en-a2-2.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I'm very sorry. Someone is coming now.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Sorry about that. What is the problem?",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Oh no. I am sorry. Let me help you.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "There is no hot water. What should I do?",
+        "translation": "No hay agua caliente. ¿Qué debo hacer?",
+        "audio": "en-a2-2.1.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "please",
+              "use"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "use",
+              "bathroom"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "please",
+              "wait"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "Please use the bathroom next door.",
+        "starters": [
+          "Please use ...",
+          "Please wait ..."
+        ],
+        "word_bank": [
+          "please",
+          "use",
+          "the",
+          "bathroom",
+          "next",
+          "door",
+          "wait"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Thank you. What are you doing now?",
+        "translation": "Gracias. ¿Qué está haciendo ahora?",
+        "audio": "en-a2-2.1.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I am calling the maintenance team.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "I'm checking the pipes.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "I am writing a note for the team.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Yesterday we visited the market. It was great!",
+        "translation": "Ayer visitamos el mercado. ¡Fue genial!",
+        "audio": "en-a2-2.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Nice! What did you buy?",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "That is good. Did you eat there?",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Great! Did you take photos?",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "I'm sorry I was late for breakfast.",
+        "translation": "Siento haber llegado tarde al desayuno.",
+        "audio": "en-a2-2.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "That's okay. No problem.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Don't worry. It's fine.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "No problem. Here is your coffee.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thanks for your help today.",
+        "translation": "Gracias por su ayuda hoy.",
+        "audio": "en-a2-2.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You're welcome. Have a good evening.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "My pleasure.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "No problem. Enjoy your stay.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

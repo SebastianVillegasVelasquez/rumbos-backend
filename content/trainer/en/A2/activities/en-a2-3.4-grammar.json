@@ -1,0 +1,196 @@
+{
+  "id": "en-a2-3.4-grammar",
+  "lesson_id": "3.4",
+  "skill": "grammar",
+  "title": "Practice 3.4",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Host giving advice to a guest",
+  "can_do": [
+    "I can ask for and give advice with should.",
+    "I can say how I feel."
+  ],
+  "items": [
+    {
+      "id": "a2-3.4.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence gives advice?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "You should sleep more."
+        },
+        {
+          "id": "o2",
+          "text": "You sleep late."
+        },
+        {
+          "id": "o3",
+          "text": "You slept well."
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Should + verb gives advice.",
+      "error_tags": {
+        "o2": {
+          "tag": "function",
+          "text": "You sleep late describes a habit; it gives no advice."
+        }
+      }
+    },
+    {
+      "id": "a2-3.4.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "You {1} eat before the hike.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "do should"
+            },
+            {
+              "id": "o2",
+              "text": "should"
+            },
+            {
+              "id": "o3",
+              "text": "are should"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "modal",
+            "text": "Say you should eat, with no helper."
+          }
+        }
+      ],
+      "explanation": "Should goes directly before the verb."
+    },
+    {
+      "id": "a2-3.4.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "You {1} drive fast on this road.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "shouldn't",
+            "should not"
+          ],
+          "error_tag": {
+            "tag": "negative",
+            "text": "Use shouldn't for advice against something."
+          }
+        }
+      ],
+      "explanation": "Shouldn't says it is not a good idea."
+    },
+    {
+      "id": "a2-3.4.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "You"
+        },
+        {
+          "id": "t2",
+          "text": "should"
+        },
+        {
+          "id": "t3",
+          "text": "drink"
+        },
+        {
+          "id": "t4",
+          "text": "more"
+        },
+        {
+          "id": "t5",
+          "text": "water"
+        }
+      ],
+      "explanation": "The order is: subject, should, verb, object.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with You should."
+      }
+    },
+    {
+      "id": "a2-3.4.ex.05",
+      "type": "match",
+      "prompt": "Match the feeling with the situation.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "happy"
+        },
+        {
+          "id": "l2",
+          "text": "tired"
+        },
+        {
+          "id": "l3",
+          "text": "nervous"
+        },
+        {
+          "id": "l4",
+          "text": "angry"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "I have a gift."
+        },
+        {
+          "id": "r2",
+          "text": "I did not sleep."
+        },
+        {
+          "id": "r3",
+          "text": "I have an exam."
+        },
+        {
+          "id": "r4",
+          "text": "The bus is very late."
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each feeling has a reason."
+    },
+    {
+      "id": "a2-3.4.ex.06",
+      "type": "short_answer",
+      "prompt": "Give advice to a tired friend. Use should.",
+      "accepted": [
+        "You should rest",
+        "You should sleep",
+        "You should go to bed"
+      ],
+      "explanation": "Use You should + rest."
+    }
+  ]
+}

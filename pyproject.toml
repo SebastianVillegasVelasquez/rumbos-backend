@@ -34,6 +34,13 @@ dev = [
     "pytest-asyncio>=1.4.0",
     "ruff>=0.16.10",
 ]
+# Dev-time text-to-speech for `python -m app.scripts.content tts`. Not installed
+# by default and never part of the image: `uv run --group tts ...`.
+tts = [
+    "imageio-ffmpeg>=0.6.0",
+    "kokoro-onnx==0.6.1",
+    "soundfile>=0.13.1",
+]
 
 [tool.ruff]
 target-version = "py313"

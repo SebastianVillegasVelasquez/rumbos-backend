@@ -1,0 +1,198 @@
+{
+  "id": "en-a2-3.1-grammar",
+  "lesson_id": "3.1",
+  "skill": "grammar",
+  "title": "Practice 3.1",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Guide meeting old and new acquaintances",
+  "can_do": [
+    "I can greet someone I know and someone I meet.",
+    "I can ask and answer simple small-talk questions."
+  ],
+  "items": [
+    {
+      "id": "a2-3.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is a good greeting for an old friend?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Nice to see you again!"
+        },
+        {
+          "id": "o2",
+          "text": "Nice to meet you!"
+        },
+        {
+          "id": "o3",
+          "text": "Goodbye!"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Again is for people you already know.",
+      "error_tags": {
+        "o2": {
+          "tag": "register",
+          "text": "Nice to meet you is for people you meet for the first time."
+        }
+      }
+    },
+    {
+      "id": "a2-3.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "Where {1} you from?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "am"
+            },
+            {
+              "id": "o2",
+              "text": "are"
+            },
+            {
+              "id": "o3",
+              "text": "is"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "be_agreement",
+            "text": "Use are with you."
+          }
+        }
+      ],
+      "explanation": "With you we use are: where are you from?"
+    },
+    {
+      "id": "a2-3.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "She {1} from Peru.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "is"
+          ],
+          "error_tag": {
+            "tag": "be_agreement",
+            "text": "Use is with she."
+          }
+        }
+      ],
+      "explanation": "With she we use is."
+    },
+    {
+      "id": "a2-3.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "How"
+        },
+        {
+          "id": "t2",
+          "text": "long"
+        },
+        {
+          "id": "t3",
+          "text": "are"
+        },
+        {
+          "id": "t4",
+          "text": "you"
+        },
+        {
+          "id": "t5",
+          "text": "staying"
+        },
+        {
+          "id": "t6",
+          "text": "here"
+        }
+      ],
+      "explanation": "The question starts with How long.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with How long, then are you."
+      }
+    },
+    {
+      "id": "a2-3.1.ex.05",
+      "type": "match",
+      "prompt": "Match the question with the answer.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "Where are you from?"
+        },
+        {
+          "id": "l2",
+          "text": "What do you do?"
+        },
+        {
+          "id": "l3",
+          "text": "How are you?"
+        },
+        {
+          "id": "l4",
+          "text": "Is this your first visit?"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "I'm from Chile."
+        },
+        {
+          "id": "r2",
+          "text": "I'm a nurse."
+        },
+        {
+          "id": "r3",
+          "text": "I'm fine, thanks."
+        },
+        {
+          "id": "r4",
+          "text": "Yes, it is."
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each answer fits its question."
+    },
+    {
+      "id": "a2-3.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Say where you are from. You are from Colombia.",
+      "accepted": [
+        "I am from Colombia",
+        "I'm from Colombia"
+      ],
+      "explanation": "Use I am from + country."
+    }
+  ]
+}

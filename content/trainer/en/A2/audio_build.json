@@ -1,0 +1,2941 @@
+{
+  "engine": "kokoro-onnx",
+  "engine_version": "0.6.1",
+  "model": "Kokoro-82M v1.0 (hexgrad), ONNX export; weights Apache-2.0",
+  "language_variant": "en-US",
+  "clips": [
+    {
+      "id": "a2fa-1b787aef6d",
+      "content_ref": "exam a2-form-a a2-fa-l-01",
+      "spoken_text": "Tomorrow we are going to hike at eight fifteen.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Tomorrow we are going to hike at eight fifteen."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-1b787aef6d.mp3",
+      "duration_s": 3.74,
+      "lufs": -19.5,
+      "bytes": 22676,
+      "sha256": "cfc156411bfe8b8045e3ce2fac1e8fc1bd31ec3dd7f6989ac1d19d19d27af09d",
+      "input_hash": "d6219cc07a04210e5722061b3c7126051c036295f69c3ef3671cf6c5437007c8"
+    },
+    {
+      "id": "a2fa-1f1ed6f614",
+      "content_ref": "exam a2-form-a a2-fa-l-11 clip 3",
+      "spoken_text": "The technician is fixing the heater.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "The technician is fixing the heater."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-1f1ed6f614.mp3",
+      "duration_s": 2.86,
+      "lufs": -23.2,
+      "bytes": 17348,
+      "sha256": "922737340835fbd6f4df1c07345f1d86010bfaf75ad3e88ecdf9f1c7b9eeaa5e",
+      "input_hash": "b8498a123dd7c799daa13ebc06e2ba563dbb4f814ef07c70f1148e20d4f0441f"
+    },
+    {
+      "id": "a2fa-20a2af587c",
+      "content_ref": "exam a2-form-a a2-fa-l-11 clip 4",
+      "spoken_text": "Four tickets to the town, please.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Four tickets to the town, please."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-20a2af587c.mp3",
+      "duration_s": 2.81,
+      "lufs": -21.0,
+      "bytes": 17060,
+      "sha256": "60b18b9e3926767cbd2c3166da42bc99d5281375b4b6e878a5dc986d3caf555b",
+      "input_hash": "ce7e891fd37185c6679d3fa27d4d59ee7c8e08fcd437d9c47cc89d8ac8598682"
+    },
+    {
+      "id": "a2fa-4bf0147a1c",
+      "content_ref": "exam a2-form-a a2-fa-l-02",
+      "spoken_text": "Your room number is one, one, two.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Your room number is one, one, two."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-4bf0147a1c.mp3",
+      "duration_s": 2.98,
+      "lufs": -19.8,
+      "bytes": 18068,
+      "sha256": "022872ca407deb571ace647a627fee72d58b9b0ddc052ab4d6c12a11fcd182ba",
+      "input_hash": "b6a61a83221a4c453deaac1ed9189ae51153b30aaf93f06aa4fca73932376acc"
+    },
+    {
+      "id": "a2fa-6e34cf5679",
+      "content_ref": "exam a2-form-a a2-fa-l-04",
+      "spoken_text": "The bus to the town leaves at nine, from platform two.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "The bus to the town leaves at nine, from platform two."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-6e34cf5679.mp3",
+      "duration_s": 4.44,
+      "lufs": -19.4,
+      "bytes": 26852,
+      "sha256": "5b803b1b0ea92d8373eb397547479ba9542b760b86604aa75f8061ba7c014ea8",
+      "input_hash": "fe8ded22ae2d2ca39b315aca382233bbd579051de58c41069dcdc5388bfdbdca"
+    },
+    {
+      "id": "a2fa-7edf68dfee",
+      "content_ref": "exam a2-form-a a2-fa-l-11 clip 2",
+      "spoken_text": "I'd like a double room for two nights.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "I'd like a double room for two nights."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-7edf68dfee.mp3",
+      "duration_s": 2.95,
+      "lufs": -22.4,
+      "bytes": 17924,
+      "sha256": "21c14ccebf7fecc88753c9eecf0ff29d2e29af0a79a78a8c4498f820e6ab33c8",
+      "input_hash": "e7cdb5fbee99b8ab2125ab1a2f1e916321b1127f506baae12919dccc9fa20a87"
+    },
+    {
+      "id": "a2fa-89955aab8f",
+      "content_ref": "exam a2-form-a a2-fa-l-05",
+      "spoken_text": "Breakfast is at seven, and the Wi-Fi password is M, A, C, I, Z, O, two, zero, two, six.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Breakfast is at seven, and the Wi-Fi password is M, A, C, I, Z, O, two, zero, two, six."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-89955aab8f.mp3",
+      "duration_s": 7.92,
+      "lufs": -19.5,
+      "bytes": 47732,
+      "sha256": "96368906d762b067d63278ca4aec984b7090d50cd3347f4fdeb67161da69abbd",
+      "input_hash": "f8df57751c812bc9ec19ee08a3e6cfc27e357b8cafb881d05e483c2c5b94166e"
+    },
+    {
+      "id": "a2fa-9e07a842b2",
+      "content_ref": "exam a2-form-a a2-fa-l-09",
+      "spoken_text": "Can someone guide a night walk? Yes, Mateo can guide it tonight.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Can someone guide a night walk?"
+        },
+        {
+          "voice": "host",
+          "text": "Yes, Mateo can guide it tonight."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael",
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-9e07a842b2.mp3",
+      "duration_s": 5.26,
+      "lufs": -19.4,
+      "bytes": 31748,
+      "sha256": "054e330cd661436e3199e0148eb6fcce74440e5fcefdbfd769d880f8f27042f0",
+      "input_hash": "d0d3e12093f9bdb312da1dbb97e56dde3cc221250532f3b564e03e052374c4e0"
+    },
+    {
+      "id": "a2fa-ae67a19dda",
+      "content_ref": "exam a2-form-a a2-fa-l-11 clip 1",
+      "spoken_text": "We are going to hike the trail in the morning.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "We are going to hike the trail in the morning."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-ae67a19dda.mp3",
+      "duration_s": 3.24,
+      "lufs": -19.2,
+      "bytes": 19652,
+      "sha256": "974f23d4ddbcd5f7e599e41cae820d3765f6cecdff343cb2dcc4ab79aec426ed",
+      "input_hash": "b94ed5199ac88a969a0e2c2b27e9765b2d36e963aead15a5fc4ddb49f8d1b203"
+    },
+    {
+      "id": "a2fa-afbacdc2af",
+      "content_ref": "exam a2-form-a a2-fa-l-10",
+      "spoken_text": "Front desk, how can I help you? Your booking is wrong! I understand, I'm so sorry.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Front desk, how can I help you?"
+        },
+        {
+          "voice": "guest",
+          "text": "Your booking is wrong!"
+        },
+        {
+          "voice": "host",
+          "text": "I understand, I'm so sorry."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael",
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-afbacdc2af.mp3",
+      "duration_s": 7.58,
+      "lufs": -19.4,
+      "bytes": 45716,
+      "sha256": "cf925a4da877b5c576fd43d6091014b3744c0fb08fac32b06fc2a66149b81730",
+      "input_hash": "489ec4844cbd2b82a50c07696ba71fe10ddc1655c49fd6370a6c92b08e651a36"
+    },
+    {
+      "id": "a2fa-bac78678a2",
+      "content_ref": "exam a2-form-a a2-fa-l-08",
+      "spoken_text": "I have a sore throat. I'm sorry to hear that. You should drink something warm.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "I have a sore throat."
+        },
+        {
+          "voice": "host",
+          "text": "I'm sorry to hear that. You should drink something warm."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael",
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-bac78678a2.mp3",
+      "duration_s": 6.24,
+      "lufs": -19.4,
+      "bytes": 37652,
+      "sha256": "83af6478889e25eaa6fdbe0f6eebb54f7427ba52482d1af4d54e0b4aad4b5415",
+      "input_hash": "4b65ba0c1e48671ee91cfbaf8f0a78168e02a2fcb028e7454b278ff7622edc5f"
+    },
+    {
+      "id": "a2fa-be41cf2c5b",
+      "content_ref": "exam a2-form-a a2-fa-l-11 clip 5",
+      "spoken_text": "Please turn off the lights when you leave.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Please turn off the lights when you leave."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-be41cf2c5b.mp3",
+      "duration_s": 3.14,
+      "lufs": -19.2,
+      "bytes": 19076,
+      "sha256": "bb9952c166eb209372182e8440b42a8410e6b60f336f5fe8cafa20ba406834cd",
+      "input_hash": "4d3fa0b6e74463c8b766c6d2bc13fc0f66bf90dd01a483dd07d4176480525214"
+    },
+    {
+      "id": "a2fa-c8afa0f164",
+      "content_ref": "exam a2-form-a a2-fa-l-03",
+      "spoken_text": "A bag of coffee is twenty thousand pesos.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "A bag of coffee is twenty thousand pesos."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-c8afa0f164.mp3",
+      "duration_s": 3.7,
+      "lufs": -19.3,
+      "bytes": 22388,
+      "sha256": "b4a683eaaeca2de3ad493d570710f15eafda381c143869f1e6846a5769b36231",
+      "input_hash": "53b54bea0e2cc7dbf400e8c3b79170ac9667aa552e1e2543f608fa1888ac68e6"
+    },
+    {
+      "id": "a2fa-ef7c4b7b9b",
+      "content_ref": "exam a2-form-a a2-fa-l-06",
+      "spoken_text": "The water is cold! I'm so sorry. The technician is fixing the heater right now.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "The water is cold!"
+        },
+        {
+          "voice": "host",
+          "text": "I'm so sorry. The technician is fixing the heater right now."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael",
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-ef7c4b7b9b.mp3",
+      "duration_s": 7.01,
+      "lufs": -19.5,
+      "bytes": 42260,
+      "sha256": "1cfe18fb79c9b460b52083081bdb5a55574290936d45c4fa53d525686293d82a",
+      "input_hash": "b8a7e843803c294749e09fb85261fcb3728b6005315c468d30911b83969e4a36"
+    },
+    {
+      "id": "a2fa-f80d16a268",
+      "content_ref": "exam a2-form-a a2-fa-l-07",
+      "spoken_text": "Where is the injury? My ankle hurts. I can't move my foot.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Where is the injury?"
+        },
+        {
+          "voice": "guest",
+          "text": "My ankle hurts. I can't move my foot."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael",
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/a2fa-f80d16a268.mp3",
+      "duration_s": 5.16,
+      "lufs": -19.3,
+      "bytes": 31172,
+      "sha256": "ab04afa3fe1f80fe5ef661d22178679a55e71fa555558b90fa27b16283ceadd7",
+      "input_hash": "64bf0b5d1f0e763ac2e15339f46c5159a6f7529a3aec22469f92aed0cbd8e340"
+    },
+    {
+      "id": "en-a2-1.1.d1",
+      "content_ref": "activity en-a2-1.1-dialogue n1",
+      "spoken_text": "Hi! What are we going to do this afternoon?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Hi! What are we going to do this afternoon?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.1.d1.mp3",
+      "duration_s": 2.95,
+      "lufs": -19.4,
+      "bytes": 17924,
+      "sha256": "64b670518c8119e2249187990d1dbfa89c076c04a63b2edea7cfdd491900d7cf",
+      "input_hash": "deff22b8dd9a9e8bc05ff0c1acedeaa90444bbd1f5b4985a791c9bf06c5aa3c6"
+    },
+    {
+      "id": "en-a2-1.1.d2",
+      "content_ref": "activity en-a2-1.1-dialogue n2",
+      "spoken_text": "Great! And what are you going to do tomorrow?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Great! And what are you going to do tomorrow?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.1.d2.mp3",
+      "duration_s": 2.95,
+      "lufs": -19.3,
+      "bytes": 17924,
+      "sha256": "42548672d2962f10e2ae6311f23b65dc96c111ddf95d0002093704b6cbd52b6e",
+      "input_hash": "b3b93d27c4fbd67ac6ad8098f9d786bed5560918f8ac2190a4746a70ff58da5e"
+    },
+    {
+      "id": "en-a2-1.1.d3",
+      "content_ref": "activity en-a2-1.1-dialogue n3",
+      "spoken_text": "What time are we going to leave?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "What time are we going to leave?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.1.d3.mp3",
+      "duration_s": 2.23,
+      "lufs": -21.1,
+      "bytes": 13604,
+      "sha256": "be4b0e5098fe820d1a248e72bb410e1e1b6c3dfbdb8c1344ce5a1f1a77193dbb",
+      "input_hash": "63c4231edb9e3a802e754273c47cbfcb8bd3175d962d01a2c070626fea5672c8"
+    },
+    {
+      "id": "en-a2-1.1.d4",
+      "content_ref": "activity en-a2-1.1-dialogue n4",
+      "spoken_text": "Are we going to eat lunch on the trail?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Are we going to eat lunch on the trail?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.1.d4.mp3",
+      "duration_s": 2.76,
+      "lufs": -19.6,
+      "bytes": 16772,
+      "sha256": "60fc2642d7cdcc02a13dda64967532fada0eb48304002c9361a4c5c2789c118f",
+      "input_hash": "43cb601ca3d934aa0d3cfdc0e87aca7228377cdbc4f0aeb727f89d3b611a1fde"
+    },
+    {
+      "id": "en-a2-1.1.d5",
+      "content_ref": "activity en-a2-1.1-dialogue n5",
+      "spoken_text": "Is it going to rain tonight?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Is it going to rain tonight?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.1.d5.mp3",
+      "duration_s": 2.21,
+      "lufs": -19.4,
+      "bytes": 13460,
+      "sha256": "11860c4e260e1c83b5ab708f59077be8d9566328024abe1f6ac862e01bd52c4d",
+      "input_hash": "28569a32e8a71f85790fac819e07509e18756d10b2976237cc54606a7a6b1f0c"
+    },
+    {
+      "id": "en-a2-1.1.d6",
+      "content_ref": "activity en-a2-1.1-dialogue n6",
+      "spoken_text": "Perfect. See you tomorrow at the gate!",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Perfect. See you tomorrow at the gate!"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.1.d6.mp3",
+      "duration_s": 2.86,
+      "lufs": -19.4,
+      "bytes": 17348,
+      "sha256": "354c867f1cc6306e0e009aa51bf661813844cb49a2e96db2a06c3dd338c23f0e",
+      "input_hash": "d8f745743c1986dce0e5f679ea963c30044a30f56d6da1dfc176c1728146a4be"
+    },
+    {
+      "id": "en-a2-1.1.l1",
+      "content_ref": "activity en-a2-1.1-listening en-a2-1.1.l1",
+      "spoken_text": "On Saturday we are going to visit a small museum.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "On Saturday we are going to visit a small museum."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.1.l1.mp3",
+      "duration_s": 4.3,
+      "lufs": -19.3,
+      "bytes": 25988,
+      "sha256": "8013c9481b90e57c99166f159d0c8780575e31058e8dab4ba6f67a852c4e2508",
+      "input_hash": "961d85d05bd23a4b8bcbc84deca6716ffeb0f89668412a6c6917570eeb022e90"
+    },
+    {
+      "id": "en-a2-1.1.l2",
+      "content_ref": "activity en-a2-1.1-listening en-a2-1.1.l2",
+      "spoken_text": "Next week Sara is going to take a boat trip.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Next week Sara is going to take a boat trip."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.1.l2.mp3",
+      "duration_s": 3.7,
+      "lufs": -19.3,
+      "bytes": 22388,
+      "sha256": "3e38140ccc189b30c871e8c0d3d62f4ea6dc07b63cba276ae60b895fa9162675",
+      "input_hash": "72de53138794cb1dc5ce00c0506acfb961ad2d3b21a989397f8908261260414b"
+    },
+    {
+      "id": "en-a2-1.1.l3",
+      "content_ref": "activity en-a2-1.1-listening en-a2-1.1.l3",
+      "spoken_text": "We are going to leave at half past six in the morning.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "We are going to leave at half past six in the morning."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.1.l3.mp3",
+      "duration_s": 3.84,
+      "lufs": -19.4,
+      "bytes": 23252,
+      "sha256": "f95bc37aabdab4e902fc2058c981be20d4625d4e9d8667494649067f0ac09691",
+      "input_hash": "885f81f0efc97c8659fc1e6680cedc90d1bae9fd924eef9e35dafdf38f0a4f73"
+    },
+    {
+      "id": "en-a2-1.2.d1",
+      "content_ref": "activity en-a2-1.2-dialogue n1",
+      "spoken_text": "Hello. Do you have a room for tonight?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Hello. Do you have a room for tonight?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.2.d1.mp3",
+      "duration_s": 2.74,
+      "lufs": -20.3,
+      "bytes": 16628,
+      "sha256": "92b65c3d087e6c8ed68598b93665d23d36e187c4ffdd90732c274ebf22b7e66c",
+      "input_hash": "cc5d603f01ec72bc411443579d5d34481ccd8e3bdde02250705a97a002b308e6"
+    },
+    {
+      "id": "en-a2-1.2.d2",
+      "content_ref": "activity en-a2-1.2-dialogue n2",
+      "spoken_text": "It is for two people. Is breakfast included?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "It is for two people. Is breakfast included?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.2.d2.mp3",
+      "duration_s": 3.46,
+      "lufs": -19.4,
+      "bytes": 20948,
+      "sha256": "7d89b64e544817c98caf3516b0f8e46a4561ad6f49fecedad76a04da2dfdbc20",
+      "input_hash": "1d5662f5859738ec976f1229bd5ad7d0cf8213fc348daddaa010cadb9e582cef"
+    },
+    {
+      "id": "en-a2-1.2.d3",
+      "content_ref": "activity en-a2-1.2-dialogue n3",
+      "spoken_text": "How much is the room per night?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "How much is the room per night?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.2.d3.mp3",
+      "duration_s": 2.38,
+      "lufs": -19.7,
+      "bytes": 14468,
+      "sha256": "1ffe7feedea441d6ead7e5c3bd3d019d407f0ad8f914fbcdf208636ca2d0aef2",
+      "input_hash": "f284fd4fdf355a1e1e9be7f42aeb7029aaa2832ab6e946dafc3ed9d212d4ae52"
+    },
+    {
+      "id": "en-a2-1.2.d4",
+      "content_ref": "activity en-a2-1.2-dialogue n4",
+      "spoken_text": "Can I pay by card?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Can I pay by card?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.2.d4.mp3",
+      "duration_s": 1.99,
+      "lufs": -19.4,
+      "bytes": 12164,
+      "sha256": "e61d15ec7fc5e9d3183d3902ba06bb89f07f9b67483b63359908cf46594bc5b9",
+      "input_hash": "95624167a7dad4835ce2629c0c3d8f405c78116bb083ea485f7ea0f586c6ac0d"
+    },
+    {
+      "id": "en-a2-1.2.d5",
+      "content_ref": "activity en-a2-1.2-dialogue n5",
+      "spoken_text": "What time is check-out?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "What time is check-out?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.2.d5.mp3",
+      "duration_s": 2.06,
+      "lufs": -19.4,
+      "bytes": 12596,
+      "sha256": "b046549a8981b4f359f723bb2d15f265ef79e954f4d09e8d4d9506527e7e15a4",
+      "input_hash": "d859c1bbf44890f2630a3aa7b35cc5bb21c0397a0a0938434e6e877eb69ca846"
+    },
+    {
+      "id": "en-a2-1.2.d6",
+      "content_ref": "activity en-a2-1.2-dialogue n6",
+      "spoken_text": "Thank you. Can I have my key, please?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Thank you. Can I have my key, please?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.2.d6.mp3",
+      "duration_s": 2.81,
+      "lufs": -21.1,
+      "bytes": 17060,
+      "sha256": "9a2e7bc43414c92820c53abeb28f222d956611dc1317101587a2060b853484b3",
+      "input_hash": "516aebb27f1474b6bb35b6bfba0b5226949cbfac316a3d9dd211e11e0fb8a4eb"
+    },
+    {
+      "id": "en-a2-1.2.l1",
+      "content_ref": "activity en-a2-1.2-listening en-a2-1.2.l1",
+      "spoken_text": "I would like to book a single room for three nights.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "I would like to book a single room for three nights."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.2.l1.mp3",
+      "duration_s": 3.74,
+      "lufs": -19.5,
+      "bytes": 22676,
+      "sha256": "305dcbadb8b61b667fe4df6558b22fe6a2cae10ab14ca0bf90f73fbea875a83e",
+      "input_hash": "ccd095d9a8147d1a2fe4a751186fc43a4442ec2bb724fa4575fa608862ba5a3a"
+    },
+    {
+      "id": "en-a2-1.2.l2",
+      "content_ref": "activity en-a2-1.2-listening en-a2-1.2.l2",
+      "spoken_text": "The room has a window and a small desk.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "The room has a window and a small desk."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.2.l2.mp3",
+      "duration_s": 3.34,
+      "lufs": -19.3,
+      "bytes": 20228,
+      "sha256": "30e391940661a40ed217f9ec17bd7bc7d32f84e09c036d9c3f02a26f37f4a63b",
+      "input_hash": "d984b199f8beae1de57812b5c5d1eb0a3830557670d040095e3764b28540a34d"
+    },
+    {
+      "id": "en-a2-1.2.l3",
+      "content_ref": "activity en-a2-1.2-listening en-a2-1.2.l3",
+      "spoken_text": "The restaurant is next to the reception.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "The restaurant is next to the reception."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.2.l3.mp3",
+      "duration_s": 3.24,
+      "lufs": -19.3,
+      "bytes": 19652,
+      "sha256": "4a88c05c80aa396e1b375f6af4c8155f0c2a0db793886921e74c68aabe3a1f11",
+      "input_hash": "f5c92be4b96f08495702fba125983d2e06a7944b59c99dfc572047545fbabb14"
+    },
+    {
+      "id": "en-a2-1.3.d1",
+      "content_ref": "activity en-a2-1.3-dialogue n1",
+      "spoken_text": "What do you like doing in your free time?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "What do you like doing in your free time?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.3.d1.mp3",
+      "duration_s": 2.62,
+      "lufs": -19.3,
+      "bytes": 15908,
+      "sha256": "8ed04936757e7fe594660273ebb828cff7b17e91663b45f03c859d964e608809",
+      "input_hash": "f32afe66b7b102e07c78f14c1a6ecfcc6e43d2f802ae1e013ae23d532a94add1"
+    },
+    {
+      "id": "en-a2-1.3.d2",
+      "content_ref": "activity en-a2-1.3-dialogue n2",
+      "spoken_text": "Nice! Do you enjoy taking photos?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Nice! Do you enjoy taking photos?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.3.d2.mp3",
+      "duration_s": 2.95,
+      "lufs": -19.3,
+      "bytes": 17924,
+      "sha256": "8d38ecbff9578371d5e03feb5b3030aff518919e09e4c9c2da5419624ebda8a1",
+      "input_hash": "866ae5fba51f4c8755789da5545acdc6a3d9ff9ac63ba34fa126bcecffa3afdb"
+    },
+    {
+      "id": "en-a2-1.3.d3",
+      "content_ref": "activity en-a2-1.3-dialogue n3",
+      "spoken_text": "What does your sister like doing?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "What does your sister like doing?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.3.d3.mp3",
+      "duration_s": 2.26,
+      "lufs": -19.4,
+      "bytes": 13748,
+      "sha256": "2e98c530a0cc6780bcdce50e98bed1a1b92e256745ccea22dcb22dd123a066e1",
+      "input_hash": "3f42ddd3f0e7ef630e623ea0ff24729950b1fb361639fc0d0a6faee8eee08145"
+    },
+    {
+      "id": "en-a2-1.3.d4",
+      "content_ref": "activity en-a2-1.3-dialogue n4",
+      "spoken_text": "Do you like cooking?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Do you like cooking?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.3.d4.mp3",
+      "duration_s": 1.8,
+      "lufs": -19.4,
+      "bytes": 11012,
+      "sha256": "b56fa6f5288506fd23b70d4893bbe8514c5a297536b0c64b97693910fe4ca067",
+      "input_hash": "7c73a168e4c229b022f191df84d7547fb31ec67d36147bddf9013853cf16ccef"
+    },
+    {
+      "id": "en-a2-1.3.d5",
+      "content_ref": "activity en-a2-1.3-dialogue n5",
+      "spoken_text": "What do you enjoy on holiday?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "What do you enjoy on holiday?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.3.d5.mp3",
+      "duration_s": 2.4,
+      "lufs": -19.8,
+      "bytes": 14612,
+      "sha256": "30db19f5914a1a716542d679949446ba0d9b6144444f238da0f677ce79dfd6cc",
+      "input_hash": "82526659f505e3467fa6b6610e79dc1b237d93c6c42da36d215dfb4fc1ad0ea4"
+    },
+    {
+      "id": "en-a2-1.3.d6",
+      "content_ref": "activity en-a2-1.3-dialogue n6",
+      "spoken_text": "Me too! It is nice to talk with you.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Me too! It is nice to talk with you."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.3.d6.mp3",
+      "duration_s": 2.95,
+      "lufs": -19.4,
+      "bytes": 17924,
+      "sha256": "baa01dc15a21f13cc35bb00addc6e0377959d195cef877111f8d00873bdb6207",
+      "input_hash": "9dc612de65fe3b03553dfd52e16966d5d0af2615279ce5024456e12d0b4dafed"
+    },
+    {
+      "id": "en-a2-1.3.l1",
+      "content_ref": "activity en-a2-1.3-listening en-a2-1.3.l1",
+      "spoken_text": "My brother likes playing the guitar in the evening.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "My brother likes playing the guitar in the evening."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.3.l1.mp3",
+      "duration_s": 3.46,
+      "lufs": -19.5,
+      "bytes": 20948,
+      "sha256": "dbc3f05ab6514c5fb09434afe9412e027f7754913391292d05afab61774f8c6a",
+      "input_hash": "11f33af3934daaaa06b7fa39e0136ee34e6b61a2b0b82047c0da7250a244c7ae"
+    },
+    {
+      "id": "en-a2-1.3.l2",
+      "content_ref": "activity en-a2-1.3-listening en-a2-1.3.l2",
+      "spoken_text": "I do not like cooking, but I enjoy washing the dishes.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "I do not like cooking, but I enjoy washing the dishes."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.3.l2.mp3",
+      "duration_s": 4.58,
+      "lufs": -19.3,
+      "bytes": 27716,
+      "sha256": "5eb63378832663bbdc8dec604b4ec08f2edb6b64e2e4efbd5065c8f4ad5817ba",
+      "input_hash": "46ed7f0fc98579d7465769c6a172650dd62f60ddfcd2f1ae5082eec48a9cf4e6"
+    },
+    {
+      "id": "en-a2-1.3.l3",
+      "content_ref": "activity en-a2-1.3-listening en-a2-1.3.l3",
+      "spoken_text": "Maria enjoys walking on the beach with her dog.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Maria enjoys walking on the beach with her dog."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.3.l3.mp3",
+      "duration_s": 4.08,
+      "lufs": -19.4,
+      "bytes": 24692,
+      "sha256": "5be68fcf983bc89c941fb8fe20dcfa2d406a7b11fb009fca509369604a5c9bcb",
+      "input_hash": "43011b4dfa10cd2f07a5773a300e71b354fc0a60b0891f367c922fff7af227b7"
+    },
+    {
+      "id": "en-a2-1.4.d1",
+      "content_ref": "activity en-a2-1.4-dialogue n1",
+      "spoken_text": "Good morning. How much is this hat?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Good morning. How much is this hat?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.4.d1.mp3",
+      "duration_s": 2.76,
+      "lufs": -19.4,
+      "bytes": 16772,
+      "sha256": "5a8651cdfc6d6f34fc04c44273d6bc86be647eae5d75692fa13c736d1b4906b0",
+      "input_hash": "930944c2708c9cd7e09bb527f97058a9d727b735ba4e0df1624e239c5596366d"
+    },
+    {
+      "id": "en-a2-1.4.d2",
+      "content_ref": "activity en-a2-1.4-dialogue n2",
+      "spoken_text": "That is a little expensive. Do you have a cheaper one?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "That is a little expensive. Do you have a cheaper one?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.4.d2.mp3",
+      "duration_s": 3.72,
+      "lufs": -19.3,
+      "bytes": 22532,
+      "sha256": "86e318611bfbd04bd75eed2e7f1b861887611572e962e795a362824d27f1352e",
+      "input_hash": "8b0d9f8cd1e737cb59ba602b1c5f20cd742717dbcb4d77ed720dedfcaf9ea12f"
+    },
+    {
+      "id": "en-a2-1.4.d3",
+      "content_ref": "activity en-a2-1.4-dialogue n3",
+      "spoken_text": "Can I see the blue bag, please?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Can I see the blue bag, please?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.4.d3.mp3",
+      "duration_s": 2.47,
+      "lufs": -19.4,
+      "bytes": 15044,
+      "sha256": "dd3576ee9a3ca6384eb89180ee42ee8955a8553aeb87e91fe62ccfbac685032a",
+      "input_hash": "ab9ed879bd7626613ea22eb68d7539c8f9d5722c9459d91c38238ae0cae6f246"
+    },
+    {
+      "id": "en-a2-1.4.d4",
+      "content_ref": "activity en-a2-1.4-dialogue n4",
+      "spoken_text": "I like it. How many do you have?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "I like it. How many do you have?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.4.d4.mp3",
+      "duration_s": 2.59,
+      "lufs": -19.4,
+      "bytes": 15764,
+      "sha256": "2f3e3d35070ed3d3c3fc73a429d074866a82c31736f2d60d667aa0a97a17493b",
+      "input_hash": "487466c5643fa104dd46cfde61d49406de04d2826bb72958848f5bd0e27695f0"
+    },
+    {
+      "id": "en-a2-1.4.d5",
+      "content_ref": "activity en-a2-1.4-dialogue n5",
+      "spoken_text": "I will take two. How much is that?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "I will take two. How much is that?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.4.d5.mp3",
+      "duration_s": 2.88,
+      "lufs": -19.4,
+      "bytes": 17492,
+      "sha256": "650304ce76e18864fa4f51bcd04da2c181e4a06689e92fed48248e438346cbd0",
+      "input_hash": "695f5d90bf619fbe55327871298d9a8729b6886b3d66fcbb3fc2ad829a2ae37a"
+    },
+    {
+      "id": "en-a2-1.4.d6",
+      "content_ref": "activity en-a2-1.4-dialogue n6",
+      "spoken_text": "Here is the money. Thank you!",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Here is the money. Thank you!"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.4.d6.mp3",
+      "duration_s": 2.47,
+      "lufs": -19.4,
+      "bytes": 15044,
+      "sha256": "4e5a4f0f21f418005d79f43da7ffdb1d0d55c92ace5d0556adb4e58cc8509c8a",
+      "input_hash": "a8e3f7877a08f47f7258dcae098e0d31d4c7e873d44b6effbf8e0b64f0e99714"
+    },
+    {
+      "id": "en-a2-1.4.l1",
+      "content_ref": "activity en-a2-1.4-listening en-a2-1.4.l1",
+      "spoken_text": "This blue scarf is fifteen thousand pesos.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "This blue scarf is fifteen thousand pesos."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.4.l1.mp3",
+      "duration_s": 3.84,
+      "lufs": -19.4,
+      "bytes": 23252,
+      "sha256": "75889ecd8caa8e5380b2d142d2f5900a016e408087c2b0c8ee1f0126f9c178fa",
+      "input_hash": "025e234f8899ceac50212c3fe3cc73d7f2eff5f5bc18f67a86aaefa2b01160c7"
+    },
+    {
+      "id": "en-a2-1.4.l2",
+      "content_ref": "activity en-a2-1.4-listening en-a2-1.4.l2",
+      "spoken_text": "I would like three postcards and a map, please.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "I would like three postcards and a map, please."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.4.l2.mp3",
+      "duration_s": 3.74,
+      "lufs": -19.7,
+      "bytes": 22676,
+      "sha256": "ad1a7873c53f0f04a5c001b8bc046730e563af2d12333a960c23a14028dfc84a",
+      "input_hash": "72819d5034b2a7cfd4e9e52971200708d57e30ef897eaa1d88bb57fb574e1ed2"
+    },
+    {
+      "id": "en-a2-1.4.l3",
+      "content_ref": "activity en-a2-1.4-listening en-a2-1.4.l3",
+      "spoken_text": "The market is open every day from eight to five.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "The market is open every day from eight to five."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-1.4.l3.mp3",
+      "duration_s": 4.06,
+      "lufs": -19.4,
+      "bytes": 24548,
+      "sha256": "68f249616d71369da1f0d2b332580fc0c593b1f7dfb0f5c3e03742c2d8b7441f",
+      "input_hash": "e7625e96512f5f3b756084db6617ac68b78cb92e18305fb92d5ff4c3ec37b21f"
+    },
+    {
+      "id": "en-a2-2.1.d1",
+      "content_ref": "activity en-a2-2.1-dialogue n1",
+      "spoken_text": "Hi, sorry to bother you. The shower is not working.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Hi, sorry to bother you. The shower is not working."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.1.d1.mp3",
+      "duration_s": 4.06,
+      "lufs": -18.8,
+      "bytes": 24548,
+      "sha256": "6bf7567f4e920f871797ad5f4fbd98baaeaf085e697ab8ece9fd35bba676459c",
+      "input_hash": "baec6d6b810b638925dc9f3bb79a31636a556405ea79b46d498bea5fdc827d7e"
+    },
+    {
+      "id": "en-a2-2.1.d2",
+      "content_ref": "activity en-a2-2.1-dialogue n2",
+      "spoken_text": "There is no hot water. What should I do?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "There is no hot water. What should I do?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.1.d2.mp3",
+      "duration_s": 3.1,
+      "lufs": -19.2,
+      "bytes": 18788,
+      "sha256": "c7af7f7bfceb056d87b35847070879c286a6a62814371386ce8c1729572f2def",
+      "input_hash": "2005bbe1d2cf57a9cd682384b0747b0c1d5aef562fd0a41af7b639f447ac3bee"
+    },
+    {
+      "id": "en-a2-2.1.d3",
+      "content_ref": "activity en-a2-2.1-dialogue n3",
+      "spoken_text": "Thank you. What are you doing now?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Thank you. What are you doing now?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.1.d3.mp3",
+      "duration_s": 2.47,
+      "lufs": -19.3,
+      "bytes": 15044,
+      "sha256": "1b385426361440a4bffee2ae91ee8dc7316a6529167f6d86045b543913202769",
+      "input_hash": "754dab7d2e5ff0a00d8ebebcd5395abee23f095f8fa9f6aa344bd0a3c00cef51"
+    },
+    {
+      "id": "en-a2-2.1.d4",
+      "content_ref": "activity en-a2-2.1-dialogue n4",
+      "spoken_text": "Yesterday we visited the market. It was great!",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Yesterday we visited the market. It was great!"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.1.d4.mp3",
+      "duration_s": 3.55,
+      "lufs": -19.3,
+      "bytes": 21524,
+      "sha256": "978ae575f6470e3f048d935ff123698eb53c6d85592018f2180cf8529979daff",
+      "input_hash": "a57a7c46c197576c0071464ccb7ad3564c8c8b2c9836f8fb3cc8c8996c91d538"
+    },
+    {
+      "id": "en-a2-2.1.d5",
+      "content_ref": "activity en-a2-2.1-dialogue n5",
+      "spoken_text": "I'm sorry I was late for breakfast.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "I'm sorry I was late for breakfast."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.1.d5.mp3",
+      "duration_s": 2.81,
+      "lufs": -21.8,
+      "bytes": 17060,
+      "sha256": "9fe7e30185ba45426eb693059af6b4cfdcd6e5087b8ec3df8c8a6478108319c2",
+      "input_hash": "047ae058d6361825a37fe719c35fa9b85938fa187aa33505f7ea14a9882e478e"
+    },
+    {
+      "id": "en-a2-2.1.d6",
+      "content_ref": "activity en-a2-2.1-dialogue n6",
+      "spoken_text": "Thanks for your help today.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Thanks for your help today."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.1.d6.mp3",
+      "duration_s": 2.16,
+      "lufs": -19.0,
+      "bytes": 13172,
+      "sha256": "48f35dc0aade6fe6f2974bdf3c2448b74901cb74a864c878a914372ca479df61",
+      "input_hash": "df990d4fac7ccbcd2a15d1d127ad9979d5dceb2512b3c7b01c519038f7e877c3"
+    },
+    {
+      "id": "en-a2-2.1.l1",
+      "content_ref": "activity en-a2-2.1-listening en-a2-2.1.l1",
+      "spoken_text": "Yesterday we visited a small village and ate fish.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Yesterday we visited a small village and ate fish."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.1.l1.mp3",
+      "duration_s": 4.15,
+      "lufs": -19.5,
+      "bytes": 25124,
+      "sha256": "de4ed8162fd25a08bcb6816ce21a957d961fff31d2b5e5b533000f1a87c80d1a",
+      "input_hash": "7da49e2e82b1e564295b72cb6ce41efc8988d5264fbd0c907840c5903dd6b54e"
+    },
+    {
+      "id": "en-a2-2.1.l2",
+      "content_ref": "activity en-a2-2.1-listening en-a2-2.1.l2",
+      "spoken_text": "Please wait here. The manager is talking on the phone.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Please wait here. The manager is talking on the phone."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.1.l2.mp3",
+      "duration_s": 4.3,
+      "lufs": -19.3,
+      "bytes": 25988,
+      "sha256": "5f1879a4a9e9c95a8260ee6285d41cac6dc3fa41c3224379a142e4bfda947954",
+      "input_hash": "563dd7155d2f39ebdf43df050b46d37e485d6c574f86ee30ccea655cf242ad4f"
+    },
+    {
+      "id": "en-a2-2.1.l3",
+      "content_ref": "activity en-a2-2.1-listening en-a2-2.1.l3",
+      "spoken_text": "I'm sorry. I broke the lamp in my room.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "I'm sorry. I broke the lamp in my room."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.1.l3.mp3",
+      "duration_s": 3.72,
+      "lufs": -19.3,
+      "bytes": 22532,
+      "sha256": "7ea98ac4bbd103f2b6592f02deaa40ae3d27a35ca6ac6a5e3837c4fbb58f6bef",
+      "input_hash": "b917ae70dc2f73dba6caa56f46b9a479bd82a6710091eec8e763f616dd24868d"
+    },
+    {
+      "id": "en-a2-2.2.d1",
+      "content_ref": "activity en-a2-2.2-dialogue n1",
+      "spoken_text": "Hello. I need two tickets to the lake, please.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Hello. I need two tickets to the lake, please."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.2.d1.mp3",
+      "duration_s": 3.34,
+      "lufs": -19.3,
+      "bytes": 20228,
+      "sha256": "4f2bf4ee3975db274ececc5274637be3a2e7330b0ba4cb6ee92403b38692afeb",
+      "input_hash": "e9d4ef110dd6b00ce93279314ffe5b894565062b3052f2f8262965cceb4bbfb8"
+    },
+    {
+      "id": "en-a2-2.2.d2",
+      "content_ref": "activity en-a2-2.2-dialogue n2",
+      "spoken_text": "Return, please. How much is it?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Return, please. How much is it?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.2.d2.mp3",
+      "duration_s": 2.74,
+      "lufs": -19.3,
+      "bytes": 16628,
+      "sha256": "09317cc04c7f5701c25b89f38fe4e0bb88135a20f8ae016df9e943b045abda2f",
+      "input_hash": "09e0fd7a6183248ed3edc0165281c333e60ec035c4870e1f9b1722cca7a0ecdd"
+    },
+    {
+      "id": "en-a2-2.2.d3",
+      "content_ref": "activity en-a2-2.2-dialogue n3",
+      "spoken_text": "I don't feel well. I have a stomachache.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "I don't feel well. I have a stomachache."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.2.d3.mp3",
+      "duration_s": 2.95,
+      "lufs": -21.3,
+      "bytes": 17924,
+      "sha256": "dca14d0bc4c4d39a69abb8ae300497b4069bb6f54eb34e9329dd8064fe434c0d",
+      "input_hash": "90ddba545c43c2b2f76e1c54ecca99041e0601492a5ff06d54cbfa08c7270340"
+    },
+    {
+      "id": "en-a2-2.2.d4",
+      "content_ref": "activity en-a2-2.2-dialogue n4",
+      "spoken_text": "It's cold here. I need a jacket.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "It's cold here. I need a jacket."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.2.d4.mp3",
+      "duration_s": 2.83,
+      "lufs": -21.3,
+      "bytes": 17204,
+      "sha256": "bac754900d49a6a580c58fa63e2703cd0354611d538bb59a03be1847a1767ba5",
+      "input_hash": "e6c359f43b7361a15ba20b441f25c46ea75b6e844f93e61f68eddee4be3a395f"
+    },
+    {
+      "id": "en-a2-2.2.d5",
+      "content_ref": "activity en-a2-2.2-dialogue n5",
+      "spoken_text": "What time do you get up every day?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "What time do you get up every day?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.2.d5.mp3",
+      "duration_s": 2.5,
+      "lufs": -20.1,
+      "bytes": 15188,
+      "sha256": "33adc64e1e78078da96c99b9542b1d8d1eca8d3310b90195024b904e9cfd666e",
+      "input_hash": "48a0833155bb8bfb7565a08d3ee224b9aa6e1ef2f3933c4396043da0f7ec387d"
+    },
+    {
+      "id": "en-a2-2.2.d6",
+      "content_ref": "activity en-a2-2.2-dialogue n6",
+      "spoken_text": "Thank you. Have a nice trip!",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Thank you. Have a nice trip!"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.2.d6.mp3",
+      "duration_s": 2.38,
+      "lufs": -19.8,
+      "bytes": 14468,
+      "sha256": "db155d4cad968176666eaf804158218fffaf99aa09840fa6665e06261789671a",
+      "input_hash": "d8893ad7de0fcd0a2048f24f06dbbc875d5a51c38a1cd2321cf5e88e628515cd"
+    },
+    {
+      "id": "en-a2-2.2.l1",
+      "content_ref": "activity en-a2-2.2-listening en-a2-2.2.l1",
+      "spoken_text": "I need a return ticket to the lake for Friday.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "I need a return ticket to the lake for Friday."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.2.l1.mp3",
+      "duration_s": 3.79,
+      "lufs": -19.4,
+      "bytes": 22964,
+      "sha256": "25d17af032a5ec66f27deb900c0f6b423ae09b25a514149f3bc9b358546cd6d5",
+      "input_hash": "e598a31811f5e2e76be1728c6546140f609e7a705decfaec2e23e6d198eff481"
+    },
+    {
+      "id": "en-a2-2.2.l2",
+      "content_ref": "activity en-a2-2.2-listening en-a2-2.2.l2",
+      "spoken_text": "My stomach hurts and I feel tired.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "My stomach hurts and I feel tired."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.2.l2.mp3",
+      "duration_s": 3.1,
+      "lufs": -19.1,
+      "bytes": 18788,
+      "sha256": "c3517b69b314c0c42571c766256a10c175c0b1c6c4f782bf3269a675013c4569",
+      "input_hash": "7df8186bd6b82a0970782e9d4fcb0c86b1920ba9b316c53805c8ae9055427469"
+    },
+    {
+      "id": "en-a2-2.2.l3",
+      "content_ref": "activity en-a2-2.2-listening en-a2-2.2.l3",
+      "spoken_text": "I want a warm jacket and a pair of boots.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "I want a warm jacket and a pair of boots."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-2.2.l3.mp3",
+      "duration_s": 3.53,
+      "lufs": -19.4,
+      "bytes": 21380,
+      "sha256": "7e3b2cab94655f9926d61dfbe8ec93bf83816de8debe6d183957b7e5f9ca0a8e",
+      "input_hash": "0fefd63b60e45b7714b6b6c0adce49ec6d556fea1a3c250ac0f58dbf328dca3a"
+    },
+    {
+      "id": "en-a2-3.1.d1",
+      "content_ref": "activity en-a2-3.1-dialogue n1",
+      "spoken_text": "Hi! Nice to meet you. Where are you from?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Hi! Nice to meet you. Where are you from?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.1.d1.mp3",
+      "duration_s": 3.1,
+      "lufs": -19.3,
+      "bytes": 18788,
+      "sha256": "1b44674c61493d213391b9376e4db54b78aba2597045e7a1e732e42aa4af7f91",
+      "input_hash": "89f921af66ce6247d640b12f429640d756d64140361b9712161faa18c87e51b6"
+    },
+    {
+      "id": "en-a2-3.1.d2",
+      "content_ref": "activity en-a2-3.1-dialogue n2",
+      "spoken_text": "How long are you staying here?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "How long are you staying here?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.1.d2.mp3",
+      "duration_s": 2.18,
+      "lufs": -19.4,
+      "bytes": 13316,
+      "sha256": "bf8499540abe343e0e3556016ca617fc94947c11043b235569701a45ace24047",
+      "input_hash": "d5fba23b68a41203a28bbb6f7bdffbb1c3a2408eddefcb2b20752f1906e0b326"
+    },
+    {
+      "id": "en-a2-3.1.d3",
+      "content_ref": "activity en-a2-3.1-dialogue n3",
+      "spoken_text": "Is this your first time in the mountains?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Is this your first time in the mountains?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.1.d3.mp3",
+      "duration_s": 2.74,
+      "lufs": -19.3,
+      "bytes": 16628,
+      "sha256": "72808e0e65b6472ad756b309c8aa76760a2bef3d4b405f15372052d8fe62990a",
+      "input_hash": "b3db1b5ec4595c0ca522582ad68c0c8c07f84186ebf12ec80ae3573541c5ccc9"
+    },
+    {
+      "id": "en-a2-3.1.d4",
+      "content_ref": "activity en-a2-3.1-dialogue n4",
+      "spoken_text": "Long time no see! How are you?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Long time no see! How are you?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.1.d4.mp3",
+      "duration_s": 2.81,
+      "lufs": -19.4,
+      "bytes": 17060,
+      "sha256": "be941b2c34c7f340fb085ea9a453c064edb7bef6e8e658e0078cb20ddd6b0d8c",
+      "input_hash": "535af45e737d26dc694dfc7b740c34f7637fa811a1ca82aa955a0a1877417d61"
+    },
+    {
+      "id": "en-a2-3.1.d5",
+      "content_ref": "activity en-a2-3.1-dialogue n5",
+      "spoken_text": "How is your family?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "How is your family?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.1.d5.mp3",
+      "duration_s": 1.87,
+      "lufs": -19.4,
+      "bytes": 11444,
+      "sha256": "8b839016dee1a78b6a803eb236068c82d393f63a253948095b3d42e4aa63e9bb",
+      "input_hash": "996da64ecf1f0e87986932c2d24d8ba3f38871fb70bf1c027a67a11909f5e86b"
+    },
+    {
+      "id": "en-a2-3.1.d6",
+      "content_ref": "activity en-a2-3.1-dialogue n6",
+      "spoken_text": "Let's have coffee later.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Let's have coffee later."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.1.d6.mp3",
+      "duration_s": 2.09,
+      "lufs": -19.5,
+      "bytes": 12740,
+      "sha256": "56248b2a73ade6c36d6e74e6bcf2cbc24a4463c19dd1b24abfa9b505a0b2bc6c",
+      "input_hash": "a8985857a1a1c66d6e8816f080979ffafdaccad23aa788843d08971a17a9335c"
+    },
+    {
+      "id": "en-a2-3.1.l1",
+      "content_ref": "activity en-a2-3.1-listening en-a2-3.1.l1",
+      "spoken_text": "Hello, I'm Peter. I'm from Australia and I'm a teacher.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Hello, I'm Peter. I'm from Australia and I'm a teacher."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.1.l1.mp3",
+      "duration_s": 4.61,
+      "lufs": -19.5,
+      "bytes": 27860,
+      "sha256": "2a9310bfc0cc1af24eba16a267a319854a26f8386089cc554522014843477a65",
+      "input_hash": "4ec856d2c101bb39f6cbc864842bb8b47e5f7a57d221a73eccf52f09c49a0993"
+    },
+    {
+      "id": "en-a2-3.1.l2",
+      "content_ref": "activity en-a2-3.1-listening en-a2-3.1.l2",
+      "spoken_text": "It's nice to see you again. How is your mother?",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "It's nice to see you again. How is your mother?"
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.1.l2.mp3",
+      "duration_s": 3.84,
+      "lufs": -19.3,
+      "bytes": 23252,
+      "sha256": "c1ec37d3d43dfbc09262087f309cf5fe83a6956b8d165d00a852a94d26b9b559",
+      "input_hash": "db76dd55790172e7713c8fca9f0aa9c4189b7ccd4016a901b152194e85f644f5"
+    },
+    {
+      "id": "en-a2-3.1.l3",
+      "content_ref": "activity en-a2-3.1-listening en-a2-3.1.l3",
+      "spoken_text": "We are here for four days with our two children.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "We are here for four days with our two children."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.1.l3.mp3",
+      "duration_s": 3.82,
+      "lufs": -19.3,
+      "bytes": 23108,
+      "sha256": "0517f067e7fba63cb29fbe2995814f9500e56b72cfd7bb886c53afd70173f9c5",
+      "input_hash": "53a7d8649fe621b1b1b8061336f4bd828153508bdb38f07cb6767fa5835367d6"
+    },
+    {
+      "id": "en-a2-3.2.d1",
+      "content_ref": "activity en-a2-3.2-dialogue n1",
+      "spoken_text": "Can you swim?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Can you swim?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.2.d1.mp3",
+      "duration_s": 1.61,
+      "lufs": -19.4,
+      "bytes": 9860,
+      "sha256": "15b24b97ece6737b29b1e01e3e8508fa7f8984cd201e5f7effc028aa31c50bbf",
+      "input_hash": "971b90aa958a51ce278f5ae2c16a2f75c0a67c6239db2a22e9dd62cba8770ffb"
+    },
+    {
+      "id": "en-a2-3.2.d2",
+      "content_ref": "activity en-a2-3.2-dialogue n2",
+      "spoken_text": "What can you do well?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "What can you do well?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.2.d2.mp3",
+      "duration_s": 1.78,
+      "lufs": -19.4,
+      "bytes": 10868,
+      "sha256": "7a766d0be57fac97a53c384b8bd5f70cfaa4f2913d48169e63e92bf48e69f8ce",
+      "input_hash": "332a084ec958f63bfabfbd213f3a4457da2fac37aef7f952091d17d49829a35c"
+    },
+    {
+      "id": "en-a2-3.2.d3",
+      "content_ref": "activity en-a2-3.2-dialogue n3",
+      "spoken_text": "Can you ride a horse?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Can you ride a horse?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.2.d3.mp3",
+      "duration_s": 1.9,
+      "lufs": -19.3,
+      "bytes": 11588,
+      "sha256": "9b4018343fc44523261566eaad0a55c5597ddda62f375ddbeec31726220c41d1",
+      "input_hash": "f509db60c7b1ce286d82ceed4866946cfc56bb7a9911deefcc57d7e76a70eb35"
+    },
+    {
+      "id": "en-a2-3.2.d4",
+      "content_ref": "activity en-a2-3.2-dialogue n4",
+      "spoken_text": "Can you speak English and French?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Can you speak English and French?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.2.d4.mp3",
+      "duration_s": 2.42,
+      "lufs": -19.6,
+      "bytes": 14756,
+      "sha256": "c590379b4f927b9586b83e2e0802f839f6f6f934a4a53e36c1948788b686f989",
+      "input_hash": "46e1be08fc87171f3197db0ca948c0c2f990eb699a5528115e26d83300aaa4c1"
+    },
+    {
+      "id": "en-a2-3.2.d5",
+      "content_ref": "activity en-a2-3.2-dialogue n5",
+      "spoken_text": "Can you carry this bag, please?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Can you carry this bag, please?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.2.d5.mp3",
+      "duration_s": 2.38,
+      "lufs": -19.4,
+      "bytes": 14468,
+      "sha256": "f4186afeffce25247953183ae866989bd83d2773e600f462fca621f8130e161b",
+      "input_hash": "8f50b00d37b0ea36345e3fdd8e6c908c70fc7910fb14bb62e6cb01c0432eb670"
+    },
+    {
+      "id": "en-a2-3.2.d6",
+      "content_ref": "activity en-a2-3.2-dialogue n6",
+      "spoken_text": "Great! You can come on the hike.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Great! You can come on the hike."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.2.d6.mp3",
+      "duration_s": 2.4,
+      "lufs": -19.3,
+      "bytes": 14612,
+      "sha256": "7e22dd167aec5491d7ef4bcb542d44923064ee9f6cef4207eaef72ce5bc4fa8d",
+      "input_hash": "8be7bb41c2d0e63d7a5ab6a419dd1b1f694e3a0a8254cd4d10c64219828174b4"
+    },
+    {
+      "id": "en-a2-3.2.l1",
+      "content_ref": "activity en-a2-3.2-listening en-a2-3.2.l1",
+      "spoken_text": "My sister can play the piano and the guitar.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "My sister can play the piano and the guitar."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.2.l1.mp3",
+      "duration_s": 3.74,
+      "lufs": -19.3,
+      "bytes": 22676,
+      "sha256": "7e23a3b9a0513fc299b9cab80d79adb8606743d858dbd832b6a29393a483aec8",
+      "input_hash": "8f6dc396a0aafa54b052197f62a22ad8618f8121ad2da2d224f51b678f3627ec"
+    },
+    {
+      "id": "en-a2-3.2.l2",
+      "content_ref": "activity en-a2-3.2-listening en-a2-3.2.l2",
+      "spoken_text": "I can't drive, but I can ride a bike.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "I can't drive, but I can ride a bike."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.2.l2.mp3",
+      "duration_s": 3.31,
+      "lufs": -19.3,
+      "bytes": 20084,
+      "sha256": "a98075a0d7d4f2aae4dcc059275d2048f9729f704a2097edd2fa871b99fbef2c",
+      "input_hash": "69d87b0e590d6441ade8e16c3f52c34c7000cadec7ef947b8d0997a3885b8966"
+    },
+    {
+      "id": "en-a2-3.2.l3",
+      "content_ref": "activity en-a2-3.2-listening en-a2-3.2.l3",
+      "spoken_text": "Can you help me with my bag? It is very heavy.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Can you help me with my bag? It is very heavy."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.2.l3.mp3",
+      "duration_s": 3.94,
+      "lufs": -19.3,
+      "bytes": 23828,
+      "sha256": "b24e50bb6816c4268f4b2eb2edbd4a8fee9da33c2cc6bf80687e7553eae4acac",
+      "input_hash": "bc6a272ec252aa98cbdf07097cb80defab05e1c95b1c0cb240996d1c9949ef93"
+    },
+    {
+      "id": "en-a2-3.3.d1",
+      "content_ref": "activity en-a2-3.3-dialogue n1",
+      "spoken_text": "Hello? Is this the hotel?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Hello? Is this the hotel?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.3.d1.mp3",
+      "duration_s": 2.42,
+      "lufs": -19.4,
+      "bytes": 14756,
+      "sha256": "c65e75448d78f3359e3c0bded92e4aa103a38d2f837c2c0c236e55b8042c20b4",
+      "input_hash": "3521be6d453633643d117be1089359be632e1ed47147781e20f1e02b7f4ad405"
+    },
+    {
+      "id": "en-a2-3.3.d2",
+      "content_ref": "activity en-a2-3.3-dialogue n2",
+      "spoken_text": "I want to speak to the manager now!",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "I want to speak to the manager now!"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.3.d2.mp3",
+      "duration_s": 2.62,
+      "lufs": -23.7,
+      "bytes": 15908,
+      "sha256": "8952bfd581c695a5c84684797b528d8d69653665ef7a2ce5aec3b2716b4b476e",
+      "input_hash": "7161a472670114b081c94ea5689962dcef1416d4714a776918c8a79988e0717e"
+    },
+    {
+      "id": "en-a2-3.3.d3",
+      "content_ref": "activity en-a2-3.3-dialogue n3",
+      "spoken_text": "My room is dirty and nobody helps me!",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "My room is dirty and nobody helps me!"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.3.d3.mp3",
+      "duration_s": 3.17,
+      "lufs": -19.3,
+      "bytes": 19220,
+      "sha256": "f479b26bed83a9730b9678621cf316073733e6d48d9b43a92cb1855fd3537f2a",
+      "input_hash": "b6a22cf53da6eded26db175614238206778719c1b1dd4f62af5ff7b130be24fa"
+    },
+    {
+      "id": "en-a2-3.3.d4",
+      "content_ref": "activity en-a2-3.3-dialogue n4",
+      "spoken_text": "How long is this going to take?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "How long is this going to take?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.3.d4.mp3",
+      "duration_s": 2.4,
+      "lufs": -19.4,
+      "bytes": 14612,
+      "sha256": "c5d6ff1a15ebd5c9df79bbe84e57c7021c9da32939836d2b182a387af612a37e",
+      "input_hash": "23cadd3a0c2dc8830d82199adbd9cf6fb2b8c07445208ebd2e5f58440a7b837d"
+    },
+    {
+      "id": "en-a2-3.3.d5",
+      "content_ref": "activity en-a2-3.3-dialogue n5",
+      "spoken_text": "Okay. Please hurry.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Okay. Please hurry."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.3.d5.mp3",
+      "duration_s": 2.23,
+      "lufs": -19.4,
+      "bytes": 13604,
+      "sha256": "10069fc6b738eaf3a5a67d774cfb14d53cd26d96fb29ef9c04600e41a90b9deb",
+      "input_hash": "d2703f95109d6922d77065a45f9323582f61ffe506ee5a16a7f32dd69782a55f"
+    },
+    {
+      "id": "en-a2-3.3.d6",
+      "content_ref": "activity en-a2-3.3-dialogue n6",
+      "spoken_text": "Thank you. Goodbye.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Thank you. Goodbye."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.3.d6.mp3",
+      "duration_s": 2.02,
+      "lufs": -19.4,
+      "bytes": 12308,
+      "sha256": "026430d5f4795f6085bc7335a781660adce4b08d4dd3049c65f72689dfe50e23",
+      "input_hash": "c0176631a29caa970ef4c9736be770229f9e1f57530bfb4eec96d0662b82f27a"
+    },
+    {
+      "id": "en-a2-3.3.l1",
+      "content_ref": "activity en-a2-3.3-listening en-a2-3.3.l1",
+      "spoken_text": "Hotel Sol, good morning. This is Ana speaking.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Hotel Sol, good morning. This is Ana speaking."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.3.l1.mp3",
+      "duration_s": 4.42,
+      "lufs": -19.2,
+      "bytes": 26708,
+      "sha256": "c262a799011ad0b44e19843c0f69d97ea483d1b3c1e5df23409a89b037da13e8",
+      "input_hash": "d6428348d57a31f17d22981992880f613a99f0222e2334c2e6087380104d363e"
+    },
+    {
+      "id": "en-a2-3.3.l2",
+      "content_ref": "activity en-a2-3.3-listening en-a2-3.3.l2",
+      "spoken_text": "Please hold on. I am checking your booking.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Please hold on. I am checking your booking."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.3.l2.mp3",
+      "duration_s": 3.74,
+      "lufs": -19.2,
+      "bytes": 22676,
+      "sha256": "3a7f9d2b1148d2e50cca29071a84dda1167125a7a3874a4d7b0397085a95f72f",
+      "input_hash": "b72bf3c62f2bb2d0e1e673825cc2cec7773b99f2acc61e9c15d1ad3f0d3be031"
+    },
+    {
+      "id": "en-a2-3.3.l3",
+      "content_ref": "activity en-a2-3.3-listening en-a2-3.3.l3",
+      "spoken_text": "I'm sorry, the manager is not here. Can I take a message?",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "I'm sorry, the manager is not here. Can I take a message?"
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.3.l3.mp3",
+      "duration_s": 4.99,
+      "lufs": -19.4,
+      "bytes": 30164,
+      "sha256": "910af5742a0aeadf37e894dabc263bfd05f11144ae715fbceda5d620b6907534",
+      "input_hash": "376eebe273ca6dadde00f80f449a0fe6b81812d6accd2605a41f63d5349f0560"
+    },
+    {
+      "id": "en-a2-3.4.d1",
+      "content_ref": "activity en-a2-3.4-dialogue n1",
+      "spoken_text": "I feel tired. What should I do?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "I feel tired. What should I do?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.4.d1.mp3",
+      "duration_s": 2.76,
+      "lufs": -19.3,
+      "bytes": 16772,
+      "sha256": "9b06717b1ee5f97edabcc45996532ad5b99863dc650f04f4877c479b50400272",
+      "input_hash": "9cd8e13b60825cc03bfd8c5f3e190c50058a57648d80ff3d010d704dfb9ed5b8"
+    },
+    {
+      "id": "en-a2-3.4.d2",
+      "content_ref": "activity en-a2-3.4-dialogue n2",
+      "spoken_text": "I'm sad because it rains. What should I do?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "I'm sad because it rains. What should I do?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.4.d2.mp3",
+      "duration_s": 3.41,
+      "lufs": -19.3,
+      "bytes": 20660,
+      "sha256": "698a23effb94cb1578c9228c4012c200fa3e1b61e42bb03a875ab79855d29307",
+      "input_hash": "d3d8c45461ab0d85d632eb0ee0338ce89231a75ac8fd4d0094446df12f7c1bb1"
+    },
+    {
+      "id": "en-a2-3.4.d3",
+      "content_ref": "activity en-a2-3.4-dialogue n3",
+      "spoken_text": "Should I take a jacket?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Should I take a jacket?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.4.d3.mp3",
+      "duration_s": 2.06,
+      "lufs": -19.3,
+      "bytes": 12596,
+      "sha256": "8953ab40048367fdce82a13415eb10dfbd921adb9da1115a66b62bca3b7b4f95",
+      "input_hash": "546497ccff5dcf57f14ce2910aee90777fb313129337a99b76d4fc9e28b364a4"
+    },
+    {
+      "id": "en-a2-3.4.d4",
+      "content_ref": "activity en-a2-3.4-dialogue n4",
+      "spoken_text": "I'm nervous about the hike.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "I'm nervous about the hike."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.4.d4.mp3",
+      "duration_s": 2.26,
+      "lufs": -19.3,
+      "bytes": 13748,
+      "sha256": "9369cf873156c5d8c1e278ca83ea8d20ad2c7164df5bea09985c84653c2cb14d",
+      "input_hash": "bcd60610e6f883af761e9c6154b6b6ddab3e4e7efc702c55f99173cccf183d4e"
+    },
+    {
+      "id": "en-a2-3.4.d5",
+      "content_ref": "activity en-a2-3.4-dialogue n5",
+      "spoken_text": "I'm very happy today!",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "I'm very happy today!"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.4.d5.mp3",
+      "duration_s": 2.14,
+      "lufs": -19.3,
+      "bytes": 13028,
+      "sha256": "8fae40d0d2f2de284e48f6dcbc1f37ff609cd6eeb8c21f139262152c93609992",
+      "input_hash": "fa4ab9d2fa03accda29dbbd235a6611c6d7688cfb0f2a2851cdb9e51e5cc74fe"
+    },
+    {
+      "id": "en-a2-3.4.d6",
+      "content_ref": "activity en-a2-3.4-dialogue n6",
+      "spoken_text": "Thanks for your advice.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Thanks for your advice."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.4.d6.mp3",
+      "duration_s": 1.97,
+      "lufs": -19.3,
+      "bytes": 12020,
+      "sha256": "bf41f44dffc6eb1405e66db1d642f05a5502ae2ec8514e3518da7f99ebc6943e",
+      "input_hash": "fa7396c8a94322f54a4cc339814521dc02d38e8668b5e380bd1f13fbaa76f80d"
+    },
+    {
+      "id": "en-a2-3.4.l1",
+      "content_ref": "activity en-a2-3.4-listening en-a2-3.4.l1",
+      "spoken_text": "You should wear a hat. The sun is strong.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "You should wear a hat. The sun is strong."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.4.l1.mp3",
+      "duration_s": 3.48,
+      "lufs": -19.1,
+      "bytes": 21092,
+      "sha256": "6c6f32ba224fad758eaa6dd629d0f64673a8c7c59c1575d95ffacd45db1a705b",
+      "input_hash": "b0ad42a7adc12e6e1bb698480f91ee208b6dee1cf9ee80ccde6c4f45645b984a"
+    },
+    {
+      "id": "en-a2-3.4.l2",
+      "content_ref": "activity en-a2-3.4-listening en-a2-3.4.l2",
+      "spoken_text": "I'm worried because my bus is late.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "I'm worried because my bus is late."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.4.l2.mp3",
+      "duration_s": 3.07,
+      "lufs": -19.3,
+      "bytes": 18644,
+      "sha256": "b359bd456b29758340ece4284725854bbac1ba463fea58b1dca3a3ad311409bf",
+      "input_hash": "89b84d4b43884b3c3747964bc5f7e5ea5d48e5cdbfca6d6eb775411892fbeb84"
+    },
+    {
+      "id": "en-a2-3.4.l3",
+      "content_ref": "activity en-a2-3.4-listening en-a2-3.4.l3",
+      "spoken_text": "You shouldn't swim in the river after the rain.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "You shouldn't swim in the river after the rain."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-3.4.l3.mp3",
+      "duration_s": 3.38,
+      "lufs": -19.2,
+      "bytes": 20516,
+      "sha256": "b19f19c24450071381e9e718cd3b7c06a7c7668679ff4d9cbbebbf49d8d967b9",
+      "input_hash": "bc7ceb8ac9d5f9aacd6b3fc13cbd868546aa9e1abcf34ec748188e0708e54a77"
+    },
+    {
+      "id": "en-a2-4.1.d1",
+      "content_ref": "activity en-a2-4.1-dialogue n1",
+      "spoken_text": "Where do I put my plastic bottle?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Where do I put my plastic bottle?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.1.d1.mp3",
+      "duration_s": 2.57,
+      "lufs": -19.4,
+      "bytes": 15620,
+      "sha256": "bd00d1a202354c5e392f460ce883ba4444e4924d94c8959c66e45cf018642cf5",
+      "input_hash": "490d753c09cf27eff1ca74ee555226886e3400e788a1755503b7808daf25dda0"
+    },
+    {
+      "id": "en-a2-4.1.d2",
+      "content_ref": "activity en-a2-4.1-dialogue n2",
+      "spoken_text": "How can I save energy in my room?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "How can I save energy in my room?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.1.d2.mp3",
+      "duration_s": 2.57,
+      "lufs": -19.4,
+      "bytes": 15620,
+      "sha256": "be97516adacf314d431b1a8c76e4c16639961f5a9fb19c23a90cfc0db1365206",
+      "input_hash": "afb0762ac8d90d1903031f6bad53728ad758d087358d8cb692990e0f74d0e35f"
+    },
+    {
+      "id": "en-a2-4.1.d3",
+      "content_ref": "activity en-a2-4.1-dialogue n3",
+      "spoken_text": "Does the hotel use solar energy?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Does the hotel use solar energy?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.1.d3.mp3",
+      "duration_s": 2.81,
+      "lufs": -19.4,
+      "bytes": 17060,
+      "sha256": "49d67cbc20e1540c381c619c16b131ad11a3f995a0cc2e06c4b015c48b84496a",
+      "input_hash": "232349e80074e16cfbd20737062a44c48c6cf2cb5a7080d3c02730ffebd91d1f"
+    },
+    {
+      "id": "en-a2-4.1.d4",
+      "content_ref": "activity en-a2-4.1-dialogue n4",
+      "spoken_text": "Can I wash my towel every day?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Can I wash my towel every day?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.1.d4.mp3",
+      "duration_s": 2.59,
+      "lufs": -19.3,
+      "bytes": 15764,
+      "sha256": "be18f1645383f375539d15d8b64fcb4ff8c4b2350cdfa2a292be62eb024f72ea",
+      "input_hash": "13c4d498d48e3f4f89df18b870ef1061dffb3c45a0d59997252a7a0582beec3f"
+    },
+    {
+      "id": "en-a2-4.1.d5",
+      "content_ref": "activity en-a2-4.1-dialogue n5",
+      "spoken_text": "Is the water here safe to drink?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Is the water here safe to drink?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.1.d5.mp3",
+      "duration_s": 2.52,
+      "lufs": -19.4,
+      "bytes": 15332,
+      "sha256": "7b592568ed9aef3ad37b40b914a33a57ab3acdb88731aa8c81a595dde5af3e84",
+      "input_hash": "021f4eff27ce6a672f1c963a0b433818a949993ca3ccfa02ade2c4e334d10586"
+    },
+    {
+      "id": "en-a2-4.1.d6",
+      "content_ref": "activity en-a2-4.1-dialogue n6",
+      "spoken_text": "I love this eco-lodge!",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "I love this eco-lodge!"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.1.d6.mp3",
+      "duration_s": 2.26,
+      "lufs": -19.3,
+      "bytes": 13748,
+      "sha256": "b556a0c51c33a83fae9711be3ba638653f283c01c9229563a979cd7592acf3e2",
+      "input_hash": "fc54ef10b95c2127074cc35fe377198b9bd0a3dd63916e263fe2fd35b669195f"
+    },
+    {
+      "id": "en-a2-4.1.l1",
+      "content_ref": "activity en-a2-4.1-listening en-a2-4.1.l1",
+      "spoken_text": "We use rain water for the garden.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "We use rain water for the garden."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.1.l1.mp3",
+      "duration_s": 3.05,
+      "lufs": -21.1,
+      "bytes": 18500,
+      "sha256": "73f5e3b41b0039590c8b4314414b5898253610a86c0352248d7d2e20cbaf9d3a",
+      "input_hash": "7bcfbb7ef4ceaee108856843794c84c94ad29ac45153a7648c27e1cb841f79a9"
+    },
+    {
+      "id": "en-a2-4.1.l2",
+      "content_ref": "activity en-a2-4.1-listening en-a2-4.1.l2",
+      "spoken_text": "Please close the tap when you brush your teeth.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Please close the tap when you brush your teeth."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.1.l2.mp3",
+      "duration_s": 3.43,
+      "lufs": -19.2,
+      "bytes": 20804,
+      "sha256": "eaa6fe3a349f181d3f9bf0b15ad2d9c82a56980c8a84f2a9ae523535077faaf3",
+      "input_hash": "0ae0a23f8362c9b55f4376db0d5c46a39ff544ceb74451df15b360fbb026feec"
+    },
+    {
+      "id": "en-a2-4.1.l3",
+      "content_ref": "activity en-a2-4.1-listening en-a2-4.1.l3",
+      "spoken_text": "The hotel gives you a bag for your paper and glass.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "The hotel gives you a bag for your paper and glass."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.1.l3.mp3",
+      "duration_s": 4.1,
+      "lufs": -19.3,
+      "bytes": 24836,
+      "sha256": "ae4b1bdbad6fa69d53b58f9768f75d466515ce38edfa19382184474d92960b1d",
+      "input_hash": "f3b92a087b0ca715410920b8e7f9f4ed066965d0a832c983d0fa13562e2d1c52"
+    },
+    {
+      "id": "en-a2-4.2.d1",
+      "content_ref": "activity en-a2-4.2-dialogue n1",
+      "spoken_text": "Hello! Is it okay to take photos here?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Hello! Is it okay to take photos here?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.2.d1.mp3",
+      "duration_s": 3.14,
+      "lufs": -19.3,
+      "bytes": 19076,
+      "sha256": "f94e9bdfd94791224515d2ef233510895d0a184e009e75da86823d34d51bb22a",
+      "input_hash": "98977f56c058c598518a1de5f874acb0817a05b65a126544e43a09aeb1ef882c"
+    },
+    {
+      "id": "en-a2-4.2.d2",
+      "content_ref": "activity en-a2-4.2-dialogue n2",
+      "spoken_text": "Thank you. How do you say hello in your language?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Thank you. How do you say hello in your language?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.2.d2.mp3",
+      "duration_s": 3.22,
+      "lufs": -19.3,
+      "bytes": 19508,
+      "sha256": "d5afaa4d50a197b0ee982b08dc9d39a73549f60fdce5d98015d662fef4dffa01",
+      "input_hash": "3ee09600a9b4f3dea1359df5518f1ef197ec25322806789abb6a392950523818"
+    },
+    {
+      "id": "en-a2-4.2.d3",
+      "content_ref": "activity en-a2-4.2-dialogue n3",
+      "spoken_text": "Excuse me. Can I sit here?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Excuse me. Can I sit here?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.2.d3.mp3",
+      "duration_s": 2.57,
+      "lufs": -22.0,
+      "bytes": 15620,
+      "sha256": "245bd61625563530e7a202140fd63b9cc8490bed8489ca78d7b3e0aa142daf3a",
+      "input_hash": "b7d44f3a2644bc35830f0ef15029da3d7355285a6f8d12204420b19b965b2fd2"
+    },
+    {
+      "id": "en-a2-4.2.d4",
+      "content_ref": "activity en-a2-4.2-dialogue n4",
+      "spoken_text": "I'm sorry. I do not understand.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "I'm sorry. I do not understand."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.2.d4.mp3",
+      "duration_s": 2.81,
+      "lufs": -21.8,
+      "bytes": 17060,
+      "sha256": "2b033a54961a69c81c120bc91548ff2d71a95fdf5bff82f520516f56b1a49552",
+      "input_hash": "0b8d465b04d52daec588da065ca251b75983c4895ae69a487fb68cc2920efdee"
+    },
+    {
+      "id": "en-a2-4.2.d5",
+      "content_ref": "activity en-a2-4.2-dialogue n5",
+      "spoken_text": "Thank you for your kindness.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Thank you for your kindness."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.2.d5.mp3",
+      "duration_s": 2.21,
+      "lufs": -19.5,
+      "bytes": 13460,
+      "sha256": "984fdf372de8c390e8752b99ce2bbc76a1e9ed74847c32cff3f8fc4b7ba32b75",
+      "input_hash": "a4fae02fd87b7c069a47a1bd83591066cd6b09c1d44dea0bac59b5022977f895"
+    },
+    {
+      "id": "en-a2-4.2.d6",
+      "content_ref": "activity en-a2-4.2-dialogue n6",
+      "spoken_text": "Goodbye and good luck!",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Goodbye and good luck!"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.2.d6.mp3",
+      "duration_s": 1.99,
+      "lufs": -19.4,
+      "bytes": 12164,
+      "sha256": "149c751713518bd3dac978a24e1c1744b0196656b36d960f594d8eac88c15ff4",
+      "input_hash": "ef555de3989ee602ec1e58e05035a7d63ceeba8a54285f9153e996da918d7058"
+    },
+    {
+      "id": "en-a2-4.2.l1",
+      "content_ref": "activity en-a2-4.2-listening en-a2-4.2.l1",
+      "spoken_text": "Excuse me, is this seat free?",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Excuse me, is this seat free?"
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.2.l1.mp3",
+      "duration_s": 2.83,
+      "lufs": -22.0,
+      "bytes": 17204,
+      "sha256": "f23464fcdc8fc70568a4d7538789bbbde04c483502d93443d9bc009a0d2f0940",
+      "input_hash": "75fac787b0e927df79ed8f4f552336123697832b1eb5061e3e412d8b66f5d725"
+    },
+    {
+      "id": "en-a2-4.2.l2",
+      "content_ref": "activity en-a2-4.2-listening en-a2-4.2.l2",
+      "spoken_text": "Thank you very much for your help.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Thank you very much for your help."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.2.l2.mp3",
+      "duration_s": 2.74,
+      "lufs": -22.2,
+      "bytes": 16628,
+      "sha256": "efef9aef6c8f091b45d32b855a2e846096a2d62ab78c66dc60ad563427e7b94b",
+      "input_hash": "e6a0bdc20c3f22d363b876b2fcc41ef2bbe5d53d88e14dd97cab731288547ac7"
+    },
+    {
+      "id": "en-a2-4.2.l3",
+      "content_ref": "activity en-a2-4.2-listening en-a2-4.2.l3",
+      "spoken_text": "In my country people say hello with a smile.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "In my country people say hello with a smile."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.2.l3.mp3",
+      "duration_s": 3.7,
+      "lufs": -19.3,
+      "bytes": 22388,
+      "sha256": "16473461ffc6d6673598ea9609476516b7fae3f345954060a62dd9b5807845fd",
+      "input_hash": "4fbf5ccd289f18667a595cf8b93afa114ecd763135e3ff2469d19b09e22f4b4d"
+    },
+    {
+      "id": "en-a2-4.3.d1",
+      "content_ref": "activity en-a2-4.3-dialogue n1",
+      "spoken_text": "Hello. I have a reservation under the name Brown.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Hello. I have a reservation under the name Brown."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.3.d1.mp3",
+      "duration_s": 3.62,
+      "lufs": -19.4,
+      "bytes": 21956,
+      "sha256": "4024d47f1053c4c97511eee9c5cb153be2a3432b4caea914dd472cd56d6baad2",
+      "input_hash": "7a7549b694de15571cc6fff6eb8e3a45d2efecc0ba8d6039432fc7546b7196f9"
+    },
+    {
+      "id": "en-a2-4.3.d2",
+      "content_ref": "activity en-a2-4.3-dialogue n2",
+      "spoken_text": "Can I have a late check-out tomorrow?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Can I have a late check-out tomorrow?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.3.d2.mp3",
+      "duration_s": 2.66,
+      "lufs": -19.3,
+      "bytes": 16196,
+      "sha256": "4e3e68b28a3f733a7c0f7bbe02072eebef8099f707ae04edd0c8799fe1a87d11",
+      "input_hash": "7cf95c81ca856c69dce165646f44fa7c756b64f67100374486a7a4377c9de11e"
+    },
+    {
+      "id": "en-a2-4.3.d3",
+      "content_ref": "activity en-a2-4.3-dialogue n3",
+      "spoken_text": "A table for four, please.",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "A table for four, please."
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.3.d3.mp3",
+      "duration_s": 2.38,
+      "lufs": -24.0,
+      "bytes": 14468,
+      "sha256": "c51763d69dd76d4e06459398913e2a0d5c02f6687282992ff261198f4e7c1dbb",
+      "input_hash": "40e4b45c4f5b7a8d34875c9f862399d34d5be5b7397ba4c4f94e62809d9d6722"
+    },
+    {
+      "id": "en-a2-4.3.d4",
+      "content_ref": "activity en-a2-4.3-dialogue n4",
+      "spoken_text": "What do you recommend?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "What do you recommend?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.3.d4.mp3",
+      "duration_s": 1.82,
+      "lufs": -19.8,
+      "bytes": 11156,
+      "sha256": "693e6ada0cdd2f1fb4f149fa80729be6ecdfeb4c71574cd42bd061ba9bfb0551",
+      "input_hash": "683ac781589781533bcf3ffdcd781c9e53243230f596ac503e47a3bccf5acedf"
+    },
+    {
+      "id": "en-a2-4.3.d5",
+      "content_ref": "activity en-a2-4.3-dialogue n5",
+      "spoken_text": "Can we have the bill, please?",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Can we have the bill, please?"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.3.d5.mp3",
+      "duration_s": 2.18,
+      "lufs": -19.5,
+      "bytes": 13316,
+      "sha256": "ba0417fac615f89f072c646cc5c5b6fa952dfe31a34a5d6ec0a2081562785da6",
+      "input_hash": "a5053e3bdcdb2db3bb6c25b323497e79ff6c39b35019171e561ce478c27d3579"
+    },
+    {
+      "id": "en-a2-4.3.d6",
+      "content_ref": "activity en-a2-4.3-dialogue n6",
+      "spoken_text": "Everything was delicious. Thank you!",
+      "turns": [
+        {
+          "voice": "guest",
+          "text": "Everything was delicious. Thank you!"
+        }
+      ],
+      "engine_voices": {
+        "guest": "af_heart"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.3.d6.mp3",
+      "duration_s": 2.95,
+      "lufs": -24.0,
+      "bytes": 17924,
+      "sha256": "41f7f81eb5eda50dbd9d48d4d8852576b11a2183e7ccff58c1d2b26fee495a79",
+      "input_hash": "979b296f28ec20ceeb0ce162e113a55f473f65198b51b3da2982aaad641b3eb6"
+    },
+    {
+      "id": "en-a2-4.3.l1",
+      "content_ref": "activity en-a2-4.3-listening en-a2-4.3.l1",
+      "spoken_text": "Your room is on the second floor. Here is your key card.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Your room is on the second floor. Here is your key card."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.3.l1.mp3",
+      "duration_s": 4.56,
+      "lufs": -19.4,
+      "bytes": 27572,
+      "sha256": "70eaa930dbf855a31fbd1942071bc5ac533bd1c27898352b0c282dac986484a0",
+      "input_hash": "212d316c331d160a944dae3790d65ef180debb4d1e6ea36fe69c7f0466266aac"
+    },
+    {
+      "id": "en-a2-4.3.l2",
+      "content_ref": "activity en-a2-4.3-listening en-a2-4.3.l2",
+      "spoken_text": "I would like the chicken soup and a glass of juice.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "I would like the chicken soup and a glass of juice."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.3.l2.mp3",
+      "duration_s": 4.22,
+      "lufs": -19.4,
+      "bytes": 25556,
+      "sha256": "434db8fe8b9cd9f85ce3a6613698ab3efbb38b24428af8bd35a498fee546fa9d",
+      "input_hash": "97b28a0d18c67e79f997d74bbea9e88ba0ba390465843da2f4f7d66cc94edd8c"
+    },
+    {
+      "id": "en-a2-4.3.l3",
+      "content_ref": "activity en-a2-4.3-listening en-a2-4.3.l3",
+      "spoken_text": "Check-out is at eleven. Please leave your key at the desk.",
+      "turns": [
+        {
+          "voice": "host",
+          "text": "Check-out is at eleven. Please leave your key at the desk."
+        }
+      ],
+      "engine_voices": {
+        "host": "am_michael"
+      },
+      "language_variant": "en-US",
+      "format": "mp3",
+      "file": "audio/en-a2-4.3.l3.mp3",
+      "duration_s": 4.66,
+      "lufs": -19.3,
+      "bytes": 28148,
+      "sha256": "ae1e120b3b64249be859657075b55080b334350180519354c4c8290e0063a170",
+      "input_hash": "e3d82b2a7cd7bf36ebb75eb4282731a40a75e8113034439f620ee70fade5ec0e"
+    }
+  ]
+}

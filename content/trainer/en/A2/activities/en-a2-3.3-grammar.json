@@ -1,0 +1,194 @@
+{
+  "id": "en-a2-3.3-grammar",
+  "lesson_id": "3.3",
+  "skill": "grammar",
+  "title": "Practice 3.3",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Receptionist on the telephone",
+  "can_do": [
+    "I can answer the telephone politely.",
+    "I can stay calm and apologise to an upset caller."
+  ],
+  "items": [
+    {
+      "id": "a2-3.3.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is polite on the phone?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Say it quickly."
+        },
+        {
+          "id": "o2",
+          "text": "Who are you?"
+        },
+        {
+          "id": "o3",
+          "text": "Can I take a message?"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "Can I ... is a polite offer.",
+      "error_tags": {
+        "o1": {
+          "tag": "politeness",
+          "text": "Say it quickly is rude on the phone."
+        }
+      }
+    },
+    {
+      "id": "a2-3.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "Please {1} a moment.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "wait"
+            },
+            {
+              "id": "o2",
+              "text": "waiting"
+            },
+            {
+              "id": "o3",
+              "text": "to wait"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "imperative",
+            "text": "Use the base verb after please."
+          }
+        }
+      ],
+      "explanation": "After please we use the base verb: please wait."
+    },
+    {
+      "id": "a2-3.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "I {1} you are upset.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "understand"
+          ],
+          "error_tag": {
+            "tag": "vocabulary",
+            "text": "Say I understand to show you listen."
+          }
+        }
+      ],
+      "explanation": "I understand shows you listen."
+    },
+    {
+      "id": "a2-3.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Can"
+        },
+        {
+          "id": "t2",
+          "text": "I"
+        },
+        {
+          "id": "t3",
+          "text": "take"
+        },
+        {
+          "id": "t4",
+          "text": "a"
+        },
+        {
+          "id": "t5",
+          "text": "message"
+        }
+      ],
+      "explanation": "The offer starts with Can I.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with Can I."
+      }
+    },
+    {
+      "id": "a2-3.3.ex.05",
+      "type": "match",
+      "prompt": "Match the phrase with what it does.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "I'm sorry."
+        },
+        {
+          "id": "l2",
+          "text": "Please hold on."
+        },
+        {
+          "id": "l3",
+          "text": "Can I help you?"
+        },
+        {
+          "id": "l4",
+          "text": "Thank you for calling."
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "apologise"
+        },
+        {
+          "id": "r2",
+          "text": "ask to wait"
+        },
+        {
+          "id": "r3",
+          "text": "offer help"
+        },
+        {
+          "id": "r4",
+          "text": "close the call"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each phrase has a job in a call."
+    },
+    {
+      "id": "a2-3.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Offer to take a message. Use Can I.",
+      "accepted": [
+        "Can I take a message",
+        "Can I take a message please"
+      ],
+      "explanation": "Use Can I take a message?"
+    }
+  ]
+}

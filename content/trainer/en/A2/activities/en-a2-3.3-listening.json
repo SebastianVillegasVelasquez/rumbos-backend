@@ -1,0 +1,81 @@
+{
+  "id": "en-a2-3.3-listening",
+  "lesson_id": "3.3",
+  "skill": "listening",
+  "title": "Listen and choose 3.3",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Receptionist on the telephone",
+  "can_do": [
+    "I can answer the telephone politely.",
+    "I can stay calm and apologise to an upset caller."
+  ],
+  "items": [
+    {
+      "id": "en-a2-3.3.l1",
+      "type": "listen_choose",
+      "prompt": "Who is speaking?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Ana"
+        },
+        {
+          "id": "o2",
+          "text": "Sol"
+        },
+        {
+          "id": "o3",
+          "text": "the manager"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: This is Ana speaking.",
+      "audio": "en-a2-3.3.l1"
+    },
+    {
+      "id": "en-a2-3.3.l2",
+      "type": "listen_choose",
+      "prompt": "What is the receptionist doing?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "making coffee"
+        },
+        {
+          "id": "o2",
+          "text": "checking a booking"
+        },
+        {
+          "id": "o3",
+          "text": "cleaning a room"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: I am checking your booking.",
+      "audio": "en-a2-3.3.l2"
+    },
+    {
+      "id": "en-a2-3.3.l3",
+      "type": "listen_choose",
+      "prompt": "What does the receptionist offer?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "to call a taxi"
+        },
+        {
+          "id": "o2",
+          "text": "to send an email"
+        },
+        {
+          "id": "o3",
+          "text": "to take a message"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: Can I take a message?",
+      "audio": "en-a2-3.3.l3"
+    }
+  ]
+}

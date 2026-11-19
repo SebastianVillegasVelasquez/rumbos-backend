@@ -1,0 +1,81 @@
+{
+  "id": "en-a2-4.3-listening",
+  "lesson_id": "4.3",
+  "skill": "listening",
+  "title": "Listen and choose 4.3",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Receptionist and waiter",
+  "can_do": [
+    "I can help a guest at check-in and check-out.",
+    "I can take a simple order in a restaurant."
+  ],
+  "items": [
+    {
+      "id": "en-a2-4.3.l1",
+      "type": "listen_choose",
+      "prompt": "Which floor is the room on?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "the third"
+        },
+        {
+          "id": "o2",
+          "text": "the second"
+        },
+        {
+          "id": "o3",
+          "text": "the first"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: on the second floor.",
+      "audio": "en-a2-4.3.l1"
+    },
+    {
+      "id": "en-a2-4.3.l2",
+      "type": "listen_choose",
+      "prompt": "What does the guest drink?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "tea"
+        },
+        {
+          "id": "o2",
+          "text": "water"
+        },
+        {
+          "id": "o3",
+          "text": "juice"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: a glass of juice.",
+      "audio": "en-a2-4.3.l2"
+    },
+    {
+      "id": "en-a2-4.3.l3",
+      "type": "listen_choose",
+      "prompt": "What does the guest leave at the desk?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "the key"
+        },
+        {
+          "id": "o2",
+          "text": "the bag"
+        },
+        {
+          "id": "o3",
+          "text": "the passport"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: leave your key at the desk.",
+      "audio": "en-a2-4.3.l3"
+    }
+  ]
+}

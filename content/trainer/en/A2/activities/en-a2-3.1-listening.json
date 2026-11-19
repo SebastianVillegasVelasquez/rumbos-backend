@@ -1,0 +1,81 @@
+{
+  "id": "en-a2-3.1-listening",
+  "lesson_id": "3.1",
+  "skill": "listening",
+  "title": "Listen and choose 3.1",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Guide meeting old and new acquaintances",
+  "can_do": [
+    "I can greet someone I know and someone I meet.",
+    "I can ask and answer simple small-talk questions."
+  ],
+  "items": [
+    {
+      "id": "en-a2-3.1.l1",
+      "type": "listen_choose",
+      "prompt": "What is Peter's job?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "cook"
+        },
+        {
+          "id": "o2",
+          "text": "teacher"
+        },
+        {
+          "id": "o3",
+          "text": "driver"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: I'm a teacher.",
+      "audio": "en-a2-3.1.l1"
+    },
+    {
+      "id": "en-a2-3.1.l2",
+      "type": "listen_choose",
+      "prompt": "Who is the speaker asking about?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "the brother"
+        },
+        {
+          "id": "o2",
+          "text": "the teacher"
+        },
+        {
+          "id": "o3",
+          "text": "the mother"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: How is your mother?",
+      "audio": "en-a2-3.1.l2"
+    },
+    {
+      "id": "en-a2-3.1.l3",
+      "type": "listen_choose",
+      "prompt": "How long are they here?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "four days"
+        },
+        {
+          "id": "o2",
+          "text": "two days"
+        },
+        {
+          "id": "o3",
+          "text": "four weeks"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: for four days.",
+      "audio": "en-a2-3.1.l3"
+    }
+  ]
+}

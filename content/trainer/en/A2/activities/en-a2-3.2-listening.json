@@ -1,0 +1,81 @@
+{
+  "id": "en-a2-3.2-listening",
+  "lesson_id": "3.2",
+  "skill": "listening",
+  "title": "Listen and choose 3.2",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Guide asking what guests can do",
+  "can_do": [
+    "I can say what I can and cannot do.",
+    "I can ask someone what they can do."
+  ],
+  "items": [
+    {
+      "id": "en-a2-3.2.l1",
+      "type": "listen_choose",
+      "prompt": "What can the sister play?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "the drums"
+        },
+        {
+          "id": "o2",
+          "text": "the violin"
+        },
+        {
+          "id": "o3",
+          "text": "the piano and the guitar"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: the piano and the guitar.",
+      "audio": "en-a2-3.2.l1"
+    },
+    {
+      "id": "en-a2-3.2.l2",
+      "type": "listen_choose",
+      "prompt": "What can the speaker do?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "ride a bike"
+        },
+        {
+          "id": "o2",
+          "text": "drive a car"
+        },
+        {
+          "id": "o3",
+          "text": "fly a plane"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: I can ride a bike.",
+      "audio": "en-a2-3.2.l2"
+    },
+    {
+      "id": "en-a2-3.2.l3",
+      "type": "listen_choose",
+      "prompt": "What does the speaker ask for?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "a map"
+        },
+        {
+          "id": "o2",
+          "text": "help with a bag"
+        },
+        {
+          "id": "o3",
+          "text": "a taxi"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: Can you help me with my bag?",
+      "audio": "en-a2-3.2.l3"
+    }
+  ]
+}

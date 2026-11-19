@@ -1,0 +1,200 @@
+{
+  "id": "en-a2-4.3-grammar",
+  "lesson_id": "4.3",
+  "skill": "grammar",
+  "title": "Practice 4.3",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Receptionist and waiter",
+  "can_do": [
+    "I can help a guest at check-in and check-out.",
+    "I can take a simple order in a restaurant."
+  ],
+  "items": [
+    {
+      "id": "a2-4.3.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is a request?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Could I have a menu, please?"
+        },
+        {
+          "id": "o2",
+          "text": "I have a menu."
+        },
+        {
+          "id": "o3",
+          "text": "The menu is big."
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Could I have ... please is a polite request.",
+      "error_tags": {
+        "o2": {
+          "tag": "function",
+          "text": "I have a menu states a fact; it asks for nothing."
+        }
+      }
+    },
+    {
+      "id": "a2-4.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "{1} I have some water, please?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "Am"
+            },
+            {
+              "id": "o2",
+              "text": "Could"
+            },
+            {
+              "id": "o3",
+              "text": "Does"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "modal",
+            "text": "Use Could or Can to ask for something."
+          }
+        }
+      ],
+      "explanation": "Could I ... asks politely."
+    },
+    {
+      "id": "a2-4.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "I would {1} a coffee, please.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "like"
+          ],
+          "error_tag": {
+            "tag": "modal",
+            "text": "Say would like, not would want."
+          }
+        }
+      ],
+      "explanation": "I would like is the polite form."
+    },
+    {
+      "id": "a2-4.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Could"
+        },
+        {
+          "id": "t2",
+          "text": "we"
+        },
+        {
+          "id": "t3",
+          "text": "have"
+        },
+        {
+          "id": "t4",
+          "text": "the"
+        },
+        {
+          "id": "t5",
+          "text": "bill"
+        },
+        {
+          "id": "t6",
+          "text": "please"
+        }
+      ],
+      "explanation": "The request starts with Could.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with Could we."
+      }
+    },
+    {
+      "id": "a2-4.3.ex.05",
+      "type": "match",
+      "prompt": "Match the place with a thing.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "reception"
+        },
+        {
+          "id": "l2",
+          "text": "restaurant"
+        },
+        {
+          "id": "l3",
+          "text": "bar"
+        },
+        {
+          "id": "l4",
+          "text": "room"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "key"
+        },
+        {
+          "id": "r2",
+          "text": "menu"
+        },
+        {
+          "id": "r3",
+          "text": "drink"
+        },
+        {
+          "id": "r4",
+          "text": "bed"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each place goes with something you find there."
+    },
+    {
+      "id": "a2-4.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Ask for the menu. Use could.",
+      "accepted": [
+        "Could I have the menu",
+        "Could I have the menu please",
+        "Could we have the menu",
+        "Could we have the menu please"
+      ],
+      "explanation": "Use Could I have + the menu."
+    }
+  ]
+}

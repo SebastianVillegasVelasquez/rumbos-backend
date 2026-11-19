@@ -1,0 +1,1563 @@
+{
+  "form_id": "a2-form-a",
+  "title": "Evaluación diagnóstica · Forma A · Diagnóstico de entrada",
+  "language": "en",
+  "level": "A2",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "sections": [
+    {
+      "key": "listening",
+      "title": "Listening",
+      "instructions": null,
+      "weight": 25,
+      "delivery": null,
+      "parts": [
+        {
+          "part_key": "a",
+          "title": "Part A — Short messages",
+          "instructions": "Listen and choose the correct answer.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "a2-fa-l-01",
+              "prompt": "What time is the hike tomorrow?",
+              "competence": {
+                "raw": "M-I · 1.1 · going to + la hora · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.1",
+                "topic": "going to + la hora"
+              },
+              "source_number": 1,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "8:15"
+                },
+                {
+                  "id": "b",
+                  "text": "5:08"
+                },
+                {
+                  "id": "c",
+                  "text": "8:50"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "a2fa-1b787aef6d",
+                "transcript": "Tomorrow we are going to hike at eight fifteen."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-l-02",
+              "prompt": "What is the room number?",
+              "competence": {
+                "raw": "M-I · 1.2 · reserva/números · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "reserva/números"
+              },
+              "source_number": 2,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "122"
+                },
+                {
+                  "id": "b",
+                  "text": "120"
+                },
+                {
+                  "id": "c",
+                  "text": "112"
+                }
+              ],
+              "key": "c",
+              "audio": {
+                "audio": "a2fa-4bf0147a1c",
+                "transcript": "Your room number is one-one-two."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-l-03",
+              "prompt": "How much is a bag of coffee?",
+              "competence": {
+                "raw": "M-I · 1.4 · precios · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "precios"
+              },
+              "source_number": 3,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "2,000"
+                },
+                {
+                  "id": "b",
+                  "text": "20,000"
+                },
+                {
+                  "id": "c",
+                  "text": "200,000"
+                }
+              ],
+              "key": "b",
+              "audio": {
+                "audio": "a2fa-c8afa0f164",
+                "transcript": "A bag of coffee is twenty thousand pesos."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-l-04",
+              "prompt": "Where does the bus leave from?",
+              "competence": {
+                "raw": "M-II · 2.2 · tiquetes · listening",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.2",
+                "topic": "tiquetes"
+              },
+              "source_number": 4,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "platform two"
+                },
+                {
+                  "id": "b",
+                  "text": "platform nine"
+                },
+                {
+                  "id": "c",
+                  "text": "the town"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "a2fa-6e34cf5679",
+                "transcript": "The bus to the town leaves at nine, from platform two."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-l-05",
+              "prompt": "What time is breakfast?",
+              "competence": {
+                "raw": "M-I · 1.2 · datos de la estadía · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "datos de la estadía"
+              },
+              "source_number": 5,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "2:00"
+                },
+                {
+                  "id": "b",
+                  "text": "7:00"
+                },
+                {
+                  "id": "c",
+                  "text": "11:00"
+                }
+              ],
+              "key": "b",
+              "audio": {
+                "audio": "a2fa-89955aab8f",
+                "transcript": "Breakfast is at seven and the Wi-Fi password is MACIZO2026."
+              },
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "b",
+          "title": "Part B — Short conversations",
+          "instructions": "Listen to each conversation and choose the correct answer.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "a2-fa-l-06",
+              "prompt": "What is the technician doing?",
+              "competence": {
+                "raw": "M-II · 2.1 · presente continuo · listening",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "presente continuo"
+              },
+              "source_number": 6,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "cleaning the room"
+                },
+                {
+                  "id": "b",
+                  "text": "bringing breakfast"
+                },
+                {
+                  "id": "c",
+                  "text": "fixing the heater"
+                }
+              ],
+              "key": "c",
+              "audio": {
+                "audio": "a2fa-ef7c4b7b9b",
+                "transcript": "— The water is cold! — I’m so sorry. The technician is fixing the heater right now."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-l-07",
+              "prompt": "What is the problem?",
+              "competence": {
+                "raw": "M-II · 2.2 · salud/síntomas · listening",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.2",
+                "topic": "salud/síntomas"
+              },
+              "source_number": 7,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "a cold"
+                },
+                {
+                  "id": "b",
+                  "text": "a headache"
+                },
+                {
+                  "id": "c",
+                  "text": "an ankle injury"
+                }
+              ],
+              "key": "c",
+              "audio": {
+                "audio": "a2fa-f80d16a268",
+                "transcript": "— Where is the injury? — My ankle hurts. I can’t move my foot."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-l-08",
+              "prompt": "What advice does the host give?",
+              "competence": {
+                "raw": "M-II · 2.2 · salud/síntomas · listening",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.2",
+                "topic": "salud/síntomas"
+              },
+              "source_number": 8,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "take many pills"
+                },
+                {
+                  "id": "b",
+                  "text": "drink something warm"
+                },
+                {
+                  "id": "c",
+                  "text": "go hiking"
+                }
+              ],
+              "key": "b",
+              "audio": {
+                "audio": "a2fa-bac78678a2",
+                "transcript": "— I have a sore throat. — I’m sorry to hear that. You should drink something warm."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-l-09",
+              "prompt": "Who can guide the night walk?",
+              "competence": {
+                "raw": "M-III · 3.2 · can · listening",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.2",
+                "topic": "can"
+              },
+              "source_number": 9,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Mateo"
+                },
+                {
+                  "id": "b",
+                  "text": "the guest"
+                },
+                {
+                  "id": "c",
+                  "text": "nobody"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "a2fa-9e07a842b2",
+                "transcript": "— Can someone guide a night walk? — Yes, Mateo can guide it tonight."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-l-10",
+              "prompt": "How does the host answer the upset caller?",
+              "competence": {
+                "raw": "M-III · 3.3 · teléfono/persona difícil · listening",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.3",
+                "topic": "teléfono/persona difícil"
+              },
+              "source_number": 10,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "hanging up"
+                },
+                {
+                  "id": "b",
+                  "text": "shouting"
+                },
+                {
+                  "id": "c",
+                  "text": "calmly and apologizing"
+                }
+              ],
+              "key": "c",
+              "audio": {
+                "audio": "a2fa-afbacdc2af",
+                "transcript": "— Front desk, how can I help you? — Your booking is wrong! — I understand, I’m so sorry."
+              },
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "c",
+          "title": "Part C — Match the audio with the scene",
+          "instructions": "Listen to the five audios and match each one with the correct scene.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "a2-fa-l-11",
+              "prompt": "Empareja cada audio (1–5) con la escena correcta: trail plan · hotel counter · cabin repair · ticket counter · green farm.",
+              "competence": {
+                "raw": "M-I a M-IV · comprensión situada · listening (cuenta como 5 ítems)",
+                "modules": [
+                  "M1",
+                  "M2",
+                  "M3",
+                  "M4"
+                ],
+                "lesson": null,
+                "topic": "comprensión situada"
+              },
+              "source_number": 11,
+              "type": "match_audio",
+              "clips": [
+                {
+                  "audio": "a2fa-ae67a19dda",
+                  "transcript": "We are going to hike the trail in the morning."
+                },
+                {
+                  "audio": "a2fa-7edf68dfee",
+                  "transcript": "I’d like a double room for two nights."
+                },
+                {
+                  "audio": "a2fa-1f1ed6f614",
+                  "transcript": "The technician is fixing the heater."
+                },
+                {
+                  "audio": "a2fa-20a2af587c",
+                  "transcript": "Four tickets to the town, please."
+                },
+                {
+                  "audio": "a2fa-be41cf2c5b",
+                  "transcript": "Please turn off the lights when you leave."
+                }
+              ],
+              "places": [
+                {
+                  "id": "trail_plan",
+                  "text": "trail plan"
+                },
+                {
+                  "id": "hotel_counter",
+                  "text": "hotel counter"
+                },
+                {
+                  "id": "cabin_repair",
+                  "text": "cabin repair"
+                },
+                {
+                  "id": "ticket_counter",
+                  "text": "ticket counter"
+                },
+                {
+                  "id": "green_farm",
+                  "text": "green farm"
+                }
+              ],
+              "key": [
+                [
+                  0,
+                  "trail_plan"
+                ],
+                [
+                  1,
+                  "hotel_counter"
+                ],
+                [
+                  2,
+                  "cabin_repair"
+                ],
+                [
+                  3,
+                  "ticket_counter"
+                ],
+                [
+                  4,
+                  "green_farm"
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "reading",
+      "title": "Reading",
+      "instructions": null,
+      "weight": 25,
+      "delivery": null,
+      "parts": [
+        {
+          "part_key": "a",
+          "title": "Part A — Signs",
+          "instructions": "Read each sign and choose the sentence that says the same.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "a2-fa-r-01",
+              "prompt": "Sign: “CHECK-OUT — 12:00”",
+              "competence": {
+                "raw": "M-IV · 4.3 · check-out · reading",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.3",
+                "topic": "check-out"
+              },
+              "source_number": 12,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "The tour starts at 12:00."
+                },
+                {
+                  "id": "b",
+                  "text": "You must leave the room by 12:00."
+                },
+                {
+                  "id": "c",
+                  "text": "Breakfast is at 12:00."
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-r-02",
+              "prompt": "Sign: “REUSE YOUR TOWEL — HANG IT UP”",
+              "competence": {
+                "raw": "M-IV · 4.1 · protocolo verde · reading",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "protocolo verde"
+              },
+              "source_number": 13,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Hang the towel to reuse it."
+                },
+                {
+                  "id": "b",
+                  "text": "Take a new towel."
+                },
+                {
+                  "id": "c",
+                  "text": "Throw the towel away."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-r-03",
+              "prompt": "Sign: “BUS TO TOWN — 9:00 — PLATFORM 2”",
+              "competence": {
+                "raw": "M-II · 2.2 · rutinas/horarios · reading",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.2",
+                "topic": "rutinas/horarios"
+              },
+              "source_number": 14,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "The bus leaves at 2:00."
+                },
+                {
+                  "id": "b",
+                  "text": "There is no bus."
+                },
+                {
+                  "id": "c",
+                  "text": "The bus leaves at 9:00 from platform 2."
+                }
+              ],
+              "key": "c",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-r-04",
+              "prompt": "Sign: “BREAKFAST 7:00 — WI-FI: MACIZO2026”",
+              "competence": {
+                "raw": "M-I · 1.2 · servicios/estadía · reading",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "servicios/estadía"
+              },
+              "source_number": 15,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Breakfast is at 7:00 and there is Wi-Fi."
+                },
+                {
+                  "id": "b",
+                  "text": "There is no Wi-Fi."
+                },
+                {
+                  "id": "c",
+                  "text": "Breakfast is at 8:00."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-r-05",
+              "prompt": "Sign: “PLEASE SAVE WATER”",
+              "competence": {
+                "raw": "M-IV · 4.1 · sostenibilidad · reading",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "sostenibilidad"
+              },
+              "source_number": 16,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "No water here."
+                },
+                {
+                  "id": "b",
+                  "text": "Use water carefully."
+                },
+                {
+                  "id": "c",
+                  "text": "Waste water."
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "b",
+          "title": "Part B — A short text",
+          "instructions": "Read the text and answer the questions.",
+          "shared": {
+            "kind": "passage",
+            "title": null,
+            "text": "Welcome to the Macizo Route! Tomorrow, we are going to hike the trail in the morning, and in the afternoon, we are going to visit a coffee farm. Yesterday it rained and the trail was muddy, but today the weather is better. If you like taking photos, you are going to love the sunrise walk. Breakfast is at 7:00 a.m.",
+            "image_id": null,
+            "alt_text": null,
+            "design_note": null,
+            "image_text": null
+          },
+          "items": [
+            {
+              "item_id": "a2-fa-r-06",
+              "prompt": "What are they going to do in the morning?",
+              "competence": {
+                "raw": "M-I · 1.1 · going to · reading",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.1",
+                "topic": "going to"
+              },
+              "source_number": 17,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "hike the trail"
+                },
+                {
+                  "id": "b",
+                  "text": "rest"
+                },
+                {
+                  "id": "c",
+                  "text": "visit a coffee farm"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-r-07",
+              "prompt": "How was the weather yesterday?",
+              "competence": {
+                "raw": "M-II · 2.1 · pasado · reading",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "pasado"
+              },
+              "source_number": 18,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "it rained"
+                },
+                {
+                  "id": "b",
+                  "text": "it snowed"
+                },
+                {
+                  "id": "c",
+                  "text": "it was sunny"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-r-08",
+              "prompt": "Is today better than yesterday?",
+              "competence": {
+                "raw": "M-II · 2.1 · comparativos · reading",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "comparativos"
+              },
+              "source_number": 19,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "The text doesn’t say."
+                },
+                {
+                  "id": "b",
+                  "text": "Yes, the weather is better."
+                },
+                {
+                  "id": "c",
+                  "text": "No, it is worse."
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-r-09",
+              "prompt": "What is good for people who like photos?",
+              "competence": {
+                "raw": "M-I · 1.3 · gustos/recomendación · reading",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.3",
+                "topic": "gustos/recomendación"
+              },
+              "source_number": 20,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "breakfast"
+                },
+                {
+                  "id": "b",
+                  "text": "the sunrise walk"
+                },
+                {
+                  "id": "c",
+                  "text": "the coffee farm"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-r-10",
+              "prompt": "What time is breakfast?",
+              "competence": {
+                "raw": "M-I · 1.2 · la hora · reading",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "la hora"
+              },
+              "source_number": 21,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "in the afternoon"
+                },
+                {
+                  "id": "b",
+                  "text": "7:00 a.m."
+                },
+                {
+                  "id": "c",
+                  "text": "9:00 a.m."
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "c",
+          "title": "Part C — A conversation with gaps",
+          "instructions": "Read the conversation and choose the right word for each gap.",
+          "shared": {
+            "kind": "passage",
+            "title": null,
+            "text": "Guest: Hello, I (a)___ like a double room for two nights. — Host: Of course. For how (b)___ nights? — Guest: Two nights. — Host: Your room (c)___ is 202. — Guest: (d)___ breakfast included? — Host: Yes. How (e)___ is it per night?",
+            "image_id": null,
+            "alt_text": null,
+            "design_note": null,
+            "image_text": null
+          },
+          "items": [
+            {
+              "item_id": "a2-fa-r-11",
+              "prompt": "Gap (a):",
+              "competence": {
+                "raw": "M-I · 1.2 · I’d like · uso",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "I’d like"
+              },
+              "source_number": 22,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "would"
+                },
+                {
+                  "id": "b",
+                  "text": "am"
+                },
+                {
+                  "id": "c",
+                  "text": "will"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(a)"
+            },
+            {
+              "item_id": "a2-fa-r-12",
+              "prompt": "Gap (b):",
+              "competence": {
+                "raw": "M-I · 1.2 · For how many nights · uso",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "For how many nights"
+              },
+              "source_number": 23,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "much"
+                },
+                {
+                  "id": "b",
+                  "text": "many"
+                },
+                {
+                  "id": "c",
+                  "text": "old"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": "(b)"
+            },
+            {
+              "item_id": "a2-fa-r-13",
+              "prompt": "Gap (c):",
+              "competence": {
+                "raw": "M-I · 1.2 · confirmar habitación · uso",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "confirmar habitación"
+              },
+              "source_number": 24,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "key"
+                },
+                {
+                  "id": "b",
+                  "text": "number"
+                },
+                {
+                  "id": "c",
+                  "text": "name"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": "(c)"
+            },
+            {
+              "item_id": "a2-fa-r-14",
+              "prompt": "Gap (d):",
+              "competence": {
+                "raw": "M-I · 1.2 · servicios (to be) · uso",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "servicios (to be)"
+              },
+              "source_number": 25,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Are"
+                },
+                {
+                  "id": "b",
+                  "text": "Is"
+                },
+                {
+                  "id": "c",
+                  "text": "Do"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": "(d)"
+            },
+            {
+              "item_id": "a2-fa-r-15",
+              "prompt": "Gap (e):",
+              "competence": {
+                "raw": "M-I · 1.4 · How much · uso",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "How much"
+              },
+              "source_number": 26,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "much"
+                },
+                {
+                  "id": "b",
+                  "text": "many"
+                },
+                {
+                  "id": "c",
+                  "text": "old"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(e)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "use_of_english",
+      "title": "Use of English",
+      "instructions": null,
+      "weight": 20,
+      "delivery": null,
+      "parts": [
+        {
+          "part_key": "tasks",
+          "title": "Use of English",
+          "instructions": "Choose the correct option.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "a2-fa-u-01",
+              "prompt": "Tomorrow we ___ visit a coffee farm.",
+              "competence": {
+                "raw": "M-I · 1.1 · going to",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.1",
+                "topic": "going to"
+              },
+              "source_number": 27,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "go to"
+                },
+                {
+                  "id": "b",
+                  "text": "are going to"
+                },
+                {
+                  "id": "c",
+                  "text": "going to"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-u-02",
+              "prompt": "Yesterday it ___ and Liam ___ in the mud.",
+              "competence": {
+                "raw": "M-II · 2.1 · pasado simple",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "pasado simple"
+              },
+              "source_number": 28,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "rain / slip"
+                },
+                {
+                  "id": "b",
+                  "text": "rains / slips"
+                },
+                {
+                  "id": "c",
+                  "text": "rained / slipped"
+                }
+              ],
+              "key": "c",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-u-03",
+              "prompt": "Look! The technician ___ the heater.",
+              "competence": {
+                "raw": "M-II · 2.1 · presente continuo",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "presente continuo"
+              },
+              "source_number": 29,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "fix"
+                },
+                {
+                  "id": "b",
+                  "text": "is fixing"
+                },
+                {
+                  "id": "c",
+                  "text": "fixes"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-u-04",
+              "prompt": "Today’s trail is ___ than yesterday’s.",
+              "competence": {
+                "raw": "M-II · 2.1 · comparativos",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "comparativos"
+              },
+              "source_number": 30,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "more hard"
+                },
+                {
+                  "id": "b",
+                  "text": "harder"
+                },
+                {
+                  "id": "c",
+                  "text": "hard"
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-u-05",
+              "prompt": "That black bag belongs to Liam; it is not yours, so it is ___.",
+              "competence": {
+                "raw": "M-II · 2.1 · pronombres posesivos / contraste",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "pronombres posesivos / contraste"
+              },
+              "source_number": 31,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "him"
+                },
+                {
+                  "id": "b",
+                  "text": "he"
+                },
+                {
+                  "id": "c",
+                  "text": "his"
+                }
+              ],
+              "key": "c",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-u-06",
+              "prompt": "Mateo ___ guide a night walk.",
+              "competence": {
+                "raw": "M-III · 3.2 · can",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.2",
+                "topic": "can"
+              },
+              "source_number": 32,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "cans"
+                },
+                {
+                  "id": "b",
+                  "text": "can to"
+                },
+                {
+                  "id": "c",
+                  "text": "can"
+                }
+              ],
+              "key": "c",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-u-07",
+              "prompt": "You ___ drink something warm and rest.",
+              "competence": {
+                "raw": "M-III · 3.4 · consejo (should)",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.4",
+                "topic": "consejo (should)"
+              },
+              "source_number": 33,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "should to"
+                },
+                {
+                  "id": "b",
+                  "text": "shoulds"
+                },
+                {
+                  "id": "c",
+                  "text": "should"
+                }
+              ],
+              "key": "c",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-u-08",
+              "prompt": "This luggage is ___; the camera was ___.",
+              "competence": {
+                "raw": "M-III · 3.4 · pronombres posesivos",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.4",
+                "topic": "pronombres posesivos"
+              },
+              "source_number": 34,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "us / me"
+                },
+                {
+                  "id": "b",
+                  "text": "our / my"
+                },
+                {
+                  "id": "c",
+                  "text": "ours / mine"
+                }
+              ],
+              "key": "c",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-u-09",
+              "prompt": "Which one is a hotel service?",
+              "competence": {
+                "raw": "M-I · 1.2 · léxico hotel",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "léxico hotel"
+              },
+              "source_number": 35,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "platform"
+                },
+                {
+                  "id": "b",
+                  "text": "sunset"
+                },
+                {
+                  "id": "c",
+                  "text": "room service"
+                }
+              ],
+              "key": "c",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-u-10",
+              "prompt": "Which is the past of “go”?",
+              "competence": {
+                "raw": "M-II · 2.1 · verbos irregulares",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "verbos irregulares"
+              },
+              "source_number": 36,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "went"
+                },
+                {
+                  "id": "b",
+                  "text": "gone"
+                },
+                {
+                  "id": "c",
+                  "text": "goed"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-u-11",
+              "prompt": "Which one is a symptom?",
+              "competence": {
+                "raw": "M-II · 2.2 · léxico salud",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.2",
+                "topic": "léxico salud"
+              },
+              "source_number": 37,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "a ticket"
+                },
+                {
+                  "id": "b",
+                  "text": "a towel"
+                },
+                {
+                  "id": "c",
+                  "text": "a sore throat"
+                }
+              ],
+              "key": "c",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-u-12",
+              "prompt": "Which one do you use to travel by road?",
+              "competence": {
+                "raw": "M-II · 2.2 · transporte",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.2",
+                "topic": "transporte"
+              },
+              "source_number": 38,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "kitchen"
+                },
+                {
+                  "id": "b",
+                  "text": "blanket"
+                },
+                {
+                  "id": "c",
+                  "text": "bus"
+                }
+              ],
+              "key": "c",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-u-13",
+              "prompt": "Which word is a feeling?",
+              "competence": {
+                "raw": "M-III · 3.4 · léxico sentimientos",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.4",
+                "topic": "léxico sentimientos"
+              },
+              "source_number": 39,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "platform"
+                },
+                {
+                  "id": "b",
+                  "text": "table"
+                },
+                {
+                  "id": "c",
+                  "text": "sad"
+                }
+              ],
+              "key": "c",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-u-14",
+              "prompt": "A polite way to start a phone call at reception:",
+              "competence": {
+                "raw": "M-III · 3.3 · fórmulas telefónicas",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.3",
+                "topic": "fórmulas telefónicas"
+              },
+              "source_number": 40,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "What do you want?"
+                },
+                {
+                  "id": "b",
+                  "text": "Front desk, how can I help you?"
+                },
+                {
+                  "id": "c",
+                  "text": "Go away."
+                }
+              ],
+              "key": "b",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "a2-fa-u-15",
+              "prompt": "The colour of the recyclable bin:",
+              "competence": {
+                "raw": "M-IV · 4.1 · reciclaje/colores",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "reciclaje/colores"
+              },
+              "source_number": 41,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "blue"
+                },
+                {
+                  "id": "b",
+                  "text": "pink"
+                },
+                {
+                  "id": "c",
+                  "text": "brown"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "writing",
+      "title": "Writing",
+      "instructions": null,
+      "weight": 15,
+      "delivery": null,
+      "parts": [
+        {
+          "part_key": "tasks",
+          "title": "Writing",
+          "instructions": "Write your answers in English.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "a2-fa-w-01",
+              "prompt": "Confirmation email. Write a short email confirming a reservation: room type, dates, breakfast time and Wi-Fi. Use \"I'd like...\" and the key data.",
+              "competence": null,
+              "source_number": null,
+              "type": "written_answers",
+              "rubric": "writing.confirmation_email",
+              "fields": [],
+              "template": null,
+              "min_words": null,
+              "max_words": null,
+              "questions": [
+                {
+                  "id": "q1",
+                  "text": "Write your email here."
+                }
+              ],
+              "source_rubric": "complete data (room, dates, breakfast, Wi-Fi) · course formulas · basic spelling",
+              "written_equivalent_of": null
+            },
+            {
+              "item_id": "a2-fa-w-02",
+              "prompt": "A short past story (25-40 words)",
+              "competence": null,
+              "source_number": null,
+              "type": "template_text",
+              "rubric": "writing.past_story",
+              "fields": [],
+              "template": "It was a wonderful trip. First, we ______. Then, we ______. Finally, we ______. Come back soon!",
+              "min_words": 25,
+              "max_words": 40,
+              "questions": [],
+              "source_rubric": "uses the template · 3 past-tense verbs · connectors First/Then/Finally · intelligibility (at least 3 past verbs and 3 connectors)",
+              "written_equivalent_of": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "speaking",
+      "title": "Speaking",
+      "instructions": null,
+      "weight": 15,
+      "delivery": "written_equivalent",
+      "parts": [
+        {
+          "part_key": "tasks",
+          "title": "Speaking (written answers)",
+          "instructions": "Write your answers in English, as if you were speaking.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "a2-fa-s-02",
+              "prompt": "Answer 2 questions",
+              "competence": null,
+              "source_number": null,
+              "type": "written_answers",
+              "rubric": "speaking.tomorrow_now_written",
+              "fields": [],
+              "template": null,
+              "min_words": null,
+              "max_words": null,
+              "questions": [
+                {
+                  "id": "q1",
+                  "text": "What are you going to do tomorrow?"
+                },
+                {
+                  "id": "q2",
+                  "text": "What is the technician doing now?"
+                }
+              ],
+              "source_rubric": "answers both · uses going to and present continuous · intelligibility",
+              "written_equivalent_of": "Speaking Task 2 · Answer 2 questions"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source_notes": [
+    "a2-fa-l-11: source item 11 is the matching task; it counts as 5 items and is left out of the per-module map",
+    "a2-fa-w-01: the source says 'write a short email' with no template or fields; it is a free text of up to 300 characters",
+    "Speaking Task 1 (a2-fa-s-01, read the Writing story aloud) is NOT in this form: it has no written equivalent yet and needs a pedagogical decision. The Speaking section keeps its 15% weight and holds Task 2 only (0 to 5)",
+    "Speaking is delivered as typed answers (delivery: written_equivalent); it does not measure pronunciation",
+    "The source gives no figure briefs or alt text and no instructions per part; the part titles and instructions are ours (see REVIEW-A2-checkin.md)"
+  ]
+}

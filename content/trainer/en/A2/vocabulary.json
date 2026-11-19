@@ -1,0 +1,628 @@
+{
+  "entries": [
+    {
+      "id": "en-a2-1.1.v1",
+      "lesson_id": "1.1",
+      "word": "plan",
+      "translation": "plan"
+    },
+    {
+      "id": "en-a2-1.1.v2",
+      "lesson_id": "1.1",
+      "word": "tomorrow",
+      "translation": "mañana"
+    },
+    {
+      "id": "en-a2-1.1.v3",
+      "lesson_id": "1.1",
+      "word": "tonight",
+      "translation": "esta noche"
+    },
+    {
+      "id": "en-a2-1.1.v4",
+      "lesson_id": "1.1",
+      "word": "next week",
+      "translation": "la próxima semana"
+    },
+    {
+      "id": "en-a2-1.1.v5",
+      "lesson_id": "1.1",
+      "word": "this afternoon",
+      "translation": "esta tarde"
+    },
+    {
+      "id": "en-a2-1.1.v6",
+      "lesson_id": "1.1",
+      "word": "weekend",
+      "translation": "fin de semana"
+    },
+    {
+      "id": "en-a2-1.1.v7",
+      "lesson_id": "1.1",
+      "word": "leave",
+      "translation": "salir"
+    },
+    {
+      "id": "en-a2-1.1.v8",
+      "lesson_id": "1.1",
+      "word": "museum",
+      "translation": "museo"
+    },
+    {
+      "id": "en-a2-1.2.v1",
+      "lesson_id": "1.2",
+      "word": "reservation",
+      "translation": "reserva"
+    },
+    {
+      "id": "en-a2-1.2.v2",
+      "lesson_id": "1.2",
+      "word": "single room",
+      "translation": "habitación sencilla"
+    },
+    {
+      "id": "en-a2-1.2.v3",
+      "lesson_id": "1.2",
+      "word": "double room",
+      "translation": "habitación doble"
+    },
+    {
+      "id": "en-a2-1.2.v4",
+      "lesson_id": "1.2",
+      "word": "night",
+      "translation": "noche"
+    },
+    {
+      "id": "en-a2-1.2.v5",
+      "lesson_id": "1.2",
+      "word": "key",
+      "translation": "llave"
+    },
+    {
+      "id": "en-a2-1.2.v6",
+      "lesson_id": "1.2",
+      "word": "included",
+      "translation": "incluido"
+    },
+    {
+      "id": "en-a2-1.2.v7",
+      "lesson_id": "1.2",
+      "word": "per night",
+      "translation": "por noche"
+    },
+    {
+      "id": "en-a2-1.2.v8",
+      "lesson_id": "1.2",
+      "word": "check-in",
+      "translation": "registro de entrada"
+    },
+    {
+      "id": "en-a2-1.3.v1",
+      "lesson_id": "1.3",
+      "word": "free time",
+      "translation": "tiempo libre"
+    },
+    {
+      "id": "en-a2-1.3.v2",
+      "lesson_id": "1.3",
+      "word": "enjoy",
+      "translation": "disfrutar"
+    },
+    {
+      "id": "en-a2-1.3.v3",
+      "lesson_id": "1.3",
+      "word": "like",
+      "translation": "gustar"
+    },
+    {
+      "id": "en-a2-1.3.v4",
+      "lesson_id": "1.3",
+      "word": "hobby",
+      "translation": "pasatiempo"
+    },
+    {
+      "id": "en-a2-1.3.v5",
+      "lesson_id": "1.3",
+      "word": "reading",
+      "translation": "leer"
+    },
+    {
+      "id": "en-a2-1.3.v6",
+      "lesson_id": "1.3",
+      "word": "swimming",
+      "translation": "nadar"
+    },
+    {
+      "id": "en-a2-1.3.v7",
+      "lesson_id": "1.3",
+      "word": "cooking",
+      "translation": "cocinar"
+    },
+    {
+      "id": "en-a2-1.3.v8",
+      "lesson_id": "1.3",
+      "word": "dancing",
+      "translation": "bailar"
+    },
+    {
+      "id": "en-a2-1.4.v1",
+      "lesson_id": "1.4",
+      "word": "price",
+      "translation": "precio"
+    },
+    {
+      "id": "en-a2-1.4.v2",
+      "lesson_id": "1.4",
+      "word": "expensive",
+      "translation": "caro"
+    },
+    {
+      "id": "en-a2-1.4.v3",
+      "lesson_id": "1.4",
+      "word": "cheap",
+      "translation": "barato"
+    },
+    {
+      "id": "en-a2-1.4.v4",
+      "lesson_id": "1.4",
+      "word": "change",
+      "translation": "cambio (dinero)"
+    },
+    {
+      "id": "en-a2-1.4.v5",
+      "lesson_id": "1.4",
+      "word": "cash",
+      "translation": "efectivo"
+    },
+    {
+      "id": "en-a2-1.4.v6",
+      "lesson_id": "1.4",
+      "word": "bag",
+      "translation": "bolsa"
+    },
+    {
+      "id": "en-a2-1.4.v7",
+      "lesson_id": "1.4",
+      "word": "postcard",
+      "translation": "postal"
+    },
+    {
+      "id": "en-a2-1.4.v8",
+      "lesson_id": "1.4",
+      "word": "souvenir",
+      "translation": "recuerdo"
+    },
+    {
+      "id": "en-a2-2.1.v1",
+      "lesson_id": "2.1",
+      "word": "yesterday",
+      "translation": "ayer"
+    },
+    {
+      "id": "en-a2-2.1.v2",
+      "lesson_id": "2.1",
+      "word": "last week",
+      "translation": "la semana pasada"
+    },
+    {
+      "id": "en-a2-2.1.v3",
+      "lesson_id": "2.1",
+      "word": "sorry",
+      "translation": "lo siento"
+    },
+    {
+      "id": "en-a2-2.1.v4",
+      "lesson_id": "2.1",
+      "word": "problem",
+      "translation": "problema"
+    },
+    {
+      "id": "en-a2-2.1.v5",
+      "lesson_id": "2.1",
+      "word": "broken",
+      "translation": "dañado"
+    },
+    {
+      "id": "en-a2-2.1.v6",
+      "lesson_id": "2.1",
+      "word": "shower",
+      "translation": "ducha"
+    },
+    {
+      "id": "en-a2-2.1.v7",
+      "lesson_id": "2.1",
+      "word": "instructions",
+      "translation": "instrucciones"
+    },
+    {
+      "id": "en-a2-2.1.v8",
+      "lesson_id": "2.1",
+      "word": "fix",
+      "translation": "arreglar"
+    },
+    {
+      "id": "en-a2-2.2.v1",
+      "lesson_id": "2.2",
+      "word": "ticket",
+      "translation": "boleto"
+    },
+    {
+      "id": "en-a2-2.2.v2",
+      "lesson_id": "2.2",
+      "word": "one way",
+      "translation": "solo ida"
+    },
+    {
+      "id": "en-a2-2.2.v3",
+      "lesson_id": "2.2",
+      "word": "return ticket",
+      "translation": "ida y vuelta"
+    },
+    {
+      "id": "en-a2-2.2.v4",
+      "lesson_id": "2.2",
+      "word": "stomachache",
+      "translation": "dolor de estómago"
+    },
+    {
+      "id": "en-a2-2.2.v5",
+      "lesson_id": "2.2",
+      "word": "medicine",
+      "translation": "medicina"
+    },
+    {
+      "id": "en-a2-2.2.v6",
+      "lesson_id": "2.2",
+      "word": "jacket",
+      "translation": "chaqueta"
+    },
+    {
+      "id": "en-a2-2.2.v7",
+      "lesson_id": "2.2",
+      "word": "size",
+      "translation": "talla"
+    },
+    {
+      "id": "en-a2-2.2.v8",
+      "lesson_id": "2.2",
+      "word": "every day",
+      "translation": "todos los días"
+    },
+    {
+      "id": "en-a2-3.1.v1",
+      "lesson_id": "3.1",
+      "word": "meet",
+      "translation": "conocer"
+    },
+    {
+      "id": "en-a2-3.1.v2",
+      "lesson_id": "3.1",
+      "word": "friend",
+      "translation": "amigo"
+    },
+    {
+      "id": "en-a2-3.1.v3",
+      "lesson_id": "3.1",
+      "word": "family",
+      "translation": "familia"
+    },
+    {
+      "id": "en-a2-3.1.v4",
+      "lesson_id": "3.1",
+      "word": "again",
+      "translation": "otra vez"
+    },
+    {
+      "id": "en-a2-3.1.v5",
+      "lesson_id": "3.1",
+      "word": "first time",
+      "translation": "primera vez"
+    },
+    {
+      "id": "en-a2-3.1.v6",
+      "lesson_id": "3.1",
+      "word": "nice",
+      "translation": "agradable"
+    },
+    {
+      "id": "en-a2-3.1.v7",
+      "lesson_id": "3.1",
+      "word": "stay",
+      "translation": "quedarse"
+    },
+    {
+      "id": "en-a2-3.1.v8",
+      "lesson_id": "3.1",
+      "word": "visit",
+      "translation": "visita"
+    },
+    {
+      "id": "en-a2-3.2.v1",
+      "lesson_id": "3.2",
+      "word": "can",
+      "translation": "poder / saber"
+    },
+    {
+      "id": "en-a2-3.2.v2",
+      "lesson_id": "3.2",
+      "word": "cannot",
+      "translation": "no poder"
+    },
+    {
+      "id": "en-a2-3.2.v3",
+      "lesson_id": "3.2",
+      "word": "swim",
+      "translation": "nadar"
+    },
+    {
+      "id": "en-a2-3.2.v4",
+      "lesson_id": "3.2",
+      "word": "ride",
+      "translation": "montar"
+    },
+    {
+      "id": "en-a2-3.2.v5",
+      "lesson_id": "3.2",
+      "word": "speak",
+      "translation": "hablar"
+    },
+    {
+      "id": "en-a2-3.2.v6",
+      "lesson_id": "3.2",
+      "word": "cook",
+      "translation": "cocinar"
+    },
+    {
+      "id": "en-a2-3.2.v7",
+      "lesson_id": "3.2",
+      "word": "help",
+      "translation": "ayudar"
+    },
+    {
+      "id": "en-a2-3.2.v8",
+      "lesson_id": "3.2",
+      "word": "carry",
+      "translation": "cargar"
+    },
+    {
+      "id": "en-a2-3.3.v1",
+      "lesson_id": "3.3",
+      "word": "phone",
+      "translation": "teléfono"
+    },
+    {
+      "id": "en-a2-3.3.v2",
+      "lesson_id": "3.3",
+      "word": "call",
+      "translation": "llamada"
+    },
+    {
+      "id": "en-a2-3.3.v3",
+      "lesson_id": "3.3",
+      "word": "message",
+      "translation": "mensaje"
+    },
+    {
+      "id": "en-a2-3.3.v4",
+      "lesson_id": "3.3",
+      "word": "manager",
+      "translation": "gerente"
+    },
+    {
+      "id": "en-a2-3.3.v5",
+      "lesson_id": "3.3",
+      "word": "upset",
+      "translation": "molesto"
+    },
+    {
+      "id": "en-a2-3.3.v6",
+      "lesson_id": "3.3",
+      "word": "wait",
+      "translation": "esperar"
+    },
+    {
+      "id": "en-a2-3.3.v7",
+      "lesson_id": "3.3",
+      "word": "hold on",
+      "translation": "espere en línea"
+    },
+    {
+      "id": "en-a2-3.3.v8",
+      "lesson_id": "3.3",
+      "word": "calm",
+      "translation": "tranquilo"
+    },
+    {
+      "id": "en-a2-3.4.v1",
+      "lesson_id": "3.4",
+      "word": "advice",
+      "translation": "consejo"
+    },
+    {
+      "id": "en-a2-3.4.v2",
+      "lesson_id": "3.4",
+      "word": "should",
+      "translation": "debería"
+    },
+    {
+      "id": "en-a2-3.4.v3",
+      "lesson_id": "3.4",
+      "word": "tired",
+      "translation": "cansado"
+    },
+    {
+      "id": "en-a2-3.4.v4",
+      "lesson_id": "3.4",
+      "word": "nervous",
+      "translation": "nervioso"
+    },
+    {
+      "id": "en-a2-3.4.v5",
+      "lesson_id": "3.4",
+      "word": "worried",
+      "translation": "preocupado"
+    },
+    {
+      "id": "en-a2-3.4.v6",
+      "lesson_id": "3.4",
+      "word": "happy",
+      "translation": "feliz"
+    },
+    {
+      "id": "en-a2-3.4.v7",
+      "lesson_id": "3.4",
+      "word": "angry",
+      "translation": "enojado"
+    },
+    {
+      "id": "en-a2-3.4.v8",
+      "lesson_id": "3.4",
+      "word": "bored",
+      "translation": "aburrido"
+    },
+    {
+      "id": "en-a2-4.1.v1",
+      "lesson_id": "4.1",
+      "word": "recycle",
+      "translation": "reciclar"
+    },
+    {
+      "id": "en-a2-4.1.v2",
+      "lesson_id": "4.1",
+      "word": "reuse",
+      "translation": "reutilizar"
+    },
+    {
+      "id": "en-a2-4.1.v3",
+      "lesson_id": "4.1",
+      "word": "energy",
+      "translation": "energía"
+    },
+    {
+      "id": "en-a2-4.1.v4",
+      "lesson_id": "4.1",
+      "word": "solar",
+      "translation": "solar"
+    },
+    {
+      "id": "en-a2-4.1.v5",
+      "lesson_id": "4.1",
+      "word": "tap",
+      "translation": "grifo"
+    },
+    {
+      "id": "en-a2-4.1.v6",
+      "lesson_id": "4.1",
+      "word": "bin",
+      "translation": "caneca"
+    },
+    {
+      "id": "en-a2-4.1.v7",
+      "lesson_id": "4.1",
+      "word": "waste",
+      "translation": "desperdiciar"
+    },
+    {
+      "id": "en-a2-4.1.v8",
+      "lesson_id": "4.1",
+      "word": "nature",
+      "translation": "naturaleza"
+    },
+    {
+      "id": "en-a2-4.2.v1",
+      "lesson_id": "4.2",
+      "word": "polite",
+      "translation": "educado"
+    },
+    {
+      "id": "en-a2-4.2.v2",
+      "lesson_id": "4.2",
+      "word": "respect",
+      "translation": "respeto"
+    },
+    {
+      "id": "en-a2-4.2.v3",
+      "lesson_id": "4.2",
+      "word": "culture",
+      "translation": "cultura"
+    },
+    {
+      "id": "en-a2-4.2.v4",
+      "lesson_id": "4.2",
+      "word": "peace",
+      "translation": "paz"
+    },
+    {
+      "id": "en-a2-4.2.v5",
+      "lesson_id": "4.2",
+      "word": "kind",
+      "translation": "amable"
+    },
+    {
+      "id": "en-a2-4.2.v6",
+      "lesson_id": "4.2",
+      "word": "visitor",
+      "translation": "visitante"
+    },
+    {
+      "id": "en-a2-4.2.v7",
+      "lesson_id": "4.2",
+      "word": "community",
+      "translation": "comunidad"
+    },
+    {
+      "id": "en-a2-4.2.v8",
+      "lesson_id": "4.2",
+      "word": "smile",
+      "translation": "sonrisa"
+    },
+    {
+      "id": "en-a2-4.3.v1",
+      "lesson_id": "4.3",
+      "word": "check-in",
+      "translation": "registro de entrada"
+    },
+    {
+      "id": "en-a2-4.3.v2",
+      "lesson_id": "4.3",
+      "word": "check-out",
+      "translation": "salida"
+    },
+    {
+      "id": "en-a2-4.3.v3",
+      "lesson_id": "4.3",
+      "word": "bill",
+      "translation": "cuenta"
+    },
+    {
+      "id": "en-a2-4.3.v4",
+      "lesson_id": "4.3",
+      "word": "menu",
+      "translation": "carta"
+    },
+    {
+      "id": "en-a2-4.3.v5",
+      "lesson_id": "4.3",
+      "word": "table",
+      "translation": "mesa"
+    },
+    {
+      "id": "en-a2-4.3.v6",
+      "lesson_id": "4.3",
+      "word": "passport",
+      "translation": "pasaporte"
+    },
+    {
+      "id": "en-a2-4.3.v7",
+      "lesson_id": "4.3",
+      "word": "floor",
+      "translation": "piso"
+    },
+    {
+      "id": "en-a2-4.3.v8",
+      "lesson_id": "4.3",
+      "word": "recommend",
+      "translation": "recomendar"
+    }
+  ]
+}

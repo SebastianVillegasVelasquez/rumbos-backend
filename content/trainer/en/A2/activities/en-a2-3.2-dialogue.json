@@ -1,0 +1,166 @@
+{
+  "id": "en-a2-3.2-dialogue",
+  "lesson_id": "3.2",
+  "skill": "dialogue",
+  "title": "Talk it through 3.2",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Guide asking what guests can do",
+  "can_do": [
+    "I can say what I can and cannot do.",
+    "I can ask someone what they can do."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Can you swim?",
+        "translation": "¿Sabes nadar?",
+        "audio": "en-a2-3.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, I can swim well.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "A little. I can swim in a pool.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "No, I can't swim.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "What can you do well?",
+        "translation": "¿Qué haces bien?",
+        "audio": "en-a2-3.2.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "can"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "I can cook and I can sing.",
+        "starters": [
+          "I can ..."
+        ],
+        "word_bank": [
+          "I",
+          "can",
+          "cook",
+          "sing",
+          "swim",
+          "dance",
+          "and"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Can you ride a horse?",
+        "translation": "¿Sabes montar a caballo?",
+        "audio": "en-a2-3.2.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, I can.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "No, I can't, but I want to learn.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "I can ride a bike.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Can you speak English and French?",
+        "translation": "¿Hablas inglés y francés?",
+        "audio": "en-a2-3.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I can speak English, but not French.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, I can speak both.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "I can speak a little French.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Can you carry this bag, please?",
+        "translation": "¿Puedes cargar esta bolsa, por favor?",
+        "audio": "en-a2-3.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course I can.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Sorry, I can't. My arm hurts.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, I can. It is not heavy.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Great! You can come on the hike.",
+        "translation": "¡Genial! Puedes venir a la caminata.",
+        "audio": "en-a2-3.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you!",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Great! I am happy to come.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Thanks! What can I bring?",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

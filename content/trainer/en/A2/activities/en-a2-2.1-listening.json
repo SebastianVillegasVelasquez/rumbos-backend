@@ -1,0 +1,82 @@
+{
+  "id": "en-a2-2.1-listening",
+  "lesson_id": "2.1",
+  "skill": "listening",
+  "title": "Listen and choose 2.1",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Host helping a guest with a problem",
+  "can_do": [
+    "I can say what happened in the past with the past simple.",
+    "I can say what is happening now.",
+    "I can apologise and give a simple instruction."
+  ],
+  "items": [
+    {
+      "id": "en-a2-2.1.l1",
+      "type": "listen_choose",
+      "prompt": "What did they eat?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "chicken"
+        },
+        {
+          "id": "o2",
+          "text": "soup"
+        },
+        {
+          "id": "o3",
+          "text": "fish"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: ate fish.",
+      "audio": "en-a2-2.1.l1"
+    },
+    {
+      "id": "en-a2-2.1.l2",
+      "type": "listen_choose",
+      "prompt": "What is the manager doing?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "talking on the phone"
+        },
+        {
+          "id": "o2",
+          "text": "writing an email"
+        },
+        {
+          "id": "o3",
+          "text": "eating lunch"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: is talking on the phone.",
+      "audio": "en-a2-2.1.l2"
+    },
+    {
+      "id": "en-a2-2.1.l3",
+      "type": "listen_choose",
+      "prompt": "What did the guest break?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "the chair"
+        },
+        {
+          "id": "o2",
+          "text": "the lamp"
+        },
+        {
+          "id": "o3",
+          "text": "the window"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: I broke the lamp.",
+      "audio": "en-a2-2.1.l3"
+    }
+  ]
+}

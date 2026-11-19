@@ -1,0 +1,343 @@
+{
+  "status": "draft",
+  "note": "Deterministic proxy for the client's human rubric (Writing and Speaking). Each criterion scores points x mean(checks). Speaking is delivered as typed answers, so it checks the grammar the task asks for and never pronunciation. Needs pedagogical sign-off before it decides anything real.",
+  "rubrics": [
+    {
+      "id": "writing.confirmation_email",
+      "criteria": [
+        {
+          "id": "complete_data",
+          "points": 3,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "room",
+                "double",
+                "single",
+                "twin",
+                "suite",
+                "cabin"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "night",
+                "nights",
+                "from",
+                "until",
+                "tomorrow",
+                "weekend",
+                "monday",
+                "tuesday",
+                "wednesday",
+                "thursday",
+                "friday",
+                "saturday",
+                "sunday",
+                "january",
+                "february",
+                "march",
+                "april",
+                "may",
+                "june",
+                "july",
+                "august",
+                "september",
+                "october",
+                "november",
+                "december"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "breakfast"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "wi-fi",
+                "wifi",
+                "wi fi"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "@text"
+              ],
+              "min": 10,
+              "max": 120,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "course_formulas",
+          "points": 1,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "i'd like",
+                "i would like",
+                "i'm writing to confirm",
+                "i am writing to confirm",
+                "please confirm",
+                "thank you",
+                "thanks",
+                "see you",
+                "dear",
+                "best regards",
+                "kind regards"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "@text"
+              ],
+              "min": 10,
+              "max": 120,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "basic_spelling",
+          "points": 1,
+          "checks": [
+            {
+              "check": "token_in_course_vocabulary_or_capitalized_name",
+              "on": [
+                "@text"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "@text"
+              ],
+              "min": 10,
+              "max": 120,
+              "multiplier": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "writing.past_story",
+      "criteria": [
+        {
+          "id": "uses_template",
+          "points": 1,
+          "checks": [
+            {
+              "check": "template_phrases_present",
+              "on": [
+                "@text"
+              ],
+              "phrases": [
+                "it was a wonderful trip",
+                "first we",
+                "then we",
+                "finally we",
+                "come back soon"
+              ]
+            },
+            {
+              "check": "not_placeholder",
+              "on": [
+                "*"
+              ],
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "past_verbs",
+          "points": 2,
+          "checks": [
+            {
+              "check": "past_verbs_at_least",
+              "on": [
+                "*"
+              ],
+              "min": 3,
+              "phrases": [
+                "went",
+                "saw",
+                "ate",
+                "had",
+                "took",
+                "made",
+                "got",
+                "came",
+                "gave",
+                "bought",
+                "drank",
+                "slept",
+                "swam",
+                "rode",
+                "wrote",
+                "read",
+                "met",
+                "ran",
+                "was",
+                "were",
+                "did",
+                "said",
+                "found",
+                "left",
+                "paid",
+                "sat",
+                "stood",
+                "lost",
+                "spent",
+                "felt",
+                "told",
+                "thought",
+                "brought",
+                "taught",
+                "sang",
+                "wore",
+                "flew",
+                "drove",
+                "began",
+                "knew",
+                "heard",
+                "kept",
+                "sold",
+                "sent",
+                "built",
+                "fell",
+                "hurt",
+                "cut"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connectors",
+          "points": 1,
+          "checks": [
+            {
+              "check": "template_phrases_present",
+              "on": [
+                "@text"
+              ],
+              "phrases": [
+                "first we",
+                "then we",
+                "finally we"
+              ]
+            },
+            {
+              "check": "not_placeholder",
+              "on": [
+                "*"
+              ],
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "basic_intelligibility",
+          "points": 1,
+          "checks": [
+            {
+              "check": "token_in_course_vocabulary_or_capitalized_name",
+              "on": [
+                "@text"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "@text"
+              ],
+              "min": 25,
+              "max": 40
+            },
+            {
+              "check": "not_placeholder",
+              "on": [
+                "*"
+              ],
+              "multiplier": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "speaking.tomorrow_now_written",
+      "criteria": [
+        {
+          "id": "answers_both",
+          "points": 2,
+          "checks": [
+            {
+              "check": "not_placeholder",
+              "on": [
+                "*"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "target_forms",
+          "points": 2,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "going to"
+              ]
+            },
+            {
+              "check": "be_plus_ing",
+              "on": [
+                "q2"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "intelligibility",
+          "points": 1,
+          "checks": [
+            {
+              "check": "token_in_course_vocabulary_or_capitalized_name",
+              "on": [
+                "*"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

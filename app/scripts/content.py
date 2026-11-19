@@ -18,6 +18,11 @@ exits 1. On success it appends one line to `<content-dir>/publication-audit.json
 
 The change is to files in the repository: commit it and deploy. Nothing runs
 against the database, and it never touches `TRAINER_SERVE_DRAFTS`.
+
+    python -m app.scripts.content tts --pack en/A2 [--only <id>] [--dry-run]
+
+makes the audio files of a pack with a local text-to-speech engine (see
+`app/scripts/tts.py`); it is a developer tool and needs `uv run --group tts`.
 """
 
 import argparse
@@ -202,6 +207,29 @@ def _publish(args: argparse.Namespace, now: datetime, out: Out) -> int:
     return 0
 
 
+def _tts(args: argparse.Namespace, out: Out) -> int:
+    from app.scripts.tts import run_tts
+
+    if not _PACK_KEY.match(args.pack):
+        out("--pack must look like en/A2")
+        return 2
+    try:
+        pack = load_pack(Path(args.content_dir) / args.pack)
+    except PackError as exc:
+        out("The pack does not load:")
+        for problem in exc.problems:
+            out(f"  {problem}")
+        return 1
+    return run_tts(
+        pack,
+        only=args.only,
+        dry_run=args.dry_run,
+        check=args.check,
+        force=args.force,
+        out=out,
+    )
+
+
 def main(
     argv: Sequence[str] | None = None,
     *,
@@ -222,7 +250,23 @@ def main(
         "--content-dir",
         default=os.environ.get("TRAINER_CONTENT_DIR", "content/trainer"),
     )
+    tts = sub.add_parser("tts", help="make the audio files of a pack (dev tool)")
+    tts.add_argument("--pack", required=True, help="language/level, e.g. en/A2")
+    tts.add_argument(
+        "--only", nargs="+", default=[], help="audio, item or activity ids"
+    )
+    tts.add_argument("--dry-run", action="store_true", help="list what would be made")
+    tts.add_argument(
+        "--check", action="store_true", help="like --dry-run; exit 1 if stale"
+    )
+    tts.add_argument("--force", action="store_true", help="remake even if up to date")
+    tts.add_argument(
+        "--content-dir",
+        default=os.environ.get("TRAINER_CONTENT_DIR", "content/trainer"),
+    )
     args = parser.parse_args(argv)
+    if args.command == "tts":
+        return _tts(args, out)
     return _publish(args, now or datetime.now(UTC), out)
 
 

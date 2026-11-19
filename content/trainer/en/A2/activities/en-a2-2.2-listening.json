@@ -1,0 +1,82 @@
+{
+  "id": "en-a2-2.2-listening",
+  "lesson_id": "2.2",
+  "skill": "listening",
+  "title": "Listen and choose 2.2",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Travel assistant at a station",
+  "can_do": [
+    "I can buy a ticket and ask the price.",
+    "I can say what hurts and what I need to wear.",
+    "I can talk about my daily routine."
+  ],
+  "items": [
+    {
+      "id": "en-a2-2.2.l1",
+      "type": "listen_choose",
+      "prompt": "Which day does the traveller want?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Friday"
+        },
+        {
+          "id": "o2",
+          "text": "Monday"
+        },
+        {
+          "id": "o3",
+          "text": "Sunday"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: for Friday.",
+      "audio": "en-a2-2.2.l1"
+    },
+    {
+      "id": "en-a2-2.2.l2",
+      "type": "listen_choose",
+      "prompt": "What hurts?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "the hand"
+        },
+        {
+          "id": "o2",
+          "text": "the stomach"
+        },
+        {
+          "id": "o3",
+          "text": "the knee"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: my stomach hurts.",
+      "audio": "en-a2-2.2.l2"
+    },
+    {
+      "id": "en-a2-2.2.l3",
+      "type": "listen_choose",
+      "prompt": "What does the speaker want?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "a hat and gloves"
+        },
+        {
+          "id": "o2",
+          "text": "a shirt and shoes"
+        },
+        {
+          "id": "o3",
+          "text": "a jacket and boots"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: a warm jacket and a pair of boots.",
+      "audio": "en-a2-2.2.l3"
+    }
+  ]
+}
