@@ -1,0 +1,81 @@
+{
+  "id": "en-a2-4.1-listening",
+  "lesson_id": "4.1",
+  "skill": "listening",
+  "title": "Listen and choose 4.1",
+  "estimated_minutes": 4,
+  "status": "draft",
+  "role": "Eco-lodge host",
+  "can_do": [
+    "I can tell guests how to save water and energy.",
+    "I can use the present simple and instructions."
+  ],
+  "items": [
+    {
+      "id": "en-a2-4.1.l1",
+      "type": "listen_choose",
+      "prompt": "What do they use for the garden?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "river water"
+        },
+        {
+          "id": "o2",
+          "text": "bottled water"
+        },
+        {
+          "id": "o3",
+          "text": "rain water"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: rain water.",
+      "audio": "en-a2-4.1.l1"
+    },
+    {
+      "id": "en-a2-4.1.l2",
+      "type": "listen_choose",
+      "prompt": "When do you close the tap?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "when you brush your teeth"
+        },
+        {
+          "id": "o2",
+          "text": "when you cook"
+        },
+        {
+          "id": "o3",
+          "text": "when you sleep"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: when you brush your teeth.",
+      "audio": "en-a2-4.1.l2"
+    },
+    {
+      "id": "en-a2-4.1.l3",
+      "type": "listen_choose",
+      "prompt": "What is the bag for?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "food"
+        },
+        {
+          "id": "o2",
+          "text": "paper and glass"
+        },
+        {
+          "id": "o3",
+          "text": "clothes"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: a bag for your paper and glass.",
+      "audio": "en-a2-4.1.l3"
+    }
+  ]
+}

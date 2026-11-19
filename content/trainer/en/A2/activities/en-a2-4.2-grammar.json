@@ -1,0 +1,199 @@
+{
+  "id": "en-a2-4.2-grammar",
+  "lesson_id": "4.2",
+  "skill": "grammar",
+  "title": "Practice 4.2",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Host welcoming guests from different countries",
+  "can_do": [
+    "I can use polite social formulas.",
+    "I can ask and answer basic questions with respect."
+  ],
+  "items": [
+    {
+      "id": "a2-4.2.ex.01",
+      "type": "mcq",
+      "prompt": "Which phrase is polite?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Move!"
+        },
+        {
+          "id": "o2",
+          "text": "Hey you!"
+        },
+        {
+          "id": "o3",
+          "text": "Excuse me, please."
+        }
+      ],
+      "correct": "o3",
+      "explanation": "Excuse me, please is polite.",
+      "error_tags": {
+        "o1": {
+          "tag": "politeness",
+          "text": "Move! is an order, not a polite phrase."
+        }
+      }
+    },
+    {
+      "id": "a2-4.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right word.",
+      "template": "{1} I take a photo?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "May"
+            },
+            {
+              "id": "o2",
+              "text": "Do"
+            },
+            {
+              "id": "o3",
+              "text": "Are"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "modal",
+            "text": "Use May or Can to ask permission."
+          }
+        }
+      ],
+      "explanation": "May I ... is a polite way to ask permission."
+    },
+    {
+      "id": "a2-4.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "Thank you! You are {1}.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "welcome"
+          ],
+          "error_tag": {
+            "tag": "formula",
+            "text": "The answer to thank you is you are welcome."
+          }
+        }
+      ],
+      "explanation": "You are welcome answers thank you."
+    },
+    {
+      "id": "a2-4.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Excuse"
+        },
+        {
+          "id": "t2",
+          "text": "me"
+        },
+        {
+          "id": "t3",
+          "text": "where"
+        },
+        {
+          "id": "t4",
+          "text": "is"
+        },
+        {
+          "id": "t5",
+          "text": "the"
+        },
+        {
+          "id": "t6",
+          "text": "museum"
+        }
+      ],
+      "explanation": "The polite question starts with Excuse me.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with Excuse me."
+      }
+    },
+    {
+      "id": "a2-4.2.ex.05",
+      "type": "match",
+      "prompt": "Match the phrase with its use.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "Excuse me"
+        },
+        {
+          "id": "l2",
+          "text": "Thank you"
+        },
+        {
+          "id": "l3",
+          "text": "I'm sorry"
+        },
+        {
+          "id": "l4",
+          "text": "Welcome"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "to get attention"
+        },
+        {
+          "id": "r2",
+          "text": "to say thanks"
+        },
+        {
+          "id": "r3",
+          "text": "to apologise"
+        },
+        {
+          "id": "r4",
+          "text": "to greet a visitor"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each formula has a use."
+    },
+    {
+      "id": "a2-4.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Thank someone for their help.",
+      "accepted": [
+        "Thank you for your help",
+        "Thank you very much for your help",
+        "Thanks for your help"
+      ],
+      "explanation": "Use Thank you for + your help."
+    }
+  ]
+}

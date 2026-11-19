@@ -1,0 +1,181 @@
+{
+  "id": "en-a2-4.3-dialogue",
+  "lesson_id": "4.3",
+  "skill": "dialogue",
+  "title": "Talk it through 4.3",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Receptionist and waiter",
+  "can_do": [
+    "I can help a guest at check-in and check-out.",
+    "I can take a simple order in a restaurant."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Hello. I have a reservation under the name Brown.",
+        "translation": "Hola. Tengo una reserva a nombre de Brown.",
+        "audio": "en-a2-4.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Welcome, Mr. Brown. May I see your passport?",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Good evening. Let me check your reservation.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Welcome. Please fill in this form.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Can I have a late check-out tomorrow?",
+        "translation": "¿Puedo hacer la salida tarde mañana?",
+        "audio": "en-a2-4.3.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "yes"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "no"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "sorry"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "Yes, you can check out at one.",
+        "starters": [
+          "Yes, you can ...",
+          "Sorry, ..."
+        ],
+        "word_bank": [
+          "yes",
+          "you",
+          "can",
+          "check",
+          "out",
+          "at",
+          "one",
+          "sorry",
+          "no"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "A table for four, please.",
+        "translation": "Una mesa para cuatro, por favor.",
+        "audio": "en-a2-4.3.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. Please follow me.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "This way, please.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Do you want a table by the window?",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "What do you recommend?",
+        "translation": "¿Qué recomienda?",
+        "audio": "en-a2-4.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I recommend the chicken soup.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "The fish is very good today.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Our coffee cake is very popular.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Can we have the bill, please?",
+        "translation": "¿Nos trae la cuenta, por favor?",
+        "audio": "en-a2-4.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. I am bringing it now.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Certainly. Cash or card?",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Sure. Here is the bill.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Everything was delicious. Thank you!",
+        "translation": "Todo estuvo delicioso. ¡Gracias!",
+        "audio": "en-a2-4.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you! Come again.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "We are glad you liked it.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Thank you. Have a nice night.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

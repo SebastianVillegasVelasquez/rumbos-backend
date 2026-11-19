@@ -1,0 +1,203 @@
+{
+  "id": "en-a2-4.1-grammar",
+  "lesson_id": "4.1",
+  "skill": "grammar",
+  "title": "Practice 4.1",
+  "estimated_minutes": 6,
+  "status": "draft",
+  "role": "Eco-lodge host",
+  "can_do": [
+    "I can tell guests how to save water and energy.",
+    "I can use the present simple and instructions."
+  ],
+  "items": [
+    {
+      "id": "a2-4.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is an instruction?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "We close the tap."
+        },
+        {
+          "id": "o2",
+          "text": "Close the tap."
+        },
+        {
+          "id": "o3",
+          "text": "The tap is closed."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "An instruction starts with the base verb: close the tap.",
+      "error_tags": {
+        "o3": {
+          "tag": "function",
+          "text": "The tap is closed describes; it does not tell anyone what to do."
+        }
+      }
+    },
+    {
+      "id": "a2-4.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the right words.",
+      "template": "{1} the fan when you go out.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "Switches off"
+            },
+            {
+              "id": "o2",
+              "text": "Switching off"
+            },
+            {
+              "id": "o3",
+              "text": "Switch off"
+            }
+          ],
+          "correct": "o3",
+          "error_tag": {
+            "tag": "imperative",
+            "text": "Use the base verb for an instruction."
+          }
+        }
+      ],
+      "explanation": "An instruction uses the base verb: switch off."
+    },
+    {
+      "id": "a2-4.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "The hotel {1} solar energy.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "uses"
+          ],
+          "error_tag": {
+            "tag": "third_person",
+            "text": "With it, add -s: uses."
+          }
+        }
+      ],
+      "explanation": "With the hotel (it) we add -s: uses."
+    },
+    {
+      "id": "a2-4.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Please"
+        },
+        {
+          "id": "t2",
+          "text": "put"
+        },
+        {
+          "id": "t3",
+          "text": "your"
+        },
+        {
+          "id": "t4",
+          "text": "bottle"
+        },
+        {
+          "id": "t5",
+          "text": "in"
+        },
+        {
+          "id": "t6",
+          "text": "the"
+        },
+        {
+          "id": "t7",
+          "text": "bin"
+        }
+      ],
+      "explanation": "The order is: please, verb, object, place.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with Please put."
+      }
+    },
+    {
+      "id": "a2-4.1.ex.05",
+      "type": "match",
+      "prompt": "Match the action with the thing.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "Switch off"
+        },
+        {
+          "id": "l2",
+          "text": "Close"
+        },
+        {
+          "id": "l3",
+          "text": "Reuse"
+        },
+        {
+          "id": "l4",
+          "text": "Recycle"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "the fan"
+        },
+        {
+          "id": "r2",
+          "text": "the tap"
+        },
+        {
+          "id": "r3",
+          "text": "your bottle"
+        },
+        {
+          "id": "r4",
+          "text": "paper and glass"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each verb goes with what it acts on."
+    },
+    {
+      "id": "a2-4.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Tell a guest to close the tap.",
+      "accepted": [
+        "Close the tap",
+        "Please close the tap",
+        "Close the tap please"
+      ],
+      "explanation": "Use the base verb: close the tap."
+    }
+  ]
+}

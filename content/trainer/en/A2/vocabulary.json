@@ -479,6 +479,150 @@
       "lesson_id": "3.4",
       "word": "bored",
       "translation": "aburrido"
+    },
+    {
+      "id": "en-a2-4.1.v1",
+      "lesson_id": "4.1",
+      "word": "recycle",
+      "translation": "reciclar"
+    },
+    {
+      "id": "en-a2-4.1.v2",
+      "lesson_id": "4.1",
+      "word": "reuse",
+      "translation": "reutilizar"
+    },
+    {
+      "id": "en-a2-4.1.v3",
+      "lesson_id": "4.1",
+      "word": "energy",
+      "translation": "energía"
+    },
+    {
+      "id": "en-a2-4.1.v4",
+      "lesson_id": "4.1",
+      "word": "solar",
+      "translation": "solar"
+    },
+    {
+      "id": "en-a2-4.1.v5",
+      "lesson_id": "4.1",
+      "word": "tap",
+      "translation": "grifo"
+    },
+    {
+      "id": "en-a2-4.1.v6",
+      "lesson_id": "4.1",
+      "word": "bin",
+      "translation": "caneca"
+    },
+    {
+      "id": "en-a2-4.1.v7",
+      "lesson_id": "4.1",
+      "word": "waste",
+      "translation": "desperdiciar"
+    },
+    {
+      "id": "en-a2-4.1.v8",
+      "lesson_id": "4.1",
+      "word": "nature",
+      "translation": "naturaleza"
+    },
+    {
+      "id": "en-a2-4.2.v1",
+      "lesson_id": "4.2",
+      "word": "polite",
+      "translation": "educado"
+    },
+    {
+      "id": "en-a2-4.2.v2",
+      "lesson_id": "4.2",
+      "word": "respect",
+      "translation": "respeto"
+    },
+    {
+      "id": "en-a2-4.2.v3",
+      "lesson_id": "4.2",
+      "word": "culture",
+      "translation": "cultura"
+    },
+    {
+      "id": "en-a2-4.2.v4",
+      "lesson_id": "4.2",
+      "word": "peace",
+      "translation": "paz"
+    },
+    {
+      "id": "en-a2-4.2.v5",
+      "lesson_id": "4.2",
+      "word": "kind",
+      "translation": "amable"
+    },
+    {
+      "id": "en-a2-4.2.v6",
+      "lesson_id": "4.2",
+      "word": "visitor",
+      "translation": "visitante"
+    },
+    {
+      "id": "en-a2-4.2.v7",
+      "lesson_id": "4.2",
+      "word": "community",
+      "translation": "comunidad"
+    },
+    {
+      "id": "en-a2-4.2.v8",
+      "lesson_id": "4.2",
+      "word": "smile",
+      "translation": "sonrisa"
+    },
+    {
+      "id": "en-a2-4.3.v1",
+      "lesson_id": "4.3",
+      "word": "check-in",
+      "translation": "registro de entrada"
+    },
+    {
+      "id": "en-a2-4.3.v2",
+      "lesson_id": "4.3",
+      "word": "check-out",
+      "translation": "salida"
+    },
+    {
+      "id": "en-a2-4.3.v3",
+      "lesson_id": "4.3",
+      "word": "bill",
+      "translation": "cuenta"
+    },
+    {
+      "id": "en-a2-4.3.v4",
+      "lesson_id": "4.3",
+      "word": "menu",
+      "translation": "carta"
+    },
+    {
+      "id": "en-a2-4.3.v5",
+      "lesson_id": "4.3",
+      "word": "table",
+      "translation": "mesa"
+    },
+    {
+      "id": "en-a2-4.3.v6",
+      "lesson_id": "4.3",
+      "word": "passport",
+      "translation": "pasaporte"
+    },
+    {
+      "id": "en-a2-4.3.v7",
+      "lesson_id": "4.3",
+      "word": "floor",
+      "translation": "piso"
+    },
+    {
+      "id": "en-a2-4.3.v8",
+      "lesson_id": "4.3",
+      "word": "recommend",
+      "translation": "recomendar"
     }
   ]
 }

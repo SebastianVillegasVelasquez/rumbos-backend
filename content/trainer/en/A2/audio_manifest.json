@@ -1388,6 +1388,357 @@
       "file": "audio/en-a2-3.4.l3.mp3",
       "duration_s": null,
       "transcript": "You shouldn't swim in the river after the rain."
+    },
+    {
+      "id": "en-a2-4.1.d1",
+      "text": "Where do I put my plastic bottle?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Where do I put my plastic bottle?"
+        }
+      ],
+      "file": "audio/en-a2-4.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Where do I put my plastic bottle?"
+    },
+    {
+      "id": "en-a2-4.1.d2",
+      "text": "How can I save energy in my room?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How can I save energy in my room?"
+        }
+      ],
+      "file": "audio/en-a2-4.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "How can I save energy in my room?"
+    },
+    {
+      "id": "en-a2-4.1.d3",
+      "text": "Does the hotel use solar energy?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Does the hotel use solar energy?"
+        }
+      ],
+      "file": "audio/en-a2-4.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "Does the hotel use solar energy?"
+    },
+    {
+      "id": "en-a2-4.1.d4",
+      "text": "Can I wash my towel every day?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can I wash my towel every day?"
+        }
+      ],
+      "file": "audio/en-a2-4.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Can I wash my towel every day?"
+    },
+    {
+      "id": "en-a2-4.1.d5",
+      "text": "Is the water here safe to drink?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is the water here safe to drink?"
+        }
+      ],
+      "file": "audio/en-a2-4.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is the water here safe to drink?"
+    },
+    {
+      "id": "en-a2-4.1.d6",
+      "text": "I love this eco-lodge!",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I love this eco-lodge!"
+        }
+      ],
+      "file": "audio/en-a2-4.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "I love this eco-lodge!"
+    },
+    {
+      "id": "en-a2-4.1.l1",
+      "text": "We use rain water for the garden.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "We use rain water for the garden."
+        }
+      ],
+      "file": "audio/en-a2-4.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "We use rain water for the garden."
+    },
+    {
+      "id": "en-a2-4.1.l2",
+      "text": "Please close the tap when you brush your teeth.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Please close the tap when you brush your teeth."
+        }
+      ],
+      "file": "audio/en-a2-4.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "Please close the tap when you brush your teeth."
+    },
+    {
+      "id": "en-a2-4.1.l3",
+      "text": "The hotel gives you a bag for your paper and glass.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The hotel gives you a bag for your paper and glass."
+        }
+      ],
+      "file": "audio/en-a2-4.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "The hotel gives you a bag for your paper and glass."
+    },
+    {
+      "id": "en-a2-4.2.d1",
+      "text": "Hello! Is it okay to take photos here?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Hello! Is it okay to take photos here?"
+        }
+      ],
+      "file": "audio/en-a2-4.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hello! Is it okay to take photos here?"
+    },
+    {
+      "id": "en-a2-4.2.d2",
+      "text": "Thank you. How do you say hello in your language?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. How do you say hello in your language?"
+        }
+      ],
+      "file": "audio/en-a2-4.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. How do you say hello in your language?"
+    },
+    {
+      "id": "en-a2-4.2.d3",
+      "text": "Excuse me. Can I sit here?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Excuse me. Can I sit here?"
+        }
+      ],
+      "file": "audio/en-a2-4.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "Excuse me. Can I sit here?"
+    },
+    {
+      "id": "en-a2-4.2.d4",
+      "text": "I'm sorry. I do not understand.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I'm sorry. I do not understand."
+        }
+      ],
+      "file": "audio/en-a2-4.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "I'm sorry. I do not understand."
+    },
+    {
+      "id": "en-a2-4.2.d5",
+      "text": "Thank you for your kindness.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you for your kindness."
+        }
+      ],
+      "file": "audio/en-a2-4.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "Thank you for your kindness."
+    },
+    {
+      "id": "en-a2-4.2.d6",
+      "text": "Goodbye and good luck!",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Goodbye and good luck!"
+        }
+      ],
+      "file": "audio/en-a2-4.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Goodbye and good luck!"
+    },
+    {
+      "id": "en-a2-4.2.l1",
+      "text": "Excuse me, is this seat free?",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Excuse me, is this seat free?"
+        }
+      ],
+      "file": "audio/en-a2-4.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "Excuse me, is this seat free?"
+    },
+    {
+      "id": "en-a2-4.2.l2",
+      "text": "Thank you very much for your help.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Thank you very much for your help."
+        }
+      ],
+      "file": "audio/en-a2-4.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "Thank you very much for your help."
+    },
+    {
+      "id": "en-a2-4.2.l3",
+      "text": "In my country people say hello with a smile.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "In my country people say hello with a smile."
+        }
+      ],
+      "file": "audio/en-a2-4.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "In my country people say hello with a smile."
+    },
+    {
+      "id": "en-a2-4.3.d1",
+      "text": "Hello. I have a reservation under the name Brown.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Hello. I have a reservation under the name Brown."
+        }
+      ],
+      "file": "audio/en-a2-4.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hello. I have a reservation under the name Brown."
+    },
+    {
+      "id": "en-a2-4.3.d2",
+      "text": "Can I have a late check-out tomorrow?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can I have a late check-out tomorrow?"
+        }
+      ],
+      "file": "audio/en-a2-4.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "Can I have a late check-out tomorrow?"
+    },
+    {
+      "id": "en-a2-4.3.d3",
+      "text": "A table for four, please.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "A table for four, please."
+        }
+      ],
+      "file": "audio/en-a2-4.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "A table for four, please."
+    },
+    {
+      "id": "en-a2-4.3.d4",
+      "text": "What do you recommend?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What do you recommend?"
+        }
+      ],
+      "file": "audio/en-a2-4.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "What do you recommend?"
+    },
+    {
+      "id": "en-a2-4.3.d5",
+      "text": "Can we have the bill, please?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can we have the bill, please?"
+        }
+      ],
+      "file": "audio/en-a2-4.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "Can we have the bill, please?"
+    },
+    {
+      "id": "en-a2-4.3.d6",
+      "text": "Everything was delicious. Thank you!",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Everything was delicious. Thank you!"
+        }
+      ],
+      "file": "audio/en-a2-4.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "Everything was delicious. Thank you!"
+    },
+    {
+      "id": "en-a2-4.3.l1",
+      "text": "Your room is on the second floor. Here is your key card.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Your room is on the second floor. Here is your key card."
+        }
+      ],
+      "file": "audio/en-a2-4.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "Your room is on the second floor. Here is your key card."
+    },
+    {
+      "id": "en-a2-4.3.l2",
+      "text": "I would like the chicken soup and a glass of juice.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I would like the chicken soup and a glass of juice."
+        }
+      ],
+      "file": "audio/en-a2-4.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "I would like the chicken soup and a glass of juice."
+    },
+    {
+      "id": "en-a2-4.3.l3",
+      "text": "Check-out is at eleven. Please leave your key at the desk.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Check-out is at eleven. Please leave your key at the desk."
+        }
+      ],
+      "file": "audio/en-a2-4.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "Check-out is at eleven. Please leave your key at the desk."
     }
   ]
 }

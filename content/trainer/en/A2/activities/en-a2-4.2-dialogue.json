@@ -1,0 +1,177 @@
+{
+  "id": "en-a2-4.2-dialogue",
+  "lesson_id": "4.2",
+  "skill": "dialogue",
+  "title": "Talk it through 4.2",
+  "estimated_minutes": 5,
+  "status": "draft",
+  "role": "Host welcoming guests from different countries",
+  "can_do": [
+    "I can use polite social formulas.",
+    "I can ask and answer basic questions with respect."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Hello! Is it okay to take photos here?",
+        "translation": "¡Hola! ¿Está bien tomar fotos aquí?",
+        "audio": "en-a2-4.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, of course. Please ask people first.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, but please be polite.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Yes. Many people like photos.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Thank you. How do you say hello in your language?",
+        "translation": "Gracias. ¿Cómo se dice hola en tu idioma?",
+        "audio": "en-a2-4.2.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "we",
+              "say"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "hola"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "buenos"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "We say hola.",
+        "starters": [
+          "We say ..."
+        ],
+        "word_bank": [
+          "we",
+          "say",
+          "hola",
+          "buenos",
+          "días"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Excuse me. Can I sit here?",
+        "translation": "Disculpe. ¿Puedo sentarme aquí?",
+        "audio": "en-a2-4.2.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. Please sit down.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, please. You are welcome.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Sure. Make yourself at home.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "I'm sorry. I do not understand.",
+        "translation": "Lo siento. No entiendo.",
+        "audio": "en-a2-4.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "No problem. I can speak slowly.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Don't worry. I can help you.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "That's okay. Let me show you.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Thank you for your kindness.",
+        "translation": "Gracias por su amabilidad.",
+        "audio": "en-a2-4.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You're welcome. We are happy to help.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "It's a pleasure.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Thank you for visiting us.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Goodbye and good luck!",
+        "translation": "¡Adiós y buena suerte!",
+        "audio": "en-a2-4.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Goodbye! Come back soon.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Thank you. Safe trip!",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Good luck to you too!",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}
