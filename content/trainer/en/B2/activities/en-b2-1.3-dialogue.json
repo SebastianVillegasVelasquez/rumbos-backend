@@ -4,7 +4,7 @@
   "title": "Talk it through 1.3",
   "estimated_minutes": 5,
   "lesson_id": "1.3",
-  "status": "draft",
+  "status": "published",
   "role": "Tour operator solving a booking problem with a customer-service representative",
   "can_do": [
     "I can describe a service problem that is still going on.",
@@ -179,5 +179,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }

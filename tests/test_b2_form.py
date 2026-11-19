@@ -132,10 +132,10 @@ def test_every_objective_item_has_a_competence_tag() -> None:
                 assert ".".join(item.competence.lesson.split(".")[:2]) in lessons
 
 
-def test_the_form_is_a_draft_nobody_has_reviewed_and_says_its_level() -> None:
-    assert FORM.status == "draft"
-    assert FORM.reviewed_by is None and FORM.reviewed_at is None
-    assert PACK.meta.status == "draft"
+def test_the_form_is_published_after_review_and_says_its_level() -> None:
+    assert FORM.status == "published"
+    assert FORM.reviewed_by and FORM.reviewed_at
+    assert PACK.meta.status == "published"
     assert (FORM.language, FORM.level, FORM.purpose) == ("en", "B2", "check_in")
     assert "B2" in FORM.title and "A1" not in FORM.title and "A2" not in FORM.title
     assert not any(
@@ -183,7 +183,9 @@ def test_the_committed_form_is_what_the_importer_builds() -> None:
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     built, entries = module.build(SOURCE)
-    assert built == FORM
+    # Publishing only changes the review fields, never the content.
+    review = {"status", "reviewed_by", "reviewed_at"}
+    assert built.model_dump(exclude=review) == FORM.model_dump(exclude=review)
     manifest = {e.id: e for e in PACK.audio.values()}
     for entry in entries:
         assert manifest[entry["id"]].transcript == entry["transcript"]

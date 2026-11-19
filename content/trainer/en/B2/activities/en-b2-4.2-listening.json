@@ -4,7 +4,7 @@
   "title": "Listen and choose 4.2",
   "estimated_minutes": 4,
   "lesson_id": "4.2",
-  "status": "draft",
+  "status": "published",
   "role": "Mediator using persuasive language to negotiate for peace through tourism",
   "can_do": [
     "I can use persuasive language to defend tourism as a culture for peace.",
@@ -77,5 +77,7 @@
       "explanation": "The speaker suggests reducing the fee in the first year.",
       "audio": "en-b2-4.2.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }

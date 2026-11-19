@@ -4,7 +4,7 @@
   "title": "Listen and choose 1.2",
   "estimated_minutes": 4,
   "lesson_id": "1.2",
-  "status": "draft",
+  "status": "published",
   "role": "Event coordinator briefing a colleague on what is certain and what is not",
   "can_do": [
     "I can say how sure I am about a plan or an event.",
@@ -77,5 +77,7 @@
       "explanation": "The speaker says to keep it ready in case the storm moves north.",
       "audio": "en-b2-1.2.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }

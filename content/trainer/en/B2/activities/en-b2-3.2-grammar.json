@@ -4,7 +4,7 @@
   "title": "Practice 3.2",
   "estimated_minutes": 6,
   "lesson_id": "3.2",
-  "status": "draft",
+  "status": "published",
   "role": "Guide telling the history and folklore of a place",
   "can_do": [
     "I can tell the history of a place using the past simple and the passive.",
@@ -222,5 +222,7 @@
       "max_length": 60,
       "explanation": "The past passive: was built by + agent."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }

@@ -4,7 +4,7 @@
   "title": "Practice 4.1",
   "estimated_minutes": 6,
   "lesson_id": "4.1",
-  "status": "draft",
+  "status": "published",
   "role": "Sustainability adviser explaining what would happen under different choices",
   "can_do": [
     "I can use conditionals and the passive to talk about sustainable tourism.",
@@ -211,5 +211,7 @@
       "max_length": 62,
       "explanation": "Use would have + past participle in the result clause."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }

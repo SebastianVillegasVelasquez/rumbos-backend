@@ -4,9 +4,9 @@
   "language": "en",
   "level": "B2",
   "purpose": "check_in",
-  "status": "draft",
-  "reviewed_by": null,
-  "reviewed_at": null,
+  "status": "published",
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z",
   "sections": [
     {
       "key": "listening",

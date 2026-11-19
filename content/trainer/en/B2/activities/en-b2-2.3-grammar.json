@@ -4,7 +4,7 @@
   "title": "Practice 2.3",
   "estimated_minutes": 6,
   "lesson_id": "2.3",
-  "status": "draft",
+  "status": "published",
   "role": "New employee asking about the company's mission and values",
   "can_do": [
     "I can talk about a company's mission and values.",
@@ -206,5 +206,7 @@
       "max_length": 71,
       "explanation": "Be committed to + noun or -ing form."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }

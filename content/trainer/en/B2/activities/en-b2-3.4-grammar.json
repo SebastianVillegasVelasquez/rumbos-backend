@@ -4,7 +4,7 @@
   "title": "Practice 3.4",
   "estimated_minutes": 6,
   "lesson_id": "3.4",
-  "status": "draft",
+  "status": "published",
   "role": "Presenter closing a talk on sustainable tourism with recommendations",
   "can_do": [
     "I can present sustainable tourism using key expressions.",
@@ -205,5 +205,7 @@
       "max_length": 78,
       "explanation": "We recommend that + subject + base verb."
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-19T19:55:41.000440Z"
 }
