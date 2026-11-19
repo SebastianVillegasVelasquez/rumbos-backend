@@ -322,7 +322,7 @@ def _build(sections: list[dict[str, Any]], notes: list[str]) -> AssessmentForm:
     return AssessmentForm.model_validate(
         {
             "form_id": "a1-form-a",
-            "title": "Evaluación diagnóstica · Forma A · Diagnóstico de entrada",
+            "title": "Inglés A1 · Evaluación diagnóstica · Forma A · Diagnóstico de entrada",
             "language": "en",
             "level": "A1",
             "status": "draft",
