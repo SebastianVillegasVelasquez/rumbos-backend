@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-2.1-listening",
+  "skill": "listening",
+  "title": "Listen and choose 2.1",
+  "estimated_minutes": 4,
+  "lesson_id": "2.1",
+  "status": "draft",
+  "role": "Team member talking with a colleague about a change at work and how it feels",
+  "can_do": [
+    "I can talk about a change at work and how I feel about it.",
+    "I can weigh advantages and disadvantages with on the one hand and on the other hand."
+  ],
+  "items": [
+    {
+      "id": "en-b2-2.1.l1",
+      "type": "listen_choose",
+      "prompt": "How does the speaker feel?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Annoyed"
+        },
+        {
+          "id": "o2",
+          "text": "Relieved"
+        },
+        {
+          "id": "o3",
+          "text": "Bored"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: I feel relieved.",
+      "audio": "en-b2-2.1.l1"
+    },
+    {
+      "id": "en-b2-2.1.l2",
+      "type": "listen_choose",
+      "prompt": "What is the disadvantage of the new office?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "It is far from home"
+        },
+        {
+          "id": "o2",
+          "text": "The rent is higher"
+        },
+        {
+          "id": "o3",
+          "text": "It is too small"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "On the other hand introduces the disadvantage: the rent is much higher.",
+      "audio": "en-b2-2.1.l2"
+    },
+    {
+      "id": "en-b2-2.1.l3",
+      "type": "listen_choose",
+      "prompt": "Why is the speaker tense?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The change makes no sense"
+        },
+        {
+          "id": "o2",
+          "text": "It is hard to leave the old routine"
+        },
+        {
+          "id": "o3",
+          "text": "The work is too easy"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker finds it hard to let go of the old routine.",
+      "audio": "en-b2-2.1.l3"
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "id": "en-b2-2.4-grammar",
+  "skill": "grammar",
+  "title": "Practice 2.4",
+  "estimated_minutes": 6,
+  "lesson_id": "2.4",
+  "status": "draft",
+  "role": "Supervisor discussing how a personal problem is affecting someone's work",
+  "can_do": [
+    "I can talk about how personal problems affect professional life.",
+    "I can raise a sensitive issue and respond with empathy."
+  ],
+  "items": [
+    {
+      "id": "b2-2.4.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence shows empathy?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "That is not my problem."
+        },
+        {
+          "id": "o2",
+          "text": "I am sorry to hear that. How can I help?"
+        },
+        {
+          "id": "o3",
+          "text": "You should have told me earlier."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "An empathetic reply recognises the feeling and offers help.",
+      "error_tags": {
+        "o1": {
+          "tag": "empathy",
+          "text": "This refuses to listen."
+        },
+        "o3": {
+          "tag": "empathy",
+          "text": "This blames the person."
+        }
+      }
+    },
+    {
+      "id": "b2-2.4.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "The problem {1} my concentration for weeks.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "has been affecting"
+            },
+            {
+              "id": "o2",
+              "text": "is affect"
+            },
+            {
+              "id": "o3",
+              "text": "affected to"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "tense",
+            "text": "For weeks needs the present perfect continuous."
+          }
+        }
+      ],
+      "explanation": "For + a period of time goes with has been affecting."
+    },
+    {
+      "id": "b2-2.4.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "I am {1} to meet my deadlines at the moment.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "struggling",
+            "trying",
+            "unable"
+          ],
+          "error_tag": {
+            "tag": "collocation",
+            "text": "Struggling to + verb means finding something hard."
+          }
+        }
+      ],
+      "explanation": "Struggling to + verb means finding it hard to do something."
+    },
+    {
+      "id": "b2-2.4.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "It"
+        },
+        {
+          "id": "t2",
+          "text": "has"
+        },
+        {
+          "id": "t3",
+          "text": "been"
+        },
+        {
+          "id": "t4",
+          "text": "difficult"
+        },
+        {
+          "id": "t5",
+          "text": "to"
+        },
+        {
+          "id": "t6",
+          "text": "focus"
+        },
+        {
+          "id": "t7",
+          "text": "on"
+        },
+        {
+          "id": "t8",
+          "text": "work"
+        }
+      ],
+      "explanation": "It has been difficult to focus on work.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "It has been + adjective + to + verb."
+      }
+    },
+    {
+      "id": "b2-2.4.ex.05",
+      "type": "match",
+      "prompt": "Match the phrase with its use.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "I am sorry to hear that."
+        },
+        {
+          "id": "l2",
+          "text": "How can I help?"
+        },
+        {
+          "id": "l3",
+          "text": "It is confidential."
+        },
+        {
+          "id": "l4",
+          "text": "Take as much time as you need."
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "to show empathy"
+        },
+        {
+          "id": "r2",
+          "text": "to offer support"
+        },
+        {
+          "id": "r3",
+          "text": "to protect privacy"
+        },
+        {
+          "id": "r4",
+          "text": "to give permission"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "These phrases help in sensitive conversations."
+    },
+    {
+      "id": "b2-2.4.ex.06",
+      "type": "short_answer",
+      "prompt": "Offer support to a colleague in difficulty. Use How can I help.",
+      "accepted": [
+        "I am sorry to hear that. How can I help",
+        "How can I help",
+        "How can I help you",
+        "I am sorry. How can I help"
+      ],
+      "max_length": 64,
+      "explanation": "How can I help? is a simple, kind offer of support."
+    }
+  ]
+}

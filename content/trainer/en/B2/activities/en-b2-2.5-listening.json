@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-2.5-listening",
+  "skill": "listening",
+  "title": "Listen and choose 2.5",
+  "estimated_minutes": 4,
+  "lesson_id": "2.5",
+  "status": "draft",
+  "role": "Delegate dealing with official and legal matters and running a meeting",
+  "can_do": [
+    "I can report a theft and deal with a consulate or an embassy.",
+    "I can open, run and close a meeting and ask for a summary of reasons."
+  ],
+  "items": [
+    {
+      "id": "en-b2-2.5.l1",
+      "type": "listen_choose",
+      "prompt": "Where was the wallet stolen?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "At the consulate"
+        },
+        {
+          "id": "o2",
+          "text": "On the bus"
+        },
+        {
+          "id": "o3",
+          "text": "In a restaurant"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: my wallet was stolen on the bus.",
+      "audio": "en-b2-2.5.l1"
+    },
+    {
+      "id": "en-b2-2.5.l2",
+      "type": "listen_choose",
+      "prompt": "What is the first item?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The staff list"
+        },
+        {
+          "id": "o2",
+          "text": "The budget"
+        },
+        {
+          "id": "o3",
+          "text": "The venue"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The chair says the first item is the budget.",
+      "audio": "en-b2-2.5.l2"
+    },
+    {
+      "id": "en-b2-2.5.l3",
+      "type": "listen_choose",
+      "prompt": "What is the speaker's position?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "They support the plan"
+        },
+        {
+          "id": "o2",
+          "text": "They oppose the plan"
+        },
+        {
+          "id": "o3",
+          "text": "They have no opinion"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: we oppose the plan.",
+      "audio": "en-b2-2.5.l3"
+    }
+  ]
+}

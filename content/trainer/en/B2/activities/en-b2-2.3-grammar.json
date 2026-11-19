@@ -1,0 +1,210 @@
+{
+  "id": "en-b2-2.3-grammar",
+  "skill": "grammar",
+  "title": "Practice 2.3",
+  "estimated_minutes": 6,
+  "lesson_id": "2.3",
+  "status": "draft",
+  "role": "New employee asking about the company's mission and values",
+  "can_do": [
+    "I can talk about a company's mission and values.",
+    "I can explain what an organisation stands for and how it acts."
+  ],
+  "items": [
+    {
+      "id": "b2-2.3.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence describes a company's mission?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "We open at nine every day."
+        },
+        {
+          "id": "o2",
+          "text": "We aim to make travel fair for everyone."
+        },
+        {
+          "id": "o3",
+          "text": "We sold two hundred tickets."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "A mission says what an organisation aims to achieve.",
+      "error_tags": {
+        "o1": {
+          "tag": "purpose",
+          "text": "This is a timetable, not a purpose."
+        },
+        "o3": {
+          "tag": "purpose",
+          "text": "This is a result, not a purpose."
+        }
+      }
+    },
+    {
+      "id": "b2-2.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "We are committed {1} protecting the environment.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "to"
+            },
+            {
+              "id": "o2",
+              "text": "for"
+            },
+            {
+              "id": "o3",
+              "text": "of"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "preposition",
+            "text": "Committed takes to."
+          }
+        }
+      ],
+      "explanation": "Be committed to + -ing."
+    },
+    {
+      "id": "b2-2.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "The company {1} for fair treatment of workers.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "stands",
+            "stand"
+          ],
+          "error_tag": {
+            "tag": "collocation",
+            "text": "The phrase is stand for."
+          }
+        }
+      ],
+      "explanation": "Stand for means to represent or support."
+    },
+    {
+      "id": "b2-2.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Our"
+        },
+        {
+          "id": "t2",
+          "text": "values"
+        },
+        {
+          "id": "t3",
+          "text": "guide"
+        },
+        {
+          "id": "t4",
+          "text": "every"
+        },
+        {
+          "id": "t5",
+          "text": "decision"
+        },
+        {
+          "id": "t6",
+          "text": "we"
+        },
+        {
+          "id": "t7",
+          "text": "make"
+        }
+      ],
+      "explanation": "Our values guide every decision we make.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Subject, verb, object, then the relative clause."
+      }
+    },
+    {
+      "id": "b2-2.3.ex.05",
+      "type": "match",
+      "prompt": "Match the word with its meaning.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "mission"
+        },
+        {
+          "id": "l2",
+          "text": "integrity"
+        },
+        {
+          "id": "l3",
+          "text": "transparent"
+        },
+        {
+          "id": "l4",
+          "text": "to uphold"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "what an organisation aims to do"
+        },
+        {
+          "id": "r2",
+          "text": "being honest and principled"
+        },
+        {
+          "id": "r3",
+          "text": "open about what you do"
+        },
+        {
+          "id": "r4",
+          "text": "to keep and defend"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "These words describe what organisations believe in."
+    },
+    {
+      "id": "b2-2.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Say what your company is committed to. Use committed to.",
+      "accepted": [
+        "We are committed to protecting nature",
+        "We are committed to fair travel",
+        "We are committed to protecting the environment",
+        "We are committed to being transparent"
+      ],
+      "max_length": 71,
+      "explanation": "Be committed to + noun or -ing form."
+    }
+  ]
+}

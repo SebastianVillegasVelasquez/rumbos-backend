@@ -1,0 +1,200 @@
+{
+  "id": "en-b2-2.3-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 2.3",
+  "estimated_minutes": 5,
+  "lesson_id": "2.3",
+  "status": "draft",
+  "role": "New employee asking about the company's mission and values",
+  "can_do": [
+    "I can talk about a company's mission and values.",
+    "I can explain what an organisation stands for and how it acts."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Welcome to the team. Do you know our mission?",
+        "translation": "Bienvenido al equipo. ¿Conoces nuestra misión?",
+        "audio": "en-b2-2.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I read it. You aim to make travel fair and sustainable.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Not completely. Could you explain it to me?",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, I think it is about local communities.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Right. What do you think our main value is?",
+        "translation": "Correcto. ¿Cuál crees que es nuestro principal valor?",
+        "audio": "en-b2-2.3.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "value"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "integrity"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "respect"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "transparency"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "honesty"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "community"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "I think the main value is respect for local communities.",
+        "starters": [
+          "I think the main value is ...",
+          "The company stands for ..."
+        ],
+        "word_bank": [
+          "I",
+          "think",
+          "the",
+          "main",
+          "value",
+          "is",
+          "respect",
+          "for",
+          "local",
+          "communities"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "How does the company show that value in practice?",
+        "translation": "¿Cómo demuestra la empresa ese valor en la práctica?",
+        "audio": "en-b2-2.3.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "By paying fair prices to local suppliers.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "By reporting its results openly every year.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "By involving residents in every new project.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "What are we committed to, as a team?",
+        "translation": "¿Con qué nos comprometemos como equipo?",
+        "audio": "en-b2-2.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "We are committed to protecting the places we visit.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "We are dedicated to treating every guest fairly.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "We have promised to be transparent with our partners.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "What would happen if we ignored these values?",
+        "translation": "¿Qué pasaría si ignoráramos estos valores?",
+        "audio": "en-b2-2.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "We would lose the trust of our partners.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Our reputation would suffer, and so would our results.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "The communities we work with would stop supporting us.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Exactly. I am glad you understand what we stand for.",
+        "translation": "Exacto. Me alegra que entiendas lo que representamos.",
+        "audio": "en-b2-2.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you. I am proud to be part of it.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "I will do my best to uphold these values.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "I look forward to contributing.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

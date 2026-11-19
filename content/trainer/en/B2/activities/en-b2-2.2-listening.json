@@ -1,0 +1,81 @@
+{
+  "id": "en-b2-2.2-listening",
+  "skill": "listening",
+  "title": "Listen and choose 2.2",
+  "estimated_minutes": 4,
+  "lesson_id": "2.2",
+  "status": "draft",
+  "role": "Colleague giving advice to someone who is afraid of a presentation",
+  "can_do": [
+    "I can give advice and instructions to help someone overcome a fear.",
+    "I can calm someone down with firm, kind language and first conditional sentences."
+  ],
+  "items": [
+    {
+      "id": "en-b2-2.2.l1",
+      "type": "listen_choose",
+      "prompt": "What advice does the speaker give?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Skip the interview"
+        },
+        {
+          "id": "o2",
+          "text": "Prepare three examples"
+        },
+        {
+          "id": "o3",
+          "text": "Arrive very early"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: if you prepare three examples, you will feel more confident.",
+      "audio": "en-b2-2.2.l1"
+    },
+    {
+      "id": "en-b2-2.2.l2",
+      "type": "listen_choose",
+      "prompt": "What should you do if you lose your place?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Stop the talk"
+        },
+        {
+          "id": "o2",
+          "text": "Start the sentence again"
+        },
+        {
+          "id": "o3",
+          "text": "Read faster"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says to start the sentence again.",
+      "audio": "en-b2-2.2.l2"
+    },
+    {
+      "id": "en-b2-2.2.l3",
+      "type": "listen_choose",
+      "prompt": "What does the speaker recommend?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Drinking coffee"
+        },
+        {
+          "id": "o2",
+          "text": "A short evening walk"
+        },
+        {
+          "id": "o3",
+          "text": "Working all night"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker recommends a short walk in the evening.",
+      "audio": "en-b2-2.2.l3"
+    }
+  ]
+}

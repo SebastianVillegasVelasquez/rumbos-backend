@@ -1,0 +1,209 @@
+{
+  "id": "en-b2-2.5-grammar",
+  "skill": "grammar",
+  "title": "Practice 2.5",
+  "estimated_minutes": 6,
+  "lesson_id": "2.5",
+  "status": "draft",
+  "role": "Delegate dealing with official and legal matters and running a meeting",
+  "can_do": [
+    "I can report a theft and deal with a consulate or an embassy.",
+    "I can open, run and close a meeting and ask for a summary of reasons."
+  ],
+  "items": [
+    {
+      "id": "b2-2.5.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is correct for reporting a theft?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Somebody stole my passport yesterday, I think."
+        },
+        {
+          "id": "o2",
+          "text": "My passport was stolen yesterday."
+        },
+        {
+          "id": "o3",
+          "text": "My passport has stolen yesterday."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The past passive is was/were + past participle: was stolen.",
+      "error_tags": {
+        "o3": {
+          "tag": "voice",
+          "text": "Has stolen is not a passive form."
+        }
+      }
+    },
+    {
+      "id": "b2-2.5.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "Two bags {1} from the coach last night.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "were taken"
+            },
+            {
+              "id": "o2",
+              "text": "was taken"
+            },
+            {
+              "id": "o3",
+              "text": "have taken"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "agreement",
+            "text": "Two bags needs were."
+          }
+        }
+      ],
+      "explanation": "A plural subject takes were: two bags were taken."
+    },
+    {
+      "id": "b2-2.5.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the missing word.",
+      "template": "I am pleased to {1} this meeting.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "open"
+          ],
+          "error_tag": {
+            "tag": "collocation",
+            "text": "We open a meeting."
+          }
+        }
+      ],
+      "explanation": "I am pleased to open this meeting is a standard formula."
+    },
+    {
+      "id": "b2-2.5.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Could"
+        },
+        {
+          "id": "t2",
+          "text": "you"
+        },
+        {
+          "id": "t3",
+          "text": "provide"
+        },
+        {
+          "id": "t4",
+          "text": "a"
+        },
+        {
+          "id": "t5",
+          "text": "summary"
+        },
+        {
+          "id": "t6",
+          "text": "of"
+        },
+        {
+          "id": "t7",
+          "text": "your"
+        },
+        {
+          "id": "t8",
+          "text": "reasons"
+        }
+      ],
+      "explanation": "Could you provide a summary of your reasons is a polite request.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Could you + base verb."
+      }
+    },
+    {
+      "id": "b2-2.5.ex.05",
+      "type": "match",
+      "prompt": "Match the phrase with its use in a meeting.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "I declare this meeting open."
+        },
+        {
+          "id": "l2",
+          "text": "Forgive me for interrupting."
+        },
+        {
+          "id": "l3",
+          "text": "We strongly disagree."
+        },
+        {
+          "id": "l4",
+          "text": "I now close the session."
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "to begin"
+        },
+        {
+          "id": "r2",
+          "text": "to cut in politely"
+        },
+        {
+          "id": "r3",
+          "text": "to state a firm objection"
+        },
+        {
+          "id": "r4",
+          "text": "to end"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "A chair needs a formula for each stage of a meeting."
+    },
+    {
+      "id": "b2-2.5.ex.06",
+      "type": "short_answer",
+      "prompt": "Politely ask someone to summarise their reasons. Use Could you.",
+      "accepted": [
+        "Could you summarise your reasons",
+        "Could you summarize your reasons",
+        "Could you provide a summary of your reasons",
+        "Could you give me a summary of your reasons"
+      ],
+      "max_length": 68,
+      "explanation": "Could you + summarise your reasons is a polite request."
+    }
+  ]
+}

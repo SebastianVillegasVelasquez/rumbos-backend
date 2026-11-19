@@ -287,6 +287,246 @@
       "lesson_id": "1.6",
       "word": "on the contrary",
       "translation": "al contrario"
+    },
+    {
+      "id": "en-b2-2.1.v1",
+      "lesson_id": "2.1",
+      "word": "restructuring",
+      "translation": "reestructuración"
+    },
+    {
+      "id": "en-b2-2.1.v2",
+      "lesson_id": "2.1",
+      "word": "anxious",
+      "translation": "ansioso"
+    },
+    {
+      "id": "en-b2-2.1.v3",
+      "lesson_id": "2.1",
+      "word": "relieved",
+      "translation": "aliviado"
+    },
+    {
+      "id": "en-b2-2.1.v4",
+      "lesson_id": "2.1",
+      "word": "to adapt",
+      "translation": "adaptarse"
+    },
+    {
+      "id": "en-b2-2.1.v5",
+      "lesson_id": "2.1",
+      "word": "on the one hand",
+      "translation": "por un lado"
+    },
+    {
+      "id": "en-b2-2.1.v6",
+      "lesson_id": "2.1",
+      "word": "on the other hand",
+      "translation": "por otro lado"
+    },
+    {
+      "id": "en-b2-2.1.v7",
+      "lesson_id": "2.1",
+      "word": "although",
+      "translation": "aunque"
+    },
+    {
+      "id": "en-b2-2.1.v8",
+      "lesson_id": "2.1",
+      "word": "workload",
+      "translation": "carga de trabajo"
+    },
+    {
+      "id": "en-b2-2.2.v1",
+      "lesson_id": "2.2",
+      "word": "nervous",
+      "translation": "nervioso"
+    },
+    {
+      "id": "en-b2-2.2.v2",
+      "lesson_id": "2.2",
+      "word": "stage fright",
+      "translation": "miedo escénico"
+    },
+    {
+      "id": "en-b2-2.2.v3",
+      "lesson_id": "2.2",
+      "word": "to calm down",
+      "translation": "calmarse"
+    },
+    {
+      "id": "en-b2-2.2.v4",
+      "lesson_id": "2.2",
+      "word": "to rehearse",
+      "translation": "ensayar"
+    },
+    {
+      "id": "en-b2-2.2.v5",
+      "lesson_id": "2.2",
+      "word": "to breathe",
+      "translation": "respirar"
+    },
+    {
+      "id": "en-b2-2.2.v6",
+      "lesson_id": "2.2",
+      "word": "confident",
+      "translation": "seguro de sí mismo"
+    },
+    {
+      "id": "en-b2-2.2.v7",
+      "lesson_id": "2.2",
+      "word": "to focus on",
+      "translation": "concentrarse en"
+    },
+    {
+      "id": "en-b2-2.2.v8",
+      "lesson_id": "2.2",
+      "word": "reassure",
+      "translation": "tranquilizar"
+    },
+    {
+      "id": "en-b2-2.3.v1",
+      "lesson_id": "2.3",
+      "word": "mission",
+      "translation": "misión"
+    },
+    {
+      "id": "en-b2-2.3.v2",
+      "lesson_id": "2.3",
+      "word": "vision",
+      "translation": "visión"
+    },
+    {
+      "id": "en-b2-2.3.v3",
+      "lesson_id": "2.3",
+      "word": "value",
+      "translation": "valor"
+    },
+    {
+      "id": "en-b2-2.3.v4",
+      "lesson_id": "2.3",
+      "word": "commitment",
+      "translation": "compromiso"
+    },
+    {
+      "id": "en-b2-2.3.v5",
+      "lesson_id": "2.3",
+      "word": "stakeholder",
+      "translation": "parte interesada"
+    },
+    {
+      "id": "en-b2-2.3.v6",
+      "lesson_id": "2.3",
+      "word": "integrity",
+      "translation": "integridad"
+    },
+    {
+      "id": "en-b2-2.3.v7",
+      "lesson_id": "2.3",
+      "word": "to uphold",
+      "translation": "defender"
+    },
+    {
+      "id": "en-b2-2.3.v8",
+      "lesson_id": "2.3",
+      "word": "transparent",
+      "translation": "transparente"
+    },
+    {
+      "id": "en-b2-2.4.v1",
+      "lesson_id": "2.4",
+      "word": "to affect",
+      "translation": "afectar"
+    },
+    {
+      "id": "en-b2-2.4.v2",
+      "lesson_id": "2.4",
+      "word": "concentration",
+      "translation": "concentración"
+    },
+    {
+      "id": "en-b2-2.4.v3",
+      "lesson_id": "2.4",
+      "word": "to struggle",
+      "translation": "tener dificultades"
+    },
+    {
+      "id": "en-b2-2.4.v4",
+      "lesson_id": "2.4",
+      "word": "leave",
+      "translation": "permiso"
+    },
+    {
+      "id": "en-b2-2.4.v5",
+      "lesson_id": "2.4",
+      "word": "support",
+      "translation": "apoyo"
+    },
+    {
+      "id": "en-b2-2.4.v6",
+      "lesson_id": "2.4",
+      "word": "deadline",
+      "translation": "fecha límite"
+    },
+    {
+      "id": "en-b2-2.4.v7",
+      "lesson_id": "2.4",
+      "word": "to cope",
+      "translation": "sobrellevar"
+    },
+    {
+      "id": "en-b2-2.4.v8",
+      "lesson_id": "2.4",
+      "word": "confidential",
+      "translation": "confidencial"
+    },
+    {
+      "id": "en-b2-2.5.v1",
+      "lesson_id": "2.5",
+      "word": "to report",
+      "translation": "denunciar"
+    },
+    {
+      "id": "en-b2-2.5.v2",
+      "lesson_id": "2.5",
+      "word": "theft",
+      "translation": "robo"
+    },
+    {
+      "id": "en-b2-2.5.v3",
+      "lesson_id": "2.5",
+      "word": "consulate",
+      "translation": "consulado"
+    },
+    {
+      "id": "en-b2-2.5.v4",
+      "lesson_id": "2.5",
+      "word": "embassy",
+      "translation": "embajada"
+    },
+    {
+      "id": "en-b2-2.5.v5",
+      "lesson_id": "2.5",
+      "word": "to negotiate",
+      "translation": "negociar"
+    },
+    {
+      "id": "en-b2-2.5.v6",
+      "lesson_id": "2.5",
+      "word": "agenda",
+      "translation": "orden del día"
+    },
+    {
+      "id": "en-b2-2.5.v7",
+      "lesson_id": "2.5",
+      "word": "to adjourn",
+      "translation": "levantar la sesión"
+    },
+    {
+      "id": "en-b2-2.5.v8",
+      "lesson_id": "2.5",
+      "word": "minutes",
+      "translation": "acta"
     }
   ]
 }

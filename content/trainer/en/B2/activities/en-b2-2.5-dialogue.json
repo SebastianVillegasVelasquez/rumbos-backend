@@ -1,0 +1,193 @@
+{
+  "id": "en-b2-2.5-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 2.5",
+  "estimated_minutes": 5,
+  "lesson_id": "2.5",
+  "status": "draft",
+  "role": "Delegate dealing with official and legal matters and running a meeting",
+  "can_do": [
+    "I can report a theft and deal with a consulate or an embassy.",
+    "I can open, run and close a meeting and ask for a summary of reasons."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Police station, good morning. How can I assist you?",
+        "translation": "Comisaría, buenos días. ¿En qué puedo ayudarle?",
+        "audio": "en-b2-2.5.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I would like to report a theft. My laptop was stolen last night.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "I am here to report that my bag was taken from the hotel lobby.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Good morning. My documents were stolen this morning.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Where and when did it happen?",
+        "translation": "¿Dónde y cuándo ocurrió?",
+        "audio": "en-b2-2.5.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "was"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "were"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "stolen"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "taken"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "happened"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "It was stolen from the hotel at about nine.",
+        "starters": [
+          "It was stolen ...",
+          "It happened ..."
+        ],
+        "word_bank": [
+          "It",
+          "was",
+          "stolen",
+          "from",
+          "the",
+          "hotel",
+          "at",
+          "about",
+          "nine"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "You will also need a new passport. Have you contacted your embassy?",
+        "translation": "También necesitará un nuevo pasaporte. ¿Contactó a su embajada?",
+        "audio": "en-b2-2.5.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Not yet. Could you tell me how to reach the consulate?",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "I called them, but nobody answered.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, they asked me to bring the police report.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Now to the meeting. I am pleased to open this session. Shall we start?",
+        "translation": "Pasemos a la reunión. Me complace abrir esta sesión. ¿Empezamos?",
+        "audio": "en-b2-2.5.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, please. Could you present the agenda first?",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Of course. We have a full agenda today.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Certainly. Let us begin with the first item.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Could you provide a summary of your reasons for the proposal?",
+        "translation": "¿Podría ofrecer un resumen de sus razones para la propuesta?",
+        "audio": "en-b2-2.5.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Certainly. In brief, it reduces costs and improves service.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Of course. There are three main reasons.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Gladly. I will summarise the key points.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. As time is up, I will now close the session.",
+        "translation": "Gracias. Como se acabó el tiempo, daré por terminada la sesión.",
+        "audio": "en-b2-2.5.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you, Chair. Will the minutes be circulated?",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Thank you. We will continue next week.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Understood. We will send our comments in writing.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  }
+}

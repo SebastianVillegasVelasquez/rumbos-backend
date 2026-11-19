@@ -964,6 +964,631 @@
       "file": "audio/en-b2-1.6.l3.mp3",
       "duration_s": null,
       "transcript": "— So the boat tour is cancelled? — No, on the contrary. It has been extended to include a second island."
+    },
+    {
+      "id": "en-b2-2.1.d1",
+      "text": "Have you heard? The company is going to merge two departments.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Have you heard? The company is going to merge two departments."
+        }
+      ],
+      "file": "audio/en-b2-2.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Have you heard? The company is going to merge two departments."
+    },
+    {
+      "id": "en-b2-2.1.d2",
+      "text": "How do you feel about the change?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How do you feel about the change?"
+        }
+      ],
+      "file": "audio/en-b2-2.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "How do you feel about the change?"
+    },
+    {
+      "id": "en-b2-2.1.d3",
+      "text": "What worries you the most?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What worries you the most?"
+        }
+      ],
+      "file": "audio/en-b2-2.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "What worries you the most?"
+    },
+    {
+      "id": "en-b2-2.1.d4",
+      "text": "Is there anything positive about it?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is there anything positive about it?"
+        }
+      ],
+      "file": "audio/en-b2-2.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Is there anything positive about it?"
+    },
+    {
+      "id": "en-b2-2.1.d5",
+      "text": "How are you going to adapt?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How are you going to adapt?"
+        }
+      ],
+      "file": "audio/en-b2-2.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "How are you going to adapt?"
+    },
+    {
+      "id": "en-b2-2.1.d6",
+      "text": "Good idea. Shall we talk again next week?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Good idea. Shall we talk again next week?"
+        }
+      ],
+      "file": "audio/en-b2-2.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "Good idea. Shall we talk again next week?"
+    },
+    {
+      "id": "en-b2-2.1.l1",
+      "text": "How was the meeting about the new schedule? Frankly, I feel relieved. At least we finally know what is happening.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How was the meeting about the new schedule?"
+        },
+        {
+          "voice": "host",
+          "text": "Frankly, I feel relieved. At least we finally know what is happening."
+        }
+      ],
+      "file": "audio/en-b2-2.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "— How was the meeting about the new schedule? — Frankly, I feel relieved. At least we finally know what is happening."
+    },
+    {
+      "id": "en-b2-2.1.l2",
+      "text": "On the one hand the new office is closer to home; on the other hand, the rent is much higher.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "On the one hand the new office is closer to home; on the other hand, the rent is much higher."
+        }
+      ],
+      "file": "audio/en-b2-2.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "On the one hand the new office is closer to home; on the other hand, the rent is much higher."
+    },
+    {
+      "id": "en-b2-2.1.l3",
+      "text": "You seem tense this week. I am. Although the change makes sense, it is hard to let go of the old routine.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "You seem tense this week."
+        },
+        {
+          "voice": "host",
+          "text": "I am. Although the change makes sense, it is hard to let go of the old routine."
+        }
+      ],
+      "file": "audio/en-b2-2.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "— You seem tense this week. — I am. Although the change makes sense, it is hard to let go of the old routine."
+    },
+    {
+      "id": "en-b2-2.2.d1",
+      "text": "I am so afraid of speaking in front of the board tomorrow.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I am so afraid of speaking in front of the board tomorrow."
+        }
+      ],
+      "file": "audio/en-b2-2.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "I am so afraid of speaking in front of the board tomorrow."
+    },
+    {
+      "id": "en-b2-2.2.d2",
+      "text": "But what if I forget everything?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "But what if I forget everything?"
+        }
+      ],
+      "file": "audio/en-b2-2.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "But what if I forget everything?"
+    },
+    {
+      "id": "en-b2-2.2.d3",
+      "text": "My hands shake when I stand up.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "My hands shake when I stand up."
+        }
+      ],
+      "file": "audio/en-b2-2.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "My hands shake when I stand up."
+    },
+    {
+      "id": "en-b2-2.2.d4",
+      "text": "Should I memorise the whole speech?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Should I memorise the whole speech?"
+        }
+      ],
+      "file": "audio/en-b2-2.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "Should I memorise the whole speech?"
+    },
+    {
+      "id": "en-b2-2.2.d5",
+      "text": "Where should I look while I speak?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Where should I look while I speak?"
+        }
+      ],
+      "file": "audio/en-b2-2.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "Where should I look while I speak?"
+    },
+    {
+      "id": "en-b2-2.2.d6",
+      "text": "Thank you. I feel a bit calmer now.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. I feel a bit calmer now."
+        }
+      ],
+      "file": "audio/en-b2-2.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. I feel a bit calmer now."
+    },
+    {
+      "id": "en-b2-2.2.l1",
+      "text": "I am terrified of the interview. Take it easy. If you prepare three examples, you will feel much more confident.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I am terrified of the interview."
+        },
+        {
+          "voice": "host",
+          "text": "Take it easy. If you prepare three examples, you will feel much more confident."
+        }
+      ],
+      "file": "audio/en-b2-2.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "— I am terrified of the interview. — Take it easy. If you prepare three examples, you will feel much more confident."
+    },
+    {
+      "id": "en-b2-2.2.l2",
+      "text": "Do not rush. Speak slowly, pause between ideas, and if you lose your place, simply start the sentence again.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Do not rush. Speak slowly, pause between ideas, and if you lose your place, simply start the sentence again."
+        }
+      ],
+      "file": "audio/en-b2-2.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "Do not rush. Speak slowly, pause between ideas, and if you lose your place, simply start the sentence again."
+    },
+    {
+      "id": "en-b2-2.2.l3",
+      "text": "I cannot sleep before big presentations. Try a short walk in the evening. It will help you relax, and you will sleep better.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I cannot sleep before big presentations."
+        },
+        {
+          "voice": "host",
+          "text": "Try a short walk in the evening. It will help you relax, and you will sleep better."
+        }
+      ],
+      "file": "audio/en-b2-2.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "— I cannot sleep before big presentations. — Try a short walk in the evening. It will help you relax, and you will sleep better."
+    },
+    {
+      "id": "en-b2-2.3.d1",
+      "text": "Welcome to the team. Do you know our mission?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Welcome to the team. Do you know our mission?"
+        }
+      ],
+      "file": "audio/en-b2-2.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "Welcome to the team. Do you know our mission?"
+    },
+    {
+      "id": "en-b2-2.3.d2",
+      "text": "Right. What do you think our main value is?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Right. What do you think our main value is?"
+        }
+      ],
+      "file": "audio/en-b2-2.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "Right. What do you think our main value is?"
+    },
+    {
+      "id": "en-b2-2.3.d3",
+      "text": "How does the company show that value in practice?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How does the company show that value in practice?"
+        }
+      ],
+      "file": "audio/en-b2-2.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "How does the company show that value in practice?"
+    },
+    {
+      "id": "en-b2-2.3.d4",
+      "text": "What are we committed to, as a team?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What are we committed to, as a team?"
+        }
+      ],
+      "file": "audio/en-b2-2.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "What are we committed to, as a team?"
+    },
+    {
+      "id": "en-b2-2.3.d5",
+      "text": "What would happen if we ignored these values?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What would happen if we ignored these values?"
+        }
+      ],
+      "file": "audio/en-b2-2.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "What would happen if we ignored these values?"
+    },
+    {
+      "id": "en-b2-2.3.d6",
+      "text": "Exactly. I am glad you understand what we stand for.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Exactly. I am glad you understand what we stand for."
+        }
+      ],
+      "file": "audio/en-b2-2.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "Exactly. I am glad you understand what we stand for."
+    },
+    {
+      "id": "en-b2-2.3.l1",
+      "text": "What does your company stand for? We stand for fair travel: honest prices, respect for culture and care for nature.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What does your company stand for?"
+        },
+        {
+          "voice": "host",
+          "text": "We stand for fair travel: honest prices, respect for culture and care for nature."
+        }
+      ],
+      "file": "audio/en-b2-2.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "— What does your company stand for? — We stand for fair travel: honest prices, respect for culture and care for nature."
+    },
+    {
+      "id": "en-b2-2.3.l2",
+      "text": "Our mission is to create work for local families while keeping the environment intact.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Our mission is to create work for local families while keeping the environment intact."
+        }
+      ],
+      "file": "audio/en-b2-2.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "Our mission is to create work for local families while keeping the environment intact."
+    },
+    {
+      "id": "en-b2-2.3.l3",
+      "text": "Why is transparency so important to you? Because partners who are told the truth tend to trust us for many years.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Why is transparency so important to you?"
+        },
+        {
+          "voice": "host",
+          "text": "Because partners who are told the truth tend to trust us for many years."
+        }
+      ],
+      "file": "audio/en-b2-2.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "— Why is transparency so important to you? — Because partners who are told the truth tend to trust us for many years."
+    },
+    {
+      "id": "en-b2-2.4.d1",
+      "text": "I wanted to check in. You have seemed distracted lately.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I wanted to check in. You have seemed distracted lately."
+        }
+      ],
+      "file": "audio/en-b2-2.4.d1.mp3",
+      "duration_s": null,
+      "transcript": "I wanted to check in. You have seemed distracted lately."
+    },
+    {
+      "id": "en-b2-2.4.d2",
+      "text": "I am sorry to hear that. Is it affecting your work?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I am sorry to hear that. Is it affecting your work?"
+        }
+      ],
+      "file": "audio/en-b2-2.4.d2.mp3",
+      "duration_s": null,
+      "transcript": "I am sorry to hear that. Is it affecting your work?"
+    },
+    {
+      "id": "en-b2-2.4.d3",
+      "text": "Which tasks are the hardest for you right now?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Which tasks are the hardest for you right now?"
+        }
+      ],
+      "file": "audio/en-b2-2.4.d3.mp3",
+      "duration_s": null,
+      "transcript": "Which tasks are the hardest for you right now?"
+    },
+    {
+      "id": "en-b2-2.4.d4",
+      "text": "What kind of support would help you most?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What kind of support would help you most?"
+        }
+      ],
+      "file": "audio/en-b2-2.4.d4.mp3",
+      "duration_s": null,
+      "transcript": "What kind of support would help you most?"
+    },
+    {
+      "id": "en-b2-2.4.d5",
+      "text": "That is reasonable. We can arrange it, if you keep me informed.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "That is reasonable. We can arrange it, if you keep me informed."
+        }
+      ],
+      "file": "audio/en-b2-2.4.d5.mp3",
+      "duration_s": null,
+      "transcript": "That is reasonable. We can arrange it, if you keep me informed."
+    },
+    {
+      "id": "en-b2-2.4.d6",
+      "text": "And remember, this conversation is confidential.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "And remember, this conversation is confidential."
+        }
+      ],
+      "file": "audio/en-b2-2.4.d6.mp3",
+      "duration_s": null,
+      "transcript": "And remember, this conversation is confidential."
+    },
+    {
+      "id": "en-b2-2.4.l1",
+      "text": "Is everything all right? You missed two deadlines. I am sorry. My father has been ill, and I have been struggling to focus.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is everything all right? You missed two deadlines."
+        },
+        {
+          "voice": "host",
+          "text": "I am sorry. My father has been ill, and I have been struggling to focus."
+        }
+      ],
+      "file": "audio/en-b2-2.4.l1.mp3",
+      "duration_s": null,
+      "transcript": "— Is everything all right? You missed two deadlines. — I am sorry. My father has been ill, and I have been struggling to focus."
+    },
+    {
+      "id": "en-b2-2.4.l2",
+      "text": "If the situation continues to affect your work, we can offer a few days of paid leave.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "If the situation continues to affect your work, we can offer a few days of paid leave."
+        }
+      ],
+      "file": "audio/en-b2-2.4.l2.mp3",
+      "duration_s": null,
+      "transcript": "If the situation continues to affect your work, we can offer a few days of paid leave."
+    },
+    {
+      "id": "en-b2-2.4.l3",
+      "text": "How are you coping? Better, thanks. Talking to my team has made it easier to keep going.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How are you coping?"
+        },
+        {
+          "voice": "host",
+          "text": "Better, thanks. Talking to my team has made it easier to keep going."
+        }
+      ],
+      "file": "audio/en-b2-2.4.l3.mp3",
+      "duration_s": null,
+      "transcript": "— How are you coping? — Better, thanks. Talking to my team has made it easier to keep going."
+    },
+    {
+      "id": "en-b2-2.5.d1",
+      "text": "Police station, good morning. How can I assist you?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Police station, good morning. How can I assist you?"
+        }
+      ],
+      "file": "audio/en-b2-2.5.d1.mp3",
+      "duration_s": null,
+      "transcript": "Police station, good morning. How can I assist you?"
+    },
+    {
+      "id": "en-b2-2.5.d2",
+      "text": "Where and when did it happen?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Where and when did it happen?"
+        }
+      ],
+      "file": "audio/en-b2-2.5.d2.mp3",
+      "duration_s": null,
+      "transcript": "Where and when did it happen?"
+    },
+    {
+      "id": "en-b2-2.5.d3",
+      "text": "You will also need a new passport. Have you contacted your embassy?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "You will also need a new passport. Have you contacted your embassy?"
+        }
+      ],
+      "file": "audio/en-b2-2.5.d3.mp3",
+      "duration_s": null,
+      "transcript": "You will also need a new passport. Have you contacted your embassy?"
+    },
+    {
+      "id": "en-b2-2.5.d4",
+      "text": "Now to the meeting. I am pleased to open this session. Shall we start?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Now to the meeting. I am pleased to open this session. Shall we start?"
+        }
+      ],
+      "file": "audio/en-b2-2.5.d4.mp3",
+      "duration_s": null,
+      "transcript": "Now to the meeting. I am pleased to open this session. Shall we start?"
+    },
+    {
+      "id": "en-b2-2.5.d5",
+      "text": "Could you provide a summary of your reasons for the proposal?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Could you provide a summary of your reasons for the proposal?"
+        }
+      ],
+      "file": "audio/en-b2-2.5.d5.mp3",
+      "duration_s": null,
+      "transcript": "Could you provide a summary of your reasons for the proposal?"
+    },
+    {
+      "id": "en-b2-2.5.d6",
+      "text": "Thank you. As time is up, I will now close the session.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. As time is up, I will now close the session."
+        }
+      ],
+      "file": "audio/en-b2-2.5.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. As time is up, I will now close the session."
+    },
+    {
+      "id": "en-b2-2.5.l1",
+      "text": "Where did the theft take place? My wallet was stolen on the bus, shortly before I reached the consulate.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Where did the theft take place?"
+        },
+        {
+          "voice": "host",
+          "text": "My wallet was stolen on the bus, shortly before I reached the consulate."
+        }
+      ],
+      "file": "audio/en-b2-2.5.l1.mp3",
+      "duration_s": null,
+      "transcript": "— Where did the theft take place? — My wallet was stolen on the bus, shortly before I reached the consulate."
+    },
+    {
+      "id": "en-b2-2.5.l2",
+      "text": "Ladies and gentlemen, I declare this meeting open. Our first item is the budget for next year.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Ladies and gentlemen, I declare this meeting open. Our first item is the budget for next year."
+        }
+      ],
+      "file": "audio/en-b2-2.5.l2.mp3",
+      "duration_s": null,
+      "transcript": "Ladies and gentlemen, I declare this meeting open. Our first item is the budget for next year."
+    },
+    {
+      "id": "en-b2-2.5.l3",
+      "text": "May I ask you to summarise your position? Certainly. We oppose the plan, because it would be too costly and too slow.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "May I ask you to summarise your position?"
+        },
+        {
+          "voice": "host",
+          "text": "Certainly. We oppose the plan, because it would be too costly and too slow."
+        }
+      ],
+      "file": "audio/en-b2-2.5.l3.mp3",
+      "duration_s": null,
+      "transcript": "— May I ask you to summarise your position? — Certainly. We oppose the plan, because it would be too costly and too slow."
     }
   ]
 }
