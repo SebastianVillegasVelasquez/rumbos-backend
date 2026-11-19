@@ -170,5 +170,37 @@ expansion is listed here (the practice tests fail if one is missing):
 | exam clips (2) | GDS | G D S |
 
 The exam's own numbers ("nine forty", "eighty-five thousand pounds") are
-already words in the source. Real clip durations and the list to listen to
-first are added with the generated audio.
+already words in the source.
+
+Real durations (from the generated files, no padding): 15 exam clips, 5.95 to
+14.64 s, mean 9.8 s; **none is 25 to 45 s** (see 2b). 162 practice clips, 1.75
+to 11.38 s, mean 4.8 s. 177 clips in all. Loudness is -18.5 to -22.9 LUFS: the
+shortest clips (a single short turn) land below the -19 target because the
+normaliser has too little signal to measure; check they are not too quiet.
+
+## 7. Audio QA: listen to these first (nobody has yet)
+
+1. **Spelled acronyms:** `b2fa-9b41ab901b` and `b2fa-d1938b039c` ("G D S": three
+   separate letters, not "gds"); `en-b2-1.3.l2` ("O T A").
+2. **Times, prices, percentages:** `en-b2-1.1.l3` (seven thirty / eight
+   o'clock), `en-b2-1.4.l3` (twelve hundred pounds, fifteen percent), and every
+   exam clip that says "nine forty" or "eighty-five thousand pounds".
+3. **Two-voice conversations in the exam** (6): `b2fa-385e86c274`,
+   `b2fa-76c7dbe9f3`, `b2fa-887d4269da`, `b2fa-98b9bcd650`, `b2fa-d1938b039c`
+   and the matching clips. Turns must alternate with the right voice, 450 ms
+   apart, nothing cut.
+4. **The longest clips**: `en-b2-4.2.l1` (11.4 s), `en-b2-4.1.l3`,
+   `en-b2-2.4.l1`, `b2fa-887d4269da` (14.6 s): pace at 0.85 speed for B2.
+5. **Long sentences with subordinate clauses and semicolons** (the exam's
+   monologues): `b2fa-7bbc9282d1`, `b2fa-bf05af1958`, `b2fa-d299b580f8`:
+   intonation, pauses at the semicolons.
+6. **The shortest practice clips** (under 2.5 s, the dialogue partner lines):
+   too quiet or clipped at the start or end.
+7. **Proper names and words with odd stress:** "consulate", "wetland",
+   "arbitration", "tariff", "briefcase", "Colombia".
+8. Each exam clip must say exactly its `text` and nothing that gives the answer
+   away.
+
+If a clip is wrong, fix its `text` or `voices[].text` in `audio_manifest.json`
+(or the voice in `tts.json`) and run `python -m app.scripts.content tts --pack
+en/B2`; only the clips whose input changed are remade.
