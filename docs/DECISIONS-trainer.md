@@ -166,7 +166,8 @@ A 422 `trainer_settings_invalid` keeps `problems[{path, code, message}]` as it
 was and adds `errors[{path, rule, message_key}]`. `errors[].path` is snake_case
 (`assessments.check_in.form_id`), the spelling of the editor's own model, while
 `problems[].path` stays camelCase (the stored document). Rules: `unknown_form`,
-`unknown_pack`, `no_exam_configured`, `assessment_step_needs_check_in`.
+`unknown_pack`, `no_exam_configured`, `assessment_step_needs_check_in`,
+`form_level_mismatch` (D41).
 `message_key` is `trainer_settings.<rule>`. No value of the request is echoed.
 Only the appearance save runs this check; creating a map with settings in the
 same call does not (it did not before either).
@@ -383,3 +384,35 @@ As for A1 (D27), the audio route serves a pack's audio when the **pack** is
 published, whatever the state of each activity. Publishing only the exam would
 also make the draft practice audio fetchable by id. Publish the practice content
 and the exam together, or accept that.
+
+## Form identity (`feat/b2-pack-and-form-identity`, from `592f082`)
+
+Audit: the forms list returned `{id, title, publication_state}`. A form already
+carried `language` and `level` in its file (and the catalog keys a pack by the
+same pair), but the list did not expose them, the A1 and A2 check-in forms had
+the same title, and nothing compared a map's `trainer.{language, level}` with
+the level of the form it selected: an A1 map could save `a2-form-a`.
+
+## D41. A form says what it is, and a map cannot pick a form of another level
+
+- The forms list items gain `language`, `level` and `purpose` (`check_in` or
+  `final`). Additive: `id`, `title`, `publication_state` are unchanged.
+- `purpose` is a field of the form file (default `check_in`), written explicitly
+  in the A1 and A2 forms. It is not checked against the slot a map puts the form
+  in (`checkIn` or `final`): existing maps use one form in both slots.
+- Titles start with the pack's name: "Inglés A1 · Evaluación diagnóstica · Forma A
+  · Diagnóstico de entrada" (same for A2, B2). **ASK**: this is a proposal that
+  follows the existing naming ("Inglés A2 · Turismo" for packs, the source's
+  section name for the form); it is one line per form to change.
+- Guard: saving settings with `trainer.enabled` and a form whose language or
+  level differs from `trainer.language`/`trainer.level` is a `422
+  trainer_settings_invalid` with `errors[{path, rule: "form_level_mismatch",
+  message_key: "trainer_settings.form_level_mismatch"}]`, for `check_in` and
+  `final`. Translation key to add on the frontend:
+  `trainer_settings.form_level_mismatch`.
+- **A map with no level.** `trainer.level` always has a value (it defaults to
+  `A1`), so with the trainer off the level is an unchosen default, not a choice.
+  The guard is therefore **not** applied while `trainer.enabled` is false, and a
+  map with exams on and the trainer off can still hold a form of any level.
+  Proposal, not done: make the editor send `trainer.level` whenever it enables
+  exams, or add `assessments.level`, so the guard can always run. Not guessed.

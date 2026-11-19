@@ -96,6 +96,22 @@ def trainer_settings_check(settings: MapSettings, catalog: Catalog) -> SettingsC
                         "There is no exam form with this id",
                     )
                 )
+            elif trainer.enabled and (
+                (form := found[0].forms[policy.form_id]).language,
+                form.level,
+            ) != (trainer.language, trainer.level):
+                # The map says which language and level its students learn; an
+                # exam of another level would be a silent, student-facing error.
+                # Only checked while the trainer is on: with it off the level is
+                # just a default the editor never chose.
+                problems.append(
+                    _finding(
+                        path,
+                        "form_level_mismatch",
+                        "form_level_mismatch",
+                        "This exam form is for another language or level than the map",
+                    )
+                )
             elif found[0].forms[policy.form_id].status != "published":
                 warnings.append(
                     _finding(
