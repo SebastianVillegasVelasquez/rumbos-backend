@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 2.1",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Waiter taking an order",
   "can_do": [
     "I can order food and drinks.",
@@ -199,5 +199,7 @@
         "text": "Add please."
       }
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

@@ -4,7 +4,7 @@
   "skill": "dialogue",
   "title": "Talk it through 2.2",
   "estimated_minutes": 5,
-  "status": "draft",
+  "status": "published",
   "role": "Guide explaining how to get somewhere",
   "can_do": [
     "I can name means of transportation.",
@@ -168,5 +168,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

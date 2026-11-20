@@ -4,7 +4,7 @@
   "skill": "dialogue",
   "title": "Talk it through 3.3",
   "estimated_minutes": 5,
-  "status": "draft",
+  "status": "published",
   "role": "Guide asking visitors about free time",
   "can_do": [
     "I can say what I like to do in my free time.",
@@ -177,5 +177,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

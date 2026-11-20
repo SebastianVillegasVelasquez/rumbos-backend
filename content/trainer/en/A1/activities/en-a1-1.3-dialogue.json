@@ -4,7 +4,7 @@
   "skill": "dialogue",
   "title": "Talk it through 1.3",
   "estimated_minutes": 5,
-  "status": "draft",
+  "status": "published",
   "role": "Front desk telling guests the hours",
   "can_do": [
     "I can say and ask the time.",
@@ -169,5 +169,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

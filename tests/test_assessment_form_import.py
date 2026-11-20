@@ -120,9 +120,8 @@ def test_image_sheets_have_alt_text(form: AssessmentForm) -> None:
     assert all(s and s.alt_text and s.design_note for s in sheets)
 
 
-def test_the_import_is_a_draft_until_someone_reviews_it(form: AssessmentForm) -> None:
-    assert form.status == "draft"
-    assert form.reviewed_by is None and form.reviewed_at is None
+def test_a_published_form_names_its_reviewer(form: AssessmentForm) -> None:
+    assert form.status != "published" or (form.reviewed_by and form.reviewed_at)
 
 
 def test_the_anomalies_are_recorded_not_fixed(form: AssessmentForm) -> None:
@@ -144,4 +143,9 @@ def test_reimporting_the_document_reproduces_the_committed_file(
     sys.modules["import_forma_a"] = module
     spec.loader.exec_module(module)
     fresh = module.parse(module.read_section(SOURCE))
-    assert json.loads(fresh.model_dump_json()) == json.loads(form.model_dump_json())
+    review = {"status", "reviewed_by", "reviewed_at"}  # set by a person, not by import
+    committed = json.loads(form.model_dump_json())
+    imported = json.loads(fresh.model_dump_json())
+    assert {k: v for k, v in imported.items() if k not in review} == {
+        k: v for k, v in committed.items() if k not in review
+    }

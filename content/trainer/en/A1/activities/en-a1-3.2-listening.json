@@ -4,7 +4,7 @@
   "skill": "listening",
   "title": "Listen and choose 3.2",
   "estimated_minutes": 4,
-  "status": "draft",
+  "status": "published",
   "role": "Guide talking about the weather",
   "can_do": [
     "I can say what the weather is like.",
@@ -77,5 +77,7 @@
       "explanation": "It is very sunny.",
       "audio": "en-a1-3.2.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

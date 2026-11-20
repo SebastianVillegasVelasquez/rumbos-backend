@@ -4,7 +4,7 @@
   "skill": "listening",
   "title": "Listen and choose 2.4",
   "estimated_minutes": 4,
-  "status": "draft",
+  "status": "published",
   "role": "Nature guide naming animals and plants",
   "can_do": [
     "I can name common animals and plants of the region.",
@@ -77,5 +77,7 @@
       "explanation": "In the tall tree.",
       "audio": "en-a1-2.4.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

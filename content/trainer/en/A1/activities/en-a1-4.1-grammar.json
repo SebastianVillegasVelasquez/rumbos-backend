@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 4.1",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Lodge staff explaining recycling and green signs",
   "can_do": [
     "I can name the colours of recycling bins.",
@@ -189,5 +189,7 @@
         "text": "Start with Please."
       }
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

@@ -12,6 +12,7 @@ from app.main import app
 from app.trainer.catalog import Catalog
 from app.trainer.dependencies import get_catalog
 from app.trainer.pack import load_pack
+from tests.draft_a1 import draft_pack
 from tests.test_assessment_api import (  # noqa: F401
     COURSE,
     clock,
@@ -123,6 +124,10 @@ async def test_an_editor_may_hear_draft_audio_a_student_may_not(
     from app.core.config import get_settings
 
     await env["setup"]({"assessments": exams()})
+    served = app.dependency_overrides[get_catalog]().pack("en", "A1")
+    app.dependency_overrides[get_catalog] = lambda: Catalog(
+        {("en", "A1"): draft_pack(served)}
+    )
     base = get_settings()
     app.dependency_overrides[get_settings] = lambda: base.model_copy(
         update={"trainer_serve_drafts": False}  # as in production

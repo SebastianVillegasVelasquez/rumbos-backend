@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 1.4",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Receptionist filling in a guest card",
   "can_do": [
     "I can ask for and give names, ages and phone numbers.",
@@ -198,5 +198,7 @@
         "text": "Use I am + number."
       }
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }
