@@ -1,0 +1,39 @@
+{
+  "engine": {
+    "name": "kokoro-onnx",
+    "version": "0.6.1",
+    "model": "Kokoro-82M v1.0 (hexgrad), ONNX export; weights Apache-2.0",
+    "lang": "en-us",
+    "variant": "en-US",
+    "files": {
+      "model": {
+        "name": "kokoro-v1.0.onnx",
+        "url": "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx",
+        "sha256": "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5"
+      },
+      "voices": {
+        "name": "voices-v1.0.bin",
+        "url": "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin",
+        "sha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d"
+      }
+    }
+  },
+  "voices": {
+    "host": "am_michael",
+    "guest": "af_heart"
+  },
+  "speed": 0.8,
+  "turn_gap_ms": 600,
+  "lead_ms": 150,
+  "tail_ms": 300,
+  "loudness": {
+    "lufs": -19,
+    "true_peak_db": -2
+  },
+  "format": {
+    "container": "mp3",
+    "sample_rate": 24000,
+    "bitrate_kbps": 48,
+    "channels": 1
+  }
+}
