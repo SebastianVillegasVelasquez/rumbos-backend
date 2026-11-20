@@ -1,174 +1,229 @@
 {
   "entries": [
     {
-      "id": "listening.a.01",
-      "text": "The tour leaves at seven fifteen.",
-      "voices": [],
-      "file": "audio/listening.a.01.mp3",
-      "duration_s": null,
-      "transcript": "The tour leaves at seven fifteen."
-    },
-    {
-      "id": "listening.a.02",
-      "text": "The room number is three-oh-four.",
-      "voices": [],
-      "file": "audio/listening.a.02.mp3",
-      "duration_s": null,
-      "transcript": "The room number is three-oh-four."
-    },
-    {
-      "id": "listening.a.03",
-      "text": "The soup is twelve thousand pesos.",
-      "voices": [],
-      "file": "audio/listening.a.03.mp3",
-      "duration_s": null,
-      "transcript": "The soup is twelve thousand pesos."
-    },
-    {
-      "id": "listening.a.04",
-      "text": "The market opens at nine, and it closes at six.",
-      "voices": [],
-      "file": "audio/listening.a.04.mp3",
-      "duration_s": null,
-      "transcript": "The market opens at nine, and it closes at six."
-    },
-    {
-      "id": "listening.a.05",
+      "id": "a1fa-1f9b60ecf8",
       "text": "She is forty years old.",
-      "voices": [],
-      "file": "audio/listening.a.05.mp3",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "She is forty years old."
+        }
+      ],
+      "file": "audio/a1fa-1f9b60ecf8.mp3",
       "duration_s": null,
       "transcript": "She is forty years old."
     },
     {
-      "id": "listening.b.01",
-      "text": "— Good afternoon, sir. Welcome. — Thank you.",
+      "id": "a1fa-3cb47910eb",
+      "text": "The soup is twelve thousand pesos.",
       "voices": [
         {
-          "voice": "speaker_a",
-          "text": "Good afternoon, sir. Welcome."
-        },
-        {
-          "voice": "speaker_b",
-          "text": "Thank you."
+          "voice": "host",
+          "text": "The soup is twelve thousand pesos."
         }
       ],
-      "file": "audio/listening.b.01.mp3",
+      "file": "audio/a1fa-3cb47910eb.mp3",
       "duration_s": null,
-      "transcript": "— Good afternoon, sir. Welcome. — Thank you."
+      "transcript": "The soup is twelve thousand pesos."
     },
     {
-      "id": "listening.b.02",
-      "text": "— Does the soup have peanuts? — No, it doesn’t.",
+      "id": "a1fa-4095dc1154",
+      "text": "The boat leaves at seven o'clock in the morning.",
       "voices": [
         {
-          "voice": "speaker_a",
-          "text": "Does the soup have peanuts?"
-        },
-        {
-          "voice": "speaker_b",
-          "text": "No, it doesn’t."
+          "voice": "host",
+          "text": "The boat leaves at seven o'clock in the morning."
         }
       ],
-      "file": "audio/listening.b.02.mp3",
-      "duration_s": null,
-      "transcript": "— Does the soup have peanuts? — No, it doesn’t."
-    },
-    {
-      "id": "listening.b.03",
-      "text": "— How do you go to the reserve? — By boat.",
-      "voices": [
-        {
-          "voice": "speaker_a",
-          "text": "How do you go to the reserve?"
-        },
-        {
-          "voice": "speaker_b",
-          "text": "By boat."
-        }
-      ],
-      "file": "audio/listening.b.03.mp3",
-      "duration_s": null,
-      "transcript": "— How do you go to the reserve? — By boat."
-    },
-    {
-      "id": "listening.b.04",
-      "text": "— Is there a pharmacy near here? — Yes, next to the market.",
-      "voices": [
-        {
-          "voice": "speaker_a",
-          "text": "Is there a pharmacy near here?"
-        },
-        {
-          "voice": "speaker_b",
-          "text": "Yes, next to the market."
-        }
-      ],
-      "file": "audio/listening.b.04.mp3",
-      "duration_s": null,
-      "transcript": "— Is there a pharmacy near here? — Yes, next to the market."
-    },
-    {
-      "id": "listening.b.05",
-      "text": "— What’s the matter? — I have a headache.",
-      "voices": [
-        {
-          "voice": "speaker_a",
-          "text": "What’s the matter?"
-        },
-        {
-          "voice": "speaker_b",
-          "text": "I have a headache."
-        }
-      ],
-      "file": "audio/listening.b.05.mp3",
-      "duration_s": null,
-      "transcript": "— What’s the matter? — I have a headache."
-    },
-    {
-      "id": "listening.c.01.1",
-      "text": "The boat leaves at 7:00 a.m.",
-      "voices": [],
-      "file": "audio/listening.c.01.1.mp3",
+      "file": "audio/a1fa-4095dc1154.mp3",
       "duration_s": null,
       "transcript": "The boat leaves at 7:00 a.m."
     },
     {
-      "id": "listening.c.01.2",
-      "text": "I would like a soup, please.",
-      "voices": [],
-      "file": "audio/listening.c.01.2.mp3",
-      "duration_s": null,
-      "transcript": "I would like a soup, please."
-    },
-    {
-      "id": "listening.c.01.3",
-      "text": "I need medicine for a cough.",
-      "voices": [],
-      "file": "audio/listening.c.01.3.mp3",
-      "duration_s": null,
-      "transcript": "I need medicine for a cough."
-    },
-    {
-      "id": "listening.c.01.4",
+      "id": "a1fa-5849d9361c",
       "text": "Put the bottle in the white bin.",
-      "voices": [],
-      "file": "audio/listening.c.01.4.mp3",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Put the bottle in the white bin."
+        }
+      ],
+      "file": "audio/a1fa-5849d9361c.mp3",
       "duration_s": null,
       "transcript": "Put the bottle in the white bin."
     },
     {
-      "id": "listening.c.01.5",
+      "id": "a1fa-5db229f78b",
+      "text": "I would like a soup, please.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I would like a soup, please."
+        }
+      ],
+      "file": "audio/a1fa-5db229f78b.mp3",
+      "duration_s": null,
+      "transcript": "I would like a soup, please."
+    },
+    {
+      "id": "a1fa-6874276db2",
+      "text": "Is there a pharmacy near here? Yes, next to the market.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is there a pharmacy near here?"
+        },
+        {
+          "voice": "host",
+          "text": "Yes, next to the market."
+        }
+      ],
+      "file": "audio/a1fa-6874276db2.mp3",
+      "duration_s": null,
+      "transcript": "— Is there a pharmacy near here? — Yes, next to the market."
+    },
+    {
+      "id": "a1fa-7ccee28f41",
+      "text": "Good afternoon, sir. Welcome. Thank you.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Good afternoon, sir. Welcome."
+        },
+        {
+          "voice": "host",
+          "text": "Thank you."
+        }
+      ],
+      "file": "audio/a1fa-7ccee28f41.mp3",
+      "duration_s": null,
+      "transcript": "— Good afternoon, sir. Welcome. — Thank you."
+    },
+    {
+      "id": "a1fa-9bd7851840",
+      "text": "What's the matter? I have a headache.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What's the matter?"
+        },
+        {
+          "voice": "host",
+          "text": "I have a headache."
+        }
+      ],
+      "file": "audio/a1fa-9bd7851840.mp3",
+      "duration_s": null,
+      "transcript": "— What’s the matter? — I have a headache."
+    },
+    {
+      "id": "a1fa-a6ea39545b",
+      "text": "Does the soup have peanuts? No, it doesn't.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Does the soup have peanuts?"
+        },
+        {
+          "voice": "host",
+          "text": "No, it doesn't."
+        }
+      ],
+      "file": "audio/a1fa-a6ea39545b.mp3",
+      "duration_s": null,
+      "transcript": "— Does the soup have peanuts? — No, it doesn’t."
+    },
+    {
+      "id": "a1fa-b383c06b05",
+      "text": "The tour leaves at seven fifteen.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The tour leaves at seven fifteen."
+        }
+      ],
+      "file": "audio/a1fa-b383c06b05.mp3",
+      "duration_s": null,
+      "transcript": "The tour leaves at seven fifteen."
+    },
+    {
+      "id": "a1fa-c1bdc09467",
+      "text": "I need medicine for a cough.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I need medicine for a cough."
+        }
+      ],
+      "file": "audio/a1fa-c1bdc09467.mp3",
+      "duration_s": null,
+      "transcript": "I need medicine for a cough."
+    },
+    {
+      "id": "a1fa-d80d1a378a",
+      "text": "The room number is three, oh, four.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The room number is three, oh, four."
+        }
+      ],
+      "file": "audio/a1fa-d80d1a378a.mp3",
+      "duration_s": null,
+      "transcript": "The room number is three-oh-four."
+    },
+    {
+      "id": "a1fa-ddfde47578",
+      "text": "The market opens at nine, and it closes at six.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The market opens at nine, and it closes at six."
+        }
+      ],
+      "file": "audio/a1fa-ddfde47578.mp3",
+      "duration_s": null,
+      "transcript": "The market opens at nine, and it closes at six."
+    },
+    {
+      "id": "a1fa-df9381df05",
+      "text": "How do you go to the reserve? By boat.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How do you go to the reserve?"
+        },
+        {
+          "voice": "host",
+          "text": "By boat."
+        }
+      ],
+      "file": "audio/a1fa-df9381df05.mp3",
+      "duration_s": null,
+      "transcript": "— How do you go to the reserve? — By boat."
+    },
+    {
+      "id": "a1fa-fba159242a",
       "text": "Welcome! May I help you?",
-      "voices": [],
-      "file": "audio/listening.c.01.5.mp3",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Welcome! May I help you?"
+        }
+      ],
+      "file": "audio/a1fa-fba159242a.mp3",
       "duration_s": null,
       "transcript": "Welcome! May I help you?"
     },
     {
       "id": "en-a1-1.1.d1",
       "text": "Good morning! Welcome to the hotel.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Good morning! Welcome to the hotel."
+        }
+      ],
       "file": "audio/en-a1-1.1.d1.mp3",
       "duration_s": null,
       "transcript": "Good morning! Welcome to the hotel."
@@ -176,7 +231,12 @@
     {
       "id": "en-a1-1.1.d2",
       "text": "I am Maria. What is your name?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I am Maria. What is your name?"
+        }
+      ],
       "file": "audio/en-a1-1.1.d2.mp3",
       "duration_s": null,
       "transcript": "I am Maria. What is your name?"
@@ -184,7 +244,12 @@
     {
       "id": "en-a1-1.1.d3",
       "text": "Nice to meet you.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Nice to meet you."
+        }
+      ],
       "file": "audio/en-a1-1.1.d3.mp3",
       "duration_s": null,
       "transcript": "Nice to meet you."
@@ -192,7 +257,12 @@
     {
       "id": "en-a1-1.1.d4",
       "text": "How are you today?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How are you today?"
+        }
+      ],
       "file": "audio/en-a1-1.1.d4.mp3",
       "duration_s": null,
       "transcript": "How are you today?"
@@ -200,7 +270,12 @@
     {
       "id": "en-a1-1.1.d5",
       "text": "Is this your first visit?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is this your first visit?"
+        }
+      ],
       "file": "audio/en-a1-1.1.d5.mp3",
       "duration_s": null,
       "transcript": "Is this your first visit?"
@@ -208,7 +283,12 @@
     {
       "id": "en-a1-1.1.d6",
       "text": "Please enjoy your stay.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Please enjoy your stay."
+        }
+      ],
       "file": "audio/en-a1-1.1.d6.mp3",
       "duration_s": null,
       "transcript": "Please enjoy your stay."
@@ -216,15 +296,25 @@
     {
       "id": "en-a1-1.1.l1",
       "text": "Good evening. My name is Laura.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Good evening. My name is Laura."
+        }
+      ],
       "file": "audio/en-a1-1.1.l1.mp3",
       "duration_s": null,
       "transcript": "Good evening. My name is Laura."
     },
     {
       "id": "en-a1-1.1.l2",
-      "text": "Hello, Mr. Brown. How are you today?",
-      "voices": [],
+      "text": "Hello, Mister Brown. How are you today?",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Hello, Mister Brown. How are you today?"
+        }
+      ],
       "file": "audio/en-a1-1.1.l2.mp3",
       "duration_s": null,
       "transcript": "Hello, Mr. Brown. How are you today?"
@@ -232,7 +322,12 @@
     {
       "id": "en-a1-1.1.l3",
       "text": "Goodbye, and have a nice day!",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Goodbye, and have a nice day!"
+        }
+      ],
       "file": "audio/en-a1-1.1.l3.mp3",
       "duration_s": null,
       "transcript": "Goodbye, and have a nice day!"
@@ -240,7 +335,12 @@
     {
       "id": "en-a1-1.2.d1",
       "text": "Hello! Are you the guide?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Hello! Are you the guide?"
+        }
+      ],
       "file": "audio/en-a1-1.2.d1.mp3",
       "duration_s": null,
       "transcript": "Hello! Are you the guide?"
@@ -248,7 +348,12 @@
     {
       "id": "en-a1-1.2.d2",
       "text": "Where are you from?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Where are you from?"
+        }
+      ],
       "file": "audio/en-a1-1.2.d2.mp3",
       "duration_s": null,
       "transcript": "Where are you from?"
@@ -256,7 +361,12 @@
     {
       "id": "en-a1-1.2.d3",
       "text": "I am from Canada. Do you speak English?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I am from Canada. Do you speak English?"
+        }
+      ],
       "file": "audio/en-a1-1.2.d3.mp3",
       "duration_s": null,
       "transcript": "I am from Canada. Do you speak English?"
@@ -264,7 +374,12 @@
     {
       "id": "en-a1-1.2.d4",
       "text": "Do you speak French?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Do you speak French?"
+        }
+      ],
       "file": "audio/en-a1-1.2.d4.mp3",
       "duration_s": null,
       "transcript": "Do you speak French?"
@@ -272,7 +387,12 @@
     {
       "id": "en-a1-1.2.d5",
       "text": "Great. I speak English and French.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Great. I speak English and French."
+        }
+      ],
       "file": "audio/en-a1-1.2.d5.mp3",
       "duration_s": null,
       "transcript": "Great. I speak English and French."
@@ -280,7 +400,12 @@
     {
       "id": "en-a1-1.2.d6",
       "text": "Are your friends from Canada too?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Are your friends from Canada too?"
+        }
+      ],
       "file": "audio/en-a1-1.2.d6.mp3",
       "duration_s": null,
       "transcript": "Are your friends from Canada too?"
@@ -288,7 +413,12 @@
     {
       "id": "en-a1-1.2.l1",
       "text": "He is from Brazil, and he speaks Portuguese.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "He is from Brazil, and he speaks Portuguese."
+        }
+      ],
       "file": "audio/en-a1-1.2.l1.mp3",
       "duration_s": null,
       "transcript": "He is from Brazil, and he speaks Portuguese."
@@ -296,7 +426,12 @@
     {
       "id": "en-a1-1.2.l2",
       "text": "We are from Germany. We are German.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "We are from Germany. We are German."
+        }
+      ],
       "file": "audio/en-a1-1.2.l2.mp3",
       "duration_s": null,
       "transcript": "We are from Germany. We are German."
@@ -304,7 +439,12 @@
     {
       "id": "en-a1-1.2.l3",
       "text": "Do you speak English? Yes, a little.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Do you speak English? Yes, a little."
+        }
+      ],
       "file": "audio/en-a1-1.2.l3.mp3",
       "duration_s": null,
       "transcript": "Do you speak English? Yes, a little."
@@ -312,7 +452,12 @@
     {
       "id": "en-a1-1.3.d1",
       "text": "Excuse me. What time is breakfast?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Excuse me. What time is breakfast?"
+        }
+      ],
       "file": "audio/en-a1-1.3.d1.mp3",
       "duration_s": null,
       "transcript": "Excuse me. What time is breakfast?"
@@ -320,7 +465,12 @@
     {
       "id": "en-a1-1.3.d2",
       "text": "And what time is lunch?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "And what time is lunch?"
+        }
+      ],
       "file": "audio/en-a1-1.3.d2.mp3",
       "duration_s": null,
       "transcript": "And what time is lunch?"
@@ -328,7 +478,12 @@
     {
       "id": "en-a1-1.3.d3",
       "text": "What time is it now?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What time is it now?"
+        }
+      ],
       "file": "audio/en-a1-1.3.d3.mp3",
       "duration_s": null,
       "transcript": "What time is it now?"
@@ -336,7 +491,12 @@
     {
       "id": "en-a1-1.3.d4",
       "text": "The tour starts at ten. Is that right?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "The tour starts at ten. Is that right?"
+        }
+      ],
       "file": "audio/en-a1-1.3.d4.mp3",
       "duration_s": null,
       "transcript": "The tour starts at ten. Is that right?"
@@ -344,7 +504,12 @@
     {
       "id": "en-a1-1.3.d5",
       "text": "Is the museum open on Sunday?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is the museum open on Sunday?"
+        }
+      ],
       "file": "audio/en-a1-1.3.d5.mp3",
       "duration_s": null,
       "transcript": "Is the museum open on Sunday?"
@@ -352,7 +517,12 @@
     {
       "id": "en-a1-1.3.d6",
       "text": "Thank you. See you at breakfast!",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. See you at breakfast!"
+        }
+      ],
       "file": "audio/en-a1-1.3.d6.mp3",
       "duration_s": null,
       "transcript": "Thank you. See you at breakfast!"
@@ -360,7 +530,12 @@
     {
       "id": "en-a1-1.3.l1",
       "text": "Dinner is at eight o'clock.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Dinner is at eight o'clock."
+        }
+      ],
       "file": "audio/en-a1-1.3.l1.mp3",
       "duration_s": null,
       "transcript": "Dinner is at eight o'clock."
@@ -368,7 +543,12 @@
     {
       "id": "en-a1-1.3.l2",
       "text": "The bus leaves at half past nine.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The bus leaves at half past nine."
+        }
+      ],
       "file": "audio/en-a1-1.3.l2.mp3",
       "duration_s": null,
       "transcript": "The bus leaves at half past nine."
@@ -376,7 +556,12 @@
     {
       "id": "en-a1-1.3.l3",
       "text": "The shop is closed on Monday.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The shop is closed on Monday."
+        }
+      ],
       "file": "audio/en-a1-1.3.l3.mp3",
       "duration_s": null,
       "transcript": "The shop is closed on Monday."
@@ -384,7 +569,12 @@
     {
       "id": "en-a1-1.4.d1",
       "text": "Welcome. Can I have your name, please?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Welcome. Can I have your name, please?"
+        }
+      ],
       "file": "audio/en-a1-1.4.d1.mp3",
       "duration_s": null,
       "transcript": "Welcome. Can I have your name, please?"
@@ -392,7 +582,12 @@
     {
       "id": "en-a1-1.4.d2",
       "text": "How do you spell your last name?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How do you spell your last name?"
+        }
+      ],
       "file": "audio/en-a1-1.4.d2.mp3",
       "duration_s": null,
       "transcript": "How do you spell your last name?"
@@ -400,7 +595,12 @@
     {
       "id": "en-a1-1.4.d3",
       "text": "How old are you?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How old are you?"
+        }
+      ],
       "file": "audio/en-a1-1.4.d3.mp3",
       "duration_s": null,
       "transcript": "How old are you?"
@@ -408,7 +608,12 @@
     {
       "id": "en-a1-1.4.d4",
       "text": "What is your phone number?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What is your phone number?"
+        }
+      ],
       "file": "audio/en-a1-1.4.d4.mp3",
       "duration_s": null,
       "transcript": "What is your phone number?"
@@ -416,7 +621,12 @@
     {
       "id": "en-a1-1.4.d5",
       "text": "Where do you live?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Where do you live?"
+        }
+      ],
       "file": "audio/en-a1-1.4.d5.mp3",
       "duration_s": null,
       "transcript": "Where do you live?"
@@ -424,7 +634,12 @@
     {
       "id": "en-a1-1.4.d6",
       "text": "Thank you. Here is your key.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. Here is your key."
+        }
+      ],
       "file": "audio/en-a1-1.4.d6.mp3",
       "duration_s": null,
       "transcript": "Thank you. Here is your key."
@@ -432,7 +647,12 @@
     {
       "id": "en-a1-1.4.l1",
       "text": "My phone number is two, five, one, nine.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "My phone number is two, five, one, nine."
+        }
+      ],
       "file": "audio/en-a1-1.4.l1.mp3",
       "duration_s": null,
       "transcript": "My phone number is two, five, one, nine."
@@ -440,15 +660,25 @@
     {
       "id": "en-a1-1.4.l2",
       "text": "She is twenty-two years old.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "She is twenty-two years old."
+        }
+      ],
       "file": "audio/en-a1-1.4.l2.mp3",
       "duration_s": null,
       "transcript": "She is twenty-two years old."
     },
     {
       "id": "en-a1-1.4.l3",
-      "text": "My last name is Torres. T-O-R-R-E-S.",
-      "voices": [],
+      "text": "My last name is Torres. T, O, R, R, E, S.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "My last name is Torres. T, O, R, R, E, S."
+        }
+      ],
       "file": "audio/en-a1-1.4.l3.mp3",
       "duration_s": null,
       "transcript": "My last name is Torres. T-O-R-R-E-S."
@@ -456,7 +686,12 @@
     {
       "id": "en-a1-2.1.d1",
       "text": "Good afternoon. Here is the menu.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Good afternoon. Here is the menu."
+        }
+      ],
       "file": "audio/en-a1-2.1.d1.mp3",
       "duration_s": null,
       "transcript": "Good afternoon. Here is the menu."
@@ -464,7 +699,12 @@
     {
       "id": "en-a1-2.1.d2",
       "text": "What would you like to eat?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What would you like to eat?"
+        }
+      ],
       "file": "audio/en-a1-2.1.d2.mp3",
       "duration_s": null,
       "transcript": "What would you like to eat?"
@@ -472,7 +712,12 @@
     {
       "id": "en-a1-2.1.d3",
       "text": "And what would you like to drink?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "And what would you like to drink?"
+        }
+      ],
       "file": "audio/en-a1-2.1.d3.mp3",
       "duration_s": null,
       "transcript": "And what would you like to drink?"
@@ -480,7 +725,12 @@
     {
       "id": "en-a1-2.1.d4",
       "text": "Do you want sugar with your coffee?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Do you want sugar with your coffee?"
+        }
+      ],
       "file": "audio/en-a1-2.1.d4.mp3",
       "duration_s": null,
       "transcript": "Do you want sugar with your coffee?"
@@ -488,7 +738,12 @@
     {
       "id": "en-a1-2.1.d5",
       "text": "Is that all?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is that all?"
+        }
+      ],
       "file": "audio/en-a1-2.1.d5.mp3",
       "duration_s": null,
       "transcript": "Is that all?"
@@ -496,7 +751,12 @@
     {
       "id": "en-a1-2.1.d6",
       "text": "The total is fifteen thousand pesos.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "The total is fifteen thousand pesos."
+        }
+      ],
       "file": "audio/en-a1-2.1.d6.mp3",
       "duration_s": null,
       "transcript": "The total is fifteen thousand pesos."
@@ -504,7 +764,12 @@
     {
       "id": "en-a1-2.1.l1",
       "text": "I would like a tea with milk, please.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I would like a tea with milk, please."
+        }
+      ],
       "file": "audio/en-a1-2.1.l1.mp3",
       "duration_s": null,
       "transcript": "I would like a tea with milk, please."
@@ -512,7 +777,12 @@
     {
       "id": "en-a1-2.1.l2",
       "text": "The fish costs eighteen thousand pesos.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The fish costs eighteen thousand pesos."
+        }
+      ],
       "file": "audio/en-a1-2.1.l2.mp3",
       "duration_s": null,
       "transcript": "The fish costs eighteen thousand pesos."
@@ -520,7 +790,12 @@
     {
       "id": "en-a1-2.1.l3",
       "text": "We have rice, beans and chicken today.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "We have rice, beans and chicken today."
+        }
+      ],
       "file": "audio/en-a1-2.1.l3.mp3",
       "duration_s": null,
       "transcript": "We have rice, beans and chicken today."
@@ -528,7 +803,12 @@
     {
       "id": "en-a1-2.2.d1",
       "text": "How do I get to the beach from here?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How do I get to the beach from here?"
+        }
+      ],
       "file": "audio/en-a1-2.2.d1.mp3",
       "duration_s": null,
       "transcript": "How do I get to the beach from here?"
@@ -536,7 +816,12 @@
     {
       "id": "en-a1-2.2.d2",
       "text": "Is it far?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is it far?"
+        }
+      ],
       "file": "audio/en-a1-2.2.d2.mp3",
       "duration_s": null,
       "transcript": "Is it far?"
@@ -544,7 +829,12 @@
     {
       "id": "en-a1-2.2.d3",
       "text": "How much is the bus?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How much is the bus?"
+        }
+      ],
       "file": "audio/en-a1-2.2.d3.mp3",
       "duration_s": null,
       "transcript": "How much is the bus?"
@@ -552,7 +842,12 @@
     {
       "id": "en-a1-2.2.d4",
       "text": "Where is the bus stop?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Where is the bus stop?"
+        }
+      ],
       "file": "audio/en-a1-2.2.d4.mp3",
       "duration_s": null,
       "transcript": "Where is the bus stop?"
@@ -560,7 +855,12 @@
     {
       "id": "en-a1-2.2.d5",
       "text": "Can I go by bike?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can I go by bike?"
+        }
+      ],
       "file": "audio/en-a1-2.2.d5.mp3",
       "duration_s": null,
       "transcript": "Can I go by bike?"
@@ -568,7 +868,12 @@
     {
       "id": "en-a1-2.2.d6",
       "text": "Thanks for your help!",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thanks for your help!"
+        }
+      ],
       "file": "audio/en-a1-2.2.d6.mp3",
       "duration_s": null,
       "transcript": "Thanks for your help!"
@@ -576,7 +881,12 @@
     {
       "id": "en-a1-2.2.l1",
       "text": "The boat to the island leaves at nine.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The boat to the island leaves at nine."
+        }
+      ],
       "file": "audio/en-a1-2.2.l1.mp3",
       "duration_s": null,
       "transcript": "The boat to the island leaves at nine."
@@ -584,7 +894,12 @@
     {
       "id": "en-a1-2.2.l2",
       "text": "Take the red bus to the market.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Take the red bus to the market."
+        }
+      ],
       "file": "audio/en-a1-2.2.l2.mp3",
       "duration_s": null,
       "transcript": "Take the red bus to the market."
@@ -592,7 +907,12 @@
     {
       "id": "en-a1-2.2.l3",
       "text": "It is ten minutes on foot.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "It is ten minutes on foot."
+        }
+      ],
       "file": "audio/en-a1-2.2.l3.mp3",
       "duration_s": null,
       "transcript": "It is ten minutes on foot."
@@ -600,7 +920,12 @@
     {
       "id": "en-a1-2.3.d1",
       "text": "Where is your friend from?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Where is your friend from?"
+        }
+      ],
       "file": "audio/en-a1-2.3.d1.mp3",
       "duration_s": null,
       "transcript": "Where is your friend from?"
@@ -608,7 +933,12 @@
     {
       "id": "en-a1-2.3.d2",
       "text": "Is your town big or small?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is your town big or small?"
+        }
+      ],
       "file": "audio/en-a1-2.3.d2.mp3",
       "duration_s": null,
       "transcript": "Is your town big or small?"
@@ -616,7 +946,12 @@
     {
       "id": "en-a1-2.3.d3",
       "text": "Tell me about your town.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Tell me about your town."
+        }
+      ],
       "file": "audio/en-a1-2.3.d3.mp3",
       "duration_s": null,
       "transcript": "Tell me about your town."
@@ -624,7 +959,12 @@
     {
       "id": "en-a1-2.3.d4",
       "text": "Is it far from the coast?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is it far from the coast?"
+        }
+      ],
       "file": "audio/en-a1-2.3.d4.mp3",
       "duration_s": null,
       "transcript": "Is it far from the coast?"
@@ -632,7 +972,12 @@
     {
       "id": "en-a1-2.3.d5",
       "text": "Are the people friendly there?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Are the people friendly there?"
+        }
+      ],
       "file": "audio/en-a1-2.3.d5.mp3",
       "duration_s": null,
       "transcript": "Are the people friendly there?"
@@ -640,7 +985,12 @@
     {
       "id": "en-a1-2.3.d6",
       "text": "I would like to visit it one day.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I would like to visit it one day."
+        }
+      ],
       "file": "audio/en-a1-2.3.d6.mp3",
       "duration_s": null,
       "transcript": "I would like to visit it one day."
@@ -648,7 +998,12 @@
     {
       "id": "en-a1-2.3.l1",
       "text": "My grandmother is from a small village in the mountains.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "My grandmother is from a small village in the mountains."
+        }
+      ],
       "file": "audio/en-a1-2.3.l1.mp3",
       "duration_s": null,
       "transcript": "My grandmother is from a small village in the mountains."
@@ -656,7 +1011,12 @@
     {
       "id": "en-a1-2.3.l2",
       "text": "Carlos is from Cartagena. It is on the coast.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Carlos is from Cartagena. It is on the coast."
+        }
+      ],
       "file": "audio/en-a1-2.3.l2.mp3",
       "duration_s": null,
       "transcript": "Carlos is from Cartagena. It is on the coast."
@@ -664,7 +1024,12 @@
     {
       "id": "en-a1-2.3.l3",
       "text": "Her parents are from Spain.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Her parents are from Spain."
+        }
+      ],
       "file": "audio/en-a1-2.3.l3.mp3",
       "duration_s": null,
       "transcript": "Her parents are from Spain."
@@ -672,7 +1037,12 @@
     {
       "id": "en-a1-2.4.d1",
       "text": "Look! What is that animal?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Look! What is that animal?"
+        }
+      ],
       "file": "audio/en-a1-2.4.d1.mp3",
       "duration_s": null,
       "transcript": "Look! What is that animal?"
@@ -680,7 +1050,12 @@
     {
       "id": "en-a1-2.4.d2",
       "text": "Is it big or small?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is it big or small?"
+        }
+      ],
       "file": "audio/en-a1-2.4.d2.mp3",
       "duration_s": null,
       "transcript": "Is it big or small?"
@@ -688,7 +1063,12 @@
     {
       "id": "en-a1-2.4.d3",
       "text": "What colour is the bird?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What colour is the bird?"
+        }
+      ],
       "file": "audio/en-a1-2.4.d3.mp3",
       "duration_s": null,
       "transcript": "What colour is the bird?"
@@ -696,7 +1076,12 @@
     {
       "id": "en-a1-2.4.d4",
       "text": "Are there flowers in the forest?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Are there flowers in the forest?"
+        }
+      ],
       "file": "audio/en-a1-2.4.d4.mp3",
       "duration_s": null,
       "transcript": "Are there flowers in the forest?"
@@ -704,7 +1089,12 @@
     {
       "id": "en-a1-2.4.d5",
       "text": "Is this tree old?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is this tree old?"
+        }
+      ],
       "file": "audio/en-a1-2.4.d5.mp3",
       "duration_s": null,
       "transcript": "Is this tree old?"
@@ -712,7 +1102,12 @@
     {
       "id": "en-a1-2.4.d6",
       "text": "Please do not touch the plants.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Please do not touch the plants."
+        }
+      ],
       "file": "audio/en-a1-2.4.d6.mp3",
       "duration_s": null,
       "transcript": "Please do not touch the plants."
@@ -720,7 +1115,12 @@
     {
       "id": "en-a1-2.4.l1",
       "text": "There are many birds in this forest.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "There are many birds in this forest."
+        }
+      ],
       "file": "audio/en-a1-2.4.l1.mp3",
       "duration_s": null,
       "transcript": "There are many birds in this forest."
@@ -728,7 +1128,12 @@
     {
       "id": "en-a1-2.4.l2",
       "text": "The orchid is a beautiful flower.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The orchid is a beautiful flower."
+        }
+      ],
       "file": "audio/en-a1-2.4.l2.mp3",
       "duration_s": null,
       "transcript": "The orchid is a beautiful flower."
@@ -736,7 +1141,12 @@
     {
       "id": "en-a1-2.4.l3",
       "text": "The monkey is in the tall tree.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The monkey is in the tall tree."
+        }
+      ],
       "file": "audio/en-a1-2.4.l3.mp3",
       "duration_s": null,
       "transcript": "The monkey is in the tall tree."
@@ -744,7 +1154,12 @@
     {
       "id": "en-a1-3.1.d1",
       "text": "Excuse me. Where is the museum?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Excuse me. Where is the museum?"
+        }
+      ],
       "file": "audio/en-a1-3.1.d1.mp3",
       "duration_s": null,
       "transcript": "Excuse me. Where is the museum?"
@@ -752,7 +1167,12 @@
     {
       "id": "en-a1-3.1.d2",
       "text": "How do I get there?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How do I get there?"
+        }
+      ],
       "file": "audio/en-a1-3.1.d2.mp3",
       "duration_s": null,
       "transcript": "How do I get there?"
@@ -760,7 +1180,12 @@
     {
       "id": "en-a1-3.1.d3",
       "text": "Is it on the left or on the right?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is it on the left or on the right?"
+        }
+      ],
       "file": "audio/en-a1-3.1.d3.mp3",
       "duration_s": null,
       "transcript": "Is it on the left or on the right?"
@@ -768,7 +1193,12 @@
     {
       "id": "en-a1-3.1.d4",
       "text": "Is it far from here?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is it far from here?"
+        }
+      ],
       "file": "audio/en-a1-3.1.d4.mp3",
       "duration_s": null,
       "transcript": "Is it far from here?"
@@ -776,7 +1206,12 @@
     {
       "id": "en-a1-3.1.d5",
       "text": "Is there a bank near the museum?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is there a bank near the museum?"
+        }
+      ],
       "file": "audio/en-a1-3.1.d5.mp3",
       "duration_s": null,
       "transcript": "Is there a bank near the museum?"
@@ -784,7 +1219,12 @@
     {
       "id": "en-a1-3.1.d6",
       "text": "Thank you very much!",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you very much!"
+        }
+      ],
       "file": "audio/en-a1-3.1.d6.mp3",
       "duration_s": null,
       "transcript": "Thank you very much!"
@@ -792,7 +1232,12 @@
     {
       "id": "en-a1-3.1.l1",
       "text": "Turn right at the corner.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Turn right at the corner."
+        }
+      ],
       "file": "audio/en-a1-3.1.l1.mp3",
       "duration_s": null,
       "transcript": "Turn right at the corner."
@@ -800,7 +1245,12 @@
     {
       "id": "en-a1-3.1.l2",
       "text": "The market is across from the church.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The market is across from the church."
+        }
+      ],
       "file": "audio/en-a1-3.1.l2.mp3",
       "duration_s": null,
       "transcript": "The market is across from the church."
@@ -808,7 +1258,12 @@
     {
       "id": "en-a1-3.1.l3",
       "text": "Go straight for two blocks.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Go straight for two blocks."
+        }
+      ],
       "file": "audio/en-a1-3.1.l3.mp3",
       "duration_s": null,
       "transcript": "Go straight for two blocks."
@@ -816,7 +1271,12 @@
     {
       "id": "en-a1-3.2.d1",
       "text": "What is the weather like today?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What is the weather like today?"
+        }
+      ],
       "file": "audio/en-a1-3.2.d1.mp3",
       "duration_s": null,
       "transcript": "What is the weather like today?"
@@ -824,7 +1284,12 @@
     {
       "id": "en-a1-3.2.d2",
       "text": "Is it going to rain?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is it going to rain?"
+        }
+      ],
       "file": "audio/en-a1-3.2.d2.mp3",
       "duration_s": null,
       "transcript": "Is it going to rain?"
@@ -832,7 +1297,12 @@
     {
       "id": "en-a1-3.2.d3",
       "text": "What should I bring?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What should I bring?"
+        }
+      ],
       "file": "audio/en-a1-3.2.d3.mp3",
       "duration_s": null,
       "transcript": "What should I bring?"
@@ -840,7 +1310,12 @@
     {
       "id": "en-a1-3.2.d4",
       "text": "Is it hot at the beach?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is it hot at the beach?"
+        }
+      ],
       "file": "audio/en-a1-3.2.d4.mp3",
       "duration_s": null,
       "transcript": "Is it hot at the beach?"
@@ -848,7 +1323,12 @@
     {
       "id": "en-a1-3.2.d5",
       "text": "And at night?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "And at night?"
+        }
+      ],
       "file": "audio/en-a1-3.2.d5.mp3",
       "duration_s": null,
       "transcript": "And at night?"
@@ -856,7 +1336,12 @@
     {
       "id": "en-a1-3.2.d6",
       "text": "Thank you. I will take my jacket.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. I will take my jacket."
+        }
+      ],
       "file": "audio/en-a1-3.2.d6.mp3",
       "duration_s": null,
       "transcript": "Thank you. I will take my jacket."
@@ -864,7 +1349,12 @@
     {
       "id": "en-a1-3.2.l1",
       "text": "Today it is cloudy and cool.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Today it is cloudy and cool."
+        }
+      ],
       "file": "audio/en-a1-3.2.l1.mp3",
       "duration_s": null,
       "transcript": "Today it is cloudy and cool."
@@ -872,7 +1362,12 @@
     {
       "id": "en-a1-3.2.l2",
       "text": "It rains a lot in April.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "It rains a lot in April."
+        }
+      ],
       "file": "audio/en-a1-3.2.l2.mp3",
       "duration_s": null,
       "transcript": "It rains a lot in April."
@@ -880,7 +1375,12 @@
     {
       "id": "en-a1-3.2.l3",
       "text": "Bring a hat. It is very sunny.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Bring a hat. It is very sunny."
+        }
+      ],
       "file": "audio/en-a1-3.2.l3.mp3",
       "duration_s": null,
       "transcript": "Bring a hat. It is very sunny."
@@ -888,7 +1388,12 @@
     {
       "id": "en-a1-3.3.d1",
       "text": "What do you do in your free time?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What do you do in your free time?"
+        }
+      ],
       "file": "audio/en-a1-3.3.d1.mp3",
       "duration_s": null,
       "transcript": "What do you do in your free time?"
@@ -896,7 +1401,12 @@
     {
       "id": "en-a1-3.3.d2",
       "text": "Do you like sports?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Do you like sports?"
+        }
+      ],
       "file": "audio/en-a1-3.3.d2.mp3",
       "duration_s": null,
       "transcript": "Do you like sports?"
@@ -904,7 +1414,12 @@
     {
       "id": "en-a1-3.3.d3",
       "text": "What do you like to do on weekends?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What do you like to do on weekends?"
+        }
+      ],
       "file": "audio/en-a1-3.3.d3.mp3",
       "duration_s": null,
       "transcript": "What do you like to do on weekends?"
@@ -912,7 +1427,12 @@
     {
       "id": "en-a1-3.3.d4",
       "text": "Do you like dancing?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Do you like dancing?"
+        }
+      ],
       "file": "audio/en-a1-3.3.d4.mp3",
       "duration_s": null,
       "transcript": "Do you like dancing?"
@@ -920,7 +1440,12 @@
     {
       "id": "en-a1-3.3.d5",
       "text": "Do you want to join the salsa class tonight?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Do you want to join the salsa class tonight?"
+        }
+      ],
       "file": "audio/en-a1-3.3.d5.mp3",
       "duration_s": null,
       "transcript": "Do you want to join the salsa class tonight?"
@@ -928,7 +1453,12 @@
     {
       "id": "en-a1-3.3.d6",
       "text": "It starts at eight.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "It starts at eight."
+        }
+      ],
       "file": "audio/en-a1-3.3.d6.mp3",
       "duration_s": null,
       "transcript": "It starts at eight."
@@ -936,7 +1466,12 @@
     {
       "id": "en-a1-3.3.l1",
       "text": "I like swimming and I like reading.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I like swimming and I like reading."
+        }
+      ],
       "file": "audio/en-a1-3.3.l1.mp3",
       "duration_s": null,
       "transcript": "I like swimming and I like reading."
@@ -944,7 +1479,12 @@
     {
       "id": "en-a1-3.3.l2",
       "text": "On Saturdays we play football.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "On Saturdays we play football."
+        }
+      ],
       "file": "audio/en-a1-3.3.l2.mp3",
       "duration_s": null,
       "transcript": "On Saturdays we play football."
@@ -952,15 +1492,25 @@
     {
       "id": "en-a1-3.3.l3",
       "text": "She does not like cooking.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "She does not like cooking."
+        }
+      ],
       "file": "audio/en-a1-3.3.l3.mp3",
       "duration_s": null,
       "transcript": "She does not like cooking."
     },
     {
       "id": "en-a1-3.4.d1",
-      "text": "Good evening. Are you OK?",
-      "voices": [],
+      "text": "Good evening. Are you okay?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Good evening. Are you okay?"
+        }
+      ],
       "file": "audio/en-a1-3.4.d1.mp3",
       "duration_s": null,
       "transcript": "Good evening. Are you OK?"
@@ -968,7 +1518,12 @@
     {
       "id": "en-a1-3.4.d2",
       "text": "Where does it hurt?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Where does it hurt?"
+        }
+      ],
       "file": "audio/en-a1-3.4.d2.mp3",
       "duration_s": null,
       "transcript": "Where does it hurt?"
@@ -976,7 +1531,12 @@
     {
       "id": "en-a1-3.4.d3",
       "text": "Do you have a fever?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Do you have a fever?"
+        }
+      ],
       "file": "audio/en-a1-3.4.d3.mp3",
       "duration_s": null,
       "transcript": "Do you have a fever?"
@@ -984,7 +1544,12 @@
     {
       "id": "en-a1-3.4.d4",
       "text": "You need to rest. Do you want a doctor?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "You need to rest. Do you want a doctor?"
+        }
+      ],
       "file": "audio/en-a1-3.4.d4.mp3",
       "duration_s": null,
       "transcript": "You need to rest. Do you want a doctor?"
@@ -992,7 +1557,12 @@
     {
       "id": "en-a1-3.4.d5",
       "text": "The pharmacy is next to the hotel.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "The pharmacy is next to the hotel."
+        }
+      ],
       "file": "audio/en-a1-3.4.d5.mp3",
       "duration_s": null,
       "transcript": "The pharmacy is next to the hotel."
@@ -1000,7 +1570,12 @@
     {
       "id": "en-a1-3.4.d6",
       "text": "I hope you feel better soon.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I hope you feel better soon."
+        }
+      ],
       "file": "audio/en-a1-3.4.d6.mp3",
       "duration_s": null,
       "transcript": "I hope you feel better soon."
@@ -1008,7 +1583,12 @@
     {
       "id": "en-a1-3.4.l1",
       "text": "I have a headache and a cold.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I have a headache and a cold."
+        }
+      ],
       "file": "audio/en-a1-3.4.l1.mp3",
       "duration_s": null,
       "transcript": "I have a headache and a cold."
@@ -1016,7 +1596,12 @@
     {
       "id": "en-a1-3.4.l2",
       "text": "Take this medicine two times a day.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Take this medicine two times a day."
+        }
+      ],
       "file": "audio/en-a1-3.4.l2.mp3",
       "duration_s": null,
       "transcript": "Take this medicine two times a day."
@@ -1024,7 +1609,12 @@
     {
       "id": "en-a1-3.4.l3",
       "text": "My stomach hurts after dinner.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "My stomach hurts after dinner."
+        }
+      ],
       "file": "audio/en-a1-3.4.l3.mp3",
       "duration_s": null,
       "transcript": "My stomach hurts after dinner."
@@ -1032,7 +1622,12 @@
     {
       "id": "en-a1-4.1.d1",
       "text": "Hello! Where can I throw this bottle?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Hello! Where can I throw this bottle?"
+        }
+      ],
       "file": "audio/en-a1-4.1.d1.mp3",
       "duration_s": null,
       "transcript": "Hello! Where can I throw this bottle?"
@@ -1040,7 +1635,12 @@
     {
       "id": "en-a1-4.1.d2",
       "text": "What colour is the bin for paper?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What colour is the bin for paper?"
+        }
+      ],
       "file": "audio/en-a1-4.1.d2.mp3",
       "duration_s": null,
       "transcript": "What colour is the bin for paper?"
@@ -1048,7 +1648,12 @@
     {
       "id": "en-a1-4.1.d3",
       "text": "And where do I put food waste?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "And where do I put food waste?"
+        }
+      ],
       "file": "audio/en-a1-4.1.d3.mp3",
       "duration_s": null,
       "transcript": "And where do I put food waste?"
@@ -1056,7 +1661,12 @@
     {
       "id": "en-a1-4.1.d4",
       "text": "Can I use the shower for a long time?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can I use the shower for a long time?"
+        }
+      ],
       "file": "audio/en-a1-4.1.d4.mp3",
       "duration_s": null,
       "transcript": "Can I use the shower for a long time?"
@@ -1064,7 +1674,12 @@
     {
       "id": "en-a1-4.1.d5",
       "text": "Do you have a sign for the lights?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Do you have a sign for the lights?"
+        }
+      ],
       "file": "audio/en-a1-4.1.d5.mp3",
       "duration_s": null,
       "transcript": "Do you have a sign for the lights?"
@@ -1072,7 +1687,12 @@
     {
       "id": "en-a1-4.1.d6",
       "text": "Thank you for taking care of nature!",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you for taking care of nature!"
+        }
+      ],
       "file": "audio/en-a1-4.1.d6.mp3",
       "duration_s": null,
       "transcript": "Thank you for taking care of nature!"
@@ -1080,7 +1700,12 @@
     {
       "id": "en-a1-4.1.l1",
       "text": "Please put the plastic bottles in the white bin.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Please put the plastic bottles in the white bin."
+        }
+      ],
       "file": "audio/en-a1-4.1.l1.mp3",
       "duration_s": null,
       "transcript": "Please put the plastic bottles in the white bin."
@@ -1088,7 +1713,12 @@
     {
       "id": "en-a1-4.1.l2",
       "text": "Save water. Turn off the tap.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Save water. Turn off the tap."
+        }
+      ],
       "file": "audio/en-a1-4.1.l2.mp3",
       "duration_s": null,
       "transcript": "Save water. Turn off the tap."
@@ -1096,7 +1726,12 @@
     {
       "id": "en-a1-4.1.l3",
       "text": "Do not leave trash on the beach.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Do not leave trash on the beach."
+        }
+      ],
       "file": "audio/en-a1-4.1.l3.mp3",
       "duration_s": null,
       "transcript": "Do not leave trash on the beach."
@@ -1104,7 +1739,12 @@
     {
       "id": "en-a1-4.2.d1",
       "text": "Hello! We are from Japan.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Hello! We are from Japan."
+        }
+      ],
       "file": "audio/en-a1-4.2.d1.mp3",
       "duration_s": null,
       "transcript": "Hello! We are from Japan."
@@ -1112,7 +1752,12 @@
     {
       "id": "en-a1-4.2.d2",
       "text": "Thank you. Your country is beautiful.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. Your country is beautiful."
+        }
+      ],
       "file": "audio/en-a1-4.2.d2.mp3",
       "duration_s": null,
       "transcript": "Thank you. Your country is beautiful."
@@ -1120,7 +1765,12 @@
     {
       "id": "en-a1-4.2.d3",
       "text": "How do you say hello in Spanish?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How do you say hello in Spanish?"
+        }
+      ],
       "file": "audio/en-a1-4.2.d3.mp3",
       "duration_s": null,
       "transcript": "How do you say hello in Spanish?"
@@ -1128,7 +1778,12 @@
     {
       "id": "en-a1-4.2.d4",
       "text": "Can you say thank you in Spanish too?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can you say thank you in Spanish too?"
+        }
+      ],
       "file": "audio/en-a1-4.2.d4.mp3",
       "duration_s": null,
       "transcript": "Can you say thank you in Spanish too?"
@@ -1136,7 +1791,12 @@
     {
       "id": "en-a1-4.2.d5",
       "text": "Sorry, I do not understand.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Sorry, I do not understand."
+        }
+      ],
       "file": "audio/en-a1-4.2.d5.mp3",
       "duration_s": null,
       "transcript": "Sorry, I do not understand."
@@ -1144,7 +1804,12 @@
     {
       "id": "en-a1-4.2.d6",
       "text": "Thank you for your patience!",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you for your patience!"
+        }
+      ],
       "file": "audio/en-a1-4.2.d6.mp3",
       "duration_s": null,
       "transcript": "Thank you for your patience!"
@@ -1152,7 +1817,12 @@
     {
       "id": "en-a1-4.2.l1",
       "text": "Bonjour means good morning in French.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Bonjour means good morning in French."
+        }
+      ],
       "file": "audio/en-a1-4.2.l1.mp3",
       "duration_s": null,
       "transcript": "Bonjour means good morning in French."
@@ -1160,7 +1830,12 @@
     {
       "id": "en-a1-4.2.l2",
       "text": "In Japan, people often say hello with a small bow.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "In Japan, people often say hello with a small bow."
+        }
+      ],
       "file": "audio/en-a1-4.2.l2.mp3",
       "duration_s": null,
       "transcript": "In Japan, people often say hello with a small bow."
@@ -1168,7 +1843,12 @@
     {
       "id": "en-a1-4.2.l3",
       "text": "Please speak slowly. I am learning English.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Please speak slowly. I am learning English."
+        }
+      ],
       "file": "audio/en-a1-4.2.l3.mp3",
       "duration_s": null,
       "transcript": "Please speak slowly. I am learning English."
@@ -1176,7 +1856,12 @@
     {
       "id": "en-a1-4.3.d1",
       "text": "Excuse me. Where is the restaurant?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Excuse me. Where is the restaurant?"
+        }
+      ],
       "file": "audio/en-a1-4.3.d1.mp3",
       "duration_s": null,
       "transcript": "Excuse me. Where is the restaurant?"
@@ -1184,7 +1869,12 @@
     {
       "id": "en-a1-4.3.d2",
       "text": "And the swimming pool?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "And the swimming pool?"
+        }
+      ],
       "file": "audio/en-a1-4.3.d2.mp3",
       "duration_s": null,
       "transcript": "And the swimming pool?"
@@ -1192,7 +1882,12 @@
     {
       "id": "en-a1-4.3.d3",
       "text": "What time does the pool open?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What time does the pool open?"
+        }
+      ],
       "file": "audio/en-a1-4.3.d3.mp3",
       "duration_s": null,
       "transcript": "What time does the pool open?"
@@ -1200,7 +1895,12 @@
     {
       "id": "en-a1-4.3.d4",
       "text": "Is there a church in the city?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is there a church in the city?"
+        }
+      ],
       "file": "audio/en-a1-4.3.d4.mp3",
       "duration_s": null,
       "transcript": "Is there a church in the city?"
@@ -1208,7 +1908,12 @@
     {
       "id": "en-a1-4.3.d5",
       "text": "What is a good place to see?",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What is a good place to see?"
+        }
+      ],
       "file": "audio/en-a1-4.3.d5.mp3",
       "duration_s": null,
       "transcript": "What is a good place to see?"
@@ -1216,7 +1921,12 @@
     {
       "id": "en-a1-4.3.d6",
       "text": "Thank you for your help.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you for your help."
+        }
+      ],
       "file": "audio/en-a1-4.3.d6.mp3",
       "duration_s": null,
       "transcript": "Thank you for your help."
@@ -1224,7 +1934,12 @@
     {
       "id": "en-a1-4.3.l1",
       "text": "The lobby is on the ground floor.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The lobby is on the ground floor."
+        }
+      ],
       "file": "audio/en-a1-4.3.l1.mp3",
       "duration_s": null,
       "transcript": "The lobby is on the ground floor."
@@ -1232,7 +1947,12 @@
     {
       "id": "en-a1-4.3.l2",
       "text": "The old town opens at nine and closes at five.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The old town opens at nine and closes at five."
+        }
+      ],
       "file": "audio/en-a1-4.3.l2.mp3",
       "duration_s": null,
       "transcript": "The old town opens at nine and closes at five."
@@ -1240,7 +1960,12 @@
     {
       "id": "en-a1-4.3.l3",
       "text": "The castle is across from the main square.",
-      "voices": [],
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The castle is across from the main square."
+        }
+      ],
       "file": "audio/en-a1-4.3.l3.mp3",
       "duration_s": null,
       "transcript": "The castle is across from the main square."
