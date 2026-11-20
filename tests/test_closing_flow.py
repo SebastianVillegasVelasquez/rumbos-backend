@@ -344,7 +344,7 @@ async def test_the_final_step_needs_a_final_exam_not_just_a_check_in(
 
 
 async def test_the_final_step_is_fine_with_the_final_exam(
-    client: httpx.AsyncClient,
+    client: httpx.AsyncClient, draft_a1: None
 ) -> None:
     r = await put_closing(client, {"steps": [final_step()]}, assessments=EXAMS)
     assert r.status_code == 200, r.text

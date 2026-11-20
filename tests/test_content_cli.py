@@ -9,6 +9,7 @@ import pytest
 
 from app.scripts.content import AUDIT_FILE, main
 from app.trainer.pack import load_pack
+from tests.draft_a1 import reset_files_to_draft
 
 NOW = datetime(2026, 11, 20, 15, 30, tzinfo=UTC)
 GRAMMAR = "en-a1-1.1-grammar"
@@ -18,6 +19,7 @@ FORM = "a1-form-a"
 @pytest.fixture
 def base(tmp_path: Path) -> Path:
     shutil.copytree(Path("content/trainer/en/A1"), tmp_path / "en" / "A1")
+    reset_files_to_draft(tmp_path / "en" / "A1")
     return tmp_path
 
 
@@ -124,8 +126,10 @@ def test_all_means_every_reviewed_item_and_nothing_else(base: Path) -> None:
 
 
 def test_a_form_without_its_audio_is_rolled_back(base: Path) -> None:
-    """The exam's listening items need audio files, which the pack does not
-    have yet: the linter refuses and every file goes back as it was."""
+    """The exam's listening items need audio files: if one is missing the linter
+    refuses and every file goes back as it was."""
+    for clip in (base / "en" / "A1" / "audio").glob("a1fa-*.mp3"):
+        clip.unlink()
     set_status(base, f"assessments/{FORM}.json", "reviewed")
     before = snapshot(base)
     code, text = run(

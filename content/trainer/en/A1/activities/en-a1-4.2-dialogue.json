@@ -4,7 +4,7 @@
   "skill": "dialogue",
   "title": "Talk it through 4.2",
   "estimated_minutes": 5,
-  "status": "draft",
+  "status": "published",
   "role": "Host welcoming guests from many countries",
   "can_do": [
     "I can welcome international guests politely.",
@@ -174,5 +174,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

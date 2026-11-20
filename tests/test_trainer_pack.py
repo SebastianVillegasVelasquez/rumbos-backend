@@ -17,7 +17,7 @@ def test_the_real_pack_loads() -> None:
     assert "a1-form-a" in pack.forms
     assert len(pack.curriculum.lessons) == 15
     assert {m.key for m in pack.curriculum.modules} == {"M1", "M2", "M3", "M4"}
-    assert pack.served_form("a1-form-a", allow_drafts=False) is None  # a draft
+    assert pack.served_form("a1-form-a", allow_drafts=False) is not None  # published
     assert pack.served_form("a1-form-a", allow_drafts=True) is not None
 
 

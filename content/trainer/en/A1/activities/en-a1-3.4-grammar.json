@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 3.4",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Hotel staff helping a guest who feels ill",
   "can_do": [
     "I can say what is wrong with me.",
@@ -195,5 +195,7 @@
         "text": "Headache is one word."
       }
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }
