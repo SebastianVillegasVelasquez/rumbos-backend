@@ -29,6 +29,7 @@ from app.exceptions import (
     BackgroundAssetNotFoundError,
     BackgroundAssetWrongKindError,
     BubbleNotFoundError,
+    ClosingNotAvailableError,
     ContentInvalidError,
     ContentTooLargeError,
     CourseMapNotFoundError,
@@ -750,6 +751,25 @@ def register_exception_handlers(app: FastAPI) -> None:
         )
 
     app.add_exception_handler(AssessmentConflictError, assessment_conflict)
+
+    async def closing_not_available(request: Request, exc: Exception) -> JSONResponse:
+        assert isinstance(exc, ClosingNotAvailableError)
+        # A generic reason and, for unfinished SCORM, the counts: never which
+        # activity, nor anything about Moodle.
+        detail: dict[str, object] = {
+            "code": "closing_not_available",
+            "message_key": f"closing.not_available.{exc.reason}",
+            "message": "The final exam is not available yet",
+            "reason": exc.reason,
+        }
+        if exc.total is not None:
+            detail["completed"] = exc.completed
+            detail["total"] = exc.total
+        return JSONResponse(
+            status_code=status.HTTP_409_CONFLICT, content={"detail": detail}
+        )
+
+    app.add_exception_handler(ClosingNotAvailableError, closing_not_available)
 
     async def trainer_rate_limited(request: Request, exc: Exception) -> JSONResponse:
         assert isinstance(exc, TrainerRateLimitedError)

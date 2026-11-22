@@ -462,3 +462,47 @@ Same `tts.json` (Kokoro-82M ONNX, `am_michael` host, `af_heart` guest, speed
 (`python -m app.scripts.content tts --pack en/B2`). Conversations use both
 voices; dialogue partner lines use the guest voice; single-speaker clips use
 the host voice.
+
+## D31. The final exam is gated in the backend, in two phases
+
+Audit before building (`feat/final-exam-gate`, from `9e35a2a`): the final exam
+started with no precondition, the practice catalog never listed it (the
+"Entrenar" entry is the `final` item of `GET /trainer/assessments`), and the
+backend has no per-user completion signal: its Moodle client reads only site info
+and course contents, and the launch `sub` is a pseudonym, not a Moodle user id.
+Decided: Moodle is the source; the backend reads it live at attempt start, so the
+plugin must sign a Moodle user id first.
+
+Phase 1 (this change): the rule (`app/closing/gate.py`), a `CompletionProvider`
+port with a refusing default and a fake for tests, `GET /trainer/closing`, the
+guard on the final start, and the editor's trial run. The real Moodle read is
+not built until the service account is shown able to read other users'
+completion (`docs/CLOSING-GATE.md`). No per-user closing state is stored (D29).
+
+Judgment calls:
+
+- `CLOSING_GATE_MODE=off` is the default: no behaviour changes until it is set to
+  `enforce`, and off logs a warning at startup and at every final start.
+- With `off` the final **stays** in `GET /trainer/assessments`, because the
+  deployed frontend reads it from there; it leaves the list only with `enforce`,
+  when the frontend reads `/trainer/closing` instead. Flip after the frontend.
+- Required SCORM = activity bubbles of the map holding the exam that are SCORM,
+  visible, and tracked for completion. Untracked ones are excluded (Moodle
+  records nothing for them, so they could never be completed). Restricted ones
+  count (the service account cannot tell what a restriction means for one
+  student; an exam gate fails closed). Zero required SCORM: available at once.
+- Reason codes beyond the requested ones: `no_attempts_left` (the start keeps
+  its existing 409 code), `form_unavailable`, `progress_unavailable` (Moodle or
+  the provider failed: closed, never open).
+- `already_passed` (final, or check-in with the exemption) is not available: the
+  step is done and a passed student must not use attempts. Before the gate, a
+  check-in pass did not stop a final start; with `enforce` it does.
+- The gate runs at start and resume only. Reading, saving and submitting an
+  attempt are not re-checked: an attempt cannot exist without passing the start.
+  An attempt opened while the gate was off lives until its time limit.
+- An editor's trial run reuses the existing `preview` attempts (stored,
+  uncounted, never in the outbox, purged after 24 h) and now says
+  `preview: true` in the start and result responses. It still needs a configured
+  closing flow with a final step.
+- The staff override for legacy cases is not built: it needs per-user storage,
+  which D29 rules out for the closing flow. Pending a decision.

@@ -2628,13 +2628,63 @@
         }
       }
     },
+    "/api/v1/trainer/closing": {
+      "get": {
+        "tags": [
+          "trainer"
+        ],
+        "summary": "Closing Status",
+        "description": "Whether the final exam of the closing flow may be started, why not, how\nmuch SCORM content is done, and the exam's own state. A course without a\nclosing flow answers `available: false, reason: not_enabled`.",
+        "operationId": "closing_status_api_v1_trainer_closing_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClosingStatus"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/trainer/assessments/{purpose}/attempts": {
       "post": {
         "tags": [
           "trainer"
         ],
         "summary": "Start Attempt",
-        "description": "201 for a new attempt; 200 with the attempt already in progress.",
+        "description": "201 for a new attempt; 200 with the attempt already in progress.\n\nThe final exam first passes the closing gate (409 `closing_not_available`,\nor the existing `no_attempts_left`); the check-in is not gated.",
         "operationId": "start_attempt_api_v1_trainer_assessments__purpose__attempts_post",
         "parameters": [
           {
@@ -5371,6 +5421,11 @@
             "format": "uuid",
             "title": "Attempt Id"
           },
+          "preview": {
+            "type": "boolean",
+            "title": "Preview",
+            "default": false
+          },
           "started_at": {
             "type": "string",
             "format": "date-time",
@@ -6192,6 +6247,89 @@
           "audio"
         ],
         "title": "Clip"
+      },
+      "ClosingProgress": {
+        "properties": {
+          "completed": {
+            "type": "integer",
+            "title": "Completed"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          }
+        },
+        "type": "object",
+        "required": [
+          "completed",
+          "total"
+        ],
+        "title": "ClosingProgress",
+        "description": "How much of the map's required SCORM content the student has finished.\nCounts only: which activities is not told."
+      },
+      "ClosingStatus": {
+        "properties": {
+          "enforced": {
+            "type": "boolean",
+            "title": "Enforced"
+          },
+          "preview": {
+            "type": "boolean",
+            "title": "Preview"
+          },
+          "available": {
+            "type": "boolean",
+            "title": "Available"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "not_enabled",
+                  "no_final_step",
+                  "form_unavailable",
+                  "already_passed",
+                  "no_attempts_left",
+                  "scorm_incomplete",
+                  "progress_unavailable"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "progress": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ClosingProgress"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "final": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AssessmentListItem"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "enforced",
+          "preview",
+          "available"
+        ],
+        "title": "ClosingStatus",
+        "description": "Whether the closing flow's final exam may be started now, by the same\nrule the start call enforces (see `app.closing.gate`)."
       },
       "CourseMapCreate": {
         "properties": {
@@ -8626,6 +8764,11 @@
               "expired"
             ],
             "title": "Status"
+          },
+          "preview": {
+            "type": "boolean",
+            "title": "Preview",
+            "default": false
           },
           "percent": {
             "type": "string",

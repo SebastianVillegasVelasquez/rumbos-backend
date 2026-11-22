@@ -442,6 +442,20 @@ class AssessmentConflictError(DomainError):
         self.code = code
 
 
+class ClosingNotAvailableError(DomainError):
+    """The final exam cannot be started yet. `reason` is one of the gate's
+    codes (`app.closing.gate.Reason`); `completed` and `total` are the SCORM
+    counts, present only when that is the reason."""
+
+    def __init__(
+        self, reason: str, completed: int | None = None, total: int | None = None
+    ) -> None:
+        super().__init__(reason)
+        self.reason = reason
+        self.completed = completed
+        self.total = total
+
+
 class TrainerRateLimitedError(DomainError):
     def __init__(self, retry_after: int) -> None:
         super().__init__("too many requests")

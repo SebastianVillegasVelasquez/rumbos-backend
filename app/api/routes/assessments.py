@@ -12,13 +12,18 @@ from fastapi import APIRouter, Depends, Response, status
 from app.assessment.access import (
     CallerDep,
     ClockDep,
+    CourseContextDep,
     CourseSettingsDep,
     rate_limited,
 )
 from app.assessment.service import AssessmentService
 from app.auth.dependencies import ScopedSession, editor_route, student_route
+from app.closing.providers import CompletionProvider, get_completion_provider
+from app.closing.service import ClosingService
 from app.core.config import Settings, get_settings
 from app.core.paths import API_PREFIX
+from app.moodle.dependencies import get_contents_provider
+from app.moodle.protocols import CourseContentsProvider
 from app.repositories.sqlalchemy.assessment_repository import (
     SqlAlchemyAssessmentRepository,
 )
@@ -26,6 +31,7 @@ from app.schemas.assessment import (
     AssessmentFormEntry,
     AssessmentList,
     AttemptStarted,
+    ClosingStatus,
     Result,
     SaveAck,
     SaveAnswers,
@@ -69,10 +75,32 @@ def get_service(
         serve_drafts=app_settings.trainer_serve_drafts or caller.preview,
         audio_url=audio_url,
         issuer=app_settings.passback_issuer,
+        hide_final=app_settings.closing_gate_mode == "enforce",
     )
 
 
 ServiceDep = Annotated[AssessmentService, Depends(get_service)]
+
+
+def get_closing_service(
+    context: CourseContextDep,
+    caller: CallerDep,
+    service: ServiceDep,
+    contents: Annotated[CourseContentsProvider, Depends(get_contents_provider)],
+    completion: Annotated[CompletionProvider, Depends(get_completion_provider)],
+    app_settings: Annotated[Settings, Depends(get_settings)],
+) -> ClosingService:
+    return ClosingService(
+        context,
+        caller,
+        service,
+        contents,
+        completion,
+        enforce=app_settings.closing_gate_mode == "enforce",
+    )
+
+
+ClosingDep = Annotated[ClosingService, Depends(get_closing_service)]
 
 
 @editor_router.get("/assessments/forms", response_model=list[AssessmentFormEntry])
@@ -103,13 +131,28 @@ async def list_assessments(service: ServiceDep) -> Any:
     return await service.overview()
 
 
+@router.get("/closing", response_model=ClosingStatus)
+async def closing_status(closing: ClosingDep) -> Any:
+    """Whether the final exam of the closing flow may be started, why not, how
+    much SCORM content is done, and the exam's own state. A course without a
+    closing flow answers `available: false, reason: not_enabled`."""
+    return await closing.availability()
+
+
 @router.post(
     "/assessments/{purpose}/attempts",
     response_model=AttemptStarted,
     status_code=status.HTTP_201_CREATED,
 )
-async def start_attempt(purpose: str, service: ServiceDep, response: Response) -> Any:
-    """201 for a new attempt; 200 with the attempt already in progress."""
+async def start_attempt(
+    purpose: str, service: ServiceDep, closing: ClosingDep, response: Response
+) -> Any:
+    """201 for a new attempt; 200 with the attempt already in progress.
+
+    The final exam first passes the closing gate (409 `closing_not_available`,
+    or the existing `no_attempts_left`); the check-in is not gated."""
+    if purpose == "final":
+        await closing.guard_final_start()
     started, created = await service.start(purpose)
     if not created:
         response.status_code = status.HTTP_200_OK
