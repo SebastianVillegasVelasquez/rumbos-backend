@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 1.2",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Guide meeting visitors from other countries",
   "can_do": [
     "I can say where I am from.",
@@ -194,5 +194,7 @@
         "text": "Use I am from before the country."
       }
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

@@ -4,7 +4,7 @@
   "skill": "dialogue",
   "title": "Talk it through 1.4",
   "estimated_minutes": 5,
-  "status": "draft",
+  "status": "published",
   "role": "Receptionist filling in a guest card",
   "can_do": [
     "I can ask for and give names, ages and phone numbers.",
@@ -174,5 +174,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

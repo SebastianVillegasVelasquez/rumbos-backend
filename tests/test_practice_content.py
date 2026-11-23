@@ -52,7 +52,9 @@ def test_the_pack_covers_every_lesson_with_three_kinds_of_activity() -> None:
 
 
 def test_nothing_is_published_without_a_reviewer() -> None:
-    assert all(a.status == "draft" for a in ACTIVITIES)
+    assert all(
+        a.status == "draft" or (a.reviewed_by and a.reviewed_at) for a in ACTIVITIES
+    )
 
 
 @pytest.mark.parametrize(

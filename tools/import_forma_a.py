@@ -15,6 +15,7 @@ Standard library only (a `.docx` is a zip of XML).
 """
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -370,11 +371,18 @@ def _build_item(
         "competence": competence,
     }
     if raw["audio"]:
-        out["audio"] = {"audio": f"{item_id}", "transcript": raw["audio"]}
+        out["audio"] = {"audio": audio_id(item_id), "transcript": raw["audio"]}
     if kind == "gap_choice":
         label = re.search(r"\((\w)\)", raw["prompt"])
         out["gap_label"] = f"({label.group(1)})" if label else None
     return out
+
+
+def audio_id(item_id: str, clip: str = "") -> str:
+    """Opaque and stable (as for A2): says nothing about the item, its position or
+    its key, so neither the URL nor the file name of exam audio gives it away."""
+    digest = hashlib.sha256(f"a1-form-a|{item_id}|{clip}".encode()).hexdigest()
+    return f"a1fa-{digest[:10]}"
 
 
 def _match(
@@ -399,7 +407,7 @@ def _match(
         "type": "match_audio",
         "prompt": raw["prompt"],
         "clips": [
-            {"audio": f"{item_id}.{i + 1}", "transcript": t}
+            {"audio": audio_id(item_id, str(i + 1)), "transcript": t}
             for i, t in enumerate(raw["_clips"])
         ],
         "places": places,

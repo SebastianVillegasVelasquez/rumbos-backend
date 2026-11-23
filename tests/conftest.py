@@ -190,3 +190,14 @@ async def client(
     transport = httpx.ASGITransport(app=fastapi_app)
     async with EditorClient(transport=transport, base_url="http://t/api/v1") as c:
         yield c
+
+
+@pytest.fixture
+def draft_a1() -> Iterator[None]:
+    """The catalog with A1 as a draft (the real A1 pack is published)."""
+    from app.trainer.dependencies import get_catalog
+    from tests.draft_a1 import draft_a1_catalog
+
+    fastapi_app.dependency_overrides[get_catalog] = draft_a1_catalog
+    yield
+    fastapi_app.dependency_overrides.pop(get_catalog, None)

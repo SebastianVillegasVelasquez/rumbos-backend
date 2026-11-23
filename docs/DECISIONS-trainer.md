@@ -523,3 +523,64 @@ blocks. **Left open, by request:** activities restricted by group (or any
 `availability` condition) look visible to the service account but may never open
 for a student, and then block them. They are counted as required until someone
 decides; `python -m app.scripts.closing restricted --course N` reports them.
+## English A1 audio (`feat/a1-audio`, from `9e35a2a`)
+
+Audit: the A1 manifest listed 150 clips (15 exam, 135 practice), every one
+referenced by the form or an activity, and **no audio file existed** (no
+`audio/` directory, every `duration_s` null, no `tts.json`). The A1 pack, its 45
+activities and `a1-form-a` are all `draft` with no reviewer, and
+`publication-audit.jsonl` has no A1 line, so in this repository no student can be
+served A1 audio or the A1 exam at all.
+
+## D48. A1 audio reuses the A2 tooling; only the pace is slower
+
+Same engine, pinned model files, voices (`am_michael` host, `af_heart` guest),
+format and loudness as D35/D47. `content/trainer/en/A1/tts.json` differs in
+`speed` 0.80 (A2 0.85) and `turn_gap_ms` 600 (A2 450), because A1 learners need
+slower, clearer speech; the engine accepts a speed factor, so no second set of
+files is needed (D37 still applies). A1 now has its own `audio_build.json`.
+
+## D49. A1 exam audio ids are opaque hashes (D34 applied to A1)
+
+The A1 form used the item id as the audio id (`listening.c.01.3`), so the URL and
+the file name of a clip named the item and the position of a matching clip. They
+are now `a1fa-<10 hex of sha256("a1-form-a|item|clip")>`, in the form, the
+manifest, the file names and `tools/import_forma_a.py` (the reimport test keeps
+passing). Item ids, keys, options and transcripts are unchanged: only the audio
+reference changed. Practice ids stay readable.
+
+## D50. A1 spoken text, logged
+
+Roles follow D33: exam single sentences use `host`, exam dialogues `guest` then
+`host`, practice dialogue partner lines `guest`, practice listening `host`
+(`speaker_a/speaker_b` of the old manifest do not exist in `tts.json`). Spoken
+differently from the displayed transcript: `listening.a.02` "three-oh-four" is
+read "three, oh, four"; `listening.c.01.1` "7:00 a.m." is read "seven o'clock in
+the morning"; `en-a1-1.1.l2` "Mr. Brown" is "Mister Brown"; `en-a1-1.4.l3`
+"T-O-R-R-E-S" is read letter by letter "T, O, R, R, E, S"; `en-a1-3.4.d1` "OK" is
+"okay". Curly apostrophes are straight. Everything else is read as written.
+`tests/test_a1_audio_text.py` fails if a clip differs and is not in this list.
+
+## D51. Adding audio re-hashes the pack but re-opens no review
+
+`content_version` is a hash of every file of the pack, so adding audio, the
+manifest or the form edit changes it (as would publishing). Nothing else reads it
+to decide state: review is `reviewed_by/reviewed_at/status` inside each file and
+is untouched; attempts and practice sessions store the version they started with
+and nothing compares it to the current one; the exam engine caches per
+`(content_version, form_id)`. The audio URL carries `?v=<content_version>` so
+caches pick up the new files by themselves. Since A1 is draft, no recorded
+result carries a version that this changes.
+
+## D52. Voice and engine licences (sources checked 2026-11-20)
+
+- Kokoro-82M weights: "License: apache-2.0", and "Kokoro was trained exclusively
+  on permissive/non-copyrighted audio data" (https://huggingface.co/hexgrad/Kokoro-82M).
+- `kokoro-onnx` package MIT, model Apache 2.0 (https://github.com/thewh1teagle/kokoro-onnx).
+- `VOICES.md` (https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md)
+  lists `af_heart` grade A and `am_michael` grade C+ (quality grade, 1-10 h of
+  training data) and gives neither any attribution or restriction.
+- **Not stated anywhere I could find:** an explicit grant about redistributing
+  *generated audio*. Apache-2.0 on the weights and the absence of an output
+  restriction point to it being allowed, but it is not a legal opinion; confirm
+  with the client's counsel before a government deliverable.

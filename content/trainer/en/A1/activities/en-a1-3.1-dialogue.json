@@ -4,7 +4,7 @@
   "skill": "dialogue",
   "title": "Talk it through 3.1",
   "estimated_minutes": 5,
-  "status": "draft",
+  "status": "published",
   "role": "Guide giving directions to a tourist place",
   "can_do": [
     "I can ask where a place is.",
@@ -167,5 +167,7 @@
         ]
       }
     ]
-  }
+  },
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

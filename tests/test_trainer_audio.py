@@ -12,6 +12,7 @@ from app.main import app
 from app.trainer.catalog import Catalog
 from app.trainer.dependencies import get_catalog
 from app.trainer.pack import load_pack
+from tests.draft_a1 import draft_pack
 from tests.test_assessment_api import (  # noqa: F401
     COURSE,
     clock,
@@ -27,14 +28,14 @@ DATA = bytes(range(256)) * 4  # 1024 bytes
 def audio_root(tmp_path: Path) -> Iterator[Path]:
     pack = load_pack(Path("content/trainer/en/A1"))
     (tmp_path / "audio").mkdir()
-    (tmp_path / "audio/listening.a.01.mp3").write_bytes(DATA)
+    (tmp_path / "audio/a1fa-b383c06b05.mp3").write_bytes(DATA)
     fake = dataclasses.replace(pack, root=tmp_path)
     app.dependency_overrides[get_catalog] = lambda: Catalog({("en", "A1"): fake})
     yield tmp_path
     app.dependency_overrides.pop(get_catalog, None)
 
 
-URL = "/trainer/audio/listening.a.01"
+URL = "/trainer/audio/a1fa-b383c06b05"
 
 
 async def test_serves_the_file_with_type_and_cache_headers(
@@ -93,7 +94,7 @@ async def test_unknown_missing_or_disabled_audio_is_404(
     await env["setup"]({"assessments": exams()})
     s = await env["student"]()
     assert (await s.get("/trainer/audio/nope")).status_code == 404
-    assert (await s.get("/trainer/audio/listening.a.02")).status_code == 404  # no file
+    assert (await s.get("/trainer/audio/a1fa-d80d1a378a")).status_code == 404  # no file
     other = await env["student"]("zed", course=COURSE + 1)  # feature off there
     assert (await other.get(URL)).status_code == 404
 
@@ -106,8 +107,8 @@ async def test_a_path_in_the_manifest_cannot_leave_the_pack(
     (tmp_path / "secret.mp3").write_bytes(b"x")
     root = tmp_path / "pack"
     root.mkdir()
-    entry = pack.audio["listening.a.01"].model_copy(update={"file": "../secret.mp3"})
-    fake = dataclasses.replace(pack, root=root, audio={"listening.a.01": entry})
+    entry = pack.audio["a1fa-b383c06b05"].model_copy(update={"file": "../secret.mp3"})
+    fake = dataclasses.replace(pack, root=root, audio={"a1fa-b383c06b05": entry})
     app.dependency_overrides[get_catalog] = lambda: Catalog({("en", "A1"): fake})
     try:
         await env["setup"]({"assessments": exams()})
@@ -123,6 +124,10 @@ async def test_an_editor_may_hear_draft_audio_a_student_may_not(
     from app.core.config import get_settings
 
     await env["setup"]({"assessments": exams()})
+    served = app.dependency_overrides[get_catalog]().pack("en", "A1")
+    app.dependency_overrides[get_catalog] = lambda: Catalog(
+        {("en", "A1"): draft_pack(served)}
+    )
     base = get_settings()
     app.dependency_overrides[get_settings] = lambda: base.model_copy(
         update={"trainer_serve_drafts": False}  # as in production

@@ -4,7 +4,7 @@
   "skill": "listening",
   "title": "Listen and choose 2.2",
   "estimated_minutes": 4,
-  "status": "draft",
+  "status": "published",
   "role": "Guide explaining how to get somewhere",
   "can_do": [
     "I can name means of transportation.",
@@ -77,5 +77,7 @@
       "explanation": "Ten minutes on foot is the walk.",
       "audio": "en-a1-2.2.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

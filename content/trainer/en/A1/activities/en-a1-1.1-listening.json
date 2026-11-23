@@ -4,7 +4,7 @@
   "skill": "listening",
   "title": "Listen and choose 1.1",
   "estimated_minutes": 4,
-  "status": "draft",
+  "status": "published",
   "role": "Receptionist welcoming a guest",
   "can_do": [
     "I can greet a guest and say my name.",
@@ -77,5 +77,7 @@
       "explanation": "Goodbye is for leaving.",
       "audio": "en-a1-1.1.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

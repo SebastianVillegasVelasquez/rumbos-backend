@@ -243,7 +243,9 @@ async def test_unknown_purpose_is_404(env: dict[str, Any]) -> None:
     assert (await s.post("/trainer/assessments/bonus/attempts")).status_code == 404
 
 
-async def test_a_draft_form_is_not_served_in_production(env: dict[str, Any]) -> None:
+async def test_a_draft_form_is_not_served_in_production(
+    env: dict[str, Any], draft_a1: None
+) -> None:
     await env["setup"]({"assessments": exams()})
     base = get_settings()
     app.dependency_overrides[get_settings] = lambda: base.model_copy(
@@ -645,6 +647,7 @@ async def test_logs_never_carry_student_text(
 
 async def test_an_editor_previews_a_draft_form_a_student_does_not(
     env: dict[str, Any],
+    draft_a1: None,
 ) -> None:
     await env["setup"]({"assessments": exams()})
     base = get_settings()

@@ -4,7 +4,7 @@
   "skill": "listening",
   "title": "Listen and choose 3.1",
   "estimated_minutes": 4,
-  "status": "draft",
+  "status": "published",
   "role": "Guide giving directions to a tourist place",
   "can_do": [
     "I can ask where a place is.",
@@ -77,5 +77,7 @@
       "explanation": "Two blocks straight.",
       "audio": "en-a1-3.1.l3"
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

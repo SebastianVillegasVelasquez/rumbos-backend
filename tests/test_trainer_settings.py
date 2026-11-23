@@ -262,7 +262,7 @@ async def test_a_published_form_saves_without_warnings(
 
 
 async def test_a_trainer_whose_content_is_all_draft_warns_at_the_level(
-    client: httpx.AsyncClient,
+    client: httpx.AsyncClient, draft_a1: None
 ) -> None:
     created = await make_map(client)
     r = await put_settings(

@@ -4,7 +4,7 @@
   "skill": "grammar",
   "title": "Practice 2.3",
   "estimated_minutes": 6,
-  "status": "draft",
+  "status": "published",
   "role": "Host talking about people and places of origin",
   "can_do": [
     "I can say where people are from.",
@@ -195,5 +195,7 @@
         "text": "Use It is + adjective."
       }
     }
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z"
 }

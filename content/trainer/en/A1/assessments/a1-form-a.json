@@ -4,9 +4,9 @@
   "language": "en",
   "level": "A1",
   "purpose": "check_in",
-  "status": "draft",
-  "reviewed_by": null,
-  "reviewed_at": null,
+  "status": "published",
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-20T17:10:32.774038Z",
   "sections": [
     {
       "key": "listening",
@@ -48,7 +48,7 @@
               ],
               "key": "b",
               "audio": {
-                "audio": "listening.a.01",
+                "audio": "a1fa-b383c06b05",
                 "transcript": "The tour leaves at seven fifteen."
               },
               "gap_label": null
@@ -81,7 +81,7 @@
               ],
               "key": "b",
               "audio": {
-                "audio": "listening.a.02",
+                "audio": "a1fa-d80d1a378a",
                 "transcript": "The room number is three-oh-four."
               },
               "gap_label": null
@@ -114,7 +114,7 @@
               ],
               "key": "b",
               "audio": {
-                "audio": "listening.a.03",
+                "audio": "a1fa-3cb47910eb",
                 "transcript": "The soup is twelve thousand pesos."
               },
               "gap_label": null
@@ -147,7 +147,7 @@
               ],
               "key": "a",
               "audio": {
-                "audio": "listening.a.04",
+                "audio": "a1fa-ddfde47578",
                 "transcript": "The market opens at nine, and it closes at six."
               },
               "gap_label": null
@@ -180,7 +180,7 @@
               ],
               "key": "b",
               "audio": {
-                "audio": "listening.a.05",
+                "audio": "a1fa-1f9b60ecf8",
                 "transcript": "She is forty years old."
               },
               "gap_label": null
@@ -221,7 +221,7 @@
               ],
               "key": "b",
               "audio": {
-                "audio": "listening.b.01",
+                "audio": "a1fa-7ccee28f41",
                 "transcript": "— Good afternoon, sir. Welcome. — Thank you."
               },
               "gap_label": null
@@ -254,7 +254,7 @@
               ],
               "key": "b",
               "audio": {
-                "audio": "listening.b.02",
+                "audio": "a1fa-a6ea39545b",
                 "transcript": "— Does the soup have peanuts? — No, it doesn’t."
               },
               "gap_label": null
@@ -287,7 +287,7 @@
               ],
               "key": "b",
               "audio": {
-                "audio": "listening.b.03",
+                "audio": "a1fa-df9381df05",
                 "transcript": "— How do you go to the reserve? — By boat."
               },
               "gap_label": null
@@ -320,7 +320,7 @@
               ],
               "key": "a",
               "audio": {
-                "audio": "listening.b.04",
+                "audio": "a1fa-6874276db2",
                 "transcript": "— Is there a pharmacy near here? — Yes, next to the market."
               },
               "gap_label": null
@@ -353,7 +353,7 @@
               ],
               "key": "a",
               "audio": {
-                "audio": "listening.b.05",
+                "audio": "a1fa-9bd7851840",
                 "transcript": "— What’s the matter? — I have a headache."
               },
               "gap_label": null
@@ -391,23 +391,23 @@
               "type": "match_audio",
               "clips": [
                 {
-                  "audio": "listening.c.01.1",
+                  "audio": "a1fa-4095dc1154",
                   "transcript": "The boat leaves at 7:00 a.m."
                 },
                 {
-                  "audio": "listening.c.01.2",
+                  "audio": "a1fa-5db229f78b",
                   "transcript": "I would like a soup, please."
                 },
                 {
-                  "audio": "listening.c.01.3",
+                  "audio": "a1fa-c1bdc09467",
                   "transcript": "I need medicine for a cough."
                 },
                 {
-                  "audio": "listening.c.01.4",
+                  "audio": "a1fa-5849d9361c",
                   "transcript": "Put the bottle in the white bin."
                 },
                 {
-                  "audio": "listening.c.01.5",
+                  "audio": "a1fa-fba159242a",
                   "transcript": "Welcome! May I help you?"
                 }
               ],
