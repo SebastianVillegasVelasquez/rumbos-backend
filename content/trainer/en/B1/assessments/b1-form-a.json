@@ -1,0 +1,1568 @@
+{
+  "form_id": "b1-form-a",
+  "title": "Inglés B1 · Evaluación diagnóstica · Forma A · Diagnóstico de entrada",
+  "language": "en",
+  "level": "B1",
+  "purpose": "check_in",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "sections": [
+    {
+      "key": "listening",
+      "title": "Listening",
+      "instructions": null,
+      "weight": 25,
+      "delivery": null,
+      "parts": [
+        {
+          "part_key": "a",
+          "title": "Part A — Short messages",
+          "instructions": "Listen and choose the correct answer.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "b1-fa-l-01",
+              "prompt": "What time does the heritage tour start?",
+              "competence": {
+                "raw": "M-I · 1.1 · preguntas indirectas + detalle · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.1",
+                "topic": "preguntas indirectas + detalle"
+              },
+              "source_number": 1,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "9:50"
+                },
+                {
+                  "id": "b",
+                  "text": "9:15"
+                },
+                {
+                  "id": "c",
+                  "text": "5:09"
+                }
+              ],
+              "key": "b",
+              "audio": {
+                "audio": "b1fa-5851db3141",
+                "transcript": "Good afternoon. Could you tell me what time the heritage walking tour starts tomorrow? — Of course. It begins at nine fifteen from the main square."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-l-02",
+              "prompt": "How much is the reef tour per person?",
+              "competence": {
+                "raw": "M-II · 2.3 · sugerir actividades + precios · listening",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.3",
+                "topic": "sugerir actividades + precios"
+              },
+              "source_number": 2,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "12,000"
+                },
+                {
+                  "id": "b",
+                  "text": "120,000"
+                },
+                {
+                  "id": "c",
+                  "text": "1,200,000"
+                }
+              ],
+              "key": "b",
+              "audio": {
+                "audio": "b1fa-67d673eb56",
+                "transcript": "The guided reef tour costs one hundred and twenty thousand pesos per person, life jacket included."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-l-03",
+              "prompt": "Where is breakfast served?",
+              "competence": {
+                "raw": "M-II · 2.1 · voz pasiva en presente (servicios) · listening",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "voz pasiva en presente (servicios)"
+              },
+              "source_number": 3,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "on the terrace"
+                },
+                {
+                  "id": "b",
+                  "text": "in the museum"
+                },
+                {
+                  "id": "c",
+                  "text": "on the beach"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b1fa-4ca657c38b",
+                "transcript": "Breakfast is served on the terrace from seven, and the rooms are cleaned every morning."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-l-04",
+              "prompt": "Where is the gala dinner going to be held?",
+              "competence": {
+                "raw": "M-I · 1.4 · futuros + evento próximo · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "futuros + evento próximo"
+              },
+              "source_number": 4,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "at the old customs house"
+                },
+                {
+                  "id": "b",
+                  "text": "at the beach club"
+                },
+                {
+                  "id": "c",
+                  "text": "on the terrace"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b1fa-554a8dece8",
+                "transcript": "Next Friday the gala dinner is going to be held at the old customs house, not at the beach club."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-l-05",
+              "prompt": "What must visitors do on the boat?",
+              "competence": {
+                "raw": "M-IV · 4.1 · turismo sostenible + modales (obligación) · listening",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "turismo sostenible + modales (obligación)"
+              },
+              "source_number": 5,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "wear a life jacket"
+                },
+                {
+                  "id": "b",
+                  "text": "bring a passport"
+                },
+                {
+                  "id": "c",
+                  "text": "pay in cash"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b1fa-afa6323603",
+                "transcript": "All visitors must wear a life jacket on the boat; you ought to protect the reef by staying on the marked route."
+              },
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "b",
+          "title": "Part B — Short conversations",
+          "instructions": "Listen to each conversation and choose the correct answer.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "b1-fa-l-06",
+              "prompt": "How does the host respond to the complaint?",
+              "competence": {
+                "raw": "M-I · 1.2 · adjetivos -ed/-ing + desacuerdo diplomático · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "adjetivos -ed/-ing + desacuerdo diplomático"
+              },
+              "source_number": 6,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "diplomatically, agreeing before explaining"
+                },
+                {
+                  "id": "b",
+                  "text": "by ignoring the guest"
+                },
+                {
+                  "id": "c",
+                  "text": "by shouting back"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b1fa-ab10370c4f",
+                "transcript": "— I’m really disappointed; the noise from the building work is frustrating. — I completely understand, and I’m sorry. I see your point; however, the work stops at six."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-l-07",
+              "prompt": "Why is the host apologizing?",
+              "competence": {
+                "raw": "M-I · 1.4 · presente perfecto + disculpa profesional · listening",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "presente perfecto + disculpa profesional"
+              },
+              "source_number": 7,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "because they have moved the event"
+                },
+                {
+                  "id": "b",
+                  "text": "because breakfast is late"
+                },
+                {
+                  "id": "c",
+                  "text": "because the boat is full"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b1fa-ed6216a4e3",
+                "transcript": "— I’m sorry, we have moved the gala dinner to the plaza because of a new local regulation. It’s going to start at eight instead."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-l-08",
+              "prompt": "What does the gallery offer the customer?",
+              "competence": {
+                "raw": "M-III · 3.1 · devoluciones/situaciones inusuales + modales para ofrecer · listening",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.1",
+                "topic": "devoluciones/situaciones inusuales + modales para ofrecer"
+              },
+              "source_number": 8,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "an exchange or a store credit"
+                },
+                {
+                  "id": "b",
+                  "text": "only an apology"
+                },
+                {
+                  "id": "c",
+                  "text": "a free tour"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b1fa-cad0a69784",
+                "transcript": "— This sculpture arrived damaged. Could I get a refund? — I’m very sorry. According to our policy we can offer you an exchange or a store credit."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-l-09",
+              "prompt": "What does Elena recommend?",
+              "competence": {
+                "raw": "M-II · 2.3 · recomendaciones (recommend + -ing / should) · listening",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.3",
+                "topic": "recomendaciones (recommend + -ing / should)"
+              },
+              "source_number": 9,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "the night market and the concert"
+                },
+                {
+                  "id": "b",
+                  "text": "staying in the hotel"
+                },
+                {
+                  "id": "c",
+                  "text": "the reef tour"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b1fa-f17a895d5f",
+                "transcript": "— We have one free evening in town. — I recommend visiting the night market, and you should book the candlelight concert."
+              },
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-l-10",
+              "prompt": "How does the tourist feel?",
+              "competence": {
+                "raw": "M-III · 3.3 · sentimientos tras un faux pas + 2.º condicional ligero · listening",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.3",
+                "topic": "sentimientos tras un faux pas + 2.º condicional ligero"
+              },
+              "source_number": 10,
+              "type": "listen_choose",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "embarrassed and regretful"
+                },
+                {
+                  "id": "b",
+                  "text": "proud"
+                },
+                {
+                  "id": "c",
+                  "text": "bored"
+                }
+              ],
+              "key": "a",
+              "audio": {
+                "audio": "b1fa-12ba25658d",
+                "transcript": "— A tourist photographed the ceremony without permission. — He feels embarrassed and regrets it. If you asked the leaders first, you wouldn’t offend anyone."
+              },
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "c",
+          "title": "Part C — Match the audio with the scene",
+          "instructions": "Listen to the five audios and match each one with the correct scene.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "b1-fa-l-11",
+              "prompt": "Empareja cada audio (1–5) con la escena correcta: front-desk clarification · canceled ocean tour · relocated gala dinner · eco-suite · customs post.",
+              "competence": {
+                "raw": "M-I a M-IV · comprensión situada · listening (cuenta como 5 ítems)",
+                "modules": [
+                  "M1",
+                  "M2",
+                  "M3",
+                  "M4"
+                ],
+                "lesson": null,
+                "topic": "comprensión situada"
+              },
+              "source_number": 11,
+              "type": "match_audio",
+              "clips": [
+                {
+                  "audio": "b1fa-3615973861",
+                  "transcript": "Could you tell me where the museum entrance is, please?"
+                },
+                {
+                  "audio": "b1fa-b3b444f6ea",
+                  "transcript": "I’m afraid the ocean tour has been canceled because of the weather."
+                },
+                {
+                  "audio": "b1fa-e7d8f61631",
+                  "transcript": "The gala dinner is going to be held at the old customs house."
+                },
+                {
+                  "audio": "b1fa-62446bfba4",
+                  "transcript": "Breakfast is served in each eco-suite and the reef is protected by law."
+                },
+                {
+                  "audio": "b1fa-f8a5436d96",
+                  "transcript": "May I see your passport? Do you have anything to declare?"
+                }
+              ],
+              "places": [
+                {
+                  "id": "front_desk_clarification",
+                  "text": "front-desk clarification"
+                },
+                {
+                  "id": "canceled_ocean_tour",
+                  "text": "canceled ocean tour"
+                },
+                {
+                  "id": "relocated_gala_dinner",
+                  "text": "relocated gala dinner"
+                },
+                {
+                  "id": "eco_suite",
+                  "text": "eco-suite"
+                },
+                {
+                  "id": "customs_post",
+                  "text": "customs post"
+                }
+              ],
+              "key": [
+                [
+                  0,
+                  "front_desk_clarification"
+                ],
+                [
+                  1,
+                  "canceled_ocean_tour"
+                ],
+                [
+                  2,
+                  "relocated_gala_dinner"
+                ],
+                [
+                  3,
+                  "eco_suite"
+                ],
+                [
+                  4,
+                  "customs_post"
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "reading",
+      "title": "Reading",
+      "instructions": null,
+      "weight": 25,
+      "delivery": null,
+      "parts": [
+        {
+          "part_key": "a",
+          "title": "Part A — Signs",
+          "instructions": "Read each sign and choose the sentence that says the same.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "b1-fa-r-01",
+              "prompt": "Sign: “BREAKFAST IS SERVED 7:00–10:00 ON THE TERRACE”",
+              "competence": {
+                "raw": "M-II · 2.1 · voz pasiva (servicios) · reading",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "voz pasiva (servicios)"
+              },
+              "source_number": 12,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Breakfast is available on the terrace in the morning."
+                },
+                {
+                  "id": "b",
+                  "text": "You must cook your own breakfast."
+                },
+                {
+                  "id": "c",
+                  "text": "There is no breakfast."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-r-02",
+              "prompt": "Sign: “THE REEF IS PROTECTED — DO NOT TOUCH THE CORAL”",
+              "competence": {
+                "raw": "M-IV · 4.1 · protección de flora/fauna (pasiva + prohibición) · reading",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "protección de flora/fauna (pasiva + prohibición)"
+              },
+              "source_number": 13,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "The coral must not be touched."
+                },
+                {
+                  "id": "b",
+                  "text": "You can take the coral home."
+                },
+                {
+                  "id": "c",
+                  "text": "The reef is closed forever."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-r-03",
+              "prompt": "Sign: “LIFE JACKETS MUST BE WORN ON ALL BOATS”",
+              "competence": {
+                "raw": "M-IV · 4.1 · modal de obligación + seguridad · reading",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "modal de obligación + seguridad"
+              },
+              "source_number": 14,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "You have to wear a life jacket."
+                },
+                {
+                  "id": "b",
+                  "text": "Life jackets are optional."
+                },
+                {
+                  "id": "c",
+                  "text": "No boats today."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-r-04",
+              "prompt": "Sign: “REFUNDS AND EXCHANGES WITHIN 14 DAYS WITH RECEIPT”",
+              "competence": {
+                "raw": "M-III · 3.1 · devoluciones/cambios en tiendas · reading",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.1",
+                "topic": "devoluciones/cambios en tiendas"
+              },
+              "source_number": 15,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "You can get a refund or exchange within 14 days if you keep the receipt."
+                },
+                {
+                  "id": "b",
+                  "text": "No returns are ever possible."
+                },
+                {
+                  "id": "c",
+                  "text": "You must pay again in 14 days."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-r-05",
+              "prompt": "Sign: “VISITOR NUMBERS ARE LIMITED TO PROTECT THE COAST”",
+              "competence": {
+                "raw": "M-IV · 4.1 · capacidad de carga + pasiva · reading",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "capacidad de carga + pasiva"
+              },
+              "source_number": 16,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "The number of visitors is restricted to protect the coast."
+                },
+                {
+                  "id": "b",
+                  "text": "Everyone can enter at any time."
+                },
+                {
+                  "id": "c",
+                  "text": "The coast is for sale."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "b",
+          "title": "Part B — A heritage tour note",
+          "instructions": "Read the text and answer the questions.",
+          "shared": {
+            "kind": "passage",
+            "title": "Heritage tour note",
+            "text": "Welcome to the old town! While the guide was explaining the legend of the lighthouse, which has warned sailors for two hundred years, a sudden storm began, so we moved indoors. The colonial houses are protected by the community, and the coral reef is now managed by local families. Tomorrow the sunrise boat trip is going to leave at six, although it will be a little shorter than usual because the sea is rough.",
+            "image_id": null,
+            "alt_text": null,
+            "design_note": null,
+            "image_text": null
+          },
+          "items": [
+            {
+              "item_id": "b1-fa-r-06",
+              "prompt": "What was the guide doing when the storm began?",
+              "competence": {
+                "raw": "M-II · 2.4 · pasado simple vs. continuo · reading",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.4",
+                "topic": "pasado simple vs. continuo"
+              },
+              "source_number": 17,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "explaining the legend of the lighthouse"
+                },
+                {
+                  "id": "b",
+                  "text": "sailing the boat"
+                },
+                {
+                  "id": "c",
+                  "text": "serving breakfast"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-r-07",
+              "prompt": "How is the lighthouse described in the text?",
+              "competence": {
+                "raw": "M-IV · 4.3 · cláusula relativa (which) · reading",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.3",
+                "topic": "cláusula relativa (which)"
+              },
+              "source_number": 18,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "as the lighthouse which has warned sailors for two hundred years"
+                },
+                {
+                  "id": "b",
+                  "text": "as a new building"
+                },
+                {
+                  "id": "c",
+                  "text": "as a hotel"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-r-08",
+              "prompt": "Who manages the coral reef now?",
+              "competence": {
+                "raw": "M-II · 2.1 · voz pasiva en presente · reading",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "voz pasiva en presente"
+              },
+              "source_number": 19,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "local families"
+                },
+                {
+                  "id": "b",
+                  "text": "a foreign company"
+                },
+                {
+                  "id": "c",
+                  "text": "nobody"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-r-09",
+              "prompt": "When is the sunrise boat trip going to leave?",
+              "competence": {
+                "raw": "M-I · 1.4 · futuros · reading",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "futuros"
+              },
+              "source_number": 20,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "at six"
+                },
+                {
+                  "id": "b",
+                  "text": "at ten"
+                },
+                {
+                  "id": "c",
+                  "text": "next month"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-r-10",
+              "prompt": "Why will the tour be shorter than usual?",
+              "competence": {
+                "raw": "M-II · 2.4 · conectores (although/because) · reading",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.4",
+                "topic": "conectores (although/because)"
+              },
+              "source_number": 21,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "because the sea is rough"
+                },
+                {
+                  "id": "b",
+                  "text": "because there are too many guides"
+                },
+                {
+                  "id": "c",
+                  "text": "the text doesn’t say"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            }
+          ]
+        },
+        {
+          "part_key": "c",
+          "title": "Part C — A conversation with gaps",
+          "instructions": "Read the conversation and choose the right word for each gap.",
+          "shared": {
+            "kind": "passage",
+            "title": "A polite request at reception",
+            "text": "Guest: Could you tell me (a)___ the gala dinner has been moved? — Host: Yes. It (b)___ now held at the old customs house. I’m sorry; we (c)___ changed the venue. — Guest: I’m a little (d)___, but I understand. — Host: You (e)___ arrive by eight, please.",
+            "image_id": null,
+            "alt_text": null,
+            "design_note": null,
+            "image_text": null
+          },
+          "items": [
+            {
+              "item_id": "b1-fa-r-11",
+              "prompt": "Gap (a):",
+              "competence": {
+                "raw": "M-I · 1.1 · pregunta indirecta (orden) · uso",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.1",
+                "topic": "pregunta indirecta (orden)"
+              },
+              "source_number": 22,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "where"
+                },
+                {
+                  "id": "b",
+                  "text": "where is"
+                },
+                {
+                  "id": "c",
+                  "text": "does where"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(a)"
+            },
+            {
+              "item_id": "b1-fa-r-12",
+              "prompt": "Gap (b):",
+              "competence": {
+                "raw": "M-II · 2.1 · voz pasiva · uso",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "voz pasiva"
+              },
+              "source_number": 23,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "is"
+                },
+                {
+                  "id": "b",
+                  "text": "are"
+                },
+                {
+                  "id": "c",
+                  "text": "be"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(b)"
+            },
+            {
+              "item_id": "b1-fa-r-13",
+              "prompt": "Gap (c):",
+              "competence": {
+                "raw": "M-I · 1.4 · presente perfecto (disculpa) · uso",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "presente perfecto (disculpa)"
+              },
+              "source_number": 24,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "have"
+                },
+                {
+                  "id": "b",
+                  "text": "has"
+                },
+                {
+                  "id": "c",
+                  "text": "had"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(c)"
+            },
+            {
+              "item_id": "b1-fa-r-14",
+              "prompt": "Gap (d):",
+              "competence": {
+                "raw": "M-I · 1.2 · adjetivos -ed/-ing · uso",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "adjetivos -ed/-ing"
+              },
+              "source_number": 25,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "disappointed"
+                },
+                {
+                  "id": "b",
+                  "text": "disappointing"
+                },
+                {
+                  "id": "c",
+                  "text": "disappoint"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(d)"
+            },
+            {
+              "item_id": "b1-fa-r-15",
+              "prompt": "Gap (e):",
+              "competence": {
+                "raw": "M-IV · 4.1 · modal de obligación · uso",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "modal de obligación"
+              },
+              "source_number": 26,
+              "type": "gap_choice",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "must"
+                },
+                {
+                  "id": "b",
+                  "text": "can"
+                },
+                {
+                  "id": "c",
+                  "text": "may"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": "(e)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "use_of_english",
+      "title": "Use of English",
+      "instructions": null,
+      "weight": 20,
+      "delivery": null,
+      "parts": [
+        {
+          "part_key": "tasks",
+          "title": "Use of English",
+          "instructions": "Choose the correct option.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "b1-fa-u-01",
+              "prompt": "Excuse me, could you tell me ___ the tour starts?",
+              "competence": {
+                "raw": "M-I · 1.1 · preguntas indirectas",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.1",
+                "topic": "preguntas indirectas"
+              },
+              "source_number": 27,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "what time"
+                },
+                {
+                  "id": "b",
+                  "text": "what time does"
+                },
+                {
+                  "id": "c",
+                  "text": "does what time"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-u-02",
+              "prompt": "The long delay was very ___ and we all felt ___.",
+              "competence": {
+                "raw": "M-I · 1.2 · adjetivos -ed/-ing",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "adjetivos -ed/-ing"
+              },
+              "source_number": 28,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "frustrating / frustrated"
+                },
+                {
+                  "id": "b",
+                  "text": "frustrated / frustrating"
+                },
+                {
+                  "id": "c",
+                  "text": "frustrate / frustrate"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-u-03",
+              "prompt": "The mountain farm is not ___ crowded ___ the luxury beaches, whereas it is far more peaceful.",
+              "competence": {
+                "raw": "M-I · 1.3 · as…as + whereas",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.3",
+                "topic": "as…as + whereas"
+              },
+              "source_number": 29,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "as / as"
+                },
+                {
+                  "id": "b",
+                  "text": "so / that"
+                },
+                {
+                  "id": "c",
+                  "text": "more / than"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-u-04",
+              "prompt": "The auditors ___ tomorrow morning; the flights are already booked.",
+              "competence": {
+                "raw": "M-I · 1.4 · futuros (present continuous para arreglos)",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "futuros (present continuous para arreglos)"
+              },
+              "source_number": 30,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "are arriving"
+                },
+                {
+                  "id": "b",
+                  "text": "arrive"
+                },
+                {
+                  "id": "c",
+                  "text": "will arrived"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-u-05",
+              "prompt": "Breakfast ___ on the terrace and the rooms ___ every morning.",
+              "competence": {
+                "raw": "M-II · 2.1 · voz pasiva en presente",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.1",
+                "topic": "voz pasiva en presente"
+              },
+              "source_number": 31,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "is served / are cleaned"
+                },
+                {
+                  "id": "b",
+                  "text": "serves / cleans"
+                },
+                {
+                  "id": "c",
+                  "text": "is serving / are cleaning"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-u-06",
+              "prompt": "All guests ___ wear a life jacket on the boat; it’s the law.",
+              "competence": {
+                "raw": "M-IV · 4.1 · modales de obligación",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "modales de obligación"
+              },
+              "source_number": 32,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "must"
+                },
+                {
+                  "id": "b",
+                  "text": "must to"
+                },
+                {
+                  "id": "c",
+                  "text": "musts"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-u-07",
+              "prompt": "You ___ visit the night market; I recommend it for a free evening.",
+              "competence": {
+                "raw": "M-II · 2.3 · recomendaciones (should)",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.3",
+                "topic": "recomendaciones (should)"
+              },
+              "source_number": 33,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "should"
+                },
+                {
+                  "id": "b",
+                  "text": "should to"
+                },
+                {
+                  "id": "c",
+                  "text": "ought"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-u-08",
+              "prompt": "While Mateo ___ the incident report, the manager ___.",
+              "competence": {
+                "raw": "M-II · 2.4 · pasado simple vs. continuo",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.4",
+                "topic": "pasado simple vs. continuo"
+              },
+              "source_number": 34,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "was writing / arrived"
+                },
+                {
+                  "id": "b",
+                  "text": "wrote / was arriving"
+                },
+                {
+                  "id": "c",
+                  "text": "writes / arrives"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-u-09",
+              "prompt": "Which word describes a feeling?",
+              "competence": {
+                "raw": "M-I · 1.2 · léxico sentimientos",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "léxico sentimientos"
+              },
+              "source_number": 35,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "embarrassed"
+                },
+                {
+                  "id": "b",
+                  "text": "terrace"
+                },
+                {
+                  "id": "c",
+                  "text": "receipt"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-u-10",
+              "prompt": "A guest wants their money back. They ask for a…",
+              "competence": {
+                "raw": "M-III · 3.1 · léxico devoluciones",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.1",
+                "topic": "léxico devoluciones"
+              },
+              "source_number": 36,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "refund"
+                },
+                {
+                  "id": "b",
+                  "text": "balcony"
+                },
+                {
+                  "id": "c",
+                  "text": "sunrise"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-u-11",
+              "prompt": "A polite, diplomatic way to disagree:",
+              "competence": {
+                "raw": "M-I · 1.2 · acuerdo/desacuerdo diplomático",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.2",
+                "topic": "acuerdo/desacuerdo diplomático"
+              },
+              "source_number": 37,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "I see your point; however, …"
+                },
+                {
+                  "id": "b",
+                  "text": "You are completely wrong."
+                },
+                {
+                  "id": "c",
+                  "text": "That’s a silly idea."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-u-12",
+              "prompt": "Which one belongs to coastal, sustainable tourism?",
+              "competence": {
+                "raw": "M-IV · 4.1 · léxico costa/sostenibilidad",
+                "modules": [
+                  "M4"
+                ],
+                "lesson": "4.1",
+                "topic": "léxico costa/sostenibilidad"
+              },
+              "source_number": 38,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "coral reef"
+                },
+                {
+                  "id": "b",
+                  "text": "heater"
+                },
+                {
+                  "id": "c",
+                  "text": "platform"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-u-13",
+              "prompt": "Which one is a professional apology?",
+              "competence": {
+                "raw": "M-I · 1.4 · disculpas profesionales",
+                "modules": [
+                  "M1"
+                ],
+                "lesson": "1.4",
+                "topic": "disculpas profesionales"
+              },
+              "source_number": 39,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "I’m terribly sorry for the inconvenience."
+                },
+                {
+                  "id": "b",
+                  "text": "That’s not my problem."
+                },
+                {
+                  "id": "c",
+                  "text": "Whatever you say."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-u-14",
+              "prompt": "At customs, the officer asks:",
+              "competence": {
+                "raw": "M-II · 2.2 · léxico aduana/autoridades",
+                "modules": [
+                  "M2"
+                ],
+                "lesson": "2.2",
+                "topic": "léxico aduana/autoridades"
+              },
+              "source_number": 40,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Do you have anything to declare?"
+                },
+                {
+                  "id": "b",
+                  "text": "What is your favorite color?"
+                },
+                {
+                  "id": "c",
+                  "text": "Please go away."
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            },
+            {
+              "item_id": "b1-fa-u-15",
+              "prompt": "A “store credit” is…",
+              "competence": {
+                "raw": "M-III · 3.1 · léxico devoluciones",
+                "modules": [
+                  "M3"
+                ],
+                "lesson": "3.1",
+                "topic": "léxico devoluciones"
+              },
+              "source_number": 41,
+              "type": "mcq",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "credit to spend in the same shop"
+                },
+                {
+                  "id": "b",
+                  "text": "a type of passport"
+                },
+                {
+                  "id": "c",
+                  "text": "a boat ticket"
+                }
+              ],
+              "key": "a",
+              "audio": null,
+              "gap_label": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "writing",
+      "title": "Writing",
+      "instructions": null,
+      "weight": 15,
+      "delivery": null,
+      "parts": [
+        {
+          "part_key": "tasks",
+          "title": "Writing",
+          "instructions": "Write your answers in English.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "b1-fa-w-01",
+              "prompt": "Professional apology email (70-100 words). Write a professional apology email to Sarah: the ocean tour has been canceled and the gala dinner has been moved. Explain what has happened (present perfect), what is going to happen now (future forms) and offer a concrete alternative. Close politely.",
+              "competence": null,
+              "source_number": null,
+              "type": "written_answers",
+              "rubric": "writing.apology_email",
+              "fields": [],
+              "template": null,
+              "min_words": 70,
+              "max_words": 100,
+              "max_chars": 900,
+              "questions": [
+                {
+                  "id": "q1",
+                  "text": "Write your email here."
+                }
+              ],
+              "source_rubric": "formal register · present perfect for what happened · future forms for the new plan · clear alternative + polite apology · cohesion and spelling",
+              "written_equivalent_of": null
+            },
+            {
+              "item_id": "b1-fa-w-02",
+              "prompt": "Balanced report + storytelling (70-100 words). Write a balanced report of the day on the coast: what went wrong and how the community solved it. Use past simple and past continuous, connectors (although/however/but) and briefly narrate the positive outcome (resilience / culture of peace). Include at least one comparison (-er than / more ... than).",
+              "competence": null,
+              "source_number": null,
+              "type": "written_answers",
+              "rubric": "writing.balanced_report",
+              "fields": [],
+              "template": null,
+              "min_words": 70,
+              "max_words": 100,
+              "max_chars": 900,
+              "questions": [
+                {
+                  "id": "q1",
+                  "text": "Write your report here."
+                }
+              ],
+              "source_rubric": "balanced contrast (negative to positive) · past simple and continuous · narrative connectors · narration of resilience · one comparison · intelligibility",
+              "written_equivalent_of": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "speaking",
+      "title": "Speaking",
+      "instructions": null,
+      "weight": 15,
+      "delivery": "written_equivalent",
+      "parts": [
+        {
+          "part_key": "tasks",
+          "title": "Speaking (written answer)",
+          "instructions": "Write your answer in English, as if you were speaking.",
+          "shared": null,
+          "items": [
+            {
+              "item_id": "b1-fa-s-02",
+              "prompt": "Clarify, compare and recommend (mini-pitch). At reception: handle a complaint, ask for clarification with an indirect question (Could you tell me...?), compare two plan options (as...as / -er than) and finish with a personalised recommendation using a relative clause (the tour which... / a guide who...).",
+              "competence": null,
+              "source_number": null,
+              "type": "written_answers",
+              "rubric": "speaking.clarify_compare_recommend_written",
+              "fields": [],
+              "template": null,
+              "min_words": null,
+              "max_words": null,
+              "max_chars": 600,
+              "questions": [
+                {
+                  "id": "q1",
+                  "text": "Write what you would say here."
+                }
+              ],
+              "source_rubric": "clarifies with an indirect question · compares two options · recommends with a relative clause · intelligibility",
+              "written_equivalent_of": "Speaking Task 2 · Clarify, compare and recommend (mini-pitch)"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source_notes": [
+    "b1-fa-l-11: source item 11 is the matching task; it counts as 5 items and is left out of the per-module map",
+    "b1-fa-w-01 and b1-fa-w-02: the source asks for 70-100 words. The platform keeps 900 characters of each answer (the shared cap of 300 would cut an email at about 45 words) and serves 70 and 100 as a hint; the rubric counts words in a wider window",
+    "Speaking Task 1 (b1-fa-s-01, read the Writing email aloud) is NOT in this form: it has no written equivalent yet and needs a pedagogical decision. The Speaking section keeps its 15% weight and holds Task 2 only (0 to 5)",
+    "Speaking is delivered as a typed answer (delivery: written_equivalent); it does not measure pronunciation",
+    "The source has no figure briefs or alt text, so no item has an image and image_pending is not set anywhere; it also gives no instructions per part, so the part titles and instructions are ours (see REVIEW-B1-checkin.md)"
+  ]
+}
