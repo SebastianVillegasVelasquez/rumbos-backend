@@ -207,3 +207,21 @@ def canonical(value: Any) -> bytes:
 
 def definition_hash(definition: Any) -> str:
     return hashlib.sha256(canonical(definition)).hexdigest()
+
+
+# (content version, form id) -> (definition, hash): a form never changes within
+# one content version, so it is built once.
+_BUILT: dict[tuple[str, str], tuple[dict[str, Any], str]] = {}
+
+
+def definition_of(
+    content_version: str, form: AssessmentForm
+) -> tuple[dict[str, Any], str]:
+    """The definition of a form of a pack and its hash, built once."""
+    key = (content_version, form.form_id)
+    found = _BUILT.get(key)
+    if found is None:
+        built = build_definition(form)
+        found = (built, definition_hash(built))
+        _BUILT[key] = found
+    return found

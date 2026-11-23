@@ -28,7 +28,7 @@ from app.assessment.metrics import METRICS
 from app.assessment.scoring import decimal_string, passes
 from app.exceptions import AssessmentConflictError, TrainerNotFoundError
 from app.mirror.attempt import attempt_claims
-from app.mirror.definition import build_definition, definition_hash
+from app.mirror.definition import definition_of
 from app.mirror.statements import definition_claims
 from app.passback.statement import claims_for
 from app.repositories.sqlalchemy.assessment_repository import (
@@ -36,7 +36,6 @@ from app.repositories.sqlalchemy.assessment_repository import (
     SqlAlchemyAssessmentRepository,
 )
 from app.schemas.map_settings import AssessmentPolicy, AssessmentSettings
-from app.trainer.assessment_form import AssessmentForm
 from app.trainer.catalog import Catalog
 from app.trainer.language import ENGLISH
 from app.trainer.pack import Pack
@@ -75,23 +74,6 @@ class _MirrorPlan:
 
     definition_hash: str
     written_text: bool
-
-
-# (content version, form id) -> (definition, hash): a form never changes within
-# one content version, so it is built once.
-_DEFINITIONS: dict[tuple[str, str], tuple[dict[str, Any], str]] = {}
-
-
-def _definition_of(
-    content_version: str, form: AssessmentForm
-) -> tuple[dict[str, Any], str]:
-    key = (content_version, form.form_id)
-    found = _DEFINITIONS.get(key)
-    if found is None:
-        built = build_definition(form)
-        found = (built, definition_hash(built))
-        _DEFINITIONS[key] = found
-    return found
 
 
 def _policy_of(settings: AssessmentSettings, purpose: str) -> AssessmentPolicy:
@@ -349,7 +331,7 @@ class AssessmentService:
         form = pack.served_form(form_id, False)
         if form is None:
             return None
-        definition, digest = _definition_of(pack.content_version, form)
+        definition, digest = definition_of(pack.content_version, form)
         now = self._clock()
         await self._attempts.ensure_definition(
             tenant_id=tenant_id,
