@@ -283,6 +283,54 @@ class Welcome(_Strict):
         return self == Welcome()
 
 
+def _closing_steps_schema(schema: dict[str, Any]) -> None:
+    """Says in the schema what `flow_problems` enforces for a closing flow: no
+    `welcome` greeting, and an `assessment` step of purpose `final` only. The
+    runtime shape is the welcome flow's (so a refused step is reported with a
+    `{path, code, message}` problem, not a generic validation error); only the
+    document the frontend generates from differs."""
+    for branch in schema.get("anyOf", []):
+        items = branch.get("items")
+        if items is None:
+            continue
+        refs = items["oneOf"]
+        kept = [r for r in refs if "WelcomeStep" not in r["$ref"]]
+        for index, ref in enumerate(kept):
+            if "AssessmentStep" in ref["$ref"]:
+                kept[index] = {
+                    "allOf": [ref],
+                    "properties": {"purpose": {"const": "final", "type": "string"}},
+                    "description": "In a closing flow the purpose is `final`.",
+                }
+        items["oneOf"] = kept
+        mapping = items.get("discriminator", {}).get("mapping")
+        if mapping:
+            mapping.pop("welcome", None)
+
+
+class ClosingFlow(Welcome):
+    """The closing flow: the welcome flow's twin, shown when the level is
+    finished. Same fields and same checks; what differs is what `steps` may
+    hold. Allowed: `video`, `html`, `pdf`, `quiz` and one `assessment` step of
+    purpose `final`. Refused with 422 `welcome_invalid` (problem
+    `step_type_not_allowed` or `assessment_purpose`): the `welcome` greeting.
+    A closing flow needs at least one step, and step keys are unique across
+    both flows. The student's progress through it is kept in Moodle, not here."""
+
+    model_config = ConfigDict(extra="forbid", json_schema_extra=None)
+
+    steps: Annotated[
+        Steps,
+        Field(
+            json_schema_extra=_closing_steps_schema,
+            description=(
+                "Allowed here: video, html, pdf, quiz and one assessment step "
+                "of purpose `final`. The `welcome` greeting is welcome-only."
+            ),
+        ),
+    ] = None
+
+
 class WelcomeDocument(ApiModel):
     """A document a welcome flow shows, as it is now (read live, never part of a
     snapshot or its hash). `available` is false when the asset is gone, taken

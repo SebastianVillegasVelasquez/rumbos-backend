@@ -12,7 +12,7 @@ from pydantic import BeforeValidator, ConfigDict, Field
 
 from app.schemas.base import ApiModel
 from app.schemas.skin import HexColor
-from app.schemas.welcome import Welcome
+from app.schemas.welcome import ClosingFlow, Welcome
 
 
 class _Strict(ApiModel):
@@ -121,7 +121,7 @@ class MapSettings(_Strict):
     # The closing flow, shown when the level is finished: the same shape as the
     # welcome flow (see `app.welcome_flow.flow` for what it may hold). Absent or
     # null: there is none.
-    closing: Welcome | None = None
+    closing: ClosingFlow | None = None
     trainer: TrainerSettings = Field(default_factory=TrainerSettings)
     assessments: AssessmentSettings = Field(default_factory=AssessmentSettings)
 

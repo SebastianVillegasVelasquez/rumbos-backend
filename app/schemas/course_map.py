@@ -168,9 +168,13 @@ class CourseMapRead(CourseMapBase):
     # Title, credit and duration of the map's music, read live from the asset;
     # null when there is none (or it has been taken down).
     audio_info: AudioInfo | None = None
-    # The documents the welcome flow's PDF steps show, read live (never in a
-    # snapshot); empty when the flow has none.
-    welcome_documents: list[WelcomeDocument] = Field(default_factory=list)
+    # The documents the PDF steps of the welcome flow and then of the closing
+    # flow show, read live (never in a snapshot); empty when there are none.
+    welcome_documents: list[WelcomeDocument] = Field(
+        default_factory=list,
+        description="Documents of the PDF steps of both flows: the welcome "
+        "flow's first, then the closing flow's, each once.",
+    )
 
 
 class SettingsWarning(BaseModel):

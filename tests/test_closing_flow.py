@@ -185,11 +185,23 @@ async def test_the_greeting_is_not_a_closing_step(client: httpx.AsyncClient) -> 
     assert problems_of(r) == [("closing.steps[0]", "step_type_not_allowed")]
 
 
-async def test_a_moodle_quiz_is_not_a_closing_step(client: httpx.AsyncClient) -> None:
+async def test_a_moodle_quiz_is_a_closing_step(client: httpx.AsyncClient) -> None:
     quiz = {"type": "quiz", "key": "cuestion1", "title": "Quiz", "cmid": 7}
     r = await put_closing(client, {"steps": [quiz]})
+    assert r.status_code == 200, r.text
+    assert r.json()["settings"]["closing"]["steps"][0]["cmid"] == 7
+
+
+async def test_a_closing_flow_holds_at_most_three_quizzes(
+    client: httpx.AsyncClient,
+) -> None:
+    quizzes = [
+        {"type": "quiz", "key": f"cuestion{i}", "title": "Quiz", "cmid": 7 + i}
+        for i in range(4)
+    ]
+    r = await put_closing(client, {"steps": quizzes})
     assert r.status_code == 422
-    assert problems_of(r) == [("closing.steps[0]", "step_type_not_allowed")]
+    assert problems_of(r) == [("closing.steps[3]", "quiz_too_many")]
 
 
 async def test_the_closing_exam_must_be_the_final_one(

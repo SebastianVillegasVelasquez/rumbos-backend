@@ -1,0 +1,509 @@
+{
+  "$defs": {
+    "Definition": {
+      "additionalProperties": false,
+      "properties": {
+        "schema": {
+          "const": 1,
+          "title": "Schema",
+          "type": "integer"
+        },
+        "form_id": {
+          "title": "Form Id",
+          "type": "string"
+        },
+        "purpose": {
+          "enum": [
+            "check_in",
+            "final"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "language": {
+          "title": "Language",
+          "type": "string"
+        },
+        "level": {
+          "title": "Level",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "sections": {
+          "items": {
+            "$ref": "#/$defs/Section"
+          },
+          "title": "Sections",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema",
+        "form_id",
+        "purpose",
+        "language",
+        "level",
+        "title",
+        "sections"
+      ],
+      "title": "Definition",
+      "type": "object"
+    },
+    "Option": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "text"
+      ],
+      "title": "Option",
+      "type": "object"
+    },
+    "Part": {
+      "additionalProperties": false,
+      "properties": {
+        "part_key": {
+          "title": "Part Key",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "instructions": {
+          "title": "Instructions",
+          "type": "string"
+        },
+        "shared": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Shared"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "questions": {
+          "items": {
+            "$ref": "#/$defs/Question"
+          },
+          "title": "Questions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "part_key",
+        "title",
+        "instructions",
+        "shared",
+        "questions"
+      ],
+      "title": "Part",
+      "type": "object"
+    },
+    "Question": {
+      "additionalProperties": false,
+      "description": "One scorable unit: a choice item, one pair of a matching item, or a\nwritten task. `weight_points` is its exact share of the 100, so the mark of\na question is `points_exact / max_points * weight_points`.",
+      "properties": {
+        "question_id": {
+          "title": "Question Id",
+          "type": "string"
+        },
+        "item_id": {
+          "title": "Item Id",
+          "type": "string"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        },
+        "prompt": {
+          "title": "Prompt",
+          "type": "string"
+        },
+        "options": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/Option"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Options"
+        },
+        "correct": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Correct"
+        },
+        "audio_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audio Id"
+        },
+        "gap_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gap Label"
+        },
+        "clip": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Matching: clip number, from 1",
+          "title": "Clip"
+        },
+        "written": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Written"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "max_points": {
+          "title": "Max Points",
+          "type": "integer"
+        },
+        "weight_points": {
+          "description": "Exact fraction of 100, e.g. `5/3` or `2`",
+          "title": "Weight Points",
+          "type": "string"
+        },
+        "weight_points_decimal": {
+          "title": "Weight Points Decimal",
+          "type": "string"
+        }
+      },
+      "required": [
+        "question_id",
+        "item_id",
+        "type",
+        "prompt",
+        "max_points",
+        "weight_points",
+        "weight_points_decimal"
+      ],
+      "title": "Question",
+      "type": "object"
+    },
+    "Section": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "instructions": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Instructions"
+        },
+        "weight": {
+          "title": "Weight",
+          "type": "integer"
+        },
+        "delivery": {
+          "anyOf": [
+            {
+              "const": "written_equivalent",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Delivery"
+        },
+        "max_points": {
+          "title": "Max Points",
+          "type": "integer"
+        },
+        "parts": {
+          "items": {
+            "$ref": "#/$defs/Part"
+          },
+          "title": "Parts",
+          "type": "array"
+        }
+      },
+      "required": [
+        "key",
+        "title",
+        "instructions",
+        "weight",
+        "delivery",
+        "max_points",
+        "parts"
+      ],
+      "title": "Section",
+      "type": "object"
+    },
+    "Shared": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "passage",
+            "image"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Title"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Text"
+        },
+        "image_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Image Id"
+        },
+        "alt_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Alt Text"
+        }
+      },
+      "required": [
+        "kind",
+        "title",
+        "text",
+        "image_id",
+        "alt_text"
+      ],
+      "title": "Shared",
+      "type": "object"
+    },
+    "Written": {
+      "additionalProperties": false,
+      "description": "What a written task asks for. The rubric that scores it never travels.",
+      "properties": {
+        "fields": {
+          "items": {
+            "$ref": "#/$defs/Option"
+          },
+          "title": "Fields",
+          "type": "array"
+        },
+        "questions": {
+          "items": {
+            "$ref": "#/$defs/Option"
+          },
+          "title": "Questions",
+          "type": "array"
+        },
+        "template": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Template"
+        },
+        "min_words": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Min Words"
+        },
+        "max_words": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Max Words"
+        },
+        "max_chars": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Max Chars"
+        }
+      },
+      "required": [
+        "fields",
+        "questions",
+        "template",
+        "min_words",
+        "max_words",
+        "max_chars"
+      ],
+      "title": "Written",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Exam definition. `jti` is fixed by (tenant, form, `definition_hash`).",
+  "properties": {
+    "iss": {
+      "title": "Iss",
+      "type": "string"
+    },
+    "aud": {
+      "const": "moodle",
+      "title": "Aud",
+      "type": "string"
+    },
+    "iat": {
+      "description": "When it was created. There is no `exp`.",
+      "title": "Iat",
+      "type": "integer"
+    },
+    "jti": {
+      "description": "Accept each `jti` once; a repeat is a duplicate",
+      "title": "Jti",
+      "type": "string"
+    },
+    "tenant": {
+      "title": "Tenant",
+      "type": "string"
+    },
+    "form_id": {
+      "title": "Form Id",
+      "type": "string"
+    },
+    "content_version": {
+      "title": "Content Version",
+      "type": "string"
+    },
+    "kind": {
+      "const": "definition",
+      "title": "Kind",
+      "type": "string"
+    },
+    "schema": {
+      "const": 1,
+      "title": "Schema",
+      "type": "integer"
+    },
+    "definition_hash": {
+      "description": "sha256 of the canonical definition",
+      "title": "Definition Hash",
+      "type": "string"
+    },
+    "definition": {
+      "$ref": "#/$defs/Definition"
+    }
+  },
+  "required": [
+    "iss",
+    "aud",
+    "iat",
+    "jti",
+    "tenant",
+    "form_id",
+    "content_version",
+    "kind",
+    "schema",
+    "definition_hash",
+    "definition"
+  ],
+  "title": "DefinitionStatement",
+  "type": "object"
+}

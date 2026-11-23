@@ -584,3 +584,86 @@ result carries a version that this changes.
   *generated audio*. Apache-2.0 on the weights and the absence of an output
   restriction point to it being allowed, but it is not a legal opinion; confirm
   with the client's counsel before a government deliverable.
+
+## D53. The final leaves the trainer list only where the closing flow has it
+
+With `CLOSING_GATE_MODE=enforce` the final exam is no longer an entry of the
+trainer list and its start is gated, but only for a map whose closing flow holds
+an enabled `assessment` step of purpose `final`. A map without one keeps what it
+had before the gate: the final stays listed and starts without the check, so no
+student is left without an entry to the exam while the closing flow is not yet
+configured. `GET /trainer/closing` still tells the truth about that map
+(`not_enabled` or `no_final_step`), which is why a screen can say "no closing
+exam" while a direct start works.
+
+Follow-up: delete this rule (and the two branches that carry it, `hide_final` in
+`get_service` and the early return in `guard_final_start`) once every map has a
+closing flow with its final step.
+
+## D54. The closing flow shares every content step type with the welcome flow
+
+Product rule: the closing flow offers every content step the welcome flow does.
+The audit found `html`, `pdf` and `video` were already shared; the Moodle `quiz`
+step was refused and is now allowed (the three-quiz limit applies per flow). The
+`welcome` greeting stays welcome-only, and the exam step is `check_in` in one
+flow and `final` in the other. The rules live in one table
+(`_FLOW_TYPES`, `_PURPOSE` in `app.welcome_flow.flow`).
+
+The OpenAPI says it with a `ClosingFlow` schema (a subclass of `Welcome` that
+only changes the generated schema of `steps`). It is deliberately not a
+stricter runtime type: a refused step keeps being reported as a
+`{path, code, message}` problem, the same error shape as the welcome flow, and
+every stored map loads unchanged.
+
+## D55. The mirror is pushed through the outbox; there is no pull endpoint
+
+Both the exam definition and each attempt go from the backend to the plugin as
+signed statements, with the outbox's retry and backoff. A pull endpoint (or a
+bearer credential per tenant) would be a place where the right answers of every
+published form can be read, so it was refused. The cost is that delivery order
+has to be handled: the definition is queued when a real attempt starts, sent
+first, and an attempt whose definition is not delivered waits without being
+counted; an `unknown_definition` answer re-queues the definition and retries the
+attempt. `PASSBACK_SENDER=http` is the real sender (D13 had only a fake); the
+endpoint is per tenant (`tenants.mirror_endpoint`), off by default.
+
+## D56. A definition is keyed by its own hash, not by `content_version`
+
+The owner asked for one definition per (tenant, form, `content_version`). A
+pack's `content_version` is a hash of every file, so a typo fix in an unrelated
+activity would resend every form unchanged. The key is the sha256 of the
+definition itself (`definition_hash`): the same content is never sent twice and
+any change the mirror can see is. `content_version` still travels, for tracing.
+
+## D57. No void or cancel; only closed attempts are exported
+
+There is no such state (an attempt is `in_progress`, `submitted` or `expired`; a
+restart is a new attempt), and none is invented for the mirror. Only closed,
+non-preview attempts are queued. If a void is wanted later it needs its own
+statement that cancels a `jti`, decided on its own.
+
+## D58. Student text is a per-tenant switch, off by default; the cap drops text first
+
+The text a student wrote leaves the backend for the first time here, so it is
+behind `tenants.mirror_written_text`, off until legal review. Off, the mirror
+gets the rubric points and `written_text_included: false`. A statement over 64 KB
+drops the text and sets `truncated: true`; an answer is never dropped. The
+largest attempt we have (A1, every answer at its limit) is 22.8 KB, so the cap
+cannot bite today.
+
+## D59. Signing is unchanged (ES256) and pinned by golden vectors
+
+The plugin verifies RS256 and the backend signs ES256; the algorithm stays and
+the plugin adapts. The passback had never been verified outside the library that
+signs it, so `contracts/signing-vectors/` holds statements made by the production
+signer and a test verifies them with plain ECDSA primitives. No statement has
+`exp`: a row can wait in the outbox for days, so `iat` (creation time) must not
+be used to refuse it. One signing key at a time, chosen `kid`, signed at send
+time; rotation adds the new public key to the plugin first.
+
+## D60. The mirror applies only where it can be complete
+
+A tenant with no endpoint, or a form that is not published, produces the plain
+schema 1 statement exactly as before. This keeps a deploy inert and means a
+statement never names a definition that was never queued.
+

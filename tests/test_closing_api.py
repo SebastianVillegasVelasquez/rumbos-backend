@@ -323,7 +323,9 @@ async def test_no_closing_flow_or_no_final_step_means_no_exam(
     await world(env, closing=None)
     s = await learner(env, "alumno1")
     assert (await closing_of(s))["reason"] == "not_enabled"
-    assert refusal(await try_final(s))["reason"] == "not_enabled"
+    # Transitional rule (D53): the screen says there is no closing exam, but a
+    # map without a final step keeps its pre-gate behaviour, so the start works.
+    assert (await try_final(s)).status_code == 201
 
 
 async def test_a_closing_flow_without_a_final_step_means_no_exam(
@@ -333,7 +335,21 @@ async def test_a_closing_flow_without_a_final_step_means_no_exam(
     await world(env, closing=only_content)
     s = await learner(env, "alumno1")
     assert (await closing_of(s))["reason"] == "no_final_step"
-    assert refusal(await try_final(s))["reason"] == "no_final_step"
+    assert (await try_final(s)).status_code == 201  # transitional rule (D53)
+
+
+@pytest.mark.parametrize("closing", [None, {"steps": [CLOSING["steps"][0]]}])
+async def test_a_map_without_a_final_step_keeps_the_final_in_the_trainer(
+    env: dict[str, Any],
+    provider: FakeCompletionProvider,
+    mode: Any,
+    closing: dict[str, Any] | None,
+) -> None:
+    await world(env, closing=closing)
+    s = await learner(env, "alumno1")
+    items = (await s.get("/trainer/assessments")).json()["items"]
+    assert [i["purpose"] for i in items] == ["check_in", "final"]
+    assert provider.calls == 0  # the completion is not even asked for
 
 
 async def test_attempts_exhausted_keeps_the_existing_error(
@@ -510,13 +526,15 @@ async def test_an_editor_cannot_read_a_students_attempt(
     assert (await e.get(f"/trainer/attempts/{uuid.uuid4()}/result")).status_code == 404
 
 
-async def test_preview_still_needs_the_flow_configured(
+async def test_preview_screen_still_says_the_flow_is_not_configured(
     env: dict[str, Any], provider: FakeCompletionProvider, mode: Any
 ) -> None:
     await world(env, closing=None)
     e = await env["editor"]("editor-1")
     assert (await closing_of(e))["reason"] == "not_enabled"
-    assert refusal(await try_final(e))["reason"] == "not_enabled"
+    # Transitional rule (D53): a map without a final step keeps its old
+    # behaviour, so the start is not gated for an editor either.
+    assert (await try_final(e)).status_code == 201
 
 
 # --- the Moodle user id ------------------------------------------------------------------------
