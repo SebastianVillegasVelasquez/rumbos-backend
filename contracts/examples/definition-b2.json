@@ -1,0 +1,1437 @@
+{
+  "iss": "rumbos-backend",
+  "aud": "moodle",
+  "iat": 1795000000,
+  "jti": "f105cf85-337d-50b8-9ef9-324bd662eb0b",
+  "kind": "definition",
+  "schema": 1,
+  "tenant": "0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b",
+  "form_id": "b2-form-a",
+  "content_version": "0123456789abcdef",
+  "definition_hash": "6406d8f6d0b5d8e75234f19add567587078a39f79e6135ce2a171964e6439cd2",
+  "definition": {
+    "schema": 1,
+    "form_id": "b2-form-a",
+    "purpose": "check_in",
+    "language": "en",
+    "level": "B2",
+    "title": "Inglés B2 · Evaluación diagnóstica · Forma A · Diagnóstico de entrada",
+    "sections": [
+      {
+        "key": "listening",
+        "title": "Listening",
+        "instructions": null,
+        "weight": 25,
+        "delivery": null,
+        "max_points": 15,
+        "parts": [
+          {
+            "part_key": "a",
+            "title": "Part A — Short messages",
+            "instructions": "Listen and choose the correct answer.",
+            "shared": null,
+            "questions": [
+              {
+                "question_id": "b2-fa-l-01",
+                "item_id": "b2-fa-l-01",
+                "type": "listen_choose",
+                "prompt": "When is the delegation expected to arrive?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "around 9:40"
+                  },
+                  {
+                    "id": "b",
+                    "text": "at 4:09"
+                  },
+                  {
+                    "id": "c",
+                    "text": "at 9:14"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": "b2fa-887d4269da",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-l-02",
+                "item_id": "b2-fa-l-02",
+                "type": "listen_choose",
+                "prompt": "How much is the mediation package?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "£8,500"
+                  },
+                  {
+                    "id": "b",
+                    "text": "£85,000"
+                  },
+                  {
+                    "id": "c",
+                    "text": "£850,000"
+                  }
+                ],
+                "correct": "b",
+                "audio_id": "b2fa-7bbc9282d1",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-l-03",
+                "item_id": "b2-fa-l-03",
+                "type": "listen_choose",
+                "prompt": "What is highly probable?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "the keynote will be moved to the main auditorium"
+                  },
+                  {
+                    "id": "b",
+                    "text": "the summit will be cancelled"
+                  },
+                  {
+                    "id": "c",
+                    "text": "the press room will close"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": "b2fa-5e47684e4c",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-l-04",
+                "item_id": "b2-fa-l-04",
+                "type": "listen_choose",
+                "prompt": "What is likely to happen to the delegation?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "it is likely to be delayed"
+                  },
+                  {
+                    "id": "b",
+                    "text": "it will certainly cancel"
+                  },
+                  {
+                    "id": "c",
+                    "text": "it has already arrived"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": "b2fa-5e1bfb3a5e",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-l-05",
+                "item_id": "b2-fa-l-05",
+                "type": "listen_choose",
+                "prompt": "Why is the caller phoning?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "to request an urgent review of repeated cancellations"
+                  },
+                  {
+                    "id": "b",
+                    "text": "to book a new tour"
+                  },
+                  {
+                    "id": "c",
+                    "text": "to thank the operator"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": "b2fa-d299b580f8",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              }
+            ]
+          },
+          {
+            "part_key": "b",
+            "title": "Part B — Short conversations",
+            "instructions": "Listen to each conversation and choose the correct answer.",
+            "shared": null,
+            "questions": [
+              {
+                "question_id": "b2-fa-l-06",
+                "item_id": "b2-fa-l-06",
+                "type": "listen_choose",
+                "prompt": "What does the client conclude?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "they cannot rebook until the account is cleared"
+                  },
+                  {
+                    "id": "b",
+                    "text": "the fee has already been paid"
+                  },
+                  {
+                    "id": "c",
+                    "text": "the account has been closed"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": "b2fa-d1938b039c",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-l-07",
+                "item_id": "b2-fa-l-07",
+                "type": "listen_choose",
+                "prompt": "What is the investor confirming through paraphrase?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "that the commission would be reinvested locally"
+                  },
+                  {
+                    "id": "b",
+                    "text": "that the deal is cancelled"
+                  },
+                  {
+                    "id": "c",
+                    "text": "that the fee is fixed"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": "b2fa-76c7dbe9f3",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-l-08",
+                "item_id": "b2-fa-l-08",
+                "type": "listen_choose",
+                "prompt": "What is the speaker correcting?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "an outdated tariff that no longer applies"
+                  },
+                  {
+                    "id": "b",
+                    "text": "the delegate’s name"
+                  },
+                  {
+                    "id": "c",
+                    "text": "the venue address"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": "b2fa-bf05af1958",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-l-09",
+                "item_id": "b2-fa-l-09",
+                "type": "listen_choose",
+                "prompt": "How does the colleague frame the situation?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "by weighing pros and cons (on the one hand… on the other hand…)"
+                  },
+                  {
+                    "id": "b",
+                    "text": "by refusing to discuss it"
+                  },
+                  {
+                    "id": "c",
+                    "text": "by blaming the delegation"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": "b2fa-385e86c274",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-l-10",
+                "item_id": "b2-fa-l-10",
+                "type": "listen_choose",
+                "prompt": "What advice is given?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "breathe, trust the preparation and focus on one face"
+                  },
+                  {
+                    "id": "b",
+                    "text": "cancel the panel"
+                  },
+                  {
+                    "id": "c",
+                    "text": "read faster"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": "b2fa-98b9bcd650",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              }
+            ]
+          },
+          {
+            "part_key": "c",
+            "title": "Part C — Match the audio with the scene",
+            "instructions": "Listen to the five audios and match each one with the correct scene.",
+            "shared": null,
+            "questions": [
+              {
+                "question_id": "b2-fa-l-11:0",
+                "item_id": "b2-fa-l-11",
+                "type": "match_pair",
+                "prompt": "Empareja cada audio (1–5) con la escena correcta: chaired negotiation · consular theft report · certainty briefing · sustainable-tourism symposium · OTA compliance call.",
+                "clip": 1,
+                "options": [
+                  {
+                    "id": "chaired_negotiation",
+                    "text": "chaired negotiation"
+                  },
+                  {
+                    "id": "consular_theft_report",
+                    "text": "consular theft report"
+                  },
+                  {
+                    "id": "certainty_briefing",
+                    "text": "certainty briefing"
+                  },
+                  {
+                    "id": "sustainable_tourism_symposium",
+                    "text": "sustainable-tourism symposium"
+                  },
+                  {
+                    "id": "ota_compliance_call",
+                    "text": "OTA compliance call"
+                  }
+                ],
+                "correct": "chaired_negotiation",
+                "audio_id": "b2fa-1d068f044e",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-l-11:1",
+                "item_id": "b2-fa-l-11",
+                "type": "match_pair",
+                "prompt": "Empareja cada audio (1–5) con la escena correcta: chaired negotiation · consular theft report · certainty briefing · sustainable-tourism symposium · OTA compliance call.",
+                "clip": 2,
+                "options": [
+                  {
+                    "id": "chaired_negotiation",
+                    "text": "chaired negotiation"
+                  },
+                  {
+                    "id": "consular_theft_report",
+                    "text": "consular theft report"
+                  },
+                  {
+                    "id": "certainty_briefing",
+                    "text": "certainty briefing"
+                  },
+                  {
+                    "id": "sustainable_tourism_symposium",
+                    "text": "sustainable-tourism symposium"
+                  },
+                  {
+                    "id": "ota_compliance_call",
+                    "text": "OTA compliance call"
+                  }
+                ],
+                "correct": "consular_theft_report",
+                "audio_id": "b2fa-8b42d3f325",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-l-11:2",
+                "item_id": "b2-fa-l-11",
+                "type": "match_pair",
+                "prompt": "Empareja cada audio (1–5) con la escena correcta: chaired negotiation · consular theft report · certainty briefing · sustainable-tourism symposium · OTA compliance call.",
+                "clip": 3,
+                "options": [
+                  {
+                    "id": "chaired_negotiation",
+                    "text": "chaired negotiation"
+                  },
+                  {
+                    "id": "consular_theft_report",
+                    "text": "consular theft report"
+                  },
+                  {
+                    "id": "certainty_briefing",
+                    "text": "certainty briefing"
+                  },
+                  {
+                    "id": "sustainable_tourism_symposium",
+                    "text": "sustainable-tourism symposium"
+                  },
+                  {
+                    "id": "ota_compliance_call",
+                    "text": "OTA compliance call"
+                  }
+                ],
+                "correct": "certainty_briefing",
+                "audio_id": "b2fa-51317ef3c2",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-l-11:3",
+                "item_id": "b2-fa-l-11",
+                "type": "match_pair",
+                "prompt": "Empareja cada audio (1–5) con la escena correcta: chaired negotiation · consular theft report · certainty briefing · sustainable-tourism symposium · OTA compliance call.",
+                "clip": 4,
+                "options": [
+                  {
+                    "id": "chaired_negotiation",
+                    "text": "chaired negotiation"
+                  },
+                  {
+                    "id": "consular_theft_report",
+                    "text": "consular theft report"
+                  },
+                  {
+                    "id": "certainty_briefing",
+                    "text": "certainty briefing"
+                  },
+                  {
+                    "id": "sustainable_tourism_symposium",
+                    "text": "sustainable-tourism symposium"
+                  },
+                  {
+                    "id": "ota_compliance_call",
+                    "text": "OTA compliance call"
+                  }
+                ],
+                "correct": "sustainable_tourism_symposium",
+                "audio_id": "b2fa-93a228d91d",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-l-11:4",
+                "item_id": "b2-fa-l-11",
+                "type": "match_pair",
+                "prompt": "Empareja cada audio (1–5) con la escena correcta: chaired negotiation · consular theft report · certainty briefing · sustainable-tourism symposium · OTA compliance call.",
+                "clip": 5,
+                "options": [
+                  {
+                    "id": "chaired_negotiation",
+                    "text": "chaired negotiation"
+                  },
+                  {
+                    "id": "consular_theft_report",
+                    "text": "consular theft report"
+                  },
+                  {
+                    "id": "certainty_briefing",
+                    "text": "certainty briefing"
+                  },
+                  {
+                    "id": "sustainable_tourism_symposium",
+                    "text": "sustainable-tourism symposium"
+                  },
+                  {
+                    "id": "ota_compliance_call",
+                    "text": "OTA compliance call"
+                  }
+                ],
+                "correct": "ota_compliance_call",
+                "audio_id": "b2fa-9b41ab901b",
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "reading",
+        "title": "Reading",
+        "instructions": null,
+        "weight": 25,
+        "delivery": null,
+        "max_points": 15,
+        "parts": [
+          {
+            "part_key": "a",
+            "title": "Part A — Notices",
+            "instructions": "Read each notice and choose the sentence that says the same.",
+            "shared": null,
+            "questions": [
+              {
+                "question_id": "b2-fa-r-01",
+                "item_id": "b2-fa-r-01",
+                "type": "mcq",
+                "prompt": "Notice: “ACCOUNTS FLAGGED FOR COMPLIANCE REVIEW CANNOT BE REBOOKED UNTIL CLEARED”",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "A flagged account must be cleared before any rebooking."
+                  },
+                  {
+                    "id": "b",
+                    "text": "Flagged accounts are rebooked automatically."
+                  },
+                  {
+                    "id": "c",
+                    "text": "No account can ever be rebooked."
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-r-02",
+                "item_id": "b2-fa-r-02",
+                "type": "mcq",
+                "prompt": "Notice: “THE WETLAND IS STRICTLY PROTECTED — VISITORS ARE INSTRUCTED TO STAY ON THE MARKED PATH”",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "Visitors must remain on the marked path in a protected area."
+                  },
+                  {
+                    "id": "b",
+                    "text": "Visitors may walk anywhere."
+                  },
+                  {
+                    "id": "c",
+                    "text": "The wetland is closed forever."
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-r-03",
+                "item_id": "b2-fa-r-03",
+                "type": "mcq",
+                "prompt": "Notice: “CANCELLATION FEES MAY BE WAIVED IN CASES OF FORCE MAJEURE”",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "In force-majeure cases the fee can be cancelled."
+                  },
+                  {
+                    "id": "b",
+                    "text": "Fees are always charged."
+                  },
+                  {
+                    "id": "c",
+                    "text": "Nobody may cancel."
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-r-04",
+                "item_id": "b2-fa-r-04",
+                "type": "mcq",
+                "prompt": "Notice: “THE CHAIR MAY CLOSE THE SESSION ONCE THE ALLOTTED TIME IS UP”",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "The chair can end the meeting when time runs out."
+                  },
+                  {
+                    "id": "b",
+                    "text": "The meeting never ends."
+                  },
+                  {
+                    "id": "c",
+                    "text": "Only guests may close the session."
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-r-05",
+                "item_id": "b2-fa-r-05",
+                "type": "mcq",
+                "prompt": "Notice: “DAILY VISITOR NUMBERS ARE CAPPED TO RESPECT THE CARRYING CAPACITY OF THE SITE”",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "A daily limit protects the site’s carrying capacity."
+                  },
+                  {
+                    "id": "b",
+                    "text": "The site has no limit."
+                  },
+                  {
+                    "id": "c",
+                    "text": "The site is for sale."
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              }
+            ]
+          },
+          {
+            "part_key": "b",
+            "title": "Part B — A briefing",
+            "instructions": "Read the text and answer the questions.",
+            "shared": {
+              "kind": "passage",
+              "title": "Summit compliance briefing",
+              "text": "If our cooperative had not filed the complaint last month, the operator would have kept canceling our confirmed bookings. The account, which is now under compliance review, has been flagged, so no rebooking is possible until it is cleared. It is highly probable that the cancellation fees will be waived once the audit is complete. The delegation is likely to arrive at approximately nine forty; a revised schedule is being circulated. On the one hand the delay is frustrating; on the other hand, the review protects every member of the network.",
+              "image_id": null,
+              "alt_text": null
+            },
+            "questions": [
+              {
+                "question_id": "b2-fa-r-06",
+                "item_id": "b2-fa-r-06",
+                "type": "mcq",
+                "prompt": "What would have happened without the complaint?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "the operator would have kept canceling the bookings"
+                  },
+                  {
+                    "id": "b",
+                    "text": "the fees would have doubled"
+                  },
+                  {
+                    "id": "c",
+                    "text": "the summit would have closed"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-r-07",
+                "item_id": "b2-fa-r-07",
+                "type": "mcq",
+                "prompt": "Why is no rebooking possible right now?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "because the account has been flagged and is under review"
+                  },
+                  {
+                    "id": "b",
+                    "text": "because the summit is over"
+                  },
+                  {
+                    "id": "c",
+                    "text": "because the delegation refused"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-r-08",
+                "item_id": "b2-fa-r-08",
+                "type": "mcq",
+                "prompt": "What is highly probable once the audit ends?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "the cancellation fees will be waived"
+                  },
+                  {
+                    "id": "b",
+                    "text": "the account will be deleted"
+                  },
+                  {
+                    "id": "c",
+                    "text": "the tour will be cancelled"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-r-09",
+                "item_id": "b2-fa-r-09",
+                "type": "mcq",
+                "prompt": "When is the delegation likely to arrive?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "at approximately nine forty"
+                  },
+                  {
+                    "id": "b",
+                    "text": "at exactly noon"
+                  },
+                  {
+                    "id": "c",
+                    "text": "next week"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-r-10",
+                "item_id": "b2-fa-r-10",
+                "type": "mcq",
+                "prompt": "How does the writer balance the situation?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "with a pros-and-cons contrast (on the one hand… on the other hand…)"
+                  },
+                  {
+                    "id": "b",
+                    "text": "by ignoring the delay"
+                  },
+                  {
+                    "id": "c",
+                    "text": "by blaming the members"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              }
+            ]
+          },
+          {
+            "part_key": "c",
+            "title": "Part C — A conversation with gaps",
+            "instructions": "Read the conversation and choose the right word for each gap.",
+            "shared": {
+              "kind": "passage",
+              "title": "Chairing a tense negotiation",
+              "text": "Chair: I am pleased to (a)___ this meeting. Could you provide a (b)___ of your reasons for the 40% commission? — Delegate: Forgive me for (c)___, but we strongly (d)___ with that figure. — Chair: If I understand you correctly, you (e)___ that the commission should be reinvested locally.",
+              "image_id": null,
+              "alt_text": null
+            },
+            "questions": [
+              {
+                "question_id": "b2-fa-r-11",
+                "item_id": "b2-fa-r-11",
+                "type": "gap_choice",
+                "prompt": "Gap (a):",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "open"
+                  },
+                  {
+                    "id": "b",
+                    "text": "opening"
+                  },
+                  {
+                    "id": "c",
+                    "text": "opened"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": "(a)",
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-r-12",
+                "item_id": "b2-fa-r-12",
+                "type": "gap_choice",
+                "prompt": "Gap (b):",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "summary"
+                  },
+                  {
+                    "id": "b",
+                    "text": "summarize"
+                  },
+                  {
+                    "id": "c",
+                    "text": "summing"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": "(b)",
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-r-13",
+                "item_id": "b2-fa-r-13",
+                "type": "gap_choice",
+                "prompt": "Gap (c):",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "interrupting"
+                  },
+                  {
+                    "id": "b",
+                    "text": "interrupt"
+                  },
+                  {
+                    "id": "c",
+                    "text": "to interrupted"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": "(c)",
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-r-14",
+                "item_id": "b2-fa-r-14",
+                "type": "gap_choice",
+                "prompt": "Gap (d):",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "disagree"
+                  },
+                  {
+                    "id": "b",
+                    "text": "disagreeing"
+                  },
+                  {
+                    "id": "c",
+                    "text": "disagreement"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": "(d)",
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              },
+              {
+                "question_id": "b2-fa-r-15",
+                "item_id": "b2-fa-r-15",
+                "type": "gap_choice",
+                "prompt": "Gap (e):",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "mean"
+                  },
+                  {
+                    "id": "b",
+                    "text": "means"
+                  },
+                  {
+                    "id": "c",
+                    "text": "meaning"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": "(e)",
+                "max_points": 1,
+                "weight_points": "5/3",
+                "weight_points_decimal": "1.666667"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "use_of_english",
+        "title": "Use of English",
+        "instructions": null,
+        "weight": 20,
+        "delivery": null,
+        "max_points": 15,
+        "parts": [
+          {
+            "part_key": "tasks",
+            "title": "Use of English",
+            "instructions": "Choose the correct option.",
+            "shared": null,
+            "questions": [
+              {
+                "question_id": "b2-fa-u-01",
+                "item_id": "b2-fa-u-01",
+                "type": "mcq",
+                "prompt": "Could you tell me ___ the full delegation is expected to arrive?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "exactly when"
+                  },
+                  {
+                    "id": "b",
+                    "text": "when exactly does"
+                  },
+                  {
+                    "id": "c",
+                    "text": "does when"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              },
+              {
+                "question_id": "b2-fa-u-02",
+                "item_id": "b2-fa-u-02",
+                "type": "mcq",
+                "prompt": "It is highly ___ that the keynote ___ moved to the main auditorium.",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "probable / will be"
+                  },
+                  {
+                    "id": "b",
+                    "text": "probably / is being"
+                  },
+                  {
+                    "id": "c",
+                    "text": "probable / would"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              },
+              {
+                "question_id": "b2-fa-u-03",
+                "item_id": "b2-fa-u-03",
+                "type": "mcq",
+                "prompt": "The operator ___ our confirmed bookings for three days; I am calling to request a review.",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "has been canceling"
+                  },
+                  {
+                    "id": "b",
+                    "text": "is canceling"
+                  },
+                  {
+                    "id": "c",
+                    "text": "cancels"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              },
+              {
+                "question_id": "b2-fa-u-04",
+                "item_id": "b2-fa-u-04",
+                "type": "mcq",
+                "prompt": "Under the new policy, the cancellation fee ___ if the delay is justified.",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "might be waived"
+                  },
+                  {
+                    "id": "b",
+                    "text": "might waive"
+                  },
+                  {
+                    "id": "c",
+                    "text": "might to be waived"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              },
+              {
+                "question_id": "b2-fa-u-05",
+                "item_id": "b2-fa-u-05",
+                "type": "mcq",
+                "prompt": "So, ___ you correctly, you ___ that the commission would be reinvested locally?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "if I understand / mean"
+                  },
+                  {
+                    "id": "b",
+                    "text": "if I understanding / means"
+                  },
+                  {
+                    "id": "c",
+                    "text": "when I understand / meaning"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              },
+              {
+                "question_id": "b2-fa-u-06",
+                "item_id": "b2-fa-u-06",
+                "type": "mcq",
+                "prompt": "The tariff, ___ appears in the old catalog, is strictly ___.",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "which / regulated"
+                  },
+                  {
+                    "id": "b",
+                    "text": "who / regulating"
+                  },
+                  {
+                    "id": "c",
+                    "text": "which / regulate"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              },
+              {
+                "question_id": "b2-fa-u-07",
+                "item_id": "b2-fa-u-07",
+                "type": "mcq",
+                "prompt": "I am reporting a theft: my briefcase ___ outside the consulate this morning.",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "was stolen"
+                  },
+                  {
+                    "id": "b",
+                    "text": "has stolen"
+                  },
+                  {
+                    "id": "c",
+                    "text": "stole"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              },
+              {
+                "question_id": "b2-fa-u-08",
+                "item_id": "b2-fa-u-08",
+                "type": "mcq",
+                "prompt": "If our community had not chosen dialogue, we ___ a very different future.",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "would have faced"
+                  },
+                  {
+                    "id": "b",
+                    "text": "will face"
+                  },
+                  {
+                    "id": "c",
+                    "text": "would face"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              },
+              {
+                "question_id": "b2-fa-u-09",
+                "item_id": "b2-fa-u-09",
+                "type": "mcq",
+                "prompt": "Which expression signals a high degree of certainty?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "it is almost certain that…"
+                  },
+                  {
+                    "id": "b",
+                    "text": "it is a terrace"
+                  },
+                  {
+                    "id": "c",
+                    "text": "a cancellation fee"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              },
+              {
+                "question_id": "b2-fa-u-10",
+                "item_id": "b2-fa-u-10",
+                "type": "mcq",
+                "prompt": "In a GDS context, a fee that is “waived” is…",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "no longer charged"
+                  },
+                  {
+                    "id": "b",
+                    "text": "doubled"
+                  },
+                  {
+                    "id": "c",
+                    "text": "paid twice"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              },
+              {
+                "question_id": "b2-fa-u-11",
+                "item_id": "b2-fa-u-11",
+                "type": "mcq",
+                "prompt": "A professional way to make an assertive complaint:",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "I am calling to request an immediate resolution."
+                  },
+                  {
+                    "id": "b",
+                    "text": "You are all useless."
+                  },
+                  {
+                    "id": "c",
+                    "text": "Whatever, forget it."
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              },
+              {
+                "question_id": "b2-fa-u-12",
+                "item_id": "b2-fa-u-12",
+                "type": "mcq",
+                "prompt": "Which word describes a feeling at work?",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "overwhelmed"
+                  },
+                  {
+                    "id": "b",
+                    "text": "courtyard"
+                  },
+                  {
+                    "id": "c",
+                    "text": "briefcase"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              },
+              {
+                "question_id": "b2-fa-u-13",
+                "item_id": "b2-fa-u-13",
+                "type": "mcq",
+                "prompt": "A phrase to open and chair a meeting:",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "I am pleased to open this meeting."
+                  },
+                  {
+                    "id": "b",
+                    "text": "Go away, please."
+                  },
+                  {
+                    "id": "c",
+                    "text": "I have no idea."
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              },
+              {
+                "question_id": "b2-fa-u-14",
+                "item_id": "b2-fa-u-14",
+                "type": "mcq",
+                "prompt": "At the consulate, the correct formal request is:",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "We require an emergency passport."
+                  },
+                  {
+                    "id": "b",
+                    "text": "Give me a boat ticket."
+                  },
+                  {
+                    "id": "c",
+                    "text": "What is your favourite colour?"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              },
+              {
+                "question_id": "b2-fa-u-15",
+                "item_id": "b2-fa-u-15",
+                "type": "mcq",
+                "prompt": "“Carrying capacity” in sustainable tourism means…",
+                "options": [
+                  {
+                    "id": "a",
+                    "text": "the maximum number of visitors a site can sustain"
+                  },
+                  {
+                    "id": "b",
+                    "text": "a type of backpack"
+                  },
+                  {
+                    "id": "c",
+                    "text": "a boat engine"
+                  }
+                ],
+                "correct": "a",
+                "audio_id": null,
+                "gap_label": null,
+                "max_points": 1,
+                "weight_points": "4/3",
+                "weight_points_decimal": "1.333333"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "writing",
+        "title": "Writing",
+        "instructions": null,
+        "weight": 15,
+        "delivery": null,
+        "max_points": 10,
+        "parts": [
+          {
+            "part_key": "tasks",
+            "title": "Writing",
+            "instructions": "Write your answers in English.",
+            "shared": null,
+            "questions": [
+              {
+                "question_id": "b2-fa-w-01",
+                "item_id": "b2-fa-w-01",
+                "type": "written_answers",
+                "prompt": "Formal complaint / claim letter to an OTA (120-160 words). Write a formal complaint letter to an international OTA. The cooperative's account has been blocked and the operator has been cancelling confirmed bookings. Explain the problem (present perfect / present perfect continuous), demand concrete actions assertively (I am writing to request..., we require that...) and ask for the cancellation fees to be waived (might be waived).",
+                "written": {
+                  "fields": [],
+                  "questions": [
+                    {
+                      "id": "q1",
+                      "text": "Write your letter here."
+                    }
+                  ],
+                  "template": null,
+                  "min_words": 120,
+                  "max_words": 160,
+                  "max_chars": 1500
+                },
+                "max_points": 5,
+                "weight_points": "15/2",
+                "weight_points_decimal": "7.500000"
+              },
+              {
+                "question_id": "b2-fa-w-02",
+                "item_id": "b2-fa-w-02",
+                "type": "written_answers",
+                "prompt": "Choose ONE: (a) Chair's meeting summary OR (b) 'Colombia, a Mediator's Perspective' (120-160 words). (a) the chair's summary of a negotiation: opens the session, summarises positions, records the disagreement (we strongly disagree) and closes on time; or (b) the climate defence 'Colombia, a Mediator's Perspective': integrate advanced conditionals (If we had not integrated..., ... would be...) and compound passive (has been protected, would be closed).",
+                "written": {
+                  "fields": [],
+                  "questions": [
+                    {
+                      "id": "q1",
+                      "text": "Write your text here. Choose option (a) or option (b)."
+                    }
+                  ],
+                  "template": null,
+                  "min_words": 120,
+                  "max_words": 160,
+                  "max_chars": 1500
+                },
+                "max_points": 5,
+                "weight_points": "15/2",
+                "weight_points_decimal": "7.500000"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "speaking",
+        "title": "Speaking",
+        "instructions": null,
+        "weight": 15,
+        "delivery": "written_equivalent",
+        "max_points": 5,
+        "parts": [
+          {
+            "part_key": "tasks",
+            "title": "Speaking (written answer)",
+            "instructions": "Write your answer in English, as if you were speaking.",
+            "shared": null,
+            "questions": [
+              {
+                "question_id": "b2-fa-s-02",
+                "item_id": "b2-fa-s-02",
+                "type": "written_answers",
+                "prompt": "Chair a negotiation (mini-pitch). In the London executive room: open the meeting politely (I am pleased to open...), ask for a summary of reasons (Could you provide a summary...?), record a firm disagreement (we strongly disagree) and close on time. Then briefly defend the value of the destination with an advanced conditional.",
+                "written": {
+                  "fields": [],
+                  "questions": [
+                    {
+                      "id": "q1",
+                      "text": "Write what you would say here."
+                    }
+                  ],
+                  "template": null,
+                  "min_words": null,
+                  "max_words": null,
+                  "max_chars": 900
+                },
+                "max_points": 5,
+                "weight_points": "15",
+                "weight_points_decimal": "15.000000"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

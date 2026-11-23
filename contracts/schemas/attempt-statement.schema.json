@@ -1,0 +1,293 @@
+{
+  "$defs": {
+    "Answer": {
+      "additionalProperties": false,
+      "properties": {
+        "question_id": {
+          "title": "Question Id",
+          "type": "string"
+        },
+        "answer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Source option id, or null if unanswered",
+          "title": "Answer"
+        },
+        "correct": {
+          "title": "Correct",
+          "type": "boolean"
+        },
+        "points_exact": {
+          "title": "Points Exact",
+          "type": "string"
+        },
+        "max_points": {
+          "title": "Max Points",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "question_id",
+        "answer",
+        "correct",
+        "points_exact",
+        "max_points"
+      ],
+      "title": "Answer",
+      "type": "object"
+    },
+    "SectionScore": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "points_exact": {
+          "title": "Points Exact",
+          "type": "string"
+        },
+        "max": {
+          "title": "Max",
+          "type": "integer"
+        },
+        "weight": {
+          "title": "Weight",
+          "type": "integer"
+        },
+        "percent_exact": {
+          "title": "Percent Exact",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "points_exact",
+        "max",
+        "weight",
+        "percent_exact"
+      ],
+      "title": "SectionScore",
+      "type": "object"
+    },
+    "WrittenScore": {
+      "additionalProperties": false,
+      "properties": {
+        "question_id": {
+          "title": "Question Id",
+          "type": "string"
+        },
+        "points_exact": {
+          "description": "What the backend's rubric awarded",
+          "title": "Points Exact",
+          "type": "string"
+        },
+        "max_points": {
+          "title": "Max Points",
+          "type": "integer"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Field or question id to text; null unless `written_text_included`",
+          "title": "Text"
+        }
+      },
+      "required": [
+        "question_id",
+        "points_exact",
+        "max_points",
+        "text"
+      ],
+      "title": "WrittenScore",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Attempt record, schema 2: the result claims plus the record. The backend\nalone decides `correct`, `points_exact`, `percent_exact` and `passed`.",
+  "properties": {
+    "iss": {
+      "title": "Iss",
+      "type": "string"
+    },
+    "aud": {
+      "const": "moodle",
+      "title": "Aud",
+      "type": "string"
+    },
+    "iat": {
+      "description": "When it was created. There is no `exp`.",
+      "title": "Iat",
+      "type": "integer"
+    },
+    "jti": {
+      "description": "Accept each `jti` once; a repeat is a duplicate",
+      "title": "Jti",
+      "type": "string"
+    },
+    "tenant": {
+      "title": "Tenant",
+      "type": "string"
+    },
+    "form_id": {
+      "title": "Form Id",
+      "type": "string"
+    },
+    "content_version": {
+      "title": "Content Version",
+      "type": "string"
+    },
+    "sub": {
+      "title": "Sub",
+      "type": "string"
+    },
+    "course_id": {
+      "title": "Course Id",
+      "type": "integer"
+    },
+    "purpose": {
+      "enum": [
+        "check_in",
+        "final"
+      ],
+      "title": "Purpose",
+      "type": "string"
+    },
+    "ordinal": {
+      "title": "Ordinal",
+      "type": "integer"
+    },
+    "percent": {
+      "description": "Two decimals, for display only",
+      "title": "Percent",
+      "type": "string"
+    },
+    "passed": {
+      "title": "Passed",
+      "type": "boolean"
+    },
+    "completes_course": {
+      "title": "Completes Course",
+      "type": "boolean"
+    },
+    "pass_percent": {
+      "title": "Pass Percent",
+      "type": "integer"
+    },
+    "pass_operator": {
+      "enum": [
+        "gt",
+        "gte"
+      ],
+      "title": "Pass Operator",
+      "type": "string"
+    },
+    "finished_at": {
+      "title": "Finished At",
+      "type": "string"
+    },
+    "kind": {
+      "const": "attempt",
+      "title": "Kind",
+      "type": "string"
+    },
+    "schema": {
+      "const": 2,
+      "title": "Schema",
+      "type": "integer"
+    },
+    "status": {
+      "enum": [
+        "submitted",
+        "expired"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "definition_hash": {
+      "title": "Definition Hash",
+      "type": "string"
+    },
+    "percent_exact": {
+      "description": "Exact fraction of 100, e.g. `401/5`",
+      "title": "Percent Exact",
+      "type": "string"
+    },
+    "sections": {
+      "items": {
+        "$ref": "#/$defs/SectionScore"
+      },
+      "title": "Sections",
+      "type": "array"
+    },
+    "answers": {
+      "items": {
+        "$ref": "#/$defs/Answer"
+      },
+      "title": "Answers",
+      "type": "array"
+    },
+    "written": {
+      "items": {
+        "$ref": "#/$defs/WrittenScore"
+      },
+      "title": "Written",
+      "type": "array"
+    },
+    "written_text_included": {
+      "title": "Written Text Included",
+      "type": "boolean"
+    },
+    "truncated": {
+      "description": "True only if the 64 KB cap forced the written text out",
+      "title": "Truncated",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "iss",
+    "aud",
+    "iat",
+    "jti",
+    "tenant",
+    "form_id",
+    "content_version",
+    "sub",
+    "course_id",
+    "purpose",
+    "ordinal",
+    "percent",
+    "passed",
+    "completes_course",
+    "pass_percent",
+    "pass_operator",
+    "finished_at",
+    "kind",
+    "schema",
+    "status",
+    "definition_hash",
+    "percent_exact",
+    "sections",
+    "answers",
+    "written",
+    "written_text_included",
+    "truncated"
+  ],
+  "title": "AttemptStatement",
+  "type": "object"
+}
