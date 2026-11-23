@@ -56,6 +56,15 @@ class Tenant(BaseORM):
     widgets_enabled: Mapped[bool] = mapped_column(
         Boolean, default=False, server_default=false()
     )
+    # Where the plugin's mirror receiver takes exam definitions and attempts
+    # (see `app.mirror`). Null is off: nothing is built or sent for the tenant,
+    # so a deploy changes nothing until an operator sets it by CLI.
+    mirror_endpoint: Mapped[str | None] = mapped_column(String(500), default=None)
+    # Whether the text a student wrote may leave the backend in an attempt
+    # statement. Off until legal review has cleared it.
+    mirror_written_text: Mapped[bool] = mapped_column(
+        Boolean, default=False, server_default=false()
+    )
 
 
 class TenantKey(BaseORM):

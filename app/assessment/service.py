@@ -27,12 +27,16 @@ from app.assessment.engine import (
 from app.assessment.metrics import METRICS
 from app.assessment.scoring import decimal_string, passes
 from app.exceptions import AssessmentConflictError, TrainerNotFoundError
+from app.mirror.attempt import attempt_claims
+from app.mirror.definition import build_definition, definition_hash
+from app.mirror.statements import definition_claims
 from app.passback.statement import claims_for
 from app.repositories.sqlalchemy.assessment_repository import (
     AttemptRecord,
     SqlAlchemyAssessmentRepository,
 )
 from app.schemas.map_settings import AssessmentPolicy, AssessmentSettings
+from app.trainer.assessment_form import AssessmentForm
 from app.trainer.catalog import Catalog
 from app.trainer.language import ENGLISH
 from app.trainer.pack import Pack
@@ -63,6 +67,31 @@ def _res(attempt: AttemptRecord) -> Mapping[str, Any]:
 
 def _frac(text: str) -> Fraction:
     return Fraction(text)
+
+
+@dataclass(frozen=True)
+class _MirrorPlan:
+    """What an attempt of a mirrored tenant adds to its statement."""
+
+    definition_hash: str
+    written_text: bool
+
+
+# (content version, form id) -> (definition, hash): a form never changes within
+# one content version, so it is built once.
+_DEFINITIONS: dict[tuple[str, str], tuple[dict[str, Any], str]] = {}
+
+
+def _definition_of(
+    content_version: str, form: AssessmentForm
+) -> tuple[dict[str, Any], str]:
+    key = (content_version, form.form_id)
+    found = _DEFINITIONS.get(key)
+    if found is None:
+        built = build_definition(form)
+        found = (built, definition_hash(built))
+        _DEFINITIONS[key] = found
+    return found
 
 
 def _policy_of(settings: AssessmentSettings, purpose: str) -> AssessmentPolicy:
@@ -291,6 +320,9 @@ class AssessmentService:
             if racing:
                 return self._started(racing, runtime, now), False
             raise AssessmentConflictError("no_attempts_left")
+        if not caller.preview:
+            # So the plugin has the definition before the attempt ends.
+            await self._mirror_plan(caller.tenant_id, policy.form_id)
         METRICS.count("started", purpose, preview=caller.preview)
         log.info(
             "attempt_started attempt=%s purpose=%s preview=%s",
@@ -299,6 +331,43 @@ class AssessmentService:
             caller.preview,
         )
         return self._started(created, runtime, now), True
+
+    async def _mirror_plan(
+        self, tenant_id: uuid.UUID, form_id: str
+    ) -> _MirrorPlan | None:
+        """Queues the definition of a published form for the tenant's mirror
+        and says what the attempt statement adds. None while the tenant's mirror
+        is off or the form is not published: the statement is then the plain
+        result one, exactly as before the mirror existed."""
+        config = await self._attempts.mirror_config(tenant_id)
+        if config is None:
+            return None
+        found = self._catalog.form(form_id)
+        if found is None:
+            return None
+        pack = found[0]
+        form = pack.served_form(form_id, False)
+        if form is None:
+            return None
+        definition, digest = _definition_of(pack.content_version, form)
+        now = self._clock()
+        await self._attempts.ensure_definition(
+            tenant_id=tenant_id,
+            form_id=form_id,
+            definition_hash=digest,
+            content_version=pack.content_version,
+            statement=definition_claims(
+                tenant_id=tenant_id,
+                form_id=form_id,
+                content_version=pack.content_version,
+                definition_hash=digest,
+                definition=definition,
+                issuer=self._issuer,
+                issued_at=int(now.timestamp()),
+            ),
+            now=now,
+        )
+        return _MirrorPlan(digest, config.written_text)
 
     def _catalog_version(self, form_id: str) -> str:
         found = self._catalog.form(form_id)
@@ -435,7 +504,7 @@ class AssessmentService:
         )
         statement = None
         if not attempt.preview:
-            statement = claims_for(
+            base = claims_for(
                 attempt_id=attempt.id,
                 tenant_id=attempt.tenant_id,
                 course_id=attempt.moodle_course_id,
@@ -450,6 +519,18 @@ class AssessmentService:
                 issuer=self._issuer,
                 issued_at=int(self._clock().timestamp()),
             )
+            plan = await self._mirror_plan(attempt.tenant_id, attempt.form_id)
+            statement = base
+            if plan is not None:
+                statement = attempt_claims(
+                    base,
+                    form=runtime.form,
+                    definition_hash=plan.definition_hash,
+                    status=status,
+                    responses=saved,
+                    scored=scored,
+                    include_written_text=plan.written_text,
+                )
         if await self._attempts.close(attempt.id, status, finished, result, statement):
             METRICS.count(status, attempt.purpose, preview=attempt.preview)
             METRICS.count_band(result["band"], preview=attempt.preview)

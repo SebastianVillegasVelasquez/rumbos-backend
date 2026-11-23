@@ -16,6 +16,9 @@ class Outcome(StrEnum):
     DUPLICATE = "duplicate"  # Moodle already had this `jti`; as good as accepted
     TRANSIENT = "transient"  # Moodle down or busy: try again later
     PERMANENT = "permanent"  # Moodle refused it for good
+    # The plugin does not know the exam definition an attempt refers to (never
+    # received, or lost): send the definition again, then retry the attempt.
+    UNKNOWN_DEFINITION = "unknown_definition"
 
 
 @dataclass(frozen=True)
@@ -25,6 +28,10 @@ class SendResult:
 
 
 class MoodleResultPort(Protocol):
+    # Whether `known` can answer: a receiver with no listing says False, and
+    # the daily reconcile leaves its rows alone instead of requeuing them all.
+    supports_reconcile: bool
+
     async def send(
         self, tenant_id: uuid.UUID, course_id: int, statement_jws: str
     ) -> SendResult: ...
@@ -40,6 +47,7 @@ class FakeMoodleResultPort:
     `up`, `down` (transient) or `reject` (permanent)."""
 
     mode: str = "up"
+    supports_reconcile: bool = True
     received: list[tuple[uuid.UUID, int, str]] = field(default_factory=list)
     jtis: dict[tuple[uuid.UUID, int], set[str]] = field(default_factory=dict)
 
