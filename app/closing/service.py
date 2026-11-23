@@ -149,12 +149,19 @@ class ClosingService:
     async def guard_final_start(self) -> None:
         """Raises unless the final exam may be started now. With the gate off
         it only says so, loudly, and lets the request through (today's
-        behaviour)."""
+        behaviour). A map whose closing flow has no final-exam step is not
+        gated either (the transitional rule, D53)."""
         if not self._enforce:
             log.warning(
                 "closing_gate_off the final exam is being started without the "
                 "SCORM completion check (CLOSING_GATE_MODE=off)"
             )
+            return
+        if not has_final_step(self._ctx.settings):
+            # Transitional (D53): a map whose closing flow has no final-exam
+            # step keeps the behaviour it had before the gate, so its students
+            # are not left without an entry to the final exam.
+            log.info("closing_gate_skipped no_final_step")
             return
         verdict = await self.availability()
         if verdict["available"]:

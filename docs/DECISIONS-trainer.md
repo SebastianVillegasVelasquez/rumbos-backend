@@ -584,3 +584,18 @@ result carries a version that this changes.
   *generated audio*. Apache-2.0 on the weights and the absence of an output
   restriction point to it being allowed, but it is not a legal opinion; confirm
   with the client's counsel before a government deliverable.
+
+## D53. The final leaves the trainer list only where the closing flow has it
+
+With `CLOSING_GATE_MODE=enforce` the final exam is no longer an entry of the
+trainer list and its start is gated, but only for a map whose closing flow holds
+an enabled `assessment` step of purpose `final`. A map without one keeps what it
+had before the gate: the final stays listed and starts without the check, so no
+student is left without an entry to the exam while the closing flow is not yet
+configured. `GET /trainer/closing` still tells the truth about that map
+(`not_enabled` or `no_final_step`), which is why a screen can say "no closing
+exam" while a direct start works.
+
+Follow-up: delete this rule (and the two branches that carry it, `hide_final` in
+`get_service` and the early return in `guard_final_start`) once every map has a
+closing flow with its final step.

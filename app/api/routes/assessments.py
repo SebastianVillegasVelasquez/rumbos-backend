@@ -19,7 +19,7 @@ from app.assessment.access import (
 from app.assessment.service import AssessmentService
 from app.auth.dependencies import ScopedSession, editor_route, student_route
 from app.closing.providers import CompletionProvider, get_completion_provider
-from app.closing.service import ClosingService
+from app.closing.service import ClosingService, has_final_step
 from app.core.config import Settings, get_settings
 from app.core.paths import API_PREFIX
 from app.moodle.dependencies import get_contents_provider
@@ -75,7 +75,10 @@ def get_service(
         serve_drafts=app_settings.trainer_serve_drafts or caller.preview,
         audio_url=audio_url,
         issuer=app_settings.passback_issuer,
-        hide_final=app_settings.closing_gate_mode == "enforce",
+        # Transitional (D53): only a map whose closing flow holds the final
+        # exam step moves the exam out of the trainer list.
+        hide_final=app_settings.closing_gate_mode == "enforce"
+        and has_final_step(settings),
     )
 
 
