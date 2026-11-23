@@ -1,0 +1,223 @@
+{
+  "id": "en-b1-3.4-grammar",
+  "skill": "grammar",
+  "title": "Practice 3.4",
+  "estimated_minutes": 6,
+  "lesson_id": "3.4",
+  "status": "draft",
+  "role": "Host introducing local culture to a visitor and comparing it with the visitor's own",
+  "can_do": [
+    "I can describe local customs and traditions.",
+    "I can say how customs differ and talk about trends."
+  ],
+  "items": [
+    {
+      "id": "b1-3.4.ex.01",
+      "type": "mcq",
+      "prompt": "Choose the correct comparison.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Our festival is long than yours."
+        },
+        {
+          "id": "o2",
+          "text": "Our festival is more long than yours."
+        },
+        {
+          "id": "o3",
+          "text": "Our festival is longer than yours."
+        }
+      ],
+      "correct": "o3",
+      "explanation": "Short adjectives add -er and use than.",
+      "error_tags": {
+        "o1": {
+          "tag": "comparative_form",
+          "text": "Use longer than."
+        },
+        "o2": {
+          "tag": "comparative_form",
+          "text": "Use longer than."
+        }
+      }
+    },
+    {
+      "id": "b1-3.4.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct word.",
+      "template": "It is {1} to my country, but not exactly the same.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "similar"
+            },
+            {
+              "id": "o2",
+              "text": "similarly"
+            },
+            {
+              "id": "o3",
+              "text": "similarity"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "word_class",
+            "text": "Use the adjective after is."
+          }
+        }
+      ],
+      "explanation": "After be we need an adjective: similar."
+    },
+    {
+      "id": "b1-3.4.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type one word: whereas, because or so.",
+      "template": "Here people eat late, {1} in my country we eat early.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "whereas",
+            "while"
+          ],
+          "error_tag": {
+            "tag": "connector",
+            "text": "Use whereas for contrast."
+          }
+        }
+      ],
+      "explanation": "Whereas shows a contrast between two facts."
+    },
+    {
+      "id": "b1-3.4.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "More"
+        },
+        {
+          "id": "t2",
+          "text": "and"
+        },
+        {
+          "id": "t3",
+          "text": "more"
+        },
+        {
+          "id": "t4",
+          "text": "young"
+        },
+        {
+          "id": "t5",
+          "text": "people"
+        },
+        {
+          "id": "t6",
+          "text": "are"
+        },
+        {
+          "id": "t7",
+          "text": "learning"
+        },
+        {
+          "id": "t8",
+          "text": "the"
+        },
+        {
+          "id": "t9",
+          "text": "old"
+        },
+        {
+          "id": "t10",
+          "text": "dances"
+        }
+      ],
+      "explanation": "More and more shows a growing trend.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with More and more."
+      }
+    },
+    {
+      "id": "b1-3.4.ex.05",
+      "type": "match",
+      "prompt": "Match each expression with its meaning.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "typical"
+        },
+        {
+          "id": "l2",
+          "text": "tradition"
+        },
+        {
+          "id": "l3",
+          "text": "trend"
+        },
+        {
+          "id": "l4",
+          "text": "handmade"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "usual for a place"
+        },
+        {
+          "id": "r2",
+          "text": "a custom from the past"
+        },
+        {
+          "id": "r3",
+          "text": "a general change over time"
+        },
+        {
+          "id": "r4",
+          "text": "made by people, not machines"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "These words help you talk about culture."
+    },
+    {
+      "id": "b1-3.4.ex.06",
+      "type": "short_answer",
+      "prompt": "Say how your country is different. Use whereas.",
+      "accepted": [
+        "In my country people eat early whereas here people eat late",
+        "In my country we eat early whereas here we eat late"
+      ],
+      "max_length": 79,
+      "explanation": "Whereas joins two opposite facts."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}

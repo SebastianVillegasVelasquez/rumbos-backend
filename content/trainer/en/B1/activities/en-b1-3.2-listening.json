@@ -1,0 +1,84 @@
+{
+  "id": "en-b1-3.2-listening",
+  "skill": "listening",
+  "title": "Listen and choose 3.2",
+  "estimated_minutes": 4,
+  "lesson_id": "3.2",
+  "status": "draft",
+  "role": "Front-desk manager answering a guest's complaint at check-out",
+  "can_do": [
+    "I can explain a problem and ask for a solution politely.",
+    "I can respond to a complaint with an apology and an offer."
+  ],
+  "items": [
+    {
+      "id": "en-b1-3.2.l1",
+      "type": "listen_choose",
+      "prompt": "What does the hotel offer?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "A free night"
+        },
+        {
+          "id": "o2",
+          "text": "A discount"
+        },
+        {
+          "id": "o3",
+          "text": "A new room"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: take twenty percent off your bill.",
+      "audio": "en-b1-3.2.l1"
+    },
+    {
+      "id": "en-b1-3.2.l2",
+      "type": "listen_choose",
+      "prompt": "Why can't the receptionist change the price?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The bill is already paid"
+        },
+        {
+          "id": "o2",
+          "text": "The guest is late"
+        },
+        {
+          "id": "o3",
+          "text": "She needs the manager's approval"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: without the manager's approval.",
+      "audio": "en-b1-3.2.l2"
+    },
+    {
+      "id": "en-b1-3.2.l3",
+      "type": "listen_choose",
+      "prompt": "What will the host do?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Speak with the team"
+        },
+        {
+          "id": "o2",
+          "text": "Refund the room"
+        },
+        {
+          "id": "o3",
+          "text": "Call the police"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: I will speak with the team.",
+      "audio": "en-b1-3.2.l3"
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}

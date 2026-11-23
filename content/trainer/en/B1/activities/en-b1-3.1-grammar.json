@@ -1,0 +1,220 @@
+{
+  "id": "en-b1-3.1-grammar",
+  "skill": "grammar",
+  "title": "Practice 3.1",
+  "estimated_minutes": 6,
+  "lesson_id": "3.1",
+  "status": "draft",
+  "role": "Shop assistant and customer-service agent handling returns and refunds",
+  "can_do": [
+    "I can ask for or offer a refund, an exchange or store credit.",
+    "I can explain a problem with a purchase or a bill."
+  ],
+  "items": [
+    {
+      "id": "b1-3.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence politely explains a problem?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "This jacket is rubbish and you know it."
+        },
+        {
+          "id": "o2",
+          "text": "I want my money, now."
+        },
+        {
+          "id": "o3",
+          "text": "I'm afraid there is a problem with this jacket."
+        }
+      ],
+      "correct": "o3",
+      "explanation": "I'm afraid ... is a polite way to introduce a problem.",
+      "error_tags": {
+        "o1": {
+          "tag": "register",
+          "text": "Keep a polite tone."
+        },
+        "o2": {
+          "tag": "register",
+          "text": "Keep a polite tone."
+        }
+      }
+    },
+    {
+      "id": "b1-3.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "If you {1} the receipt, we can give you a refund.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "have"
+            },
+            {
+              "id": "o2",
+              "text": "will have"
+            },
+            {
+              "id": "o3",
+              "text": "had had"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "first_conditional",
+            "text": "Use the present simple after if."
+          }
+        }
+      ],
+      "explanation": "First conditional: if + present, then can/will + verb."
+    },
+    {
+      "id": "b1-3.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type one word: refund, exchange or credit.",
+      "template": "We can't give you a {1}, but we can give you a store credit.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "refund"
+          ],
+          "error_tag": {
+            "tag": "vocabulary",
+            "text": "Refund means money back."
+          }
+        }
+      ],
+      "explanation": "A refund returns the money; store credit does not."
+    },
+    {
+      "id": "b1-3.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Could"
+        },
+        {
+          "id": "t2",
+          "text": "I"
+        },
+        {
+          "id": "t3",
+          "text": "exchange"
+        },
+        {
+          "id": "t4",
+          "text": "this"
+        },
+        {
+          "id": "t5",
+          "text": "shirt"
+        },
+        {
+          "id": "t6",
+          "text": "for"
+        },
+        {
+          "id": "t7",
+          "text": "a"
+        },
+        {
+          "id": "t8",
+          "text": "larger"
+        },
+        {
+          "id": "t9",
+          "text": "size"
+        }
+      ],
+      "explanation": "Could I + verb is a polite request.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Put exchange after Could I."
+      }
+    },
+    {
+      "id": "b1-3.1.ex.05",
+      "type": "match",
+      "prompt": "Match each word with its meaning.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "refund"
+        },
+        {
+          "id": "l2",
+          "text": "exchange"
+        },
+        {
+          "id": "l3",
+          "text": "store credit"
+        },
+        {
+          "id": "l4",
+          "text": "receipt"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "money returned"
+        },
+        {
+          "id": "r2",
+          "text": "a different item"
+        },
+        {
+          "id": "r3",
+          "text": "money to spend in the shop"
+        },
+        {
+          "id": "r4",
+          "text": "proof of purchase"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "These words appear in every return."
+    },
+    {
+      "id": "b1-3.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Ask for an exchange of a broken bag. Start with Could I.",
+      "accepted": [
+        "Could I exchange this bag please",
+        "Could I exchange this bag",
+        "Could I exchange this broken bag please",
+        "Could I exchange this broken bag"
+      ],
+      "max_length": 59,
+      "explanation": "Could I + exchange + object is a polite request."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}

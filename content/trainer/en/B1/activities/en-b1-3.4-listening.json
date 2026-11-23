@@ -1,0 +1,84 @@
+{
+  "id": "en-b1-3.4-listening",
+  "skill": "listening",
+  "title": "Listen and choose 3.4",
+  "estimated_minutes": 4,
+  "lesson_id": "3.4",
+  "status": "draft",
+  "role": "Host introducing local culture to a visitor and comparing it with the visitor's own",
+  "can_do": [
+    "I can describe local customs and traditions.",
+    "I can say how customs differ and talk about trends."
+  ],
+  "items": [
+    {
+      "id": "en-b1-3.4.l1",
+      "type": "listen_choose",
+      "prompt": "Who makes the food?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "A big company"
+        },
+        {
+          "id": "o2",
+          "text": "The village families"
+        },
+        {
+          "id": "o3",
+          "text": "The tourists"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: made by the families of the village.",
+      "audio": "en-b1-3.4.l1"
+    },
+    {
+      "id": "en-b1-3.4.l2",
+      "type": "listen_choose",
+      "prompt": "What is different here?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "People arrive earlier"
+        },
+        {
+          "id": "o2",
+          "text": "There are no meetings"
+        },
+        {
+          "id": "o3",
+          "text": "Meetings start later"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: a meeting can start fifteen minutes late.",
+      "audio": "en-b1-3.4.l2"
+    },
+    {
+      "id": "en-b1-3.4.l3",
+      "type": "listen_choose",
+      "prompt": "What is growing fast?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Rural tourism"
+        },
+        {
+          "id": "o2",
+          "text": "City tourism"
+        },
+        {
+          "id": "o3",
+          "text": "Beach tourism"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: rural tourism is growing fast.",
+      "audio": "en-b1-3.4.l3"
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}

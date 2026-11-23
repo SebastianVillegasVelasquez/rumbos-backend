@@ -1,0 +1,217 @@
+{
+  "id": "en-b1-3.2-grammar",
+  "skill": "grammar",
+  "title": "Practice 3.2",
+  "estimated_minutes": 6,
+  "lesson_id": "3.2",
+  "status": "draft",
+  "role": "Front-desk manager answering a guest's complaint at check-out",
+  "can_do": [
+    "I can explain a problem and ask for a solution politely.",
+    "I can respond to a complaint with an apology and an offer."
+  ],
+  "items": [
+    {
+      "id": "b1-3.2.ex.01",
+      "type": "mcq",
+      "prompt": "Choose the most polite way to complain.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Your hotel is dirty."
+        },
+        {
+          "id": "o2",
+          "text": "I'm afraid the room wasn't clean."
+        },
+        {
+          "id": "o3",
+          "text": "The room was a disaster, obviously."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "I'm afraid ... is polite and still clear.",
+      "error_tags": {
+        "o1": {
+          "tag": "register",
+          "text": "Use a softener such as I'm afraid."
+        },
+        "o3": {
+          "tag": "register",
+          "text": "Use a softener such as I'm afraid."
+        }
+      }
+    },
+    {
+      "id": "b1-3.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "I'd like {1} to the manager, please.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "speak"
+            },
+            {
+              "id": "o2",
+              "text": "speaking"
+            },
+            {
+              "id": "o3",
+              "text": "to speak"
+            }
+          ],
+          "correct": "o3",
+          "error_tag": {
+            "tag": "would_like",
+            "text": "I'd like to + verb."
+          }
+        }
+      ],
+      "explanation": "Would like is followed by to + verb."
+    },
+    {
+      "id": "b1-3.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type one word.",
+      "template": "I'm sorry {1} the noise last night.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "about",
+            "for"
+          ],
+          "error_tag": {
+            "tag": "preposition",
+            "text": "Say sorry about or sorry for."
+          }
+        }
+      ],
+      "explanation": "Sorry about / sorry for + noun."
+    },
+    {
+      "id": "b1-3.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "We"
+        },
+        {
+          "id": "t2",
+          "text": "would"
+        },
+        {
+          "id": "t3",
+          "text": "like"
+        },
+        {
+          "id": "t4",
+          "text": "a"
+        },
+        {
+          "id": "t5",
+          "text": "discount"
+        },
+        {
+          "id": "t6",
+          "text": "for"
+        },
+        {
+          "id": "t7",
+          "text": "the"
+        },
+        {
+          "id": "t8",
+          "text": "problem"
+        }
+      ],
+      "explanation": "Would like + a noun phrase.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Put a discount after would like."
+      }
+    },
+    {
+      "id": "b1-3.2.ex.05",
+      "type": "match",
+      "prompt": "Match each sentence with its function.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "I'm afraid there is a problem."
+        },
+        {
+          "id": "l2",
+          "text": "I apologize for that."
+        },
+        {
+          "id": "l3",
+          "text": "We can offer you a discount."
+        },
+        {
+          "id": "l4",
+          "text": "That is unacceptable."
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "start a complaint"
+        },
+        {
+          "id": "r2",
+          "text": "apologize"
+        },
+        {
+          "id": "r3",
+          "text": "offer a solution"
+        },
+        {
+          "id": "r4",
+          "text": "show strong feeling"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each sentence plays a different role in a complaint."
+    },
+    {
+      "id": "b1-3.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Politely ask to speak to the manager. Start with Could I.",
+      "accepted": [
+        "Could I speak to the manager please",
+        "Could I speak to the manager",
+        "Could I speak with the manager please",
+        "Could I speak with the manager"
+      ],
+      "max_length": 57,
+      "explanation": "Could I speak to ... please makes a polite request."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}

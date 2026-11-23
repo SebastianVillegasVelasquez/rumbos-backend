@@ -1,0 +1,196 @@
+{
+  "id": "en-b1-3.3-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 3.3",
+  "estimated_minutes": 5,
+  "lesson_id": "3.3",
+  "status": "draft",
+  "role": "Cultural guide helping a visitor who has made a social mistake",
+  "can_do": [
+    "I can express regret and embarrassment.",
+    "I can give advice to avoid a cultural mistake with a light second conditional."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "I touched the sacred statue and everyone looked at me. I feel so embarrassed.",
+        "translation": "Toqué la estatua sagrada y todos me miraron. Me siento muy avergonzado.",
+        "audio": "en-b1-3.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Don't worry. Many visitors make that mistake.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "I understand. It was an honest mistake.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "It's fine. Just say sorry to the guard.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "What should I do now?",
+        "translation": "¿Qué debería hacer ahora?",
+        "audio": "en-b1-3.3.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "apologize"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "apologise"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "sorry"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "explain"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "bow"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "You should apologize and explain that you didn't know.",
+        "starters": [
+          "You should ...",
+          "I would ..."
+        ],
+        "word_bank": [
+          "You",
+          "should",
+          "apologize",
+          "and",
+          "explain",
+          "that",
+          "you",
+          "didn't",
+          "know"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "If I had known the custom, I wouldn't have done it.",
+        "translation": "Si hubiera sabido la costumbre, no lo habría hecho.",
+        "audio": "en-b1-3.3.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "That's true. Next time you could ask the guide first.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, it's better to ask than to guess.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Don't be too hard on yourself.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "How should I greet the elders in the village?",
+        "translation": "¿Cómo debería saludar a los mayores del pueblo?",
+        "audio": "en-b1-3.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You should shake hands softly and smile.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "It's polite to nod and say good morning.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "You ought to wait for them to greet you first.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is it rude to take photos of people?",
+        "translation": "¿Es grosero tomar fotos de las personas?",
+        "audio": "en-b1-3.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It can be, so you should ask for permission first.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, in many places it is better to ask.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Not always, but it's polite to ask.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. I will be more careful.",
+        "translation": "Gracias. Seré más cuidadoso.",
+        "audio": "en-b1-3.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I'm sure you will do well.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Respect goes a long way. Enjoy the festival.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "No problem. You're learning.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}

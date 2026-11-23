@@ -1222,6 +1222,506 @@
       "file": "audio/en-b1-2.4.l3.mp3",
       "duration_s": null,
       "transcript": "— I heard there was a problem at the airport. — Yes, the flight was delayed for three hours, but the airline gave everyone a free lunch."
+    },
+    {
+      "id": "en-b1-3.1.d1",
+      "text": "Hello. I bought this bag yesterday, but the zip is broken.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Hello. I bought this bag yesterday, but the zip is broken."
+        }
+      ],
+      "file": "audio/en-b1-3.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hello. I bought this bag yesterday, but the zip is broken."
+    },
+    {
+      "id": "en-b1-3.1.d2",
+      "text": "Yes, here it is. Can I have my money back?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Yes, here it is. Can I have my money back?"
+        }
+      ],
+      "file": "audio/en-b1-3.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "Yes, here it is. Can I have my money back?"
+    },
+    {
+      "id": "en-b1-3.1.d3",
+      "text": "I'd prefer an exchange. Is it possible to get the same bag in blue?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I'd prefer an exchange. Is it possible to get the same bag in blue?"
+        }
+      ],
+      "file": "audio/en-b1-3.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "I'd prefer an exchange. Is it possible to get the same bag in blue?"
+    },
+    {
+      "id": "en-b1-3.1.d4",
+      "text": "At the restaurant: excuse me, I think the bill is wrong.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "At the restaurant: excuse me, I think the bill is wrong."
+        }
+      ],
+      "file": "audio/en-b1-3.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "At the restaurant: excuse me, I think the bill is wrong."
+    },
+    {
+      "id": "en-b1-3.1.d5",
+      "text": "We were charged for two desserts, but we only had one.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "We were charged for two desserts, but we only had one."
+        }
+      ],
+      "file": "audio/en-b1-3.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "We were charged for two desserts, but we only had one."
+    },
+    {
+      "id": "en-b1-3.1.d6",
+      "text": "At the bank: my card doesn't work. What can I do?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "At the bank: my card doesn't work. What can I do?"
+        }
+      ],
+      "file": "audio/en-b1-3.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "At the bank: my card doesn't work. What can I do?"
+    },
+    {
+      "id": "en-b1-3.1.l1",
+      "text": "I'd like to return these shoes. They're too small. No problem. You can have an exchange or store credit, but we can't give a refund after thirty days.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I'd like to return these shoes. They're too small."
+        },
+        {
+          "voice": "host",
+          "text": "No problem. You can have an exchange or store credit, but we can't give a refund after thirty days."
+        }
+      ],
+      "file": "audio/en-b1-3.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "— I'd like to return these shoes. They're too small. — No problem. You can have an exchange or store credit, but we can't give a refund after 30 days."
+    },
+    {
+      "id": "en-b1-3.1.l2",
+      "text": "Excuse me, the soup is cold. I'm so sorry. I'll bring you a hot one immediately, and the dessert is on the house.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Excuse me, the soup is cold."
+        },
+        {
+          "voice": "host",
+          "text": "I'm so sorry. I'll bring you a hot one immediately, and the dessert is on the house."
+        }
+      ],
+      "file": "audio/en-b1-3.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "— Excuse me, the soup is cold. — I'm so sorry. I'll bring you a hot one immediately, and the dessert is on the house."
+    },
+    {
+      "id": "en-b1-3.1.l3",
+      "text": "You were overcharged by fifteen dollars on your last bill, so we are going to return the money to your account in three days.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "You were overcharged by fifteen dollars on your last bill, so we are going to return the money to your account in three days."
+        }
+      ],
+      "file": "audio/en-b1-3.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "You were overcharged by 15 dollars on your last bill, so we are going to return the money to your account in three days."
+    },
+    {
+      "id": "en-b1-3.2.d1",
+      "text": "Good morning. I'd like to check out, but I have a complaint.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Good morning. I'd like to check out, but I have a complaint."
+        }
+      ],
+      "file": "audio/en-b1-3.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "Good morning. I'd like to check out, but I have a complaint."
+    },
+    {
+      "id": "en-b1-3.2.d2",
+      "text": "The room was very noisy at night and nobody helped us.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "The room was very noisy at night and nobody helped us."
+        }
+      ],
+      "file": "audio/en-b1-3.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "The room was very noisy at night and nobody helped us."
+    },
+    {
+      "id": "en-b1-3.2.d3",
+      "text": "I called the front desk twice, and nothing happened.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I called the front desk twice, and nothing happened."
+        }
+      ],
+      "file": "audio/en-b1-3.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "I called the front desk twice, and nothing happened."
+    },
+    {
+      "id": "en-b1-3.2.d4",
+      "text": "What can you do to solve this?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What can you do to solve this?"
+        }
+      ],
+      "file": "audio/en-b1-3.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "What can you do to solve this?"
+    },
+    {
+      "id": "en-b1-3.2.d5",
+      "text": "A discount sounds fair, but I'd like to talk to the manager.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "A discount sounds fair, but I'd like to talk to the manager."
+        }
+      ],
+      "file": "audio/en-b1-3.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "A discount sounds fair, but I'd like to talk to the manager."
+    },
+    {
+      "id": "en-b1-3.2.d6",
+      "text": "Thank you. I appreciate your help.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. I appreciate your help."
+        }
+      ],
+      "file": "audio/en-b1-3.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. I appreciate your help."
+    },
+    {
+      "id": "en-b1-3.2.l1",
+      "text": "I'm afraid the air conditioning didn't work in our room. I'm very sorry. We'll take twenty percent off your bill.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I'm afraid the air conditioning didn't work in our room."
+        },
+        {
+          "voice": "host",
+          "text": "I'm very sorry. We'll take twenty percent off your bill."
+        }
+      ],
+      "file": "audio/en-b1-3.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "— I'm afraid the air conditioning didn't work in our room. — I'm very sorry. We'll take 20% off your bill."
+    },
+    {
+      "id": "en-b1-3.2.l2",
+      "text": "I'm sorry, but I can't change the price without the manager's approval. She will be back at four o'clock.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "I'm sorry, but I can't change the price without the manager's approval. She will be back at four o'clock."
+        }
+      ],
+      "file": "audio/en-b1-3.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "I'm sorry, but I can't change the price without the manager's approval. She will be back at 4:00."
+    },
+    {
+      "id": "en-b1-3.2.l3",
+      "text": "The breakfast was cold, and the staff weren't polite. I apologize. That is not the standard we expect. I will speak with the team.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "The breakfast was cold, and the staff weren't polite."
+        },
+        {
+          "voice": "host",
+          "text": "I apologize. That is not the standard we expect. I will speak with the team."
+        }
+      ],
+      "file": "audio/en-b1-3.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "— The breakfast was cold, and the staff weren't polite. — I apologize. That is not the standard we expect. I will speak with the team."
+    },
+    {
+      "id": "en-b1-3.3.d1",
+      "text": "I touched the sacred statue and everyone looked at me. I feel so embarrassed.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I touched the sacred statue and everyone looked at me. I feel so embarrassed."
+        }
+      ],
+      "file": "audio/en-b1-3.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "I touched the sacred statue and everyone looked at me. I feel so embarrassed."
+    },
+    {
+      "id": "en-b1-3.3.d2",
+      "text": "What should I do now?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What should I do now?"
+        }
+      ],
+      "file": "audio/en-b1-3.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "What should I do now?"
+    },
+    {
+      "id": "en-b1-3.3.d3",
+      "text": "If I had known the custom, I wouldn't have done it.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "If I had known the custom, I wouldn't have done it."
+        }
+      ],
+      "file": "audio/en-b1-3.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "If I had known the custom, I wouldn't have done it."
+    },
+    {
+      "id": "en-b1-3.3.d4",
+      "text": "How should I greet the elders in the village?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How should I greet the elders in the village?"
+        }
+      ],
+      "file": "audio/en-b1-3.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "How should I greet the elders in the village?"
+    },
+    {
+      "id": "en-b1-3.3.d5",
+      "text": "Is it rude to take photos of people?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is it rude to take photos of people?"
+        }
+      ],
+      "file": "audio/en-b1-3.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is it rude to take photos of people?"
+    },
+    {
+      "id": "en-b1-3.3.d6",
+      "text": "Thank you. I will be more careful.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. I will be more careful."
+        }
+      ],
+      "file": "audio/en-b1-3.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. I will be more careful."
+    },
+    {
+      "id": "en-b1-3.3.l1",
+      "text": "I put my feet on the table and the host looked angry. In many cultures that is rude. If you asked first, you would not offend anyone.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I put my feet on the table and the host looked angry."
+        },
+        {
+          "voice": "host",
+          "text": "In many cultures that is rude. If you asked first, you would not offend anyone."
+        }
+      ],
+      "file": "audio/en-b1-3.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "— I put my feet on the table and the host looked angry. — In many cultures that is rude. If you asked first, you would not offend anyone."
+    },
+    {
+      "id": "en-b1-3.3.l2",
+      "text": "She felt really embarrassed because she wore a short skirt in the church, so now she always carries a scarf.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "She felt really embarrassed because she wore a short skirt in the church, so now she always carries a scarf."
+        }
+      ],
+      "file": "audio/en-b1-3.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "She felt really embarrassed because she wore a short skirt in the church, so now she always carries a scarf."
+    },
+    {
+      "id": "en-b1-3.3.l3",
+      "text": "Do you shake hands when you meet someone here? Usually yes, but with older people you should wait for them to start.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Do you shake hands when you meet someone here?"
+        },
+        {
+          "voice": "host",
+          "text": "Usually yes, but with older people you should wait for them to start."
+        }
+      ],
+      "file": "audio/en-b1-3.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "— Do you shake hands when you meet someone here? — Usually yes, but with older people you should wait for them to start."
+    },
+    {
+      "id": "en-b1-3.4.d1",
+      "text": "What is a typical custom in your town?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What is a typical custom in your town?"
+        }
+      ],
+      "file": "audio/en-b1-3.4.d1.mp3",
+      "duration_s": null,
+      "transcript": "What is a typical custom in your town?"
+    },
+    {
+      "id": "en-b1-3.4.d2",
+      "text": "How is it different from my country?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How is it different from my country?"
+        }
+      ],
+      "file": "audio/en-b1-3.4.d2.mp3",
+      "duration_s": null,
+      "transcript": "How is it different from my country?"
+    },
+    {
+      "id": "en-b1-3.4.d3",
+      "text": "Is the festival the same every year?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is the festival the same every year?"
+        }
+      ],
+      "file": "audio/en-b1-3.4.d3.mp3",
+      "duration_s": null,
+      "transcript": "Is the festival the same every year?"
+    },
+    {
+      "id": "en-b1-3.4.d4",
+      "text": "Which trends are becoming popular among young people?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Which trends are becoming popular among young people?"
+        }
+      ],
+      "file": "audio/en-b1-3.4.d4.mp3",
+      "duration_s": null,
+      "transcript": "Which trends are becoming popular among young people?"
+    },
+    {
+      "id": "en-b1-3.4.d5",
+      "text": "Do people still wear traditional clothes?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Do people still wear traditional clothes?"
+        }
+      ],
+      "file": "audio/en-b1-3.4.d5.mp3",
+      "duration_s": null,
+      "transcript": "Do people still wear traditional clothes?"
+    },
+    {
+      "id": "en-b1-3.4.d6",
+      "text": "That's interesting. I'd like to learn more.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "That's interesting. I'd like to learn more."
+        }
+      ],
+      "file": "audio/en-b1-3.4.d6.mp3",
+      "duration_s": null,
+      "transcript": "That's interesting. I'd like to learn more."
+    },
+    {
+      "id": "en-b1-3.4.l1",
+      "text": "What do you eat during the harvest festival? We eat roasted corn and sweet bread. Both are made by the families of the village.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What do you eat during the harvest festival?"
+        },
+        {
+          "voice": "host",
+          "text": "We eat roasted corn and sweet bread. Both are made by the families of the village."
+        }
+      ],
+      "file": "audio/en-b1-3.4.l1.mp3",
+      "duration_s": null,
+      "transcript": "— What do you eat during the harvest festival? — We eat roasted corn and sweet bread. Both are made by the families of the village."
+    },
+    {
+      "id": "en-b1-3.4.l2",
+      "text": "In my country people usually arrive on time, whereas here a meeting can start fifteen minutes late.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "In my country people usually arrive on time, whereas here a meeting can start fifteen minutes late."
+        }
+      ],
+      "file": "audio/en-b1-3.4.l2.mp3",
+      "duration_s": null,
+      "transcript": "In my country people usually arrive on time, whereas here a meeting can start 15 minutes late."
+    },
+    {
+      "id": "en-b1-3.4.l3",
+      "text": "Is it a growing trend to visit small villages? Yes, more and more visitors want an authentic experience, so rural tourism is growing fast.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is it a growing trend to visit small villages?"
+        },
+        {
+          "voice": "host",
+          "text": "Yes, more and more visitors want an authentic experience, so rural tourism is growing fast."
+        }
+      ],
+      "file": "audio/en-b1-3.4.l3.mp3",
+      "duration_s": null,
+      "transcript": "— Is it a growing trend to visit small villages? — Yes, more and more visitors want an authentic experience, so rural tourism is growing fast."
     }
   ]
 }

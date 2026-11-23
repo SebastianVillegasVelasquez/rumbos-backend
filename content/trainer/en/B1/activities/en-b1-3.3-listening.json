@@ -1,0 +1,84 @@
+{
+  "id": "en-b1-3.3-listening",
+  "skill": "listening",
+  "title": "Listen and choose 3.3",
+  "estimated_minutes": 4,
+  "lesson_id": "3.3",
+  "status": "draft",
+  "role": "Cultural guide helping a visitor who has made a social mistake",
+  "can_do": [
+    "I can express regret and embarrassment.",
+    "I can give advice to avoid a cultural mistake with a light second conditional."
+  ],
+  "items": [
+    {
+      "id": "en-b1-3.3.l1",
+      "type": "listen_choose",
+      "prompt": "What would help the guest avoid the mistake?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Staying at home"
+        },
+        {
+          "id": "o2",
+          "text": "Asking first"
+        },
+        {
+          "id": "o3",
+          "text": "Paying more"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: if you asked first.",
+      "audio": "en-b1-3.3.l1"
+    },
+    {
+      "id": "en-b1-3.3.l2",
+      "type": "listen_choose",
+      "prompt": "Why does she carry a scarf?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "To keep warm"
+        },
+        {
+          "id": "o2",
+          "text": "To take photos"
+        },
+        {
+          "id": "o3",
+          "text": "To dress respectfully"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: she wore a short skirt in the church.",
+      "audio": "en-b1-3.3.l2"
+    },
+    {
+      "id": "en-b1-3.3.l3",
+      "type": "listen_choose",
+      "prompt": "What should you do with older people?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Wait for them to start"
+        },
+        {
+          "id": "o2",
+          "text": "Shake hands first"
+        },
+        {
+          "id": "o3",
+          "text": "Not greet them"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: wait for them to start.",
+      "audio": "en-b1-3.3.l3"
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}
