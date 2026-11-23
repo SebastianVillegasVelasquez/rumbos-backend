@@ -3,10 +3,10 @@ fields next to steps, keys, the position of the greeting, how many quizzes, how
 much markup, and what the author's HTML and CSS contain.
 
 The closing flow is the welcome flow's twin and shares every rule here. It
-differs only in what it may hold: content steps (`html`, `pdf`, `video`) and at
-most one `assessment` step of purpose `final`, never the greeting or a Moodle
-`quiz`; the welcome flow's assessment step is the `check_in` one. A closing flow
-must have steps. Step keys are also unique across the two flows, because Moodle
+differs in two things only, both in `_FLOW_TYPES` and `_PURPOSE`: it never holds
+the `welcome` greeting (every other content type is shared: `html`, `pdf`,
+`video`, `quiz`), and its one `assessment` step has purpose `final` where the
+welcome flow's has `check_in`. A closing flow must have steps. Step keys are also unique across the two flows, because Moodle
 keeps the progress of a step by map and key alone.
 
 `flow_problems` is pure and lists every problem (not just the first), each as
@@ -30,6 +30,7 @@ from app.schemas.welcome import (
     HtmlStep,
     PdfStep,
     QuizStep,
+    VideoStep,
     Welcome,
     WelcomeStep,
 )
@@ -41,6 +42,19 @@ FlowName = Literal["welcome", "closing"]
 
 # The exam each flow may hold.
 _PURPOSE: dict[str, str] = {"welcome": "check_in", "closing": "final"}
+# The one table of what each flow may hold. Shared content types appear in both;
+# the schema document of the closing flow (`ClosingFlow`) must say the same.
+_SHARED_TYPES: tuple[type, ...] = (
+    VideoStep,
+    HtmlStep,
+    PdfStep,
+    QuizStep,
+    AssessmentStep,
+)
+_FLOW_TYPES: dict[str, tuple[type, ...]] = {
+    "welcome": (WelcomeStep, *_SHARED_TYPES),
+    "closing": _SHARED_TYPES,
+}
 
 
 def _problem(path: str, code: str, message: str) -> Problem:
@@ -103,18 +117,17 @@ def flow_problems(
                 )
             )
         seen.add(step.key)
-        if isinstance(step, WelcomeStep):
-            if closing:
-                problems.append(_not_allowed(where))
-            elif index != 0:
-                problems.append(
-                    _problem(
-                        where,
-                        "welcome_step_position",
-                        "The welcome step must be the first step, "
-                        "and there can be only one",
-                    )
+        if not isinstance(step, _FLOW_TYPES[name]):
+            problems.append(_not_allowed(where, name))
+        if isinstance(step, WelcomeStep) and not closing and index != 0:
+            problems.append(
+                _problem(
+                    where,
+                    "welcome_step_position",
+                    "The welcome step must be the first step, "
+                    "and there can be only one",
                 )
+            )
         if isinstance(step, AssessmentStep):
             assessments += 1
             if assessments > 1:
@@ -134,8 +147,6 @@ def flow_problems(
                     )
                 )
         if isinstance(step, QuizStep):
-            if closing:
-                problems.append(_not_allowed(where))
             quizzes += 1
             if quizzes > MAX_QUIZ_STEPS:
                 problems.append(
@@ -164,11 +175,11 @@ def flow_problems(
     return problems
 
 
-def _not_allowed(where: str) -> Problem:
+def _not_allowed(where: str, name: str) -> Problem:
     return _problem(
         where,
         "step_type_not_allowed",
-        "A closing flow holds only content steps and a final assessment",
+        f"A {name} flow cannot hold this type of step",
     )
 
 

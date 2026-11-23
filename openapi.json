@@ -4245,7 +4245,8 @@
               "$ref": "#/components/schemas/WelcomeDocument"
             },
             "type": "array",
-            "title": "Welcomedocuments"
+            "title": "Welcomedocuments",
+            "description": "Documents of the PDF steps of both flows: the welcome flow's first, then the closing flow's, each once."
           },
           "warnings": {
             "items": {
@@ -6248,6 +6249,128 @@
         ],
         "title": "Clip"
       },
+      "ClosingFlow": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": true
+          },
+          "steps": {
+            "anyOf": [
+              {
+                "items": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/VideoStep"
+                    },
+                    {
+                      "$ref": "#/components/schemas/HtmlStep"
+                    },
+                    {
+                      "$ref": "#/components/schemas/PdfStep"
+                    },
+                    {
+                      "$ref": "#/components/schemas/QuizStep"
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/AssessmentStep"
+                        }
+                      ],
+                      "properties": {
+                        "purpose": {
+                          "type": "string",
+                          "const": "final"
+                        }
+                      },
+                      "description": "In a closing flow the purpose is `final`."
+                    }
+                  ],
+                  "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                      "assessment": "#/components/schemas/AssessmentStep",
+                      "html": "#/components/schemas/HtmlStep",
+                      "pdf": "#/components/schemas/PdfStep",
+                      "quiz": "#/components/schemas/QuizStep",
+                      "video": "#/components/schemas/VideoStep"
+                    }
+                  }
+                },
+                "type": "array",
+                "minItems": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Steps",
+            "description": "Allowed here: video, html, pdf, quiz and one assessment step of purpose `final`. The `welcome` greeting is welcome-only."
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 300
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "video": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WelcomeVideo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "playOnEnter": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Playonenter",
+            "default": true
+          },
+          "show": {
+            "type": "string",
+            "enum": [
+              "first_visit",
+              "always"
+            ],
+            "title": "Show",
+            "default": "first_visit"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ClosingFlow",
+        "description": "The closing flow: the welcome flow's twin, shown when the level is\nfinished. Same fields and same checks; what differs is what `steps` may\nhold. Allowed: `video`, `html`, `pdf`, `quiz` and one `assessment` step of\npurpose `final`. Refused with 422 `welcome_invalid` (problem\n`step_type_not_allowed` or `assessment_purpose`): the `welcome` greeting.\nA closing flow needs at least one step, and step keys are unique across\nboth flows. The student's progress through it is kept in Moodle, not here."
+      },
       "ClosingProgress": {
         "properties": {
           "completed": {
@@ -6542,7 +6665,8 @@
               "$ref": "#/components/schemas/WelcomeDocument"
             },
             "type": "array",
-            "title": "Welcomedocuments"
+            "title": "Welcomedocuments",
+            "description": "Documents of the PDF steps of both flows: the welcome flow's first, then the closing flow's, each once."
           }
         },
         "type": "object",
@@ -7431,7 +7555,7 @@
           "closing": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/Welcome"
+                "$ref": "#/components/schemas/ClosingFlow"
               },
               {
                 "type": "null"
@@ -8300,7 +8424,8 @@
               "$ref": "#/components/schemas/WelcomeDocument"
             },
             "type": "array",
-            "title": "Welcomedocuments"
+            "title": "Welcomedocuments",
+            "description": "Documents of the PDF steps of both flows: the welcome flow's first, then the closing flow's, each once."
           },
           "publicationNumber": {
             "type": "integer",

@@ -94,8 +94,12 @@ class PublishedMapRead(ApiModel):
     # when the map has no music, or the track has since been taken down (then
     # `settings.audio` is null too).
     audio_info: AudioInfo | None = None
-    # The documents of the frozen welcome flow's PDF steps, read live: whether
-    # each is still available is not part of the publication.
-    welcome_documents: list[WelcomeDocument] = Field(default_factory=list)
+    # The documents of the frozen welcome and closing flows' PDF steps, read
+    # live: whether each is still available is not part of the publication.
+    welcome_documents: list[WelcomeDocument] = Field(
+        default_factory=list,
+        description="Documents of the PDF steps of both flows: the welcome "
+        "flow's first, then the closing flow's, each once.",
+    )
     publication_number: int
     published_at: datetime
