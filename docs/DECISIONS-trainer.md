@@ -599,3 +599,18 @@ exam" while a direct start works.
 Follow-up: delete this rule (and the two branches that carry it, `hide_final` in
 `get_service` and the early return in `guard_final_start`) once every map has a
 closing flow with its final step.
+
+## D54. The closing flow shares every content step type with the welcome flow
+
+Product rule: the closing flow offers every content step the welcome flow does.
+The audit found `html`, `pdf` and `video` were already shared; the Moodle `quiz`
+step was refused and is now allowed (the three-quiz limit applies per flow). The
+`welcome` greeting stays welcome-only, and the exam step is `check_in` in one
+flow and `final` in the other. The rules live in one table
+(`_FLOW_TYPES`, `_PURPOSE` in `app.welcome_flow.flow`).
+
+The OpenAPI says it with a `ClosingFlow` schema (a subclass of `Welcome` that
+only changes the generated schema of `steps`). It is deliberately not a
+stricter runtime type: a refused step keeps being reported as a
+`{path, code, message}` problem, the same error shape as the welcome flow, and
+every stored map loads unchanged.

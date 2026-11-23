@@ -175,6 +175,25 @@ Same endpoints at every level: `GET /trainer/assessments`, `POST
 * The forms have no images (the sources gave no figures), so no step needs an
   image or alt text.
 
+## The closing flow and the final exam (frontend)
+
+* `settings.closing` is typed `ClosingFlow` in `openapi.json`. Its steps are
+  `video`, `html`, `pdf`, `quiz` (the same as the welcome flow) and one
+  `assessment` step with `purpose: "final"`. The `welcome` greeting is
+  welcome-only; sending it is a `422 welcome_invalid` with
+  `step_type_not_allowed`. Step keys are unique across both flows.
+* Closing PDFs come in the same `welcomeDocuments` list as the welcome ones
+  (editor, publication and published reads); there is no separate list.
+* The backend stores no closing progress. Which steps a student has finished is
+  kept in Moodle (`format_rumbos_flow`, D29); no endpoint exists for it.
+* **Transitional rule (D53).** With `CLOSING_GATE_MODE=enforce`, the final exam
+  leaves `GET /trainer/assessments` and is reached through `GET /trainer/closing`
+  only on a map whose closing flow holds a final `assessment` step. On a map
+  without one the final stays in the trainer list and starts as before. Read
+  `final` from `/trainer/closing` when it answers `available` or a reason other
+  than `not_enabled` / `no_final_step`; otherwise use the trainer list. This rule
+  will be removed once every map has its closing flow.
+
 ## What does not exist
 
 No endpoint to record audio, no transcript field, no `delivery` field, no
