@@ -214,6 +214,514 @@
       "file": "audio/b1fa-f8a5436d96.mp3",
       "duration_s": null,
       "transcript": "May I see your passport? Do you have anything to declare?"
+    },
+    {
+      "id": "en-b1-1.1.d1",
+      "text": "Excuse me, sorry to interrupt. Do you know where the ferry dock is?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Excuse me, sorry to interrupt. Do you know where the ferry dock is?"
+        }
+      ],
+      "file": "audio/en-b1-1.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Excuse me, sorry to interrupt. Do you know where the ferry dock is?"
+    },
+    {
+      "id": "en-b1-1.1.d2",
+      "text": "Thanks. Could you tell me how long the walk takes?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thanks. Could you tell me how long the walk takes?"
+        }
+      ],
+      "file": "audio/en-b1-1.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "Thanks. Could you tell me how long the walk takes?"
+    },
+    {
+      "id": "en-b1-1.1.d3",
+      "text": "Sorry, I didn't catch that. Could you repeat the street name?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Sorry, I didn't catch that. Could you repeat the street name?"
+        }
+      ],
+      "file": "audio/en-b1-1.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "Sorry, I didn't catch that. Could you repeat the street name?"
+    },
+    {
+      "id": "en-b1-1.1.d4",
+      "text": "Can you tell me if the museum is open on Sundays?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can you tell me if the museum is open on Sundays?"
+        }
+      ],
+      "file": "audio/en-b1-1.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Can you tell me if the museum is open on Sundays?"
+    },
+    {
+      "id": "en-b1-1.1.d5",
+      "text": "Do you know whether I need a ticket for the old fort?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Do you know whether I need a ticket for the old fort?"
+        }
+      ],
+      "file": "audio/en-b1-1.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "Do you know whether I need a ticket for the old fort?"
+    },
+    {
+      "id": "en-b1-1.1.d6",
+      "text": "Thank you. One last thing: could you tell me who the guide is?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. One last thing: could you tell me who the guide is?"
+        }
+      ],
+      "file": "audio/en-b1-1.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. One last thing: could you tell me who the guide is?"
+    },
+    {
+      "id": "en-b1-1.1.l1",
+      "text": "Excuse me. Could you tell me where the post office is? It's two blocks from here, behind the church.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Excuse me. Could you tell me where the post office is?"
+        },
+        {
+          "voice": "host",
+          "text": "It's two blocks from here, behind the church."
+        }
+      ],
+      "file": "audio/en-b1-1.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "— Excuse me. Could you tell me where the post office is? — It's two blocks from here, behind the church."
+    },
+    {
+      "id": "en-b1-1.1.l2",
+      "text": "Do you know if the bank is open on Saturday? Yes, it opens at nine and closes at one o'clock.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Do you know if the bank is open on Saturday?"
+        },
+        {
+          "voice": "host",
+          "text": "Yes, it opens at nine and closes at one o'clock."
+        }
+      ],
+      "file": "audio/en-b1-1.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "— Do you know if the bank is open on Saturday? — Yes, it opens at 9:00 and closes at 1:00."
+    },
+    {
+      "id": "en-b1-1.1.l3",
+      "text": "Sorry, I didn't understand. Could you say that again, please? Of course. The bus to the lighthouse leaves every thirty minutes.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Sorry, I didn't understand. Could you say that again, please?"
+        },
+        {
+          "voice": "host",
+          "text": "Of course. The bus to the lighthouse leaves every thirty minutes."
+        }
+      ],
+      "file": "audio/en-b1-1.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "— Sorry, I didn't understand. Could you say that again, please? — Of course. The bus to the lighthouse leaves every 30 minutes."
+    },
+    {
+      "id": "en-b1-1.2.d1",
+      "text": "I'm a bit annoyed. The pool is closed and nobody told us.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I'm a bit annoyed. The pool is closed and nobody told us."
+        }
+      ],
+      "file": "audio/en-b1-1.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "I'm a bit annoyed. The pool is closed and nobody told us."
+    },
+    {
+      "id": "en-b1-1.2.d2",
+      "text": "The weather is awful and the day is very boring. What can we do?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "The weather is awful and the day is very boring. What can we do?"
+        }
+      ],
+      "file": "audio/en-b1-1.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "The weather is awful and the day is very boring. What can we do?"
+    },
+    {
+      "id": "en-b1-1.2.d3",
+      "text": "I think the new menu is too expensive.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I think the new menu is too expensive."
+        }
+      ],
+      "file": "audio/en-b1-1.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "I think the new menu is too expensive."
+    },
+    {
+      "id": "en-b1-1.2.d4",
+      "text": "The tour was really exciting, don't you think?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "The tour was really exciting, don't you think?"
+        }
+      ],
+      "file": "audio/en-b1-1.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "The tour was really exciting, don't you think?"
+    },
+    {
+      "id": "en-b1-1.2.d5",
+      "text": "I'm disappointed with our room. It is small and noisy.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I'm disappointed with our room. It is small and noisy."
+        }
+      ],
+      "file": "audio/en-b1-1.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "I'm disappointed with our room. It is small and noisy."
+    },
+    {
+      "id": "en-b1-1.2.d6",
+      "text": "Thank you. I feel much better now.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. I feel much better now."
+        }
+      ],
+      "file": "audio/en-b1-1.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. I feel much better now."
+    },
+    {
+      "id": "en-b1-1.2.l1",
+      "text": "How was the boat trip? It was amazing. I was really excited when we saw the dolphins.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How was the boat trip?"
+        },
+        {
+          "voice": "host",
+          "text": "It was amazing. I was really excited when we saw the dolphins."
+        }
+      ],
+      "file": "audio/en-b1-1.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "— How was the boat trip? — It was amazing. I was really excited when we saw the dolphins."
+    },
+    {
+      "id": "en-b1-1.2.l2",
+      "text": "Are you enjoying the conference? Not really. The talks are long and boring, and I'm a little tired.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Are you enjoying the conference?"
+        },
+        {
+          "voice": "host",
+          "text": "Not really. The talks are long and boring, and I'm a little tired."
+        }
+      ],
+      "file": "audio/en-b1-1.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "— Are you enjoying the conference? — Not really. The talks are long and boring, and I'm a little tired."
+    },
+    {
+      "id": "en-b1-1.2.l3",
+      "text": "I think we should cancel the picnic because of the rain. I see your point, but the forecast says it will stop by noon.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I think we should cancel the picnic because of the rain."
+        },
+        {
+          "voice": "host",
+          "text": "I see your point, but the forecast says it will stop by noon."
+        }
+      ],
+      "file": "audio/en-b1-1.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "— I think we should cancel the picnic because of the rain. — I see your point, but the forecast says it will stop by noon."
+    },
+    {
+      "id": "en-b1-1.3.d1",
+      "text": "We can't decide between the island and the mountains. Which is cheaper?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "We can't decide between the island and the mountains. Which is cheaper?"
+        }
+      ],
+      "file": "audio/en-b1-1.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "We can't decide between the island and the mountains. Which is cheaper?"
+    },
+    {
+      "id": "en-b1-1.3.d2",
+      "text": "Is the island as crowded as the town?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is the island as crowded as the town?"
+        }
+      ],
+      "file": "audio/en-b1-1.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "Is the island as crowded as the town?"
+    },
+    {
+      "id": "en-b1-1.3.d3",
+      "text": "The island is more beautiful, whereas the mountains are cooler. Which do you prefer?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "The island is more beautiful, whereas the mountains are cooler. Which do you prefer?"
+        }
+      ],
+      "file": "audio/en-b1-1.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "The island is more beautiful, whereas the mountains are cooler. Which do you prefer?"
+    },
+    {
+      "id": "en-b1-1.3.d4",
+      "text": "How far is the beach from the hotel on the island?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How far is the beach from the hotel on the island?"
+        }
+      ],
+      "file": "audio/en-b1-1.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "How far is the beach from the hotel on the island?"
+    },
+    {
+      "id": "en-b1-1.3.d5",
+      "text": "Is the food as good as in the capital?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is the food as good as in the capital?"
+        }
+      ],
+      "file": "audio/en-b1-1.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is the food as good as in the capital?"
+    },
+    {
+      "id": "en-b1-1.3.d6",
+      "text": "Great. We'll book the island, then.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Great. We'll book the island, then."
+        }
+      ],
+      "file": "audio/en-b1-1.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "Great. We'll book the island, then."
+    },
+    {
+      "id": "en-b1-1.3.l1",
+      "text": "Is the north beach as busy as the south beach? No, it is much quieter, whereas the south beach is always full.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is the north beach as busy as the south beach?"
+        },
+        {
+          "voice": "host",
+          "text": "No, it is much quieter, whereas the south beach is always full."
+        }
+      ],
+      "file": "audio/en-b1-1.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "— Is the north beach as busy as the south beach? — No, it is much quieter, whereas the south beach is always full."
+    },
+    {
+      "id": "en-b1-1.3.l2",
+      "text": "Which hotel is cheaper? The Palm Inn costs eighty dollars a night, and the Sea View costs one hundred and ten.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Which hotel is cheaper?"
+        },
+        {
+          "voice": "host",
+          "text": "The Palm Inn costs eighty dollars a night, and the Sea View costs one hundred and ten."
+        }
+      ],
+      "file": "audio/en-b1-1.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "— Which hotel is cheaper? — The Palm Inn costs 80 dollars a night, and the Sea View costs 110."
+    },
+    {
+      "id": "en-b1-1.3.l3",
+      "text": "The mountain village is not as modern as the city, whereas it is far more peaceful. I think it is the best place for a quiet weekend.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "The mountain village is not as modern as the city, whereas it is far more peaceful. I think it is the best place for a quiet weekend."
+        }
+      ],
+      "file": "audio/en-b1-1.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "The mountain village is not as modern as the city, whereas it is far more peaceful. I think it is the best place for a quiet weekend."
+    },
+    {
+      "id": "en-b1-1.4.d1",
+      "text": "Hello. Is the welcome party still on for Saturday?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Hello. Is the welcome party still on for Saturday?"
+        }
+      ],
+      "file": "audio/en-b1-1.4.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hello. Is the welcome party still on for Saturday?"
+    },
+    {
+      "id": "en-b1-1.4.d2",
+      "text": "Why have you changed the day?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Why have you changed the day?"
+        }
+      ],
+      "file": "audio/en-b1-1.4.d2.mp3",
+      "duration_s": null,
+      "transcript": "Why have you changed the day?"
+    },
+    {
+      "id": "en-b1-1.4.d3",
+      "text": "What is going to happen with the food?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What is going to happen with the food?"
+        }
+      ],
+      "file": "audio/en-b1-1.4.d3.mp3",
+      "duration_s": null,
+      "transcript": "What is going to happen with the food?"
+    },
+    {
+      "id": "en-b1-1.4.d4",
+      "text": "Have you told the other guests?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Have you told the other guests?"
+        }
+      ],
+      "file": "audio/en-b1-1.4.d4.mp3",
+      "duration_s": null,
+      "transcript": "Have you told the other guests?"
+    },
+    {
+      "id": "en-b1-1.4.d5",
+      "text": "This is a big inconvenience for us.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "This is a big inconvenience for us."
+        }
+      ],
+      "file": "audio/en-b1-1.4.d5.mp3",
+      "duration_s": null,
+      "transcript": "This is a big inconvenience for us."
+    },
+    {
+      "id": "en-b1-1.4.d6",
+      "text": "Fine. Please confirm the new time by email.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Fine. Please confirm the new time by email."
+        }
+      ],
+      "file": "audio/en-b1-1.4.d6.mp3",
+      "duration_s": null,
+      "transcript": "Fine. Please confirm the new time by email."
+    },
+    {
+      "id": "en-b1-1.4.l1",
+      "text": "What are you doing tomorrow evening? I'm having dinner with a client at eight, so I can't join the tour.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What are you doing tomorrow evening?"
+        },
+        {
+          "voice": "host",
+          "text": "I'm having dinner with a client at eight, so I can't join the tour."
+        }
+      ],
+      "file": "audio/en-b1-1.4.l1.mp3",
+      "duration_s": null,
+      "transcript": "— What are you doing tomorrow evening? — I'm having dinner with a client at eight, so I can't join the tour."
+    },
+    {
+      "id": "en-b1-1.4.l2",
+      "text": "We have postponed the concert until next Thursday because the singer is ill. It is going to start at eight thirty, and your tickets are still valid.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "We have postponed the concert until next Thursday because the singer is ill. It is going to start at eight thirty, and your tickets are still valid."
+        }
+      ],
+      "file": "audio/en-b1-1.4.l2.mp3",
+      "duration_s": null,
+      "transcript": "We have postponed the concert until next Thursday because the singer is ill. It is going to start at 8:30, and your tickets are still valid."
+    },
+    {
+      "id": "en-b1-1.4.l3",
+      "text": "I'm sorry, I have lost the invitation. Where is the party going to be? Don't worry. I will send you the address by message in a minute.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I'm sorry, I have lost the invitation. Where is the party going to be?"
+        },
+        {
+          "voice": "host",
+          "text": "Don't worry. I will send you the address by message in a minute."
+        }
+      ],
+      "file": "audio/en-b1-1.4.l3.mp3",
+      "duration_s": null,
+      "transcript": "— I'm sorry, I have lost the invitation. Where is the party going to be? — Don't worry. I will send you the address by message in a minute."
     }
   ]
 }

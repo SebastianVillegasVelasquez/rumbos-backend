@@ -1,0 +1,196 @@
+{
+  "entries": [
+    {
+      "id": "en-b1-1.1.v1",
+      "lesson_id": "1.1",
+      "word": "interrupt",
+      "translation": "interrumpir"
+    },
+    {
+      "id": "en-b1-1.1.v2",
+      "lesson_id": "1.1",
+      "word": "clarify",
+      "translation": "aclarar"
+    },
+    {
+      "id": "en-b1-1.1.v3",
+      "lesson_id": "1.1",
+      "word": "repeat",
+      "translation": "repetir"
+    },
+    {
+      "id": "en-b1-1.1.v4",
+      "lesson_id": "1.1",
+      "word": "directions",
+      "translation": "indicaciones"
+    },
+    {
+      "id": "en-b1-1.1.v5",
+      "lesson_id": "1.1",
+      "word": "ferry dock",
+      "translation": "muelle del ferry"
+    },
+    {
+      "id": "en-b1-1.1.v6",
+      "lesson_id": "1.1",
+      "word": "entrance",
+      "translation": "entrada"
+    },
+    {
+      "id": "en-b1-1.1.v7",
+      "lesson_id": "1.1",
+      "word": "whether",
+      "translation": "si (indirecta)"
+    },
+    {
+      "id": "en-b1-1.1.v8",
+      "lesson_id": "1.1",
+      "word": "I didn't catch that",
+      "translation": "no entendí"
+    },
+    {
+      "id": "en-b1-1.2.v1",
+      "lesson_id": "1.2",
+      "word": "bored",
+      "translation": "aburrido (sentimiento)"
+    },
+    {
+      "id": "en-b1-1.2.v2",
+      "lesson_id": "1.2",
+      "word": "boring",
+      "translation": "aburrido (cosa)"
+    },
+    {
+      "id": "en-b1-1.2.v3",
+      "lesson_id": "1.2",
+      "word": "annoyed",
+      "translation": "molesto"
+    },
+    {
+      "id": "en-b1-1.2.v4",
+      "lesson_id": "1.2",
+      "word": "annoying",
+      "translation": "molesto (cosa)"
+    },
+    {
+      "id": "en-b1-1.2.v5",
+      "lesson_id": "1.2",
+      "word": "exciting",
+      "translation": "emocionante"
+    },
+    {
+      "id": "en-b1-1.2.v6",
+      "lesson_id": "1.2",
+      "word": "I see your point",
+      "translation": "entiendo su punto"
+    },
+    {
+      "id": "en-b1-1.2.v7",
+      "lesson_id": "1.2",
+      "word": "I'm afraid I disagree",
+      "translation": "me temo que no estoy de acuerdo"
+    },
+    {
+      "id": "en-b1-1.2.v8",
+      "lesson_id": "1.2",
+      "word": "exactly",
+      "translation": "exacto"
+    },
+    {
+      "id": "en-b1-1.3.v1",
+      "lesson_id": "1.3",
+      "word": "crowded",
+      "translation": "concurrido"
+    },
+    {
+      "id": "en-b1-1.3.v2",
+      "lesson_id": "1.3",
+      "word": "peaceful",
+      "translation": "tranquilo"
+    },
+    {
+      "id": "en-b1-1.3.v3",
+      "lesson_id": "1.3",
+      "word": "cheaper",
+      "translation": "más barato"
+    },
+    {
+      "id": "en-b1-1.3.v4",
+      "lesson_id": "1.3",
+      "word": "whereas",
+      "translation": "mientras que"
+    },
+    {
+      "id": "en-b1-1.3.v5",
+      "lesson_id": "1.3",
+      "word": "as ... as",
+      "translation": "tan ... como"
+    },
+    {
+      "id": "en-b1-1.3.v6",
+      "lesson_id": "1.3",
+      "word": "further",
+      "translation": "más lejos"
+    },
+    {
+      "id": "en-b1-1.3.v7",
+      "lesson_id": "1.3",
+      "word": "view",
+      "translation": "vista"
+    },
+    {
+      "id": "en-b1-1.3.v8",
+      "lesson_id": "1.3",
+      "word": "quiet",
+      "translation": "silencioso"
+    },
+    {
+      "id": "en-b1-1.4.v1",
+      "lesson_id": "1.4",
+      "word": "postpone",
+      "translation": "aplazar"
+    },
+    {
+      "id": "en-b1-1.4.v2",
+      "lesson_id": "1.4",
+      "word": "venue",
+      "translation": "lugar del evento"
+    },
+    {
+      "id": "en-b1-1.4.v3",
+      "lesson_id": "1.4",
+      "word": "schedule",
+      "translation": "horario"
+    },
+    {
+      "id": "en-b1-1.4.v4",
+      "lesson_id": "1.4",
+      "word": "rearrange",
+      "translation": "reorganizar"
+    },
+    {
+      "id": "en-b1-1.4.v5",
+      "lesson_id": "1.4",
+      "word": "I apologize",
+      "translation": "me disculpo"
+    },
+    {
+      "id": "en-b1-1.4.v6",
+      "lesson_id": "1.4",
+      "word": "inconvenience",
+      "translation": "inconveniente"
+    },
+    {
+      "id": "en-b1-1.4.v7",
+      "lesson_id": "1.4",
+      "word": "in advance",
+      "translation": "con antelación"
+    },
+    {
+      "id": "en-b1-1.4.v8",
+      "lesson_id": "1.4",
+      "word": "confirm",
+      "translation": "confirmar"
+    }
+  ]
+}

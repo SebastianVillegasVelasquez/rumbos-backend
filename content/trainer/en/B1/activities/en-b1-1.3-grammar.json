@@ -1,0 +1,218 @@
+{
+  "id": "en-b1-1.3-grammar",
+  "skill": "grammar",
+  "title": "Practice 1.3",
+  "estimated_minutes": 6,
+  "lesson_id": "1.3",
+  "status": "draft",
+  "role": "Travel advisor helping a couple choose between two destinations",
+  "can_do": [
+    "I can compare two places with as ... as and comparatives.",
+    "I can show a contrast with whereas."
+  ],
+  "items": [
+    {
+      "id": "b1-1.3.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is correct?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The hotel is as bigger as the old palace."
+        },
+        {
+          "id": "o2",
+          "text": "The hotel is more big than the old palace."
+        },
+        {
+          "id": "o3",
+          "text": "The hotel is as big as the old palace."
+        }
+      ],
+      "correct": "o3",
+      "explanation": "Use as + adjective + as. Do not add -er inside as ... as.",
+      "error_tags": {
+        "o1": {
+          "tag": "as_as",
+          "text": "Use the basic adjective between as and as."
+        },
+        "o2": {
+          "tag": "as_as",
+          "text": "Use the basic adjective between as and as."
+        }
+      }
+    },
+    {
+      "id": "b1-1.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "The beach is {1} than the lake.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "cleaner"
+            },
+            {
+              "id": "o2",
+              "text": "more clean"
+            },
+            {
+              "id": "o3",
+              "text": "cleanest"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "comparative_form",
+            "text": "Add -er to short adjectives."
+          }
+        }
+      ],
+      "explanation": "Short adjectives take -er than: cleaner than."
+    },
+    {
+      "id": "b1-1.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the comparative of good.",
+      "template": "The food here is {1} than in the capital.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "better"
+          ],
+          "error_tag": {
+            "tag": "irregular",
+            "text": "Good is irregular: better."
+          }
+        }
+      ],
+      "explanation": "The comparative of good is better."
+    },
+    {
+      "id": "b1-1.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "The"
+        },
+        {
+          "id": "t2",
+          "text": "village"
+        },
+        {
+          "id": "t3",
+          "text": "is"
+        },
+        {
+          "id": "t4",
+          "text": "quiet"
+        },
+        {
+          "id": "t5",
+          "text": "whereas"
+        },
+        {
+          "id": "t6",
+          "text": "the"
+        },
+        {
+          "id": "t7",
+          "text": "city"
+        },
+        {
+          "id": "t8",
+          "text": "is"
+        },
+        {
+          "id": "t9",
+          "text": "noisy"
+        }
+      ],
+      "explanation": "Whereas joins two opposite ideas in one sentence.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Put whereas between the two ideas."
+      }
+    },
+    {
+      "id": "b1-1.3.ex.05",
+      "type": "match",
+      "prompt": "Match each pair with the idea.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "as expensive as"
+        },
+        {
+          "id": "l2",
+          "text": "cheaper than"
+        },
+        {
+          "id": "l3",
+          "text": "not as crowded as"
+        },
+        {
+          "id": "l4",
+          "text": "whereas"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "the same price"
+        },
+        {
+          "id": "r2",
+          "text": "lower price"
+        },
+        {
+          "id": "r3",
+          "text": "fewer people"
+        },
+        {
+          "id": "r4",
+          "text": "a contrast"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "These forms compare or contrast two things."
+    },
+    {
+      "id": "b1-1.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Compare the island and the city. Use not as ... as with quiet.",
+      "accepted": [
+        "The city is not as quiet as the island",
+        "The island is not as quiet as the city"
+      ],
+      "max_length": 58,
+      "explanation": "Not as quiet as means less quiet than."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}

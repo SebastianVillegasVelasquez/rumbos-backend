@@ -1,0 +1,216 @@
+{
+  "id": "en-b1-1.1-grammar",
+  "skill": "grammar",
+  "title": "Practice 1.1",
+  "estimated_minutes": 6,
+  "lesson_id": "1.1",
+  "status": "draft",
+  "role": "Front-desk assistant helping a visitor who asks for directions and details",
+  "can_do": [
+    "I can interrupt politely and ask someone to repeat or explain.",
+    "I can ask for information with indirect questions."
+  ],
+  "items": [
+    {
+      "id": "b1-1.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is a correct indirect question?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Could you tell me where is the station?"
+        },
+        {
+          "id": "o2",
+          "text": "Could you tell me where the station is?"
+        },
+        {
+          "id": "o3",
+          "text": "Could you tell me where does the station is?"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "In an indirect question the verb keeps statement order: where the station is.",
+      "error_tags": {
+        "o1": {
+          "tag": "question_order",
+          "text": "After Could you tell me the verb goes after the subject."
+        },
+        "o3": {
+          "tag": "question_order",
+          "text": "After Could you tell me the verb goes after the subject."
+        }
+      }
+    },
+    {
+      "id": "b1-1.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "Can you tell me {1} the market closes?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "when does"
+            },
+            {
+              "id": "o2",
+              "text": "does when"
+            },
+            {
+              "id": "o3",
+              "text": "when"
+            }
+          ],
+          "correct": "o3",
+          "error_tag": {
+            "tag": "question_order",
+            "text": "Do not use does inside an indirect question."
+          }
+        }
+      ],
+      "explanation": "After Can you tell me we use statement order: when the market closes."
+    },
+    {
+      "id": "b1-1.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type one word that fits.",
+      "template": "Do you know {1} the bank is open on Sundays?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "if",
+            "whether"
+          ],
+          "error_tag": {
+            "tag": "indirect_yes_no",
+            "text": "Use if or whether for a yes/no question."
+          }
+        }
+      ],
+      "explanation": "If and whether introduce a yes/no indirect question."
+    },
+    {
+      "id": "b1-1.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Could"
+        },
+        {
+          "id": "t2",
+          "text": "you"
+        },
+        {
+          "id": "t3",
+          "text": "tell"
+        },
+        {
+          "id": "t4",
+          "text": "me"
+        },
+        {
+          "id": "t5",
+          "text": "where"
+        },
+        {
+          "id": "t6",
+          "text": "the"
+        },
+        {
+          "id": "t7",
+          "text": "toilets"
+        },
+        {
+          "id": "t8",
+          "text": "are"
+        }
+      ],
+      "explanation": "Could you tell me + where + subject + verb.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Keep statement order after Could you tell me."
+      }
+    },
+    {
+      "id": "b1-1.1.ex.05",
+      "type": "match",
+      "prompt": "Match each phrase with its use.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "Sorry to interrupt, but ..."
+        },
+        {
+          "id": "l2",
+          "text": "Could you say that again?"
+        },
+        {
+          "id": "l3",
+          "text": "What do you mean by ...?"
+        },
+        {
+          "id": "l4",
+          "text": "Do you mean ...?"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "stop someone politely"
+        },
+        {
+          "id": "r2",
+          "text": "ask for repetition"
+        },
+        {
+          "id": "r3",
+          "text": "ask for the meaning"
+        },
+        {
+          "id": "r4",
+          "text": "check that you understood"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each phrase helps you interrupt or clarify politely."
+    },
+    {
+      "id": "b1-1.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Politely ask where the ferry dock is. Start with Could you tell me.",
+      "accepted": [
+        "Could you tell me where the ferry dock is",
+        "Could you tell me where the dock is",
+        "Could you tell me where the ferry is"
+      ],
+      "max_length": 61,
+      "explanation": "Could you tell me + where + subject + verb, with no does."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}

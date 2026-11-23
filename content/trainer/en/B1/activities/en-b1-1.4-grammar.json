@@ -1,0 +1,216 @@
+{
+  "id": "en-b1-1.4-grammar",
+  "skill": "grammar",
+  "title": "Practice 1.4",
+  "estimated_minutes": 6,
+  "lesson_id": "1.4",
+  "status": "draft",
+  "role": "Events coordinator informing a client about a change of plans",
+  "can_do": [
+    "I can talk about future plans with going to, will and the present continuous.",
+    "I can apologize for a change with the present perfect."
+  ],
+  "items": [
+    {
+      "id": "b1-1.4.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence is a plan that is already arranged?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "We meet the caterers at nine, maybe."
+        },
+        {
+          "id": "o2",
+          "text": "We are meeting the caterers at nine."
+        },
+        {
+          "id": "o3",
+          "text": "We will to meet the caterers at nine."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The present continuous talks about a fixed arrangement.",
+      "error_tags": {
+        "o1": {
+          "tag": "future_form",
+          "text": "Use be + -ing for arranged plans."
+        },
+        "o3": {
+          "tag": "future_form",
+          "text": "Use be + -ing for arranged plans."
+        }
+      }
+    },
+    {
+      "id": "b1-1.4.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "We {1} the party to Sunday. I'm very sorry.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "has moved"
+            },
+            {
+              "id": "o2",
+              "text": "move"
+            },
+            {
+              "id": "o3",
+              "text": "have moved"
+            }
+          ],
+          "correct": "o3",
+          "error_tag": {
+            "tag": "present_perfect",
+            "text": "We takes have, not has."
+          }
+        }
+      ],
+      "explanation": "Use the present perfect (have moved) for a change that matters now."
+    },
+    {
+      "id": "b1-1.4.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type one word: going, will or has.",
+      "template": "Look at the sky. It is {1} to rain this afternoon.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "going"
+          ],
+          "error_tag": {
+            "tag": "going_to",
+            "text": "With evidence we say is going to."
+          }
+        }
+      ],
+      "explanation": "Be going to is used when we see evidence now."
+    },
+    {
+      "id": "b1-1.4.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "We"
+        },
+        {
+          "id": "t2",
+          "text": "have"
+        },
+        {
+          "id": "t3",
+          "text": "rearranged"
+        },
+        {
+          "id": "t4",
+          "text": "the"
+        },
+        {
+          "id": "t5",
+          "text": "schedule"
+        },
+        {
+          "id": "t6",
+          "text": "and"
+        },
+        {
+          "id": "t7",
+          "text": "we"
+        },
+        {
+          "id": "t8",
+          "text": "apologize"
+        }
+      ],
+      "explanation": "Report the change first, then apologize.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Subject, have, past participle."
+      }
+    },
+    {
+      "id": "b1-1.4.ex.05",
+      "type": "match",
+      "prompt": "Match each sentence with its use.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "I'll call you later."
+        },
+        {
+          "id": "l2",
+          "text": "We are going to move the party."
+        },
+        {
+          "id": "l3",
+          "text": "We are meeting at six."
+        },
+        {
+          "id": "l4",
+          "text": "We have changed the venue."
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "a decision at the moment"
+        },
+        {
+          "id": "r2",
+          "text": "a plan or intention"
+        },
+        {
+          "id": "r3",
+          "text": "an arrangement"
+        },
+        {
+          "id": "r4",
+          "text": "a change with a present result"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each form of the future or the present perfect has its own use."
+    },
+    {
+      "id": "b1-1.4.ex.06",
+      "type": "short_answer",
+      "prompt": "Apologize for moving the meeting. Start with I'm sorry that we.",
+      "accepted": [
+        "I'm sorry that we have moved the meeting",
+        "I am sorry that we have moved the meeting",
+        "I'm sorry that we have changed the meeting",
+        "I am sorry that we have changed the meeting"
+      ],
+      "max_length": 63,
+      "explanation": "Use the present perfect after sorry that we."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}

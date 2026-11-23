@@ -1,0 +1,213 @@
+{
+  "id": "en-b1-1.2-grammar",
+  "skill": "grammar",
+  "title": "Practice 1.2",
+  "estimated_minutes": 6,
+  "lesson_id": "1.2",
+  "status": "draft",
+  "role": "Guest relations officer talking with a guest who is not happy",
+  "can_do": [
+    "I can say how I feel and what makes me feel that way.",
+    "I can agree and disagree politely."
+  ],
+  "items": [
+    {
+      "id": "b1-1.2.ex.01",
+      "type": "mcq",
+      "prompt": "Choose the correct sentence.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The film was boring, so I felt bored."
+        },
+        {
+          "id": "o2",
+          "text": "The film was bored, so I felt boring."
+        },
+        {
+          "id": "o3",
+          "text": "The film was boring, so I felt boring."
+        }
+      ],
+      "correct": "o1",
+      "explanation": "-ing describes the thing; -ed describes the person's feeling.",
+      "error_tags": {
+        "o2": {
+          "tag": "ed_ing",
+          "text": "Use -ing for the cause and -ed for the feeling."
+        },
+        "o3": {
+          "tag": "ed_ing",
+          "text": "Use -ing for the cause and -ed for the feeling."
+        }
+      }
+    },
+    {
+      "id": "b1-1.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct word.",
+      "template": "The long queue was really {1}.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "annoyed"
+            },
+            {
+              "id": "o2",
+              "text": "annoying"
+            },
+            {
+              "id": "o3",
+              "text": "annoy"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "ed_ing",
+            "text": "A queue is the cause, so it is annoying."
+          }
+        }
+      ],
+      "explanation": "The queue causes the feeling, so we use the -ing adjective."
+    },
+    {
+      "id": "b1-1.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the correct adjective: surprise.",
+      "template": "We were very {1} to see the whole town in the square.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "surprised"
+          ],
+          "error_tag": {
+            "tag": "ed_ing",
+            "text": "A person feels surprised."
+          }
+        }
+      ],
+      "explanation": "We feel surprised; the news or the sight is surprising."
+    },
+    {
+      "id": "b1-1.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "I"
+        },
+        {
+          "id": "t2",
+          "text": "see"
+        },
+        {
+          "id": "t3",
+          "text": "your"
+        },
+        {
+          "id": "t4",
+          "text": "point"
+        },
+        {
+          "id": "t5",
+          "text": "however"
+        },
+        {
+          "id": "t6",
+          "text": "I"
+        },
+        {
+          "id": "t7",
+          "text": "disagree"
+        }
+      ],
+      "explanation": "Say I see your point first, then however, then your own view.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with I see your point."
+      }
+    },
+    {
+      "id": "b1-1.2.ex.05",
+      "type": "match",
+      "prompt": "Match each sentence with its meaning.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "I'm afraid I disagree."
+        },
+        {
+          "id": "l2",
+          "text": "Exactly!"
+        },
+        {
+          "id": "l3",
+          "text": "You may be right."
+        },
+        {
+          "id": "l4",
+          "text": "That's nonsense."
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "polite disagreement"
+        },
+        {
+          "id": "r2",
+          "text": "strong agreement"
+        },
+        {
+          "id": "r3",
+          "text": "partial agreement"
+        },
+        {
+          "id": "r4",
+          "text": "rude disagreement"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Polite English softens disagreement."
+    },
+    {
+      "id": "b1-1.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Disagree politely with: The hotel is too noisy. Start with I see your point.",
+      "accepted": [
+        "I see your point but I think it is quiet",
+        "I see your point however I think it is quiet",
+        "I see your point but I think it is not noisy",
+        "I see your point however I do not think it is noisy",
+        "I see your point but I don't think it is noisy"
+      ],
+      "max_length": 71,
+      "explanation": "I see your point, however + your opinion keeps the answer polite."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}
