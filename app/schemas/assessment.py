@@ -94,6 +94,8 @@ class SectionSummary(_Out):
 
 class AttemptStarted(_Out):
     attempt_id: uuid.UUID
+    # True for an editor's trial run: never counted, reported or graded.
+    preview: bool = False
     started_at: datetime
     deadline_at: datetime
     server_now: datetime
@@ -222,6 +224,8 @@ class Sync(_Out):
 
 class Result(_Out):
     status: Literal["submitted", "expired"]
+    # True for an editor's trial run: nothing of it is recorded as a result.
+    preview: bool = False
     percent: str
     passed: bool
     band: Band
@@ -230,3 +234,41 @@ class Result(_Out):
     attempts: Attempts
     gain: str | None = None
     sync: Sync
+
+
+ClosingReason = Literal[
+    "not_enabled",
+    "no_final_step",
+    "form_unavailable",
+    "already_passed",
+    "no_attempts_left",
+    "scorm_incomplete",
+    "progress_unavailable",
+    "user_unlinked",
+]
+
+
+class ClosingProgress(_Out):
+    """How much of the map's required SCORM content the student has finished.
+    Counts only: which activities is not told."""
+
+    completed: int
+    total: int
+
+
+class ClosingStatus(_Out):
+    """Whether the closing flow's final exam may be started now, by the same
+    rule the start call enforces (see `app.closing.gate`)."""
+
+    # False while `CLOSING_GATE_MODE=off`: nothing is checked on start, and
+    # `progress` is not computed.
+    enforced: bool
+    # True for an editor in preview: the SCORM and attempt conditions are
+    # skipped and an attempt is a trial run (`preview: true`).
+    preview: bool
+    available: bool
+    reason: ClosingReason | None = None
+    progress: ClosingProgress | None = None
+    # The final exam's state, as `/trainer/assessments` lists it for check-in;
+    # null when the map has no final exam.
+    final: AssessmentListItem | None = None

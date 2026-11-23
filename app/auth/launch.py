@@ -181,6 +181,7 @@ class LaunchService:
             course_id=course,
             role=role,
             sub=claims["sub"],
+            moodle_user_id=self._moodle_user_id(claims),
             expires_at=now + timedelta(seconds=self._settings.token_ttl_seconds),
         )
         # Kept until the assertion could no longer pass the time checks.
@@ -232,6 +233,21 @@ class LaunchService:
         except jwt.PyJWTError as exc:
             raise LaunchInvalidError("invalid") from exc
         return claims
+
+    @staticmethod
+    def _moodle_user_id(claims: dict[str, Any]) -> int | None:
+        """The optional signed `uid` claim: the Moodle user id, an integer. A
+        missing one is normal (an older plugin). One of the wrong type or range
+        is ignored, not refused: the launch is genuine and the course must open;
+        the final exam then says the user could not be identified. The value is
+        never logged."""
+        if "uid" not in claims:
+            return None
+        uid = claims["uid"]
+        if _is_int(uid) and 1 <= uid <= _MAX_COURSE_ID:
+            return int(uid)
+        audit.warning("launch_uid_ignored reason=bad_value")
+        return None
 
     def _check_claims(self, claims: dict[str, Any]) -> tuple[Role, int]:
         """The claims PyJWT does not check. Returns (role, course)."""

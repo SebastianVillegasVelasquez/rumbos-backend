@@ -119,6 +119,12 @@ class Settings(BaseSettings):
     passback_key_id: str = "passback-1"
     # EC P-256 private key in PEM; the public half goes to Moodle.
     passback_signing_key_pem: SecretStr | None = None
+    # Whether the final exam waits for the student to finish the SCORM content
+    # shown on the map. `off` is the behaviour before the gate existed (nothing
+    # is checked, the exam stays in the trainer list, and every start logs a
+    # warning); `enforce` checks it at every start. `enforce` needs a completion
+    # provider (see `app.closing.providers`): without one the exam stays closed.
+    closing_gate_mode: Literal["off", "enforce"] = "off"
     # Practice attempts older than this many days are purged by the CLI.
     trainer_retention_days: int = Field(default=90, ge=1)
 

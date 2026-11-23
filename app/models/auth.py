@@ -41,6 +41,8 @@ class AccessToken(AuthORM):
         )
     )
     sub: Mapped[str] = mapped_column(String(32))
+    # The Moodle user id the plugin signed (`uid`), when it did. Never logged.
+    moodle_user_id: Mapped[int | None] = mapped_column(default=None)
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(UTC)

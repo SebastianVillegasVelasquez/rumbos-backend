@@ -11,7 +11,7 @@ import logging
 import secrets
 import uuid
 from collections.abc import Callable, Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from fractions import Fraction
 from typing import Any
@@ -51,6 +51,8 @@ class Caller:
     course_id: int
     sub: str
     preview: bool
+    # The Moodle user id from the launch, if the plugin signed one. Never logged.
+    moodle_user_id: int | None = field(default=None, repr=False)
 
 
 def _res(attempt: AttemptRecord) -> Mapping[str, Any]:
@@ -82,8 +84,12 @@ class AssessmentService:
         serve_drafts: bool,
         audio_url: Callable[[str, str], str],
         issuer: str = "rumbos-backend",
+        hide_final: bool = False,
     ) -> None:
         self._issuer = issuer
+        # With the closing gate on, the final exam is not an entry of the
+        # trainer: it is reached through the closing flow (`/trainer/closing`).
+        self._hide_final = hide_final
         self._attempts = attempts
         self._catalog = catalog
         self._settings = settings
@@ -125,7 +131,7 @@ class AssessmentService:
         items = []
         for purpose in ("check_in", "final"):
             policy = settings.check_in if purpose == "check_in" else settings.final
-            if policy is None:
+            if policy is None or (purpose == "final" and self._hide_final):
                 continue
             items.append(await self._list_item(settings, purpose, policy, attempts))
         shown = settings.check_in or settings.final
@@ -140,6 +146,17 @@ class AssessmentService:
             },
             "items": items,
         }
+
+    async def final_item(self) -> dict[str, Any] | None:
+        """The final exam's list item (state, attempts, `already_passed`), or
+        None when there is no final exam. The closing flow shows this one."""
+        settings = self._settings
+        if settings is None or not settings.enabled or settings.final is None:
+            return None
+        attempts = await self._attempts.list_for_user(
+            self._caller.sub, self._caller.preview
+        )
+        return await self._list_item(settings, "final", settings.final, attempts)
 
     async def _list_item(
         self,
@@ -293,6 +310,7 @@ class AssessmentService:
     ) -> dict[str, Any]:
         return {
             "attempt_id": attempt.id,
+            "preview": attempt.preview,
             "started_at": attempt.started_at,
             "deadline_at": attempt.deadline_at,
             "server_now": now,
@@ -459,6 +477,7 @@ class AssessmentService:
                 gain = decimal_string(_frac(r["percent_exact"]) - first)
         return {
             "status": attempt.status,
+            "preview": attempt.preview,
             "percent": r["percent"],
             "passed": r["passed"],
             "band": r["band"],

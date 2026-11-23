@@ -2,6 +2,8 @@ import uuid
 from datetime import datetime
 from typing import Literal
 
+from pydantic import Field
+
 from app.enums import Role
 from app.schemas.base import ApiModel
 
@@ -36,6 +38,8 @@ class NewAccessToken(ApiModel):
     role: Role
     sub: str
     expires_at: datetime
+    # The signed `uid` claim when the plugin sent a valid one; never logged.
+    moodle_user_id: int | None = Field(default=None, repr=False)
 
 
 class TokenGrant(ApiModel):
@@ -46,3 +50,4 @@ class TokenGrant(ApiModel):
     role: Role
     sub: str
     expires_at: datetime
+    moodle_user_id: int | None = Field(default=None, repr=False)

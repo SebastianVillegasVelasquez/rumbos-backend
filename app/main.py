@@ -81,6 +81,12 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     except BaseException:
         await engine.dispose()
         raise
+    if settings.closing_gate_mode == "off":
+        logging.getLogger("rumbos.closing").warning(
+            "CLOSING_GATE_MODE=off: the final exam does not wait for the SCORM "
+            "content to be completed and stays listed in the trainer. Set "
+            "CLOSING_GATE_MODE=enforce once a completion provider is in place."
+        )
     # No automatic retries: a Moodle failure surfaces immediately.
     timeout = httpx.Timeout(
         connect=settings.moodle_connect_timeout,

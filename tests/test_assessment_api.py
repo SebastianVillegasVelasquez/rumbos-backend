@@ -81,6 +81,7 @@ async def token(
     sub: str,
     tenant: uuid.UUID = LEGACY_TENANT_ID,
     course: int = COURSE,
+    moodle_user_id: int | None = None,
 ) -> str:
     secret = new_token()
     async with engine.begin() as conn:
@@ -91,6 +92,7 @@ async def token(
                 course_id=course,
                 role=role,
                 sub=sub,
+                moodle_user_id=moodle_user_id,
                 expires_at=datetime.now(UTC) + timedelta(hours=1),
                 created_at=datetime.now(UTC),
             )

@@ -10,9 +10,11 @@ from fastapi import Depends, Request
 from app.assessment.service import Caller, Clock
 from app.auth.dependencies import PrincipalDep, ScopedSession
 from app.auth.rate_limit import FixedWindowLimiter
+from app.closing.service import CourseContext
 from app.core.config import Settings, get_settings
 from app.enums import Role
 from app.exceptions import TrainerNotFoundError, TrainerRateLimitedError
+from app.repositories.sqlalchemy.bubble_repository import SqlAlchemyBubbleRepository
 from app.repositories.sqlalchemy.course_map_repository import (
     SqlAlchemyCourseMapRepository,
 )
@@ -41,36 +43,61 @@ async def caller_of(principal: PrincipalDep) -> Caller:
         principal.course_id,
         principal.sub,
         preview=principal.role is Role.EDITOR,
+        moodle_user_id=principal.moodle_user_id,
     )
 
 
 CallerDep = Annotated[Caller, Depends(caller_of)]
 
 
-async def course_settings(session: ScopedSession, caller: CallerDep) -> MapSettings:
-    """The settings of the course's map that enables the trainer or the
-    assessments: the first one in level order. Students read what is
-    published; an editor in preview reads the drafts, so a map can be tried
-    before it is published. A course with none gets all defaults (off)."""
-    found: list[MapSettings] = []
+async def course_context(session: ScopedSession, caller: CallerDep) -> CourseContext:
+    """The map the caller's exam settings come from (the first of the course's
+    maps that enables the trainer or the assessments, in level order) with its
+    activity bubbles. Students read what is published; an editor in preview
+    reads the drafts, so a map can be tried before it is published. A course
+    with none gets all defaults (off)."""
+    found: list[CourseContext] = []
     if caller.preview:
         maps = SqlAlchemyCourseMapRepository(session)
+        bubbles = SqlAlchemyBubbleRepository(session)
         for summary in await maps.list_for_course(caller.course_id):
             full = await maps.get_by_id(summary.id)
             if full:
-                found.append(full.settings)
+                ids = tuple(
+                    b.activity_id
+                    for b in await bubbles.list_by_course_map(summary.id)
+                    if b.activity_id is not None
+                )
+                found.append(CourseContext(full.settings, ids))
     else:
         rows, _ = await SqlAlchemyPublicationRepository(session).list_published(
             caller.course_id, 100, 0
         )
-        found = [MapSettings.model_validate(r.snapshot["settings"]) for r in rows]
-    for settings in found:
-        if settings.assessments.enabled:
-            return settings
-    for settings in found:
-        if settings.trainer.enabled:
-            return settings
-    return MapSettings()
+        found = [
+            CourseContext(
+                MapSettings.model_validate(r.snapshot["settings"]),
+                tuple(
+                    b["activityId"]
+                    for b in r.snapshot["bubbles"]
+                    if b.get("activityId") is not None
+                ),
+            )
+            for r in rows
+        ]
+    for context in found:
+        if context.settings.assessments.enabled:
+            return context
+    for context in found:
+        if context.settings.trainer.enabled:
+            return context
+    return CourseContext(MapSettings(), ())
+
+
+CourseContextDep = Annotated[CourseContext, Depends(course_context)]
+
+
+async def course_settings(context: CourseContextDep) -> MapSettings:
+    return context.settings
 
 
 CourseSettingsDep = Annotated[MapSettings, Depends(course_settings)]
