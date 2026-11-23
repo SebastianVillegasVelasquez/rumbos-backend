@@ -1,0 +1,84 @@
+{
+  "id": "en-b1-2.2-listening",
+  "skill": "listening",
+  "title": "Listen and choose 2.2",
+  "estimated_minutes": 4,
+  "lesson_id": "2.2",
+  "status": "draft",
+  "role": "Tour guide helping a traveller at a bus station, a bank and a border post",
+  "can_do": [
+    "I can arrange travel or accommodation and handle a simple transaction.",
+    "I can answer an official's basic questions."
+  ],
+  "items": [
+    {
+      "id": "en-b1-2.2.l1",
+      "type": "listen_choose",
+      "prompt": "How much is a return ticket?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "54,000 pesos"
+        },
+        {
+          "id": "o2",
+          "text": "45,000 pesos"
+        },
+        {
+          "id": "o3",
+          "text": "4,500 pesos"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: forty-five thousand pesos.",
+      "audio": "en-b1-2.2.l1"
+    },
+    {
+      "id": "en-b1-2.2.l2",
+      "type": "listen_choose",
+      "prompt": "How many nights is the reservation?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Three"
+        },
+        {
+          "id": "o2",
+          "text": "Four"
+        },
+        {
+          "id": "o3",
+          "text": "Two"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: for two nights.",
+      "audio": "en-b1-2.2.l2"
+    },
+    {
+      "id": "en-b1-2.2.l3",
+      "type": "listen_choose",
+      "prompt": "How long is the visitor staying?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Nine days"
+        },
+        {
+          "id": "o2",
+          "text": "Five days"
+        },
+        {
+          "id": "o3",
+          "text": "A month"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: nine days.",
+      "audio": "en-b1-2.2.l3"
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}

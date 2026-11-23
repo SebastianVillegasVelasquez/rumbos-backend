@@ -1,0 +1,84 @@
+{
+  "id": "en-b1-2.3-listening",
+  "skill": "listening",
+  "title": "Listen and choose 2.3",
+  "estimated_minutes": 4,
+  "lesson_id": "2.3",
+  "status": "draft",
+  "role": "Local host suggesting things to do to a visitor",
+  "can_do": [
+    "I can suggest activities with should and ought to.",
+    "I can recommend places with recommend + -ing."
+  ],
+  "items": [
+    {
+      "id": "en-b1-2.3.l1",
+      "type": "listen_choose",
+      "prompt": "What does the speaker recommend?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Staying at the hotel"
+        },
+        {
+          "id": "o2",
+          "text": "Going to the harbour"
+        },
+        {
+          "id": "o3",
+          "text": "Visiting the fort"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: I recommend going to the harbour.",
+      "audio": "en-b1-2.3.l1"
+    },
+    {
+      "id": "en-b1-2.3.l2",
+      "type": "listen_choose",
+      "prompt": "What should you take?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "An umbrella"
+        },
+        {
+          "id": "o2",
+          "text": "A hat"
+        },
+        {
+          "id": "o3",
+          "text": "A jacket"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: you ought to take a jacket.",
+      "audio": "en-b1-2.3.l2"
+    },
+    {
+      "id": "en-b1-2.3.l3",
+      "type": "listen_choose",
+      "prompt": "What should the guest do?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Book early"
+        },
+        {
+          "id": "o2",
+          "text": "Pay later"
+        },
+        {
+          "id": "o3",
+          "text": "Go alone"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: you should book early.",
+      "audio": "en-b1-2.3.l3"
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}

@@ -722,6 +722,506 @@
       "file": "audio/en-b1-1.4.l3.mp3",
       "duration_s": null,
       "transcript": "— I'm sorry, I have lost the invitation. Where is the party going to be? — Don't worry. I will send you the address by message in a minute."
+    },
+    {
+      "id": "en-b1-2.1.d1",
+      "text": "Hello. What services does the hotel offer?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Hello. What services does the hotel offer?"
+        }
+      ],
+      "file": "audio/en-b1-2.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Hello. What services does the hotel offer?"
+    },
+    {
+      "id": "en-b1-2.1.d2",
+      "text": "Is the airport shuttle included in the price?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is the airport shuttle included in the price?"
+        }
+      ],
+      "file": "audio/en-b1-2.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "Is the airport shuttle included in the price?"
+    },
+    {
+      "id": "en-b1-2.1.d3",
+      "text": "When are the towels changed?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "When are the towels changed?"
+        }
+      ],
+      "file": "audio/en-b1-2.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "When are the towels changed?"
+    },
+    {
+      "id": "en-b1-2.1.d4",
+      "text": "Is dinner served in the restaurant?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is dinner served in the restaurant?"
+        }
+      ],
+      "file": "audio/en-b1-2.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "Is dinner served in the restaurant?"
+    },
+    {
+      "id": "en-b1-2.1.d5",
+      "text": "Where is the spa located?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Where is the spa located?"
+        }
+      ],
+      "file": "audio/en-b1-2.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "Where is the spa located?"
+    },
+    {
+      "id": "en-b1-2.1.d6",
+      "text": "Thank you. Can the luggage be kept after check-out?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you. Can the luggage be kept after check-out?"
+        }
+      ],
+      "file": "audio/en-b1-2.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you. Can the luggage be kept after check-out?"
+    },
+    {
+      "id": "en-b1-2.1.l1",
+      "text": "Is there a gym in the hotel? Yes, the gym is open from six to nine in the morning and it is used mostly by business guests.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is there a gym in the hotel?"
+        },
+        {
+          "voice": "host",
+          "text": "Yes, the gym is open from six to nine in the morning and it is used mostly by business guests."
+        }
+      ],
+      "file": "audio/en-b1-2.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "— Is there a gym in the hotel? — Yes, the gym is open from 6:00 to 9:00 in the morning and it is used mostly by business guests."
+    },
+    {
+      "id": "en-b1-2.1.l2",
+      "text": "Laundry is collected at ten and is returned the next day. It is charged by the kilo.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Laundry is collected at ten and is returned the next day. It is charged by the kilo."
+        }
+      ],
+      "file": "audio/en-b1-2.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "Laundry is collected at ten and is returned the next day. It is charged by the kilo."
+    },
+    {
+      "id": "en-b1-2.1.l3",
+      "text": "Are pets allowed? Small dogs are accepted in the garden rooms, but they are not allowed in the restaurant.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Are pets allowed?"
+        },
+        {
+          "voice": "host",
+          "text": "Small dogs are accepted in the garden rooms, but they are not allowed in the restaurant."
+        }
+      ],
+      "file": "audio/en-b1-2.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "— Are pets allowed? — Small dogs are accepted in the garden rooms, but they are not allowed in the restaurant."
+    },
+    {
+      "id": "en-b1-2.2.d1",
+      "text": "Good morning. I'd like two tickets to the capital, please.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Good morning. I'd like two tickets to the capital, please."
+        }
+      ],
+      "file": "audio/en-b1-2.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "Good morning. I'd like two tickets to the capital, please."
+    },
+    {
+      "id": "en-b1-2.2.d2",
+      "text": "A return ticket, please. How much is it?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "A return ticket, please. How much is it?"
+        }
+      ],
+      "file": "audio/en-b1-2.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "A return ticket, please. How much is it?"
+    },
+    {
+      "id": "en-b1-2.2.d3",
+      "text": "Can I pay by card, or only in cash?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can I pay by card, or only in cash?"
+        }
+      ],
+      "file": "audio/en-b1-2.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "Can I pay by card, or only in cash?"
+    },
+    {
+      "id": "en-b1-2.2.d4",
+      "text": "Excuse me. What is the exchange rate for dollars today?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Excuse me. What is the exchange rate for dollars today?"
+        }
+      ],
+      "file": "audio/en-b1-2.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "Excuse me. What is the exchange rate for dollars today?"
+    },
+    {
+      "id": "en-b1-2.2.d5",
+      "text": "Welcome. What is the purpose of your visit?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Welcome. What is the purpose of your visit?"
+        }
+      ],
+      "file": "audio/en-b1-2.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "Welcome. What is the purpose of your visit?"
+    },
+    {
+      "id": "en-b1-2.2.d6",
+      "text": "How long are you going to stay in the country?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How long are you going to stay in the country?"
+        }
+      ],
+      "file": "audio/en-b1-2.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "How long are you going to stay in the country?"
+    },
+    {
+      "id": "en-b1-2.2.l1",
+      "text": "How much is a return ticket to the island? It's forty-five thousand pesos, and children under five travel free.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How much is a return ticket to the island?"
+        },
+        {
+          "voice": "host",
+          "text": "It's forty-five thousand pesos, and children under five travel free."
+        }
+      ],
+      "file": "audio/en-b1-2.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "— How much is a return ticket to the island? — It's 45,000 pesos, and children under five travel free."
+    },
+    {
+      "id": "en-b1-2.2.l2",
+      "text": "Your reservation is for two nights, from the fourth to the sixth. Check-in starts at two o'clock in the afternoon.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Your reservation is for two nights, from the fourth to the sixth. Check-in starts at two o'clock in the afternoon."
+        }
+      ],
+      "file": "audio/en-b1-2.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "Your reservation is for two nights, from the fourth to the sixth. Check-in starts at 2:00 in the afternoon."
+    },
+    {
+      "id": "en-b1-2.2.l3",
+      "text": "What is the purpose of your visit? I'm a tourist. I'm staying nine days with my family.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What is the purpose of your visit?"
+        },
+        {
+          "voice": "host",
+          "text": "I'm a tourist. I'm staying nine days with my family."
+        }
+      ],
+      "file": "audio/en-b1-2.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "— What is the purpose of your visit? — I'm a tourist. I'm staying nine days with my family."
+    },
+    {
+      "id": "en-b1-2.3.d1",
+      "text": "I have a free afternoon. What do you recommend?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I have a free afternoon. What do you recommend?"
+        }
+      ],
+      "file": "audio/en-b1-2.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "I have a free afternoon. What do you recommend?"
+    },
+    {
+      "id": "en-b1-2.3.d2",
+      "text": "What is the best time to go to the old fort?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What is the best time to go to the old fort?"
+        }
+      ],
+      "file": "audio/en-b1-2.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "What is the best time to go to the old fort?"
+    },
+    {
+      "id": "en-b1-2.3.d3",
+      "text": "I like active things. Is there something to do outdoors?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I like active things. Is there something to do outdoors?"
+        }
+      ],
+      "file": "audio/en-b1-2.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "I like active things. Is there something to do outdoors?"
+    },
+    {
+      "id": "en-b1-2.3.d4",
+      "text": "Where should I eat tonight?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Where should I eat tonight?"
+        }
+      ],
+      "file": "audio/en-b1-2.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "Where should I eat tonight?"
+    },
+    {
+      "id": "en-b1-2.3.d5",
+      "text": "Is it worth buying souvenirs at the market?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is it worth buying souvenirs at the market?"
+        }
+      ],
+      "file": "audio/en-b1-2.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is it worth buying souvenirs at the market?"
+    },
+    {
+      "id": "en-b1-2.3.d6",
+      "text": "Thank you for all the tips!",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you for all the tips!"
+        }
+      ],
+      "file": "audio/en-b1-2.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you for all the tips!"
+    },
+    {
+      "id": "en-b1-2.3.l1",
+      "text": "What should we do on our last night? I recommend going to the harbour. There is live music every Friday.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What should we do on our last night?"
+        },
+        {
+          "voice": "host",
+          "text": "I recommend going to the harbour. There is live music every Friday."
+        }
+      ],
+      "file": "audio/en-b1-2.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "— What should we do on our last night? — I recommend going to the harbour. There is live music every Friday."
+    },
+    {
+      "id": "en-b1-2.3.l2",
+      "text": "You ought to take a jacket if you go up the hill. It gets cold after six o'clock.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "You ought to take a jacket if you go up the hill. It gets cold after six o'clock."
+        }
+      ],
+      "file": "audio/en-b1-2.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "You ought to take a jacket if you go up the hill. It gets cold after 6:00."
+    },
+    {
+      "id": "en-b1-2.3.l3",
+      "text": "Is the cooking class worth the money? Definitely. It costs sixty thousand pesos, but you should book early because it is very popular.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is the cooking class worth the money?"
+        },
+        {
+          "voice": "host",
+          "text": "Definitely. It costs sixty thousand pesos, but you should book early because it is very popular."
+        }
+      ],
+      "file": "audio/en-b1-2.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "— Is the cooking class worth the money? — Definitely. It costs 60,000 pesos, but you should book early because it is very popular."
+    },
+    {
+      "id": "en-b1-2.4.d1",
+      "text": "What happened at the museum this morning?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What happened at the museum this morning?"
+        }
+      ],
+      "file": "audio/en-b1-2.4.d1.mp3",
+      "duration_s": null,
+      "transcript": "What happened at the museum this morning?"
+    },
+    {
+      "id": "en-b1-2.4.d2",
+      "text": "What were you doing when the lights went out?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What were you doing when the lights went out?"
+        }
+      ],
+      "file": "audio/en-b1-2.4.d2.mp3",
+      "duration_s": null,
+      "transcript": "What were you doing when the lights went out?"
+    },
+    {
+      "id": "en-b1-2.4.d3",
+      "text": "Did anyone get hurt?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Did anyone get hurt?"
+        }
+      ],
+      "file": "audio/en-b1-2.4.d3.mp3",
+      "duration_s": null,
+      "transcript": "Did anyone get hurt?"
+    },
+    {
+      "id": "en-b1-2.4.d4",
+      "text": "How did you solve the problem?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "How did you solve the problem?"
+        }
+      ],
+      "file": "audio/en-b1-2.4.d4.mp3",
+      "duration_s": null,
+      "transcript": "How did you solve the problem?"
+    },
+    {
+      "id": "en-b1-2.4.d5",
+      "text": "Unfortunately the tour was shorter than planned. How did the guests react?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Unfortunately the tour was shorter than planned. How did the guests react?"
+        }
+      ],
+      "file": "audio/en-b1-2.4.d5.mp3",
+      "duration_s": null,
+      "transcript": "Unfortunately the tour was shorter than planned. How did the guests react?"
+    },
+    {
+      "id": "en-b1-2.4.d6",
+      "text": "Good. Please write a short report.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Good. Please write a short report."
+        }
+      ],
+      "file": "audio/en-b1-2.4.d6.mp3",
+      "duration_s": null,
+      "transcript": "Good. Please write a short report."
+    },
+    {
+      "id": "en-b1-2.4.l1",
+      "text": "Why were you late this morning? I was waiting for the bus when it started to rain, so I took a taxi.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Why were you late this morning?"
+        },
+        {
+          "voice": "host",
+          "text": "I was waiting for the bus when it started to rain, so I took a taxi."
+        }
+      ],
+      "file": "audio/en-b1-2.4.l1.mp3",
+      "duration_s": null,
+      "transcript": "— Why were you late this morning? — I was waiting for the bus when it started to rain, so I took a taxi."
+    },
+    {
+      "id": "en-b1-2.4.l2",
+      "text": "Fortunately, the storm ended before the dinner, although the garden was still wet, so we moved the tables inside.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Fortunately, the storm ended before the dinner, although the garden was still wet, so we moved the tables inside."
+        }
+      ],
+      "file": "audio/en-b1-2.4.l2.mp3",
+      "duration_s": null,
+      "transcript": "Fortunately, the storm ended before the dinner, although the garden was still wet, so we moved the tables inside."
+    },
+    {
+      "id": "en-b1-2.4.l3",
+      "text": "I heard there was a problem at the airport. Yes, the flight was delayed for three hours, but the airline gave everyone a free lunch.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I heard there was a problem at the airport."
+        },
+        {
+          "voice": "host",
+          "text": "Yes, the flight was delayed for three hours, but the airline gave everyone a free lunch."
+        }
+      ],
+      "file": "audio/en-b1-2.4.l3.mp3",
+      "duration_s": null,
+      "transcript": "— I heard there was a problem at the airport. — Yes, the flight was delayed for three hours, but the airline gave everyone a free lunch."
     }
   ]
 }
