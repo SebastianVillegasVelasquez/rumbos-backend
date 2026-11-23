@@ -11,7 +11,7 @@ import logging
 import secrets
 import uuid
 from collections.abc import Callable, Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from fractions import Fraction
 from typing import Any
@@ -51,6 +51,8 @@ class Caller:
     course_id: int
     sub: str
     preview: bool
+    # The Moodle user id from the launch, if the plugin signed one. Never logged.
+    moodle_user_id: int | None = field(default=None, repr=False)
 
 
 def _res(attempt: AttemptRecord) -> Mapping[str, Any]:

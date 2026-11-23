@@ -506,3 +506,20 @@ Judgment calls:
   closing flow with a final step.
 - The staff override for legacy cases is not built: it needs per-user storage,
   which D29 rules out for the closing flow. Pending a decision.
+
+## D32. The Moodle user id (`uid`) and the restricted-activity rule
+
+The plugin signs `uid` (integer, optional). It is stored only on the access token
+(a new nullable column, migration `e1f4a7c2b630`, additive with a downgrade): the
+token is a database row, so "only on the token" and "not in the database" cannot
+both hold; the row expires and is purged with the token. It is never returned or
+logged. A malformed `uid` is ignored (the launch is genuine and the course must
+open), and the gate then says `user_unlinked`.
+
+Rule change: the required SCORM set is built from the map's bubbles visible to
+students (hidden section or module excluded); only over that set does an activity
+missing from Moodle's answer count as not completed. A hidden activity never
+blocks. **Left open, by request:** activities restricted by group (or any
+`availability` condition) look visible to the service account but may never open
+for a student, and then block them. They are counted as required until someone
+decides; `python -m app.scripts.closing restricted --course N` reports them.

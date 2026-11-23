@@ -19,14 +19,19 @@ class CompletionUnavailableError(Exception):
 
 
 class CompletionProvider(Protocol):
-    async def completed_cmids(self, *, course_id: int, sub: str) -> frozenset[int]:
-        """The course-module ids this user has completed (passed or not failed),
-        read fresh. Raises `CompletionUnavailableError`."""
+    async def completed_cmids(
+        self, *, course_id: int, moodle_user_id: int
+    ) -> frozenset[int]:
+        """The course-module ids this Moodle user has completed (passed or not
+        failed), read fresh. An activity Moodle does not report is not
+        completed. Raises `CompletionUnavailableError`."""
         ...
 
 
 class UnavailableCompletionProvider:
-    async def completed_cmids(self, *, course_id: int, sub: str) -> frozenset[int]:
+    async def completed_cmids(
+        self, *, course_id: int, moodle_user_id: int
+    ) -> frozenset[int]:
         raise CompletionUnavailableError("no completion provider is configured")
 
 

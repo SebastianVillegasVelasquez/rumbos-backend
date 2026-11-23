@@ -161,6 +161,7 @@ Student free text exists only in exam answers; logs never contain it.
 | `GET /trainer/assessments/forms` | `[{id, title, publication_state}]` | editors only (403 for students), read-only: every exam form in the deployed content, drafts included, ordered by `id`; `id` is what `assessments.check_in.form_id` takes |
 
 | `GET /trainer/closing` | `{enforced, preview, available, reason, progress, final}` | **new.** Whether the closing flow's final exam may start; see `CLOSING-GATE.md` |
+| `/trainer/closing` `reason` | `user_unlinked` | **new.** `enforce`, SCORM to check, and the launch carried no signed Moodle user id; `message` explains it |
 | 409 of `POST /assessments/final/attempts` | `code: closing_not_available`, `message_key`, `reason`, `completed?`, `total?` | **new.** Only with `CLOSING_GATE_MODE=enforce` |
 | `AttemptStarted`, `Result` | `preview` | **new.** `true` for an editor's trial run, `false` for every real attempt |
 | `GET /trainer/assessments` | no `final` item | with `CLOSING_GATE_MODE=enforce`; read the final from `/trainer/closing` |

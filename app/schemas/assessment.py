@@ -244,6 +244,7 @@ ClosingReason = Literal[
     "no_attempts_left",
     "scorm_incomplete",
     "progress_unavailable",
+    "user_unlinked",
 ]
 
 

@@ -52,7 +52,13 @@ async def principal_for_token(session: AsyncSession, token: str) -> Principal:
     )
     if grant is None:
         raise UnauthorizedError
-    return Principal(grant.tenant_id, grant.course_id, grant.role, grant.sub)
+    return Principal(
+        grant.tenant_id,
+        grant.course_id,
+        grant.role,
+        grant.sub,
+        grant.moodle_user_id,
+    )
 
 
 async def get_bearer_principal(

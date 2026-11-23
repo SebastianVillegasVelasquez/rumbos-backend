@@ -153,3 +153,23 @@ def test_preview_still_needs_the_flow_to_be_configured() -> None:
 def test_the_first_answer_without_scorm_leaves_moodle_out() -> None:
     assert verdict(check_scorm=False, required=None) == Decision(True)
     assert verdict(check_scorm=False, already_passed=True).reason == "already_passed"
+
+
+def test_restriction_kinds_reads_every_condition_in_the_tree() -> None:
+    from app.closing.gate import restriction_kinds
+
+    nested = (
+        '{"op":"|","c":[{"type":"group","id":1},'
+        '{"op":"&","c":[{"type":"date","d":">=","t":5},{"type":"grouping","id":2}]}],'
+        '"show":true}'
+    )
+    assert restriction_kinds(nested) == ["date", "group", "grouping"]
+    assert restriction_kinds(None) == [] and restriction_kinds("") == []
+    assert restriction_kinds("not json") == ["unreadable"]
+
+
+def test_without_a_user_id_the_scorm_cannot_be_checked() -> None:
+    got = verdict(required=frozenset({1}), completed=None, user_known=False)
+    assert (got.available, got.reason) == (False, "user_unlinked")
+    # ... but nothing to check means nothing to identify
+    assert verdict(required=frozenset(), user_known=False).available

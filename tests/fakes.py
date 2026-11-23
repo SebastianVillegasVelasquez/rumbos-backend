@@ -715,22 +715,24 @@ class InMemoryAuthRepository:
 
 
 class FakeCompletionProvider:
-    """A stand-in for Moodle's per-user completion: `done[(course, sub)]` is the
+    """A stand-in for Moodle's per-user completion: `done[(course, user id)]` is the
     set of completed course-module ids. Set `error` to simulate Moodle failing."""
 
     def __init__(self) -> None:
-        self.done: dict[tuple[int, str], set[int]] = {}
+        self.done: dict[tuple[int, int], set[int]] = {}
         self.error: Exception | None = None
         self.calls = 0
 
-    def complete(self, course_id: int, sub: str, *cmids: int) -> None:
-        self.done.setdefault((course_id, sub), set()).update(cmids)
+    def complete(self, course_id: int, user: int, *cmids: int) -> None:
+        self.done.setdefault((course_id, user), set()).update(cmids)
 
-    def revoke(self, course_id: int, sub: str, *cmids: int) -> None:
-        self.done.setdefault((course_id, sub), set()).difference_update(cmids)
+    def revoke(self, course_id: int, user: int, *cmids: int) -> None:
+        self.done.setdefault((course_id, user), set()).difference_update(cmids)
 
-    async def completed_cmids(self, *, course_id: int, sub: str) -> frozenset[int]:
+    async def completed_cmids(
+        self, *, course_id: int, moodle_user_id: int
+    ) -> frozenset[int]:
         self.calls += 1
         if self.error:
             raise self.error
-        return frozenset(self.done.get((course_id, sub), set()))
+        return frozenset(self.done.get((course_id, moodle_user_id), set()))

@@ -6,6 +6,7 @@ from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
+from app.closing.gate import REASON_MESSAGES
 from app.exceptions import (
     ActivityAlreadyPlacedError,
     AssessmentConflictError,
@@ -759,7 +760,9 @@ def register_exception_handlers(app: FastAPI) -> None:
         detail: dict[str, object] = {
             "code": "closing_not_available",
             "message_key": f"closing.not_available.{exc.reason}",
-            "message": "The final exam is not available yet",
+            "message": REASON_MESSAGES.get(
+                exc.reason, "The final exam is not available yet."
+            ),
             "reason": exc.reason,
         }
         if exc.total is not None:

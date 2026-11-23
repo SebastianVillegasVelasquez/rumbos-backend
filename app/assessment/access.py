@@ -43,6 +43,7 @@ async def caller_of(principal: PrincipalDep) -> Caller:
         principal.course_id,
         principal.sub,
         preview=principal.role is Role.EDITOR,
+        moodle_user_id=principal.moodle_user_id,
     )
 
 

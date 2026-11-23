@@ -13,6 +13,7 @@ everything, so what a restriction means for one student is unknown here, and
 the safe side for an exam gate is to require it.
 """
 
+import json
 from collections.abc import Collection
 from dataclasses import dataclass
 from typing import Literal
@@ -31,7 +32,25 @@ Reason = Literal[
     "no_attempts_left",
     "scorm_incomplete",
     "progress_unavailable",
+    "user_unlinked",
 ]
+
+# What each refusal tells the student: fixed texts, no activity, no internals.
+REASON_MESSAGES: dict[str, str] = {
+    "not_enabled": "The final exam is not enabled for this course.",
+    "no_final_step": "This course has no final exam step yet.",
+    "form_unavailable": "The final exam is not published yet.",
+    "already_passed": "You have already passed the exam.",
+    "no_attempts_left": "You have used all your attempts at the final exam.",
+    "scorm_incomplete": "Complete all the course content to unlock the final exam.",
+    "progress_unavailable": (
+        "Your progress could not be checked right now. Try again in a moment."
+    ),
+    "user_unlinked": (
+        "Your Moodle account could not be identified in this session. Open the "
+        "course again from Moodle; if it keeps happening, contact support."
+    ),
+}
 
 
 @dataclass(frozen=True)
@@ -75,6 +94,34 @@ def _counts(
     )
 
 
+def restriction_kinds(availability: str | None) -> list[str]:
+    """The kinds of condition in a module's raw `availability` JSON (`group`,
+    `grouping`, `date`, `completion`, `grade`, `profile`...), sorted and without
+    repeats. Empty: unrestricted. Unreadable JSON: `["unreadable"]`. For the
+    operator's report on activities that may never open for a student."""
+    if not availability:
+        return []
+    try:
+        tree = json.loads(availability)
+    except ValueError:
+        return ["unreadable"]
+    kinds: set[str] = set()
+
+    def walk(node: object) -> None:
+        if isinstance(node, dict):
+            kind = node.get("type")
+            if isinstance(kind, str):
+                kinds.add(kind)
+            for value in node.values():
+                walk(value)
+        elif isinstance(node, list):
+            for value in node:
+                walk(value)
+
+    walk(tree)
+    return sorted(kinds)
+
+
 def decide(
     *,
     enabled: bool,
@@ -84,6 +131,7 @@ def decide(
     already_passed: bool,
     attempts_left: bool,
     check_scorm: bool = True,
+    user_known: bool = True,
     required: frozenset[int] | None = frozenset(),
     completed: frozenset[int] | None = frozenset(),
 ) -> Decision:
@@ -113,6 +161,10 @@ def decide(
     if not required:
         # A map with no SCORM to finish has nothing to wait for.
         return Decision(True, progress=Progress(0, 0))
+    if not user_known:
+        # Enforcing, with SCORM to check, but the launch did not say who the
+        # student is in Moodle: closed, and said clearly.
+        return Decision(False, "user_unlinked")
     if completed is None:
         return Decision(False, "progress_unavailable")
     progress = Progress(len(required & completed), len(required))

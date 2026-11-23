@@ -1,5 +1,5 @@
 import uuid
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from app.enums import Role
 
@@ -16,6 +16,9 @@ class Principal:
     course_id: int | None
     role: Role
     sub: str | None
+    # The Moodle user id the plugin signed, if it did. Kept out of repr so it
+    # cannot reach a log line by accident.
+    moodle_user_id: int | None = field(default=None, repr=False)
 
     def can_see_course(self, course_id: int) -> bool:
         """Whether the course is one this principal may act on."""

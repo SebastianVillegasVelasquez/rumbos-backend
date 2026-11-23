@@ -116,9 +116,14 @@ class ClosingService:
     async def _with_progress(self, facts: dict[str, Any]) -> Decision:
         required = await self._required()
         completed = None
-        if required:
-            completed = await self._completed()
-        decision = decide(**facts, required=required, completed=completed)
+        if required and self._caller.moodle_user_id is not None:
+            completed = await self._completed(self._caller.moodle_user_id)
+        decision = decide(
+            **facts,
+            required=required,
+            completed=completed,
+            user_known=self._caller.moodle_user_id is not None,
+        )
         if required is not None and not required:
             log.info("closing_gate no_scorm_required course=%s", self._caller.course_id)
         return decision
@@ -132,10 +137,10 @@ class ClosingService:
             return None
         return required_scorm_cmids(result.sections, self._ctx.activity_ids)
 
-    async def _completed(self) -> frozenset[int] | None:
+    async def _completed(self, moodle_user_id: int) -> frozenset[int] | None:
         try:
             return await self._completion.completed_cmids(
-                course_id=self._caller.course_id, sub=self._caller.sub
+                course_id=self._caller.course_id, moodle_user_id=moodle_user_id
             )
         except (CompletionUnavailableError, MoodleError):
             log.warning("closing_gate completion_unavailable")

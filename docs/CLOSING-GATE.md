@@ -5,9 +5,10 @@ not an entry of the trainer. A student reaches it only after completing the
 SCORM content shown on the map. The rule is enforced by the backend, so calling
 the API directly gets the same answer as the screen.
 
-Status: **phase 1.** The rule, the endpoint, the guard and the editor's trial
-run are built and tested against a fake completion provider. The real read of
-Moodle's completion is **not** built (see "Before the real provider").
+Status: **phase 1 + the user id.** The rule, the endpoint, the guard, the
+editor's trial run and the signed Moodle user id (`uid`) are built and tested
+against a fake completion provider. The real read of Moodle's completion is
+**not** built (see "Before the real provider").
 
 ## Switch
 
@@ -33,17 +34,55 @@ exists. Editors in preview are not affected (they skip the SCORM condition).
 5. `already_passed`: passed the final, or the check-in while `exemption.enabled`
 6. `no_attempts_left`
 7. SCORM: `progress_unavailable` if Moodle could not be read (closed, never open);
-   `scorm_incomplete` with `completed` / `total`; otherwise available
+   `user_unlinked` if there is SCORM to check but the launch carried no Moodle
+   user id (see "The Moodle user id"); `scorm_incomplete` with `completed` /
+   `total`; otherwise available
 
 Required SCORM content = the **activity bubbles of the map that holds the final
 exam** that point at a module with `modname: scorm`, are visible to students
 (section and module visible, not a label or a link-less module) and that Moodle
 tracks for completion (`completion != 0`). Hidden, deleted, non-SCORM and
-untracked ones do not count. A restricted one (`availability` set) **does**
-count: the service account sees everything, so what a restriction means for one
-student is unknown, and the safe side of an exam gate is to require it. A map
+untracked ones do not count. The required set is built from those bubbles
+only, and only over that set is an activity that Moodle's answer omits counted
+as **not completed**; an activity that is not in the set never blocks, whatever
+Moodle says about it. A map
 with **no** required SCORM opens the exam at once (logged). Non-SCORM bubbles
 never block. To widen the rule change `REQUIRED_MODNAMES`.
+
+### Open question: restricted activities (not decided)
+
+An activity hidden from students by its own `visible` flag, or whose section is
+hidden, is out of the set. One that is only **restricted** (`availability`:
+group, grouping, date, completion, ...) looks visible to the service account,
+which sees everything, so it is in the set and **blocks** a student who can
+never open it (typical: a group or grouping restriction). The backend cannot
+tell these apart without a per-student view of the course. Run the report and
+decide per case (exclude it, or fix the course):
+
+```
+python -m app.scripts.closing restricted --course <moodle course id>
+```
+
+It lists the required SCORM that carry a restriction, the kinds of condition,
+and flags group and grouping ones. Read-only.
+
+## The Moodle user id
+
+The plugin signs `uid`, an integer, optional, in the launch assertion. The
+backend keeps it only on the short-lived access token (`access_tokens.
+moodle_user_id`, expired rows are purged with the token), never returns it and
+never logs it (it is out of the repr of the principal and the caller). A
+missing `uid` is normal for an older plugin; one that is not an integer in
+`1..2147483647` is ignored with a log line that does not carry its value.
+Claims the backend does not know are not refused (PyJWT validates only the
+required ones), so a plugin may add claims before the backend learns them.
+
+With `CLOSING_GATE_MODE=enforce`, SCORM to check and no `uid`, the exam is
+closed with reason `user_unlinked` and the message "Your Moodle account could
+not be identified in this session. Open the course again from Moodle; if it
+keeps happening, contact support." (`message_key`
+`closing.not_available.user_unlinked`). A map with no required SCORM does not
+need the id.
 
 ## `GET /trainer/closing`
 
@@ -162,3 +201,63 @@ activities as that student, or use *Course administration > Reports > Activity
 completion* ("Override" cell) / *Course completion* to mark an activity
 complete or incomplete for the user. The backend sees the change on its next
 call (see the freshness check above).
+
+## Order of deploy and of rollback
+
+Deploy: **backend first** (migration `e1f4a7c2b630`, mode `off`), then the
+plugin that signs `uid` and the frontend, then `enforce` once the completion
+provider exists. After the deploy run `alembic current`: the entrypoint starts
+the container even when a migration fails, and the new code selects the new
+column, so with the column missing **every** authenticated request fails. If
+`current` is not `e1f4a7c2b630`, roll the image back.
+
+Rollback, in this order:
+
+1. **Backend to `CLOSING_GATE_MODE=off` first** and restart it. The final exam
+   is open as before and is listed in the trainer again, so whatever the
+   frontend or the plugin does next cannot lock students out. `/trainer/closing`
+   keeps answering.
+2. Then revert the frontend and, if needed, the plugin. Leaving the plugin's
+   `uid` in place is harmless: a backend without this change ignores the claim
+   (verify it, see below).
+3. Only then, if the whole change must go, roll the backend image back and, last,
+   `alembic downgrade d2a9e5b7c316` (drops `access_tokens.moodle_user_id`).
+   Never downgrade while the new image still runs: it selects that column.
+
+## Checking the deployed service ignores claims it does not know
+
+The code does (the tests send unknown claims), but what runs in the deployed
+service is what counts. A launch needs the tenant's private key, which only the
+plugin side holds; run this where that key is, against the deployed backend
+(a test `sub`, role `student`). It redeems one assertion and creates one
+short-lived token; a 200 means the extra claims were accepted.
+
+```python
+import json, secrets, sys, time, urllib.request
+import jwt  # PyJWT, with cryptography
+
+KEY = open(sys.argv[1]).read()  # the tenant's private key (PEM)
+ISS, KID, COURSE = sys.argv[2], sys.argv[3], int(sys.argv[4])
+URL = sys.argv[5].rstrip("/") + "/api/v1/auth/launch"
+now = int(time.time())
+claims = {
+    "iss": ISS,
+    "aud": "rumbos",
+    "sub": "0" * 32,
+    "course": COURSE,
+    "role": "student",
+    "iat": now,
+    "exp": now + 60,
+    "jti": secrets.token_urlsafe(16),
+    "uid": 1,
+    "claim_the_backend_does_not_know": {"x": [1, 2]},
+}
+token = jwt.encode(claims, KEY, algorithm="RS256", headers={"kid": KID})
+req = urllib.request.Request(
+    URL, json.dumps({"assertion": token}).encode(), {"Content-Type": "application/json"}
+)
+print(urllib.request.urlopen(req).status)  # expect 200
+```
+
+Run it before and after the backend deploy: a 200 both times means the old
+backend tolerates the plugin's new claim and the new one stores it.
