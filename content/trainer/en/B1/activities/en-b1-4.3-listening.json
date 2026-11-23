@@ -1,0 +1,84 @@
+{
+  "id": "en-b1-4.3-listening",
+  "skill": "listening",
+  "title": "Listen and choose 4.3",
+  "estimated_minutes": 4,
+  "lesson_id": "4.3",
+  "status": "draft",
+  "role": "Tourism adviser giving personalised recommendations",
+  "can_do": [
+    "I can describe people, places and things with who, which and that.",
+    "I can give personalised recommendations."
+  ],
+  "items": [
+    {
+      "id": "en-b1-4.3.l1",
+      "type": "listen_choose",
+      "prompt": "What does the Blue Coast have?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "A gym"
+        },
+        {
+          "id": "o2",
+          "text": "A large pool"
+        },
+        {
+          "id": "o3",
+          "text": "A casino"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: a large pool.",
+      "audio": "en-b1-4.3.l1"
+    },
+    {
+      "id": "en-b1-4.3.l2",
+      "type": "listen_choose",
+      "prompt": "Who is Maria?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "A hotel owner"
+        },
+        {
+          "id": "o2",
+          "text": "A chef"
+        },
+        {
+          "id": "o3",
+          "text": "A guide"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: Maria is a guide.",
+      "audio": "en-b1-4.3.l2"
+    },
+    {
+      "id": "en-b1-4.3.l3",
+      "type": "listen_choose",
+      "prompt": "Where can you see traditional dancing?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "In a small theatre"
+        },
+        {
+          "id": "o2",
+          "text": "In a big hotel"
+        },
+        {
+          "id": "o3",
+          "text": "On the beach"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: a small theatre in the old town.",
+      "audio": "en-b1-4.3.l3"
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}

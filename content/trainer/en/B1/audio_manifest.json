@@ -1722,6 +1722,373 @@
       "file": "audio/en-b1-3.4.l3.mp3",
       "duration_s": null,
       "transcript": "— Is it a growing trend to visit small villages? — Yes, more and more visitors want an authentic experience, so rural tourism is growing fast."
+    },
+    {
+      "id": "en-b1-4.1.d1",
+      "text": "Welcome to the nature reserve. Is it allowed to walk on the dunes?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Welcome to the nature reserve. Is it allowed to walk on the dunes?"
+        }
+      ],
+      "file": "audio/en-b1-4.1.d1.mp3",
+      "duration_s": null,
+      "transcript": "Welcome to the nature reserve. Is it allowed to walk on the dunes?"
+    },
+    {
+      "id": "en-b1-4.1.d2",
+      "text": "What should we do with our rubbish?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What should we do with our rubbish?"
+        }
+      ],
+      "file": "audio/en-b1-4.1.d2.mp3",
+      "duration_s": null,
+      "transcript": "What should we do with our rubbish?"
+    },
+    {
+      "id": "en-b1-4.1.d3",
+      "text": "Can we feed the birds?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can we feed the birds?"
+        }
+      ],
+      "file": "audio/en-b1-4.1.d3.mp3",
+      "duration_s": null,
+      "transcript": "Can we feed the birds?"
+    },
+    {
+      "id": "en-b1-4.1.d4",
+      "text": "There are some turtle nests on the beach. What do we have to do?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "There are some turtle nests on the beach. What do we have to do?"
+        }
+      ],
+      "file": "audio/en-b1-4.1.d4.mp3",
+      "duration_s": null,
+      "transcript": "There are some turtle nests on the beach. What do we have to do?"
+    },
+    {
+      "id": "en-b1-4.1.d5",
+      "text": "Is it necessary to pay an entrance fee?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is it necessary to pay an entrance fee?"
+        }
+      ],
+      "file": "audio/en-b1-4.1.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is it necessary to pay an entrance fee?"
+    },
+    {
+      "id": "en-b1-4.1.d6",
+      "text": "Thank you for explaining. We'll follow the rules.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Thank you for explaining. We'll follow the rules."
+        }
+      ],
+      "file": "audio/en-b1-4.1.d6.mp3",
+      "duration_s": null,
+      "transcript": "Thank you for explaining. We'll follow the rules."
+    },
+    {
+      "id": "en-b1-4.1.l1",
+      "text": "Visitors mustn't pick any flowers, and they should stay on the marked trail. The fine for breaking the rules is one hundred dollars.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Visitors mustn't pick any flowers, and they should stay on the marked trail. The fine for breaking the rules is one hundred dollars."
+        }
+      ],
+      "file": "audio/en-b1-4.1.l1.mp3",
+      "duration_s": null,
+      "transcript": "Visitors mustn't pick any flowers, and they should stay on the marked trail. The fine for breaking the rules is 100 dollars."
+    },
+    {
+      "id": "en-b1-4.1.l2",
+      "text": "Can I take a shell as a souvenir? No, you shouldn't. Shells are homes for small animals, and taking them harms the beach.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Can I take a shell as a souvenir?"
+        },
+        {
+          "voice": "host",
+          "text": "No, you shouldn't. Shells are homes for small animals, and taking them harms the beach."
+        }
+      ],
+      "file": "audio/en-b1-4.1.l2.mp3",
+      "duration_s": null,
+      "transcript": "— Can I take a shell as a souvenir? — No, you shouldn't. Shells are homes for small animals, and taking them harms the beach."
+    },
+    {
+      "id": "en-b1-4.1.l3",
+      "text": "You must register at the park office before you enter, and you should arrive before nine in the morning because the number of visitors is limited.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "You must register at the park office before you enter, and you should arrive before nine in the morning because the number of visitors is limited."
+        }
+      ],
+      "file": "audio/en-b1-4.1.l3.mp3",
+      "duration_s": null,
+      "transcript": "You must register at the park office before you enter, and you should arrive before nine in the morning because the number of visitors is limited."
+    },
+    {
+      "id": "en-b1-4.2.d1",
+      "text": "Tell me about this festival. How did it start?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Tell me about this festival. How did it start?"
+        }
+      ],
+      "file": "audio/en-b1-4.2.d1.mp3",
+      "duration_s": null,
+      "transcript": "Tell me about this festival. How did it start?"
+    },
+    {
+      "id": "en-b1-4.2.d2",
+      "text": "What happened after the conflict ended?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What happened after the conflict ended?"
+        }
+      ],
+      "file": "audio/en-b1-4.2.d2.mp3",
+      "duration_s": null,
+      "transcript": "What happened after the conflict ended?"
+    },
+    {
+      "id": "en-b1-4.2.d3",
+      "text": "Were people still angry at that time?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Were people still angry at that time?"
+        }
+      ],
+      "file": "audio/en-b1-4.2.d3.mp3",
+      "duration_s": null,
+      "transcript": "Were people still angry at that time?"
+    },
+    {
+      "id": "en-b1-4.2.d4",
+      "text": "Who organized the first celebration?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Who organized the first celebration?"
+        }
+      ],
+      "file": "audio/en-b1-4.2.d4.mp3",
+      "duration_s": null,
+      "transcript": "Who organized the first celebration?"
+    },
+    {
+      "id": "en-b1-4.2.d5",
+      "text": "Is the festival still celebrated today?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is the festival still celebrated today?"
+        }
+      ],
+      "file": "audio/en-b1-4.2.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is the festival still celebrated today?"
+    },
+    {
+      "id": "en-b1-4.2.d6",
+      "text": "What a beautiful story. Thank you for sharing it.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What a beautiful story. Thank you for sharing it."
+        }
+      ],
+      "file": "audio/en-b1-4.2.d6.mp3",
+      "duration_s": null,
+      "transcript": "What a beautiful story. Thank you for sharing it."
+    },
+    {
+      "id": "en-b1-4.2.l1",
+      "text": "Long ago, two villages fought for years. One day, while the leaders were walking along the river, they found a bridge that nobody had built.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Long ago, two villages fought for years. One day, while the leaders were walking along the river, they found a bridge that nobody had built."
+        }
+      ],
+      "file": "audio/en-b1-4.2.l1.mp3",
+      "duration_s": null,
+      "transcript": "Long ago, two villages fought for years. One day, while the leaders were walking along the river, they found a bridge that nobody had built."
+    },
+    {
+      "id": "en-b1-4.2.l2",
+      "text": "When did the villages sign the peace? They signed it in the spring, after they had talked for three long weeks.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "When did the villages sign the peace?"
+        },
+        {
+          "voice": "host",
+          "text": "They signed it in the spring, after they had talked for three long weeks."
+        }
+      ],
+      "file": "audio/en-b1-4.2.l2.mp3",
+      "duration_s": null,
+      "transcript": "— When did the villages sign the peace? — They signed it in the spring, after they had talked for three long weeks."
+    },
+    {
+      "id": "en-b1-4.2.l3",
+      "text": "Every year, on the first Saturday of May, people were walking to the bridge with flowers, and that is how the festival of peace began.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Every year, on the first Saturday of May, people were walking to the bridge with flowers, and that is how the festival of peace began."
+        }
+      ],
+      "file": "audio/en-b1-4.2.l3.mp3",
+      "duration_s": null,
+      "transcript": "Every year, on the first Saturday of May, people were walking to the bridge with flowers, and that is how the festival of peace began."
+    },
+    {
+      "id": "en-b1-4.3.d1",
+      "text": "I love nature and I don't like crowds. What do you recommend?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I love nature and I don't like crowds. What do you recommend?"
+        }
+      ],
+      "file": "audio/en-b1-4.3.d1.mp3",
+      "duration_s": null,
+      "transcript": "I love nature and I don't like crowds. What do you recommend?"
+    },
+    {
+      "id": "en-b1-4.3.d2",
+      "text": "Which kind of hotel would suit us? We have a small budget.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Which kind of hotel would suit us? We have a small budget."
+        }
+      ],
+      "file": "audio/en-b1-4.3.d2.mp3",
+      "duration_s": null,
+      "transcript": "Which kind of hotel would suit us? We have a small budget."
+    },
+    {
+      "id": "en-b1-4.3.d3",
+      "text": "I'd like to meet local people. Is there something for that?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I'd like to meet local people. Is there something for that?"
+        }
+      ],
+      "file": "audio/en-b1-4.3.d3.mp3",
+      "duration_s": null,
+      "transcript": "I'd like to meet local people. Is there something for that?"
+    },
+    {
+      "id": "en-b1-4.3.d4",
+      "text": "What is the most authentic restaurant in town?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "What is the most authentic restaurant in town?"
+        }
+      ],
+      "file": "audio/en-b1-4.3.d4.mp3",
+      "duration_s": null,
+      "transcript": "What is the most authentic restaurant in town?"
+    },
+    {
+      "id": "en-b1-4.3.d5",
+      "text": "Is there any hidden gem that tourists don't know about?",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is there any hidden gem that tourists don't know about?"
+        }
+      ],
+      "file": "audio/en-b1-4.3.d5.mp3",
+      "duration_s": null,
+      "transcript": "Is there any hidden gem that tourists don't know about?"
+    },
+    {
+      "id": "en-b1-4.3.d6",
+      "text": "These are perfect suggestions. Thank you!",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "These are perfect suggestions. Thank you!"
+        }
+      ],
+      "file": "audio/en-b1-4.3.d6.mp3",
+      "duration_s": null,
+      "transcript": "These are perfect suggestions. Thank you!"
+    },
+    {
+      "id": "en-b1-4.3.l1",
+      "text": "I'd like a hotel which has a pool and is near the beach. The Blue Coast is a hotel that has a large pool, and it is only two minutes from the sand.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "I'd like a hotel which has a pool and is near the beach."
+        },
+        {
+          "voice": "host",
+          "text": "The Blue Coast is a hotel that has a large pool, and it is only two minutes from the sand."
+        }
+      ],
+      "file": "audio/en-b1-4.3.l1.mp3",
+      "duration_s": null,
+      "transcript": "— I'd like a hotel which has a pool and is near the beach. — The Blue Coast is a hotel that has a large pool, and it is only two minutes from the sand."
+    },
+    {
+      "id": "en-b1-4.3.l2",
+      "text": "Maria is a guide who knows every trail in the area, and she can organize a tour that suits your budget.",
+      "voices": [
+        {
+          "voice": "host",
+          "text": "Maria is a guide who knows every trail in the area, and she can organize a tour that suits your budget."
+        }
+      ],
+      "file": "audio/en-b1-4.3.l2.mp3",
+      "duration_s": null,
+      "transcript": "Maria is a guide who knows every trail in the area, and she can organize a tour that suits your budget."
+    },
+    {
+      "id": "en-b1-4.3.l3",
+      "text": "Is there a place where we can see traditional dancing? Yes, there is a small theatre in the old town where local groups perform every Saturday at seven o'clock.",
+      "voices": [
+        {
+          "voice": "guest",
+          "text": "Is there a place where we can see traditional dancing?"
+        },
+        {
+          "voice": "host",
+          "text": "Yes, there is a small theatre in the old town where local groups perform every Saturday at seven o'clock."
+        }
+      ],
+      "file": "audio/en-b1-4.3.l3.mp3",
+      "duration_s": null,
+      "transcript": "— Is there a place where we can see traditional dancing? — Yes, there is a small theatre in the old town where local groups perform every Saturday at 7:00."
     }
   ]
 }

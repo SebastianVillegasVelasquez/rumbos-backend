@@ -1,0 +1,194 @@
+{
+  "id": "en-b1-4.1-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 4.1",
+  "estimated_minutes": 5,
+  "lesson_id": "4.1",
+  "status": "draft",
+  "role": "Park ranger explaining the rules of a protected area to visitors",
+  "can_do": [
+    "I can explain rules and advice for protecting nature.",
+    "I can use should, must and mustn't."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Welcome to the nature reserve. Is it allowed to walk on the dunes?",
+        "translation": "Bienvenidos a la reserva. ¿Se puede caminar sobre las dunas?",
+        "audio": "en-b1-4.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "No, you mustn't walk on the dunes. Please use the trail.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "You should stay on the wooden path to protect the plants.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "It's better not to, because the dunes are fragile.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "What should we do with our rubbish?",
+        "translation": "¿Qué debemos hacer con la basura?",
+        "audio": "en-b1-4.1.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "take"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "bin"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "bag"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "home"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "litter"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "You must take your rubbish with you.",
+        "starters": [
+          "You must ...",
+          "You should ..."
+        ],
+        "word_bank": [
+          "You",
+          "must",
+          "take",
+          "your",
+          "rubbish",
+          "with",
+          "you"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Can we feed the birds?",
+        "translation": "¿Podemos darle de comer a las aves?",
+        "audio": "en-b1-4.1.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "No, you mustn't feed the wildlife.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "It's not allowed, because it changes their behaviour.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "You shouldn't, even if they look hungry.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "There are some turtle nests on the beach. What do we have to do?",
+        "translation": "Hay nidos de tortugas en la playa. ¿Qué tenemos que hacer?",
+        "audio": "en-b1-4.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You must keep away from the nests.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "You mustn't use flashlights at night.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "You should walk quietly and keep your distance.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is it necessary to pay an entrance fee?",
+        "translation": "¿Es necesario pagar una entrada?",
+        "audio": "en-b1-4.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, the fee is used to protect the reserve.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "You must pay at the gate, but children don't have to.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, and the money helps local rangers.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you for explaining. We'll follow the rules.",
+        "translation": "Gracias por explicar. Seguiremos las reglas.",
+        "audio": "en-b1-4.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you for helping us protect nature.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "You're welcome. Enjoy the reserve.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Great. Have a wonderful visit.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ]
+}
