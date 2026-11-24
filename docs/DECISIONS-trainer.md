@@ -855,3 +855,27 @@ Judgment calls:
   key at all, so hashes of existing maps and publications do not move.
 - Purposes are spelled `checkin` and `final`, as in the brief and in `outcome`,
   not `check_in`/`checkIn` as in the assessment settings.
+
+## D65. The passed-outcome statement needed no new claim
+
+Audit of the signed result passback (`app/passback/statement.py`, the outbox, the
+schema 2 mirror statement): every closed, non-preview attempt already produces a
+statement signed ES256 with `purpose`, `passed`, `completes_course` and `jti` (the
+attempt id, which Moodle must accept once), plus `sub`, `tenant` and `course_id`.
+The schema 2 statement spreads those claims unchanged. So the plugin can decide
+"mark all the content complete" from a passing `check_in` statement with
+`completes_course: true`, and nothing was added: no claim, no endpoint, no change
+to the signing vectors or to the outbox.
+
+- **`purpose` is spelled `check_in`**, as in the shipped statement, its schemas
+  and the plugin's verifier; the brief's `checkin` is the spelling of the outcome
+  and of the congratulations keys. Renaming a signed claim would break the plugin
+  for no gain.
+- **The plugin should act on `completes_course`, not on `passed` alone**: it is
+  `passed` and the exemption that was in force when the attempt was sat. A passed
+  check-in with the exemption off is a pass that completes nothing.
+- **C4 is documented, not enforced here** (the writes happen in Moodle): the
+  plugin acts only on a verified statement, once per `jti`, and never on a
+  message from the browser. `docs/CLOSING-GATE.md`, "What the plugin acts on".
+  `tests/test_outcome_statement.py` pins the four claims for each purpose and
+  outcome, in the signed statement and in both published schemas.
