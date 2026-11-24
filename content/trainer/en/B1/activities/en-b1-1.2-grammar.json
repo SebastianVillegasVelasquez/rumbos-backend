@@ -46,7 +46,7 @@
       "id": "b1-1.2.ex.02",
       "type": "gap_fill",
       "prompt": "Choose the correct word.",
-      "template": "The long queue was really {1}.",
+      "template": "The long line was really {1}.",
       "gaps": [
         {
           "gap_id": "1",
@@ -67,11 +67,11 @@
           "correct": "o2",
           "error_tag": {
             "tag": "ed_ing",
-            "text": "A queue is the cause, so it is annoying."
+            "text": "A line is the cause, so it is annoying."
           }
         }
       ],
-      "explanation": "The queue causes the feeling, so we use the -ing adjective."
+      "explanation": "The line causes the feeling, so we use the -ing adjective."
     },
     {
       "id": "b1-1.2.ex.03",

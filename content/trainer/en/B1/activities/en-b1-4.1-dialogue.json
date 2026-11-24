@@ -39,7 +39,7 @@
       },
       {
         "id": "n2",
-        "partner_line": "What should we do with our rubbish?",
+        "partner_line": "What should we do with our trash?",
         "translation": "¿Qué debemos hacer con la basura?",
         "audio": "en-b1-4.1.d2",
         "mode": "type",
@@ -75,7 +75,7 @@
             "next": "n3"
           }
         ],
-        "model_reply": "You must take your rubbish with you.",
+        "model_reply": "You must take your trash with you.",
         "starters": [
           "You must ...",
           "You should ..."
@@ -85,7 +85,7 @@
           "must",
           "take",
           "your",
-          "rubbish",
+          "trash",
           "with",
           "you"
         ]
@@ -104,7 +104,7 @@
           },
           {
             "id": "o2",
-            "text": "It's not allowed, because it changes their behaviour.",
+            "text": "It's not allowed, because it changes their behavior.",
             "next": "n4"
           },
           {

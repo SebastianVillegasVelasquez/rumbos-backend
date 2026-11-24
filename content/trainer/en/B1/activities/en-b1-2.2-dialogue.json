@@ -5,7 +5,7 @@
   "estimated_minutes": 5,
   "lesson_id": "2.2",
   "status": "draft",
-  "role": "Tour guide helping a traveller at a bus station, a bank and a border post",
+  "role": "Tour guide helping a traveler at a bus station, a bank and a border post",
   "can_do": [
     "I can arrange travel or accommodation and handle a simple transaction.",
     "I can answer an official's basic questions."
@@ -146,7 +146,7 @@
         "options": [
           {
             "id": "o1",
-            "text": "I'm here on holiday.",
+            "text": "I'm here on vacation.",
             "next": "n6"
           },
           {

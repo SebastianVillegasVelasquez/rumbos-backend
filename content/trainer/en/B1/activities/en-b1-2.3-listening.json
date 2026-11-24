@@ -22,7 +22,7 @@
         },
         {
           "id": "o2",
-          "text": "Going to the harbour"
+          "text": "Going to the harbor"
         },
         {
           "id": "o3",
@@ -30,7 +30,7 @@
         }
       ],
       "correct": "o2",
-      "explanation": "The speaker says: I recommend going to the harbour.",
+      "explanation": "The speaker says: I recommend going to the harbor.",
       "audio": "en-b1-2.3.l1"
     },
     {

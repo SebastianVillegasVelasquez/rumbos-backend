@@ -62,7 +62,7 @@
       "options": [
         {
           "id": "o1",
-          "text": "In a small theatre"
+          "text": "In a small theater"
         },
         {
           "id": "o2",
@@ -74,7 +74,7 @@
         }
       ],
       "correct": "o1",
-      "explanation": "The speaker says: a small theatre in the old town.",
+      "explanation": "The speaker says: a small theater in the old town.",
       "audio": "en-b1-4.3.l3"
     }
   ],
