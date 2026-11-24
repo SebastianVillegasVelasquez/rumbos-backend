@@ -879,3 +879,20 @@ to the signing vectors or to the outbox.
   message from the browser. `docs/CLOSING-GATE.md`, "What the plugin acts on".
   `tests/test_outcome_statement.py` pins the four claims for each purpose and
   outcome, in the signed statement and in both published schemas.
+
+## D66. The restart after three failed finals is a design, not a feature
+
+Audited and written up in `docs/CLOSING-RESTART.md`, not built: it needs an
+irreversible reset of completion in Moodle, which by C4 may only follow a
+verified signed backend statement, and neither that statement kind nor the
+plugin's handling of it exists. Recommended there: a `cycle` column on the
+attempts (history untouched), a `cycle.restart` statement emitted with the
+exhausting attempt, the new cycle opening only after it is `sent`, the switch
+`CLOSING_RESTART_MODE=off|enforce` defaulting to `off`, an operator-run backfill
+for students already exhausted, and **not shipping it before 2026-11-30**: use
+the manual procedure in that document (raise `final.maxAttempts`, reset
+completion in Moodle), which works with today's code.
+
+An audit note: a student's attempts are isolated per course (a pass in one course
+is `used: 0` in another), checked with a probe, so a cycle needs no course
+scoping of its own.
