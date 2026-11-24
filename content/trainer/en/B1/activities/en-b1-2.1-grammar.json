@@ -1,0 +1,214 @@
+{
+  "id": "en-b1-2.1-grammar",
+  "skill": "grammar",
+  "title": "Practice 2.1",
+  "estimated_minutes": 6,
+  "lesson_id": "2.1",
+  "status": "published",
+  "role": "Hotel receptionist describing the services to a new guest",
+  "can_do": [
+    "I can describe hotel services with the present passive.",
+    "I can answer a guest's questions about what is offered."
+  ],
+  "items": [
+    {
+      "id": "b1-2.1.ex.01",
+      "type": "mcq",
+      "prompt": "Choose the correct passive sentence.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Rooms are cleaned every day."
+        },
+        {
+          "id": "o2",
+          "text": "Rooms clean every day."
+        },
+        {
+          "id": "o3",
+          "text": "Rooms are cleaning every day."
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The present passive is am/is/are + past participle.",
+      "error_tags": {
+        "o2": {
+          "tag": "passive_form",
+          "text": "Use are + cleaned, not -ing."
+        },
+        "o3": {
+          "tag": "passive_form",
+          "text": "Use are + cleaned, not -ing."
+        }
+      }
+    },
+    {
+      "id": "b1-2.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "Wi-Fi {1} free in all the rooms.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "provides"
+            },
+            {
+              "id": "o2",
+              "text": "is provided"
+            },
+            {
+              "id": "o3",
+              "text": "is providing"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "passive_form",
+            "text": "Wi-Fi does not act, so use the passive."
+          }
+        }
+      ],
+      "explanation": "The hotel provides; the Wi-Fi is provided. We focus on the service."
+    },
+    {
+      "id": "b1-2.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the correct form of the verb in brackets (clean).",
+      "template": "The pool {1} twice a week.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "is cleaned"
+          ],
+          "error_tag": {
+            "tag": "passive_form",
+            "text": "Use is cleaned for one pool."
+          }
+        }
+      ],
+      "explanation": "Singular subject + is + past participle."
+    },
+    {
+      "id": "b1-2.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Airport"
+        },
+        {
+          "id": "t2",
+          "text": "transfers"
+        },
+        {
+          "id": "t3",
+          "text": "are"
+        },
+        {
+          "id": "t4",
+          "text": "arranged"
+        },
+        {
+          "id": "t5",
+          "text": "by"
+        },
+        {
+          "id": "t6",
+          "text": "the"
+        },
+        {
+          "id": "t7",
+          "text": "hotel"
+        }
+      ],
+      "explanation": "Subject, are, past participle, by the agent.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Put the participle after are."
+      }
+    },
+    {
+      "id": "b1-2.1.ex.05",
+      "type": "match",
+      "prompt": "Match each active sentence with its passive.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "They serve dinner at eight."
+        },
+        {
+          "id": "l2",
+          "text": "They clean the rooms daily."
+        },
+        {
+          "id": "l3",
+          "text": "They change the towels."
+        },
+        {
+          "id": "l4",
+          "text": "They offer free parking."
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "Dinner is served at eight."
+        },
+        {
+          "id": "r2",
+          "text": "The rooms are cleaned daily."
+        },
+        {
+          "id": "r3",
+          "text": "The towels are changed."
+        },
+        {
+          "id": "r4",
+          "text": "Free parking is offered."
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "The object of the active sentence becomes the subject of the passive."
+    },
+    {
+      "id": "b1-2.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Say that bikes are available. Use the passive of rent.",
+      "accepted": [
+        "Bikes are rented here",
+        "Bikes can be rented here",
+        "Bikes can be rented at the hotel",
+        "Bikes are rented at the hotel"
+      ],
+      "max_length": 52,
+      "explanation": "Bikes are rented / can be rented uses the passive."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

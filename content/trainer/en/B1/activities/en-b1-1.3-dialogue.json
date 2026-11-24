@@ -1,0 +1,198 @@
+{
+  "id": "en-b1-1.3-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 1.3",
+  "estimated_minutes": 5,
+  "lesson_id": "1.3",
+  "status": "published",
+  "role": "Travel advisor helping a couple choose between two destinations",
+  "can_do": [
+    "I can compare two places with as ... as and comparatives.",
+    "I can show a contrast with whereas."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "We can't decide between the island and the mountains. Which is cheaper?",
+        "translation": "No podemos decidir entre la isla y las montañas. ¿Cuál es más barato?",
+        "audio": "en-b1-1.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "The mountains are cheaper than the island.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "The island is a bit more expensive than the mountains.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "They are about the same price.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Is the island as crowded as the town?",
+        "translation": "¿La isla está tan llena de gente como el pueblo?",
+        "audio": "en-b1-1.3.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "not"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "less"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "quieter"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "crowded"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "peaceful"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "No, it is not as crowded as the town.",
+        "starters": [
+          "No, it is not as ... as",
+          "It is less crowded than ..."
+        ],
+        "word_bank": [
+          "No",
+          "it",
+          "is",
+          "not",
+          "as",
+          "crowded",
+          "as",
+          "the",
+          "town"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "The island is more beautiful, whereas the mountains are cooler. Which do you prefer?",
+        "translation": "La isla es más bonita, mientras que las montañas son más frescas. ¿Cuál prefiere?",
+        "audio": "en-b1-1.3.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I prefer the island, because it is more relaxing.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "I prefer the mountains, because they are cooler.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "I can't decide. They are both nice.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "How far is the beach from the hotel on the island?",
+        "translation": "¿A qué distancia está la playa del hotel en la isla?",
+        "audio": "en-b1-1.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It's only five minutes on foot.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "It's a bit further than the town, about ten minutes.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "It's as close as the pool.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is the food as good as in the capital?",
+        "translation": "¿La comida es tan buena como en la capital?",
+        "audio": "en-b1-1.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It's just as good, and it's cheaper.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "It's not as good, but the view is better.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "It's even better, in my opinion.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Great. We'll book the island, then.",
+        "translation": "Genial. Entonces reservaremos la isla.",
+        "audio": "en-b1-1.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Excellent choice. I'll prepare the booking.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Perfect. I'll send you the details today.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Wonderful. You will love it.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

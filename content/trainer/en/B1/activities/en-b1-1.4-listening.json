@@ -1,0 +1,86 @@
+{
+  "id": "en-b1-1.4-listening",
+  "skill": "listening",
+  "title": "Listen and choose 1.4",
+  "estimated_minutes": 4,
+  "lesson_id": "1.4",
+  "status": "published",
+  "role": "Events coordinator informing a client about a change of plans",
+  "can_do": [
+    "I can talk about future plans with going to, will and the present continuous.",
+    "I can apologize for a change with the present perfect."
+  ],
+  "items": [
+    {
+      "id": "en-b1-1.4.l1",
+      "type": "listen_choose",
+      "prompt": "Why can't the speaker join the tour?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "She is going to the airport"
+        },
+        {
+          "id": "o2",
+          "text": "She is having dinner with a client"
+        },
+        {
+          "id": "o3",
+          "text": "She is ill"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: having dinner with a client.",
+      "audio": "en-b1-1.4.l1"
+    },
+    {
+      "id": "en-b1-1.4.l2",
+      "type": "listen_choose",
+      "prompt": "What has changed?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The singer's name"
+        },
+        {
+          "id": "o2",
+          "text": "The price of the tickets"
+        },
+        {
+          "id": "o3",
+          "text": "The day of the concert"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: we have postponed the concert until next Thursday.",
+      "audio": "en-b1-1.4.l2"
+    },
+    {
+      "id": "en-b1-1.4.l3",
+      "type": "listen_choose",
+      "prompt": "What will the second speaker do?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Send the address"
+        },
+        {
+          "id": "o2",
+          "text": "Call the guest"
+        },
+        {
+          "id": "o3",
+          "text": "Change the venue"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: I will send you the address.",
+      "audio": "en-b1-1.4.l3"
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

@@ -1,0 +1,127 @@
+{
+  "modules": [
+    {
+      "key": "M1",
+      "title": "Dealing with unexpected situations, messages and details"
+    },
+    {
+      "key": "M2",
+      "title": "Guiding new visitors in town"
+    },
+    {
+      "key": "M3",
+      "title": "Problematic situations and cultural differences"
+    },
+    {
+      "key": "M4",
+      "title": "Pillars of the training program"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "1.1",
+      "module": "M1",
+      "code": "1.1",
+      "title": "Interrupting politely and asking for clarification",
+      "description": "Interrupt politely, ask for repetition and ask for details with indirect questions."
+    },
+    {
+      "id": "1.2",
+      "module": "M1",
+      "code": "1.2",
+      "title": "Feelings, agreeing and disagreeing politely",
+      "description": "Describe feelings with -ed and -ing adjectives and disagree in a polite, diplomatic way."
+    },
+    {
+      "id": "1.3",
+      "module": "M1",
+      "code": "1.3",
+      "title": "Comparing vacation spots",
+      "description": "Compare places with as ... as, comparatives and whereas."
+    },
+    {
+      "id": "1.4",
+      "module": "M1",
+      "code": "1.4",
+      "title": "Describing an upcoming event and apologizing for changes",
+      "description": "Talk about future plans and apologize for a change with the present perfect."
+    },
+    {
+      "id": "2.1",
+      "module": "M2",
+      "code": "2.1",
+      "title": "Describing hotels and what they offer",
+      "description": "Describe a hotel and its services with the passive voice."
+    },
+    {
+      "id": "2.2",
+      "module": "M2",
+      "code": "2.2",
+      "title": "Transactions, travel arrangements and authorities abroad",
+      "description": "Handle transactions while travelling and answer questions from officials."
+    },
+    {
+      "id": "2.3",
+      "module": "M2",
+      "code": "2.3",
+      "title": "Suggesting activities to entertain a visitor",
+      "description": "Suggest and recommend activities with should, ought to and recommend + -ing."
+    },
+    {
+      "id": "2.4",
+      "module": "M2",
+      "code": "2.4",
+      "title": "Positive and negative events in the past",
+      "description": "Tell what happened and what was happening with past simple, past continuous and connectors."
+    },
+    {
+      "id": "3.1",
+      "module": "M3",
+      "code": "3.1",
+      "title": "Unusual situations in shops, banks and restaurants",
+      "description": "Return a purchase, ask for a refund or exchange and solve a problem at a counter."
+    },
+    {
+      "id": "3.2",
+      "module": "M3",
+      "code": "3.2",
+      "title": "Complaints at a hotel when checking out",
+      "description": "Make and answer a complaint at check-out in a polite and firm way."
+    },
+    {
+      "id": "3.3",
+      "module": "M3",
+      "code": "3.3",
+      "title": "Feelings after a cultural faux pas and how to avoid it",
+      "description": "Say how you feel after a mistake and give advice to avoid cultural errors."
+    },
+    {
+      "id": "3.4",
+      "module": "M3",
+      "code": "3.4",
+      "title": "Talking about your culture and how it differs",
+      "description": "Describe customs and cultural trends and say how they differ."
+    },
+    {
+      "id": "4.1",
+      "module": "M4",
+      "code": "4.1",
+      "title": "Sustainable tourism: protecting local flora and fauna",
+      "description": "Give advice and rules about the environment with should, must and mustn't."
+    },
+    {
+      "id": "4.2",
+      "module": "M4",
+      "code": "4.2",
+      "title": "Tourism as a culture for peace: local traditions",
+      "description": "Tell stories about local traditions with past simple, past continuous and past perfect."
+    },
+    {
+      "id": "4.3",
+      "module": "M4",
+      "code": "4.3",
+      "title": "Tourism culture and personalised recommendations",
+      "description": "Recommend places and activities with relative clauses and adjectives."
+    }
+  ]
+}

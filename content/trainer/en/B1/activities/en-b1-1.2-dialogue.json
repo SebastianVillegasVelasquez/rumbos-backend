@@ -1,0 +1,198 @@
+{
+  "id": "en-b1-1.2-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 1.2",
+  "estimated_minutes": 5,
+  "lesson_id": "1.2",
+  "status": "published",
+  "role": "Guest relations officer talking with a guest who is not happy",
+  "can_do": [
+    "I can say how I feel and what makes me feel that way.",
+    "I can agree and disagree politely."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "I'm a bit annoyed. The pool is closed and nobody told us.",
+        "translation": "Estoy un poco molesto. La piscina está cerrada y nadie nos avisó.",
+        "audio": "en-b1-1.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I understand, and I'm sorry. We should have told you.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "I see why you are annoyed. Let me check why it is closed.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "You are right. That is really frustrating.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "The weather is awful and the day is very boring. What can we do?",
+        "translation": "El clima es horrible y el día es muy aburrido. ¿Qué podemos hacer?",
+        "audio": "en-b1-1.2.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "museum"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "cinema"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "movie"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "indoor"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "visit"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "You could visit the museum, which is very interesting.",
+        "starters": [
+          "You could visit ...",
+          "How about the ...?"
+        ],
+        "word_bank": [
+          "You",
+          "could",
+          "visit",
+          "the",
+          "museum",
+          "which",
+          "is",
+          "very",
+          "interesting"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "I think the new menu is too expensive.",
+        "translation": "Creo que el nuevo menú es demasiado caro.",
+        "audio": "en-b1-1.2.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I see your point; however, the portions are quite big.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "You may be right. I'll pass your comment on.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "I'm afraid I disagree, but thank you for telling me.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "The tour was really exciting, don't you think?",
+        "translation": "El tour fue muy emocionante, ¿no cree?",
+        "audio": "en-b1-1.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, exactly. The guide was great.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "I agree. I was very excited at the end.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "To be honest, I was a little bored in the first part.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "I'm disappointed with our room. It is small and noisy.",
+        "translation": "Estoy decepcionado con nuestra habitación. Es pequeña y ruidosa.",
+        "audio": "en-b1-1.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I'm sorry to hear that. I can show you another room.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "I understand how you feel. Let me see what is free.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "That sounds annoying. We will move you now.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. I feel much better now.",
+        "translation": "Gracias. Me siento mucho mejor ahora.",
+        "audio": "en-b1-1.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I'm glad to hear it. Enjoy your stay.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "You're welcome. Please tell me if you need anything.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Thank you for your patience.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

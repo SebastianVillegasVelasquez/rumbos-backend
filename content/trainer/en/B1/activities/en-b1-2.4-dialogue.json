@@ -1,0 +1,196 @@
+{
+  "id": "en-b1-2.4-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 2.4",
+  "estimated_minutes": 5,
+  "lesson_id": "2.4",
+  "status": "published",
+  "role": "Guide telling a colleague what happened during a group visit",
+  "can_do": [
+    "I can tell a past event with the past simple and the past continuous.",
+    "I can link ideas with while, when, but, so and although."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "What happened at the museum this morning?",
+        "translation": "¿Qué pasó en el museo esta mañana?",
+        "audio": "en-b1-2.4.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "The power went out while we were visiting.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "A group of students arrived late, so we waited.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Nothing special. We had a nice visit.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "What were you doing when the lights went out?",
+        "translation": "¿Qué estaban haciendo cuando se apagaron las luces?",
+        "audio": "en-b1-2.4.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "were"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "was"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "visiting"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "walking"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "listening"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "We were looking at the old maps.",
+        "starters": [
+          "We were ...",
+          "I was ... when it happened"
+        ],
+        "word_bank": [
+          "We",
+          "were",
+          "looking",
+          "at",
+          "the",
+          "old",
+          "maps"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Did anyone get hurt?",
+        "translation": "¿Alguien se lastimó?",
+        "audio": "en-b1-2.4.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "No, fortunately nobody was hurt.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "No, although some people were scared.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "One guest fell, but she is fine.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "How did you solve the problem?",
+        "translation": "¿Cómo resolvieron el problema?",
+        "audio": "en-b1-2.4.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "We used our phones as flashlights.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "The staff brought candles, so everyone stayed calm.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "The guard opened the emergency door.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Unfortunately the tour was shorter than planned. How did the guests react?",
+        "translation": "Desafortunadamente el tour fue más corto de lo planeado. ¿Cómo reaccionaron los invitados?",
+        "audio": "en-b1-2.4.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "They were disappointed, but they understood.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Most of them were happy, although a few were upset.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "They said it was an adventure.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Good. Please write a short report.",
+        "translation": "Bien. Por favor escriba un informe corto.",
+        "audio": "en-b1-2.4.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I will write it this afternoon.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Of course. You will have it by five.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Sure. I'll include photos.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

@@ -1,0 +1,86 @@
+{
+  "id": "en-b1-3.1-listening",
+  "skill": "listening",
+  "title": "Listen and choose 3.1",
+  "estimated_minutes": 4,
+  "lesson_id": "3.1",
+  "status": "published",
+  "role": "Shop assistant and customer-service agent handling returns and refunds",
+  "can_do": [
+    "I can ask for or offer a refund, an exchange or store credit.",
+    "I can explain a problem with a purchase or a bill."
+  ],
+  "items": [
+    {
+      "id": "en-b1-3.1.l1",
+      "type": "listen_choose",
+      "prompt": "Why does the guest want to return the shoes?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "They are too expensive"
+        },
+        {
+          "id": "o2",
+          "text": "They are too small"
+        },
+        {
+          "id": "o3",
+          "text": "They are broken"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: they're too small.",
+      "audio": "en-b1-3.1.l1"
+    },
+    {
+      "id": "en-b1-3.1.l2",
+      "type": "listen_choose",
+      "prompt": "What will the waiter do?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Take the soup off the bill"
+        },
+        {
+          "id": "o2",
+          "text": "Call the manager"
+        },
+        {
+          "id": "o3",
+          "text": "Bring a hot soup"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: I'll bring you a hot one.",
+      "audio": "en-b1-3.1.l2"
+    },
+    {
+      "id": "en-b1-3.1.l3",
+      "type": "listen_choose",
+      "prompt": "How much was the customer overcharged?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Fifteen dollars"
+        },
+        {
+          "id": "o2",
+          "text": "Fifty dollars"
+        },
+        {
+          "id": "o3",
+          "text": "Five dollars"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: fifteen dollars.",
+      "audio": "en-b1-3.1.l3"
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

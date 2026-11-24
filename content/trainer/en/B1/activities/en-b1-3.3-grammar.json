@@ -1,0 +1,220 @@
+{
+  "id": "en-b1-3.3-grammar",
+  "skill": "grammar",
+  "title": "Practice 3.3",
+  "estimated_minutes": 6,
+  "lesson_id": "3.3",
+  "status": "published",
+  "role": "Cultural guide helping a visitor who has made a social mistake",
+  "can_do": [
+    "I can express regret and embarrassment.",
+    "I can give advice to avoid a cultural mistake with a light second conditional."
+  ],
+  "items": [
+    {
+      "id": "b1-3.3.ex.01",
+      "type": "mcq",
+      "prompt": "Choose the correct sentence.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "If I knew the rule, I would not break it."
+        },
+        {
+          "id": "o2",
+          "text": "If I would know the rule, I would not break it."
+        },
+        {
+          "id": "o3",
+          "text": "If I know the rule, I would not break it."
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Second conditional: if + past simple, would + verb.",
+      "error_tags": {
+        "o2": {
+          "tag": "second_conditional",
+          "text": "Do not use would in the if clause."
+        },
+        "o3": {
+          "tag": "second_conditional",
+          "text": "Do not use would in the if clause."
+        }
+      }
+    },
+    {
+      "id": "b1-3.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct word.",
+      "template": "She felt {1} after the mistake.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "embarrassing"
+            },
+            {
+              "id": "o2",
+              "text": "embarrassed"
+            },
+            {
+              "id": "o3",
+              "text": "embarrass"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "ed_ing",
+            "text": "A person feels embarrassed."
+          }
+        }
+      ],
+      "explanation": "We use -ed for the feeling of a person."
+    },
+    {
+      "id": "b1-3.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type one word.",
+      "template": "You {1} ask for permission before taking a photo.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "should",
+            "must",
+            "ought to"
+          ],
+          "error_tag": {
+            "tag": "advice_form",
+            "text": "Use should or ought to."
+          }
+        }
+      ],
+      "explanation": "Should (or ought to) gives advice."
+    },
+    {
+      "id": "b1-3.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "If"
+        },
+        {
+          "id": "t2",
+          "text": "you"
+        },
+        {
+          "id": "t3",
+          "text": "asked"
+        },
+        {
+          "id": "t4",
+          "text": "first"
+        },
+        {
+          "id": "t5",
+          "text": "nobody"
+        },
+        {
+          "id": "t6",
+          "text": "would"
+        },
+        {
+          "id": "t7",
+          "text": "be"
+        },
+        {
+          "id": "t8",
+          "text": "offended"
+        }
+      ],
+      "explanation": "If + past simple, would + verb.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Keep the if clause first."
+      }
+    },
+    {
+      "id": "b1-3.3.ex.05",
+      "type": "match",
+      "prompt": "Match each sentence with its meaning.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "I regret it."
+        },
+        {
+          "id": "l2",
+          "text": "I feel embarrassed."
+        },
+        {
+          "id": "l3",
+          "text": "It was rude."
+        },
+        {
+          "id": "l4",
+          "text": "Show some respect."
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "I wish I hadn't done it"
+        },
+        {
+          "id": "r2",
+          "text": "I feel ashamed"
+        },
+        {
+          "id": "r3",
+          "text": "It was impolite"
+        },
+        {
+          "id": "r4",
+          "text": "Be polite"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "These words describe social mistakes."
+    },
+    {
+      "id": "b1-3.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Give advice: ask before taking photos. Start with You should.",
+      "accepted": [
+        "You should ask before taking photos",
+        "You should ask permission before taking photos",
+        "You should ask first before taking photos",
+        "You should always ask before taking photos"
+      ],
+      "max_length": 66,
+      "explanation": "You should + base verb gives advice."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

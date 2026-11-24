@@ -1,0 +1,199 @@
+{
+  "id": "en-b1-4.3-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 4.3",
+  "estimated_minutes": 5,
+  "lesson_id": "4.3",
+  "status": "published",
+  "role": "Tourism adviser giving personalised recommendations",
+  "can_do": [
+    "I can describe people, places and things with who, which and that.",
+    "I can give personalised recommendations."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "I love nature and I don't like crowds. What do you recommend?",
+        "translation": "Me encanta la naturaleza y no me gustan las multitudes. ¿Qué me recomienda?",
+        "audio": "en-b1-4.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I recommend the Green Valley, which is very quiet.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "You'd like the mountain village, which is far from the crowds.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "How about the national park, where you can walk for hours?",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Which kind of hotel would suit us? We have a small budget.",
+        "translation": "¿Qué tipo de hotel nos convendría? Tenemos un presupuesto pequeño.",
+        "audio": "en-b1-4.3.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "family"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "small"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "cheap"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "hostel"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "guesthouse"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "I'd choose a family-run guesthouse that is cheap and friendly.",
+        "starters": [
+          "I'd choose a ... that ...",
+          "A ... which ..."
+        ],
+        "word_bank": [
+          "I'd",
+          "choose",
+          "a",
+          "family-run",
+          "guesthouse",
+          "that",
+          "is",
+          "cheap",
+          "and",
+          "friendly"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "I'd like to meet local people. Is there something for that?",
+        "translation": "Me gustaría conocer gente local. ¿Hay algo para eso?",
+        "audio": "en-b1-4.3.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Join the cooking class, which is taught by a local chef.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Visit the weekend market, where you can talk to farmers.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Book a tour with a guide who lives in the village.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "What is the most authentic restaurant in town?",
+        "translation": "¿Cuál es el restaurante más auténtico del pueblo?",
+        "audio": "en-b1-4.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Casa Rosa is a place where the locals eat.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "I recommend the small restaurant that is next to the church.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "The restaurant which has no sign is the best.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is there any hidden gem that tourists don't know about?",
+        "translation": "¿Hay alguna joya escondida que los turistas no conozcan?",
+        "audio": "en-b1-4.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, there is a waterfall that few people visit.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "There is a small beach which is only reached on foot.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "A friend of mine, who is a fisherman, can take you there.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "These are perfect suggestions. Thank you!",
+        "translation": "Son sugerencias perfectas. ¡Gracias!",
+        "audio": "en-b1-4.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You're welcome. Have a wonderful trip.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "My pleasure. Send me a photo when you're there.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Glad I could help.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

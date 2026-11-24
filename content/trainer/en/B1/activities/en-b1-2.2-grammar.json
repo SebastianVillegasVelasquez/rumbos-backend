@@ -1,0 +1,222 @@
+{
+  "id": "en-b1-2.2-grammar",
+  "skill": "grammar",
+  "title": "Practice 2.2",
+  "estimated_minutes": 6,
+  "lesson_id": "2.2",
+  "status": "published",
+  "role": "Tour guide helping a traveler at a bus station, a bank and a border post",
+  "can_do": [
+    "I can arrange travel or accommodation and handle a simple transaction.",
+    "I can answer an official's basic questions."
+  ],
+  "items": [
+    {
+      "id": "b1-2.2.ex.01",
+      "type": "mcq",
+      "prompt": "Which question is polite at a ticket office?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Give me two tickets."
+        },
+        {
+          "id": "o2",
+          "text": "I want tickets two."
+        },
+        {
+          "id": "o3",
+          "text": "Could I have two tickets, please?"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "Could I have ... please is a polite request.",
+      "error_tags": {
+        "o1": {
+          "tag": "register",
+          "text": "Use Could I have ... please."
+        },
+        "o2": {
+          "tag": "register",
+          "text": "Use Could I have ... please."
+        }
+      }
+    },
+    {
+      "id": "b1-2.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct word.",
+      "template": "How long are you {1} to stay in the country?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "going"
+            },
+            {
+              "id": "o2",
+              "text": "will"
+            },
+            {
+              "id": "o3",
+              "text": "want"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "going_to",
+            "text": "Use going to for plans."
+          }
+        }
+      ],
+      "explanation": "Are you going to stay is the question about plans."
+    },
+    {
+      "id": "b1-2.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type one word.",
+      "template": "Do you have a reservation {1} two nights?",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "for"
+          ],
+          "error_tag": {
+            "tag": "preposition",
+            "text": "Use for before a length of time."
+          }
+        }
+      ],
+      "explanation": "We use for with a period of time."
+    },
+    {
+      "id": "b1-2.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "I"
+        },
+        {
+          "id": "t2",
+          "text": "would"
+        },
+        {
+          "id": "t3",
+          "text": "like"
+        },
+        {
+          "id": "t4",
+          "text": "to"
+        },
+        {
+          "id": "t5",
+          "text": "change"
+        },
+        {
+          "id": "t6",
+          "text": "some"
+        },
+        {
+          "id": "t7",
+          "text": "dollars"
+        },
+        {
+          "id": "t8",
+          "text": "into"
+        },
+        {
+          "id": "t9",
+          "text": "pesos"
+        }
+      ],
+      "explanation": "Would like to + verb is a polite way to ask.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Put to change after would like."
+      }
+    },
+    {
+      "id": "b1-2.2.ex.05",
+      "type": "match",
+      "prompt": "Match each phrase with the place.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "Single or return?"
+        },
+        {
+          "id": "l2",
+          "text": "What is the exchange rate?"
+        },
+        {
+          "id": "l3",
+          "text": "Purpose of your visit?"
+        },
+        {
+          "id": "l4",
+          "text": "A double room for two nights?"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "bus station"
+        },
+        {
+          "id": "r2",
+          "text": "bank"
+        },
+        {
+          "id": "r3",
+          "text": "border post"
+        },
+        {
+          "id": "r4",
+          "text": "hotel"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Each phrase belongs to one situation."
+    },
+    {
+      "id": "b1-2.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Ask politely for a single ticket to the island. Start with Could I.",
+      "accepted": [
+        "Could I have a single ticket to the island please",
+        "Could I have a single ticket to the island",
+        "Could I buy a single ticket to the island please",
+        "Could I buy a single ticket to the island"
+      ],
+      "max_length": 69,
+      "explanation": "Could I have ... please makes a polite request."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

@@ -1,0 +1,215 @@
+{
+  "id": "en-b1-4.1-grammar",
+  "skill": "grammar",
+  "title": "Practice 4.1",
+  "estimated_minutes": 6,
+  "lesson_id": "4.1",
+  "status": "published",
+  "role": "Park ranger explaining the rules of a protected area to visitors",
+  "can_do": [
+    "I can explain rules and advice for protecting nature.",
+    "I can use should, must and mustn't."
+  ],
+  "items": [
+    {
+      "id": "b1-4.1.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence expresses a prohibition?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "You don't have to leave litter here."
+        },
+        {
+          "id": "o2",
+          "text": "You mustn't leave litter here."
+        },
+        {
+          "id": "o3",
+          "text": "You should leave litter here."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "Mustn't means it is forbidden.",
+      "error_tags": {
+        "o1": {
+          "tag": "mustnt",
+          "text": "Mustn't means not allowed."
+        },
+        "o3": {
+          "tag": "mustnt",
+          "text": "Mustn't means not allowed."
+        }
+      }
+    },
+    {
+      "id": "b1-4.1.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "Visitors {1} wear a hat. It is only advice.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "must"
+            },
+            {
+              "id": "o2",
+              "text": "mustn't"
+            },
+            {
+              "id": "o3",
+              "text": "should"
+            }
+          ],
+          "correct": "o3",
+          "error_tag": {
+            "tag": "advice_vs_rule",
+            "text": "For advice use should."
+          }
+        }
+      ],
+      "explanation": "Should gives advice; must is a rule."
+    },
+    {
+      "id": "b1-4.1.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type one word: mustn't, don't or should.",
+      "template": "You {1} have to pay, because the trail is free.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "don't",
+            "do not"
+          ],
+          "error_tag": {
+            "tag": "dont_have_to",
+            "text": "Not necessary is don't have to."
+          }
+        }
+      ],
+      "explanation": "Don't have to means it is not necessary."
+    },
+    {
+      "id": "b1-4.1.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Visitors"
+        },
+        {
+          "id": "t2",
+          "text": "must"
+        },
+        {
+          "id": "t3",
+          "text": "stay"
+        },
+        {
+          "id": "t4",
+          "text": "on"
+        },
+        {
+          "id": "t5",
+          "text": "the"
+        },
+        {
+          "id": "t6",
+          "text": "marked"
+        },
+        {
+          "id": "t7",
+          "text": "trail"
+        }
+      ],
+      "explanation": "Subject + must + base verb.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Put must before the verb."
+      }
+    },
+    {
+      "id": "b1-4.1.ex.05",
+      "type": "match",
+      "prompt": "Match each sentence with its meaning.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "You must wear a helmet."
+        },
+        {
+          "id": "l2",
+          "text": "You mustn't feed the animals."
+        },
+        {
+          "id": "l3",
+          "text": "You don't have to pay."
+        },
+        {
+          "id": "l4",
+          "text": "You should bring water."
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "it is necessary"
+        },
+        {
+          "id": "r2",
+          "text": "it is forbidden"
+        },
+        {
+          "id": "r3",
+          "text": "it is not necessary"
+        },
+        {
+          "id": "r4",
+          "text": "it is good advice"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Modals have different strengths."
+    },
+    {
+      "id": "b1-4.1.ex.06",
+      "type": "short_answer",
+      "prompt": "Tell visitors not to touch the nests. Start with You mustn't.",
+      "accepted": [
+        "You mustn't touch the nests",
+        "You must not touch the nests",
+        "You mustn't touch the turtle nests",
+        "You must not touch the turtle nests"
+      ],
+      "max_length": 55,
+      "explanation": "You mustn't + base verb forbids an action."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

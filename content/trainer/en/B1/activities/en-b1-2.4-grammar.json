@@ -1,0 +1,218 @@
+{
+  "id": "en-b1-2.4-grammar",
+  "skill": "grammar",
+  "title": "Practice 2.4",
+  "estimated_minutes": 6,
+  "lesson_id": "2.4",
+  "status": "published",
+  "role": "Guide telling a colleague what happened during a group visit",
+  "can_do": [
+    "I can tell a past event with the past simple and the past continuous.",
+    "I can link ideas with while, when, but, so and although."
+  ],
+  "items": [
+    {
+      "id": "b1-2.4.ex.01",
+      "type": "mcq",
+      "prompt": "Choose the correct sentence.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "I was cooking when the phone rang."
+        },
+        {
+          "id": "o2",
+          "text": "I cooked when the phone was ringing."
+        },
+        {
+          "id": "o3",
+          "text": "I was cook when the phone rang."
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The longer action takes the past continuous; the short one takes the past simple.",
+      "error_tags": {
+        "o2": {
+          "tag": "past_cont_simple",
+          "text": "Use was cooking for the longer action."
+        },
+        "o3": {
+          "tag": "past_cont_simple",
+          "text": "Use was cooking for the longer action."
+        }
+      }
+    },
+    {
+      "id": "b1-2.4.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "While we {1} dinner, the lights went out.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "had"
+            },
+            {
+              "id": "o2",
+              "text": "were having"
+            },
+            {
+              "id": "o3",
+              "text": "have"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "past_cont_simple",
+            "text": "Use were having after while."
+          }
+        }
+      ],
+      "explanation": "While is usually followed by the past continuous."
+    },
+    {
+      "id": "b1-2.4.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type one connector: but, so or although.",
+      "template": "It was raining, {1} we stayed inside.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "so"
+          ],
+          "error_tag": {
+            "tag": "connector",
+            "text": "Use so for a result."
+          }
+        }
+      ],
+      "explanation": "So shows the result of the rain."
+    },
+    {
+      "id": "b1-2.4.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "Although"
+        },
+        {
+          "id": "t2",
+          "text": "it"
+        },
+        {
+          "id": "t3",
+          "text": "was"
+        },
+        {
+          "id": "t4",
+          "text": "cold"
+        },
+        {
+          "id": "t5",
+          "text": "we"
+        },
+        {
+          "id": "t6",
+          "text": "enjoyed"
+        },
+        {
+          "id": "t7",
+          "text": "the"
+        },
+        {
+          "id": "t8",
+          "text": "walk"
+        }
+      ],
+      "explanation": "Although introduces a contrast with the main idea.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with although and the contrast."
+      }
+    },
+    {
+      "id": "b1-2.4.ex.05",
+      "type": "match",
+      "prompt": "Match each connector with its idea.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "although"
+        },
+        {
+          "id": "l2",
+          "text": "so"
+        },
+        {
+          "id": "l3",
+          "text": "because"
+        },
+        {
+          "id": "l4",
+          "text": "while"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "contrast"
+        },
+        {
+          "id": "r2",
+          "text": "result"
+        },
+        {
+          "id": "r3",
+          "text": "reason"
+        },
+        {
+          "id": "r4",
+          "text": "two actions at the same time"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Connectors link ideas in a story."
+    },
+    {
+      "id": "b1-2.4.ex.06",
+      "type": "short_answer",
+      "prompt": "Say what you were doing when the storm started. Use was or were.",
+      "accepted": [
+        "I was walking on the beach when the storm started",
+        "I was working when the storm started",
+        "We were walking on the beach when the storm started",
+        "We were working when the storm started"
+      ],
+      "max_length": 71,
+      "explanation": "Past continuous + when + past simple."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

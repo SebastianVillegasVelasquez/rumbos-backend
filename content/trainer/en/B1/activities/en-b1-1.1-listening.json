@@ -1,0 +1,86 @@
+{
+  "id": "en-b1-1.1-listening",
+  "skill": "listening",
+  "title": "Listen and choose 1.1",
+  "estimated_minutes": 4,
+  "lesson_id": "1.1",
+  "status": "published",
+  "role": "Front-desk assistant helping a visitor who asks for directions and details",
+  "can_do": [
+    "I can interrupt politely and ask someone to repeat or explain.",
+    "I can ask for information with indirect questions."
+  ],
+  "items": [
+    {
+      "id": "en-b1-1.1.l1",
+      "type": "listen_choose",
+      "prompt": "Where is the post office?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "In front of the church"
+        },
+        {
+          "id": "o2",
+          "text": "Behind the church"
+        },
+        {
+          "id": "o3",
+          "text": "Next to the bank"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: behind the church.",
+      "audio": "en-b1-1.1.l1"
+    },
+    {
+      "id": "en-b1-1.1.l2",
+      "type": "listen_choose",
+      "prompt": "When does the bank close on Saturday?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "At nine"
+        },
+        {
+          "id": "o2",
+          "text": "At three"
+        },
+        {
+          "id": "o3",
+          "text": "At one"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: closes at one o'clock.",
+      "audio": "en-b1-1.1.l2"
+    },
+    {
+      "id": "en-b1-1.1.l3",
+      "type": "listen_choose",
+      "prompt": "How often does the bus leave?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Every thirty minutes"
+        },
+        {
+          "id": "o2",
+          "text": "Every hour"
+        },
+        {
+          "id": "o3",
+          "text": "Every three minutes"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: every thirty minutes.",
+      "audio": "en-b1-1.1.l3"
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

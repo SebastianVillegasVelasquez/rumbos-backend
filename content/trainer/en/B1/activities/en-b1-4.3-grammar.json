@@ -1,0 +1,222 @@
+{
+  "id": "en-b1-4.3-grammar",
+  "skill": "grammar",
+  "title": "Practice 4.3",
+  "estimated_minutes": 6,
+  "lesson_id": "4.3",
+  "status": "published",
+  "role": "Tourism adviser giving personalised recommendations",
+  "can_do": [
+    "I can describe people, places and things with who, which and that.",
+    "I can give personalised recommendations."
+  ],
+  "items": [
+    {
+      "id": "b1-4.3.ex.01",
+      "type": "mcq",
+      "prompt": "Choose the correct sentence.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "I met a guide which knows the island well."
+        },
+        {
+          "id": "o2",
+          "text": "I met a guide what knows the island well."
+        },
+        {
+          "id": "o3",
+          "text": "I met a guide who knows the island well."
+        }
+      ],
+      "correct": "o3",
+      "explanation": "Use who for people and which for things.",
+      "error_tags": {
+        "o1": {
+          "tag": "relative_pronoun",
+          "text": "Who is for people."
+        },
+        "o2": {
+          "tag": "relative_pronoun",
+          "text": "Who is for people."
+        }
+      }
+    },
+    {
+      "id": "b1-4.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct word.",
+      "template": "This is the tour {1} I recommended to you.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "that"
+            },
+            {
+              "id": "o2",
+              "text": "who"
+            },
+            {
+              "id": "o3",
+              "text": "what"
+            }
+          ],
+          "correct": "o1",
+          "error_tag": {
+            "tag": "relative_pronoun",
+            "text": "A tour is a thing, so use that or which."
+          }
+        }
+      ],
+      "explanation": "That (or which) refers to things."
+    },
+    {
+      "id": "b1-4.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type one word: who, which or where.",
+      "template": "That is the village {1} my grandmother was born.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "where"
+          ],
+          "error_tag": {
+            "tag": "relative_pronoun",
+            "text": "For a place use where."
+          }
+        }
+      ],
+      "explanation": "Where refers to a place."
+    },
+    {
+      "id": "b1-4.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "I"
+        },
+        {
+          "id": "t2",
+          "text": "want"
+        },
+        {
+          "id": "t3",
+          "text": "a"
+        },
+        {
+          "id": "t4",
+          "text": "hotel"
+        },
+        {
+          "id": "t5",
+          "text": "that"
+        },
+        {
+          "id": "t6",
+          "text": "is"
+        },
+        {
+          "id": "t7",
+          "text": "quiet"
+        },
+        {
+          "id": "t8",
+          "text": "and"
+        },
+        {
+          "id": "t9",
+          "text": "cheap"
+        }
+      ],
+      "explanation": "A hotel that + description.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Put that after hotel."
+      }
+    },
+    {
+      "id": "b1-4.3.ex.05",
+      "type": "match",
+      "prompt": "Match each relative word with its use.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "who"
+        },
+        {
+          "id": "l2",
+          "text": "which"
+        },
+        {
+          "id": "l3",
+          "text": "where"
+        },
+        {
+          "id": "l4",
+          "text": "that"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "people"
+        },
+        {
+          "id": "r2",
+          "text": "things"
+        },
+        {
+          "id": "r3",
+          "text": "places"
+        },
+        {
+          "id": "r4",
+          "text": "people or things"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Relative pronouns link a description to a noun."
+    },
+    {
+      "id": "b1-4.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Recommend a restaurant with a relative clause. Use which.",
+      "accepted": [
+        "I recommend a restaurant which is very quiet",
+        "I recommend a restaurant which is cheap",
+        "I recommend a restaurant which serves local food",
+        "I recommend the restaurant which serves local food"
+      ],
+      "max_length": 70,
+      "explanation": "Which describes a thing, like a restaurant."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

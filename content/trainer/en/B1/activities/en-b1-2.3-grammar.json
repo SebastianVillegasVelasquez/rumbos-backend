@@ -1,0 +1,218 @@
+{
+  "id": "en-b1-2.3-grammar",
+  "skill": "grammar",
+  "title": "Practice 2.3",
+  "estimated_minutes": 6,
+  "lesson_id": "2.3",
+  "status": "published",
+  "role": "Local host suggesting things to do to a visitor",
+  "can_do": [
+    "I can suggest activities with should and ought to.",
+    "I can recommend places with recommend + -ing."
+  ],
+  "items": [
+    {
+      "id": "b1-2.3.ex.01",
+      "type": "mcq",
+      "prompt": "Which sentence gives advice?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "You are trying the local fish."
+        },
+        {
+          "id": "o2",
+          "text": "You should try the local fish."
+        },
+        {
+          "id": "o3",
+          "text": "You tried the local fish."
+        }
+      ],
+      "correct": "o2",
+      "explanation": "Should + base verb gives advice.",
+      "error_tags": {
+        "o1": {
+          "tag": "advice_form",
+          "text": "Use should + verb."
+        },
+        "o3": {
+          "tag": "advice_form",
+          "text": "Use should + verb."
+        }
+      }
+    },
+    {
+      "id": "b1-2.3.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "I recommend {1} the market early.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "to visit"
+            },
+            {
+              "id": "o2",
+              "text": "visit"
+            },
+            {
+              "id": "o3",
+              "text": "visiting"
+            }
+          ],
+          "correct": "o3",
+          "error_tag": {
+            "tag": "recommend_ing",
+            "text": "Recommend is followed by -ing."
+          }
+        }
+      ],
+      "explanation": "After recommend we use -ing: I recommend visiting."
+    },
+    {
+      "id": "b1-2.3.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type one word.",
+      "template": "You ought {1} bring a hat.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "to"
+          ],
+          "error_tag": {
+            "tag": "ought_to",
+            "text": "Say ought to, not ought alone."
+          }
+        }
+      ],
+      "explanation": "Ought is followed by to + verb."
+    },
+    {
+      "id": "b1-2.3.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "I"
+        },
+        {
+          "id": "t2",
+          "text": "recommend"
+        },
+        {
+          "id": "t3",
+          "text": "taking"
+        },
+        {
+          "id": "t4",
+          "text": "a"
+        },
+        {
+          "id": "t5",
+          "text": "boat"
+        },
+        {
+          "id": "t6",
+          "text": "to"
+        },
+        {
+          "id": "t7",
+          "text": "the"
+        },
+        {
+          "id": "t8",
+          "text": "island"
+        }
+      ],
+      "explanation": "Recommend + -ing + object.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Put taking after recommend."
+      }
+    },
+    {
+      "id": "b1-2.3.ex.05",
+      "type": "match",
+      "prompt": "Match each sentence with its strength.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "You must show your passport."
+        },
+        {
+          "id": "l2",
+          "text": "You should rest."
+        },
+        {
+          "id": "l3",
+          "text": "You could take a taxi."
+        },
+        {
+          "id": "l4",
+          "text": "I recommend booking."
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "obligation"
+        },
+        {
+          "id": "r2",
+          "text": "advice"
+        },
+        {
+          "id": "r3",
+          "text": "possibility"
+        },
+        {
+          "id": "r4",
+          "text": "personal suggestion"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Modals and recommend show different strengths."
+    },
+    {
+      "id": "b1-2.3.ex.06",
+      "type": "short_answer",
+      "prompt": "Advise a friend to see the sunset. Start with You should.",
+      "accepted": [
+        "You should see the sunset",
+        "You should watch the sunset",
+        "You should go to see the sunset",
+        "You should go and see the sunset"
+      ],
+      "max_length": 52,
+      "explanation": "You should + base verb gives advice."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

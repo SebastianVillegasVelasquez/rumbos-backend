@@ -1,0 +1,86 @@
+{
+  "id": "en-b1-1.2-listening",
+  "skill": "listening",
+  "title": "Listen and choose 1.2",
+  "estimated_minutes": 4,
+  "lesson_id": "1.2",
+  "status": "published",
+  "role": "Guest relations officer talking with a guest who is not happy",
+  "can_do": [
+    "I can say how I feel and what makes me feel that way.",
+    "I can agree and disagree politely."
+  ],
+  "items": [
+    {
+      "id": "en-b1-1.2.l1",
+      "type": "listen_choose",
+      "prompt": "How did the speaker feel?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Bored"
+        },
+        {
+          "id": "o2",
+          "text": "Excited"
+        },
+        {
+          "id": "o3",
+          "text": "Tired"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: I was really excited.",
+      "audio": "en-b1-1.2.l1"
+    },
+    {
+      "id": "en-b1-1.2.l2",
+      "type": "listen_choose",
+      "prompt": "What does the speaker think of the talks?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "They are exciting"
+        },
+        {
+          "id": "o2",
+          "text": "They are short"
+        },
+        {
+          "id": "o3",
+          "text": "They are boring"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: long and boring.",
+      "audio": "en-b1-1.2.l2"
+    },
+    {
+      "id": "en-b1-1.2.l3",
+      "type": "listen_choose",
+      "prompt": "What does the second speaker say?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "The rain will stop by noon"
+        },
+        {
+          "id": "o2",
+          "text": "The picnic is canceled"
+        },
+        {
+          "id": "o3",
+          "text": "It will rain all day"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: it will stop by noon.",
+      "audio": "en-b1-1.2.l3"
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

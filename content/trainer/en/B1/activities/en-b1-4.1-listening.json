@@ -1,0 +1,86 @@
+{
+  "id": "en-b1-4.1-listening",
+  "skill": "listening",
+  "title": "Listen and choose 4.1",
+  "estimated_minutes": 4,
+  "lesson_id": "4.1",
+  "status": "published",
+  "role": "Park ranger explaining the rules of a protected area to visitors",
+  "can_do": [
+    "I can explain rules and advice for protecting nature.",
+    "I can use should, must and mustn't."
+  ],
+  "items": [
+    {
+      "id": "en-b1-4.1.l1",
+      "type": "listen_choose",
+      "prompt": "What is the fine?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Ten dollars"
+        },
+        {
+          "id": "o2",
+          "text": "One hundred dollars"
+        },
+        {
+          "id": "o3",
+          "text": "One thousand dollars"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: one hundred dollars.",
+      "audio": "en-b1-4.1.l1"
+    },
+    {
+      "id": "en-b1-4.1.l2",
+      "type": "listen_choose",
+      "prompt": "Why shouldn't you take shells?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "They are expensive"
+        },
+        {
+          "id": "o2",
+          "text": "They are dangerous"
+        },
+        {
+          "id": "o3",
+          "text": "Animals live in them"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: shells are homes for small animals.",
+      "audio": "en-b1-4.1.l2"
+    },
+    {
+      "id": "en-b1-4.1.l3",
+      "type": "listen_choose",
+      "prompt": "What must visitors do first?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Register at the office"
+        },
+        {
+          "id": "o2",
+          "text": "Buy a map"
+        },
+        {
+          "id": "o3",
+          "text": "Rent a bike"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: you must register at the park office.",
+      "audio": "en-b1-4.1.l3"
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

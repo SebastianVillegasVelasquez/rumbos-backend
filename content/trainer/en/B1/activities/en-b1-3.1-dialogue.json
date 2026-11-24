@@ -1,0 +1,199 @@
+{
+  "id": "en-b1-3.1-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 3.1",
+  "estimated_minutes": 5,
+  "lesson_id": "3.1",
+  "status": "published",
+  "role": "Shop assistant and customer-service agent handling returns and refunds",
+  "can_do": [
+    "I can ask for or offer a refund, an exchange or store credit.",
+    "I can explain a problem with a purchase or a bill."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Hello. I bought this bag yesterday, but the zip is broken.",
+        "translation": "Hola. Compré esta bolsa ayer, pero el cierre está roto.",
+        "audio": "en-b1-3.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I'm very sorry. Do you have the receipt?",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "I'm sorry about that. Let me have a look.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "I understand. We can solve this for you.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Yes, here it is. Can I have my money back?",
+        "translation": "Sí, aquí está. ¿Puedo recuperar mi dinero?",
+        "audio": "en-b1-3.1.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "refund"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "exchange"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "credit"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "money"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "offer"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "Yes, we can give you a refund or an exchange.",
+        "starters": [
+          "We can give you ...",
+          "You can have a ..."
+        ],
+        "word_bank": [
+          "Yes",
+          "we",
+          "can",
+          "give",
+          "you",
+          "a",
+          "refund",
+          "or",
+          "an",
+          "exchange"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "I'd prefer an exchange. Is it possible to get the same bag in blue?",
+        "translation": "Prefiero un cambio. ¿Es posible tener la misma bolsa en azul?",
+        "audio": "en-b1-3.1.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, we have it in blue in stock.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "I'm afraid the blue one is sold out, but I can order it.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Let me check the storeroom.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "At the restaurant: excuse me, I think the bill is wrong.",
+        "translation": "En el restaurante: disculpe, creo que la cuenta está mal.",
+        "audio": "en-b1-3.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I'm sorry. Let me check it with you.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Of course. What seems to be the problem?",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Thank you for telling me. I'll bring a new bill.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "We were charged for two desserts, but we only had one.",
+        "translation": "Nos cobraron dos postres, pero solo comimos uno.",
+        "audio": "en-b1-3.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You're right. I'm sorry for the mistake.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "I see. I'll take it off the bill right away.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "I apologize. The error is mine.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "At the bank: my card doesn't work. What can I do?",
+        "translation": "En el banco: mi tarjeta no funciona. ¿Qué puedo hacer?",
+        "audio": "en-b1-3.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "We can issue a new card today.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Please show me your passport and I'll check your account.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "I'll call the card service for you.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

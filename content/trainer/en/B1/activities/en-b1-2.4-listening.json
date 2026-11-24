@@ -1,0 +1,86 @@
+{
+  "id": "en-b1-2.4-listening",
+  "skill": "listening",
+  "title": "Listen and choose 2.4",
+  "estimated_minutes": 4,
+  "lesson_id": "2.4",
+  "status": "published",
+  "role": "Guide telling a colleague what happened during a group visit",
+  "can_do": [
+    "I can tell a past event with the past simple and the past continuous.",
+    "I can link ideas with while, when, but, so and although."
+  ],
+  "items": [
+    {
+      "id": "en-b1-2.4.l1",
+      "type": "listen_choose",
+      "prompt": "What did the speaker do when it started to rain?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Waited for the bus"
+        },
+        {
+          "id": "o2",
+          "text": "Took a taxi"
+        },
+        {
+          "id": "o3",
+          "text": "Went home"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: it started to rain, so I took a taxi.",
+      "audio": "en-b1-2.4.l1"
+    },
+    {
+      "id": "en-b1-2.4.l2",
+      "type": "listen_choose",
+      "prompt": "What did they do with the tables?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Left them in the garden"
+        },
+        {
+          "id": "o2",
+          "text": "Put them away"
+        },
+        {
+          "id": "o3",
+          "text": "Moved them inside"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: we moved the tables inside.",
+      "audio": "en-b1-2.4.l2"
+    },
+    {
+      "id": "en-b1-2.4.l3",
+      "type": "listen_choose",
+      "prompt": "What did the airline give the passengers?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "A free lunch"
+        },
+        {
+          "id": "o2",
+          "text": "A new ticket"
+        },
+        {
+          "id": "o3",
+          "text": "A taxi"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: a free lunch.",
+      "audio": "en-b1-2.4.l3"
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

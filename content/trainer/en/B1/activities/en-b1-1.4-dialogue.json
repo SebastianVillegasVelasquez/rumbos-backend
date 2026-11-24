@@ -1,0 +1,197 @@
+{
+  "id": "en-b1-1.4-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 1.4",
+  "estimated_minutes": 5,
+  "lesson_id": "1.4",
+  "status": "published",
+  "role": "Events coordinator informing a client about a change of plans",
+  "can_do": [
+    "I can talk about future plans with going to, will and the present continuous.",
+    "I can apologize for a change with the present perfect."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Hello. Is the welcome party still on for Saturday?",
+        "translation": "Hola. ¿La fiesta de bienvenida sigue en pie para el sábado?",
+        "audio": "en-b1-1.4.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I'm afraid we have moved it to Sunday.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, it is going to start at seven.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "We have changed the time, and I'm sorry about that.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Why have you changed the day?",
+        "translation": "¿Por qué han cambiado el día?",
+        "audio": "en-b1-1.4.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "because"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "weather"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "rain"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "storm"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "venue"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "We have changed it because of the rain.",
+        "starters": [
+          "We have changed it because ...",
+          "Because of the ..."
+        ],
+        "word_bank": [
+          "We",
+          "have",
+          "changed",
+          "it",
+          "because",
+          "of",
+          "the",
+          "rain"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "What is going to happen with the food?",
+        "translation": "¿Qué va a pasar con la comida?",
+        "audio": "en-b1-1.4.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "The caterers are going to prepare it on Sunday.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "We will keep the same menu.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "We are meeting the caterers tomorrow to confirm it.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Have you told the other guests?",
+        "translation": "¿Les ha avisado a los demás invitados?",
+        "audio": "en-b1-1.4.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, we have emailed everyone.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Not yet, but I'm calling them this afternoon.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "We have sent a message and we will call again tomorrow.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "This is a big inconvenience for us.",
+        "translation": "Esto es un gran inconveniente para nosotros.",
+        "audio": "en-b1-1.4.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I'm terribly sorry for the inconvenience.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "I apologize. We will offer you a free drink.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "I understand, and I'm very sorry.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Fine. Please confirm the new time by email.",
+        "translation": "Bien. Por favor, confirme la nueva hora por correo.",
+        "audio": "en-b1-1.4.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. You will have it within the hour.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "I'll send it right now.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Certainly. Thank you for your understanding.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

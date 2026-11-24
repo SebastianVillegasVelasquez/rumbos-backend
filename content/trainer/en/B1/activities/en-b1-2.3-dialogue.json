@@ -1,0 +1,199 @@
+{
+  "id": "en-b1-2.3-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 2.3",
+  "estimated_minutes": 5,
+  "lesson_id": "2.3",
+  "status": "published",
+  "role": "Local host suggesting things to do to a visitor",
+  "can_do": [
+    "I can suggest activities with should and ought to.",
+    "I can recommend places with recommend + -ing."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "I have a free afternoon. What do you recommend?",
+        "translation": "Tengo una tarde libre. ¿Qué me recomienda?",
+        "audio": "en-b1-2.3.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I recommend visiting the old fort.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "You should take a walk along the seafront.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "You ought to try the local ice cream.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "What is the best time to go to the old fort?",
+        "translation": "¿Cuál es la mejor hora para ir al viejo fuerte?",
+        "audio": "en-b1-2.3.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "sunset"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "morning"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "afternoon"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "evening"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "early"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "You should go at sunset, because the view is wonderful.",
+        "starters": [
+          "You should go ...",
+          "I recommend going ..."
+        ],
+        "word_bank": [
+          "You",
+          "should",
+          "go",
+          "at",
+          "sunset",
+          "because",
+          "the",
+          "view",
+          "is",
+          "wonderful"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "I like active things. Is there something to do outdoors?",
+        "translation": "Me gustan las cosas activas. ¿Hay algo para hacer al aire libre?",
+        "audio": "en-b1-2.3.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I recommend hiking up to the lighthouse.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "You could rent a kayak. It's great fun.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "You should try the cycling route along the coast.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Where should I eat tonight?",
+        "translation": "¿Dónde debería cenar esta noche?",
+        "audio": "en-b1-2.3.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I'd recommend trying the fish restaurant by the port.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "You ought to book a table at the Casa Verde.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "You should eat at the market. It's cheap and tasty.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is it worth buying souvenirs at the market?",
+        "translation": "¿Vale la pena comprar recuerdos en el mercado?",
+        "audio": "en-b1-2.3.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, you should buy the handmade baskets.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "I recommend buying the coffee, not the T-shirts.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "It isn't necessary, but the prices are good.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you for all the tips!",
+        "translation": "¡Gracias por todos los consejos!",
+        "audio": "en-b1-2.3.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You're welcome. Enjoy your day!",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "My pleasure. I hope you have a great time.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Anytime. Don't forget the sunscreen.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

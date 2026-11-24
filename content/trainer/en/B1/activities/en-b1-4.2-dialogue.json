@@ -1,0 +1,198 @@
+{
+  "id": "en-b1-4.2-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 4.2",
+  "estimated_minutes": 5,
+  "lesson_id": "4.2",
+  "status": "published",
+  "role": "Community guide telling the story of a local tradition",
+  "can_do": [
+    "I can tell a short story about a tradition in the past.",
+    "I can order events with past tenses and connectors."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Tell me about this festival. How did it start?",
+        "translation": "Cuénteme sobre este festival. ¿Cómo empezó?",
+        "audio": "en-b1-4.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It started long ago, after a long conflict between two villages.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "It began when two families decided to share a meal.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Nobody knows exactly, but there is a famous legend.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "What happened after the conflict ended?",
+        "translation": "¿Qué pasó después de que terminó el conflicto?",
+        "audio": "en-b1-4.2.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "peace"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "shared"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "met"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "celebrated"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "friends"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "The two villages celebrated peace with a big meal.",
+        "starters": [
+          "The villages ...",
+          "People ..."
+        ],
+        "word_bank": [
+          "The",
+          "two",
+          "villages",
+          "celebrated",
+          "peace",
+          "with",
+          "a",
+          "big",
+          "meal"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Were people still angry at that time?",
+        "translation": "¿La gente seguía enojada en ese momento?",
+        "audio": "en-b1-4.2.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Some were, but most wanted to start again.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, but the elders were speaking calmly.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "No, they had already forgiven each other.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Who organized the first celebration?",
+        "translation": "¿Quién organizó la primera celebración?",
+        "audio": "en-b1-4.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "The women of both villages organized it.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "The elders had planned it for months.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "A group of young people made the plan.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Is the festival still celebrated today?",
+        "translation": "¿El festival se sigue celebrando hoy?",
+        "audio": "en-b1-4.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, every generation has kept the tradition.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, and visitors are welcome to join.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Yes, it has been celebrated for two hundred years.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "What a beautiful story. Thank you for sharing it.",
+        "translation": "Qué historia tan bonita. Gracias por compartirla.",
+        "audio": "en-b1-4.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you for listening.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "My pleasure. Stories like this keep peace alive.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "You're welcome. Enjoy the festival.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

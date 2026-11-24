@@ -1,0 +1,197 @@
+{
+  "id": "en-b1-3.2-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 3.2",
+  "estimated_minutes": 5,
+  "lesson_id": "3.2",
+  "status": "published",
+  "role": "Front-desk manager answering a guest's complaint at check-out",
+  "can_do": [
+    "I can explain a problem and ask for a solution politely.",
+    "I can respond to a complaint with an apology and an offer."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Good morning. I'd like to check out, but I have a complaint.",
+        "translation": "Buenos días. Quisiera hacer el check-out, pero tengo una queja.",
+        "audio": "en-b1-3.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. I'm sorry to hear that. What happened?",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Certainly. Please tell me about it.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "I'm sorry. How can I help you?",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "The room was very noisy at night and nobody helped us.",
+        "translation": "La habitación fue muy ruidosa por la noche y nadie nos ayudó.",
+        "audio": "en-b1-3.2.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "sorry"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "apologize"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "apologise"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "understand"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "noise"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "I'm very sorry about the noise. I apologize.",
+        "starters": [
+          "I'm very sorry ...",
+          "I apologize for ..."
+        ],
+        "word_bank": [
+          "I'm",
+          "very",
+          "sorry",
+          "about",
+          "the",
+          "noise",
+          "I",
+          "apologize"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "I called the front desk twice, and nothing happened.",
+        "translation": "Llamé a la recepción dos veces y no pasó nada.",
+        "audio": "en-b1-3.2.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "That is unacceptable. I'll speak to the night team.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "I understand why you are upset. We should have moved you.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "I see. I will make a note of this.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "What can you do to solve this?",
+        "translation": "¿Qué pueden hacer para resolverlo?",
+        "audio": "en-b1-3.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "We can offer you a ten percent discount.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "We can take one night off the bill.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "We can give you a free breakfast for your next stay.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "A discount sounds fair, but I'd like to talk to the manager.",
+        "translation": "Un descuento suena justo, pero me gustaría hablar con el gerente.",
+        "audio": "en-b1-3.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. I'll call the manager now.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Certainly. She will be here in two minutes.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "I understand. Please take a seat.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. I appreciate your help.",
+        "translation": "Gracias. Agradezco su ayuda.",
+        "audio": "en-b1-3.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Thank you for your patience. Have a safe trip.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "You're welcome. We hope to see you again.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "It's our pleasure. Goodbye.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

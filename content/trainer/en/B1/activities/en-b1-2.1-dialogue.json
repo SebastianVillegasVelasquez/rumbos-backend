@@ -1,0 +1,195 @@
+{
+  "id": "en-b1-2.1-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 2.1",
+  "estimated_minutes": 5,
+  "lesson_id": "2.1",
+  "status": "published",
+  "role": "Hotel receptionist describing the services to a new guest",
+  "can_do": [
+    "I can describe hotel services with the present passive.",
+    "I can answer a guest's questions about what is offered."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Hello. What services does the hotel offer?",
+        "translation": "Hola. ¿Qué servicios ofrece el hotel?",
+        "audio": "en-b1-2.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Free Wi-Fi is provided in every room.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Bikes can be rented at the front desk.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "A laundry service is offered every day.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Is the airport shuttle included in the price?",
+        "translation": "¿El transporte al aeropuerto está incluido en el precio?",
+        "audio": "en-b1-2.1.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "included"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "free"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "charged"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "extra"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "paid"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "No, the shuttle is charged separately.",
+        "starters": [
+          "Yes, it is ...",
+          "No, it is charged ..."
+        ],
+        "word_bank": [
+          "No",
+          "the",
+          "shuttle",
+          "is",
+          "charged",
+          "separately"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "When are the towels changed?",
+        "translation": "¿Cuándo se cambian las toallas?",
+        "audio": "en-b1-2.1.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "They are changed every morning.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "They are changed every two days to save water.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "They are changed when you ask for it.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Is dinner served in the restaurant?",
+        "translation": "¿Se sirve la cena en el restaurante?",
+        "audio": "en-b1-2.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, dinner is served from seven to ten.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, and room service is also provided.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Dinner is served only on weekends.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Where is the spa located?",
+        "translation": "¿Dónde está el spa?",
+        "audio": "en-b1-2.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "It is located on the second floor.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "It is found next to the pool.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "It is reached by the glass elevator.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. Can the luggage be kept after check-out?",
+        "translation": "Gracias. ¿Se puede guardar el equipaje después de la salida?",
+        "audio": "en-b1-2.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. Luggage is stored free of charge.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Yes, it is kept in a secure room.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Yes, but it is stored only until six.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

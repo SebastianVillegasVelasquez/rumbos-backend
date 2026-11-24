@@ -1,0 +1,86 @@
+{
+  "id": "en-b1-4.2-listening",
+  "skill": "listening",
+  "title": "Listen and choose 4.2",
+  "estimated_minutes": 4,
+  "lesson_id": "4.2",
+  "status": "published",
+  "role": "Community guide telling the story of a local tradition",
+  "can_do": [
+    "I can tell a short story about a tradition in the past.",
+    "I can order events with past tenses and connectors."
+  ],
+  "items": [
+    {
+      "id": "en-b1-4.2.l1",
+      "type": "listen_choose",
+      "prompt": "What did the leaders find?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "A boat"
+        },
+        {
+          "id": "o2",
+          "text": "A bridge"
+        },
+        {
+          "id": "o3",
+          "text": "A treasure"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: they found a bridge.",
+      "audio": "en-b1-4.2.l1"
+    },
+    {
+      "id": "en-b1-4.2.l2",
+      "type": "listen_choose",
+      "prompt": "How long did they talk before signing?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Three days"
+        },
+        {
+          "id": "o2",
+          "text": "Three years"
+        },
+        {
+          "id": "o3",
+          "text": "Three weeks"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: for three long weeks.",
+      "audio": "en-b1-4.2.l2"
+    },
+    {
+      "id": "en-b1-4.2.l3",
+      "type": "listen_choose",
+      "prompt": "What did people bring to the bridge?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Flowers"
+        },
+        {
+          "id": "o2",
+          "text": "Food"
+        },
+        {
+          "id": "o3",
+          "text": "Music"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: with flowers.",
+      "audio": "en-b1-4.2.l3"
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

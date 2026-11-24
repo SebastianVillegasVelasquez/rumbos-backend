@@ -1,0 +1,194 @@
+{
+  "id": "en-b1-1.1-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 1.1",
+  "estimated_minutes": 5,
+  "lesson_id": "1.1",
+  "status": "published",
+  "role": "Front-desk assistant helping a visitor who asks for directions and details",
+  "can_do": [
+    "I can interrupt politely and ask someone to repeat or explain.",
+    "I can ask for information with indirect questions."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Excuse me, sorry to interrupt. Do you know where the ferry dock is?",
+        "translation": "Disculpe, perdón por interrumpir. ¿Sabe dónde está el muelle del ferry?",
+        "audio": "en-b1-1.1.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, it's next to the fish market.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "I think it's behind the old fort, but I'll check.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Sorry, I'm new here. Could you ask my colleague?",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "Thanks. Could you tell me how long the walk takes?",
+        "translation": "Gracias. ¿Podría decirme cuánto dura el paseo?",
+        "audio": "en-b1-1.1.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "minutes"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "hour"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "hours"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "twenty"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "half"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "It takes about twenty minutes.",
+        "starters": [
+          "It takes about ...",
+          "It is about ... minutes"
+        ],
+        "word_bank": [
+          "It",
+          "takes",
+          "about",
+          "twenty",
+          "minutes"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Sorry, I didn't catch that. Could you repeat the street name?",
+        "translation": "Perdón, no entendí. ¿Podría repetir el nombre de la calle?",
+        "audio": "en-b1-1.1.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. It is Calle del Faro.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Sure. It is Calle del Faro, F-A-R-O.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Certainly. Let me write it down for you.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Can you tell me if the museum is open on Sundays?",
+        "translation": "¿Puede decirme si el museo abre los domingos?",
+        "audio": "en-b1-1.1.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, it opens at ten on Sundays.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "I'm not sure. I'll ask and tell you in a minute.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "No, it is closed on Sundays, but it opens on Mondays.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Do you know whether I need a ticket for the old fort?",
+        "translation": "¿Sabe si necesito entrada para el viejo fuerte?",
+        "audio": "en-b1-1.1.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, you can buy one at the gate.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "No, entry is free for visitors.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "I don't know, but I can find out for you.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "Thank you. One last thing: could you tell me who the guide is?",
+        "translation": "Gracias. Una última cosa: ¿podría decirme quién es el guía?",
+        "audio": "en-b1-1.1.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Of course. Her name is Marta.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Yes, the guide is called Mr. Pérez.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "I'll find out and let you know.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

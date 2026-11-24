@@ -1,0 +1,195 @@
+{
+  "id": "en-b1-2.2-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 2.2",
+  "estimated_minutes": 5,
+  "lesson_id": "2.2",
+  "status": "published",
+  "role": "Tour guide helping a traveler at a bus station, a bank and a border post",
+  "can_do": [
+    "I can arrange travel or accommodation and handle a simple transaction.",
+    "I can answer an official's basic questions."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "Good morning. I'd like two tickets to the capital, please.",
+        "translation": "Buenos días. Quisiera dos boletos a la capital, por favor.",
+        "audio": "en-b1-2.2.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Certainly. Single or return?",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "Of course. For which day?",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "Sure. Do you want the morning bus or the night bus?",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "A return ticket, please. How much is it?",
+        "translation": "Ida y vuelta, por favor. ¿Cuánto cuesta?",
+        "audio": "en-b1-2.2.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "pesos"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "dollars"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "total"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "each"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "per"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "It is thirty dollars in total.",
+        "starters": [
+          "It is ... dollars",
+          "The total is ..."
+        ],
+        "word_bank": [
+          "It",
+          "is",
+          "thirty",
+          "dollars",
+          "in",
+          "total"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Can I pay by card, or only in cash?",
+        "translation": "¿Puedo pagar con tarjeta o solo en efectivo?",
+        "audio": "en-b1-2.2.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "You can pay by card.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "I'm afraid it's cash only here.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "Both are fine.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Excuse me. What is the exchange rate for dollars today?",
+        "translation": "Disculpe. ¿Cuál es el tipo de cambio del dólar hoy?",
+        "audio": "en-b1-2.2.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Today it's four thousand pesos to the dollar.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "I'll check it for you. One moment, please.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "It changes every morning. Do you want to see the board?",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Welcome. What is the purpose of your visit?",
+        "translation": "Bienvenido. ¿Cuál es el motivo de su visita?",
+        "audio": "en-b1-2.2.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I'm here on vacation.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "I'm visiting friends.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "I'm here for a business meeting.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "How long are you going to stay in the country?",
+        "translation": "¿Cuánto tiempo va a quedarse en el país?",
+        "audio": "en-b1-2.2.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "For two weeks.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "Until the end of the month.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "Just a long weekend.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

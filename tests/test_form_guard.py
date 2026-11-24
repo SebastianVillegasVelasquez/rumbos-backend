@@ -67,7 +67,11 @@ async def test_a_form_of_the_same_level_still_saves(
     client: httpx.AsyncClient,
 ) -> None:
     created = await make_map(client)
-    for level, form in (("A1", "a1-form-a"), ("A2", "a2-form-a")):
+    for level, form in (
+        ("A1", "a1-form-a"),
+        ("A2", "a2-form-a"),
+        ("B1", "b1-form-a"),
+    ):
         body = {"trainer": trainer(level), "assessments": exams(form)}
         r = await put_settings(client, created["id"], body)
         assert r.status_code == 200, r.text

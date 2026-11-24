@@ -1,0 +1,218 @@
+{
+  "id": "en-b1-4.2-grammar",
+  "skill": "grammar",
+  "title": "Practice 4.2",
+  "estimated_minutes": 6,
+  "lesson_id": "4.2",
+  "status": "published",
+  "role": "Community guide telling the story of a local tradition",
+  "can_do": [
+    "I can tell a short story about a tradition in the past.",
+    "I can order events with past tenses and connectors."
+  ],
+  "items": [
+    {
+      "id": "b1-4.2.ex.01",
+      "type": "mcq",
+      "prompt": "Choose the correct story sentence.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "When the leaders arrived, the people were waiting."
+        },
+        {
+          "id": "o2",
+          "text": "When the leaders arrived, the people waited since an hour."
+        },
+        {
+          "id": "o3",
+          "text": "When the leaders were arrive, the people waited."
+        }
+      ],
+      "correct": "o1",
+      "explanation": "Past simple for the short event, past continuous for the background.",
+      "error_tags": {
+        "o2": {
+          "tag": "past_cont_simple",
+          "text": "Use were waiting for the background action."
+        },
+        "o3": {
+          "tag": "past_cont_simple",
+          "text": "Use were waiting for the background action."
+        }
+      }
+    },
+    {
+      "id": "b1-4.2.ex.02",
+      "type": "gap_fill",
+      "prompt": "Choose the correct form.",
+      "template": "They {1} for years before they made peace.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "options": [
+            {
+              "id": "o1",
+              "text": "have fought"
+            },
+            {
+              "id": "o2",
+              "text": "had fought"
+            },
+            {
+              "id": "o3",
+              "text": "fight"
+            }
+          ],
+          "correct": "o2",
+          "error_tag": {
+            "tag": "past_perfect",
+            "text": "Use had + past participle for the earlier event."
+          }
+        }
+      ],
+      "explanation": "The past perfect shows the earlier action."
+    },
+    {
+      "id": "b1-4.2.ex.03",
+      "type": "gap_fill",
+      "prompt": "Type the past simple of the verb build.",
+      "template": "Long ago, the villagers {1} a bridge of wood.",
+      "gaps": [
+        {
+          "gap_id": "1",
+          "accepted": [
+            "built"
+          ],
+          "error_tag": {
+            "tag": "irregular_past",
+            "text": "The past of build is built."
+          }
+        }
+      ],
+      "explanation": "Build is irregular: built."
+    },
+    {
+      "id": "b1-4.2.ex.04",
+      "type": "reorder",
+      "prompt": "Put the words in order.",
+      "tokens": [
+        {
+          "id": "t1",
+          "text": "After"
+        },
+        {
+          "id": "t2",
+          "text": "the"
+        },
+        {
+          "id": "t3",
+          "text": "war"
+        },
+        {
+          "id": "t4",
+          "text": "ended"
+        },
+        {
+          "id": "t5",
+          "text": "the"
+        },
+        {
+          "id": "t6",
+          "text": "villages"
+        },
+        {
+          "id": "t7",
+          "text": "celebrated"
+        },
+        {
+          "id": "t8",
+          "text": "together"
+        }
+      ],
+      "explanation": "After + past simple gives the order of events.",
+      "error_tag": {
+        "tag": "word_order",
+        "text": "Start with After."
+      }
+    },
+    {
+      "id": "b1-4.2.ex.05",
+      "type": "match",
+      "prompt": "Match each connector with its idea.",
+      "left": [
+        {
+          "id": "l1",
+          "text": "after"
+        },
+        {
+          "id": "l2",
+          "text": "before"
+        },
+        {
+          "id": "l3",
+          "text": "while"
+        },
+        {
+          "id": "l4",
+          "text": "then"
+        }
+      ],
+      "right": [
+        {
+          "id": "r1",
+          "text": "later in time"
+        },
+        {
+          "id": "r2",
+          "text": "earlier in time"
+        },
+        {
+          "id": "r3",
+          "text": "at the same time"
+        },
+        {
+          "id": "r4",
+          "text": "next"
+        }
+      ],
+      "pairs": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ],
+      "explanation": "Connectors show the order of events."
+    },
+    {
+      "id": "b1-4.2.ex.06",
+      "type": "short_answer",
+      "prompt": "Tell what the villages did after the peace. Start with After.",
+      "accepted": [
+        "After the peace the villages celebrated together",
+        "After the peace the villages celebrated",
+        "After the peace they celebrated together",
+        "After the peace they celebrated"
+      ],
+      "max_length": 68,
+      "explanation": "After + noun + past simple tells the next event."
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

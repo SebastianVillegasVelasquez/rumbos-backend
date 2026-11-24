@@ -1,0 +1,197 @@
+{
+  "id": "en-b1-3.4-dialogue",
+  "skill": "dialogue",
+  "title": "Talk it through 3.4",
+  "estimated_minutes": 5,
+  "lesson_id": "3.4",
+  "status": "published",
+  "role": "Host introducing local culture to a visitor and comparing it with the visitor's own",
+  "can_do": [
+    "I can describe local customs and traditions.",
+    "I can say how customs differ and talk about trends."
+  ],
+  "dialogue": {
+    "start": "n1",
+    "nodes": [
+      {
+        "id": "n1",
+        "partner_line": "What is a typical custom in your town?",
+        "translation": "¿Cuál es una costumbre típica en su pueblo?",
+        "audio": "en-b1-3.4.d1",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Families eat together on Sundays.",
+            "next": "n2"
+          },
+          {
+            "id": "o2",
+            "text": "We celebrate the harvest with a big festival.",
+            "next": "n2"
+          },
+          {
+            "id": "o3",
+            "text": "People greet everyone in the street.",
+            "next": "n2"
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "partner_line": "How is it different from my country?",
+        "translation": "¿En qué se diferencia de mi país?",
+        "audio": "en-b1-3.4.d2",
+        "mode": "type",
+        "accept": [
+          {
+            "all_of": [
+              "different"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "similar"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "same"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "differ"
+            ],
+            "next": "n3"
+          },
+          {
+            "all_of": [
+              "more"
+            ],
+            "next": "n3"
+          }
+        ],
+        "model_reply": "It is similar, but our festival is longer.",
+        "starters": [
+          "It is similar, but ...",
+          "It is different because ..."
+        ],
+        "word_bank": [
+          "It",
+          "is",
+          "similar",
+          "but",
+          "our",
+          "festival",
+          "is",
+          "longer"
+        ]
+      },
+      {
+        "id": "n3",
+        "partner_line": "Is the festival the same every year?",
+        "translation": "¿El festival es igual cada año?",
+        "audio": "en-b1-3.4.d3",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Mostly, but every year there are new dances.",
+            "next": "n4"
+          },
+          {
+            "id": "o2",
+            "text": "Yes, it has been the same for a hundred years.",
+            "next": "n4"
+          },
+          {
+            "id": "o3",
+            "text": "No, it grows bigger every year.",
+            "next": "n4"
+          }
+        ]
+      },
+      {
+        "id": "n4",
+        "partner_line": "Which trends are becoming popular among young people?",
+        "translation": "¿Qué tendencias se están volviendo populares entre los jóvenes?",
+        "audio": "en-b1-3.4.d4",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "More young people are wearing traditional clothes.",
+            "next": "n5"
+          },
+          {
+            "id": "o2",
+            "text": "Local food is getting more and more popular.",
+            "next": "n5"
+          },
+          {
+            "id": "o3",
+            "text": "Handmade crafts are returning.",
+            "next": "n5"
+          }
+        ]
+      },
+      {
+        "id": "n5",
+        "partner_line": "Do people still wear traditional clothes?",
+        "translation": "¿La gente todavía usa ropa tradicional?",
+        "audio": "en-b1-3.4.d5",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "Yes, especially during festivals.",
+            "next": "n6"
+          },
+          {
+            "id": "o2",
+            "text": "Not every day, but many people have a special outfit.",
+            "next": "n6"
+          },
+          {
+            "id": "o3",
+            "text": "Older people wear it more often than young people.",
+            "next": "n6"
+          }
+        ]
+      },
+      {
+        "id": "n6",
+        "partner_line": "That's interesting. I'd like to learn more.",
+        "translation": "Qué interesante. Me gustaría aprender más.",
+        "audio": "en-b1-3.4.d6",
+        "mode": "choose",
+        "options": [
+          {
+            "id": "o1",
+            "text": "I can introduce you to a local family.",
+            "next": null
+          },
+          {
+            "id": "o2",
+            "text": "You could join a workshop tomorrow.",
+            "next": null
+          },
+          {
+            "id": "o3",
+            "text": "I will show you a good book about it.",
+            "next": null
+          }
+        ]
+      }
+    ]
+  },
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

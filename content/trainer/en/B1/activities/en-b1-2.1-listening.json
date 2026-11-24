@@ -1,0 +1,86 @@
+{
+  "id": "en-b1-2.1-listening",
+  "skill": "listening",
+  "title": "Listen and choose 2.1",
+  "estimated_minutes": 4,
+  "lesson_id": "2.1",
+  "status": "published",
+  "role": "Hotel receptionist describing the services to a new guest",
+  "can_do": [
+    "I can describe hotel services with the present passive.",
+    "I can answer a guest's questions about what is offered."
+  ],
+  "items": [
+    {
+      "id": "en-b1-2.1.l1",
+      "type": "listen_choose",
+      "prompt": "When is the gym open?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "In the evening"
+        },
+        {
+          "id": "o2",
+          "text": "In the morning"
+        },
+        {
+          "id": "o3",
+          "text": "All night"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "The speaker says: from six to nine in the morning.",
+      "audio": "en-b1-2.1.l1"
+    },
+    {
+      "id": "en-b1-2.1.l2",
+      "type": "listen_choose",
+      "prompt": "How is the laundry service charged?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "By the day"
+        },
+        {
+          "id": "o2",
+          "text": "It is free"
+        },
+        {
+          "id": "o3",
+          "text": "By the kilo"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "The speaker says: it is charged by the kilo.",
+      "audio": "en-b1-2.1.l2"
+    },
+    {
+      "id": "en-b1-2.1.l3",
+      "type": "listen_choose",
+      "prompt": "Where are small dogs allowed?",
+      "options": [
+        {
+          "id": "o1",
+          "text": "In the garden rooms"
+        },
+        {
+          "id": "o2",
+          "text": "In the restaurant"
+        },
+        {
+          "id": "o3",
+          "text": "In the spa"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "The speaker says: accepted in the garden rooms.",
+      "audio": "en-b1-2.1.l3"
+    }
+  ],
+  "flags": [
+    "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
+}

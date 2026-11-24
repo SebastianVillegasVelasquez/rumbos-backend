@@ -1,0 +1,611 @@
+{
+  "status": "draft",
+  "note": "Deterministic proxy for the client's human rubric (Writing and Speaking at B1). Each criterion scores points x mean(checks), scaled by a word-count window. It can tell that the expected phrases, tense markers and linking words are present; it cannot tell that an email is formal, coherent or well spelled, and a text that lists the expected phrases scores as well as one that uses them. Speaking is delivered as a typed answer, so it never checks pronunciation. Needs pedagogical sign-off before it decides anything real.",
+  "rubrics": [
+    {
+      "id": "writing.apology_email",
+      "criteria": [
+        {
+          "id": "formal_register_and_apology",
+          "points": 2,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "dear sarah",
+                "dear ms",
+                "dear mrs",
+                "dear miss",
+                "dear sir or madam",
+                "dear"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "yours sincerely",
+                "yours faithfully",
+                "kind regards",
+                "best regards",
+                "best wishes",
+                "sincerely",
+                "regards"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "i am sorry",
+                "i'm sorry",
+                "i apologize",
+                "i apologise",
+                "we apologize",
+                "we apologise",
+                "my apologies",
+                "our apologies",
+                "apologies for",
+                "i am writing to apologize",
+                "i am writing to apologise",
+                "sorry for"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 55,
+              "max": 130,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "what_has_happened_present_perfect",
+          "points": 1,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "has been canceled",
+                "has been cancelled",
+                "have been canceled",
+                "have been cancelled",
+                "has been moved",
+                "have been moved",
+                "has been changed",
+                "have changed",
+                "have moved",
+                "have canceled",
+                "have cancelled",
+                "has changed",
+                "has moved",
+                "has been postponed",
+                "have had to",
+                "has had to"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "has been",
+                "have been",
+                "have had",
+                "has had",
+                "have moved",
+                "have changed"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 55,
+              "max": 130,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "new_plan_and_alternative",
+          "points": 1,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "going to",
+                "will",
+                "we are going to",
+                "is going to",
+                "are going to",
+                "next"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "instead",
+                "alternative",
+                "we can offer",
+                "we would like to offer",
+                "we can arrange",
+                "we will arrange",
+                "we will organize",
+                "we will organise",
+                "another",
+                "we suggest",
+                "i suggest",
+                "we can offer you"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 55,
+              "max": 130,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "sentences_and_linking",
+          "points": 1,
+          "checks": [
+            {
+              "check": "sentence_terminals_at_least",
+              "on": [
+                "q1"
+              ],
+              "min": 4
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "however",
+                "because",
+                "so",
+                "but",
+                "although",
+                "therefore",
+                "as a result",
+                "also",
+                "and",
+                "while",
+                "whereas",
+                "then",
+                "after",
+                "when"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 55,
+              "max": 130,
+              "multiplier": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "writing.balanced_report",
+      "criteria": [
+        {
+          "id": "past_simple_and_continuous",
+          "points": 2,
+          "checks": [
+            {
+              "check": "past_verbs_at_least",
+              "on": [
+                "q1"
+              ],
+              "min": 4,
+              "phrases": [
+                "went",
+                "saw",
+                "ate",
+                "had",
+                "took",
+                "made",
+                "got",
+                "came",
+                "gave",
+                "bought",
+                "was",
+                "were",
+                "did",
+                "said",
+                "found",
+                "left",
+                "paid",
+                "sat",
+                "stood",
+                "lost",
+                "felt",
+                "told",
+                "thought",
+                "brought",
+                "began",
+                "knew",
+                "heard",
+                "kept",
+                "sent",
+                "built",
+                "fell",
+                "ran",
+                "met",
+                "held",
+                "became",
+                "wrote",
+                "spoke",
+                "understood"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "was raining",
+                "was blowing",
+                "was getting",
+                "was working",
+                "was waiting",
+                "was happening",
+                "was falling",
+                "was helping",
+                "was cooking",
+                "was trying",
+                "was sitting",
+                "was walking",
+                "were waiting",
+                "were walking",
+                "were working",
+                "were having",
+                "were trying",
+                "were helping",
+                "were doing",
+                "were sitting",
+                "were cooking",
+                "were preparing",
+                "were standing",
+                "were talking",
+                "were playing",
+                "were looking"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "while",
+                "when",
+                "as"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 55,
+              "max": 130,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "contrast_connectors",
+          "points": 1,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "although",
+                "however",
+                "but",
+                "whereas",
+                "on the other hand",
+                "despite",
+                "in spite of",
+                "even though"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 55,
+              "max": 130,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "positive_outcome",
+          "points": 1,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "resilience",
+                "resilient",
+                "together",
+                "solved",
+                "helped",
+                "peace",
+                "united",
+                "support",
+                "supported",
+                "shared",
+                "community",
+                "neighbours",
+                "neighbors",
+                "volunteers",
+                "came together",
+                "worked together"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 55,
+              "max": 130,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "comparison_and_sentences",
+          "points": 1,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "than",
+                "as good as",
+                "as bad as",
+                "as big as",
+                "as strong as",
+                "as quickly as"
+              ]
+            },
+            {
+              "check": "sentence_terminals_at_least",
+              "on": [
+                "q1"
+              ],
+              "min": 4
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 55,
+              "max": 130,
+              "multiplier": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "speaking.clarify_compare_recommend_written",
+      "criteria": [
+        {
+          "id": "indirect_question",
+          "points": 2,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "could you tell me",
+                "can you tell me",
+                "would you tell me",
+                "do you know",
+                "i was wondering if",
+                "would you mind telling me",
+                "i would like to know",
+                "i'd like to know",
+                "could you explain"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "tell me where",
+                "tell me what",
+                "tell me when",
+                "tell me how",
+                "tell me if",
+                "tell me whether",
+                "know where",
+                "know what",
+                "know when",
+                "know how",
+                "know if",
+                "know whether",
+                "wondering if",
+                "wondering whether"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "please",
+                "sorry",
+                "excuse me",
+                "i'm sorry",
+                "i apologize",
+                "i apologise",
+                "thank you"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 25,
+              "max": 150,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "comparison",
+          "points": 1,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "than",
+                "not as",
+                "as good as",
+                "as cheap as",
+                "as expensive as",
+                "as big as",
+                "as quiet as",
+                "as crowded as",
+                "as long as",
+                "as far as",
+                "whereas"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 25,
+              "max": 150,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "recommendation_with_relative_clause",
+          "points": 1,
+          "checks": [
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "i recommend",
+                "i would recommend",
+                "i'd recommend",
+                "i suggest",
+                "you should",
+                "you ought to",
+                "my recommendation"
+              ]
+            },
+            {
+              "check": "uses_model_phrase",
+              "on": [
+                "q1"
+              ],
+              "phrases": [
+                "which",
+                "who",
+                "that",
+                "where"
+              ]
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 25,
+              "max": 150,
+              "multiplier": true
+            }
+          ]
+        },
+        {
+          "id": "intelligibility",
+          "points": 1,
+          "checks": [
+            {
+              "check": "sentence_terminals_at_least",
+              "on": [
+                "q1"
+              ],
+              "min": 3
+            },
+            {
+              "check": "word_count_between",
+              "on": [
+                "q1"
+              ],
+              "min": 25,
+              "max": 150,
+              "multiplier": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
