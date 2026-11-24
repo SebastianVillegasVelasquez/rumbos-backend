@@ -15,16 +15,19 @@ audit's decision on the receiving endpoint); `fake` is for development.
 import argparse
 import asyncio
 import sys
+import uuid
 from collections import Counter
 from collections.abc import Callable, Sequence
 from datetime import UTC, datetime
 
+import httpx
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import Settings, get_settings
 from app.core.database import create_engine
-from app.models import PassbackOutbox
+from app.models import MirrorDefinition, PassbackOutbox, Tenant
+from app.passback.http import HttpMirrorPort
 from app.passback.port import FakeMoodleResultPort, MoodleResultPort
 from app.passback.worker import sync_reconcile, sync_run
 from app.tenancy.scope import SYSTEM, bind_scope
@@ -36,6 +39,16 @@ def port_for(settings: Settings) -> MoodleResultPort | None:
     return None
 
 
+async def mirror_endpoints(session: AsyncSession) -> dict[uuid.UUID, str]:
+    """The tenants that have a mirror endpoint, and where it is."""
+    rows = await session.execute(
+        select(Tenant.id, Tenant.mirror_endpoint).where(
+            Tenant.mirror_endpoint.is_not(None)
+        )
+    )
+    return {tenant_id: url for tenant_id, url in rows if url}
+
+
 async def status(
     session: AsyncSession, out: Callable[[str], None] = print
 ) -> Counter[str]:
@@ -44,6 +57,11 @@ async def status(
     )
     for key in sorted(counts):
         out(f"{key}: {counts[key]}")
+    definitions: Counter[str] = Counter(
+        (await session.scalars(select(MirrorDefinition.status))).all()
+    )
+    for key in sorted(definitions):
+        out(f"definitions {key}: {definitions[key]}")
     return counts
 
 
@@ -59,8 +77,18 @@ async def _main(argv: Sequence[str] | None) -> int:
             if args.command == "status":
                 await status(session)
                 return 0
-            port = port_for(settings)
             key = settings.passback_signing_key_pem
+            tenants: set[uuid.UUID] | None = None
+            client: httpx.AsyncClient | None = None
+            port: MoodleResultPort | None
+            if settings.passback_sender == "http":
+                endpoints = await mirror_endpoints(session)
+                client = httpx.AsyncClient(
+                    timeout=settings.passback_http_timeout_seconds
+                )
+                port, tenants = HttpMirrorPort(client, endpoints), set(endpoints)
+            else:
+                port = port_for(settings)
             if port is None or key is None:
                 print(
                     "Nothing sent: set PASSBACK_SENDER and PASSBACK_SIGNING_KEY_PEM "
@@ -68,12 +96,21 @@ async def _main(argv: Sequence[str] | None) -> int:
                 )
                 return 0
             now = datetime.now(UTC)
-            if args.command == "sync-run":
-                await sync_run(
-                    session, port, key.get_secret_value(), settings.passback_key_id, now
-                )
-            else:
-                await sync_reconcile(session, port, now)
+            try:
+                if args.command == "sync-run":
+                    await sync_run(
+                        session,
+                        port,
+                        key.get_secret_value(),
+                        settings.passback_key_id,
+                        now,
+                        tenants=tenants,
+                    )
+                else:
+                    await sync_reconcile(session, port, now)
+            finally:
+                if client is not None:
+                    await client.aclose()
     finally:
         await engine.dispose()
     return 0

@@ -185,9 +185,10 @@ the same validators, with the same error shape (`422 welcome_invalid`, paths
 under `closing.`). `null` or absent: there is no closing flow, and the map is
 stored and hashed exactly as before (`to_stored()` leaves the key out).
 
-What it may hold: **content steps** (`html`, `pdf`, `video`, same rules as in
-the welcome flow) and at most one `assessment` step with `purpose: "final"`.
-Refused: the `welcome` greeting and the Moodle `quiz` step
+What it may hold: every content step the welcome flow has (`html`, `pdf`,
+`video` and the Moodle `quiz` step, same rules and limits, one shared validator
+table in `app.welcome_flow.flow`) and at most one `assessment` step with
+`purpose: "final"`. Refused: the `welcome` greeting
 (`step_type_not_allowed`), an assessment step with another purpose
 (`assessment_purpose`, which also refuses `final` in the welcome flow), and a
 closing flow without steps (`closing_needs_steps`). Steps reorder freely.
@@ -204,8 +205,24 @@ the key, so a key shared by a welcome step and a closing step would share one
 row. The duplicate is reported at `closing.steps[i].key`.
 
 The PDFs of the closing flow are listed in `welcomeDocuments` next to those of
-the welcome flow, and the assets of both keep a publication or a draft from
-losing them.
+the welcome flow (welcome steps first, then closing ones, each document once),
+in the editor read, the publication read and the published read, resolved by the
+same code as the welcome ones (`usable_documents`, read live, `available: false`
+when the asset is gone). The assets of both flows keep a publication or a draft
+from losing them. The frontend therefore needs no second list.
+
+**The OpenAPI tells the two flows apart.** `MapSettings.closing` is the
+`ClosingFlow` schema: its `steps` offer `video`, `html`, `pdf`, `quiz` and an
+`assessment` step whose `purpose` is `final`, and not the `welcome` greeting.
+At runtime a step outside that is still reported as a `{path, code, message}`
+problem (`422 welcome_invalid`), never as a generic validation error, so the
+error shape is the welcome flow's. Maps stored before this load unchanged.
+
+**Where the closing progress lives.** The backend stores none of it: which
+steps a student has seen or acknowledged is kept in Moodle (`format_rumbos_flow`,
+D29), keyed by course, user, map and step key. No endpoint is needed or planned.
+The only closing state the backend answers is the final exam's, through
+`GET /trainer/closing`.
 
 **Not decided here: when the level is finished.** The backend has no such
 signal, and per-student progress of the flows lives in Moodle (see

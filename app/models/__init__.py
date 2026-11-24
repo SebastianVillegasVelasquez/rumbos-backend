@@ -10,7 +10,7 @@ from app.models.auth import AccessToken, AuthORM, UsedJti
 from app.models.base import BaseORM
 from app.models.bubble import Bubble
 from app.models.course_map import CourseMap
-from app.models.passback import CompletionAudit, PassbackOutbox
+from app.models.passback import CompletionAudit, MirrorDefinition, PassbackOutbox
 from app.models.practice import (
     PracticeAnswer,
     PracticeReport,
@@ -36,6 +36,7 @@ __all__ = [
     "CourseMap",
     "CourseMapSkinRule",
     "CourseMapView3dBinding",
+    "MirrorDefinition",
     "PassbackOutbox",
     "PracticeAnswer",
     "PracticeReport",

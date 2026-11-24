@@ -1,0 +1,28 @@
+{
+  "description": "Result passback, schema 1: what the backend has sent since the passback was built (no `schema` claim).",
+  "header": {
+    "alg": "ES256",
+    "kid": "vectors-1",
+    "typ": "JWT"
+  },
+  "claims": {
+    "iss": "rumbos-backend",
+    "aud": "moodle",
+    "iat": 1795000000,
+    "jti": "0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5c",
+    "sub": "s-4f9d2c",
+    "tenant": "0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b",
+    "course_id": 7,
+    "purpose": "final",
+    "ordinal": 1,
+    "form_id": "synthetic",
+    "content_version": "0123456789abcdef",
+    "percent": "80.20",
+    "passed": true,
+    "completes_course": true,
+    "pass_percent": 80,
+    "pass_operator": "gt",
+    "finished_at": "2026-11-18T10:13:20+00:00"
+  },
+  "jws": "eyJhbGciOiJFUzI1NiIsImtpZCI6InZlY3RvcnMtMSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJydW1ib3MtYmFja2VuZCIsImF1ZCI6Im1vb2RsZSIsImlhdCI6MTc5NTAwMDAwMCwianRpIjoiMDE5MGExYjItYzNkNC03ZTVmLThhOWItMGMxZDJlM2Y0YTVjIiwic3ViIjoicy00ZjlkMmMiLCJ0ZW5hbnQiOiIwMTkwYTFiMi1jM2Q0LTdlNWYtOGE5Yi0wYzFkMmUzZjRhNWIiLCJjb3Vyc2VfaWQiOjcsInB1cnBvc2UiOiJmaW5hbCIsIm9yZGluYWwiOjEsImZvcm1faWQiOiJzeW50aGV0aWMiLCJjb250ZW50X3ZlcnNpb24iOiIwMTIzNDU2Nzg5YWJjZGVmIiwicGVyY2VudCI6IjgwLjIwIiwicGFzc2VkIjp0cnVlLCJjb21wbGV0ZXNfY291cnNlIjp0cnVlLCJwYXNzX3BlcmNlbnQiOjgwLCJwYXNzX29wZXJhdG9yIjoiZ3QiLCJmaW5pc2hlZF9hdCI6IjIwMjYtMTEtMThUMTA6MTM6MjArMDA6MDAifQ.Km0PW8Exmi6CVtmPLXqytM106hrcNznskDJHAES9j7h0_xSDTpkD7TkCpnF6un3EF35K_3mU4Qbhu6s3ageM7A"
+}

@@ -15,13 +15,24 @@ from sqlalchemy import delete, func, select, update
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
+from uuid_utils.compat import uuid7
 
 from app.models import (
     AssessmentAnswer,
     AssessmentAttempt,
     CompletionAudit,
+    MirrorDefinition,
     PassbackOutbox,
+    Tenant,
 )
+
+
+@dataclass(frozen=True)
+class MirrorConfig:
+    """A tenant's mirror switch: where it goes, and whether student text may."""
+
+    endpoint: str
+    written_text: bool
 
 
 @dataclass(frozen=True)
@@ -266,6 +277,57 @@ class SqlAlchemyAssessmentRepository:
                 )
             await self._session.commit()
             return closed
+        except BaseException:
+            await self._session.rollback()
+            raise
+
+    async def mirror_config(self, tenant_id: uuid.UUID) -> MirrorConfig | None:
+        """The tenant's mirror settings, or None while its mirror is off."""
+        row = (
+            await self._session.execute(
+                select(Tenant.mirror_endpoint, Tenant.mirror_written_text).where(
+                    Tenant.id == tenant_id
+                )
+            )
+        ).first()
+        await self._session.rollback()
+        if row is None or not row[0]:
+            return None
+        return MirrorConfig(endpoint=row[0], written_text=bool(row[1]))
+
+    async def ensure_definition(
+        self,
+        *,
+        tenant_id: uuid.UUID,
+        form_id: str,
+        definition_hash: str,
+        content_version: str,
+        statement: Mapping[str, Any],
+        now: datetime,
+    ) -> None:
+        """Queues the definition for the plugin, once: a form that did not
+        change (same hash) is already there and stays as it is."""
+        try:
+            await self._session.execute(
+                pg_insert(MirrorDefinition)
+                .values(
+                    id=uuid7(),
+                    created_at=now,
+                    updated_at=now,
+                    tenant_id=tenant_id,
+                    form_id=form_id,
+                    definition_hash=definition_hash,
+                    content_version=content_version,
+                    statement=dict(statement),
+                    status="pending",
+                    attempts=0,
+                    next_try_at=now,
+                )
+                .on_conflict_do_nothing(
+                    index_elements=["tenant_id", "form_id", "definition_hash"]
+                )
+            )
+            await self._session.commit()
         except BaseException:
             await self._session.rollback()
             raise

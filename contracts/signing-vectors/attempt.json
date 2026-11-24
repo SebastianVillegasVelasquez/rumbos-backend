@@ -1,0 +1,194 @@
+{
+  "description": "Attempt record for the mirror, schema 2 (a superset of the result claims).",
+  "header": {
+    "alg": "ES256",
+    "kid": "vectors-1",
+    "typ": "JWT"
+  },
+  "claims": {
+    "iss": "rumbos-backend",
+    "aud": "moodle",
+    "iat": 1795000000,
+    "jti": "0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5c",
+    "sub": "s-4f9d2c",
+    "tenant": "0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b",
+    "course_id": 7,
+    "purpose": "final",
+    "ordinal": 1,
+    "form_id": "synthetic",
+    "content_version": "0123456789abcdef",
+    "percent": "80.20",
+    "passed": true,
+    "completes_course": true,
+    "pass_percent": 80,
+    "pass_operator": "gt",
+    "finished_at": "2026-11-18T10:13:20+00:00",
+    "schema": 2,
+    "kind": "attempt",
+    "status": "submitted",
+    "definition_hash": "0c0ba813736770275f7c03fd99497ec6bea52800fee5cdd2175764d9290e2f31",
+    "percent_exact": "401/5",
+    "sections": [
+      {
+        "key": "listening",
+        "points_exact": "7",
+        "max": 10,
+        "weight": 49,
+        "percent_exact": "70"
+      },
+      {
+        "key": "reading",
+        "points_exact": "9",
+        "max": 10,
+        "weight": 51,
+        "percent_exact": "90"
+      }
+    ],
+    "answers": [
+      {
+        "question_id": "listening.q0",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "listening.q1",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "listening.q2",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "listening.q3",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "listening.q4",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "listening.q5",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "listening.q6",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "listening.q7",
+        "answer": "b",
+        "correct": false,
+        "points_exact": "0",
+        "max_points": 1
+      },
+      {
+        "question_id": "listening.q8",
+        "answer": "b",
+        "correct": false,
+        "points_exact": "0",
+        "max_points": 1
+      },
+      {
+        "question_id": "listening.q9",
+        "answer": "b",
+        "correct": false,
+        "points_exact": "0",
+        "max_points": 1
+      },
+      {
+        "question_id": "reading.q0",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "reading.q1",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "reading.q2",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "reading.q3",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "reading.q4",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "reading.q5",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "reading.q6",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "reading.q7",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "reading.q8",
+        "answer": "a",
+        "correct": true,
+        "points_exact": "1",
+        "max_points": 1
+      },
+      {
+        "question_id": "reading.q9",
+        "answer": "b",
+        "correct": false,
+        "points_exact": "0",
+        "max_points": 1
+      }
+    ],
+    "written": [],
+    "written_text_included": false,
+    "truncated": false
+  },
+  "jws": "eyJhbGciOiJFUzI1NiIsImtpZCI6InZlY3RvcnMtMSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJydW1ib3MtYmFja2VuZCIsImF1ZCI6Im1vb2RsZSIsImlhdCI6MTc5NTAwMDAwMCwianRpIjoiMDE5MGExYjItYzNkNC03ZTVmLThhOWItMGMxZDJlM2Y0YTVjIiwic3ViIjoicy00ZjlkMmMiLCJ0ZW5hbnQiOiIwMTkwYTFiMi1jM2Q0LTdlNWYtOGE5Yi0wYzFkMmUzZjRhNWIiLCJjb3Vyc2VfaWQiOjcsInB1cnBvc2UiOiJmaW5hbCIsIm9yZGluYWwiOjEsImZvcm1faWQiOiJzeW50aGV0aWMiLCJjb250ZW50X3ZlcnNpb24iOiIwMTIzNDU2Nzg5YWJjZGVmIiwicGVyY2VudCI6IjgwLjIwIiwicGFzc2VkIjp0cnVlLCJjb21wbGV0ZXNfY291cnNlIjp0cnVlLCJwYXNzX3BlcmNlbnQiOjgwLCJwYXNzX29wZXJhdG9yIjoiZ3QiLCJmaW5pc2hlZF9hdCI6IjIwMjYtMTEtMThUMTA6MTM6MjArMDA6MDAiLCJzY2hlbWEiOjIsImtpbmQiOiJhdHRlbXB0Iiwic3RhdHVzIjoic3VibWl0dGVkIiwiZGVmaW5pdGlvbl9oYXNoIjoiMGMwYmE4MTM3MzY3NzAyNzVmN2MwM2ZkOTk0OTdlYzZiZWE1MjgwMGZlZTVjZGQyMTc1NzY0ZDkyOTBlMmYzMSIsInBlcmNlbnRfZXhhY3QiOiI0MDEvNSIsInNlY3Rpb25zIjpbeyJrZXkiOiJsaXN0ZW5pbmciLCJwb2ludHNfZXhhY3QiOiI3IiwibWF4IjoxMCwid2VpZ2h0Ijo0OSwicGVyY2VudF9leGFjdCI6IjcwIn0seyJrZXkiOiJyZWFkaW5nIiwicG9pbnRzX2V4YWN0IjoiOSIsIm1heCI6MTAsIndlaWdodCI6NTEsInBlcmNlbnRfZXhhY3QiOiI5MCJ9XSwiYW5zd2VycyI6W3sicXVlc3Rpb25faWQiOiJsaXN0ZW5pbmcucTAiLCJhbnN3ZXIiOiJhIiwiY29ycmVjdCI6dHJ1ZSwicG9pbnRzX2V4YWN0IjoiMSIsIm1heF9wb2ludHMiOjF9LHsicXVlc3Rpb25faWQiOiJsaXN0ZW5pbmcucTEiLCJhbnN3ZXIiOiJhIiwiY29ycmVjdCI6dHJ1ZSwicG9pbnRzX2V4YWN0IjoiMSIsIm1heF9wb2ludHMiOjF9LHsicXVlc3Rpb25faWQiOiJsaXN0ZW5pbmcucTIiLCJhbnN3ZXIiOiJhIiwiY29ycmVjdCI6dHJ1ZSwicG9pbnRzX2V4YWN0IjoiMSIsIm1heF9wb2ludHMiOjF9LHsicXVlc3Rpb25faWQiOiJsaXN0ZW5pbmcucTMiLCJhbnN3ZXIiOiJhIiwiY29ycmVjdCI6dHJ1ZSwicG9pbnRzX2V4YWN0IjoiMSIsIm1heF9wb2ludHMiOjF9LHsicXVlc3Rpb25faWQiOiJsaXN0ZW5pbmcucTQiLCJhbnN3ZXIiOiJhIiwiY29ycmVjdCI6dHJ1ZSwicG9pbnRzX2V4YWN0IjoiMSIsIm1heF9wb2ludHMiOjF9LHsicXVlc3Rpb25faWQiOiJsaXN0ZW5pbmcucTUiLCJhbnN3ZXIiOiJhIiwiY29ycmVjdCI6dHJ1ZSwicG9pbnRzX2V4YWN0IjoiMSIsIm1heF9wb2ludHMiOjF9LHsicXVlc3Rpb25faWQiOiJsaXN0ZW5pbmcucTYiLCJhbnN3ZXIiOiJhIiwiY29ycmVjdCI6dHJ1ZSwicG9pbnRzX2V4YWN0IjoiMSIsIm1heF9wb2ludHMiOjF9LHsicXVlc3Rpb25faWQiOiJsaXN0ZW5pbmcucTciLCJhbnN3ZXIiOiJiIiwiY29ycmVjdCI6ZmFsc2UsInBvaW50c19leGFjdCI6IjAiLCJtYXhfcG9pbnRzIjoxfSx7InF1ZXN0aW9uX2lkIjoibGlzdGVuaW5nLnE4IiwiYW5zd2VyIjoiYiIsImNvcnJlY3QiOmZhbHNlLCJwb2ludHNfZXhhY3QiOiIwIiwibWF4X3BvaW50cyI6MX0seyJxdWVzdGlvbl9pZCI6Imxpc3RlbmluZy5xOSIsImFuc3dlciI6ImIiLCJjb3JyZWN0IjpmYWxzZSwicG9pbnRzX2V4YWN0IjoiMCIsIm1heF9wb2ludHMiOjF9LHsicXVlc3Rpb25faWQiOiJyZWFkaW5nLnEwIiwiYW5zd2VyIjoiYSIsImNvcnJlY3QiOnRydWUsInBvaW50c19leGFjdCI6IjEiLCJtYXhfcG9pbnRzIjoxfSx7InF1ZXN0aW9uX2lkIjoicmVhZGluZy5xMSIsImFuc3dlciI6ImEiLCJjb3JyZWN0Ijp0cnVlLCJwb2ludHNfZXhhY3QiOiIxIiwibWF4X3BvaW50cyI6MX0seyJxdWVzdGlvbl9pZCI6InJlYWRpbmcucTIiLCJhbnN3ZXIiOiJhIiwiY29ycmVjdCI6dHJ1ZSwicG9pbnRzX2V4YWN0IjoiMSIsIm1heF9wb2ludHMiOjF9LHsicXVlc3Rpb25faWQiOiJyZWFkaW5nLnEzIiwiYW5zd2VyIjoiYSIsImNvcnJlY3QiOnRydWUsInBvaW50c19leGFjdCI6IjEiLCJtYXhfcG9pbnRzIjoxfSx7InF1ZXN0aW9uX2lkIjoicmVhZGluZy5xNCIsImFuc3dlciI6ImEiLCJjb3JyZWN0Ijp0cnVlLCJwb2ludHNfZXhhY3QiOiIxIiwibWF4X3BvaW50cyI6MX0seyJxdWVzdGlvbl9pZCI6InJlYWRpbmcucTUiLCJhbnN3ZXIiOiJhIiwiY29ycmVjdCI6dHJ1ZSwicG9pbnRzX2V4YWN0IjoiMSIsIm1heF9wb2ludHMiOjF9LHsicXVlc3Rpb25faWQiOiJyZWFkaW5nLnE2IiwiYW5zd2VyIjoiYSIsImNvcnJlY3QiOnRydWUsInBvaW50c19leGFjdCI6IjEiLCJtYXhfcG9pbnRzIjoxfSx7InF1ZXN0aW9uX2lkIjoicmVhZGluZy5xNyIsImFuc3dlciI6ImEiLCJjb3JyZWN0Ijp0cnVlLCJwb2ludHNfZXhhY3QiOiIxIiwibWF4X3BvaW50cyI6MX0seyJxdWVzdGlvbl9pZCI6InJlYWRpbmcucTgiLCJhbnN3ZXIiOiJhIiwiY29ycmVjdCI6dHJ1ZSwicG9pbnRzX2V4YWN0IjoiMSIsIm1heF9wb2ludHMiOjF9LHsicXVlc3Rpb25faWQiOiJyZWFkaW5nLnE5IiwiYW5zd2VyIjoiYiIsImNvcnJlY3QiOmZhbHNlLCJwb2ludHNfZXhhY3QiOiIwIiwibWF4X3BvaW50cyI6MX1dLCJ3cml0dGVuIjpbXSwid3JpdHRlbl90ZXh0X2luY2x1ZGVkIjpmYWxzZSwidHJ1bmNhdGVkIjpmYWxzZX0.QTZKEdmkSCFDwsFAU4EEGpcYcgJc1b8T_E3HPT9A9GuBAL1pU9Y2CyLQHs7sYoIumUnFTluoUpah2-37w-9hLg"
+}

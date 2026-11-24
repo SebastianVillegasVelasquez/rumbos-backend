@@ -1,0 +1,400 @@
+{
+  "iss": "rumbos-backend",
+  "aud": "moodle",
+  "iat": 1795000000,
+  "jti": "0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a60",
+  "sub": "s-4f9d2c",
+  "tenant": "0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b",
+  "course_id": 7,
+  "purpose": "final",
+  "ordinal": 1,
+  "form_id": "b2-form-a",
+  "content_version": "0123456789abcdef",
+  "percent": "73.00",
+  "passed": false,
+  "completes_course": false,
+  "pass_percent": 80,
+  "pass_operator": "gt",
+  "finished_at": "2026-11-18T10:13:20+00:00",
+  "schema": 2,
+  "kind": "attempt",
+  "status": "submitted",
+  "definition_hash": "6406d8f6d0b5d8e75234f19add567587078a39f79e6135ce2a171964e6439cd2",
+  "percent_exact": "73",
+  "sections": [
+    {
+      "key": "listening",
+      "points_exact": "15",
+      "max": 15,
+      "weight": 25,
+      "percent_exact": "100"
+    },
+    {
+      "key": "reading",
+      "points_exact": "15",
+      "max": 15,
+      "weight": 25,
+      "percent_exact": "100"
+    },
+    {
+      "key": "use_of_english",
+      "points_exact": "15",
+      "max": 15,
+      "weight": 20,
+      "percent_exact": "100"
+    },
+    {
+      "key": "writing",
+      "points_exact": "0",
+      "max": 10,
+      "weight": 15,
+      "percent_exact": "0"
+    },
+    {
+      "key": "speaking",
+      "points_exact": "1",
+      "max": 5,
+      "weight": 15,
+      "percent_exact": "20"
+    }
+  ],
+  "answers": [
+    {
+      "question_id": "b2-fa-l-01",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-l-02",
+      "answer": "b",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-l-03",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-l-04",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-l-05",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-l-06",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-l-07",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-l-08",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-l-09",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-l-10",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-l-11:0",
+      "answer": "chaired_negotiation",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-l-11:1",
+      "answer": "consular_theft_report",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-l-11:2",
+      "answer": "certainty_briefing",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-l-11:3",
+      "answer": "sustainable_tourism_symposium",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-l-11:4",
+      "answer": "ota_compliance_call",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-01",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-02",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-03",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-04",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-05",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-06",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-07",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-08",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-09",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-10",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-11",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-12",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-13",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-14",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-r-15",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-01",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-02",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-03",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-04",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-05",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-06",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-07",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-08",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-09",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-10",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-11",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-12",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-13",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-14",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    },
+    {
+      "question_id": "b2-fa-u-15",
+      "answer": "a",
+      "correct": true,
+      "points_exact": "1",
+      "max_points": 1
+    }
+  ],
+  "written": [
+    {
+      "question_id": "b2-fa-w-01",
+      "points_exact": "0",
+      "max_points": 5,
+      "text": null
+    },
+    {
+      "question_id": "b2-fa-w-02",
+      "points_exact": "0",
+      "max_points": 5,
+      "text": null
+    },
+    {
+      "question_id": "b2-fa-s-02",
+      "points_exact": "1",
+      "max_points": 5,
+      "text": null
+    }
+  ],
+  "written_text_included": false,
+  "truncated": false
+}

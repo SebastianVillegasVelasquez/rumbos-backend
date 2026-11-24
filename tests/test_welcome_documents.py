@@ -2,6 +2,7 @@
 saved, it keeps the document from being deleted (draft or publication), and
 `welcomeDocuments` is read live without touching snapshots or hashes."""
 
+import uuid
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
@@ -395,3 +396,43 @@ async def test_a_flow_without_documents_publishes_the_same_hash_as_before(
     await put_settings(client, created["id"], {"welcome": None})
 
     assert (await state(client, created["id"]))["draftHash"] == before["draftHash"]
+
+
+# --- the closing flow resolves documents like the welcome flow ---------------------------
+
+
+async def test_a_closing_pdf_is_listed_with_the_welcome_ones(
+    client: httpx.AsyncClient,
+) -> None:
+    welcome_doc = await a_document(client)
+    closing_doc = await a_document(client, build_pdf(pages=2))
+    created = await make_map(client)
+    r = await put_settings(
+        client,
+        created["id"],
+        {
+            "welcome": {"steps": [pdf_step(welcome_doc["id"], "documento1")]},
+            "closing": {"steps": [pdf_step(closing_doc["id"], "documento2")]},
+        },
+    )
+    assert r.status_code == 200, r.text
+    listed = (await full_map(client, created["id"]))["welcomeDocuments"]
+    assert [(d["assetId"], d["available"]) for d in listed] == [
+        (welcome_doc["id"], True),
+        (closing_doc["id"], True),
+    ]
+    assert listed[1]["pageCount"] == 2
+
+
+async def test_a_closing_pdf_that_does_not_exist_is_refused(
+    client: httpx.AsyncClient,
+) -> None:
+    created = await make_map(client)
+    r = await put_settings(
+        client,
+        created["id"],
+        {"closing": {"steps": [pdf_step(str(uuid.uuid4()))]}},
+    )
+    assert r.status_code == 422
+    problems = [(p["path"], p["code"]) for p in r.json()["detail"]["problems"]]
+    assert problems == [("closing.steps[0].assetId", "document_unavailable")]

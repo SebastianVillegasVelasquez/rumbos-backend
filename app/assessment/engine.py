@@ -49,6 +49,11 @@ def option_id(form_id: str, item_id: str, source_id: str) -> str:
     return "o" + _token(form_id, item_id, source_id)
 
 
+def clip_id(form_id: str, item_id: str, clip_index: int) -> str:
+    """The id a student's matching answer uses for a clip, opaque like options."""
+    return "c" + _token(form_id, item_id, str(clip_index))
+
+
 def _rng(seed: str, *parts: str) -> random.Random:
     digest = hashlib.sha256("|".join((seed, *parts)).encode()).digest()
     return random.Random(int.from_bytes(digest[:8], "big"))
@@ -113,7 +118,7 @@ def _item_view(
     elif isinstance(item, MatchAudioItem):
         rng = _rng(seed, item.item_id)
         clips = [
-            {"id": "c" + _token(form_id, item.item_id, str(i)), "audio": audio(c.audio)}
+            {"id": clip_id(form_id, item.item_id, i), "audio": audio(c.audio)}
             for i, c in enumerate(item.clips)
         ]
         base["clips"] = _shuffled(clips, rng)
@@ -212,9 +217,7 @@ def clean_response(
         return {"option_id": chosen}
     if isinstance(item, MatchAudioItem):
         pairs = response.get("pairs")
-        clips = {
-            "c" + _token(form_id, item.item_id, str(i)) for i in range(len(item.clips))
-        }
+        clips = {clip_id(form_id, item.item_id, i) for i in range(len(item.clips))}
         places = {p.id for p in item.places}
         if not isinstance(pairs, list):
             raise InvalidResponseError("pairs must be a list")
@@ -257,10 +260,7 @@ def _objective_points(
         right = option_id(form_id, item.item_id, item.key)
         return Fraction(int(response.get("option_id") == right))
     assert isinstance(item, MatchAudioItem)
-    wanted = {
-        "c" + _token(form_id, item.item_id, str(index)): place
-        for index, place in item.key
-    }
+    wanted = {clip_id(form_id, item.item_id, index): place for index, place in item.key}
     given = {p[0]: p[1] for p in response.get("pairs", [])}
     return Fraction(
         sum(1 for clip, place in wanted.items() if given.get(clip) == place)

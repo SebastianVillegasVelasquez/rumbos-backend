@@ -1,0 +1,107 @@
+{
+  "additionalProperties": false,
+  "description": "Result passback, schema 1 (no `schema` claim).",
+  "properties": {
+    "iss": {
+      "title": "Iss",
+      "type": "string"
+    },
+    "aud": {
+      "const": "moodle",
+      "title": "Aud",
+      "type": "string"
+    },
+    "iat": {
+      "description": "When it was created. There is no `exp`.",
+      "title": "Iat",
+      "type": "integer"
+    },
+    "jti": {
+      "description": "Accept each `jti` once; a repeat is a duplicate",
+      "title": "Jti",
+      "type": "string"
+    },
+    "tenant": {
+      "title": "Tenant",
+      "type": "string"
+    },
+    "form_id": {
+      "title": "Form Id",
+      "type": "string"
+    },
+    "content_version": {
+      "title": "Content Version",
+      "type": "string"
+    },
+    "sub": {
+      "title": "Sub",
+      "type": "string"
+    },
+    "course_id": {
+      "title": "Course Id",
+      "type": "integer"
+    },
+    "purpose": {
+      "enum": [
+        "check_in",
+        "final"
+      ],
+      "title": "Purpose",
+      "type": "string"
+    },
+    "ordinal": {
+      "title": "Ordinal",
+      "type": "integer"
+    },
+    "percent": {
+      "description": "Two decimals, for display only",
+      "title": "Percent",
+      "type": "string"
+    },
+    "passed": {
+      "title": "Passed",
+      "type": "boolean"
+    },
+    "completes_course": {
+      "title": "Completes Course",
+      "type": "boolean"
+    },
+    "pass_percent": {
+      "title": "Pass Percent",
+      "type": "integer"
+    },
+    "pass_operator": {
+      "enum": [
+        "gt",
+        "gte"
+      ],
+      "title": "Pass Operator",
+      "type": "string"
+    },
+    "finished_at": {
+      "title": "Finished At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "iss",
+    "aud",
+    "iat",
+    "jti",
+    "tenant",
+    "form_id",
+    "content_version",
+    "sub",
+    "course_id",
+    "purpose",
+    "ordinal",
+    "percent",
+    "passed",
+    "completes_course",
+    "pass_percent",
+    "pass_operator",
+    "finished_at"
+  ],
+  "title": "ResultStatement",
+  "type": "object"
+}

@@ -1,0 +1,20 @@
+{
+  "cap_bytes": 65536,
+  "forms": {
+    "a1-form-a": {
+      "definition_bytes": 22229,
+      "attempt_bytes_without_text": 5922,
+      "attempt_bytes_worst_case": 22807
+    },
+    "a2-form-a": {
+      "definition_bytes": 20914,
+      "attempt_bytes_without_text": 5490,
+      "attempt_bytes_worst_case": 12678
+    },
+    "b2-form-a": {
+      "definition_bytes": 25135,
+      "attempt_bytes_without_text": 5488,
+      "attempt_bytes_worst_case": 21101
+    }
+  }
+}
