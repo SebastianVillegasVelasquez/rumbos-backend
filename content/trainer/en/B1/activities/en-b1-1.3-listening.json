@@ -4,7 +4,7 @@
   "title": "Listen and choose 1.3",
   "estimated_minutes": 4,
   "lesson_id": "1.3",
-  "status": "draft",
+  "status": "published",
   "role": "Travel advisor helping a couple choose between two destinations",
   "can_do": [
     "I can compare two places with as ... as and comparatives.",
@@ -80,5 +80,7 @@
   ],
   "flags": [
     "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
 }

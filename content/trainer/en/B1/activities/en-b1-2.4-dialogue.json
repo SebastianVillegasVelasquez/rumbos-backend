@@ -4,7 +4,7 @@
   "title": "Talk it through 2.4",
   "estimated_minutes": 5,
   "lesson_id": "2.4",
-  "status": "draft",
+  "status": "published",
   "role": "Guide telling a colleague what happened during a group visit",
   "can_do": [
     "I can tell a past event with the past simple and the past continuous.",
@@ -190,5 +190,7 @@
   },
   "flags": [
     "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
 }

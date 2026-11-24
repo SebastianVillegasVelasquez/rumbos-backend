@@ -1,10 +1,12 @@
 # B1 pack: what a human must decide before anything is published
 
 Pack `en/B1`, exam `b1-form-a`. Everything was built as `draft` with `reviewed_by` and
-`reviewed_at` empty. This file sits next to the pack (not inside it) so editing it does
-not change the pack's `content_version`. Nothing here was fixed: each item is flagged for a
-person to decide. (The publish command is run by the owner after this review; see the
-hand-over notes.)
+`reviewed_at` empty. **At the owner's explicit request it was then signed and published with the
+reviewer "Sebastian Villegas Velasquez" (audit line in `content/trainer/publication-audit.jsonl`)
+before any of the points below was decided and before anyone listened to the audio.** The points
+below are therefore open on live content. This file sits next to the pack (not inside it) so
+editing it does not change the pack's `content_version`. Nothing here was fixed: each item is
+flagged for a person to decide.
 
 ## 1. The exam may not discriminate at B1, and the pass rule makes that matter
 

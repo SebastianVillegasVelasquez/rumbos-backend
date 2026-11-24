@@ -4,7 +4,7 @@
   "title": "Talk it through 4.3",
   "estimated_minutes": 5,
   "lesson_id": "4.3",
-  "status": "draft",
+  "status": "published",
   "role": "Tourism adviser giving personalised recommendations",
   "can_do": [
     "I can describe people, places and things with who, which and that.",
@@ -193,5 +193,7 @@
   },
   "flags": [
     "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
 }

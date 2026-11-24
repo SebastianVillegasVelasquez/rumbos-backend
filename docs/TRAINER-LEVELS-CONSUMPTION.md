@@ -212,9 +212,9 @@ curl -X PUT "$API/api/v1/trainer/attempts/$ATTEMPT/answers" -H "Authorization: B
 curl -X POST "$API/api/v1/trainer/attempts/$ATTEMPT/submit" -H "Authorization: Bearer $TOKEN"
 ```
 
-While the B1 pack is a draft the save in step 2 answers `200` with warnings
-`content_not_published`, and a student gets `404` on step 4; both change when the
-content is published with the reviewed CLI.
+The B1 pack and `b1-form-a` are published (signed by the owner, see
+`publication-audit.jsonl`): the save in step 2 answers `200` with no
+`content_not_published` warnings and a student can start the check-in in step 4.
 
 ## What does not exist
 

@@ -4,7 +4,7 @@
   "title": "Talk it through 1.4",
   "estimated_minutes": 5,
   "lesson_id": "1.4",
-  "status": "draft",
+  "status": "published",
   "role": "Events coordinator informing a client about a change of plans",
   "can_do": [
     "I can talk about future plans with going to, will and the present continuous.",
@@ -191,5 +191,7 @@
   },
   "flags": [
     "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
 }

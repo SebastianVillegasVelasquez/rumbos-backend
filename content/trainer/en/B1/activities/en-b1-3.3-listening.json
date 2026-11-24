@@ -4,7 +4,7 @@
   "title": "Listen and choose 3.3",
   "estimated_minutes": 4,
   "lesson_id": "3.3",
-  "status": "draft",
+  "status": "published",
   "role": "Cultural guide helping a visitor who has made a social mistake",
   "can_do": [
     "I can express regret and embarrassment.",
@@ -80,5 +80,7 @@
   ],
   "flags": [
     "Draft written for B1: a teacher must review the wording, the level and the answer keys before it is published."
-  ]
+  ],
+  "reviewed_by": "Sebastian Villegas Velasquez",
+  "reviewed_at": "2026-11-24T00:15:27.634159Z"
 }
