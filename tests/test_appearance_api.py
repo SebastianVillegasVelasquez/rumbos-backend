@@ -50,6 +50,7 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "closing": None,
     "trainer": DEFAULT_TRAINER,
     "assessments": DEFAULT_ASSESSMENTS,
+    "congratulations": None,
 }
 
 CUSTOM_SETTINGS: dict[str, Any] = {
@@ -65,6 +66,7 @@ CUSTOM_SETTINGS: dict[str, Any] = {
     "closing": None,
     "trainer": DEFAULT_TRAINER,
     "assessments": DEFAULT_ASSESSMENTS,
+    "congratulations": None,
 }
 
 

@@ -6546,6 +6546,78 @@
         "title": "ClosingStatus",
         "description": "Whether the closing flow's final exam may be started now, by the same\nrule the start call enforces (see `app.closing.gate`)."
       },
+      "Congratulations": {
+        "properties": {
+          "checkin": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CongratulationsText"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "final": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CongratulationsText"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Congratulations",
+        "description": "The two screens: after a passed check-in (`checkin`) and after a passed\nfinal (`final`). Placeholders: `{score}` and `{threshold}` only."
+      },
+      "CongratulationsText": {
+        "properties": {
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title",
+            "description": "One line, up to 80 characters. Plain text; may contain {score} and {threshold}."
+          },
+          "body": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body",
+            "description": "Up to 600 characters, line breaks allowed. Plain text; may contain {score} and {threshold}."
+          },
+          "ctaLabel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ctalabel",
+            "description": "The button's label: one line, up to 40 characters. Plain text; may contain {score} and {threshold}."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "CongratulationsText",
+        "description": "What one congratulations screen says. Each field null: the default copy."
+      },
       "CourseMapCreate": {
         "properties": {
           "title": {
@@ -7712,6 +7784,16 @@
           },
           "assessments": {
             "$ref": "#/components/schemas/AssessmentSettings"
+          },
+          "congratulations": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Congratulations"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,

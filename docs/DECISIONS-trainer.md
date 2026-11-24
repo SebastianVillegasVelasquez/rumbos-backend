@@ -829,3 +829,29 @@ you passed the check-in" apart from "you passed the final". Added as `outcome` o
   SCORM check for `already_passed`, so a passed check-in costs no completion call.
 - The pass rule, scoring and the start guard are unchanged; the guard keeps
   rejecting a final for a student who passed the check-in or the final.
+
+## D64. The congratulations text is data in `MapSettings`, checked in the settings check
+
+Judgment calls:
+
+- **Where it is checked.** The brief asks for refusals in the existing
+  `errors[{path, rule, message_key}]` shape, which only the write-time settings
+  check produces (`trainer_settings_invalid`); a pydantic constraint would give the
+  generic validation 422. So the model has no length constraints and the caps,
+  the markup rule and the placeholder whitelist live in
+  `app.trainer.settings_check` (the OpenAPI states the caps in each field's
+  description). Shape errors (unknown field, wrong type) stay the generic 422.
+  Reads never re-run the rules.
+- **Plain text means no `<` or `>`.** It is a blunt rule (a text cannot say
+  "score > 80") but it leaves nothing for an HTML sink to work with if a client
+  ever renders it wrongly, and the frontend must render text anyway.
+- **Placeholders: exactly `{score}` and `{threshold}`; any other brace is refused**
+  (`{}`, `{0}`, `{Score}`, `{ score }`, `{{score}}`, a lone `{`...). Stricter than
+  the welcome flow's `{curso}` rule, which only refuses a complete `{...}`: this
+  one is about numbers the student sees, and a stray brace has no use.
+- **Cleaning runs before checking**, so a zero-width character cannot hide a
+  placeholder (`{scor​e}` is stored, and valid, as `{score}`).
+- **Null at every level** is the default copy. An all-empty object is stored as no
+  key at all, so hashes of existing maps and publications do not move.
+- Purposes are spelled `checkin` and `final`, as in the brief and in `outcome`,
+  not `check_in`/`checkIn` as in the assessment settings.

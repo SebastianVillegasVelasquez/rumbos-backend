@@ -167,6 +167,50 @@ Rules worth knowing:
 * A passed check-in decides the status even while the final form is not published;
   it also skips the Moodle read (no completion is needed to say "not required").
 
+## The congratulations text
+
+`MapSettings.congratulations` (optional) holds what the congratulations screen
+says, on the Rumbos card the frontend already has. One object per exam: `checkin`
+(shown after a passed check-in) and `final` (after a passed final), each with
+`title`, `body` and `ctaLabel`:
+
+```json
+"congratulations": {
+  "checkin": {"title": "¡Lo lograste!", "body": "Sacaste {score} y el mínimo era {threshold}.", "ctaLabel": "Continuar"},
+  "final": null
+}
+```
+
+| rule | value |
+| --- | --- |
+| `title` | one line, up to 80 characters |
+| `body` | up to 600 characters, line breaks allowed |
+| `ctaLabel` | one line, up to 40 characters |
+| markup | plain text only: `<` and `>` are refused |
+| placeholders | `{score}` and `{threshold}`, nothing else: any other `{` or `}` is refused |
+| `null` | the whole object, one exam, or one field: the frontend's default copy |
+
+Texts are cleaned like every other text of the settings (normalised, control and
+zero-width characters dropped, ends trimmed) **before** they are checked and
+stored, so a hidden character cannot split a placeholder to slip past; a text
+that ends up empty is `null`. Unset, the key is left out of the stored settings, so
+no stored map or publication changes its hash.
+
+Refusals are `422 trainer_settings_invalid` with the usual `errors[{path, rule,
+message_key}]` and the same details in `problems[]`; no value is echoed. Paths are
+`congratulations.checkin.title`, `.body`, `.cta_label`; rules (`message_key`
+`trainer_settings.<rule>`): `congratulations_too_long`,
+`congratulations_markup_not_allowed`, `congratulations_placeholder_unknown`. A
+shape error (an unknown field such as `html`, a non-string) is the generic
+validation 422. A stored text always loads, whatever the rules become.
+
+**What the frontend does with it:** show it as **text** (never as HTML), and fill
+the two placeholders itself, in one pass of plain string replacement over exactly
+`{score}` and `{threshold}` and nothing else: `{score}` is the score it already
+has (`outcome.checkin.percent`, or the result of the final attempt) and
+`{threshold}` is `outcome.checkin.pass_percent` (the rule the attempt was graded
+with). The backend never interpolates, formats or evaluates a text.
+
 ## What the plugin acts on (C4)
 
 The only thing that may cause a write to a student's Moodle completion is a
