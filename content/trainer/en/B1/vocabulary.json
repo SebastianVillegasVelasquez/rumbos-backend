@@ -191,6 +191,534 @@
       "lesson_id": "1.4",
       "word": "confirm",
       "translation": "confirmar"
+    },
+    {
+      "id": "en-b1-2.1.v1",
+      "lesson_id": "2.1",
+      "word": "laundry",
+      "translation": "lavandería"
+    },
+    {
+      "id": "en-b1-2.1.v2",
+      "lesson_id": "2.1",
+      "word": "provided",
+      "translation": "proporcionado"
+    },
+    {
+      "id": "en-b1-2.1.v3",
+      "lesson_id": "2.1",
+      "word": "included",
+      "translation": "incluido"
+    },
+    {
+      "id": "en-b1-2.1.v4",
+      "lesson_id": "2.1",
+      "word": "charged",
+      "translation": "cobrado"
+    },
+    {
+      "id": "en-b1-2.1.v5",
+      "lesson_id": "2.1",
+      "word": "housekeeping",
+      "translation": "limpieza de habitaciones"
+    },
+    {
+      "id": "en-b1-2.1.v6",
+      "lesson_id": "2.1",
+      "word": "shuttle",
+      "translation": "transporte"
+    },
+    {
+      "id": "en-b1-2.1.v7",
+      "lesson_id": "2.1",
+      "word": "available",
+      "translation": "disponible"
+    },
+    {
+      "id": "en-b1-2.1.v8",
+      "lesson_id": "2.1",
+      "word": "spa",
+      "translation": "spa"
+    },
+    {
+      "id": "en-b1-2.2.v1",
+      "lesson_id": "2.2",
+      "word": "ticket",
+      "translation": "boleto"
+    },
+    {
+      "id": "en-b1-2.2.v2",
+      "lesson_id": "2.2",
+      "word": "exchange rate",
+      "translation": "tipo de cambio"
+    },
+    {
+      "id": "en-b1-2.2.v3",
+      "lesson_id": "2.2",
+      "word": "reservation",
+      "translation": "reserva"
+    },
+    {
+      "id": "en-b1-2.2.v4",
+      "lesson_id": "2.2",
+      "word": "purpose of your visit",
+      "translation": "motivo de su visita"
+    },
+    {
+      "id": "en-b1-2.2.v5",
+      "lesson_id": "2.2",
+      "word": "how long are you staying",
+      "translation": "cuánto tiempo se queda"
+    },
+    {
+      "id": "en-b1-2.2.v6",
+      "lesson_id": "2.2",
+      "word": "passport",
+      "translation": "pasaporte"
+    },
+    {
+      "id": "en-b1-2.2.v7",
+      "lesson_id": "2.2",
+      "word": "single / return",
+      "translation": "ida / ida y vuelta"
+    },
+    {
+      "id": "en-b1-2.2.v8",
+      "lesson_id": "2.2",
+      "word": "currency",
+      "translation": "moneda"
+    },
+    {
+      "id": "en-b1-2.3.v1",
+      "lesson_id": "2.3",
+      "word": "recommend",
+      "translation": "recomendar"
+    },
+    {
+      "id": "en-b1-2.3.v2",
+      "lesson_id": "2.3",
+      "word": "worth visiting",
+      "translation": "vale la pena visitar"
+    },
+    {
+      "id": "en-b1-2.3.v3",
+      "lesson_id": "2.3",
+      "word": "market",
+      "translation": "mercado"
+    },
+    {
+      "id": "en-b1-2.3.v4",
+      "lesson_id": "2.3",
+      "word": "sunset",
+      "translation": "atardecer"
+    },
+    {
+      "id": "en-b1-2.3.v5",
+      "lesson_id": "2.3",
+      "word": "rent",
+      "translation": "alquilar"
+    },
+    {
+      "id": "en-b1-2.3.v6",
+      "lesson_id": "2.3",
+      "word": "local dish",
+      "translation": "plato local"
+    },
+    {
+      "id": "en-b1-2.3.v7",
+      "lesson_id": "2.3",
+      "word": "hiking",
+      "translation": "senderismo"
+    },
+    {
+      "id": "en-b1-2.3.v8",
+      "lesson_id": "2.3",
+      "word": "tip",
+      "translation": "consejo"
+    },
+    {
+      "id": "en-b1-2.4.v1",
+      "lesson_id": "2.4",
+      "word": "while",
+      "translation": "mientras"
+    },
+    {
+      "id": "en-b1-2.4.v2",
+      "lesson_id": "2.4",
+      "word": "when",
+      "translation": "cuando"
+    },
+    {
+      "id": "en-b1-2.4.v3",
+      "lesson_id": "2.4",
+      "word": "suddenly",
+      "translation": "de repente"
+    },
+    {
+      "id": "en-b1-2.4.v4",
+      "lesson_id": "2.4",
+      "word": "fortunately",
+      "translation": "afortunadamente"
+    },
+    {
+      "id": "en-b1-2.4.v5",
+      "lesson_id": "2.4",
+      "word": "unfortunately",
+      "translation": "desafortunadamente"
+    },
+    {
+      "id": "en-b1-2.4.v6",
+      "lesson_id": "2.4",
+      "word": "although",
+      "translation": "aunque"
+    },
+    {
+      "id": "en-b1-2.4.v7",
+      "lesson_id": "2.4",
+      "word": "delay",
+      "translation": "retraso"
+    },
+    {
+      "id": "en-b1-2.4.v8",
+      "lesson_id": "2.4",
+      "word": "solved",
+      "translation": "resolvió"
+    },
+    {
+      "id": "en-b1-3.1.v1",
+      "lesson_id": "3.1",
+      "word": "refund",
+      "translation": "reembolso"
+    },
+    {
+      "id": "en-b1-3.1.v2",
+      "lesson_id": "3.1",
+      "word": "exchange",
+      "translation": "cambio"
+    },
+    {
+      "id": "en-b1-3.1.v3",
+      "lesson_id": "3.1",
+      "word": "store credit",
+      "translation": "saldo a favor"
+    },
+    {
+      "id": "en-b1-3.1.v4",
+      "lesson_id": "3.1",
+      "word": "receipt",
+      "translation": "recibo"
+    },
+    {
+      "id": "en-b1-3.1.v5",
+      "lesson_id": "3.1",
+      "word": "faulty",
+      "translation": "defectuoso"
+    },
+    {
+      "id": "en-b1-3.1.v6",
+      "lesson_id": "3.1",
+      "word": "bill",
+      "translation": "cuenta"
+    },
+    {
+      "id": "en-b1-3.1.v7",
+      "lesson_id": "3.1",
+      "word": "overcharged",
+      "translation": "cobrado de más"
+    },
+    {
+      "id": "en-b1-3.1.v8",
+      "lesson_id": "3.1",
+      "word": "policy",
+      "translation": "política"
+    },
+    {
+      "id": "en-b1-3.2.v1",
+      "lesson_id": "3.2",
+      "word": "complaint",
+      "translation": "queja"
+    },
+    {
+      "id": "en-b1-3.2.v2",
+      "lesson_id": "3.2",
+      "word": "noisy",
+      "translation": "ruidoso"
+    },
+    {
+      "id": "en-b1-3.2.v3",
+      "lesson_id": "3.2",
+      "word": "compensation",
+      "translation": "compensación"
+    },
+    {
+      "id": "en-b1-3.2.v4",
+      "lesson_id": "3.2",
+      "word": "discount",
+      "translation": "descuento"
+    },
+    {
+      "id": "en-b1-3.2.v5",
+      "lesson_id": "3.2",
+      "word": "unacceptable",
+      "translation": "inaceptable"
+    },
+    {
+      "id": "en-b1-3.2.v6",
+      "lesson_id": "3.2",
+      "word": "apologize",
+      "translation": "disculparse"
+    },
+    {
+      "id": "en-b1-3.2.v7",
+      "lesson_id": "3.2",
+      "word": "manager",
+      "translation": "gerente"
+    },
+    {
+      "id": "en-b1-3.2.v8",
+      "lesson_id": "3.2",
+      "word": "solve",
+      "translation": "resolver"
+    },
+    {
+      "id": "en-b1-3.3.v1",
+      "lesson_id": "3.3",
+      "word": "embarrassed",
+      "translation": "avergonzado"
+    },
+    {
+      "id": "en-b1-3.3.v2",
+      "lesson_id": "3.3",
+      "word": "regret",
+      "translation": "arrepentirse"
+    },
+    {
+      "id": "en-b1-3.3.v3",
+      "lesson_id": "3.3",
+      "word": "offend",
+      "translation": "ofender"
+    },
+    {
+      "id": "en-b1-3.3.v4",
+      "lesson_id": "3.3",
+      "word": "custom",
+      "translation": "costumbre"
+    },
+    {
+      "id": "en-b1-3.3.v5",
+      "lesson_id": "3.3",
+      "word": "rude",
+      "translation": "grosero"
+    },
+    {
+      "id": "en-b1-3.3.v6",
+      "lesson_id": "3.3",
+      "word": "permission",
+      "translation": "permiso"
+    },
+    {
+      "id": "en-b1-3.3.v7",
+      "lesson_id": "3.3",
+      "word": "respect",
+      "translation": "respeto"
+    },
+    {
+      "id": "en-b1-3.3.v8",
+      "lesson_id": "3.3",
+      "word": "greeting",
+      "translation": "saludo"
+    },
+    {
+      "id": "en-b1-3.4.v1",
+      "lesson_id": "3.4",
+      "word": "custom",
+      "translation": "costumbre"
+    },
+    {
+      "id": "en-b1-3.4.v2",
+      "lesson_id": "3.4",
+      "word": "tradition",
+      "translation": "tradición"
+    },
+    {
+      "id": "en-b1-3.4.v3",
+      "lesson_id": "3.4",
+      "word": "trend",
+      "translation": "tendencia"
+    },
+    {
+      "id": "en-b1-3.4.v4",
+      "lesson_id": "3.4",
+      "word": "differ",
+      "translation": "diferir"
+    },
+    {
+      "id": "en-b1-3.4.v5",
+      "lesson_id": "3.4",
+      "word": "typical",
+      "translation": "típico"
+    },
+    {
+      "id": "en-b1-3.4.v6",
+      "lesson_id": "3.4",
+      "word": "festival",
+      "translation": "festival"
+    },
+    {
+      "id": "en-b1-3.4.v7",
+      "lesson_id": "3.4",
+      "word": "handmade",
+      "translation": "hecho a mano"
+    },
+    {
+      "id": "en-b1-3.4.v8",
+      "lesson_id": "3.4",
+      "word": "celebrate",
+      "translation": "celebrar"
+    },
+    {
+      "id": "en-b1-4.1.v1",
+      "lesson_id": "4.1",
+      "word": "protect",
+      "translation": "proteger"
+    },
+    {
+      "id": "en-b1-4.1.v2",
+      "lesson_id": "4.1",
+      "word": "wildlife",
+      "translation": "fauna silvestre"
+    },
+    {
+      "id": "en-b1-4.1.v3",
+      "lesson_id": "4.1",
+      "word": "turtle",
+      "translation": "tortuga"
+    },
+    {
+      "id": "en-b1-4.1.v4",
+      "lesson_id": "4.1",
+      "word": "nest",
+      "translation": "nido"
+    },
+    {
+      "id": "en-b1-4.1.v5",
+      "lesson_id": "4.1",
+      "word": "litter",
+      "translation": "basura"
+    },
+    {
+      "id": "en-b1-4.1.v6",
+      "lesson_id": "4.1",
+      "word": "trail",
+      "translation": "sendero"
+    },
+    {
+      "id": "en-b1-4.1.v7",
+      "lesson_id": "4.1",
+      "word": "fine",
+      "translation": "multa"
+    },
+    {
+      "id": "en-b1-4.1.v8",
+      "lesson_id": "4.1",
+      "word": "sustainable",
+      "translation": "sostenible"
+    },
+    {
+      "id": "en-b1-4.2.v1",
+      "lesson_id": "4.2",
+      "word": "legend",
+      "translation": "leyenda"
+    },
+    {
+      "id": "en-b1-4.2.v2",
+      "lesson_id": "4.2",
+      "word": "neighbour",
+      "translation": "vecino"
+    },
+    {
+      "id": "en-b1-4.2.v3",
+      "lesson_id": "4.2",
+      "word": "peace",
+      "translation": "paz"
+    },
+    {
+      "id": "en-b1-4.2.v4",
+      "lesson_id": "4.2",
+      "word": "celebrate",
+      "translation": "celebrar"
+    },
+    {
+      "id": "en-b1-4.2.v5",
+      "lesson_id": "4.2",
+      "word": "generation",
+      "translation": "generación"
+    },
+    {
+      "id": "en-b1-4.2.v6",
+      "lesson_id": "4.2",
+      "word": "ceremony",
+      "translation": "ceremonia"
+    },
+    {
+      "id": "en-b1-4.2.v7",
+      "lesson_id": "4.2",
+      "word": "long ago",
+      "translation": "hace mucho tiempo"
+    },
+    {
+      "id": "en-b1-4.2.v8",
+      "lesson_id": "4.2",
+      "word": "share",
+      "translation": "compartir"
+    },
+    {
+      "id": "en-b1-4.3.v1",
+      "lesson_id": "4.3",
+      "word": "who",
+      "translation": "quien (personas)"
+    },
+    {
+      "id": "en-b1-4.3.v2",
+      "lesson_id": "4.3",
+      "word": "which",
+      "translation": "que (cosas)"
+    },
+    {
+      "id": "en-b1-4.3.v3",
+      "lesson_id": "4.3",
+      "word": "that",
+      "translation": "que"
+    },
+    {
+      "id": "en-b1-4.3.v4",
+      "lesson_id": "4.3",
+      "word": "suit",
+      "translation": "ajustarse a"
+    },
+    {
+      "id": "en-b1-4.3.v5",
+      "lesson_id": "4.3",
+      "word": "budget",
+      "translation": "presupuesto"
+    },
+    {
+      "id": "en-b1-4.3.v6",
+      "lesson_id": "4.3",
+      "word": "authentic",
+      "translation": "auténtico"
+    },
+    {
+      "id": "en-b1-4.3.v7",
+      "lesson_id": "4.3",
+      "word": "hidden gem",
+      "translation": "joya escondida"
+    },
+    {
+      "id": "en-b1-4.3.v8",
+      "lesson_id": "4.3",
+      "word": "family-run",
+      "translation": "de gestión familiar"
     }
   ]
 }
