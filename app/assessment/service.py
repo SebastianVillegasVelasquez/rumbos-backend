@@ -58,6 +58,16 @@ class Caller:
     moodle_user_id: int | None = field(default=None, repr=False)
 
 
+@dataclass(frozen=True)
+class Standing:
+    """The student's standing in the two exams (see `AssessmentService.standing`).
+    `checkin` is None when the map has no check-in."""
+
+    checkin: dict[str, Any] | None
+    checkin_passed: bool
+    final_passed: bool
+
+
 def _res(attempt: AttemptRecord) -> Mapping[str, Any]:
     """The stored result of a closed attempt."""
     assert attempt.result is not None
@@ -168,6 +178,54 @@ class AssessmentService:
             self._caller.sub, self._caller.preview
         )
         return await self._list_item(settings, "final", settings.final, attempts)
+
+    async def standing(self) -> Standing:
+        """What the student has done in both exams, for the closing outcome:
+        the check-in's outcome (with the pass rule that was in force when it was
+        sat) and whether either exam was passed. Read from the attempts, never
+        stored. An editor in preview has none: a trial run is not a result."""
+        settings = self._settings
+        if settings is None or not settings.enabled:
+            return Standing(None, False, False)
+        preview = self._caller.preview
+        closed: list[AttemptRecord] = []
+        for attempt in await self._attempts.list_for_user(self._caller.sub, preview):
+            if attempt.status == "in_progress" and self._past(attempt):
+                attempt = await self._expire(attempt)
+            closed.append(attempt)
+
+        def done(purpose: str) -> list[AttemptRecord]:
+            return (
+                []
+                if preview
+                else [a for a in closed if a.purpose == purpose and a.result]
+            )
+
+        final_passed = any(_res(a)["passed"] for a in done("final"))
+        policy = settings.check_in
+        if policy is None:
+            return Standing(None, False, final_passed)
+        sat = done("check_in")
+        passing = [a for a in sat if _res(a)["passed"]]
+        decisive = (
+            passing[0]
+            if passing
+            else max(sat, key=lambda a: _frac(_res(a)["percent_exact"]), default=None)
+        )
+        rule = decisive.policy if decisive else None
+        outcome: dict[str, Any] = {
+            "status": (
+                "passed" if passing else "not_passed" if decisive else "not_taken"
+            ),
+            "percent": _res(decisive)["percent"] if decisive else None,
+            "pass_percent": rule["pass_percent"] if rule else settings.pass_percent,
+            "pass_operator": rule["pass_operator"] if rule else settings.pass_operator,
+            "attempts": {
+                "used": sum(1 for a in closed if a.purpose == "check_in"),
+                "max": policy.max_attempts,
+            },
+        }
+        return Standing(outcome, bool(passing), final_passed)
 
     async def _list_item(
         self,

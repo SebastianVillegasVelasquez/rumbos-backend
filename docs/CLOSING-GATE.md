@@ -102,6 +102,94 @@ Student or editor in preview. Always 200 once authenticated.
 `progress` counts are safe to show. Which activities are missing is never told.
 `final` has the shape of an item of `GET /trainer/assessments`.
 
+### `outcome`: the student's journey (enforce only)
+
+While `CLOSING_GATE_MODE=enforce` the answer also carries `outcome`, read from the
+student's attempts on every call (the backend stores no journey state, D29):
+
+```
+"outcome": {
+  "checkin": {
+    "status": "not_taken" | "passed" | "not_passed",
+    "percent": "80.17" | null,       score of the deciding attempt (display, 2 decimals)
+    "pass_percent": 80, "pass_operator": "gt" | "gte",
+    "attempts": {"used": 1, "max": 1}
+  } | null,                          null: the map has no check-in
+  "final": {
+    "status": "required" | "locked" | "not_required_passed_checkin" | "passed" | "exhausted",
+    "reason": null | "scorm_incomplete" | "progress_unavailable" | "user_unlinked" |
+              "form_unavailable" | "not_enabled" | "no_final_step",   only when locked
+    "attempts": {"used": 0, "max": 3} | null
+  },
+  "scorm_gate": {"satisfied": true | false | null, "reason": "passed_checkin" | null}
+}
+```
+
+With `off` the `outcome` key is absent and the answer is byte-for-byte what it was
+before this existed (pinned by a test that compares bytes). The existing `final`
+(the exam's list item), `available`, `reason` and `progress` are unchanged.
+
+| the student | `checkin.status` | `final.status` | `scorm_gate` | `available` / `reason` |
+| --- | --- | --- | --- | --- |
+| has sat nothing | `not_taken` | `locked` (`scorm_incomplete`) until the content is done, then `required` | `false`, then `true` | same as `final.status` says |
+| passed the check-in | `passed` | `not_required_passed_checkin` | `true`, reason `passed_checkin` | `false` / `already_passed` (unchanged) |
+| did not pass the check-in | `not_passed` | `locked`, then `required` | as above | as above |
+| passed the final | as it was | `passed` | as it was | `false` / `already_passed` |
+| failed every final attempt | as it was | `exhausted` | as it was | `false` / `no_attempts_left` |
+
+How the frontend reads it (product rules C3):
+
+1. **Check-in passed** (`final.status == "not_required_passed_checkin"`): show the
+   congratulations screen, then the closing flow **without** the final-exam step.
+   The plugin marks every activity of the course complete from the signed
+   statement of the passing attempt (see "What the plugin acts on"); the
+   frontend never asks for that.
+2. **Check-in not passed**: the student works through the map; when the content is
+   done `final.status` is `required` and the closing flow opens **with** the
+   final-exam step.
+3. **Final passed**: `final.status == "passed"`: congratulations.
+4. **Final exhausted**: `final.status == "exhausted"`. What happens next is not
+   built: see `docs/CLOSING-RESTART.md`.
+
+Rules worth knowing:
+
+* `not_passed` is reported as soon as an attempt is closed without a pass, even if
+  the map allows more check-in attempts; `attempts` says how many are left. An
+  attempt still in progress is `not_taken`.
+* `pass_percent` / `pass_operator` are the rule the deciding attempt was **graded
+  with** (the passing one, else the best), frozen with the attempt: tightening the
+  rule later does not change what a student was told. Never recompute the verdict
+  from `percent` (rounded); read `status`.
+* A passed check-in exempts the final only while `assessments.exemption.enabled`.
+  With the exemption off the final stays `required`/`locked` as for anybody.
+* An editor in preview sees `not_taken` and a `required`/`locked` final: a trial
+  run is not a result.
+* A passed check-in decides the status even while the final form is not published;
+  it also skips the Moodle read (no completion is needed to say "not required").
+
+## What the plugin acts on (C4)
+
+The only thing that may cause a write to a student's Moodle completion is a
+**verified signed statement** from this backend, never anything the browser says.
+The statement of every closed attempt (`app/passback/statement.py`, ES256, through
+the existing outbox) already carries what the plugin needs to decide "mark all
+the content complete":
+
+| claim | use |
+| --- | --- |
+| `purpose` | `check_in` or `final` |
+| `passed` | the frozen pass rule was met |
+| `completes_course` | `passed` and the frozen policy had the exemption on |
+| `jti` | the attempt id: accept each once (a resent statement changes nothing) |
+| `sub`, `tenant`, `course_id` | whose course to complete |
+
+So a passing `check_in` statement with `completes_course: true` is the signal to
+mark the content complete, and the plugin must refuse to do it for anything else
+(an unsigned message, a failed attempt, a `jti` already applied). A forged
+frontend message that asked for completion would be a self-service completion
+exploit. No endpoint is added for this and no claim was added: the statement is
+unchanged, so the signing vectors and the plugin's verifier keep working.
+
 ## `POST /trainer/assessments/final/attempts`
 
 Runs the same check first (`enforce` only). Refusals:

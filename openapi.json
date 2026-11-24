@@ -2634,7 +2634,7 @@
           "trainer"
         ],
         "summary": "Closing Status",
-        "description": "Whether the final exam of the closing flow may be started, why not, how\nmuch SCORM content is done, and the exam's own state. A course without a\nclosing flow answers `available: false, reason: not_enabled`.",
+        "description": "Whether the final exam of the closing flow may be started, why not, how\nmuch SCORM content is done, and the exam's own state. A course without a\nclosing flow answers `available: false, reason: not_enabled`.\n\nWhile the gate is enforced it also carries `outcome`: the check-in's\noutcome, the final's status (`required`, `locked`,\n`not_required_passed_checkin`, `passed` or `exhausted`) and whether the\nSCORM condition is met. With `CLOSING_GATE_MODE=off` the `outcome` key is\nabsent and the answer is exactly what it was before it existed.",
         "operationId": "closing_status_api_v1_trainer_closing_get",
         "parameters": [
           {
@@ -6232,6 +6232,55 @@
         "title": "CatalogUnavailable",
         "description": "Nothing to practise for this caller. `reason` is deliberately coarse."
       },
+      "CheckinOutcome": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "not_taken",
+              "passed",
+              "not_passed"
+            ],
+            "title": "Status"
+          },
+          "percent": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Percent"
+          },
+          "pass_percent": {
+            "type": "integer",
+            "title": "Pass Percent"
+          },
+          "pass_operator": {
+            "type": "string",
+            "enum": [
+              "gt",
+              "gte"
+            ],
+            "title": "Pass Operator"
+          },
+          "attempts": {
+            "$ref": "#/components/schemas/Attempts"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "percent",
+          "pass_percent",
+          "pass_operator",
+          "attempts"
+        ],
+        "title": "CheckinOutcome",
+        "description": "How the student's check-in went. `not_taken` also covers an attempt still\nin progress. `percent` is the score of the attempt that decided it (the\npassing one, else the best), as the exam reports it; `pass_percent` and\n`pass_operator` are the rule that attempt was graded with (the map's current\nrule while nothing was sat). The rule is `percent` `pass_operator`\n`pass_percent`: with `gt`, exactly the threshold does not pass. It is decided\non the exact score and `percent` is rounded to two decimals for display, so\na client must show `status` and never recompute it from `percent`."
+      },
       "Clip": {
         "properties": {
           "id": {
@@ -6375,6 +6424,34 @@
         "title": "ClosingFlow",
         "description": "The closing flow: the welcome flow's twin, shown when the level is\nfinished. Same fields and same checks; what differs is what `steps` may\nhold. Allowed: `video`, `html`, `pdf`, `quiz`, `moodle_activity` and one\n`assessment` step of purpose `final`. Refused with 422 `welcome_invalid` (problem\n`step_type_not_allowed` or `assessment_purpose`): the `welcome` greeting.\nA closing flow needs at least one step, and step keys are unique across\nboth flows. The student's progress through it is kept in Moodle, not here."
       },
+      "ClosingOutcome": {
+        "properties": {
+          "checkin": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CheckinOutcome"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "final": {
+            "$ref": "#/components/schemas/FinalOutcome"
+          },
+          "scorm_gate": {
+            "$ref": "#/components/schemas/ScormGate"
+          }
+        },
+        "type": "object",
+        "required": [
+          "checkin",
+          "final",
+          "scorm_gate"
+        ],
+        "title": "ClosingOutcome",
+        "description": "The student's journey through the two exams, read from their attempts\n(nothing about it is stored: D29)."
+      },
       "ClosingProgress": {
         "properties": {
           "completed": {
@@ -6443,6 +6520,16 @@
             "anyOf": [
               {
                 "$ref": "#/components/schemas/AssessmentListItem"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "outcome": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ClosingOutcome"
               },
               {
                 "type": "null"
@@ -6913,6 +7000,60 @@
           "label"
         ],
         "title": "Field_"
+      },
+      "FinalOutcome": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "required",
+              "not_required_passed_checkin",
+              "passed",
+              "exhausted",
+              "locked"
+            ],
+            "title": "Status"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "not_enabled",
+                  "no_final_step",
+                  "form_unavailable",
+                  "already_passed",
+                  "no_attempts_left",
+                  "scorm_incomplete",
+                  "progress_unavailable",
+                  "user_unlinked"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "attempts": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Attempts"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "reason",
+          "attempts"
+        ],
+        "title": "FinalOutcome",
+        "description": "The final exam's status for this student: `required` (they may sit it now),\n`locked` (they must, but not yet: `reason` says why, as for `available`),\n`not_required_passed_checkin` (a passed check-in exempts them and the\nclosing flow is shown without the exam step), `passed`, or `exhausted` (every\nattempt used without passing). `attempts` is null when the map has no final\nexam."
       },
       "FinishOut": {
         "properties": {
@@ -9154,6 +9295,40 @@
           "items"
         ],
         "title": "SceneList"
+      },
+      "ScormGate": {
+        "properties": {
+          "satisfied": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Satisfied"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "passed_checkin"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "satisfied",
+          "reason"
+        ],
+        "title": "ScormGate",
+        "description": "Whether the SCORM condition of the gate is met. `satisfied` is true with\n`reason: passed_checkin` when a passed check-in met it without the content\nbeing done (the plugin then marks the content complete from the signed\nstatement), false while content is missing, and null when it was not checked\nor could not be read."
       },
       "SectionPart": {
         "properties": {

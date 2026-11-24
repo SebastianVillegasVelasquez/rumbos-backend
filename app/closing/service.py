@@ -23,7 +23,9 @@ from app.closing.gate import (
     Decision,
     Reason,
     decide,
+    final_outcome,
     required_scorm_cmids,
+    scorm_gate,
 )
 from app.closing.providers import CompletionProvider, CompletionUnavailableError
 from app.exceptions import AssessmentConflictError, ClosingNotAvailableError
@@ -97,7 +99,7 @@ class ClosingService:
         decision = decide(**facts, check_scorm=False)
         if self._enforce and decision.available and not preview:
             decision = await self._with_progress(facts)
-        return {
+        verdict: dict[str, Any] = {
             "enforced": self._enforce,
             "preview": preview,
             "available": decision.available,
@@ -111,6 +113,37 @@ class ClosingService:
                 else None
             ),
             "final": item,
+        }
+        if self._enforce:
+            # With the gate off the answer is exactly what it was before.
+            verdict["outcome"] = await self._outcome(decision, facts, item)
+        return verdict
+
+    async def _outcome(
+        self, decision: Decision, facts: dict[str, Any], item: dict[str, Any] | None
+    ) -> dict[str, Any]:
+        """The student's journey, read from their attempts (nothing is stored,
+        D29): the check-in's outcome and the final's status, by the same verdict
+        that gates the start."""
+        standing = await self._assessments.standing()
+        exempts = (
+            standing.checkin_passed and self._ctx.settings.assessments.exemption.enabled
+        )
+        final = final_outcome(
+            decision,
+            final_passed=standing.final_passed,
+            checkin_exempts=exempts,
+            attempts_left=facts["attempts_left"],
+        )
+        gate = scorm_gate(decision, checkin_exempts=exempts)
+        return {
+            "checkin": standing.checkin,
+            "final": {
+                "status": final.status,
+                "reason": final.reason,
+                "attempts": item["attempts"] if item else None,
+            },
+            "scorm_gate": {"satisfied": gate.satisfied, "reason": gate.reason},
         }
 
     async def _with_progress(self, facts: dict[str, Any]) -> Decision:

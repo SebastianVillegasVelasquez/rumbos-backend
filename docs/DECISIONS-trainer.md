@@ -788,3 +788,44 @@ OpenAPI lists it in `Welcome` and in `ClosingFlow`. Judgment calls:
   `docs/WELCOME-FLOW.md`.
 - No URL is stored or accepted. Stored maps and hashes do not change: the type
   only exists in maps that use it.
+
+## D63. The journey is an additive `outcome` object, read from attempts, enforce only
+
+What the frontend could already read about a student: the check-in item of
+`GET /trainer/assessments` (`state`, `attempts`, `best`) and, for the final,
+`GET /trainer/closing`. Missing: an explicit check-in outcome with the threshold
+that applied, and a single status for the final that tells "not required because
+you passed the check-in" apart from "you passed the final". Added as `outcome` on
+`GET /trainer/closing`, with no table and no new endpoint (D29). Judgment calls:
+
+- **Additive, not a reshape.** The brief asked for "an explicit `final` object".
+  `final` already exists on this payload (the exam's list item, shipped and used),
+  so the new status sits in `outcome.final`. Replacing `final` would break every
+  client that reads `final.state`.
+- **`passed_checkin` is on the gate, not on `reason`.** The refusal for a student
+  who passed the check-in stays `already_passed` (pinned by the existing tests and
+  mapped to message keys by clients). The "SCORM gate is satisfied because of the
+  check-in" fact is `outcome.scorm_gate = {satisfied: true, reason: "passed_checkin"}`.
+  `decide` is untouched, so there is still one gate function and one verdict;
+  `final_outcome` and `scorm_gate` only classify it.
+- **Enforce only.** With `CLOSING_GATE_MODE=off` the key is absent and the bytes
+  are the old ones (verified by comparing the response of the previous commit
+  with this one, and pinned by a test). The route returns the JSON itself to omit
+  the key: a wrap serializer on the model would have collapsed `ClosingStatus` to a
+  bare `object` in the OpenAPI.
+- **The exemption switch is respected.** `not_required_passed_checkin` only while
+  `assessments.exemption.enabled`, exactly like the existing `already_passed`.
+  With it off a passed check-in does not exempt and the final stays required.
+- **`not_passed` does not wait for the attempts to run out.** A closed attempt
+  without a pass is `not_passed`; `attempts` tells whether more are allowed. An
+  attempt still open is `not_taken`. The check-in is normally one attempt.
+- **The threshold is the one the attempt was graded with** (it is frozen on the
+  attempt), so a later change of the rule does not rewrite what a student was told.
+- **Order of the final's status:** no final in the map (`not_enabled`,
+  `no_final_step`) stays `locked`; then `passed`; then a check-in exemption; then
+  `exhausted`; then `locked` with the verdict's reason; else `required`. So a
+  passed check-in wins over an unpublished final form.
+- **No Moodle read for a student who needs none:** the verdict returns before the
+  SCORM check for `already_passed`, so a passed check-in costs no completion call.
+- The pass rule, scoring and the start guard are unchanged; the guard keeps
+  rejecting a final for a student who passed the check-in or the final.

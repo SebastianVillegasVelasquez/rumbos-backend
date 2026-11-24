@@ -8,6 +8,7 @@ import uuid
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, Response, status
+from fastapi.responses import JSONResponse
 
 from app.assessment.access import (
     CallerDep,
@@ -135,11 +136,22 @@ async def list_assessments(service: ServiceDep) -> Any:
 
 
 @router.get("/closing", response_model=ClosingStatus)
-async def closing_status(closing: ClosingDep) -> Any:
+async def closing_status(closing: ClosingDep) -> Response:
     """Whether the final exam of the closing flow may be started, why not, how
     much SCORM content is done, and the exam's own state. A course without a
-    closing flow answers `available: false, reason: not_enabled`."""
-    return await closing.availability()
+    closing flow answers `available: false, reason: not_enabled`.
+
+    While the gate is enforced it also carries `outcome`: the check-in's
+    outcome, the final's status (`required`, `locked`,
+    `not_required_passed_checkin`, `passed` or `exhausted`) and whether the
+    SCORM condition is met. With `CLOSING_GATE_MODE=off` the `outcome` key is
+    absent and the answer is exactly what it was before it existed."""
+    body = ClosingStatus.model_validate(await closing.availability())
+    return JSONResponse(
+        body.model_dump(
+            mode="json", exclude=None if body.outcome is not None else {"outcome"}
+        )
+    )
 
 
 @router.post(

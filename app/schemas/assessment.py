@@ -256,6 +256,62 @@ class ClosingProgress(_Out):
     total: int
 
 
+CheckinStatus = Literal["not_taken", "passed", "not_passed"]
+FinalStatus = Literal[
+    "required", "not_required_passed_checkin", "passed", "exhausted", "locked"
+]
+
+
+class CheckinOutcome(_Out):
+    """How the student's check-in went. `not_taken` also covers an attempt still
+    in progress. `percent` is the score of the attempt that decided it (the
+    passing one, else the best), as the exam reports it; `pass_percent` and
+    `pass_operator` are the rule that attempt was graded with (the map's current
+    rule while nothing was sat). The rule is `percent` `pass_operator`
+    `pass_percent`: with `gt`, exactly the threshold does not pass. It is decided
+    on the exact score and `percent` is rounded to two decimals for display, so
+    a client must show `status` and never recompute it from `percent`."""
+
+    status: CheckinStatus
+    percent: str | None
+    pass_percent: int
+    pass_operator: Literal["gt", "gte"]
+    attempts: Attempts
+
+
+class FinalOutcome(_Out):
+    """The final exam's status for this student: `required` (they may sit it now),
+    `locked` (they must, but not yet: `reason` says why, as for `available`),
+    `not_required_passed_checkin` (a passed check-in exempts them and the
+    closing flow is shown without the exam step), `passed`, or `exhausted` (every
+    attempt used without passing). `attempts` is null when the map has no final
+    exam."""
+
+    status: FinalStatus
+    reason: ClosingReason | None
+    attempts: Attempts | None
+
+
+class ScormGate(_Out):
+    """Whether the SCORM condition of the gate is met. `satisfied` is true with
+    `reason: passed_checkin` when a passed check-in met it without the content
+    being done (the plugin then marks the content complete from the signed
+    statement), false while content is missing, and null when it was not checked
+    or could not be read."""
+
+    satisfied: bool | None
+    reason: Literal["passed_checkin"] | None
+
+
+class ClosingOutcome(_Out):
+    """The student's journey through the two exams, read from their attempts
+    (nothing about it is stored: D29)."""
+
+    checkin: CheckinOutcome | None
+    final: FinalOutcome
+    scorm_gate: ScormGate
+
+
 class ClosingStatus(_Out):
     """Whether the closing flow's final exam may be started now, by the same
     rule the start call enforces (see `app.closing.gate`)."""
@@ -272,3 +328,8 @@ class ClosingStatus(_Out):
     # The final exam's state, as `/trainer/assessments` lists it for check-in;
     # null when the map has no final exam.
     final: AssessmentListItem | None = None
+    # The check-in outcome and the final's status, to drive the journey. Present
+    # only while the gate is enforced; with `CLOSING_GATE_MODE=off` the key is
+    # absent, so the answer is exactly what it was before. `checkin` is null when
+    # the map has no check-in.
+    outcome: ClosingOutcome | None = None
