@@ -436,3 +436,28 @@ async def test_a_closing_pdf_that_does_not_exist_is_refused(
     assert r.status_code == 422
     problems = [(p["path"], p["code"]) for p in r.json()["detail"]["problems"]]
     assert problems == [("closing.steps[0].assetId", "document_unavailable")]
+
+
+async def test_a_document_used_only_by_the_closing_flow_is_saved_published_and_kept(
+    client: httpx.AsyncClient,
+) -> None:
+    # The whole path an editor takes for a PDF in the closing flow: upload,
+    # save the step, publish, and the document is then protected from deletion
+    # by the closing flow alone (the welcome flow holds nothing).
+    doc = await a_document(client)
+    created = await make_map(client)
+    saved = await put_settings(
+        client,
+        created["id"],
+        {"closing": {"steps": [pdf_step(doc["id"], "documento2")]}},
+    )
+    assert saved.status_code == 200, saved.text
+    assert saved.json()["settings"]["welcome"]["steps"] is None
+
+    assert (await client.delete(f"/assets/{doc['id']}")).status_code == 409
+    await publish(client, created["id"])
+    await put_settings(client, created["id"], {"closing": None})
+
+    refused = await client.delete(f"/assets/{doc['id']}")
+    assert refused.status_code == 409
+    assert refused.json()["detail"]["usage"]["publications"] == 1

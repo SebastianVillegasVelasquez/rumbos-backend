@@ -731,3 +731,40 @@ A tenant with no endpoint, or a form that is not published, produces the plain
 schema 1 statement exactly as before. This keeps a deploy inert and means a
 statement never names a definition that was never queued.
 
+
+## Outcomes, activity steps and congratulations (`feat/outcomes-activity-steps-congrats`, from `bac6ed5`)
+
+## D61. The closing-flow PDF failure is not in the backend path that was tested
+
+Reported: adding a PDF step in the closing flow fails with "el archivo no se pudo
+subir" while the welcome flow works. Evidence gathered before touching anything:
+
+- `POST /assets` (`app/api/routes/assets.py`) has no notion of a flow: the same
+  route, form fields, size cap (`DOCUMENT_MAX_BYTES`), scan and quota serve both.
+  The editor's `PdfEditor` is one component mounted for both flows and sends the
+  same request (`kind=document`, `title`, `rightsDeclared=true`, the file).
+- The whole path was run through the API with a real PDF: upload (201), save a
+  `pdf` step into the closing flow alone (200), into the welcome flow alone,
+  into both, with and without `ack` and `minSeconds` (200 each), read back through
+  `welcomeDocuments` (`available: true`), publish (201), delete refused while the
+  closing flow or a publication uses it (409). The scope check
+  (`usable_documents`) and the in-use query (`asset_repository.py`) both read the
+  closing flow. Nothing failed. `tests/test_welcome_documents.py` now holds that
+  path for a document used only by the closing flow.
+- The text in the editor is the `generic` entry of its PDF upload errors
+  ("No se pudo subir el documento"). The editor shows it for anything that is
+  not an `ApiError` carrying `asset_too_large`,
+  `document_rights_declaration_required` or `document_invalid`: a network or
+  proxy failure, or any other backend refusal. One of those was seen directly:
+  with `ASSETS_UPLOADS_ENABLED=false` (the default, and what both `.env` files in
+  this repo carry) the upload answers 503 `uploads_disabled`. Storage
+  unavailable (503) and a tenant quota refusal are other refusals of the same
+  route that it would also word this way; their exact codes were not exercised.
+
+Not confirmed: which of those the product owner hit. The backend cannot be blamed
+for a flow-specific failure that this evidence does not show, so no limit was
+raised and no code was changed. One request and response from the failing case
+(status and `detail.code` in the browser's network tab) settles it. A welcome PDF
+chosen from the library involves no upload at all, which would also explain why
+"the welcome flow works". The `moodle_activity` step (D62) gives a path with no
+upload.
