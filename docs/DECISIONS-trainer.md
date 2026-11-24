@@ -768,3 +768,23 @@ raised and no code was changed. One request and response from the failing case
 chosen from the library involves no upload at all, which would also explain why
 "the welcome flow works". The `moodle_activity` step (D62) gives a path with no
 upload.
+
+## D62. `moodle_activity` is a content step of the shared table, with a required cmid
+
+Added to `_SHARED_TYPES`, so both flows hold it with one validator and the
+OpenAPI lists it in `Welcome` and in `ClosingFlow`. Judgment calls:
+
+- `{key, type, cmid, title}` as proposed (C1). The step also carries `mandatory`
+  and `revision`, which every step type has with defaults; they are not new
+  fields, and an editor that sends only the four named ones is valid.
+- `cmid` is **required** (unlike `quiz`, whose `cmid` may be null until linked):
+  an activity step with nothing to open is not a draft worth keeping. The editor
+  picks the activity first. A value <= 0, a string, a float or a bool is refused.
+- No limit on how many (unlike `quiz`, capped at 3 because it is a graded
+  activity): only the 12-step flow limit applies.
+- The backend cannot verify the id (D29: it never asks Moodle about a student or
+  a module of the flow) and does not try. A stale id is the frontend's and the
+  plugin's to degrade ("Actividad no disponible"), as documented in
+  `docs/WELCOME-FLOW.md`.
+- No URL is stored or accepted. Stored maps and hashes do not change: the type
+  only exists in maps that use it.

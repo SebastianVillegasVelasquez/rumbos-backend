@@ -164,6 +164,21 @@ class QuizStep(_StepBase):
     )
 
 
+class MoodleActivityStep(_StepBase):
+    """An activity of the Moodle course (a PDF `resource`, a page, a SCORM...)
+    that the student opens from the flow. The file lives in Moodle, so no
+    upload is involved.
+
+    `cmid` is the Moodle course-module id and is **specific to one course**:
+    duplicating or restoring a course gives its activities new ids, so the
+    frontend must treat an id it cannot open as "activity not available". The
+    backend does not check that the id exists (only the Moodle plugin can) and
+    no URL is ever stored: the plugin builds it from a validated `cmid`."""
+
+    type: Literal["moodle_activity"]
+    cmid: Annotated[int, Field(strict=True, gt=0)]
+
+
 class AssessmentStep(_StepBase):
     """A native exam (see `MapSettings.assessments`): the check-in in the
     welcome flow, the final exam in the closing flow (`flow_problems` refuses
@@ -175,7 +190,13 @@ class AssessmentStep(_StepBase):
 
 
 Step = Annotated[
-    WelcomeStep | VideoStep | HtmlStep | PdfStep | QuizStep | AssessmentStep,
+    WelcomeStep
+    | VideoStep
+    | HtmlStep
+    | PdfStep
+    | QuizStep
+    | MoodleActivityStep
+    | AssessmentStep,
     Field(discriminator="type"),
 ]
 
@@ -240,6 +261,12 @@ class Welcome(_Strict):
                             "key": "cuestionario",
                             "title": "Cuestionario de entrada",
                             "cmid": 77,
+                        },
+                        {
+                            "type": "moodle_activity",
+                            "key": "actividad1",
+                            "title": "Guia de estudio",
+                            "cmid": 42,
                         },
                     ],
                 }
@@ -311,8 +338,8 @@ def _closing_steps_schema(schema: dict[str, Any]) -> None:
 class ClosingFlow(Welcome):
     """The closing flow: the welcome flow's twin, shown when the level is
     finished. Same fields and same checks; what differs is what `steps` may
-    hold. Allowed: `video`, `html`, `pdf`, `quiz` and one `assessment` step of
-    purpose `final`. Refused with 422 `welcome_invalid` (problem
+    hold. Allowed: `video`, `html`, `pdf`, `quiz`, `moodle_activity` and one
+    `assessment` step of purpose `final`. Refused with 422 `welcome_invalid` (problem
     `step_type_not_allowed` or `assessment_purpose`): the `welcome` greeting.
     A closing flow needs at least one step, and step keys are unique across
     both flows. The student's progress through it is kept in Moodle, not here."""
@@ -324,8 +351,9 @@ class ClosingFlow(Welcome):
         Field(
             json_schema_extra=_closing_steps_schema,
             description=(
-                "Allowed here: video, html, pdf, quiz and one assessment step "
-                "of purpose `final`. The `welcome` greeting is welcome-only."
+                "Allowed here: video, html, pdf, quiz, moodle_activity and one "
+                "assessment step of purpose `final`. The `welcome` greeting is "
+                "welcome-only."
             ),
         ),
     ] = None

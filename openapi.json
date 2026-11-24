@@ -6274,6 +6274,9 @@
                       "$ref": "#/components/schemas/QuizStep"
                     },
                     {
+                      "$ref": "#/components/schemas/MoodleActivityStep"
+                    },
+                    {
                       "allOf": [
                         {
                           "$ref": "#/components/schemas/AssessmentStep"
@@ -6293,6 +6296,7 @@
                     "mapping": {
                       "assessment": "#/components/schemas/AssessmentStep",
                       "html": "#/components/schemas/HtmlStep",
+                      "moodle_activity": "#/components/schemas/MoodleActivityStep",
                       "pdf": "#/components/schemas/PdfStep",
                       "quiz": "#/components/schemas/QuizStep",
                       "video": "#/components/schemas/VideoStep"
@@ -6307,7 +6311,7 @@
               }
             ],
             "title": "Steps",
-            "description": "Allowed here: video, html, pdf, quiz and one assessment step of purpose `final`. The `welcome` greeting is welcome-only."
+            "description": "Allowed here: video, html, pdf, quiz, moodle_activity and one assessment step of purpose `final`. The `welcome` greeting is welcome-only."
           },
           "title": {
             "anyOf": [
@@ -6369,7 +6373,7 @@
         "additionalProperties": false,
         "type": "object",
         "title": "ClosingFlow",
-        "description": "The closing flow: the welcome flow's twin, shown when the level is\nfinished. Same fields and same checks; what differs is what `steps` may\nhold. Allowed: `video`, `html`, `pdf`, `quiz` and one `assessment` step of\npurpose `final`. Refused with 422 `welcome_invalid` (problem\n`step_type_not_allowed` or `assessment_purpose`): the `welcome` greeting.\nA closing flow needs at least one step, and step keys are unique across\nboth flows. The student's progress through it is kept in Moodle, not here."
+        "description": "The closing flow: the welcome flow's twin, shown when the level is\nfinished. Same fields and same checks; what differs is what `steps` may\nhold. Allowed: `video`, `html`, `pdf`, `quiz`, `moodle_activity` and one\n`assessment` step of purpose `final`. Refused with 422 `welcome_invalid` (problem\n`step_type_not_allowed` or `assessment_purpose`): the `welcome` greeting.\nA closing flow needs at least one step, and step keys are unique across\nboth flows. The student's progress through it is kept in Moodle, not here."
       },
       "ClosingProgress": {
         "properties": {
@@ -7611,6 +7615,53 @@
           "percent"
         ],
         "title": "ModuleResult"
+      },
+      "MoodleActivityStep": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z0-9]{6,16}$",
+            "title": "Key"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "mandatory": {
+            "type": "boolean",
+            "title": "Mandatory",
+            "default": true
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 9999.0,
+            "minimum": 1.0,
+            "title": "Revision",
+            "default": 1
+          },
+          "type": {
+            "type": "string",
+            "const": "moodle_activity",
+            "title": "Type"
+          },
+          "cmid": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Cmid"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "key",
+          "title",
+          "type",
+          "cmid"
+        ],
+        "title": "MoodleActivityStep",
+        "description": "An activity of the Moodle course (a PDF `resource`, a page, a SCORM...)\nthat the student opens from the flow. The file lives in Moodle, so no\nupload is involved.\n\n`cmid` is the Moodle course-module id and is **specific to one course**:\nduplicating or restoring a course gives its activities new ids, so the\nfrontend must treat an id it cannot open as \"activity not available\". The\nbackend does not check that the id exists (only the Moodle plugin can) and\nno URL is ever stored: the plugin builds it from a validated `cmid`."
       },
       "MoodleStatus": {
         "type": "string",
@@ -10093,6 +10144,9 @@
                       "$ref": "#/components/schemas/QuizStep"
                     },
                     {
+                      "$ref": "#/components/schemas/MoodleActivityStep"
+                    },
+                    {
                       "$ref": "#/components/schemas/AssessmentStep"
                     }
                   ],
@@ -10101,6 +10155,7 @@
                     "mapping": {
                       "assessment": "#/components/schemas/AssessmentStep",
                       "html": "#/components/schemas/HtmlStep",
+                      "moodle_activity": "#/components/schemas/MoodleActivityStep",
                       "pdf": "#/components/schemas/PdfStep",
                       "quiz": "#/components/schemas/QuizStep",
                       "video": "#/components/schemas/VideoStep",
@@ -10215,6 +10270,12 @@
                 "key": "cuestionario",
                 "title": "Cuestionario de entrada",
                 "type": "quiz"
+              },
+              {
+                "cmid": 42,
+                "key": "actividad1",
+                "title": "Guia de estudio",
+                "type": "moodle_activity"
               }
             ]
           }
