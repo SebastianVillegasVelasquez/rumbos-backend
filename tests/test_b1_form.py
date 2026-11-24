@@ -441,7 +441,7 @@ def test_known_limit_a_list_of_the_expected_phrases_scores_like_a_real_text() ->
     assert _points("b1-fa-w-01", LIST) == 5
     assert _points("b1-fa-w-02", LIST) < 5
     assert 25 <= len(SPEAKING_LIST.split()) <= 150
-    assert _points("b1-fa-s-02", SPEAKING_LIST) >= 4
+    assert _points("b1-fa-s-02", SPEAKING_LIST) == 5
 
 
 @pytest.mark.parametrize(
