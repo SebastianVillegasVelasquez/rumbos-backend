@@ -23,7 +23,15 @@ from tests.sessions import new_session
 CATALOG = load_catalog(Path(__file__).resolve().parent.parent / "content/trainer")
 NOW = datetime(2026, 11, 23, 12, 0, tzinfo=UTC)
 URL = "https://moodle.test/local/rumbos/mirror.php"
-PUBLISHED = {"a1-form-a", "a2-form-a", "b2-form-a"}
+# Every form the catalog serves to students, so publishing one more form never
+# makes these tests stale.
+PUBLISHED = {
+    form.form_id
+    for pack in CATALOG.packs.values()
+    for form in (pack.served_form(f, False) for f in pack.forms)
+    if form is not None
+}
+N = len(PUBLISHED)
 
 
 async def tenant(engine: AsyncEngine) -> Tenant:
@@ -156,7 +164,7 @@ async def test_resync_needs_the_mirror_to_be_on(engine: AsyncEngine) -> None:
 async def test_resync_is_a_dry_run_unless_applied(engine: AsyncEngine) -> None:
     await enable(engine)
     counts = await sync(engine, apply=False)
-    assert counts == {"created": 3, "requeued": 0, "waiting": 0}
+    assert counts == {"created": N, "requeued": 0, "waiting": 0}
     assert await rows(engine) == []
 
 
@@ -164,12 +172,12 @@ async def test_resync_queues_every_published_form_and_twice_is_the_same(
     engine: AsyncEngine,
 ) -> None:
     await enable(engine)
-    assert await sync(engine, apply=True) == {"created": 3, "requeued": 0, "waiting": 0}
+    assert await sync(engine, apply=True) == {"created": N, "requeued": 0, "waiting": 0}
     first = await rows(engine)
     assert {r.form_id for r in first} == PUBLISHED
     assert {r.status for r in first} == {"pending"}
     assert all(r.statement["kind"] == "definition" for r in first)
-    assert await sync(engine, apply=True) == {"created": 0, "requeued": 0, "waiting": 3}
+    assert await sync(engine, apply=True) == {"created": 0, "requeued": 0, "waiting": N}
     assert sorted(r.statement["jti"] for r in await rows(engine)) == sorted(
         r.statement["jti"] for r in first
     )
@@ -188,11 +196,11 @@ async def test_resync_sends_again_what_was_sent_and_keeps_the_signed_claims(
         await s.commit()
     assert await sync(engine, apply=False) == {
         "created": 0,
-        "requeued": 3,
+        "requeued": N,
         "waiting": 0,
     }
     assert {r.status for r in await rows(engine)} == {"sent"}
-    assert await sync(engine, apply=True) == {"created": 0, "requeued": 3, "waiting": 0}
+    assert await sync(engine, apply=True) == {"created": 0, "requeued": N, "waiting": 0}
     after = await rows(engine)
     assert {r.status for r in after} == {"pending"} and {r.attempts for r in after} == {
         0
