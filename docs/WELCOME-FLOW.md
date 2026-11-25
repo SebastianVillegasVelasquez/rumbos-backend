@@ -32,7 +32,7 @@ Every step has:
 | field | rule |
 | --- | --- |
 | `key` | `^[a-z0-9]{6,16}$`, unique in the flow (`step_key_duplicate`) |
-| `type` | `welcome`, `video`, `html`, `pdf` or `quiz` (`step_type_invalid`) |
+| `type` | `welcome`, `video`, `html`, `pdf`, `quiz` or `moodle_activity` (`step_type_invalid`) |
 | `title` | 1..120 characters |
 | `mandatory` | default `true` |
 | `revision` | 1..9999, default 1. Bump it to make students see a changed step again |
@@ -44,9 +44,35 @@ Every step has:
 | `html` | `html` (<=100 KB), `css` (<=50 KB or null), `ack {label 1..160}` or null, `minSeconds` 0..600 | see "HTML and CSS" |
 | `pdf` | `assetId`, `ack`, `minSeconds` | the asset must be a usable document (`document_unavailable`) |
 | `quiz` | `cmid` (positive or null), `intro`, `outcomeAbove`, `outcomeBelow` (<=300 each) | at most 3 (`quiz_too_many`); the backend never grades |
+| `moodle_activity` | `cmid` (integer > 0, required) | an activity of the course opened from Moodle, see "The `moodle_activity` step" |
 
 Flow limits: at most 12 steps (`steps_too_many`) and at most 400 KB of HTML plus
 CSS together (`flow_too_large`).
+
+## The `moodle_activity` step
+
+```json
+{"type": "moodle_activity", "key": "actividad1", "title": "Guia de estudio", "cmid": 42}
+```
+
+A Moodle activity (a PDF `resource`, a page, a SCORM...) that the student opens
+from the flow. It is allowed in the welcome **and** the closing flow (one
+validator table), counts toward the 12-step limit and shares the key space of the
+other steps. The file lives in Moodle, so a PDF shown this way needs no upload at
+all. Nothing else is stored: no URL, no name, no type. A `url`, `link` or any
+other field is refused (`unknown_field`), `cmid` <= 0 is `out_of_range`, a
+missing `cmid` or `title` is `required`.
+
+**`cmid` is specific to one course.** It is the Moodle course-module id, and a
+duplicated or restored course gives its activities new ids. The backend cannot
+check that an id exists or is the activity the author meant (it saves the step
+without asking Moodle), so the frontend must degrade gracefully: when the plugin
+says it cannot open the activity (`not_found`, `forbidden` or `unsupported`)
+show "Actividad no disponible" and let the student continue if the step is not
+mandatory. Opening an activity is the plugin's job (host contract), which
+builds the URL itself from a `cmid` it validated: the backend never produces or
+accepts one. A future export and import of flows must reset these ids as it
+does the quiz one (see "Not done here").
 
 ## Errors
 
@@ -186,7 +212,7 @@ under `closing.`). `null` or absent: there is no closing flow, and the map is
 stored and hashed exactly as before (`to_stored()` leaves the key out).
 
 What it may hold: every content step the welcome flow has (`html`, `pdf`,
-`video` and the Moodle `quiz` step, same rules and limits, one shared validator
+`video`, the Moodle `quiz` step and the `moodle_activity` step, same rules and limits, one shared validator
 table in `app.welcome_flow.flow`) and at most one `assessment` step with
 `purpose: "final"`. Refused: the `welcome` greeting
 (`step_type_not_allowed`), an assessment step with another purpose
@@ -212,7 +238,7 @@ when the asset is gone). The assets of both flows keep a publication or a draft
 from losing them. The frontend therefore needs no second list.
 
 **The OpenAPI tells the two flows apart.** `MapSettings.closing` is the
-`ClosingFlow` schema: its `steps` offer `video`, `html`, `pdf`, `quiz` and an
+`ClosingFlow` schema: its `steps` offer `video`, `html`, `pdf`, `quiz`, `moodle_activity` and an
 `assessment` step whose `purpose` is `final`, and not the `welcome` greeting.
 At runtime a step outside that is still reported as a `{path, code, message}`
 problem (`422 welcome_invalid`), never as a generic validation error, so the
@@ -256,6 +282,7 @@ uv run alembic upgrade head
 - **Export and import** of flows (`.rumbos` files) is not implemented: the
   exporter and importer do not exist yet on the branch this builds on. When
   they do, the agreed behavior is: flows travel; a quiz `cmid` is reset to null
-  with the warning `flow_quiz_unlinked`; a document that cannot travel is
-  dropped with `document_dropped`.
+  with the warning `flow_quiz_unlinked` (a `moodle_activity` step's `cmid` is
+  course-specific too and would need the same treatment); a document that
+  cannot travel is dropped with `document_dropped`.
 - Per-student progress, quiz grading and scripts in HTML steps are out of scope.

@@ -104,10 +104,16 @@ async def test_an_unknown_form_is_a_422(client: httpx.AsyncClient) -> None:
 
 
 async def test_a_trainer_without_content_is_a_422(client: httpx.AsyncClient) -> None:
-    created = await make_map(client)
-    r = await put_settings(
-        client, created["id"], {"trainer": {"enabled": True, "level": "B1"}}
-    )
+    # Every level the settings accept has a pack now, so the deployment is made
+    # to have none: what is refused is a level without content, whichever it is.
+    app.dependency_overrides[get_catalog] = lambda: Catalog({})
+    try:
+        created = await make_map(client)
+        r = await put_settings(
+            client, created["id"], {"trainer": {"enabled": True, "level": "B1"}}
+        )
+    finally:
+        app.dependency_overrides.pop(get_catalog, None)
     assert r.status_code == 422
     assert r.json()["detail"]["problems"][0]["code"] == "pack_not_found"
     assert r.json()["detail"]["errors"] == [

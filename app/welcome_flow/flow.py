@@ -5,7 +5,7 @@ much markup, and what the author's HTML and CSS contain.
 The closing flow is the welcome flow's twin and shares every rule here. It
 differs in two things only, both in `_FLOW_TYPES` and `_PURPOSE`: it never holds
 the `welcome` greeting (every other content type is shared: `html`, `pdf`,
-`video`, `quiz`), and its one `assessment` step has purpose `final` where the
+`video`, `quiz`, `moodle_activity`), and its one `assessment` step has purpose `final` where the
 welcome flow's has `check_in`. A closing flow must have steps. Step keys are also unique across the two flows, because Moodle
 keeps the progress of a step by map and key alone.
 
@@ -28,6 +28,7 @@ from app.schemas.welcome import (
     MAX_QUIZ_STEPS,
     AssessmentStep,
     HtmlStep,
+    MoodleActivityStep,
     PdfStep,
     QuizStep,
     VideoStep,
@@ -49,6 +50,7 @@ _SHARED_TYPES: tuple[type, ...] = (
     HtmlStep,
     PdfStep,
     QuizStep,
+    MoodleActivityStep,
     AssessmentStep,
 )
 _FLOW_TYPES: dict[str, tuple[type, ...]] = {

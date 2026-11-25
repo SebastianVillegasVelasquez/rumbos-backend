@@ -11,6 +11,7 @@ from typing import Annotated, Any, Literal
 from pydantic import BeforeValidator, ConfigDict, Field
 
 from app.schemas.base import ApiModel
+from app.schemas.congratulations import Congratulations
 from app.schemas.skin import HexColor
 from app.schemas.welcome import ClosingFlow, Welcome
 
@@ -124,6 +125,9 @@ class MapSettings(_Strict):
     closing: ClosingFlow | None = None
     trainer: TrainerSettings = Field(default_factory=TrainerSettings)
     assessments: AssessmentSettings = Field(default_factory=AssessmentSettings)
+    # What the congratulations screens say (see `app.schemas.congratulations`).
+    # Absent or null: the frontend's default copy.
+    congratulations: Congratulations | None = None
 
     def to_stored(self) -> dict[str, Any]:
         """The JSON-able form kept in `course_maps.settings` (camelCase).
@@ -144,6 +148,9 @@ class MapSettings(_Strict):
             del stored["trainer"]
         if self.assessments == AssessmentSettings():
             del stored["assessments"]
+        if self.congratulations is None or self.congratulations.is_empty():
+            # Same rule for the texts: no custom copy is no key.
+            del stored["congratulations"]
         if self.closing is None:
             # No closing flow is no key, so every map stored before it existed
             # keeps its hash.

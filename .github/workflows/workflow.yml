@@ -35,6 +35,16 @@ jobs:
         run: uv run mypy app tests
 
       - name: OpenAPI document is up to date
+        # Importing the app reads its settings, so the step needs them, as the
+        # tests do. Nothing connects: these are placeholders.
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: db_test
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          MOODLE_SERVICE_TOKEN: ""
+          MOODLE_BASE_URL: ""
         run: uv run python -m app.scripts.export_openapi --check
 
   test:

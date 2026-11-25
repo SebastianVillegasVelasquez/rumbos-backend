@@ -731,3 +731,168 @@ A tenant with no endpoint, or a form that is not published, produces the plain
 schema 1 statement exactly as before. This keeps a deploy inert and means a
 statement never names a definition that was never queued.
 
+
+## Outcomes, activity steps and congratulations (`feat/outcomes-activity-steps-congrats`, from `bac6ed5`)
+
+## D61. The closing-flow PDF failure is not in the backend path that was tested
+
+Reported: adding a PDF step in the closing flow fails with "el archivo no se pudo
+subir" while the welcome flow works. Evidence gathered before touching anything:
+
+- `POST /assets` (`app/api/routes/assets.py`) has no notion of a flow: the same
+  route, form fields, size cap (`DOCUMENT_MAX_BYTES`), scan and quota serve both.
+  The editor's `PdfEditor` is one component mounted for both flows and sends the
+  same request (`kind=document`, `title`, `rightsDeclared=true`, the file).
+- The whole path was run through the API with a real PDF: upload (201), save a
+  `pdf` step into the closing flow alone (200), into the welcome flow alone,
+  into both, with and without `ack` and `minSeconds` (200 each), read back through
+  `welcomeDocuments` (`available: true`), publish (201), delete refused while the
+  closing flow or a publication uses it (409). The scope check
+  (`usable_documents`) and the in-use query (`asset_repository.py`) both read the
+  closing flow. Nothing failed. `tests/test_welcome_documents.py` now holds that
+  path for a document used only by the closing flow.
+- The text in the editor is the `generic` entry of its PDF upload errors
+  ("No se pudo subir el documento"). The editor shows it for anything that is
+  not an `ApiError` carrying `asset_too_large`,
+  `document_rights_declaration_required` or `document_invalid`: a network or
+  proxy failure, or any other backend refusal. One of those was seen directly:
+  with `ASSETS_UPLOADS_ENABLED=false` (the default, and what both `.env` files in
+  this repo carry) the upload answers 503 `uploads_disabled`. Storage
+  unavailable (503) and a tenant quota refusal are other refusals of the same
+  route that it would also word this way; their exact codes were not exercised.
+
+Not confirmed: which of those the product owner hit. The backend cannot be blamed
+for a flow-specific failure that this evidence does not show, so no limit was
+raised and no code was changed. One request and response from the failing case
+(status and `detail.code` in the browser's network tab) settles it. A welcome PDF
+chosen from the library involves no upload at all, which would also explain why
+"the welcome flow works". The `moodle_activity` step (D62) gives a path with no
+upload.
+
+## D62. `moodle_activity` is a content step of the shared table, with a required cmid
+
+Added to `_SHARED_TYPES`, so both flows hold it with one validator and the
+OpenAPI lists it in `Welcome` and in `ClosingFlow`. Judgment calls:
+
+- `{key, type, cmid, title}` as proposed (C1). The step also carries `mandatory`
+  and `revision`, which every step type has with defaults; they are not new
+  fields, and an editor that sends only the four named ones is valid.
+- `cmid` is **required** (unlike `quiz`, whose `cmid` may be null until linked):
+  an activity step with nothing to open is not a draft worth keeping. The editor
+  picks the activity first. A value <= 0, a string, a float or a bool is refused.
+- No limit on how many (unlike `quiz`, capped at 3 because it is a graded
+  activity): only the 12-step flow limit applies.
+- The backend cannot verify the id (D29: it never asks Moodle about a student or
+  a module of the flow) and does not try. A stale id is the frontend's and the
+  plugin's to degrade ("Actividad no disponible"), as documented in
+  `docs/WELCOME-FLOW.md`.
+- No URL is stored or accepted. Stored maps and hashes do not change: the type
+  only exists in maps that use it.
+
+## D63. The journey is an additive `outcome` object, read from attempts, enforce only
+
+What the frontend could already read about a student: the check-in item of
+`GET /trainer/assessments` (`state`, `attempts`, `best`) and, for the final,
+`GET /trainer/closing`. Missing: an explicit check-in outcome with the threshold
+that applied, and a single status for the final that tells "not required because
+you passed the check-in" apart from "you passed the final". Added as `outcome` on
+`GET /trainer/closing`, with no table and no new endpoint (D29). Judgment calls:
+
+- **Additive, not a reshape.** The brief asked for "an explicit `final` object".
+  `final` already exists on this payload (the exam's list item, shipped and used),
+  so the new status sits in `outcome.final`. Replacing `final` would break every
+  client that reads `final.state`.
+- **`passed_checkin` is on the gate, not on `reason`.** The refusal for a student
+  who passed the check-in stays `already_passed` (pinned by the existing tests and
+  mapped to message keys by clients). The "SCORM gate is satisfied because of the
+  check-in" fact is `outcome.scorm_gate = {satisfied: true, reason: "passed_checkin"}`.
+  `decide` is untouched, so there is still one gate function and one verdict;
+  `final_outcome` and `scorm_gate` only classify it.
+- **Enforce only.** With `CLOSING_GATE_MODE=off` the key is absent and the bytes
+  are the old ones (verified by comparing the response of the previous commit
+  with this one, and pinned by a test). The route returns the JSON itself to omit
+  the key: a wrap serializer on the model would have collapsed `ClosingStatus` to a
+  bare `object` in the OpenAPI.
+- **The exemption switch is respected.** `not_required_passed_checkin` only while
+  `assessments.exemption.enabled`, exactly like the existing `already_passed`.
+  With it off a passed check-in does not exempt and the final stays required.
+- **`not_passed` does not wait for the attempts to run out.** A closed attempt
+  without a pass is `not_passed`; `attempts` tells whether more are allowed. An
+  attempt still open is `not_taken`. The check-in is normally one attempt.
+- **The threshold is the one the attempt was graded with** (it is frozen on the
+  attempt), so a later change of the rule does not rewrite what a student was told.
+- **Order of the final's status:** no final in the map (`not_enabled`,
+  `no_final_step`) stays `locked`; then `passed`; then a check-in exemption; then
+  `exhausted`; then `locked` with the verdict's reason; else `required`. So a
+  passed check-in wins over an unpublished final form.
+- **No Moodle read for a student who needs none:** the verdict returns before the
+  SCORM check for `already_passed`, so a passed check-in costs no completion call.
+- The pass rule, scoring and the start guard are unchanged; the guard keeps
+  rejecting a final for a student who passed the check-in or the final.
+
+## D64. The congratulations text is data in `MapSettings`, checked in the settings check
+
+Judgment calls:
+
+- **Where it is checked.** The brief asks for refusals in the existing
+  `errors[{path, rule, message_key}]` shape, which only the write-time settings
+  check produces (`trainer_settings_invalid`); a pydantic constraint would give the
+  generic validation 422. So the model has no length constraints and the caps,
+  the markup rule and the placeholder whitelist live in
+  `app.trainer.settings_check` (the OpenAPI states the caps in each field's
+  description). Shape errors (unknown field, wrong type) stay the generic 422.
+  Reads never re-run the rules.
+- **Plain text means no `<` or `>`.** It is a blunt rule (a text cannot say
+  "score > 80") but it leaves nothing for an HTML sink to work with if a client
+  ever renders it wrongly, and the frontend must render text anyway.
+- **Placeholders: exactly `{score}` and `{threshold}`; any other brace is refused**
+  (`{}`, `{0}`, `{Score}`, `{ score }`, `{{score}}`, a lone `{`...). Stricter than
+  the welcome flow's `{curso}` rule, which only refuses a complete `{...}`: this
+  one is about numbers the student sees, and a stray brace has no use.
+- **Cleaning runs before checking**, so a zero-width character cannot hide a
+  placeholder (`{scor​e}` is stored, and valid, as `{score}`).
+- **Null at every level** is the default copy. An all-empty object is stored as no
+  key at all, so hashes of existing maps and publications do not move.
+- Purposes are spelled `checkin` and `final`, as in the brief and in `outcome`,
+  not `check_in`/`checkIn` as in the assessment settings.
+
+## D65. The passed-outcome statement needed no new claim
+
+Audit of the signed result passback (`app/passback/statement.py`, the outbox, the
+schema 2 mirror statement): every closed, non-preview attempt already produces a
+statement signed ES256 with `purpose`, `passed`, `completes_course` and `jti` (the
+attempt id, which Moodle must accept once), plus `sub`, `tenant` and `course_id`.
+The schema 2 statement spreads those claims unchanged. So the plugin can decide
+"mark all the content complete" from a passing `check_in` statement with
+`completes_course: true`, and nothing was added: no claim, no endpoint, no change
+to the signing vectors or to the outbox.
+
+- **`purpose` is spelled `check_in`**, as in the shipped statement, its schemas
+  and the plugin's verifier; the brief's `checkin` is the spelling of the outcome
+  and of the congratulations keys. Renaming a signed claim would break the plugin
+  for no gain.
+- **The plugin should act on `completes_course`, not on `passed` alone**: it is
+  `passed` and the exemption that was in force when the attempt was sat. A passed
+  check-in with the exemption off is a pass that completes nothing.
+- **C4 is documented, not enforced here** (the writes happen in Moodle): the
+  plugin acts only on a verified statement, once per `jti`, and never on a
+  message from the browser. `docs/CLOSING-GATE.md`, "What the plugin acts on".
+  `tests/test_outcome_statement.py` pins the four claims for each purpose and
+  outcome, in the signed statement and in both published schemas.
+
+## D66. The restart after three failed finals is a design, not a feature
+
+Audited and written up in `docs/CLOSING-RESTART.md`, not built: it needs an
+irreversible reset of completion in Moodle, which by C4 may only follow a
+verified signed backend statement, and neither that statement kind nor the
+plugin's handling of it exists. Recommended there: a `cycle` column on the
+attempts (history untouched), a `cycle.restart` statement emitted with the
+exhausting attempt, the new cycle opening only after it is `sent`, the switch
+`CLOSING_RESTART_MODE=off|enforce` defaulting to `off`, an operator-run backfill
+for students already exhausted, and **not shipping it before 2026-11-30**: use
+the manual procedure in that document (raise `final.maxAttempts`, reset
+completion in Moodle), which works with today's code.
+
+An audit note: a student's attempts are isolated per course (a pass in one course
+is `used: 0` in another), checked with a probe, so a cycle needs no course
+scoping of its own.

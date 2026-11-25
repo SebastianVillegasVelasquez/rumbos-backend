@@ -27,6 +27,12 @@ STEPS: dict[str, dict[str, Any]] = {
         "assetId": str(uuid.uuid4()),
     },
     "quiz": {"type": "quiz", "key": "quiz0001", "title": "Q", "cmid": 5},
+    "moodle_activity": {
+        "type": "moodle_activity",
+        "key": "actividad",
+        "title": "A",
+        "cmid": 6,
+    },
 }
 PURPOSE = {"welcome": "check_in", "closing": "final"}
 
@@ -84,6 +90,7 @@ def test_openapi_says_what_the_closing_flow_may_hold() -> None:
         "HtmlStep",
         "PdfStep",
         "QuizStep",
+        "MoodleActivityStep",
         "AssessmentStep",
     ]
     exam = items["oneOf"][-1]

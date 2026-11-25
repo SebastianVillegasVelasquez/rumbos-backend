@@ -66,6 +66,77 @@ class Decision:
     progress: Progress | None = None
 
 
+FinalStatus = Literal[
+    "required",
+    "not_required_passed_checkin",
+    "passed",
+    "exhausted",
+    "locked",
+]
+ScormGateReason = Literal["passed_checkin"]
+
+
+@dataclass(frozen=True)
+class FinalOutcome:
+    """Where the student stands with the final exam, for the frontend to pick
+    the closing flow it shows (with the final-exam step, or without it)."""
+
+    status: FinalStatus
+    # Why the exam is `locked` (the verdict's own reason); null otherwise.
+    reason: Reason | None = None
+
+
+@dataclass(frozen=True)
+class ScormGate:
+    """Whether the SCORM condition is met. `satisfied` is null when it was not
+    checked or could not be read; `reason` is set only when something other than
+    the content itself met it."""
+
+    satisfied: bool | None
+    reason: ScormGateReason | None = None
+
+
+def final_outcome(
+    decision: Decision,
+    *,
+    final_passed: bool,
+    checkin_exempts: bool,
+    attempts_left: bool,
+) -> FinalOutcome:
+    """The final exam's status, derived from the one verdict `decide` gave and
+    two facts it folds together (`already_passed` is true for a pass in the
+    final and for a check-in pass that exempts).
+
+    `checkin_exempts`: the student passed the check-in and the map's exemption is
+    on, so the final is not required. A map with no final exam at all stays
+    `locked` (`not_enabled`, `no_final_step`): there is nothing to require."""
+    if decision.reason in ("not_enabled", "no_final_step"):
+        return FinalOutcome("locked", decision.reason)
+    if final_passed:
+        return FinalOutcome("passed")
+    if checkin_exempts:
+        return FinalOutcome("not_required_passed_checkin")
+    if not attempts_left:
+        return FinalOutcome("exhausted")
+    if decision.available:
+        return FinalOutcome("required")
+    return FinalOutcome("locked", decision.reason)
+
+
+def scorm_gate(decision: Decision, *, checkin_exempts: bool) -> ScormGate:
+    """A check-in pass satisfies the SCORM condition without the content being
+    done: the plugin marks it complete from the signed pass statement. Otherwise
+    the condition is what the verdict found: met, not met, or unknown (not read
+    yet, or Moodle could not be asked)."""
+    if checkin_exempts:
+        return ScormGate(True, "passed_checkin")
+    if decision.reason == "scorm_incomplete":
+        return ScormGate(False)
+    if decision.available and decision.progress is not None:
+        return ScormGate(True)
+    return ScormGate(None)
+
+
 def required_scorm_cmids(
     sections: Collection[MoodleSection],
     activity_ids: Collection[int],

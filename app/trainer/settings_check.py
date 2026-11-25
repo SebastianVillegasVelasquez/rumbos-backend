@@ -10,6 +10,13 @@ before a person has reviewed and published it.
 import re
 from dataclasses import dataclass, field
 
+from app.schemas.congratulations import (
+    BODY_MAX,
+    CTA_LABEL_MAX,
+    PLACEHOLDERS,
+    TITLE_MAX,
+    Congratulations,
+)
 from app.schemas.map_settings import MapSettings
 from app.schemas.welcome import AssessmentStep
 from app.trainer.catalog import Catalog
@@ -43,6 +50,61 @@ def error_entry(problem: Problem) -> dict[str, str]:
         "rule": rule,
         "message_key": f"trainer_settings.{rule}",
     }
+
+
+# (attribute of the text, name in the JSON path, its limit)
+_TEXT_FIELDS = (
+    ("title", "title", TITLE_MAX),
+    ("body", "body", BODY_MAX),
+    ("cta_label", "ctaLabel", CTA_LABEL_MAX),
+)
+
+
+def congratulations_problems(texts: Congratulations | None) -> list[Problem]:
+    """What the congratulations texts break: too long, markup (`<` or `>`: they
+    are plain text, shown as text), or any brace that is not exactly `{score}` or
+    `{threshold}`. Nothing is echoed: the findings carry a path and a rule."""
+    problems: list[Problem] = []
+    for purpose in ("checkin", "final"):
+        entry = getattr(texts, purpose, None) if texts else None
+        if entry is None:
+            continue
+        for attribute, name, limit in _TEXT_FIELDS:
+            value: str | None = getattr(entry, attribute)
+            if value is None:
+                continue
+            path = f"congratulations.{purpose}.{name}"
+            if len(value) > limit:
+                problems.append(
+                    _finding(
+                        path,
+                        "congratulations_too_long",
+                        "too_long",
+                        f"This text is longer than {limit} characters",
+                    )
+                )
+            if "<" in value or ">" in value:
+                problems.append(
+                    _finding(
+                        path,
+                        "congratulations_markup_not_allowed",
+                        "markup_not_allowed",
+                        "This text is plain text: it cannot contain < or >",
+                    )
+                )
+            left = value
+            for placeholder in PLACEHOLDERS:
+                left = left.replace(placeholder, "")
+            if "{" in left or "}" in left:
+                problems.append(
+                    _finding(
+                        path,
+                        "congratulations_placeholder_unknown",
+                        "placeholder_unknown",
+                        "Only the {score} and {threshold} placeholders are allowed",
+                    )
+                )
+    return problems
 
 
 def trainer_settings_check(settings: MapSettings, catalog: Catalog) -> SettingsCheck:
@@ -150,4 +212,5 @@ def trainer_settings_check(settings: MapSettings, catalog: Catalog) -> SettingsC
                     "An assessment step needs assessments enabled with a final",
                 )
             )
+    problems.extend(congratulations_problems(settings.congratulations))
     return SettingsCheck(problems, warnings)

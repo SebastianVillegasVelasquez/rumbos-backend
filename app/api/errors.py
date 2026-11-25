@@ -120,7 +120,9 @@ _WELCOME_KINDS: dict[str, tuple[str, str]] = {
     "union_tag_not_found": ("step_type_invalid", "Every step needs a type"),
 }
 # The tags pydantic adds to a location when it goes through a step's union.
-_STEP_TAGS = frozenset({"welcome", "video", "html", "pdf", "quiz", "assessment"})
+_STEP_TAGS = frozenset(
+    {"welcome", "video", "html", "pdf", "quiz", "moodle_activity", "assessment"}
+)
 
 
 def welcome_path(loc: tuple[int | str, ...], flow: str = "welcome") -> str:
