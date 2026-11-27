@@ -961,3 +961,19 @@ outcome, and a result carried none. A reload also lost the final's score.
   does. No final exam in the map: the three are null.
 - The fields are additive. Clients still read `passed` and `status`.
 
+## D70. The failure, exhausted and route texts are three more blocks of data
+
+Judgment calls:
+
+- **Three top-level blocks** (`failure`, `exhausted`, `routeInstructions`) with
+  the congratulations fields (`title`, `body`, `ctaLabel`), caps and checks,
+  through one shared function. One `failure` block: the frontend decides after
+  which exam it shows it.
+- **Placeholders only where they were asked for.** `failure` has the four of the
+  brief; `exhausted` and `routeInstructions` have none, and `{score}` is not
+  allowed in `failure`. Allowing one more later breaks no stored text; taking one
+  away would.
+- **Their own rule names** (`journey_text_*`): a `congratulations_*` message on
+  another field would mislead the editor. The frontend needs the three keys.
+- **No default copy here**, and nothing is interpolated.
+

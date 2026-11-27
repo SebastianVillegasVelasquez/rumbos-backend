@@ -7561,6 +7561,50 @@
         "title": "InitialView",
         "description": "Where the camera starts: a point of the map (0-1) and a zoom."
       },
+      "JourneyText": {
+        "properties": {
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title",
+            "description": "One line, up to 80 characters."
+          },
+          "body": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body",
+            "description": "Up to 600 characters, line breaks allowed."
+          },
+          "ctaLabel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ctalabel",
+            "description": "The button's label: one line, up to 40 characters."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "JourneyText",
+        "description": "One block of the journey. Plain text; which placeholders it may contain\ndepends on the block it is in (see `MapSettings`). Each field null: the\ndefault copy."
+      },
       "LaunchResponse": {
         "properties": {
           "accessToken": {
@@ -7835,6 +7879,39 @@
                 "type": "null"
               }
             ]
+          },
+          "failure": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JourneyText"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Shown after a failed attempt. Plain text; may contain {attempt}, {attempts_max}, {attempts_left} and {threshold}."
+          },
+          "exhausted": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JourneyText"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Shown when every attempt at the final is used without passing. Plain text; no placeholders."
+          },
+          "routeInstructions": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JourneyText"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Shown on the map after a failed check-in. Plain text; no placeholders."
           }
         },
         "additionalProperties": false,

@@ -299,6 +299,51 @@ the attempt's result). Do not fill a final text with the check-in's threshold: t
 two can differ if the rule changed between them. The backend never interpolates,
 formats or evaluates a text.
 
+## The failure, exhausted and route texts
+
+Three more optional blocks of `MapSettings`, written by the editor. Each has the
+same fields as a congratulations text: `title`, `body`, `ctaLabel`.
+
+| block (JSON key) | when the frontend shows it | placeholders |
+| --- | --- | --- |
+| `failure` | after each failed attempt | `{attempt}`, `{attempts_max}`, `{attempts_left}`, `{threshold}` |
+| `exhausted` | every final attempt used without passing (`outcome.final.status: exhausted`) | none |
+| `routeInstructions` | on the map, after a failed check-in (`outcome.checkin.status: not_passed`) | none |
+
+```json
+"failure": {"title": "Casi", "body": "Intento {attempt} de {attempts_max}: te quedan {attempts_left}. Mínimo: {threshold}.", "ctaLabel": "Volver"},
+"exhausted": null,
+"routeInstructions": {"body": "Recorre el mapa y completa cada actividad."}
+```
+
+Everything else is as for the congratulations texts: the same caps, plain text
+(`<` and `>` refused), cleaned before it is checked, `null` (a block or a field)
+means the frontend's default copy (the backend holds none), an unset block is no
+key in the stored settings (no map changes its hash), and a stored text always
+loads. **Only the placeholders in the table**: any other `{` or `}` is refused,
+so a block with none takes no brace at all, and `{score}` is not one of
+`failure`'s.
+
+Refusals are `422 trainer_settings_invalid`; paths are `failure.body`,
+`exhausted.title`, `route_instructions.cta_label`, ...; rules (`message_key`
+`trainer_settings.<rule>`): `journey_text_too_long`,
+`journey_text_markup_not_allowed`, `journey_text_placeholder_unknown`.
+
+**What the frontend does with them:** show them as text, and fill the
+placeholders of `failure` in one pass of plain string replacement. The values,
+right after the failed attempt:
+
+| placeholder | value |
+| --- | --- |
+| `{attempt}` | `attempts.used` of the attempt's result |
+| `{attempts_max}` | `outcome.final.attempts.max` (or `outcome.checkin.attempts.max`): the limit in force now, which is the one the start applies |
+| `{attempts_left}` | the larger of 0 and `{attempts_max}` minus `{attempt}` |
+| `{threshold}` | `pass_percent` of the attempt's result |
+
+`attempts` of a result counts the attempts that exist when it is read, and its
+`max` is the one saved when that attempt started: read an older result again and
+`used` is today's count, not that attempt's number.
+
 ## What the plugin acts on (C4)
 
 The only thing that may cause a write to a student's Moodle completion is a
