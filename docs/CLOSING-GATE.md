@@ -419,6 +419,51 @@ not exist yet:
 2. **Proof that the service account may read other users' completion.** Run this
    once against a real site with a test student, before the provider is built.
 
+### The check command (run this first)
+
+In the backend's environment, with its real `MOODLE_BASE_URL` and
+`MOODLE_SERVICE_TOKEN`:
+
+```bash
+python -m app.scripts.closing check-service-account \
+  --tenant <tenant id> --uid <Moodle id of the test student> --course <course id>
+```
+
+It makes two reads (`core_course_get_contents` and
+`core_completion_get_activities_completion_status`) and writes nothing. It says
+whether completion came back, and if not Moodle's error code with the likely
+cause; the tracked activities of the course the completion answer **leaves out**,
+with what the contents say of each (hidden, restriction kinds, visible to the
+service account); and for the published map the gate would use, each required
+SCORM with its `state` and `tracking`, or `OMITTED`, plus the map activities that
+are not in the contents at all. It prints no token, user id, name or Moodle error
+text, so the output can be shared. Exit status 0: completion read; 1: not read;
+2: unknown tenant.
+
+**A limit of the gate rule that this report exposes.** The gate treats
+`uservisible: false` in the course contents as hidden, and the contents are read
+by the service account. So a SCORM that **the service account** cannot see (a
+restriction that applies to it, for instance) is **not required**: for that
+activity the gate fails open, whatever students see. This corrects the assumption
+under "Open question: restricted activities" that the service account sees
+everything. The report lists such activities under "the gate does NOT require"
+and flags the ones with no hidden flag. The rule is unchanged: fix the account's
+role or the course, or decide the rule with the provider.
+
+What Moodle's function does (read in the code of the plugin's dev site,
+`completion/classes/external.php`, not run against the production site): reading
+another user needs `report/progress:view`, and a shared group in a course with
+separate groups; and it **skips every activity the calling account cannot see**.
+Visibility is the service account's, not the student's. A required SCORM that the
+answer leaves out although the contents show it as visible would count as not
+completed for everybody (`OMITTED`), and one the student cannot see but the
+account can is still required and reported (the restriction question above).
+
+The command does not test freshness (point 4 below): complete the SCORM as the
+test student and run it again.
+
+### The same by hand
+
 ```bash
 # Moodle web service call, from any machine that can reach the site.
 # MOODLE_URL is the backend's MOODLE_BASE_URL; the token is the backend's

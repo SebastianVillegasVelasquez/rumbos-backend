@@ -997,3 +997,22 @@ Judgment calls:
   SCORM tracks. The design's "reset completion, delete nothing" is marked as not
   settled. D66's summary of the manual procedure is superseded.
 
+## D72. A check of the service account before any completion provider
+
+`app.scripts.closing check-service-account` asks Moodle what the real provider
+would ask, and reports what comes back. **The provider is not built**: it waits
+for this output from the real site.
+
+- **The Moodle call is on `HttpMoodleClient` only**, not on the `MoodleClient`
+  protocol, the cache or the gate: nothing the API runs can reach it.
+- **Output safe to share:** no token, user id, activity name or Moodle message.
+  `MoodleError` now keeps Moodle's `errorcode` so the cause can be told (a short
+  identifier; anything else prints as `-`).
+- **Omitted = tracked in the contents and not in the answer.** Both reads are the
+  service account's, so an activity it sees in neither cannot show up there: the
+  report also lists map activities missing from the contents, which the gate would
+  silently not require.
+- **`--tenant` selects the published map**; the token and URL are the
+  environment's (there is one Moodle per environment), so a tenant whose issuer
+  differs gets a warning.
+

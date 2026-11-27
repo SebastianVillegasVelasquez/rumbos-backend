@@ -193,9 +193,11 @@ php public/course/format/rumbos/cli/staging_completion.php \
 Marking `incomplete` does not hold for a SCORM the student really took (see
 `CLOSING-RESTART.md`).
 
-A read-only report helps when `enforce` is prepared:
-`python -m app.scripts.closing restricted --course <id>` lists the required SCORM
-that carry an access restriction.
+Two read-only reports help when `enforce` is prepared:
+`python -m app.scripts.closing restricted --course <id>` (required SCORM with an
+access restriction) and `python -m app.scripts.closing check-service-account`
+(what the service account can read of a student's completion: see
+`CLOSING-GATE.md`, "The check command").
 
 ## Resetting a test student: `assessments erase`
 

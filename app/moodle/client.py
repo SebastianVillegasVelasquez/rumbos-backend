@@ -10,7 +10,11 @@ from app.moodle.exceptions import (
     MoodleError,
     MoodleUnavailableError,
 )
-from app.moodle.schemas import MoodleSection, MoodleSiteInfo
+from app.moodle.schemas import (
+    MoodleCompletionStatuses,
+    MoodleSection,
+    MoodleSiteInfo,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +27,7 @@ _NOT_FOUND_CODES = frozenset({"dml_missing_record_exception", "invalidcourseid"}
 
 _SITE_INFO = TypeAdapter(MoodleSiteInfo)
 _SECTIONS = TypeAdapter(list[MoodleSection])
+_COMPLETION = TypeAdapter(MoodleCompletionStatuses)
 
 
 class HttpMoodleClient:
@@ -47,6 +52,19 @@ class HttpMoodleClient:
     async def get_course_contents(self, course_id: int) -> list[MoodleSection]:
         data = await self._call("core_course_get_contents", courseid=course_id)
         return self._parse(_SECTIONS, data)
+
+    async def get_activities_completion_status(
+        self, course_id: int, moodle_user_id: int
+    ) -> MoodleCompletionStatuses:
+        """One user's completion in one course, as the service account may read
+        it. Moodle leaves out the activities that account cannot see. Used by
+        the operator's check only: the gate has no completion provider yet."""
+        data = await self._call(
+            "core_completion_get_activities_completion_status",
+            courseid=course_id,
+            userid=moodle_user_id,
+        )
+        return self._parse(_COMPLETION, data)
 
     async def _call(self, wsfunction: str, **params: Any) -> Any:
         form = {
@@ -87,10 +105,12 @@ class HttpMoodleClient:
         # Log the code only: `message`/`debuginfo` are Moodle internals.
         logger.warning("Moodle call %s failed with errorcode=%s", wsfunction, code)
         if code in _AUTH_CODES:
-            raise MoodleAuthError("Moodle rejected the credentials or permissions")
+            raise MoodleAuthError(
+                "Moodle rejected the credentials or permissions", errorcode=code
+            )
         if code in _NOT_FOUND_CODES:
-            raise MoodleCourseNotFoundError("Moodle course not found")
-        raise MoodleError(f"Moodle error: {code or 'unknown'}")
+            raise MoodleCourseNotFoundError("Moodle course not found", errorcode=code)
+        raise MoodleError(f"Moodle error: {code or 'unknown'}", errorcode=code or None)
 
     @staticmethod
     def _parse[T](adapter: TypeAdapter[T], data: Any) -> T:

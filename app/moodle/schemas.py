@@ -80,3 +80,24 @@ class MoodleSection(_MoodleModel):
     visible: MoodleBool = True
     uservisible: MoodleBool = True
     modules: list[MoodleModule] = Field(default_factory=list)
+
+
+class MoodleActivityCompletion(_MoodleModel):
+    """One activity of `core_completion_get_activities_completion_status`."""
+
+    cmid: int
+    modname: str = ""
+    # 0 incomplete, 1 complete, 2 complete (pass), 3 complete (fail).
+    state: int
+    # Completion tracking configuration: 1 manual, 2 automatic.
+    tracking: int = 0
+
+
+class MoodleWarning(_MoodleModel):
+    # The code only: Moodle's warning messages are not read.
+    warningcode: str = ""
+
+
+class MoodleCompletionStatuses(_MoodleModel):
+    statuses: list[MoodleActivityCompletion]
+    warnings: list[MoodleWarning] = Field(default_factory=list)

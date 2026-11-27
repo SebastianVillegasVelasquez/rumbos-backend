@@ -7,7 +7,14 @@ translate into HTTP responses.
 
 
 class MoodleError(Exception):
-    """Base class, and the fallback for Moodle errors we don't classify."""
+    """Base class, and the fallback for Moodle errors we don't classify.
+
+    `errorcode` is Moodle's short code (`requiredcapability`, ...) when Moodle
+    answered with an error object, for an operator's diagnosis."""
+
+    def __init__(self, message: str = "", *, errorcode: str | None = None) -> None:
+        super().__init__(message)
+        self.errorcode = errorcode
 
 
 class MoodleUnavailableError(MoodleError):
