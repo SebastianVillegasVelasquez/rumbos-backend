@@ -896,3 +896,22 @@ completion in Moodle), which works with today's code.
 An audit note: a student's attempts are isolated per course (a pass in one course
 is `used: 0` in another), checked with a probe, so a cycle needs no course
 scoping of its own.
+
+## D67. Attempt numbers follow the highest one; the limit counts the rows
+
+Bug: `create` numbered a new attempt `count + 1`. `purge-preview` deletes the old
+preview rows, so with a newer one left (say 3 alone) the count and the numbers
+part: the next start took 2, the one after took 3 again, hit the unique index and
+answered `409 no_attempts_left` while the closing status said `available` with 2
+of 3 used.
+
+- **Number = highest existing + 1; limit = number of rows.** Both come from one
+  query. The count is what every read already reports as `attempts.used`, so the
+  screen and the start cannot disagree.
+- **What the purge does to the count:** it deletes preview rows only, so an
+  editor's `attempts.used` drops by the number purged. No limit is applied to
+  previews. A student's rows are never purged, so a student's count and numbers
+  are untouched (`erase` removes all of a user's rows: both restart at 1).
+- **`ordinal` may have holes now** (previews only). Nothing reads it as a count:
+  it orders the history and goes in the statement of real attempts.
+

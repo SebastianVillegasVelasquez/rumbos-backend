@@ -49,9 +49,10 @@ licences). No speech or AI runs at request time.
 
 Rules: the server clock is the only clock (`deadline_at`); a request after the
 deadline closes the attempt as `expired` with what was saved; one attempt open
-per user and purpose and dense attempt numbers (unique indexes); a pass locks the
-exam; editors' attempts are preview (never counted, purged by
-`assessments purge-preview`). Nothing sent to a student carries a key, an
+per user and purpose and one attempt per number (unique indexes; a new attempt takes
+the highest number plus 1); a pass locks the exam; editors' attempts are preview
+(no attempt limit, never counted as results, purged by `assessments
+purge-preview`, which can leave holes in the numbering). Nothing sent to a student carries a key, an
 accepted answer, a rubric, a transcript or a per-item verdict. Scores are exact
 fractions shown with two decimals; passing is strictly above `passPercent` under
 `gt`.

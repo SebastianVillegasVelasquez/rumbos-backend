@@ -19,8 +19,9 @@ browser.
 ## What the audit found
 
 * An attempt is a row of `assessment_attempts` (`app/models/assessment.py`):
-  `(tenant, course, sub, purpose, preview, ordinal)` is unique and `ordinal` is
-  dense, so the history of a student's finals is `ordinal` 1, 2, 3...
+  `(tenant, course, sub, purpose, preview, ordinal)` is unique and a new attempt
+  takes the highest `ordinal` plus 1, so the history of a student's finals is
+  `ordinal` 1, 2, 3... (only purged previews leave holes).
 * The limit is **counted, not stored**: `create` counts the student's attempts of
   that purpose and refuses when `used >= max_attempts`; the limit is the **current**
   `assessments.final.maxAttempts` (a copy frozen on each attempt is only history).

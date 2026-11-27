@@ -118,25 +118,33 @@ class SqlAlchemyAssessmentRepository:
         """Starts the next attempt, or returns None when the user already has
         one in progress (including one a racing request just started) or, with
         `max_attempts`, has used them all. The numbering and the one-open rule
-        are enforced by unique indexes, so two tabs cannot both win."""
+        are enforced by unique indexes, so two tabs cannot both win.
+
+        The limit counts the attempts that exist (what every read reports as
+        `attempts.used`); the new attempt's number is the highest one plus 1.
+        The two differ after `purge_preview`, which leaves holes: numbering by
+        the count would reuse a number that is still taken."""
         try:
-            used = await self._session.scalar(
-                select(func.count())
-                .select_from(AssessmentAttempt)
-                .where(
-                    AssessmentAttempt.sub == sub,
-                    AssessmentAttempt.purpose == purpose,
-                    AssessmentAttempt.preview == preview,
+            used, last = (
+                await self._session.execute(
+                    select(
+                        func.count(),
+                        func.coalesce(func.max(AssessmentAttempt.ordinal), 0),
+                    ).where(
+                        AssessmentAttempt.sub == sub,
+                        AssessmentAttempt.purpose == purpose,
+                        AssessmentAttempt.preview == preview,
+                    )
                 )
-            )
-            if max_attempts is not None and (used or 0) >= max_attempts:
+            ).one()
+            if max_attempts is not None and used >= max_attempts:
                 await self._session.rollback()
                 return None
             row = AssessmentAttempt(
                 moodle_course_id=moodle_course_id,
                 sub=sub,
                 purpose=purpose,
-                ordinal=(used or 0) + 1,
+                ordinal=last + 1,
                 form_id=form_id,
                 content_version=content_version,
                 status="in_progress",
