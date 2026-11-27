@@ -8,7 +8,12 @@ from typing import Any
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncEngine
 
-from app.models import AssessmentAnswer, AssessmentAttempt
+from app.models import (
+    AssessmentAnswer,
+    AssessmentAttempt,
+    CompletionAudit,
+    PassbackOutbox,
+)
 from app.models.tenant import LEGACY_TENANT_ID
 from app.scripts import assessments as cli
 from app.tenancy.scope import SYSTEM
@@ -27,6 +32,7 @@ async def seed(
     answers: dict[str, Any] | None = None,
     status: str = "in_progress",
     created: datetime = NOW,
+    course: int = 7,
 ) -> uuid.UUID:
     attempt_id = uuid.uuid4()
     async with new_session(engine, SYSTEM) as s:
@@ -34,7 +40,7 @@ async def seed(
             AssessmentAttempt(
                 id=attempt_id,
                 tenant_id=LEGACY_TENANT_ID,
-                moodle_course_id=7,
+                moodle_course_id=course,
                 sub=sub,
                 purpose=purpose,
                 ordinal=1,
@@ -155,6 +161,49 @@ async def test_erase_removes_one_users_attempts_and_answers_only(
     async with new_session(engine, SYSTEM) as s:
         left = await s.scalar(select(func.count()).select_from(AssessmentAnswer))
     assert left == 1
+
+
+async def test_erase_reaches_every_course_and_the_outbox_but_not_the_audit(
+    engine: AsyncEngine,
+) -> None:
+    """The limits `docs/TESTING-closing-flow.md` states: every course of the
+    tenant, previews too, and the outbox rows go with their attempts (a pending
+    one is then never sent). The audit trail stays."""
+    ids = [
+        await seed(engine, sub="gone", deadline=NOW, status="submitted"),
+        await seed(engine, sub="gone", deadline=NOW, status="submitted", course=8),
+        await seed(engine, sub="gone", deadline=NOW, preview=True),
+    ]
+    async with new_session(engine, SYSTEM) as s:
+        for attempt_id, state in zip(ids, ("pending", "sent"), strict=False):
+            s.add(
+                PassbackOutbox(
+                    tenant_id=LEGACY_TENANT_ID,
+                    moodle_course_id=7,
+                    attempt_id=attempt_id,
+                    statement={"passed": True},
+                    status=state,
+                    attempts=0,
+                    next_try_at=NOW,
+                )
+            )
+            s.add(
+                CompletionAudit(
+                    tenant_id=LEGACY_TENANT_ID,
+                    moodle_course_id=7,
+                    attempt_id=attempt_id,
+                    event="enqueued",
+                    detail={},
+                    at=NOW,
+                )
+            )
+        await s.commit()
+    async with new_session(engine, SYSTEM) as s:
+        assert await cli.erase(s, LEGACY_TENANT_ID, "gone", lambda _: None) == 3
+    async with new_session(engine, SYSTEM) as s:
+        assert await s.scalar(select(func.count()).select_from(AssessmentAttempt)) == 0
+        assert await s.scalar(select(func.count()).select_from(PassbackOutbox)) == 0
+        assert await s.scalar(select(func.count()).select_from(CompletionAudit)) == 2
 
 
 async def test_stats_counts_by_purpose_status_and_band(engine: AsyncEngine) -> None:

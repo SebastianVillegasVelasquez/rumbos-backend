@@ -10,6 +10,9 @@ editor's trial run and the signed Moodle user id (`uid`) are built and tested
 against a fake completion provider. The real read of Moodle's completion is
 **not** built (see "Before the real provider").
 
+To put a test student in each state, and to reset one, see
+`TESTING-closing-flow.md`.
+
 ## Switch
 
 `CLOSING_GATE_MODE` (environment):

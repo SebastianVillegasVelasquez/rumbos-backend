@@ -977,3 +977,23 @@ Judgment calls:
   another field would mislead the editor. The frontend needs the three keys.
 - **No default copy here**, and nothing is interpolated.
 
+## D71. The test-student runbook, and the restart's manual procedure corrected
+
+`docs/TESTING-closing-flow.md` had been cited but never written.
+
+- **No force-pass.** The runbook fails an attempt by submitting it empty and
+  passes one by lowering the pass mark on a dedicated test course (`1`, `gte`),
+  which uses only existing settings. Both are real results and are reported.
+- **It says what cannot be tested:** with no completion provider, `enforce` on a
+  deployed environment never reads content as done or as incomplete; those two
+  states exist only in the automated tests.
+- **`erase`'s limits are pinned by a test** (every course of the tenant,
+  previews, outbox rows, audit kept).
+- **A new test student is the recommended reset:** `erase` leaves Moodle and the
+  browser (screens remembered per map, not per student) as they were.
+- **`CLOSING-RESTART.md` follows the plugin's audit.** The "course completion
+  reset" suggestion is gone (Moodle's course reset deletes everybody's data), and
+  so is the claim that overriding completion is enough: it does not hold over
+  SCORM tracks. The design's "reset completion, delete nothing" is marked as not
+  settled. D66's summary of the manual procedure is superseded.
+
