@@ -947,3 +947,17 @@ Judgment calls:
 - **`off` is pinned by bytes**: `tests/fixtures/closing_off/` was recorded from
   `main` at ff84961.
 
+## D69. The final's threshold travels with the attempt
+
+`{threshold}` of the final had no source: only the check-in's rule was in the
+outcome, and a result carried none. A reload also lost the final's score.
+
+- **From the attempt's saved policy**, never from today's settings, for results
+  (`pass_percent`, `pass_operator`) and for `outcome.final` (plus `percent`).
+- **The deciding final is chosen like the deciding check-in**: the passing one,
+  else the best score. Not the latest: the outcome says where the student stands,
+  and the latest attempt's own numbers are in its result.
+- **Nothing sat: `percent` null and the current rule**, as the check-in block
+  does. No final exam in the map: the three are null.
+- The fields are additive. Clients still read `passed` and `status`.
+

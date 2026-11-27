@@ -228,6 +228,14 @@ class Result(_Out):
     preview: bool = False
     percent: str
     passed: bool
+    pass_percent: int = Field(
+        description="The pass mark this attempt was graded with (frozen when it "
+        "started). For display: read `passed`, never compare `percent` with it."
+    )
+    pass_operator: Literal["gt", "gte"] = Field(
+        description="`gt`: the score must be above `pass_percent`; `gte`: at "
+        "least it. Decided on the exact score; `percent` is rounded for display."
+    )
     band: Band
     by_section: list[SectionResult]
     by_module: list[ModuleResult]
@@ -285,11 +293,21 @@ class FinalOutcome(_Out):
     `not_required_passed_checkin` (a passed check-in exempts them and the
     closing flow is shown without the exam step), `passed`, or `exhausted` (every
     attempt used without passing). `attempts` is null when the map has no final
-    exam."""
+    exam.
+
+    `percent`, `pass_percent` and `pass_operator` are those of the final attempt
+    that decides: the passing one, else the one with the best score (not
+    necessarily the latest; one attempt's own are in its result). The rule is
+    the one that attempt was graded with. With no final sat, `percent` is null
+    and the rule is the map's current one. All three are null when the map has
+    no final exam. Read `status`, never compare `percent`."""
 
     status: FinalStatus
     reason: ClosingReason | None
     attempts: Attempts | None
+    percent: str | None
+    pass_percent: int | None
+    pass_operator: Literal["gt", "gte"] | None
 
 
 class ScormGate(_Out):

@@ -157,6 +157,7 @@ class ClosingService:
                 "status": final.status,
                 "reason": final.reason,
                 "attempts": item["attempts"] if item else None,
+                **standing.final_score,
             },
             "scorm_gate": {"satisfied": gate.satisfied, "reason": gate.reason},
         }

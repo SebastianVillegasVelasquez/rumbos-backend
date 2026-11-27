@@ -61,11 +61,13 @@ class Caller:
 @dataclass(frozen=True)
 class Standing:
     """The student's standing in the two exams (see `AssessmentService.standing`).
-    `checkin` is None when the map has no check-in."""
+    `checkin` is None when the map has no check-in. `final_score` is the score
+    and pass rule of the final attempt that decides (see `_score_of`)."""
 
     checkin: dict[str, Any] | None
     checkin_passed: bool
     final_passed: bool
+    final_score: dict[str, Any]
 
 
 def _res(attempt: AttemptRecord) -> Mapping[str, Any]:
@@ -76,6 +78,34 @@ def _res(attempt: AttemptRecord) -> Mapping[str, Any]:
 
 def _frac(text: str) -> Fraction:
     return Fraction(text)
+
+
+def _deciding(sat: list[AttemptRecord]) -> AttemptRecord | None:
+    """Of an exam's closed attempts, the one its outcome is told from: the
+    passing one, else the best score. None when nothing was sat."""
+    passing = [a for a in sat if _res(a)["passed"]]
+    if passing:
+        return passing[0]
+    return max(sat, key=lambda a: _frac(_res(a)["percent_exact"]), default=None)
+
+
+def _score_of(
+    attempt: AttemptRecord | None, settings: AssessmentSettings | None
+) -> dict[str, Any]:
+    """`percent` and the pass rule `attempt` was graded with (frozen on it).
+    With no attempt: no score, and the rule in force now, or no rule when
+    `settings` is None (there is no such exam)."""
+    if attempt is not None:
+        return {
+            "percent": _res(attempt)["percent"],
+            "pass_percent": attempt.policy["pass_percent"],
+            "pass_operator": attempt.policy["pass_operator"],
+        }
+    return {
+        "percent": None,
+        "pass_percent": settings.pass_percent if settings else None,
+        "pass_operator": settings.pass_operator if settings else None,
+    }
 
 
 @dataclass(frozen=True)
@@ -181,12 +211,13 @@ class AssessmentService:
 
     async def standing(self) -> Standing:
         """What the student has done in both exams, for the closing outcome:
-        the check-in's outcome (with the pass rule that was in force when it was
-        sat) and whether either exam was passed. Read from the attempts, never
-        stored. An editor in preview has none: a trial run is not a result."""
+        the check-in's outcome and the final's score (each with the pass rule
+        that was in force when the deciding attempt was sat) and whether either
+        exam was passed. Read from the attempts, never stored. An editor in
+        preview has none: a trial run is not a result."""
         settings = self._settings
         if settings is None or not settings.enabled:
-            return Standing(None, False, False)
+            return Standing(None, False, False, _score_of(None, None))
         preview = self._caller.preview
         closed: list[AttemptRecord] = []
         for attempt in await self._attempts.list_for_user(self._caller.sub, preview):
@@ -201,31 +232,25 @@ class AssessmentService:
                 else [a for a in closed if a.purpose == purpose and a.result]
             )
 
-        final_passed = any(_res(a)["passed"] for a in done("final"))
+        final = _deciding(done("final"))
+        final_passed = bool(final and _res(final)["passed"])
+        final_score = _score_of(final, settings if settings.final else None)
         policy = settings.check_in
         if policy is None:
-            return Standing(None, False, final_passed)
-        sat = done("check_in")
-        passing = [a for a in sat if _res(a)["passed"]]
-        decisive = (
-            passing[0]
-            if passing
-            else max(sat, key=lambda a: _frac(_res(a)["percent_exact"]), default=None)
-        )
-        rule = decisive.policy if decisive else None
+            return Standing(None, False, final_passed, final_score)
+        decisive = _deciding(done("check_in"))
+        passed = bool(decisive and _res(decisive)["passed"])
         outcome: dict[str, Any] = {
             "status": (
-                "passed" if passing else "not_passed" if decisive else "not_taken"
+                "passed" if passed else "not_passed" if decisive else "not_taken"
             ),
-            "percent": _res(decisive)["percent"] if decisive else None,
-            "pass_percent": rule["pass_percent"] if rule else settings.pass_percent,
-            "pass_operator": rule["pass_operator"] if rule else settings.pass_operator,
+            **_score_of(decisive, settings),
             "attempts": {
                 "used": sum(1 for a in closed if a.purpose == "check_in"),
                 "max": policy.max_attempts,
             },
         }
-        return Standing(outcome, bool(passing), final_passed)
+        return Standing(outcome, passed, final_passed, final_score)
 
     async def _list_item(
         self,
@@ -601,6 +626,9 @@ class AssessmentService:
             "preview": attempt.preview,
             "percent": r["percent"],
             "passed": r["passed"],
+            # The rule this attempt was graded with, frozen when it started.
+            "pass_percent": attempt.policy["pass_percent"],
+            "pass_operator": attempt.policy["pass_operator"],
             "band": r["band"],
             "by_section": [
                 {k: s[k] for k in ("key", "points", "max", "percent", "weight")}

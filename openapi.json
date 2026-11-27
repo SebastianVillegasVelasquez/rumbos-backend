@@ -7117,16 +7117,56 @@
                 "type": "null"
               }
             ]
+          },
+          "percent": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Percent"
+          },
+          "pass_percent": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pass Percent"
+          },
+          "pass_operator": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "gt",
+                  "gte"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pass Operator"
           }
         },
         "type": "object",
         "required": [
           "status",
           "reason",
-          "attempts"
+          "attempts",
+          "percent",
+          "pass_percent",
+          "pass_operator"
         ],
         "title": "FinalOutcome",
-        "description": "The final exam's status for this student: `required` (they may sit it now),\n`locked` (they must, but not yet: `reason` says why, as for `available`),\n`not_required_passed_checkin` (a passed check-in exempts them and the\nclosing flow is shown without the exam step), `passed`, or `exhausted` (every\nattempt used without passing). `attempts` is null when the map has no final\nexam."
+        "description": "The final exam's status for this student: `required` (they may sit it now),\n`locked` (they must, but not yet: `reason` says why, as for `available`),\n`not_required_passed_checkin` (a passed check-in exempts them and the\nclosing flow is shown without the exam step), `passed`, or `exhausted` (every\nattempt used without passing). `attempts` is null when the map has no final\nexam.\n\n`percent`, `pass_percent` and `pass_operator` are those of the final attempt\nthat decides: the passing one, else the one with the best score (not\nnecessarily the latest; one attempt's own are in its result). The rule is\nthe one that attempt was graded with. With no final sat, `percent` is null\nand the rule is the map's current one. All three are null when the map has\nno final exam. Read `status`, never compare `percent`."
       },
       "FinishOut": {
         "properties": {
@@ -9179,6 +9219,20 @@
             "type": "boolean",
             "title": "Passed"
           },
+          "pass_percent": {
+            "type": "integer",
+            "title": "Pass Percent",
+            "description": "The pass mark this attempt was graded with (frozen when it started). For display: read `passed`, never compare `percent` with it."
+          },
+          "pass_operator": {
+            "type": "string",
+            "enum": [
+              "gt",
+              "gte"
+            ],
+            "title": "Pass Operator",
+            "description": "`gt`: the score must be above `pass_percent`; `gte`: at least it. Decided on the exact score; `percent` is rounded for display."
+          },
           "band": {
             "type": "string",
             "enum": [
@@ -9226,6 +9280,8 @@
           "status",
           "percent",
           "passed",
+          "pass_percent",
+          "pass_operator",
           "band",
           "by_section",
           "by_module",

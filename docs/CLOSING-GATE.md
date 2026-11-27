@@ -183,7 +183,10 @@ apply the differences listed above.
     "status": "required" | "locked" | "not_required_passed_checkin" | "passed" | "exhausted",
     "reason": null | "scorm_incomplete" | "progress_unavailable" | "user_unlinked" |
               "form_unavailable" | "not_enabled" | "no_final_step",   only when locked
-    "attempts": {"used": 0, "max": 3} | null
+    "attempts": {"used": 0, "max": 3} | null,
+    "percent": "66.67" | null,       score of the deciding final (display, 2 decimals)
+    "pass_percent": 80 | null,       the rule it was graded with
+    "pass_operator": "gt" | "gte" | null
   },
   "scorm_gate": {"satisfied": true | false | null,
                  "reason": "passed_checkin" | "not_checked" | null}
@@ -215,6 +218,23 @@ How the frontend reads it (product rules C3):
 3. **Final passed**: `final.status == "passed"`: congratulations.
 4. **Final exhausted**: `final.status == "exhausted"`. What happens next is not
    built: see `docs/CLOSING-RESTART.md`.
+
+### The final's score and threshold
+
+`outcome.final.percent`, `pass_percent` and `pass_operator` describe the **deciding**
+final: the passing one, else the best score. It is what `{threshold}` (and
+`{score}`) of the final mean after a reload. With no final sat `percent` is `null`
+and the rule is the map's current one; all three are `null` when the map has no
+final exam. The deciding attempt is not necessarily the latest: right after an
+attempt, use that attempt's result.
+
+Every attempt result (`POST .../submit`, `GET .../result`) carries `pass_percent`
+and `pass_operator`, the rule saved with that attempt, for the check-in and the
+final alike.
+
+Clients read `passed` (a result) and `status` (the outcome). They never compare
+`percent` with `pass_percent`: the verdict is made on the exact score, and
+`percent` is rounded for display.
 
 Rules worth knowing:
 
@@ -272,9 +292,12 @@ validation 422. A stored text always loads, whatever the rules become.
 **What the frontend does with it:** show it as **text** (never as HTML), and fill
 the two placeholders itself, in one pass of plain string replacement over exactly
 `{score}` and `{threshold}` and nothing else: `{score}` is the score it already
-has (`outcome.checkin.percent`, or the result of the final attempt) and
-`{threshold}` is `outcome.checkin.pass_percent` (the rule the attempt was graded
-with). The backend never interpolates, formats or evaluates a text.
+has and `{threshold}` is the pass mark of the same exam: for `checkin`,
+`outcome.checkin.percent` and `outcome.checkin.pass_percent`; for `final`,
+`outcome.final.percent` and `outcome.final.pass_percent` (or the same fields of
+the attempt's result). Do not fill a final text with the check-in's threshold: the
+two can differ if the rule changed between them. The backend never interpolates,
+formats or evaluates a text.
 
 ## What the plugin acts on (C4)
 
