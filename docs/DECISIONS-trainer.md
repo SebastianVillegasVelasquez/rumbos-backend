@@ -1016,3 +1016,20 @@ for this output from the real site.
   environment's (there is one Moodle per environment), so a tenant whose issuer
   differs gets a warning.
 
+## D73. The signing vectors cover a failure and the real sending path
+
+The vectors already existed (result passed, definition, attempt).
+
+- **Added `result-failed.json`**, at exactly the mark under `gt`: the case where a
+  receiver that compares `percent` with `pass_percent` would be wrong. The other
+  three files are untouched, so what the plugin may already hold stays valid.
+- **Score and verdict of the vectors now come from `decimal_string` and
+  `passes`** instead of being typed in. The claims did not change.
+- **A test sends through the real path** (submit, outbox, `sync_run`) and holds
+  the header and claim names to the vectors: the builders alone did not show what
+  the service sends.
+- **The README lists every claim**, and a test fails when a vector gains one the
+  list lacks. Algorithm and claims are unchanged.
+- **Documented, not changed:** `completes_course` is false for a passed final
+  whose exemption setting was off.
+

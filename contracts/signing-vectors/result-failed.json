@@ -1,0 +1,28 @@
+{
+  "description": "Result passback, schema 1, a failed final: exactly at the mark under `gt`, so `percent` reads as the pass mark and `passed` is false.",
+  "header": {
+    "alg": "ES256",
+    "kid": "vectors-1",
+    "typ": "JWT"
+  },
+  "claims": {
+    "iss": "rumbos-backend",
+    "aud": "moodle",
+    "iat": 1795000000,
+    "jti": "0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5d",
+    "sub": "s-81b7ae",
+    "tenant": "0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b",
+    "course_id": 7,
+    "purpose": "final",
+    "ordinal": 1,
+    "form_id": "synthetic",
+    "content_version": "0123456789abcdef",
+    "percent": "80.00",
+    "passed": false,
+    "completes_course": false,
+    "pass_percent": 80,
+    "pass_operator": "gt",
+    "finished_at": "2026-11-18T10:13:20+00:00"
+  },
+  "jws": "eyJhbGciOiJFUzI1NiIsImtpZCI6InZlY3RvcnMtMSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJydW1ib3MtYmFja2VuZCIsImF1ZCI6Im1vb2RsZSIsImlhdCI6MTc5NTAwMDAwMCwianRpIjoiMDE5MGExYjItYzNkNC03ZTVmLThhOWItMGMxZDJlM2Y0YTVkIiwic3ViIjoicy04MWI3YWUiLCJ0ZW5hbnQiOiIwMTkwYTFiMi1jM2Q0LTdlNWYtOGE5Yi0wYzFkMmUzZjRhNWIiLCJjb3Vyc2VfaWQiOjcsInB1cnBvc2UiOiJmaW5hbCIsIm9yZGluYWwiOjEsImZvcm1faWQiOiJzeW50aGV0aWMiLCJjb250ZW50X3ZlcnNpb24iOiIwMTIzNDU2Nzg5YWJjZGVmIiwicGVyY2VudCI6IjgwLjAwIiwicGFzc2VkIjpmYWxzZSwiY29tcGxldGVzX2NvdXJzZSI6ZmFsc2UsInBhc3NfcGVyY2VudCI6ODAsInBhc3Nfb3BlcmF0b3IiOiJndCIsImZpbmlzaGVkX2F0IjoiMjAyNi0xMS0xOFQxMDoxMzoyMCswMDowMCJ9.TiSOYF2UtIOyue_dWj2Eb2mbnq9vxOfj1kP863uqXP2df5qbBcJbgKdTX4un7I-xzxdjT8hF9jg9u57CLaeVrg"
+}

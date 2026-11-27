@@ -1,3 +1,4 @@
+# ruff: noqa: F811
 """The golden signing vectors, verified without the code that signs them.
 
 The backend signs with PyJWT (ES256). These tests check the files under
@@ -19,11 +20,29 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import ec
 from cryptography.hazmat.primitives.asymmetric.utils import encode_dss_signature
 
+from app.mirror.schemas import SCHEMAS
+from app.passback.port import Outcome, SendResult
 from app.passback.statement import sign
+from app.passback.worker import sync_run
+from app.tenancy.scope import SYSTEM
 from tests import signing_vectors
+from tests.sessions import new_session
+from tests.test_assessment_api import (  # noqa: F401
+    clock,
+    draft_content_is_served,
+    env,
+)
+from tests.test_mirror_flow import A2, configure, finish
+from tests.test_passback import NOW
 
 DIRECTORY = Path(__file__).resolve().parent.parent / "contracts" / "signing-vectors"
-NAMES = ["result", "definition", "attempt"]
+NAMES = ["result", "result-failed", "definition", "attempt"]
+SCHEMA_OF = {
+    "result": "result-statement",
+    "result-failed": "result-statement",
+    "definition": "definition-statement",
+    "attempt": "attempt-statement",
+}
 
 
 def b64decode(text: str) -> bytes:
@@ -130,3 +149,91 @@ def test_the_statements_tell_each_other_apart() -> None:
     result, attempt = load("result")["claims"], load("attempt")["claims"]
     assert all(attempt[k] == v for k, v in result.items())  # a superset
     assert attempt["definition_hash"] == load("definition")["claims"]["definition_hash"]
+
+
+def test_the_passed_and_the_failed_result_differ_where_they_should() -> None:
+    passed, failed = load("result")["claims"], load("result-failed")["claims"]
+    assert passed.keys() == failed.keys()
+    assert (passed["percent"], passed["passed"], passed["completes_course"]) == (
+        "80.20",
+        True,
+        True,
+    )
+    assert (failed["percent"], failed["passed"], failed["completes_course"]) == (
+        "80.00",
+        False,
+        False,
+    )
+    assert (failed["pass_percent"], failed["pass_operator"]) == (80, "gt")
+    assert failed["jti"] != passed["jti"]
+    # One attempt is sent as one of these two, so they share its `jti`.
+    assert load("attempt")["claims"]["jti"] == passed["jti"]
+
+
+@pytest.mark.parametrize("name", NAMES)
+def test_each_vector_fits_its_schema_with_no_claim_beyond_it(name: str) -> None:
+    SCHEMAS[SCHEMA_OF[name]].model_validate(load(name)["claims"])
+
+
+@pytest.mark.parametrize("name", NAMES)
+def test_the_readme_lists_every_claim(name: str) -> None:
+    readme = (DIRECTORY / "README.md").read_text(encoding="utf-8")
+    table = readme.split("## Every claim the backend sends")[1].split("\n## ")[0]
+    assert not [c for c in load(name)["claims"] if f"`{c}`" not in table]
+
+
+class Keeper:
+    """A receiver that accepts everything and keeps the tokens as they came."""
+
+    supports_reconcile = False
+
+    def __init__(self) -> None:
+        self.tokens: list[str] = []
+
+    async def send(
+        self, tenant_id: object, course_id: int, statement_jws: str
+    ) -> SendResult:
+        self.tokens.append(statement_jws)
+        return SendResult(Outcome.ACCEPTED)
+
+    async def known(self, tenant_id: object, course_id: int) -> set[str]:
+        return set()
+
+
+@pytest.mark.parametrize("mirrored", [False, True])
+async def test_what_the_worker_really_sends_matches_the_vectors(
+    env: dict[str, Any], mirrored: bool
+) -> None:
+    """The production path from end to end (start, submit, outbox, `sync_run`),
+    signed with the vectors' key and checked without the JWT library: the same
+    header and the same claim names as the files handed to the plugin."""
+    if mirrored:
+        await configure(env["engine"])
+    await env["setup"]({"assessments": A2})
+    student = await env["student"]()
+    await finish(student, right=True)
+    await finish(await env["student"]("other-student"), right=False)
+    keeper = Keeper()
+    # The exam clock is the test's: send "later" than any row it queued.
+    async with new_session(env["engine"], SYSTEM) as session:
+        await sync_run(
+            session,
+            keeper,
+            signing_vectors.private_pem(),
+            signing_vectors.KID,
+            NOW,
+            lambda _: None,
+        )
+    sent = [verify_independently(token, JWKS) for token in keeper.tokens]
+    for token in keeper.tokens:
+        assert json.loads(b64decode(token.split(".")[0])) == load("result")["header"]
+    kinds = [c.get("kind", "result") for c in sent]
+    attempts = [c for c in sent if c.get("kind") != "definition"]
+    expected = ["attempt"] * 2 if mirrored else ["result"] * 2
+    assert sorted(c.get("kind", "result") for c in attempts) == expected
+    assert kinds.count("definition") == (1 if mirrored else 0)
+    assert {c["passed"] for c in attempts} == {True, False}
+    for claims in sent:
+        name = claims.get("kind", "result")
+        assert claims.keys() == load(name)["claims"].keys()
+        SCHEMAS[SCHEMA_OF[name]].model_validate(claims)
