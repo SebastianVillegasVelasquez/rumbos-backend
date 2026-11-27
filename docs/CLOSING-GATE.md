@@ -14,14 +14,59 @@ against a fake completion provider. The real read of Moodle's completion is
 
 `CLOSING_GATE_MODE` (environment):
 
+Three modes, chosen per environment; the default is `off`.
+
 | value | behaviour |
 | --- | --- |
-| `off` (default) | exactly as before the gate: a final attempt starts without any check, the final stays in `GET /trainer/assessments`. Startup and every final start log a warning (`rumbos.closing`, `CLOSING_GATE_MODE=off`) |
-| `enforce` | the gate runs at every start of a final attempt; the final leaves the trainer list |
+| `off` (default) | exactly as before the gate: a final attempt starts without any check, the final stays in `GET /trainer/assessments`, `GET /trainer/closing` has no `outcome`. Startup and every final start log a warning (`rumbos.closing`, `CLOSING_GATE_MODE=off`) |
+| `observe` (interim) | `GET /trainer/closing` has `outcome`, read from the attempts alone; the start of a final refuses only what the attempts decide; **the content is not checked**. The completion provider and the course contents are never asked for. The final leaves the trainer list as with `enforce`. Startup and every final start log a warning (`CLOSING_GATE_MODE=observe`) |
+| `enforce` | the full rule below runs for `GET /trainer/closing` and at every start of a final attempt; `outcome` is there; the final leaves the trainer list |
 
 `enforce` with no completion provider keeps the exam **closed** for students
 (`progress_unavailable`). Do not turn it on in production until the provider
 exists. Editors in preview are not affected (they skip the SCORM condition).
+
+### What each answer says in each mode
+
+| | `off` | `observe` | `enforce` |
+| --- | --- | --- | --- |
+| `enforced` | `false` | `false` | `true` |
+| `progress` | `null` | `null` | counts, when SCORM was checked |
+| `outcome` | key absent | present | present |
+| `outcome.scorm_gate` | | always `{"satisfied": null, "reason": "not_checked"}` | see "`outcome`" below |
+| `outcome.final.reason` may be a SCORM one (`scorm_incomplete`, `progress_unavailable`, `user_unlinked`) | | never | yes |
+| final in `GET /trainer/assessments` | listed | not listed | not listed |
+
+A client tells the modes apart by `outcome` (present or not) and, between the two
+that send it, by `scorm_gate.reason == "not_checked"`. `enforced: false` alone
+does not mean there is no journey.
+
+### Which guards apply at `POST .../final/attempts`
+
+| refusal | `off` | `observe` | `enforce` |
+| --- | --- | --- | --- |
+| passed the final | `409 locked` | `409 closing_not_available`, `already_passed` | same as `observe` |
+| passed the check-in with the exemption on | **starts** | `409 closing_not_available`, `already_passed` | same as `observe` |
+| every attempt used | `409 no_attempts_left` | `409 no_attempts_left` | `409 no_attempts_left` |
+| content not done, unreadable, or no Moodle user id | starts | **starts** | `409 closing_not_available` |
+| exams off or the final form not published | `404` | `404` (as `off`) | `409 closing_not_available` (`not_enabled`, `form_unavailable`) |
+
+In `observe` and `enforce` a map whose closing flow has no final-exam step is not
+gated at all and keeps the final in the trainer list (D53). Editors in preview are
+never refused.
+
+### The honest limit of `observe`
+
+**In `observe` the server does not enforce "all the content is done before the
+final exam".** `outcome.final.status` is `required`, and `available` is `true`, as
+soon as the attempts allow it, even for a student who has sat nothing and opened
+nothing. Anyone who calls the API, and any client that offers the final on
+`required` alone, lets a student sit it without the content. If the journey must
+wait for the content on screen, the client has to decide that itself from what it
+knows of Moodle's completion, and that is presentation, not a control. A passing
+final reported to Moodle in this mode counts like any other. Use `observe` to let
+the journeys work and be tested until the completion provider exists; it is not a
+substitute for `enforce`.
 
 ## The rule (`app/closing/gate.py`, the only place)
 
@@ -90,7 +135,7 @@ Student or editor in preview. Always 200 once authenticated.
 
 ```
 {
-  "enforced": true,          false while CLOSING_GATE_MODE=off (progress is then null)
+  "enforced": true,          true only in enforce (otherwise progress is null)
   "preview": false,          true for an editor: a start is a trial run
   "available": false,
   "reason": "scorm_incomplete",   null when available; see the rule above
@@ -102,10 +147,29 @@ Student or editor in preview. Always 200 once authenticated.
 `progress` counts are safe to show. Which activities are missing is never told.
 `final` has the shape of an item of `GET /trainer/assessments`.
 
-### `outcome`: the student's journey (enforce only)
+### `final.state` is not the journey: read `outcome.final.status`
 
-While `CLOSING_GATE_MODE=enforce` the answer also carries `outcome`, read from the
-student's attempts on every call (the backend stores no journey state, D29):
+The two can disagree, by design of the older field:
+
+| the student | `final.state` | `outcome.final.status` |
+| --- | --- | --- |
+| content not done (`enforce`) | `available` | `locked` |
+| passed the check-in | `available` | `not_required_passed_checkin` |
+
+`final` is the exam's list item: `state` describes only that exam's own attempts
+and whether its form is served, and ignores the SCORM condition and the check-in
+exemption. It cannot change without changing the bytes of `off` and the meaning of
+`GET /trainer/assessments`, so **using `final.state` of this endpoint to decide the
+journey is deprecated**. Clients decide from `outcome.final.status` (and from
+`available` for "may a start succeed now"). `final.attempts`, `final.in_progress`
+and `final.best` stay good to read.
+
+### `outcome`: the student's journey (`observe` and `enforce`)
+
+With `CLOSING_GATE_MODE=observe` or `enforce` the answer also carries `outcome`,
+read from the student's attempts on every call (the backend stores no journey
+state, D29). The block and the table below describe `enforce`; for `observe`
+apply the differences listed above.
 
 ```
 "outcome": {
@@ -121,7 +185,8 @@ student's attempts on every call (the backend stores no journey state, D29):
               "form_unavailable" | "not_enabled" | "no_final_step",   only when locked
     "attempts": {"used": 0, "max": 3} | null
   },
-  "scorm_gate": {"satisfied": true | false | null, "reason": "passed_checkin" | null}
+  "scorm_gate": {"satisfied": true | false | null,
+                 "reason": "passed_checkin" | "not_checked" | null}
 }
 ```
 
@@ -236,7 +301,8 @@ unchanged, so the signing vectors and the plugin's verifier keep working.
 
 ## `POST /trainer/assessments/final/attempts`
 
-Runs the same check first (`enforce` only). Refusals:
+Runs the same check first (in `observe` only its attempt refusals count: see
+"Which guards apply"). Refusals:
 
 * `409 {"detail": {"code": "closing_not_available", "message_key":
   "closing.not_available.<reason>", "message", "reason", "completed"?, "total"?}}`
@@ -338,7 +404,9 @@ call (see the freshness check above).
 
 Deploy: **backend first** (migration `e1f4a7c2b630`, mode `off`), then the
 plugin that signs `uid` and the frontend, then `enforce` once the completion
-provider exists. After the deploy run `alembic current`: the entrypoint starts
+provider exists. `observe` is opt-in per environment and can be set as soon as the
+backend that has it is deployed; going back to `off` is the same one-line change
+and restart, and needs no data change. After the deploy run `alembic current`: the entrypoint starts
 the container even when a migration fails, and the new code selects the new
 column, so with the column missing **every** authenticated request fails. If
 `current` is not `e1f4a7c2b630`, roll the image back.

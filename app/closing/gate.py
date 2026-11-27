@@ -73,7 +73,7 @@ FinalStatus = Literal[
     "exhausted",
     "locked",
 ]
-ScormGateReason = Literal["passed_checkin"]
+ScormGateReason = Literal["passed_checkin", "not_checked"]
 
 
 @dataclass(frozen=True)
@@ -89,8 +89,9 @@ class FinalOutcome:
 @dataclass(frozen=True)
 class ScormGate:
     """Whether the SCORM condition is met. `satisfied` is null when it was not
-    checked or could not be read; `reason` is set only when something other than
-    the content itself met it."""
+    checked or could not be read; `reason` says that something other than the
+    content met it (`passed_checkin`), or that this mode never looks at it
+    (`not_checked`)."""
 
     satisfied: bool | None
     reason: ScormGateReason | None = None
@@ -135,6 +136,15 @@ def scorm_gate(decision: Decision, *, checkin_exempts: bool) -> ScormGate:
     if decision.available and decision.progress is not None:
         return ScormGate(True)
     return ScormGate(None)
+
+
+# What `observe` reports about the content, whatever the student did: it never
+# looks, so it claims nothing.
+SCORM_NOT_CHECKED = ScormGate(None, "not_checked")
+
+# The refusals `observe` applies at the start of a final attempt: the ones that
+# follow from the student's attempts alone.
+OBSERVE_REFUSALS: frozenset[Reason] = frozenset({"already_passed", "no_attempts_left"})
 
 
 def required_scorm_cmids(

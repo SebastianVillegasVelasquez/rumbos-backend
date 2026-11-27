@@ -915,3 +915,35 @@ of 3 used.
 - **`ordinal` may have holes now** (previews only). Nothing reads it as a count:
   it orders the history and goes in the statement of real attempts.
 
+## D68. `observe`: the journey without the SCORM condition (interim)
+
+`outcome` came only with `enforce`, and `enforce` closes every map with required
+SCORM until a completion provider exists, so in production the frontend had no
+journey to read. `observe` is the verdict with the SCORM step left out
+(`decide(check_scorm=False)`), so there is still one rule.
+
+Judgment calls:
+
+- **`scorm_gate` is `not_checked` for everybody**, also after a passed check-in,
+  where `enforce` says `satisfied: true, passed_checkin`. The mode claims nothing
+  about the content. The exemption still shows in `final.status`.
+- **Refusals: `already_passed` (final, or check-in with the exemption) and
+  `no_attempts_left`**, with the codes `enforce` uses. For `not_enabled` and
+  `form_unavailable` the start is left to behave as with the gate off (404).
+  This is stricter than `off` in one case: a student exempted by the check-in is
+  refused.
+- **`enforced` stays `false`.** The server does not enforce the content rule, and
+  the field must not say it does. The frontend decides from `outcome`.
+- **The final leaves the trainer list**, as with `enforce` and under the same
+  transitional rule (D53): the mode exists to run the same journeys, whose only
+  entry to the final is the closing flow.
+- **No Moodle read at all**, neither completion nor course contents, so a Moodle
+  outage does not change an answer.
+- **`required` before the content is done is the accepted cost.** Documented in
+  `docs/CLOSING-GATE.md`, "The honest limit of `observe`".
+- **`final.state` is deprecated for the journey, not changed.** Changing it would
+  alter the `off` bytes and the trainer list. `outcome.final.status` is the field
+  to read.
+- **`off` is pinned by bytes**: `tests/fixtures/closing_off/` was recorded from
+  `main` at ff84961.
+

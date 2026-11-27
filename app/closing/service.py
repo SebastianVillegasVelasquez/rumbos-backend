@@ -10,16 +10,22 @@ shared cache, so up to `MOODLE_CONTENTS_TTL_SECONDS` old) and the student's
 completed activities (never cached here; see `CompletionProvider`). If either
 cannot be read the verdict is closed (`progress_unavailable`).
 
+That is `CLOSING_GATE_MODE=enforce`. In `observe` Moodle is asked for neither:
+the verdict and the journey (`outcome`) come from the attempts alone, so the
+content is not enforced. In `off` there is no journey and no guard.
+
 The backend keeps no per-user closing state (D29): the flow's own progress
 lives in Moodle.
 """
 
 import logging
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Literal
 
 from app.assessment.service import AssessmentService, Caller
 from app.closing.gate import (
+    OBSERVE_REFUSALS,
+    SCORM_NOT_CHECKED,
     Decision,
     Reason,
     decide,
@@ -35,6 +41,9 @@ from app.schemas.map_settings import MapSettings
 from app.schemas.welcome import AssessmentStep
 
 log = logging.getLogger("rumbos.closing")
+
+# `CLOSING_GATE_MODE` (see docs/CLOSING-GATE.md).
+GateMode = Literal["off", "observe", "enforce"]
 
 
 @dataclass(frozen=True)
@@ -66,14 +75,14 @@ class ClosingService:
         contents: CourseContentsProvider,
         completion: CompletionProvider,
         *,
-        enforce: bool,
+        mode: GateMode,
     ) -> None:
         self._ctx = context
         self._caller = caller
         self._assessments = assessments
         self._contents = contents
         self._completion = completion
-        self._enforce = enforce
+        self._mode = mode
 
     async def availability(self) -> dict[str, Any]:
         settings = self._ctx.settings
@@ -97,10 +106,11 @@ class ClosingService:
             "attempts_left": state != "exhausted",
         }
         decision = decide(**facts, check_scorm=False)
-        if self._enforce and decision.available and not preview:
+        enforced = self._mode == "enforce"
+        if enforced and decision.available and not preview:
             decision = await self._with_progress(facts)
         verdict: dict[str, Any] = {
-            "enforced": self._enforce,
+            "enforced": enforced,
             "preview": preview,
             "available": decision.available,
             "reason": decision.reason,
@@ -114,7 +124,7 @@ class ClosingService:
             ),
             "final": item,
         }
-        if self._enforce:
+        if self._mode != "off":
             # With the gate off the answer is exactly what it was before.
             verdict["outcome"] = await self._outcome(decision, facts, item)
         return verdict
@@ -124,7 +134,8 @@ class ClosingService:
     ) -> dict[str, Any]:
         """The student's journey, read from their attempts (nothing is stored,
         D29): the check-in's outcome and the final's status, by the same verdict
-        that gates the start."""
+        that gates the start. In `observe` that verdict never looked at the
+        content, and the SCORM condition is reported as not checked."""
         standing = await self._assessments.standing()
         exempts = (
             standing.checkin_passed and self._ctx.settings.assessments.exemption.enabled
@@ -135,7 +146,11 @@ class ClosingService:
             checkin_exempts=exempts,
             attempts_left=facts["attempts_left"],
         )
-        gate = scorm_gate(decision, checkin_exempts=exempts)
+        gate = (
+            SCORM_NOT_CHECKED
+            if self._mode == "observe"
+            else scorm_gate(decision, checkin_exempts=exempts)
+        )
         return {
             "checkin": standing.checkin,
             "final": {
@@ -183,8 +198,11 @@ class ClosingService:
         """Raises unless the final exam may be started now. With the gate off
         it only says so, loudly, and lets the request through (today's
         behaviour). A map whose closing flow has no final-exam step is not
-        gated either (the transitional rule, D53)."""
-        if not self._enforce:
+        gated either (the transitional rule, D53).
+
+        `observe` refuses only what the attempts decide (`OBSERVE_REFUSALS`);
+        for anything else the start behaves as with the gate off."""
+        if self._mode == "off":
             log.warning(
                 "closing_gate_off the final exam is being started without the "
                 "SCORM completion check (CLOSING_GATE_MODE=off)"
@@ -196,10 +214,17 @@ class ClosingService:
             # are not left without an entry to the final exam.
             log.info("closing_gate_skipped no_final_step")
             return
+        if self._mode == "observe":
+            log.warning(
+                "closing_gate_observe the final exam is being started without the "
+                "SCORM completion check (CLOSING_GATE_MODE=observe)"
+            )
         verdict = await self.availability()
         if verdict["available"]:
             return
         reason: Reason = verdict["reason"]
+        if self._mode == "observe" and reason not in OBSERVE_REFUSALS:
+            return
         if reason == "no_attempts_left":
             raise AssessmentConflictError("no_attempts_left")
         progress = verdict["progress"]

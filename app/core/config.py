@@ -127,7 +127,9 @@ class Settings(BaseSettings):
     # is checked, the exam stays in the trainer list, and every start logs a
     # warning); `enforce` checks it at every start. `enforce` needs a completion
     # provider (see `app.closing.providers`): without one the exam stays closed.
-    closing_gate_mode: Literal["off", "enforce"] = "off"
+    # `observe` (interim) reports the journey from the attempts and keeps the
+    # attempt rules, but never checks the content: see docs/CLOSING-GATE.md.
+    closing_gate_mode: Literal["off", "observe", "enforce"] = "off"
     # Practice attempts older than this many days are purged by the CLI.
     trainer_retention_days: int = Field(default=90, ge=1)
 
