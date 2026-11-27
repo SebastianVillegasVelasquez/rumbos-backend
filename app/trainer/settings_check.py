@@ -60,6 +60,14 @@ _TEXT_FIELDS = (
 )
 
 
+def _stray_braces(value: str, allowed: tuple[str, ...]) -> bool:
+    """Whether `value` has a brace that is not part of an allowed placeholder.
+    All of them are taken out in one pass over the original text: one at a time,
+    removing the inner one of `{thres{score}hold}` would leave an allowed one."""
+    left = re.split("|".join(map(re.escape, allowed)), value) if allowed else [value]
+    return any("{" in piece or "}" in piece for piece in left)
+
+
 def congratulations_problems(texts: Congratulations | None) -> list[Problem]:
     """What the congratulations texts break: too long, markup (`<` or `>`: they
     are plain text, shown as text), or any brace that is not exactly `{score}` or
@@ -92,10 +100,7 @@ def congratulations_problems(texts: Congratulations | None) -> list[Problem]:
                         "This text is plain text: it cannot contain < or >",
                     )
                 )
-            left = value
-            for placeholder in PLACEHOLDERS:
-                left = left.replace(placeholder, "")
-            if "{" in left or "}" in left:
+            if _stray_braces(value, PLACEHOLDERS):
                 problems.append(
                     _finding(
                         path,

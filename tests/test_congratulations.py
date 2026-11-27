@@ -266,6 +266,22 @@ GOOD = {
 }
 
 
+@pytest.mark.parametrize(
+    "text",
+    [
+        # Taking the inner placeholder out first would leave a whole allowed one.
+        "{thres{score}hold}",
+        "{sco{threshold}re}",
+        "{th{score}resh{score}old}",
+    ],
+)
+def test_a_placeholder_cannot_be_spliced_around_another(text: str) -> None:
+    found = congratulations_problems(texts(body=text))
+    assert rules(found) == [
+        ("congratulations.checkin.body", "congratulations_placeholder_unknown")
+    ]
+
+
 async def test_the_texts_are_saved_read_back_and_published(
     client: httpx.AsyncClient,
 ) -> None:
