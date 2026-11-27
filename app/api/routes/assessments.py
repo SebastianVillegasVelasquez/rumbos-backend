@@ -77,9 +77,9 @@ def get_service(
         audio_url=audio_url,
         issuer=app_settings.passback_issuer,
         # Transitional (D53): only a map whose closing flow holds the final
-        # exam step moves the exam out of the trainer list.
-        hide_final=app_settings.closing_gate_mode == "enforce"
-        and has_final_step(settings),
+        # exam step moves the exam out of the trainer list. `observe` shows the
+        # same journey as `enforce`, so it moves it too.
+        hide_final=app_settings.closing_gate_mode != "off" and has_final_step(settings),
     )
 
 
@@ -100,7 +100,7 @@ def get_closing_service(
         service,
         contents,
         completion,
-        enforce=app_settings.closing_gate_mode == "enforce",
+        mode=app_settings.closing_gate_mode,
     )
 
 
@@ -141,11 +141,14 @@ async def closing_status(closing: ClosingDep) -> Response:
     much SCORM content is done, and the exam's own state. A course without a
     closing flow answers `available: false, reason: not_enabled`.
 
-    While the gate is enforced it also carries `outcome`: the check-in's
-    outcome, the final's status (`required`, `locked`,
+    With `CLOSING_GATE_MODE=enforce` or `observe` it also carries `outcome`:
+    the check-in's outcome, the final's status (`required`, `locked`,
     `not_required_passed_checkin`, `passed` or `exhausted`) and whether the
-    SCORM condition is met. With `CLOSING_GATE_MODE=off` the `outcome` key is
-    absent and the answer is exactly what it was before it existed."""
+    SCORM condition is met. Read `outcome.final.status` for the journey, never
+    `final.state`. In `observe` the server does not check the content:
+    `scorm_gate` is `{satisfied: null, reason: not_checked}`. With `off` the
+    `outcome` key is absent and the answer is exactly what it was before it
+    existed."""
     body = ClosingStatus.model_validate(await closing.availability())
     return JSONResponse(
         body.model_dump(
@@ -165,7 +168,9 @@ async def start_attempt(
     """201 for a new attempt; 200 with the attempt already in progress.
 
     The final exam first passes the closing gate (409 `closing_not_available`,
-    or the existing `no_attempts_left`); the check-in is not gated."""
+    or the existing `no_attempts_left`); the check-in is not gated. With
+    `CLOSING_GATE_MODE=observe` the gate refuses only an exam already passed
+    and attempts used up."""
     if purpose == "final":
         await closing.guard_final_start()
     started, created = await service.start(purpose)

@@ -896,3 +896,140 @@ completion in Moodle), which works with today's code.
 An audit note: a student's attempts are isolated per course (a pass in one course
 is `used: 0` in another), checked with a probe, so a cycle needs no course
 scoping of its own.
+
+## D67. Attempt numbers follow the highest one; the limit counts the rows
+
+Bug: `create` numbered a new attempt `count + 1`. `purge-preview` deletes the old
+preview rows, so with a newer one left (say 3 alone) the count and the numbers
+part: the next start took 2, the one after took 3 again, hit the unique index and
+answered `409 no_attempts_left` while the closing status said `available` with 2
+of 3 used.
+
+- **Number = highest existing + 1; limit = number of rows.** Both come from one
+  query. The count is what every read already reports as `attempts.used`, so the
+  screen and the start cannot disagree.
+- **What the purge does to the count:** it deletes preview rows only, so an
+  editor's `attempts.used` drops by the number purged. No limit is applied to
+  previews. A student's rows are never purged, so a student's count and numbers
+  are untouched (`erase` removes all of a user's rows: both restart at 1).
+- **`ordinal` may have holes now** (previews only). Nothing reads it as a count:
+  it orders the history and goes in the statement of real attempts.
+
+## D68. `observe`: the journey without the SCORM condition (interim)
+
+`outcome` came only with `enforce`, and `enforce` closes every map with required
+SCORM until a completion provider exists, so in production the frontend had no
+journey to read. `observe` is the verdict with the SCORM step left out
+(`decide(check_scorm=False)`), so there is still one rule.
+
+Judgment calls:
+
+- **`scorm_gate` is `not_checked` for everybody**, also after a passed check-in,
+  where `enforce` says `satisfied: true, passed_checkin`. The mode claims nothing
+  about the content. The exemption still shows in `final.status`.
+- **Refusals: `already_passed` (final, or check-in with the exemption) and
+  `no_attempts_left`**, with the codes `enforce` uses. For `not_enabled` and
+  `form_unavailable` the start is left to behave as with the gate off (404).
+  This is stricter than `off` in one case: a student exempted by the check-in is
+  refused.
+- **`enforced` stays `false`.** The server does not enforce the content rule, and
+  the field must not say it does. The frontend decides from `outcome`.
+- **The final leaves the trainer list**, as with `enforce` and under the same
+  transitional rule (D53): the mode exists to run the same journeys, whose only
+  entry to the final is the closing flow.
+- **No Moodle read at all**, neither completion nor course contents, so a Moodle
+  outage does not change an answer.
+- **`required` before the content is done is the accepted cost.** Documented in
+  `docs/CLOSING-GATE.md`, "The honest limit of `observe`".
+- **`final.state` is deprecated for the journey, not changed.** Changing it would
+  alter the `off` bytes and the trainer list. `outcome.final.status` is the field
+  to read.
+- **`off` is pinned by bytes**: `tests/fixtures/closing_off/` was recorded from
+  `main` at ff84961.
+
+## D69. The final's threshold travels with the attempt
+
+`{threshold}` of the final had no source: only the check-in's rule was in the
+outcome, and a result carried none. A reload also lost the final's score.
+
+- **From the attempt's saved policy**, never from today's settings, for results
+  (`pass_percent`, `pass_operator`) and for `outcome.final` (plus `percent`).
+- **The deciding final is chosen like the deciding check-in**: the passing one,
+  else the best score. Not the latest: the outcome says where the student stands,
+  and the latest attempt's own numbers are in its result.
+- **Nothing sat: `percent` null and the current rule**, as the check-in block
+  does. No final exam in the map: the three are null.
+- The fields are additive. Clients still read `passed` and `status`.
+
+## D70. The failure, exhausted and route texts are three more blocks of data
+
+Judgment calls:
+
+- **Three top-level blocks** (`failure`, `exhausted`, `routeInstructions`) with
+  the congratulations fields (`title`, `body`, `ctaLabel`), caps and checks,
+  through one shared function. One `failure` block: the frontend decides after
+  which exam it shows it.
+- **Placeholders only where they were asked for.** `failure` has the four of the
+  brief; `exhausted` and `routeInstructions` have none, and `{score}` is not
+  allowed in `failure`. Allowing one more later breaks no stored text; taking one
+  away would.
+- **Their own rule names** (`journey_text_*`): a `congratulations_*` message on
+  another field would mislead the editor. The frontend needs the three keys.
+- **No default copy here**, and nothing is interpolated.
+
+## D71. The test-student runbook, and the restart's manual procedure corrected
+
+`docs/TESTING-closing-flow.md` had been cited but never written.
+
+- **No force-pass.** The runbook fails an attempt by submitting it empty and
+  passes one by lowering the pass mark on a dedicated test course (`1`, `gte`),
+  which uses only existing settings. Both are real results and are reported.
+- **It says what cannot be tested:** with no completion provider, `enforce` on a
+  deployed environment never reads content as done or as incomplete; those two
+  states exist only in the automated tests.
+- **`erase`'s limits are pinned by a test** (every course of the tenant,
+  previews, outbox rows, audit kept).
+- **A new test student is the recommended reset:** `erase` leaves Moodle and the
+  browser (screens remembered per map, not per student) as they were.
+- **`CLOSING-RESTART.md` follows the plugin's audit.** The "course completion
+  reset" suggestion is gone (Moodle's course reset deletes everybody's data), and
+  so is the claim that overriding completion is enough: it does not hold over
+  SCORM tracks. The design's "reset completion, delete nothing" is marked as not
+  settled. D66's summary of the manual procedure is superseded.
+
+## D72. A check of the service account before any completion provider
+
+`app.scripts.closing check-service-account` asks Moodle what the real provider
+would ask, and reports what comes back. **The provider is not built**: it waits
+for this output from the real site.
+
+- **The Moodle call is on `HttpMoodleClient` only**, not on the `MoodleClient`
+  protocol, the cache or the gate: nothing the API runs can reach it.
+- **Output safe to share:** no token, user id, activity name or Moodle message.
+  `MoodleError` now keeps Moodle's `errorcode` so the cause can be told (a short
+  identifier; anything else prints as `-`).
+- **Omitted = tracked in the contents and not in the answer.** Both reads are the
+  service account's, so an activity it sees in neither cannot show up there: the
+  report also lists map activities missing from the contents, which the gate would
+  silently not require.
+- **`--tenant` selects the published map**; the token and URL are the
+  environment's (there is one Moodle per environment), so a tenant whose issuer
+  differs gets a warning.
+
+## D73. The signing vectors cover a failure and the real sending path
+
+The vectors already existed (result passed, definition, attempt).
+
+- **Added `result-failed.json`**, at exactly the mark under `gt`: the case where a
+  receiver that compares `percent` with `pass_percent` would be wrong. The other
+  three files are untouched, so what the plugin may already hold stays valid.
+- **Score and verdict of the vectors now come from `decimal_string` and
+  `passes`** instead of being typed in. The claims did not change.
+- **A test sends through the real path** (submit, outbox, `sync_run`) and holds
+  the header and claim names to the vectors: the builders alone did not show what
+  the service sends.
+- **The README lists every claim**, and a test fails when a vector gains one the
+  list lacks. Algorithm and claims are unchanged.
+- **Documented, not changed:** `completes_course` is false for a passed final
+  whose exemption setting was off.
+

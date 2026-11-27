@@ -87,6 +87,12 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
             "content to be completed and stays listed in the trainer. Set "
             "CLOSING_GATE_MODE=enforce once a completion provider is in place."
         )
+    elif settings.closing_gate_mode == "observe":
+        logging.getLogger("rumbos.closing").warning(
+            "CLOSING_GATE_MODE=observe: the closing journey is reported from the "
+            "attempts, and the server does NOT enforce that the content is done "
+            "before the final exam."
+        )
     # No automatic retries: a Moodle failure surfaces immediately.
     timeout = httpx.Timeout(
         connect=settings.moodle_connect_timeout,

@@ -22,6 +22,7 @@ from app.closing.gate import (
 from tests import test_closing_api as api
 from tests.fakes import FakeCompletionProvider
 from tests.test_assessment_api import COURSE, exams, put, start
+from tests.test_assessment_engine import answers as engine_answers
 from tests.test_publications_api import publish
 from tests.test_welcome_api import put_settings
 
@@ -144,6 +145,7 @@ async def test_a_student_who_has_sat_nothing(
         "status": "locked",
         "reason": "scorm_incomplete",
         "attempts": {"used": 0, "max": 3},
+        **NO_SCORE,
     }
     assert outcome["scorm_gate"] == {"satisfied": False, "reason": None}
 
@@ -183,6 +185,7 @@ async def test_a_passed_check_in_makes_the_final_not_required(
         "status": "not_required_passed_checkin",
         "reason": None,
         "attempts": {"used": 0, "max": 3},
+        **NO_SCORE,
     }
     assert outcome["scorm_gate"] == {"satisfied": True, "reason": "passed_checkin"}
     # The verdict itself is unchanged: not available, because already passed.
@@ -239,6 +242,7 @@ async def test_a_failed_check_in_keeps_the_final_required(
         "status": "required",
         "reason": None,
         "attempts": {"used": 0, "max": 3},
+        **NO_SCORE,
     }
     assert (await try_final(s)).status_code == 201
 
@@ -264,6 +268,118 @@ async def test_the_threshold_reported_is_the_one_the_attempt_was_graded_with(
     assert outcome["status"] == "passed"
 
 
+# --- the final's score and threshold -------------------------------------------------------
+
+
+def rule_of(body: dict[str, Any]) -> tuple[Any, Any]:
+    return body["pass_percent"], body["pass_operator"]
+
+
+async def change_rule(env: dict[str, Any], **rule: Any) -> None:
+    """The editor changes the pass rule and publishes again."""
+    editor = env["client"]()
+    found = (await editor.get("/course-maps", params={"moodleCourseId": COURSE})).json()
+    map_id = found["items"][0]["id"]
+    changed = {"assessments": exams(**rule), "closing": api.CLOSING}
+    assert (await put_settings(editor, map_id, changed)).status_code == 200
+    await publish(editor, map_id)
+
+
+async def sit_part(c: httpx.AsyncClient, right: int) -> dict[str, Any]:
+    """A final with only the first `right` correct answers saved."""
+    attempt = (await start(c, "final"))["attempt_id"]
+    items = list(engine_answers("right").items())[:right]
+    payload = [{"item_id": k, "response": v} for k, v in items]
+    saved = await c.put(
+        f"/trainer/attempts/{attempt}/answers", json={"answers": payload}
+    )
+    assert saved.status_code == 200, saved.text
+    body: dict[str, Any] = (await c.post(f"/trainer/attempts/{attempt}/submit")).json()
+    return {**body, "attempt_id": attempt}
+
+
+async def test_a_result_carries_the_rule_its_attempt_was_graded_with(
+    env: dict[str, Any], provider: FakeCompletionProvider, mode: Any
+) -> None:
+    await world(env)
+    provider.complete(COURSE, uid("alumno1"), SCORM_A, SCORM_B)
+    s = await learner(env, "alumno1")
+    check_in = await sit(s, "check_in", "wrong")
+    assert rule_of(check_in) == (80, "gt")
+    first = await sit_part(s, 10)
+    assert rule_of(first) == (80, "gt")
+
+    await change_rule(env, passPercent=95, passOperator="gte")
+    # Reloading the old result: its own rule, not the new one.
+    again = (await s.get(f"/trainer/attempts/{first['attempt_id']}/result")).json()
+    assert rule_of(again) == (80, "gt")
+    assert rule_of(await sit_part(s, 10)) == (95, "gte")
+
+
+async def test_the_final_outcome_tells_the_deciding_attempts_score_and_rule(
+    env: dict[str, Any], provider: FakeCompletionProvider, mode: Any
+) -> None:
+    await world(env)
+    provider.complete(COURSE, uid("alumno1"), SCORM_A, SCORM_B)
+    s = await learner(env, "alumno1")
+    best = await sit_part(s, 15)
+    assert best["passed"] is False and best["percent"] != "0.00"
+
+    # A worse attempt under a new rule: the earlier, better one still decides,
+    # with the rule it was graded with.
+    await change_rule(env, passPercent=95, passOperator="gte")
+    worse = await sit_part(s, 5)
+    assert float(worse["percent"]) < float(best["percent"])
+    final = (await closing_of(s))["outcome"]["final"]
+    assert {k: final[k] for k in score("")} == score(best["percent"])
+    # The latest attempt's own numbers are in its result.
+    assert rule_of(worse) == (95, "gte")
+
+    # A pass decides over any score, with its rule.
+    passed = await sit(s, "final", "right")
+    assert passed["passed"] is True
+    final = (await closing_of(s))["outcome"]["final"]
+    assert {k: final[k] for k in score("")} == score("100.00", 95, "gte")
+
+
+async def test_with_no_final_sat_the_outcome_gives_the_current_rule(
+    env: dict[str, Any], provider: FakeCompletionProvider, mode: Any
+) -> None:
+    await world(env, final={"passPercent": 70, "passOperator": "gte"})
+    final = (await closing_of(await learner(env, "alumno1")))["outcome"]["final"]
+    assert {k: final[k] for k in score("")} == {
+        "percent": None,
+        "pass_percent": 70,
+        "pass_operator": "gte",
+    }
+
+
+async def test_a_map_without_a_final_exam_has_no_final_rule(
+    env: dict[str, Any], provider: FakeCompletionProvider, mode: Any
+) -> None:
+    await world(env, final={"final": None}, closing=None)
+    final = (await closing_of(await learner(env, "alumno1")))["outcome"]["final"]
+    assert final["attempts"] is None
+    assert (final["percent"], final["pass_percent"], final["pass_operator"]) == (
+        None,
+        None,
+        None,
+    )
+
+
+@pytest.mark.parametrize("gate", ["observe", "enforce"])
+async def test_the_final_score_is_there_in_both_modes_that_report_it(
+    env: dict[str, Any], provider: FakeCompletionProvider, mode: Any, gate: str
+) -> None:
+    await world(env)
+    mode(gate)
+    provider.complete(COURSE, uid("alumno1"), SCORM_A, SCORM_B)
+    s = await learner(env, "alumno1")
+    result = await sit_part(s, 10)
+    final = (await closing_of(s))["outcome"]["final"]
+    assert {k: final[k] for k in score("")} == score(result["percent"])
+
+
 # --- the final ----------------------------------------------------------------------------------
 
 
@@ -282,6 +398,7 @@ async def test_a_passed_final(
         "status": "passed",
         "reason": None,
         "attempts": {"used": 1, "max": 3},
+        **score("100.00"),
     }
     assert refusal(await try_final(s))["reason"] == "already_passed"
 
@@ -301,6 +418,7 @@ async def test_three_failed_finals_exhaust_it_and_the_check_in_stays_consumed(
         "status": "exhausted",
         "reason": None,
         "attempts": {"used": 3, "max": 3},
+        **score("0.00"),
     }
     assert outcome["checkin"]["attempts"] == {"used": 1, "max": 1}
     assert outcome["checkin"]["status"] == "not_passed"
@@ -358,6 +476,18 @@ async def test_the_outcome_follows_the_attempts_not_a_stored_state(
 
 
 # --- the gate off ---------------------------------------------------------------------------------
+
+# The final's score and rule while no final was sat (the map's current rule).
+NO_SCORE = {"percent": None, "pass_percent": 80, "pass_operator": "gt"}
+
+
+def score(percent: str, pass_percent: int = 80, operator: str = "gt") -> dict[str, Any]:
+    return {
+        "percent": percent,
+        "pass_percent": pass_percent,
+        "pass_operator": operator,
+    }
+
 
 BEFORE_KEYS = {"enforced", "preview", "available", "reason", "progress", "final"}
 

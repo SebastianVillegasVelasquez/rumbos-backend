@@ -12,6 +12,7 @@ from pydantic import BeforeValidator, ConfigDict, Field
 
 from app.schemas.base import ApiModel
 from app.schemas.congratulations import Congratulations
+from app.schemas.journey_texts import JourneyText
 from app.schemas.skin import HexColor
 from app.schemas.welcome import ClosingFlow, Welcome
 
@@ -128,6 +129,23 @@ class MapSettings(_Strict):
     # What the congratulations screens say (see `app.schemas.congratulations`).
     # Absent or null: the frontend's default copy.
     congratulations: Congratulations | None = None
+    # The other texts of the closing journey (see `app.schemas.journey_texts`).
+    # Absent or null: the frontend's default copy.
+    failure: JourneyText | None = Field(
+        default=None,
+        description="Shown after a failed attempt. Plain text; may contain "
+        "{attempt}, {attempts_max}, {attempts_left} and {threshold}.",
+    )
+    exhausted: JourneyText | None = Field(
+        default=None,
+        description="Shown when every attempt at the final is used without "
+        "passing. Plain text; no placeholders.",
+    )
+    route_instructions: JourneyText | None = Field(
+        default=None,
+        description="Shown on the map after a failed check-in. Plain text; no "
+        "placeholders.",
+    )
 
     def to_stored(self) -> dict[str, Any]:
         """The JSON-able form kept in `course_maps.settings` (camelCase).
@@ -151,6 +169,13 @@ class MapSettings(_Strict):
         if self.congratulations is None or self.congratulations.is_empty():
             # Same rule for the texts: no custom copy is no key.
             del stored["congratulations"]
+        for text, key in (
+            (self.failure, "failure"),
+            (self.exhausted, "exhausted"),
+            (self.route_instructions, "routeInstructions"),
+        ):
+            if text is None or text.is_empty():
+                del stored[key]
         if self.closing is None:
             # No closing flow is no key, so every map stored before it existed
             # keeps its hash.

@@ -8,22 +8,26 @@ and what a direct API call gets.
 import logging
 import uuid
 from collections.abc import Iterator
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 import httpx
 import pytest
-from sqlalchemy import func, select
+from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 from app.closing.providers import CompletionUnavailableError
 from app.core.config import get_settings
 from app.main import app
-from app.models import PassbackOutbox
+from app.models import AssessmentAttempt, PassbackOutbox
 from app.moodle.cache import CachedMoodleClient
 from app.moodle.exceptions import MoodleUnavailableError
 from app.moodle.schemas import MoodleModule, MoodleSection
+from app.scripts.assessments import purge_preview
+from app.tenancy.scope import SYSTEM
 from tests import test_assessment_api as base
 from tests.fakes import FakeCompletionProvider, InMemoryMoodleClient
+from tests.sessions import new_session
 from tests.test_assessment_api import COURSE, exams, put, start
 from tests.test_publications_api import add_bubble, make_map, publish
 from tests.test_welcome_api import put_settings
@@ -500,6 +504,57 @@ async def test_a_trial_run_leaves_no_trace_in_real_data(
     assert (await closing_of(as_student))["final"]["already_passed"] is False
 
 
+async def test_a_trial_run_starts_after_older_ones_were_purged(
+    env: dict[str, Any], provider: FakeCompletionProvider, mode: Any
+) -> None:
+    """The purge leaves a hole in the numbering: the next trial run must take the
+    number after the highest one left, not the count of rows plus one."""
+    await world(env)
+    e = await env["editor"]("editor-1")
+
+    async def trial() -> str:
+        r = await try_final(e)
+        assert r.status_code == 201, r.text
+        attempt: str = r.json()["attempt_id"]
+        assert (await e.post(f"/trainer/attempts/{attempt}/submit")).status_code == 200
+        return attempt
+
+    old = [await trial(), await trial()]
+    await trial()  # a newer one, which the purge keeps
+    await age_attempts(env["engine"], old, hours=30)
+    async with new_session(env["engine"], SYSTEM) as session:
+        assert await purge_preview(session, datetime.now(UTC), 24, lambda _: None) == 2
+    # The purged rows no longer count.
+    assert (await closing_of(e))["final"]["attempts"] == {"used": 1, "max": 3}
+
+    await trial()
+    shown = await closing_of(e)
+    assert shown["final"]["attempts"] == {"used": 2, "max": 3}
+    assert shown["available"] is True
+    await trial()
+    assert (await closing_of(e))["final"]["attempts"] == {"used": 3, "max": 3}
+    assert await ordinals(env["engine"], "editor-1") == [3, 4, 5]
+
+
+async def age_attempts(engine: AsyncEngine, ids: list[str], *, hours: int) -> None:
+    async with engine.begin() as conn:
+        await conn.execute(
+            update(AssessmentAttempt)
+            .where(AssessmentAttempt.id.in_([uuid.UUID(i) for i in ids]))
+            .values(created_at=datetime.now(UTC) - timedelta(hours=hours))
+        )
+
+
+async def ordinals(engine: AsyncEngine, sub: str) -> list[int]:
+    async with engine.connect() as conn:
+        rows = await conn.scalars(
+            select(AssessmentAttempt.ordinal)
+            .where(AssessmentAttempt.sub == sub)
+            .order_by(AssessmentAttempt.ordinal)
+        )
+        return list(rows)
+
+
 async def test_a_real_attempt_says_it_is_not_a_preview(
     env: dict[str, Any], provider: FakeCompletionProvider, mode: Any
 ) -> None:
@@ -604,7 +659,6 @@ async def test_the_report_lists_restricted_required_scorm_and_flags_groups(
     env: dict[str, Any], provider: FakeCompletionProvider
 ) -> None:
     from app.scripts.closing import restricted_report
-    from tests.sessions import new_session
 
     by_group = '{"op":"&","c":[{"type":"group","id":3}],"showc":[true]}'
     by_date = '{"op":"&","c":[{"type":"date","d":">=","t":1}],"showc":[true]}'

@@ -36,8 +36,8 @@ class AssessmentAttempt(BaseORM):
 
     __tablename__ = "assessment_attempts"
     __table_args__ = (
-        # Attempt numbers are dense per (user, purpose): two tabs racing to
-        # start the same one cannot both win.
+        # Attempt numbers grow per (user, purpose): two tabs racing to start
+        # the same one cannot both win. Purged previews leave holes.
         UniqueConstraint(
             "tenant_id",
             "moodle_course_id",

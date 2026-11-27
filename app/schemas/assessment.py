@@ -228,6 +228,14 @@ class Result(_Out):
     preview: bool = False
     percent: str
     passed: bool
+    pass_percent: int = Field(
+        description="The pass mark this attempt was graded with (frozen when it "
+        "started). For display: read `passed`, never compare `percent` with it."
+    )
+    pass_operator: Literal["gt", "gte"] = Field(
+        description="`gt`: the score must be above `pass_percent`; `gte`: at "
+        "least it. Decided on the exact score; `percent` is rounded for display."
+    )
     band: Band
     by_section: list[SectionResult]
     by_module: list[ModuleResult]
@@ -285,11 +293,21 @@ class FinalOutcome(_Out):
     `not_required_passed_checkin` (a passed check-in exempts them and the
     closing flow is shown without the exam step), `passed`, or `exhausted` (every
     attempt used without passing). `attempts` is null when the map has no final
-    exam."""
+    exam.
+
+    `percent`, `pass_percent` and `pass_operator` are those of the final attempt
+    that decides: the passing one, else the one with the best score (not
+    necessarily the latest; one attempt's own are in its result). The rule is
+    the one that attempt was graded with. With no final sat, `percent` is null
+    and the rule is the map's current one. All three are null when the map has
+    no final exam. Read `status`, never compare `percent`."""
 
     status: FinalStatus
     reason: ClosingReason | None
     attempts: Attempts | None
+    percent: str | None
+    pass_percent: int | None
+    pass_operator: Literal["gt", "gte"] | None
 
 
 class ScormGate(_Out):
@@ -297,10 +315,12 @@ class ScormGate(_Out):
     `reason: passed_checkin` when a passed check-in met it without the content
     being done (the plugin then marks the content complete from the signed
     statement), false while content is missing, and null when it was not checked
-    or could not be read."""
+    or could not be read. With `CLOSING_GATE_MODE=observe` it is always
+    `{satisfied: null, reason: not_checked}`, a passed check-in included: the
+    server does not know whether the content is done."""
 
     satisfied: bool | None
-    reason: Literal["passed_checkin"] | None
+    reason: Literal["passed_checkin", "not_checked"] | None
 
 
 class ClosingOutcome(_Out):
@@ -316,8 +336,9 @@ class ClosingStatus(_Out):
     """Whether the closing flow's final exam may be started now, by the same
     rule the start call enforces (see `app.closing.gate`)."""
 
-    # False while `CLOSING_GATE_MODE=off`: nothing is checked on start, and
-    # `progress` is not computed.
+    # True only with `CLOSING_GATE_MODE=enforce`. False with `off` and with
+    # `observe`: the content is not checked and `progress` is not computed. It
+    # does not say whether `outcome` is there.
     enforced: bool
     # True for an editor in preview: the SCORM and attempt conditions are
     # skipped and an attempt is a trial run (`preview: true`).
@@ -325,11 +346,17 @@ class ClosingStatus(_Out):
     available: bool
     reason: ClosingReason | None = None
     progress: ClosingProgress | None = None
-    # The final exam's state, as `/trainer/assessments` lists it for check-in;
-    # null when the map has no final exam.
-    final: AssessmentListItem | None = None
+    final: AssessmentListItem | None = Field(
+        default=None,
+        description="The final exam's list item, as `/trainer/assessments` shapes "
+        "it; null when the map has no final exam. Use it for the attempt in "
+        "progress and the best result. Do not use `final.state` to decide the "
+        "journey: it only describes this exam's own attempts and ignores the "
+        "SCORM condition and the check-in exemption (it can say `available` "
+        "while the exam is locked or not required). Read `outcome.final.status`.",
+    )
     # The check-in outcome and the final's status, to drive the journey. Present
-    # only while the gate is enforced; with `CLOSING_GATE_MODE=off` the key is
+    # with `CLOSING_GATE_MODE=enforce` and `observe`; with `off` the key is
     # absent, so the answer is exactly what it was before. `checkin` is null when
     # the map has no check-in.
     outcome: ClosingOutcome | None = None

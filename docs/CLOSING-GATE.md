@@ -10,18 +10,66 @@ editor's trial run and the signed Moodle user id (`uid`) are built and tested
 against a fake completion provider. The real read of Moodle's completion is
 **not** built (see "Before the real provider").
 
+To put a test student in each state, and to reset one, see
+`TESTING-closing-flow.md`.
+
 ## Switch
 
 `CLOSING_GATE_MODE` (environment):
 
+Three modes, chosen per environment; the default is `off`.
+
 | value | behaviour |
 | --- | --- |
-| `off` (default) | exactly as before the gate: a final attempt starts without any check, the final stays in `GET /trainer/assessments`. Startup and every final start log a warning (`rumbos.closing`, `CLOSING_GATE_MODE=off`) |
-| `enforce` | the gate runs at every start of a final attempt; the final leaves the trainer list |
+| `off` (default) | exactly as before the gate: a final attempt starts without any check, the final stays in `GET /trainer/assessments`, `GET /trainer/closing` has no `outcome`. Startup and every final start log a warning (`rumbos.closing`, `CLOSING_GATE_MODE=off`) |
+| `observe` (interim) | `GET /trainer/closing` has `outcome`, read from the attempts alone; the start of a final refuses only what the attempts decide; **the content is not checked**. The completion provider and the course contents are never asked for. The final leaves the trainer list as with `enforce`. Startup and every final start log a warning (`CLOSING_GATE_MODE=observe`) |
+| `enforce` | the full rule below runs for `GET /trainer/closing` and at every start of a final attempt; `outcome` is there; the final leaves the trainer list |
 
 `enforce` with no completion provider keeps the exam **closed** for students
 (`progress_unavailable`). Do not turn it on in production until the provider
 exists. Editors in preview are not affected (they skip the SCORM condition).
+
+### What each answer says in each mode
+
+| | `off` | `observe` | `enforce` |
+| --- | --- | --- | --- |
+| `enforced` | `false` | `false` | `true` |
+| `progress` | `null` | `null` | counts, when SCORM was checked |
+| `outcome` | key absent | present | present |
+| `outcome.scorm_gate` | | always `{"satisfied": null, "reason": "not_checked"}` | see "`outcome`" below |
+| `outcome.final.reason` may be a SCORM one (`scorm_incomplete`, `progress_unavailable`, `user_unlinked`) | | never | yes |
+| final in `GET /trainer/assessments` | listed | not listed | not listed |
+
+A client tells the modes apart by `outcome` (present or not) and, between the two
+that send it, by `scorm_gate.reason == "not_checked"`. `enforced: false` alone
+does not mean there is no journey.
+
+### Which guards apply at `POST .../final/attempts`
+
+| refusal | `off` | `observe` | `enforce` |
+| --- | --- | --- | --- |
+| passed the final | `409 locked` | `409 closing_not_available`, `already_passed` | same as `observe` |
+| passed the check-in with the exemption on | **starts** | `409 closing_not_available`, `already_passed` | same as `observe` |
+| every attempt used | `409 no_attempts_left` | `409 no_attempts_left` | `409 no_attempts_left` |
+| content not done, unreadable, or no Moodle user id | starts | **starts** | `409 closing_not_available` |
+| exams off or the final form not published | `404` | `404` (as `off`) | `409 closing_not_available` (`not_enabled`, `form_unavailable`) |
+
+In `observe` and `enforce` a map whose closing flow has no final-exam step is not
+gated at all and keeps the final in the trainer list (D53). Editors in preview are
+never refused.
+
+### The honest limit of `observe`
+
+**In `observe` the server does not enforce "all the content is done before the
+final exam".** `outcome.final.status` is `required`, and `available` is `true`, as
+soon as the attempts allow it, even for a student who has sat nothing and opened
+nothing. Anyone who calls the API, and any client that offers the final on
+`required` alone, lets a student sit it without the content. If the journey must
+wait for the content on screen, the client has to decide that itself from what it
+knows of Moodle's completion, and that is presentation, not a control. A passing
+final reported to Moodle in this mode counts like any other. Use `observe` to let
+the journeys work and be tested until the completion provider exists; it is not a
+substitute for `enforce`.
 
 ## The rule (`app/closing/gate.py`, the only place)
 
@@ -90,7 +138,7 @@ Student or editor in preview. Always 200 once authenticated.
 
 ```
 {
-  "enforced": true,          false while CLOSING_GATE_MODE=off (progress is then null)
+  "enforced": true,          true only in enforce (otherwise progress is null)
   "preview": false,          true for an editor: a start is a trial run
   "available": false,
   "reason": "scorm_incomplete",   null when available; see the rule above
@@ -102,10 +150,29 @@ Student or editor in preview. Always 200 once authenticated.
 `progress` counts are safe to show. Which activities are missing is never told.
 `final` has the shape of an item of `GET /trainer/assessments`.
 
-### `outcome`: the student's journey (enforce only)
+### `final.state` is not the journey: read `outcome.final.status`
 
-While `CLOSING_GATE_MODE=enforce` the answer also carries `outcome`, read from the
-student's attempts on every call (the backend stores no journey state, D29):
+The two can disagree, by design of the older field:
+
+| the student | `final.state` | `outcome.final.status` |
+| --- | --- | --- |
+| content not done (`enforce`) | `available` | `locked` |
+| passed the check-in | `available` | `not_required_passed_checkin` |
+
+`final` is the exam's list item: `state` describes only that exam's own attempts
+and whether its form is served, and ignores the SCORM condition and the check-in
+exemption. It cannot change without changing the bytes of `off` and the meaning of
+`GET /trainer/assessments`, so **using `final.state` of this endpoint to decide the
+journey is deprecated**. Clients decide from `outcome.final.status` (and from
+`available` for "may a start succeed now"). `final.attempts`, `final.in_progress`
+and `final.best` stay good to read.
+
+### `outcome`: the student's journey (`observe` and `enforce`)
+
+With `CLOSING_GATE_MODE=observe` or `enforce` the answer also carries `outcome`,
+read from the student's attempts on every call (the backend stores no journey
+state, D29). The block and the table below describe `enforce`; for `observe`
+apply the differences listed above.
 
 ```
 "outcome": {
@@ -119,9 +186,13 @@ student's attempts on every call (the backend stores no journey state, D29):
     "status": "required" | "locked" | "not_required_passed_checkin" | "passed" | "exhausted",
     "reason": null | "scorm_incomplete" | "progress_unavailable" | "user_unlinked" |
               "form_unavailable" | "not_enabled" | "no_final_step",   only when locked
-    "attempts": {"used": 0, "max": 3} | null
+    "attempts": {"used": 0, "max": 3} | null,
+    "percent": "66.67" | null,       score of the deciding final (display, 2 decimals)
+    "pass_percent": 80 | null,       the rule it was graded with
+    "pass_operator": "gt" | "gte" | null
   },
-  "scorm_gate": {"satisfied": true | false | null, "reason": "passed_checkin" | null}
+  "scorm_gate": {"satisfied": true | false | null,
+                 "reason": "passed_checkin" | "not_checked" | null}
 }
 ```
 
@@ -150,6 +221,23 @@ How the frontend reads it (product rules C3):
 3. **Final passed**: `final.status == "passed"`: congratulations.
 4. **Final exhausted**: `final.status == "exhausted"`. What happens next is not
    built: see `docs/CLOSING-RESTART.md`.
+
+### The final's score and threshold
+
+`outcome.final.percent`, `pass_percent` and `pass_operator` describe the **deciding**
+final: the passing one, else the best score. It is what `{threshold}` (and
+`{score}`) of the final mean after a reload. With no final sat `percent` is `null`
+and the rule is the map's current one; all three are `null` when the map has no
+final exam. The deciding attempt is not necessarily the latest: right after an
+attempt, use that attempt's result.
+
+Every attempt result (`POST .../submit`, `GET .../result`) carries `pass_percent`
+and `pass_operator`, the rule saved with that attempt, for the check-in and the
+final alike.
+
+Clients read `passed` (a result) and `status` (the outcome). They never compare
+`percent` with `pass_percent`: the verdict is made on the exact score, and
+`percent` is rounded for display.
 
 Rules worth knowing:
 
@@ -207,9 +295,57 @@ validation 422. A stored text always loads, whatever the rules become.
 **What the frontend does with it:** show it as **text** (never as HTML), and fill
 the two placeholders itself, in one pass of plain string replacement over exactly
 `{score}` and `{threshold}` and nothing else: `{score}` is the score it already
-has (`outcome.checkin.percent`, or the result of the final attempt) and
-`{threshold}` is `outcome.checkin.pass_percent` (the rule the attempt was graded
-with). The backend never interpolates, formats or evaluates a text.
+has and `{threshold}` is the pass mark of the same exam: for `checkin`,
+`outcome.checkin.percent` and `outcome.checkin.pass_percent`; for `final`,
+`outcome.final.percent` and `outcome.final.pass_percent` (or the same fields of
+the attempt's result). Do not fill a final text with the check-in's threshold: the
+two can differ if the rule changed between them. The backend never interpolates,
+formats or evaluates a text.
+
+## The failure, exhausted and route texts
+
+Three more optional blocks of `MapSettings`, written by the editor. Each has the
+same fields as a congratulations text: `title`, `body`, `ctaLabel`.
+
+| block (JSON key) | when the frontend shows it | placeholders |
+| --- | --- | --- |
+| `failure` | after each failed attempt | `{attempt}`, `{attempts_max}`, `{attempts_left}`, `{threshold}` |
+| `exhausted` | every final attempt used without passing (`outcome.final.status: exhausted`) | none |
+| `routeInstructions` | on the map, after a failed check-in (`outcome.checkin.status: not_passed`) | none |
+
+```json
+"failure": {"title": "Casi", "body": "Intento {attempt} de {attempts_max}: te quedan {attempts_left}. Mínimo: {threshold}.", "ctaLabel": "Volver"},
+"exhausted": null,
+"routeInstructions": {"body": "Recorre el mapa y completa cada actividad."}
+```
+
+Everything else is as for the congratulations texts: the same caps, plain text
+(`<` and `>` refused), cleaned before it is checked, `null` (a block or a field)
+means the frontend's default copy (the backend holds none), an unset block is no
+key in the stored settings (no map changes its hash), and a stored text always
+loads. **Only the placeholders in the table**: any other `{` or `}` is refused,
+so a block with none takes no brace at all, and `{score}` is not one of
+`failure`'s.
+
+Refusals are `422 trainer_settings_invalid`; paths are `failure.body`,
+`exhausted.title`, `route_instructions.cta_label`, ...; rules (`message_key`
+`trainer_settings.<rule>`): `journey_text_too_long`,
+`journey_text_markup_not_allowed`, `journey_text_placeholder_unknown`.
+
+**What the frontend does with them:** show them as text, and fill the
+placeholders of `failure` in one pass of plain string replacement. The values,
+right after the failed attempt:
+
+| placeholder | value |
+| --- | --- |
+| `{attempt}` | `attempts.used` of the attempt's result |
+| `{attempts_max}` | `outcome.final.attempts.max` (or `outcome.checkin.attempts.max`): the limit in force now, which is the one the start applies |
+| `{attempts_left}` | the larger of 0 and `{attempts_max}` minus `{attempt}` |
+| `{threshold}` | `pass_percent` of the attempt's result |
+
+`attempts` of a result counts the attempts that exist when it is read, and its
+`max` is the one saved when that attempt started: read an older result again and
+`used` is today's count, not that attempt's number.
 
 ## What the plugin acts on (C4)
 
@@ -236,7 +372,8 @@ unchanged, so the signing vectors and the plugin's verifier keep working.
 
 ## `POST /trainer/assessments/final/attempts`
 
-Runs the same check first (`enforce` only). Refusals:
+Runs the same check first (in `observe` only its attempt refusals count: see
+"Which guards apply"). Refusals:
 
 * `409 {"detail": {"code": "closing_not_available", "message_key":
   "closing.not_available.<reason>", "message", "reason", "completed"?, "total"?}}`
@@ -281,6 +418,51 @@ not exist yet:
    reads it until the plugin signs it, and it must never reach a log.
 2. **Proof that the service account may read other users' completion.** Run this
    once against a real site with a test student, before the provider is built.
+
+### The check command (run this first)
+
+In the backend's environment, with its real `MOODLE_BASE_URL` and
+`MOODLE_SERVICE_TOKEN`:
+
+```bash
+python -m app.scripts.closing check-service-account \
+  --tenant <tenant id> --uid <Moodle id of the test student> --course <course id>
+```
+
+It makes two reads (`core_course_get_contents` and
+`core_completion_get_activities_completion_status`) and writes nothing. It says
+whether completion came back, and if not Moodle's error code with the likely
+cause; the tracked activities of the course the completion answer **leaves out**,
+with what the contents say of each (hidden, restriction kinds, visible to the
+service account); and for the published map the gate would use, each required
+SCORM with its `state` and `tracking`, or `OMITTED`, plus the map activities that
+are not in the contents at all. It prints no token, user id, name or Moodle error
+text, so the output can be shared. Exit status 0: completion read; 1: not read;
+2: unknown tenant.
+
+**A limit of the gate rule that this report exposes.** The gate treats
+`uservisible: false` in the course contents as hidden, and the contents are read
+by the service account. So a SCORM that **the service account** cannot see (a
+restriction that applies to it, for instance) is **not required**: for that
+activity the gate fails open, whatever students see. This corrects the assumption
+under "Open question: restricted activities" that the service account sees
+everything. The report lists such activities under "the gate does NOT require"
+and flags the ones with no hidden flag. The rule is unchanged: fix the account's
+role or the course, or decide the rule with the provider.
+
+What Moodle's function does (read in the code of the plugin's dev site,
+`completion/classes/external.php`, not run against the production site): reading
+another user needs `report/progress:view`, and a shared group in a course with
+separate groups; and it **skips every activity the calling account cannot see**.
+Visibility is the service account's, not the student's. A required SCORM that the
+answer leaves out although the contents show it as visible would count as not
+completed for everybody (`OMITTED`), and one the student cannot see but the
+account can is still required and reported (the restriction question above).
+
+The command does not test freshness (point 4 below): complete the SCORM as the
+test student and run it again.
+
+### The same by hand
 
 ```bash
 # Moodle web service call, from any machine that can reach the site.
@@ -338,7 +520,9 @@ call (see the freshness check above).
 
 Deploy: **backend first** (migration `e1f4a7c2b630`, mode `off`), then the
 plugin that signs `uid` and the frontend, then `enforce` once the completion
-provider exists. After the deploy run `alembic current`: the entrypoint starts
+provider exists. `observe` is opt-in per environment and can be set as soon as the
+backend that has it is deployed; going back to `off` is the same one-line change
+and restart, and needs no data change. After the deploy run `alembic current`: the entrypoint starts
 the container even when a migration fails, and the new code selects the new
 column, so with the column missing **every** authenticated request fails. If
 `current` is not `e1f4a7c2b630`, roll the image back.

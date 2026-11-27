@@ -2634,7 +2634,7 @@
           "trainer"
         ],
         "summary": "Closing Status",
-        "description": "Whether the final exam of the closing flow may be started, why not, how\nmuch SCORM content is done, and the exam's own state. A course without a\nclosing flow answers `available: false, reason: not_enabled`.\n\nWhile the gate is enforced it also carries `outcome`: the check-in's\noutcome, the final's status (`required`, `locked`,\n`not_required_passed_checkin`, `passed` or `exhausted`) and whether the\nSCORM condition is met. With `CLOSING_GATE_MODE=off` the `outcome` key is\nabsent and the answer is exactly what it was before it existed.",
+        "description": "Whether the final exam of the closing flow may be started, why not, how\nmuch SCORM content is done, and the exam's own state. A course without a\nclosing flow answers `available: false, reason: not_enabled`.\n\nWith `CLOSING_GATE_MODE=enforce` or `observe` it also carries `outcome`:\nthe check-in's outcome, the final's status (`required`, `locked`,\n`not_required_passed_checkin`, `passed` or `exhausted`) and whether the\nSCORM condition is met. Read `outcome.final.status` for the journey, never\n`final.state`. In `observe` the server does not check the content:\n`scorm_gate` is `{satisfied: null, reason: not_checked}`. With `off` the\n`outcome` key is absent and the answer is exactly what it was before it\nexisted.",
         "operationId": "closing_status_api_v1_trainer_closing_get",
         "parameters": [
           {
@@ -2684,7 +2684,7 @@
           "trainer"
         ],
         "summary": "Start Attempt",
-        "description": "201 for a new attempt; 200 with the attempt already in progress.\n\nThe final exam first passes the closing gate (409 `closing_not_available`,\nor the existing `no_attempts_left`); the check-in is not gated.",
+        "description": "201 for a new attempt; 200 with the attempt already in progress.\n\nThe final exam first passes the closing gate (409 `closing_not_available`,\nor the existing `no_attempts_left`); the check-in is not gated. With\n`CLOSING_GATE_MODE=observe` the gate refuses only an exam already passed\nand attempts used up.",
         "operationId": "start_attempt_api_v1_trainer_assessments__purpose__attempts_post",
         "parameters": [
           {
@@ -6524,7 +6524,8 @@
               {
                 "type": "null"
               }
-            ]
+            ],
+            "description": "The final exam's list item, as `/trainer/assessments` shapes it; null when the map has no final exam. Use it for the attempt in progress and the best result. Do not use `final.state` to decide the journey: it only describes this exam's own attempts and ignores the SCORM condition and the check-in exemption (it can say `available` while the exam is locked or not required). Read `outcome.final.status`."
           },
           "outcome": {
             "anyOf": [
@@ -7116,16 +7117,56 @@
                 "type": "null"
               }
             ]
+          },
+          "percent": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Percent"
+          },
+          "pass_percent": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pass Percent"
+          },
+          "pass_operator": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "gt",
+                  "gte"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pass Operator"
           }
         },
         "type": "object",
         "required": [
           "status",
           "reason",
-          "attempts"
+          "attempts",
+          "percent",
+          "pass_percent",
+          "pass_operator"
         ],
         "title": "FinalOutcome",
-        "description": "The final exam's status for this student: `required` (they may sit it now),\n`locked` (they must, but not yet: `reason` says why, as for `available`),\n`not_required_passed_checkin` (a passed check-in exempts them and the\nclosing flow is shown without the exam step), `passed`, or `exhausted` (every\nattempt used without passing). `attempts` is null when the map has no final\nexam."
+        "description": "The final exam's status for this student: `required` (they may sit it now),\n`locked` (they must, but not yet: `reason` says why, as for `available`),\n`not_required_passed_checkin` (a passed check-in exempts them and the\nclosing flow is shown without the exam step), `passed`, or `exhausted` (every\nattempt used without passing). `attempts` is null when the map has no final\nexam.\n\n`percent`, `pass_percent` and `pass_operator` are those of the final attempt\nthat decides: the passing one, else the one with the best score (not\nnecessarily the latest; one attempt's own are in its result). The rule is\nthe one that attempt was graded with. With no final sat, `percent` is null\nand the rule is the map's current one. All three are null when the map has\nno final exam. Read `status`, never compare `percent`."
       },
       "FinishOut": {
         "properties": {
@@ -7520,6 +7561,50 @@
         "title": "InitialView",
         "description": "Where the camera starts: a point of the map (0-1) and a zoom."
       },
+      "JourneyText": {
+        "properties": {
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title",
+            "description": "One line, up to 80 characters."
+          },
+          "body": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body",
+            "description": "Up to 600 characters, line breaks allowed."
+          },
+          "ctaLabel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ctalabel",
+            "description": "The button's label: one line, up to 40 characters."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "JourneyText",
+        "description": "One block of the journey. Plain text; which placeholders it may contain\ndepends on the block it is in (see `MapSettings`). Each field null: the\ndefault copy."
+      },
       "LaunchResponse": {
         "properties": {
           "accessToken": {
@@ -7794,6 +7879,39 @@
                 "type": "null"
               }
             ]
+          },
+          "failure": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JourneyText"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Shown after a failed attempt. Plain text; may contain {attempt}, {attempts_max}, {attempts_left} and {threshold}."
+          },
+          "exhausted": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JourneyText"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Shown when every attempt at the final is used without passing. Plain text; no placeholders."
+          },
+          "routeInstructions": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JourneyText"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Shown on the map after a failed check-in. Plain text; no placeholders."
           }
         },
         "additionalProperties": false,
@@ -9178,6 +9296,20 @@
             "type": "boolean",
             "title": "Passed"
           },
+          "pass_percent": {
+            "type": "integer",
+            "title": "Pass Percent",
+            "description": "The pass mark this attempt was graded with (frozen when it started). For display: read `passed`, never compare `percent` with it."
+          },
+          "pass_operator": {
+            "type": "string",
+            "enum": [
+              "gt",
+              "gte"
+            ],
+            "title": "Pass Operator",
+            "description": "`gt`: the score must be above `pass_percent`; `gte`: at least it. Decided on the exact score; `percent` is rounded for display."
+          },
           "band": {
             "type": "string",
             "enum": [
@@ -9225,6 +9357,8 @@
           "status",
           "percent",
           "passed",
+          "pass_percent",
+          "pass_operator",
           "band",
           "by_section",
           "by_module",
@@ -9395,7 +9529,10 @@
             "anyOf": [
               {
                 "type": "string",
-                "const": "passed_checkin"
+                "enum": [
+                  "passed_checkin",
+                  "not_checked"
+                ]
               },
               {
                 "type": "null"
@@ -9410,7 +9547,7 @@
           "reason"
         ],
         "title": "ScormGate",
-        "description": "Whether the SCORM condition of the gate is met. `satisfied` is true with\n`reason: passed_checkin` when a passed check-in met it without the content\nbeing done (the plugin then marks the content complete from the signed\nstatement), false while content is missing, and null when it was not checked\nor could not be read."
+        "description": "Whether the SCORM condition of the gate is met. `satisfied` is true with\n`reason: passed_checkin` when a passed check-in met it without the content\nbeing done (the plugin then marks the content complete from the signed\nstatement), false while content is missing, and null when it was not checked\nor could not be read. With `CLOSING_GATE_MODE=observe` it is always\n`{satisfied: null, reason: not_checked}`, a passed check-in included: the\nserver does not know whether the content is done."
       },
       "SectionPart": {
         "properties": {

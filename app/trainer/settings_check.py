@@ -16,7 +16,9 @@ from app.schemas.congratulations import (
     PLACEHOLDERS,
     TITLE_MAX,
     Congratulations,
+    CongratulationsText,
 )
+from app.schemas.journey_texts import JOURNEY_PLACEHOLDERS, JourneyText
 from app.schemas.map_settings import MapSettings
 from app.schemas.welcome import AssessmentStep
 from app.trainer.catalog import Catalog
@@ -60,51 +62,96 @@ _TEXT_FIELDS = (
 )
 
 
+def _stray_braces(value: str, allowed: tuple[str, ...]) -> bool:
+    """Whether `value` has a brace that is not part of an allowed placeholder.
+    All of them are taken out in one pass over the original text: one at a time,
+    removing the inner one of `{thres{score}hold}` would leave an allowed one."""
+    left = re.split("|".join(map(re.escape, allowed)), value) if allowed else [value]
+    return any("{" in piece or "}" in piece for piece in left)
+
+
+def _text_problems(
+    entry: CongratulationsText | JourneyText,
+    prefix: str,
+    family: str,
+    allowed: tuple[str, ...],
+) -> list[Problem]:
+    """What one block of editor text breaks: too long, markup (`<` or `>`: it is
+    plain text, shown as text), or a brace that is not part of one of the
+    `allowed` placeholders. `family` starts the rule names. Nothing is echoed:
+    the findings carry a path and a rule."""
+    problems: list[Problem] = []
+    for attribute, name, limit in _TEXT_FIELDS:
+        value: str | None = getattr(entry, attribute)
+        if value is None:
+            continue
+        path = f"{prefix}.{name}"
+        if len(value) > limit:
+            problems.append(
+                _finding(
+                    path,
+                    f"{family}_too_long",
+                    "too_long",
+                    f"This text is longer than {limit} characters",
+                )
+            )
+        if "<" in value or ">" in value:
+            problems.append(
+                _finding(
+                    path,
+                    f"{family}_markup_not_allowed",
+                    "markup_not_allowed",
+                    "This text is plain text: it cannot contain < or >",
+                )
+            )
+        if _stray_braces(value, allowed):
+            problems.append(
+                _finding(
+                    path,
+                    f"{family}_placeholder_unknown",
+                    "placeholder_unknown",
+                    f"Only these placeholders are allowed: {', '.join(allowed)}"
+                    if allowed
+                    else "This text takes no placeholders: it cannot contain { or }",
+                )
+            )
+    return problems
+
+
 def congratulations_problems(texts: Congratulations | None) -> list[Problem]:
-    """What the congratulations texts break: too long, markup (`<` or `>`: they
-    are plain text, shown as text), or any brace that is not exactly `{score}` or
-    `{threshold}`. Nothing is echoed: the findings carry a path and a rule."""
+    """What the congratulations texts break (`{score}` and `{threshold}` are
+    their placeholders)."""
     problems: list[Problem] = []
     for purpose in ("checkin", "final"):
         entry = getattr(texts, purpose, None) if texts else None
-        if entry is None:
-            continue
-        for attribute, name, limit in _TEXT_FIELDS:
-            value: str | None = getattr(entry, attribute)
-            if value is None:
-                continue
-            path = f"congratulations.{purpose}.{name}"
-            if len(value) > limit:
-                problems.append(
-                    _finding(
-                        path,
-                        "congratulations_too_long",
-                        "too_long",
-                        f"This text is longer than {limit} characters",
-                    )
+        if entry is not None:
+            problems.extend(
+                _text_problems(
+                    entry,
+                    f"congratulations.{purpose}",
+                    "congratulations",
+                    PLACEHOLDERS,
                 )
-            if "<" in value or ">" in value:
-                problems.append(
-                    _finding(
-                        path,
-                        "congratulations_markup_not_allowed",
-                        "markup_not_allowed",
-                        "This text is plain text: it cannot contain < or >",
-                    )
-                )
-            left = value
-            for placeholder in PLACEHOLDERS:
-                left = left.replace(placeholder, "")
-            if "{" in left or "}" in left:
-                problems.append(
-                    _finding(
-                        path,
-                        "congratulations_placeholder_unknown",
-                        "placeholder_unknown",
-                        "Only the {score} and {threshold} placeholders are allowed",
-                    )
-                )
+            )
     return problems
+
+
+def journey_text_problems(settings: MapSettings) -> list[Problem]:
+    """The same rules for the failure, exhausted and route texts, each with its
+    own placeholders (see `app.schemas.journey_texts`)."""
+    blocks = {
+        "failure": settings.failure,
+        "exhausted": settings.exhausted,
+        "routeInstructions": settings.route_instructions,
+    }
+    return [
+        problem
+        for name, entry in blocks.items()
+        if entry is not None
+        for problem in _text_problems(
+            entry, name, "journey_text", JOURNEY_PLACEHOLDERS[name]
+        )
+    ]
 
 
 def trainer_settings_check(settings: MapSettings, catalog: Catalog) -> SettingsCheck:
@@ -213,4 +260,5 @@ def trainer_settings_check(settings: MapSettings, catalog: Catalog) -> SettingsC
                 )
             )
     problems.extend(congratulations_problems(settings.congratulations))
+    problems.extend(journey_text_problems(settings))
     return SettingsCheck(problems, warnings)
